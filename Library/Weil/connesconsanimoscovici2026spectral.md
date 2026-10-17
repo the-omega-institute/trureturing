@@ -9222,3 +9222,431 @@ This is a source-specific application of the existing projection and
 convexity results, without a generic novelty or Lean-proof claim.
 
 The [fixed-trial source, exact packet and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/fbfefa527018d4388fd9c2cb4dd5c0d2130f7043/docs/reports/weil-c27) preserve this conditional stopping result; the common-trial supplier is reused without replay.
+
+
+### The complete unweighted row and the finite joint good-block metric
+
+The archived $1263$-by-$18$ action $P^{-1}C$ serves the old lift,
+not arbitrary new rows. A different query supplies the missing
+unweighted row and two inverse actions on the SAME positive principal
+block of the rho32-v2 lower target. The accepted original target,
+residual generators, source, lift and positive-pivot evidence are
+reused; no old target supplier or old lift solve is replayed.
+
+The original exact384-bit row0 source $w$ has support
+$2049\le m\le32768$. Put its coefficients, without $W$, $Mw$ or
+rescaling, into the accepted residual-generator Cauchy product. This
+gives every retained coefficient of
+
+$$
+r_n=\sum_{m=2049}^{32768}w_mR_{mn},\qquad0\le n\le1280.
+$$
+
+The scalar $\kappa$ enters only through the reused product.
+Because $w$ itself is finitely supported, this $r=w^*R$ is complete
+for the original source; it requires no omitted $w$-source tail.
+The source and exact-lift formulas identify $rV$ with the archived
+unweighted projection. The overlap check tests the new implementation
+and does not establish source equality from overlap.
+
+Use the saved full finite row $b_J$ and restrict both rows to the
+accepted1263 positive coordinates. With
+
+$$
+B_J=\begin{pmatrix}r_g\\b_{J,g}\end{pmatrix},\qquad
+PX_J=B_J^*,\qquad G_{JJ}=B_JX_J,
+$$
+
+one new validated two-right-side solve encloses $X_J$ and $G_{JJ}$.
+The two off-diagonal evaluations enclose the same real cross entry;
+their average remains enclosing. For every real $e\in\mathbb R^2$,
+
+$$
+e^*G_{JJ}e=(e^*B_J)P^{-1}(B_J^*e)\ge0.
+$$
+
+This retains the common-realization cross energy, rather than
+combining separately optimized marginal bounds. $P$ is the certified
+principal block of the saved lower target, not a new certification of
+the whole actual center.
+
+| Metric entry | Outward enclosure |
+|---|---|
+| $r_gP^{-1}r_g^*$ | $[4787.103066499741053563,\ 4787.103066499741053564]$ |
+| $r_gP^{-1}b_{J,g}^*$ | $[663.225066385094668430,\ 663.225066385094668431]$ |
+| $b_{J,g}P^{-1}b_{J,g}^*$ | $[92.167958630498818052,\ 92.167958630498818053]$ |
+
+The row packet is144087bytes, SHA256
+`566cb68530f31dd6e26af076055bb368e2b2e82fdcc0857abb7b2b475a036f48`;
+its assembly takes<8.573037seconds. The joint metric packet is303335bytes,
+SHA256
+`9ba53b70a0f1cad25b9e92894eff93f1340dc31d1a9bf945c560b6dc6940d072`.
+It includes all1263-by2 inverse-action intervals. Its preparation and
+target reconstruction take<14.334747seconds, the one two-right-side
+solve takes<118.573775seconds, and total assembly takes<133.114112seconds,
+excluding serialization.
+
+The working precision is fixed1024bits and export precision640bits;
+the Cauchy product uses the fixed accepted order512. There is one
+new unweighted product and one new solve with two new right sides.
+The target reconstruction supplies that new solve's input; it is not
+an old scientific-producer replay. No general inverse, source,
+direction, parameter, precision or cutoff scan is performed.
+
+The complete row remains $b=b_J+b_{\rm far}$. Writing
+$f_g=b_{{\rm far},g}$, the complete metric from the earlier joint
+border is
+
+$$
+G_2=G_{JJ}+
+\begin{pmatrix}
+0&r_gP^{-1}f_g^*\\
+f_gP^{-1}r_g^*&
+b_{J,g}P^{-1}f_g^*+f_gP^{-1}b_{J,g}^*+f_gP^{-1}f_g^*
+\end{pmatrix}.
+$$
+
+Thus $G_{JJ,11}$ already concerns the complete original $r$, whereas
+the other entries do not yet supply the complete $b$ metric.
+The exported1263-by2 inverse actions can be reused for the two mixed
+far terms; the remaining far energy and the reduced-core far row
+still require a sound common-source estimate. No arbitrary finite
+$b_J$ energy can replace the complete $b$ energy, and the correction
+matrix is not asserted to have either Loewner sign.
+
+All inherited actual form, residual-map/domain, source/lift and
+comparison premises remain. These are conditional numerical
+applications of the existing Cauchy-product, interval-solve and
+Schur mechanisms, without a generic-method novelty or Lean-proof
+claim. The actual-center/full-border/cofinal positivity, Robin and
+RH questions remain open.
+
+The [two new consumers, complete retained row, finite joint metric and inverse actions](https://github.com/the-omega-institute/trureturing-experiments/tree/f9610d3a5a732abaf68e733e50a7e34e66148ced/docs/reports/weil-c27) preserve the source and target bindings and reproduction entry.
+
+
+### Two new far pairings on the saved good-block inverse actions
+
+The complete18-coordinate far row on the old lift is already saved
+above. It is reused, rather than queried again. The new finite joint
+metric also saves two different directions,
+$Y_1=P^{-1}r_g^*$ and $Y_2=P^{-1}b_{J,g}^*$, on the SAME1263-positive
+principal block. The missing observations are now the two actual
+same-source contractions
+
+$$
+u=f_gY_1,\qquad v=f_gY_2,\qquad
+f=\kappa u_F^*W_FR_F,\quad\kappa=33/32.
+$$
+
+These profiles are not columns of the old18-dimensional lift, and
+their inverse actions are already supplied. No new solve, general
+inverse or target reconstruction is needed.
+
+Let $H$ be the existing1281-by112 far feature map and let
+$\iota_g$ embed the positive coordinates with zeros on the remaining
+18 coordinates. Aggregate
+
+$$
+h_i=H^*\iota_gY_i,\qquad L_i\ge\|\iota_gY_i\|_2
+$$
+
+before source functionals or error estimates. The norm caps are
+computed directly on the full embedded retained vectors. The signed
+masked kernel $K$ is not assumed PSD. The full paid Gram comparison
+and the accepted directional jet estimate give two independently
+valid bounds on the same physical profile:
+
+$$
+\|R_F\iota_gY_i\|_{W_F}^2
+\le \min\left\{\operatorname{up}(h_i^*Kh_i)+\varepsilon L_i^2,\
+N_{i,\mathrm{jet}}^2\right\}.
+$$
+
+Here $\varepsilon$ is the already transported COMPLETE far allowance,
+at least the original512-grid allowance. Matrix arrays use640bits.
+The directional bound retains its omitted moments, masking,
+rounding and actual-symbol forward payment. The original physical
+weight is already present; this norm bound adds no $\kappa$ factor.
+
+The existing cached finite and analytic-tail maps are applied once
+to each new aggregated profile. The raw mixed part uses the saved
+left-kernel row on the same two-column feature matrix. All source,
+symbol, smooth, actual-symbol forward, raw mixed and Abel allowances
+are retained. Uniform forward and raw mixed errors scale by $L_i$
+through the existing homogeneous contract. Approximate cached symbols
+are not identified with the actual symbol.
+
+| New observation | Outward enclosure |
+|---|---|
+| $u=f_gP^{-1}r_g^*$ | $[20.231424206590496643,\ 20.240043090713776357]$ |
+| $v=f_gP^{-1}b_{J,g}^*$ | $[2.786887993197035236,\ 2.788073520641284838]$ |
+| Complete $G_{2,12}=c+u$ | $[683.456490591670613158,\ 683.465109475822996702]$ |
+| $G_{2,22}-z=d+2v$ | $[97.741734616883793577,\ 97.744105671790482675]$ |
+
+The single1024-working/640-export application takes<4.991544seconds,
+excluding serialization. Its30181-byte packet has SHA256
+`39ddee410fa83bf4d35cb97f33bc9e63568dff8d9404dee331b0b3925336a858`;
+the source has SHA256
+`62c0da60931ae22580a8e1f16b79180ef9f26c40bae4aaf08b047e2006b09d2b`.
+It makes two new feature, norm, finite-functional and cached-tail
+applications, with one two-column raw mixed product. Old source
+recovery, old lift queries, target reconstruction, inverse/solve,
+scientific producer and fixture replays are all0. No scan or retry
+follows.
+
+For these two profiles the directional jet caps are selected; their
+improvement over the full paid Gram caps is below the displayed precision.
+The physical norm-squared uppers are at most241.529430992648325580 and
+4.573192066649095956. The total explicit functional allowances are
+at most0.004309442047589309 and0.000592763720310256, including
+the respective Abel allowances0.004032646541103321 and
+0.000554676109821741. The positive signs do not result from dropping
+these nonzero analytic payments.
+
+Write the previously saved finite metric as
+$G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$.
+The actual complete joint metric is enclosed through
+
+$$
+G_2=
+\begin{pmatrix}a&c+u\\c+u&d+2v\end{pmatrix}
++\begin{pmatrix}0&0\\0&z\end{pmatrix},
+\qquad z=f_gP^{-1}f_g^*\ge0.
+$$
+
+The unknown $z$ still has no new upper bound. The matrix before the
+$z$ term need not be PSD and is not substituted for $G_2$.
+The two response intervals contain functionals of ONE actual source;
+their endpoints are not asserted independently attainable.
+The saved old18-coordinate far row also retains its earlier broad
+error-transport limitation. These observations alone do not certify
+the complete joint border or remove the cofinal obligation.
+
+All inherited common-form/domain, residual-map, source, normalization
+and comparison premises remain. This is a new source-specific
+application of accepted functional and error-estimation methods,
+without a generic-method novelty or Lean-proof claim. Actual-center,
+full-border/cofinal positivity, Robin and RH remain open.
+
+The [new two-profile source, directed cross terms, partial complete metric and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/d90d6869c73e1fbcdb4321e0879b55902b4abd81/docs/reports/weil-c27) preserve this same-source application and all explicit payments.
+
+
+### Price the remaining far inverse energy from the saved correlations
+
+Reuse the two paid far pairings and the finite joint metric on the SAME
+positive block. Write
+$G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$,
+$m=(u,v)$ and $s=d-c^2/a>0$. The classical projection inequality gives
+
+$$
+z=f_gP^{-1}f_g^*\ge Q_J,
+\qquad
+Q_J=\frac{u^2}{a}+\frac{(v-cu/a)^2}{s}.
+$$
+
+This is a lower bound, not the missing upper. One saved-data application
+returns
+
+$$
+\boxed{Q_J\in[0.086276954471713906,\ 0.086630925124381975].}
+$$
+
+It reuses every old source query and inverse action. No new source or far
+functional, target reconstruction, inverse, solve or parameter scan runs.
+The interval is for functionals of one source; its endpoints are not
+asserted jointly attainable.
+
+For the earlier joint border use the SAME complete reduced row
+$\beta=\beta_J+fV$, with the already saved18-coordinate far row. Choose
+only the fixed optimistic comparison
+$t_+=\mathrm{cap}/h_{\mathrm{lo}}$ and the saved refined common charge
+$D=\overline D$. Eligibility of $t_+$ is not asserted. Let $p=(\Sigma_0)_{00}<0$;
+the18-by17 core elimination map $T_\Sigma$ has first row
+$-(\Sigma_0)_{0,1:}/p$ and remaining block $I_{17}$. The reference
+inverse $R$ of the17-dimensional positive core and its accepted Neumann
+constant $\eta<1$ are reused. A single new reference action on
+$\beta T_\Sigma$ supplies its energy and its cross with $\rho T_\Sigma$;
+the archived $\rho T_\Sigma R T_\Sigma^*\rho^*$ is consumed directly. The relative inverse error
+is bounded by $\eta/(1-\eta)$ in the reference metric, with its bilinear
+Cauchy allowances retained.
+
+Put
+
+$$
+\begin{aligned}
+\mathfrak a&=t_+^{-1}+a+\rho\Sigma_0^{-1}\rho^*,\\
+\mathfrak c&=c+u+\rho\Sigma_0^{-1}\beta^*,\\
+\mathfrak d&=\overline D+d+2v+\beta\Sigma_0^{-1}\beta^*.
+\end{aligned}
+$$
+
+Then the existing border identity becomes
+
+$$
+\det N_2=\mathfrak a z+\mathfrak a\mathfrak d-\mathfrak c^2.
+$$
+
+The first entry is enclosed by
+
+$$
+\mathfrak a\in[39434.061125466995953787,\
+39434.061125466995953788]>0.
+$$
+
+Thus this comparison requires
+
+$$
+z<z_{\mathrm{crit}}
+=\mathfrak c^2/\mathfrak a-\mathfrak d,
+\qquad
+z-Q_J<\Delta=z_{\mathrm{crit}}-Q_J.
+$$
+
+The calculation is inconclusive about that budget. The saved canonical
+18-coordinate far-row box, transported through the weak core directions,
+produces enclosures for both $z_{\mathrm{crit}}$ and $\Delta$ contained
+in $[-7\cdot10^{192},7\cdot10^{192}]$ that cross zero. These are wide
+containing intervals, not a claim that either exact quantity varies over
+them or that the actual source has intrinsic uncertainty of that size.
+The undivided determinant coefficients remain saved. The new projection
+floor does not turn an inconclusive budget into a target sign.
+
+Consequently the positive floor does not settle the required joint
+inequality $z<z_{\mathrm{crit}}$. The current canonical row box also fails
+to provide a useful threshold for that comparison. A useful next input must retain shared
+source constraints in the core transport or supply a sufficient joint
+comparison directly. Increasing the arithmetic precision of this same
+box does not add those constraints. No source or precision retry follows.
+Any future exclusion with $t_+$ would apply only to $0<t\le t_+$ and
+$D\ge\overline D$ on this SAME lower target, not to every admissible
+charge or the actual full center.
+
+The sole1024-working/640-export application takes<0.121972seconds,
+excluding serialization. Its11131-byte packet has SHA256
+`11ccabd6110436b2b29f1a910c6c36a5fd8479af19d183cf614826ed9ad746c6`;
+the source has SHA256
+`a478b8d52e52384be98b6f385e65df9a4364d6b882a5fd82a119c9752ca3fd9f`.
+It makes one new17-reference action, two new reference bilinears and one
+explicit two-dimensional projection calculation. No old scientific
+producer or fixture is replayed. All inherited common-form/domain,
+residual, source/lift, complete-far, normalization and comparison premises
+remain. These are conditional numerical applications of existing
+projection, Schur and Neumann methods, without generic-method novelty
+or a Lean-proof claim. Actual-center/full-border/cofinal positivity,
+Robin and RH remain open.
+
+The [saved-data consumer, directed energy budget and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/3115ead2bc655c55bf3b25435f9d20a979cd3872/docs/reports/weil-c27) preserve the accepted source and its single application.
+
+
+### Condition the lifted far row on the paid good-block observations
+
+Keep the SAME source, positive block and exact enclosed lift. Let
+$Y=P^{-1}[r_g^*,b_{J,g}^*]$ be the two saved actions, put
+$A=[\iota_gY,V]$, and write the physical upper Gram as
+
+$$
+F=A^*(HKH^*+\varepsilon I)A
+=\begin{pmatrix}F_{mm}&F_{my}\\F_{ym}&F_{yy}\end{pmatrix}.
+$$
+
+The signed112-dimensional kernel $K$ is not assumed positive.
+The inherited physical majorant
+$R_F^*W_FR_F\preceq HKH^*+\varepsilon I$ implies positivity of the
+exact $F$. No claim is made that every matrix in its entrywise interval
+box is positive. The complete original512-metadata allowance is retained.
+Reuse the saved $H^*\iota_gY$, $H^*V$, $V^*V$ and $F_{yy}$;
+the new contractions supply $Y^*Y$, $-Y^*(P^{-1}C)$, $F_{mm}$ and
+$F_{my}$. No old physical block, source functional or inverse action
+is recalculated.
+
+For the actual row $y=fV$ and the already paid pair $m=(u,v)$, the
+column $\xi=(m,y)^T$ satisfies
+
+$$
+\xi\xi^*\preceq\Gamma F,
+\qquad \Gamma=\kappa^2E,
+\qquad \kappa=33/32,
+$$
+
+where $E$ is the accepted upper for the SAME physical source norm
+squared. The original weight is already present in $F$ and $E$.
+This physical Gram is distinct from the earlier inverse metric $G_{JJ}$.
+Its observed energy is not the unknown $z=f_gP^{-1}f_g^*$.
+
+Standard Schur conditioning gives, for this one common realization,
+
+$$
+B=F_{mm}^{-1}F_{my},\qquad S_F=F_{yy}-F_{ym}B,
+$$
+
+$$
+(y-mB)^*(y-mB)
+\preceq
+\left(\Gamma-mF_{mm}^{-1}m^*\right)S_F.
+$$
+
+Only positivity of the observed two-by-two block is required for this
+formula; the remaining exact Schur form may be semidefinite. The single
+saved-data application verifies its pivots within
+
+$$
+(F_{mm})_{00}\in[241.5294309926483,\ 241.5294309926484],
+\qquad
+s_m\in[2.76928258548446,\ 2.76928258548447]\cdot10^{-6}.
+$$
+
+It encloses the observed fraction
+
+$$
+\frac{mF_{mm}^{-1}m^*}{\Gamma}
+\in[0.19224358456570,\ 0.82455202205468].
+$$
+
+This is a containing interval, not an asserted attainable range.
+A lower enclosure of the spent energy supplies the remaining-energy
+upper used in the coordinate supports. Across all18 original lift
+coordinates, the individual physical variance ratios obey
+
+$$
+\boxed{
+\frac{(S_F)_{jj}}{(F_{yy})_{jj}}
+\in[1.8707,\ 1.9304]\cdot10^{-10},\qquad 0\le j<18.
+}
+$$
+
+These compare conditional and unconditional variances in the SAME
+physical Gram. They are not a reduction factor for the old source-query
+errors, the core inverse energy, or the Robin deficit. Intersecting the
+conditional supports with the original saved640-grid far row leaves
+all18 original intervals exactly unchanged. Width accounting uses those
+original grid bounds; no round-trip enlargement is credited as progress.
+The full joint Gram and conditional Schur form are retained for a
+correlated core estimate. Unchanged coordinate intervals alone do not
+exclude an improvement of that estimate.
+
+For a subsequent quadratic comparison, existing trust-region results
+must keep their hypotheses. [Jeyakumar--Li, Lemma6.3 and
+Corollary4.3](https://arxiv.org/abs/1309.3000) distinguish the single
+Slater quadratic constraint from extended trust regions with linear
+constraints; the latter equivalence requires strict feasibility and
+their dimension condition(2.2).
+[Wang--Xia, Theorem6](https://arxiv.org/html/1407.0465v2) concerns one
+scalar quadratic interval constraint, not this two-observation rectangle.
+No exactness of a future multiple-constraint relaxation or successful
+quadratic comparison is asserted here.
+
+The sole1024-working/640-export application takes<0.358260seconds,
+excluding serialization. Its126523-byte packet has SHA256
+`2e1c11ef3807445ce6b157d47232bc6086ac96f8a07786e4b03b7355e61c00ae`;
+the source has SHA256
+`d081a2d80786ea53deb91896548271e5b63f3adf966922362c0f9d5a6da7e7ab`.
+There is no new source/far query, target reconstruction, inverse/solve,
+old producer/fixture replay or parameter/precision scan. This is a
+conditional numerical application of existing Schur and ellipsoid
+methods, without generic-method novelty or a Lean-proof claim.
+The indefinite core and joint determinant remain uncertified; no upper
+for the unseen far inverse energy is supplied. A sufficient direct joint
+comparison remains an alternative. Actual-center/full-border/cofinal
+positivity, Robin and RH remain open.
+
+The [twenty-profile consumer, directed conditional Gram and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/f3e667c05bc6bbdce7ef7832f7e368567a7f3969/docs/reports/weil-c27) retain the shared-source application and its original-grid comparison.

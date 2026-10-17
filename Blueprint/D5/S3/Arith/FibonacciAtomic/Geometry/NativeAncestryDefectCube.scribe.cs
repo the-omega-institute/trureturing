@@ -22,6 +22,17 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                 "fill(t,a) replaces B by D precisely at the original positions where the Boolean choice a is true."),
             Def("variant", "The finite-subset family",
                 "variant(t,A) uses the membership indicator of A as the simultaneous choice."),
+            Describe.Lean(DescribeId.Create("native-fill-at"),
+                DeclarationHandle.Create(Prefix + "fill_at"), H("The subtree at an original position"),
+                StatementSource.FromAuthor(Disp(All("t", Op("Source"),
+                    All("a", Seq(Op("Address"), Sp, To, Sp, Op("Bool")),
+                    All("p", Op("Address"), Imp(Call("Member", V("p"), Call("positions", V("t"))),
+                        EqOf(Call("subtree", V("p"), Call("fill", V("t"), V("a"))),
+                            Call("some", Call("ite", Call("a", V("p")), Op("defectD"), Op("defectB")))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every original B position remains present after simultaneous filling. "
+                    + "Its subtree is exactly D for a true choice and B for a false choice."))),
+                DescribeRole.Theorem),
             Def("areaVector", "Euclidean ancestor-area vector",
                 "areaVector(m,t) lists the products of the left and right child leaf counts in inorder gap order, "
                 + "in Euclidean space with m minus one coordinates. Unoccupied coordinates are zero."),

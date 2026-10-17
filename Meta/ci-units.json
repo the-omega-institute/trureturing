@@ -1664,6 +1664,8 @@
     "tools/Architecture/BannedSymbols.txt",
     "tools/Architecture/BannedSymbols.Guid.txt",
     "[tests-workflow-script]",
+    "skills/autonomous-research/*",
+    "tools/scripts/agent/research_readouts/*",
     "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py",
     "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_anchor_cases.py",
     "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/mirror_fixture.py",
