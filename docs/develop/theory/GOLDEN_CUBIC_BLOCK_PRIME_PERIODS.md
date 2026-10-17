@@ -4182,3 +4182,172 @@ $v_3(A_k)=k+1$. Restricting these two conclusions to $j\geq1$
 proves the assertions.
 
 ## 追加锚（本行以下为增补区）
+
+
+
+## 74. Global rational reduction obstruction for a depth-three golden prime
+
+**Definition 74.1 (global nonsingular and formal subgroups).**
+For a prime Q>5, let
+
+ E_Q: Y^2=X(X+5Q)(X-15Q).
+
+Write G_0(Q) for the subgroup of E_Q(\mathbb Q) whose points have nonsingular reduction modulo Q on this displayed integral model, and write G_1(Q) for its subgroup reducing to the point at infinity. These are subgroups of the global rational-point group, not the entire local groups E_Q(\mathbb Q_Q).
+
+**Theorem 74.2 (vanishing of the global nonsingular reduction image).**
+Let j>=1, and suppose
+
+ B_j=L_(3^j)^2+3=P^2 Q^3
+
+for distinct rational primes P,Q. Then
+
+ G_0(Q)=G_1(Q).
+
+In particular the image of G_0(Q) in the nonsingular group of the reduced cuspidal cubic, isomorphic to the additive group F_Q, is zero.
+
+Proof. The fixed-golden clock gives P,Q>5 and 2*3^(j+1) dividing Q-1. The quadratic constraint for this actual factorization gives Q=19 modulo 40. These are the TBN3, DCE5 and GPC1 statements in [the golden-unit-lift dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md). Consequently Q=19 modulo 120 and Q>=19.
+
+We use the full two-Selmer bound of Goto, *A study on the Selmer groups of elliptic curves with a rational 2-torsion* (2002), [Section 2 and Table 9](https://www.ma.noda.tus.ac.jp/u/tg/files/thesis.pdf), printed p49 / PDF p48. The types in that table are prime residue classes modulo 24, as specified before Table 5. Its row 5 x 19 gives s_3(-n)=1 without a Legendre-sign restriction. Here s_3(-n) is dim_F2 Sel_2 minus 2 for y^2=x(x+n)(x-3n). Taking n=5Q proves rank E_Q(\mathbb Q)<=1. This is the full two-Selmer convention, not the potentially larger sum of two-isogeny bounds.
+
+We also use the nonsingular reduction homomorphism, the torsion-free formal kernel over Q_Q for Q>=3, prime-to-ell torsion injection at good reduction ell, and the quadratic canonical-height law; see Silverman, *The Arithmetic of Elliptic Curves*, [IV.6.3–6.4, VII.1–3 and VIII.9](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). The height estimate needed below is proved explicitly.
+
+**1. An actual branch gives a non-torsion formal point**
+
+The displayed integral model has discriminant 2304*(5Q)^6. At Q>=19 its valuation is 6<12, so the model is minimal at Q. Its reduction is the cuspidal cubic Y^2=X^3, and the indicated nonsingular and formal subgroups therefore have the standard reduction meanings.
+
+Put x=L_(3^j), f=F_(3^j), s=PQ. Since 3^j is odd,
+
+ x^2+3=Qs^2,
+ x^2+4=5f^2.
+
+The point
+
+ R=(5Q(x^2+3), 25Q^2 x s f)
+
+lies on E_Q: its three factors are 5Q(x^2+3), 5Q(x^2+4), and 5Q*x^2. Their product equals the displayed Y-coordinate squared.
+
+Let T=(0,0), the rational point of order 2. The 2-torsion translation formula on Y^2=X^3-10QX^2-75Q^2X is
+
+ X(R+T)=(-75Q^2)/X(R).
+
+Thus S=R+T has
+
+ X(S)=-15Q/B_j=-15/(P^2 Q^2).
+
+In particular v_Q(X(S))=-2, so S is a nonzero point of the formal kernel G_1(Q). The formal group is torsion-free for Q>=3, hence S is non-torsion. The rank bound above therefore gives rank E_Q(\mathbb Q)=1.
+
+**2. The global nonsingular subgroup is infinite cyclic**
+
+G_0(Q) is a subgroup of the finitely generated rank-one group E_Q(\mathbb Q), and it contains S. It has rank 1.
+
+It has no torsion. Indeed, a torsion point in G_0(Q) injects into the additive reduction group F_Q because the formal kernel is torsion-free, so its order divides Q. But E_Q has good reduction at 7: Q=19 mod 120 ensures Q is not 7, and its discriminant is 2304*(5Q)^6, supported only at 2,3,5,Q. The curve y^2=x(x+1)(x-3) has 8 points over F7, and all its nonzero quadratic twists also have8 points (trace zero; equivalently a seven-residue count). Thus #E_Q(F7)=8. Prime-to-7 torsion injects into this group, ruling out Q-torsion for Q>=19.
+
+Consequently G_0(Q)=Z H for some H. Suppose its reduction image is nonzero. Then H reduces to a nonzero element of the additive group F_Q, of exact order Q. Since S lies in the kernel, S=[m]H with a nonzero integer m divisible by Q.
+
+**3. Explicit height bound on the fixed base, no conjectural height estimate**
+
+For any non-torsion A on E_Q put z(A)=X(A)/(5Q). The quadratic-twist isomorphism to
+
+ E: w^2=z(z+1)(z-3)
+
+preserves canonical height. More directly, the elementary rational-height inequality |h(X/(5Q))-h(X)|<=log(5Q), applied to every [2^k]A, shows that the difference disappears after multiplication by 4^(-k) in the canonical-height limit. Thus hhat(A)=(1/2) lim_(k->infinity) 4^(-k) h(z([2^k]A)) with the standard normalization. The duplication map on these rational z-coordinates is:
+
+ D(z)=(z^2+3)^2/[4z(z+1)(z-3)].
+
+For coprime integers a,b, b>0, put H_0=max(|a|,b),
+
+ F=(a^2+3b^2)^2,
+ G=4ab(a+b)(a-3b).
+
+Then H_0^4 <= max(|F|,|G|) <=24 H_0^4. Also gcd(F,G) divides 144:
+
+- A common prime other than 2,3 cannot divide a or b, and a=-b or a=3b would force it to divide 4 or 12.
+- If 3 divides a, then 3 does not divide b and v_3(a^2+3b^2)=1, so v_3(F)=2. If 3 does not divide a, 3 does not divide F.
+- At 2, F is odd unless a,b are both odd. In that case a^2+3b^2=4 mod8, hence v_2(F)=4.
+
+Thus, for logarithmic rational height h,
+
+ 4h(z)-log144 <= h(D(z)) <=4h(z)+log24.
+
+Telescoping the canonical-height limit gives
+
+ (1/2)h(z)-log144/6 <= hhat(A) <= (1/2)h(z)+log24/6,
+
+and in particular |hhat(A)-(1/2)h(z)|<1. None of the duplication denominators is zero because A is non-torsion.
+
+**4. Lower height from a nonzero global reduction**
+
+Since H reduces to a finite nonzero nonsingular point on Y^2=X^3, both its coordinates are Q-adic units. Therefore v_Q(z(H))=-1. Its rational height is at least log Q, so
+
+ hhat(H)>(1/2)log Q-1>1/3.
+
+For the last inequality use Q>=19>16 and log2>2/3. Since Q divides m,
+
+ hhat(S)=m^2 hhat(H)>Q^2/3.
+
+**5. Upper height from the ORIGINAL golden clock**
+
+The base coordinate of S is z(S)=-3/B_j. Since 3 does not divide B_j, h(z(S))=log B_j. Write N=3^j and phi=(1+sqrt5)/2. For odd N>=3,
+
+ L_N=phi^N-phi^(-N)<phi^N,
+ B_j<2phi^(2N),
+ log B_j<N+1,
+
+using 2log phi<1 and log2<1. The actual rank constraint gives N< Q/6. Hence
+
+ hhat(S)<(1/2)log B_j+1<Q/12+3/2.
+
+But Q^2/3>Q/12+3/2 for every Q>=3, a contradiction. The global reduction image must therefore be zero, proving the statement.
+
+
+**Theorem 74.3 (one-point certificate excluding the depth-three role).**
+Let Q>5 be prime. If there are rational numbers a,b satisfying
+
+ b^2=a(a+5Q)(a-15Q),     v_Q(a)=v_Q(b)=0,
+
+then there are no j>=1 and prime P distinct from Q such that
+
+ L_(3^j)^2+3=P^2 Q^3.
+
+Proof. The displayed rational point reduces to a finite nonsingular point of Y^2=X^3, because both coordinates are nonzero modulo Q. Hence it belongs to G_0(Q) but not G_1(Q). Theorem 74.2 contradicts the proposed golden factorization. This conclusion concerns only the depth-three role in this factorization; it asserts neither non-WSS status for Q in other settings nor existence of such certificates for infinitely many primes.
+
+## 75. A quartic prime family excluded from the depth-three role
+
+The construction below is an elementary rational-conic parametrization, not a new general method for constructing theta-congruent twists. This application supplies explicit certificates for Theorem 74.3 while retaining the original golden blocks. General twist-point parametrizations via products of linear factors modulo squares are classical: see M. Kan, *theta-congruent numbers and elliptic curves*, Acta Arith. 94(2) (2000), 153–160, lemma proof on p.154, [primary journal text](https://matwbn.icm.edu.pl/ksiazki/aa/aa94/aa9422.pdf). All identities and local-unit assertions needed here are proved below.
+
+**Definition 75.1 (the represented prime family).** Put
+
+$$\mathcal F(m,n)=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4.$$
+
+Let $\mathcal Q$ be the set of primes $Q>5$ represented as $Q=\mathcal F(m,n)$ by integers $m,n$. This definition asserts neither infinitely many prime values nor infinitely many members in the actual golden prime supports.
+
+**Theorem 75.2 (uniform quartic-family exclusion).** For every $Q\in\mathcal Q$, every $j\ge1$, and every prime $P\ne Q$,
+
+$$\boxed{L_{3^j}^{\,2}+3\ne P^2Q^3.}$$
+
+Thus the depth-three prime in an actual surviving $P^2Q^3$ block cannot be represented by $\mathcal F$ over the integers.
+
+**Proof.** Choose $m,n$ with $Q=\mathcal F(m,n)$ and put
+
+$$u=m^2+mn-n^2,\qquad v=m^2-4mn-n^2,\qquad r=m^2+n^2.$$
+
+The identity $v+2iu=(1+2i)(m+in)^2$ and its norm, or direct polynomial expansion, give
+
+$$4u^2+v^2=5r^2,\qquad Q=3u^2+v^2=5r^2-u^2.$$
+
+Consequently $T=(-15u^2,75uvr)$ is an integral point on $E_Q:Y^2=X(X+5Q)(X-15Q)$. Indeed,
+
+$$X(T)+5Q=5v^2,\qquad X(T)-15Q=-75r^2,$$
+
+and the product of the three factors is $5625u^2v^2r^2=Y(T)^2$.
+
+We verify that both coordinates are $Q$-adic units. First $\gcd(m,n)=1$: otherwise a common divisor $d>1$ would have $d^4\mid Q$ by homogeneity, contradicting primality. If $Q\mid u$, the equation $Q=3u^2+v^2$ implies $Q\mid v$. Then $u-v=5mn$ and $Q>5$ imply $Q\mid m$ or $Q\mid n$. Substitution in $u=m^2+mn-n^2$ forces the other divisibility, contradicting coprimality. Hence $Q\nmid u$. If $Q\mid v$, then $Q\mid3u^2$, again impossible. If $Q\mid r$, the equation $Q=5r^2-u^2$ forces $Q\mid u$. Thus $Q\nmid uvr$, and $Q\nmid75$ gives the required unit coordinates. This also excludes zero $u,v,r$, since zero is divisible by $Q$. There are no omitted zero-coordinate exceptions. Theorem 74.3 proves the conclusion. ∎
+
+**Lemma 75.3 (compatibility with the required prime class).** Every $Q\in\mathcal Q$ satisfies $Q\equiv19\pmod{120}$.
+
+**Proof.** Coprimality excludes both $m,n$ being even. If they have opposite parity, $u,v$ are odd, and $Q=3u^2+v^2$ is divisible by four, impossible. Thus both are odd. Hence $u$ is odd, $r\equiv2\pmod8$, and $Q=5r^2-u^2\equiv3\pmod8$. Modulo five, $u\equiv(m+3n)^2$, so $Q\equiv-(m+3n)^4\equiv-1\pmod5$ because $Q\ne5$. Finally $Q\equiv v^2\equiv1\pmod3$ because $Q\ne3$. These combine to give $19$ modulo $120$. ∎
+
+The lemma is a compatibility check, not the exclusion argument. The family is not disjoint from actual golden prime support: $\mathcal F(1,1)=19=L_3^2+3$. This example is not a new individual exclusion. The theorem is uniform in all integer parameters and all original layers; it does not replace exact golden support by unrestricted splitting. No assertion is made that infinitely many represented primes have pure ternary golden period, that every other cross-level necessary condition is independent of the representation, or that a member cannot be WSS in another depth vector. The parametrization and congruence lemma are elementary; the global exclusion uses Section 74's height and reduction obstruction. This is a paper proof with no Lean certification claim.
+
+
+## 追加锚（本行以下为增补区）

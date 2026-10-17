@@ -3376,3 +3376,625 @@ U\text{ unitary},\qquad UQ=F\text{ flat},\qquad UDQ=FT\text{ flat}.
 按正负号排列 `F0` 的行后，它正是第 10、11 节的 Fourier 型块构造；`F=F0MR` 只再乘右单项式矩阵。因此这个低 affinity completion 仍是 Fourier 等价类的伴随，已由第 11 节的 quartet 文献归约排除。它说明“相对于指定 `S` 非 mode-local”不等于“已排除所有 Fourier-equivalent completions”：固定边自同构可以显著改变前一性质而保持后一等价类。
 
 所以，若继续以 affinity 攻击剩余 quartet fibre，必须明确限制 completion 等价类，排除整个已知 Fourier locus 及其固定边自同构轨道；仅去掉 mode-local 子集不够。非零判别式内域、以及去除已知排除类后的剩余 completion 下界均未由本例解决。第 17、18、31 节的条件预算与刚性论证保持有效；六维四 MUB 问题也未由本例解决。
+
+## 45. 实际互补 contexts 的交叉 pinching 与联合 affinity 缺口
+
+第 31 节已经排除了 order-three symmetry 在两个互补 contexts 中的非平凡饱和分裂；第 32 节进一步给出近饱和定量界。本节保留实际互补基的等模重叠，改进其中的交叉项估计，得到更强的联合约束。这里不主张常数最优，也不假设单个 residual completion 的 affinity 下界。
+
+### 45.1. 定义与结论
+
+设 `d` 为正整数，`C,D` 是 `C^d` 的两个互相无偏正交基，`E_C,E_D` 是对应的 rank-one diagonal pinching。采用第 32 节的归一化：
+
+```math
+\tau(X)=\frac{\operatorname{Tr}(X)}d,\qquad
+\langle X,Y\rangle_2=\tau(X^\dagger Y),\qquad
+\|X\|_2^2=\tau(X^\dagger X).
+```
+
+令 `S` 为 `Tr(S)=0`、`S^3=I` 的 unitary，并置
+
+```math
+A=\mathsf E_C(S),\quad B=\mathsf E_D(S),\quad R=S-A-B,
+\qquad a=\|A\|_2^2,\quad b=\|B\|_2^2,\quad r=\|R\|_2^2.
+```
+
+**命题 45.1。** 有 `a+b+r=1`，且
+
+```math
+\boxed{\sqrt a(1-a)\le4\sqrt{br}+2\sqrt d\,r,\qquad
+\sqrt b(1-b)\le4\sqrt{ar}+2\sqrt d\,r.}
+```
+
+特别地，在六维令 `alpha=alpha_S(C)=2a`、`beta=alpha_S(D)=2b`，则
+
+```math
+\boxed{ab\le22r,\qquad
+\alpha\beta\le44(2-\alpha-\beta).}
+```
+
+这两个乘积不等式在 `r>0` 时严格，并且总有
+
+```math
+\boxed{\min\{\alpha,\beta\}<\sqrt{2024}-44<\frac{989}{1000}.}
+```
+
+### 45.2. 交叉项与 order-three 恒等式
+
+互相无偏性给出
+
+```math
+\mathsf E_C\mathsf E_D(X)=\mathsf E_D\mathsf E_C(X)=\tau(X)I.
+```
+
+故 `A,B` trace zero 且 Hilbert–Schmidt 正交，`E_C(R)=E_D(R)=0`，从而 `a+b+r=1`。`A,B` 分别在自己的基中对角，因此 normal。
+
+在 `C` 基中，`B` 在互补的 `D` 基中对角，所以
+
+```math
+(BB^\dagger)_{ii}=(B^\dagger B)_{ii}=b.
+```
+
+也就是说，`B` 的每一行、每一列的 Euclidean norm 平方都恰为 `b`。逐行或逐列用 Cauchy–Schwarz，再求和除以 `d`，得到
+
+```math
+\|\mathsf E_C(BR)\|_2,\quad\|\mathsf E_C(RB)\|_2,\quad
+\|\mathsf E_C(BR^\dagger)\|_2,\quad
+\|\mathsf E_C(RB^\dagger)\|_2\le\sqrt{br}.
+```
+
+例如 `d^{-1} sum_i |(BR)_{ii}|^2 <= b d^{-1} sum_{i,j}|R_{ji}|^2=br`。这一步使用实际 MUB 重叠，而不只使用 `||B||op<=1`。
+
+再令 `q_i=(RR^dagger)_{ii}>=0`。由 `sum_i q_i=dr` 可得
+
+```math
+\|\mathsf E_C(RR^\dagger)-rI\|_2^2
+=\frac1d\sum_iq_i^2-r^2\le(d-1)r^2.
+```
+
+同时，pinching 的 Hilbert–Schmidt 收缩性与 `||R||op<=sqrt(d)||R||2` 给出
+
+```math
+\|\mathsf E_C(R^2)\|_2\le\|R^2\|_2
+\le\|R\|_{\mathrm{op}}\|R\|_2\le\sqrt d\,r.
+```
+
+这里没有假定 `R` normal。投影 `SS^dagger=I`，利用 diagonal pinching 的 bimodule 性质消去含单个 `A` 的混合项，得
+
+```math
+H:=AA^\dagger-aI
+=rI-\mathsf E_C(BR^\dagger+RB^\dagger+RR^\dagger),
+\qquad \|H\|_2\le2\sqrt{br}+\sqrt{d-1}\,r.
+```
+
+又由 `S^2=S^dagger`，置
+
+```math
+\mu=\tau(B^2),\qquad J=\mathsf E_C(BR+RB+R^2),
+\qquad f=2\sqrt{br}+\sqrt d\,r,
+```
+
+则
+
+```math
+A^2+\mu I+J=A^\dagger,\qquad
+\|J\|_2\le f,\qquad\|H\|_2\le f.
+```
+
+令 `t=|mu|^2`、`u=||J||2`、`h=||H||2`。由 `A` normal 且 trace zero，
+
+```math
+\|A^2\|_2^2=a^2+h^2,\qquad
+\|A^\dagger-\mu I\|_2^2=a+t.
+```
+
+展开 `A^2=(A^dagger-mu I)-J` 的平方范数并用 Cauchy–Schwarz，保留负的 `-u^2` 项，得到
+
+```math
+a(1-a)+t\le h^2-u^2+2\sqrt{a+t}\,u.
+```
+
+若 `a=0`，所求不等式成立。若 `a>0` 且 `f>sqrt(a)`，由 `a<=1` 得 `sqrt(a)(1-a)<=sqrt(a)<2f`。余下情形 `f<=sqrt(a)` 中，`0<=u<=f<=sqrt(a+t)`，因此
+
+```math
+h^2-u^2+2\sqrt{a+t}\,u\le2f\sqrt{a+t}.
+```
+
+这里用了 `f^2-u^2=(f-u)(f+u)<=2sqrt(a+t)(f-u)`。此外
+
+```math
+2f\bigl(\sqrt{a+t}-\sqrt a\bigr)
+=\frac{2ft}{\sqrt{a+t}+\sqrt a}\le t.
+```
+
+消去 `t`，得 `a(1-a)<=2f sqrt(a)`；除以 `sqrt(a)>0` 即为第一条交叉 pinching 界。交换 `C,D` 得第二条。
+
+### 45.3. 六维的多项式联合界
+
+交换两基后可设 `a<=b`，于是 `a<=1/2`。把第一条交叉界乘以 `sqrt(a)`，用 `a(1-a)=ab+ar`，记 `p=ab`，得到
+
+```math
+p\le4\sqrt{pr}+(2\sqrt{6a}-a)r.
+```
+
+在 `0<=a<=1/2` 上，
+
+```math
+(a+3)^2-24a=a^2+9-18a>0.
+```
+
+确实，`a<1/2` 时 `9-18a>0`，端点 `a=1/2` 时右侧为 `1/4`。故 `2sqrt(6a)-a<3`，从而 `p<=4sqrt(pr)+3r`，且 `r>0` 时严格。另一方面，
+
+```math
+\tfrac12(\sqrt p-4\sqrt r)^2\ge0
+\quad\Longrightarrow\quad
+4\sqrt{pr}\le\tfrac12p+8r.
+```
+
+合并得 `p<=22r`，严格性保持。代入 `alpha=2a`、`beta=2b` 和 `2-alpha-beta=2r`，得到命题中的联合 affinity 乘积界。
+
+令 `m=min(alpha,beta)`。若 `r=0`，乘积界给出 `alpha beta=0`，所以 `m=0`。若 `r>0`，则
+
+```math
+m^2\le\alpha\beta<88r\le88(1-m),
+```
+
+因此 `(m+44)^2<2024`，即 `m<sqrt(2024)-44`。最后
+
+```math
+\left(44+\frac{989}{1000}\right)^2-2024
+=\frac{10121}{1000000}>0
+```
+
+给出所述有理数上界。命题得证。
+
+### 45.4. 对实际 residual completion 的用途与范围
+
+沿用第 16、44 节的行约定，要求 `T,F,FT,G,GT,FG^dagger` 全部是 flat unitary；额外两个基分别是 `F^dagger,G^dagger` 的列。固定 two-circulant 边的 simultaneous three-cycle symmetry `S` 满足 `Tr(S)=0`、`S^3=I`，且三个特征空间的秩均为二。实际 pinching 为
+
+```math
+\mathsf E_C(X)=F^\dagger\operatorname{diag}(FXF^\dagger)F,\qquad
+\mathsf E_D(X)=G^\dagger\operatorname{diag}(GXG^\dagger)G.
+```
+
+这里 `diag` 保留对角元并把其余元素置零。`F,G` 的 unitarity 给出完整正交性，`FG^dagger` 的 flatness 给出两基互相无偏。第 16 节的实际 mode 恒等式给出
+
+```math
+a=\frac16\sum_i|(FSF^\dagger)_{ii}|^2=\frac{\alpha_S(C)}2,
+\qquad b=\frac{\alpha_S(D)}2.
+```
+
+因此命题 45.1 对实际 quartet 的两个额外基成立，也对所有六条相对边均排除 Fourier 两种取向的 residual 子类成立。若在某个这样的 branch 上能证明每个 completion 都满足 `alpha_S>=sqrt(2024)-44`，特别是 `alpha_S>=989/1000`，便足以排除该 branch 中的 MUB pair。这把第 32 节的充分下界阈值 `2499/2500` 降低了。
+
+本节没有证明这个单 completion 下界。`F,FT` 与 `G,GT` 的共同 flatness 仍是实际 completion 域的条件，但没有在本节进一步加强联合界。六条边的 Fourier 排除、以及剩余 fibre 的单 completion 几何，仍须另行处理；本节不推出六维 quartet 不存在。
+
+## 46. 实参数支上共同无偏向量的退化 autocorrelation 排除
+
+### 46.1 实参数种子与非退化结论
+
+令 `-1<a<1`，并取正平方根：
+
+```math
+p=\frac{a-1}{2}+i\sqrt{1-\frac{(a-1)^2}{4}},\qquad
+q=\frac{-a-1}{2}+i\sqrt{1-\frac{(a+1)^2}{4}}.
+```
+
+于是 `|p|=|q|=1`、`Re(p+q)=-1`。记 `S` 为三循环矩阵，约定其第一行为 `(0,1,0)`，`J` 为三阶全一矩阵，并令：
+
+```math
+A=\operatorname{circ}(1,p,1)=J+(p-1)S,\qquad
+B=\operatorname{circ}(1,q,1)=J+(q-1)S,
+\qquad
+H=\frac1{\sqrt6}\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix}.
+```
+
+这里 `H` 始终表示归一化矩阵。此 block construction 是 Szöllősi 的已知构造，见 [*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，§2，式 (1)–(7)](https://arxiv.org/abs/0811.3930)，DOI `10.1090/S0002-9939-09-10102-8`。本节研究的是其实际共同无偏向量上的额外非退化结论。
+
+取 `omega=exp(2 pi i/3)`，按 `S` 的特征值 `1,omega,omega²` 排列酉 Fourier 坐标。对两个三元单位相位向量 `x,y`，记其 Fourier 坐标为 `u,z`，并循环定义：
+
+```math
+c_k=\overline{u_k}u_{k+1},\qquad d_k=\overline{z_k}z_{k+1},\qquad
+\Delta(x,y)=\det\begin{pmatrix}
+c_0&c_1&c_2\\d_0&d_1&d_2\\1&1&1
+\end{pmatrix}.
+```
+
+**命题 46.1。** 若 `H(x,y)^T` 的六个分量也都具有模一，则：
+
+```math
+\left(\prod_{k=0}^2u_kz_k\ne0\right)
+\quad\Longrightarrow\quad \Delta(x,y)\ne0.
+```
+
+等价地，在这些实际共同平坦向量上，`Delta(x,y)=0` 必迫使 `x,y` 至少有一个是单一 Fourier mode。该命题适用于整个所述实参数区间。
+
+**证明。** 首先，`AA*+BB*=6I`，因为其非对角相关系数为 `2+2 Re(p+q)=0`；circulant 矩阵交换又给出其余 block Gram 恒等式。因此 `H` 确为平坦酉矩阵。
+
+反设 `u,z` 都有满支撑而 `Delta=0`。单位相位条件给出 `sum c_k=sum d_k=0`。两非零向量 `c,d` 位于二维零和子空间，退化行列式使它们成比例，故可写 `d=eta c`。令 `z_k=lambda_k u_k`，则：
+
+```math
+\overline{\lambda_k}\lambda_{k+1}=\eta.
+```
+
+三个相邻模长乘积相等，故三个 `|lambda_k|` 相等。由 `||u||²=||z||²=3`，公共模长是一。因此 `eta³=1`，存在同一个单位相位 `gamma` 及 `m in {0,1,2}`，使：
+
+```math
+z_k=\gamma\omega^{mk}u_k,\qquad y=\gamma S^m x.
+\tag{46.1}
+```
+
+以下分别排除三种位移，始终保留同一相位 `gamma`。
+
+### 46.2 实参数恒等式与非零循环位移
+
+写 `p+q=-1+ih`，并令 `P=p-1`、`Q=q-1`。由 `p,q` 均在开第二象限，其辐角之差的绝对值小于 `pi/2`；故 `|p+q|²>2`，即 `h>1`。又 `|p+q|<=2`，所以 `h<=sqrt(3)`。直接由两个单位模条件及实部之和得到：
+
+```math
+pq=\frac{1-ih}{1+ih},\qquad
+ a^2=\frac{h^2(3-h^2)}{1+h^2},\qquad
+\operatorname{Re}(Q^2-P^2)=4a,
+\qquad I_0:=\operatorname{Im}(P^2+Q^2)=-\frac{4h^3}{1+h^2}.
+```
+
+因此有严格不等式：
+
+```math
+I_0^2-4a^2
+=\frac{4h^2(h^2-1)(5h^2+3)}{(1+h^2)^2}>0.
+\tag{46.2}
+```
+
+`A,B` 未归一化的 mode 特征值分别为：
+
+```math
+a_0=2+p,\quad a_k=P\omega^k\ (k=1,2),\qquad
+b_0=2+q,\quad b_k=Q\omega^k\ (k=1,2).
+```
+
+固定式 (46.1) 的 `m`，令：
+
+```math
+K_k=a_k+\gamma\omega^{mk}b_k,\qquad
+L_k=\overline{b_k}-\gamma\omega^{mk}\overline{a_k}.
+```
+
+输出的两个 Fourier channel 为 `K_k u_k/sqrt(6)` 和 `L_k u_k/sqrt(6)`。它们与 `x` 的 constant-modulus 条件共同给出：
+
+```math
+\sum_kc_k=
+\sum_k\overline{K_k}K_{k+1}c_k=
+\sum_k\overline{L_k}L_{k+1}c_k=0.
+```
+
+由于 `c` 非零，三个方程的系数行列式必须为零。但对 `m=1,2`，其确切展开为：
+
+```math
+\det\begin{pmatrix}
+1&1&1\\
+\overline{K_0}K_1&\overline{K_1}K_2&\overline{K_2}K_0\\
+\overline{L_0}L_1&\overline{L_1}L_2&\overline{L_2}L_0
+\end{pmatrix}
+=18\omega^m\left(a\frac pq\gamma^{-2}-iI_0-a\frac qp\gamma^2\right).
+\tag{46.3}
+```
+
+式 (46.3) 可逐个 Laurent 系数展开得到：以 `conjugate(p)=1/p`、`conjugate(q)=1/q`、`conjugate(omega)=omega²` 代入，乘以 `p²q²gamma²` 后使用：
+
+```math
+\omega^2+\omega+1=0,\qquad
+p^2q+pq^2+2pq+p+q=0.
+```
+
+其中两个奇次系数为零，其余三个系数即为式 (46.3) 右侧。由于 `p/q` 和 `gamma` 都有模一，若右侧为零，三角不等式就给出 `|I_0|<=2|a|`，与式 (46.2) 矛盾。两个非零循环位移均被排除。
+
+### 46.3 零位移中的相位一致性与范数矛盾
+
+现在令 `y=gamma x`，并记 `sigma=x_0+x_1+x_2`。满支撑保证 `sigma!=0`，且 `x` 不是常向量。未归一化的输出 channel 为：
+
+```math
+(P+\gamma Q)Sx+(1+\gamma)\sigma\mathbf1,
+\qquad
+(\overline Q-\gamma\overline P)S^2x+(1-\gamma)\sigma\mathbf1.
+\tag{46.4}
+```
+
+若 `x` 的三个单位相位彼此不同，实线性泛函在这三个圆周点上取同一个值就必须为零。比较式 (46.4) 的分量平方模，因 `sigma!=0`，便有：
+
+```math
+(P+\gamma Q)(1+\overline\gamma)=0,\qquad
+(\overline Q-\gamma\overline P)(1-\overline\gamma)=0.
+```
+
+`gamma=1` 或 `-1` 与 `P+Q=-3+ih!=0` 矛盾；其余情形使两个第一因子均为零，消去 `gamma` 得到 `-|P|²=|Q|²`，仍然矛盾。因此 `x` 恰有两个不同分量。乘以公共相位并作循环置换后可设 `x=(1,1,xi)`，其中 `|xi|=1`、`xi!=1`。
+
+令：
+
+```math
+U=(P+\gamma Q)(1+\overline\gamma),\qquad
+V=(\overline Q-\gamma\overline P)(1-\overline\gamma),\qquad
+Z=\overline\sigma(1-\xi)\ne0.
+```
+
+两种分量平方模的差给出 `Re(UZ)=Re(VZ)=0`，从而 `Im(U conjugate(V))=0`。写 `gamma=cos(phi)+i sin(phi)`，展开得：
+
+```math
+\operatorname{Im}(U\overline V)
+=2\sin\phi\bigl(I_0\sin\phi-4a\cos\phi\bigr).
+\tag{46.5}
+```
+
+再记 `Z_1=Q conjugate(P)`、`Z_0=(2+q)(2+conjugate(p))`，则：
+
+```math
+\operatorname{Re}Z_0=\operatorname{Re}Z_1=\frac{h^2+3}{2},\qquad
+\operatorname{Im}Z_1=\frac a2(h+3/h),\qquad
+\operatorname{Im}Z_0=\frac a2(h-3/h).
+\tag{46.6}
+```
+
+当 `gamma=±1` 时，`Re(gamma Z_0)` 和 `Re(gamma Z_1)` 同号且非零。式 (46.5) 的另一分支使：
+
+```math
+\gamma=\pm\frac{I_0+4ia}{\sqrt{I_0^2+16a^2}}.
+```
+
+利用实参数恒等式和式 (46.6)，此时两个实部的分子分别满足：
+
+```math
+I_0\operatorname{Re}Z_1-4a\operatorname{Im}Z_1
+=-\frac{6h(h^2+3)}{1+h^2}<0,
+```
+
+```math
+I_0\operatorname{Re}Z_0-4a\operatorname{Im}Z_0
+=-\frac{18h(h^2-1)}{1+h^2}<0.
+```
+
+所以这两个实部仍同号且非零。另一方面：
+
+```math
+|K_0|^2=6+2\operatorname{Re}(\gamma Z_0),\qquad
+|K_1|^2=|K_2|^2=6+2\operatorname{Re}(\gamma Z_1).
+```
+
+三个平方模必同时严格大于六，或同时严格小于六。由 `sum |u_k|²=3`，输出第一 channel 的平方范数：
+
+```math
+\frac16\sum_k|K_ku_k|^2
+```
+
+便不能等于三。这与其三个分量均有模一矛盾，排除了最后一个位移。
+
+因此满支撑时必有 `Delta!=0`。最后，三元单位相位向量若有一个 Fourier 分量为零，便有三个单位复数之和为零；它们必构成等边三角形。在三个位置上，这些相位只能按两个循环方向排列，所以原向量为单一 Fourier mode。这也证明了命题中的等价表述。证毕。
+
+### 46.4 实际列基方向与第 33 节的适用结论
+
+**推论 46.2。** 保持命题 46.1 的归一化 `H`。令 `L` 为分块循环行置换，并置 `H_0=LH`。若归一化向量 `v` 共同无偏于实际列基 `(I,H_0)`，设：
+
+```math
+w=H_0^*v,\qquad \binom{x}{y}=\sqrt6\,w.
+```
+
+则 `x,y` 都是单位相位向量，且：
+
+```math
+H\binom{x}{y}=\sqrt6\,L^*v
+```
+
+也逐项有模一。因此，只要 `w` 的两个 channel Fourier transforms 均有满支撑，第 33 节的输出侧行列式就满足 `Delta(w)!=0`。特别地，这适用于第 35 节使用的行置换 indices `(2,0,1,4,5,3)`。
+
+继续假设 `w` 的两个 channel Fourier transforms 均有满支撑。若另一实际共同无偏向量 `v'` 与 `v` **逐模正交**，则令 `w'=H_0^*v'` 后，第 33 节的 conditional partner theorem 给出：`w'` 是 mode-local，或 `w'~R^m Theta w`。返回原坐标，即：
+
+```math
+v'\text{ 是 mode-local},\qquad\text{或}\qquad
+v'\sim H_0R^m\Theta H_0^*v
+\quad(m\in\mathbb Z_3).
+```
+
+**证明。** 共同无偏的定义保证 `v` 与 `H_0*v` 的每个分量均有模 `1/sqrt(6)`，上述缩放恒等式直接给出命题 46.1 的两个实际平坦条件。缩放使 `Delta` 乘以非零因子，故非零性不变。`L` 为分块循环置换，而 `H` 为两 circulant block 矩阵，所以 `H_0` 保持每个二维 mode 子空间，并在其上酉作用；故它保持逐模正交和 mode-local 性质。对 `w,w'` 应用第 33 节，再以 `H_0` 传回即可。证毕。
+
+此推论不把输入侧 `Delta(v)` 与输出侧 `Delta(H_0*v)` 视为同一个量，也不将全局正交替换为逐模正交。命题 46.1 留下的退化情形，是至少一个 channel 为单一 Fourier mode；它未断言另一个 channel 也为单一 mode。这一排除结论本身尚不给出实际 completion 的 affinity 下界。
+
+## 47. 实参数支的常值 channel 纤维与两个例外参数
+
+### 47.1 常值第一 channel 的精确分类
+
+沿用第 46 节的 `a,p,q,H,S`，令 `L=diag(S²,S)`、`H_0=LH`，并记 `P=p-1`、`Q=q-1`、`A_0=2+p`、`B_0=2+q`。于是：
+
+```math
+\sqrt6 H_0=\begin{pmatrix}
+J+PI&J+QI\\J+\overline QI&-J-\overline PI
+\end{pmatrix}.
+```
+
+这里仍使用第 46 节所引的 Szöllősi block construction；本节分类其实际共同平坦方程中第一 channel 为常值的纤维。
+
+**命题 47.1。** 固定 `-1<a<1`。对单位相位向量 `x,y`，要求 `x` 为常值且 `H(x,y)^T` 逐项有模一。以公共相位把 `x` 归一为 `(1,1,1)` 后，所有可能的 `y` 恰为：
+
+1. 对每个参数都有的两个常值向量 `y=gamma(1,1,1)`，其中：
+
+   ```math
+   |\gamma|=1,\qquad \operatorname{Re}(\overline{A_0}B_0\gamma)=0.
+   ```
+
+2. 仅在以下两个参数出现的三个额外非恒定向量：
+
+   ```math
+   a=\pm\sqrt{\frac{37-\sqrt{73}}{72}}.
+   \tag{47.1}
+   ```
+
+   此时置：
+
+   ```math
+   s=\frac{11+\sqrt{73}}8,\quad h=\sqrt s,\quad
+   t=\frac{2a^2}{3},\quad
+   \eta=-\frac{a(5s-3)}{6h(2s-3)},
+   ```
+
+   ```math
+   d=\eta h-i\left(\frac{a\eta(s+1)}s+\frac{3t}{2h}\right),\qquad
+   m=d\left(\frac12+i\frac\eta t\right),\qquad
+   \alpha=m+d,\quad\beta=m-2d.
+   \tag{47.2}
+   ```
+
+   三个额外向量是 `(alpha,alpha,beta)` 的三个不同置换。
+
+因此，第一 channel 为常值的 projective 纤维通常恰有两个点，在式 (47.1) 的两个参数处恰有五个点。三个额外点的第二 channel 均有完整的三模 Fourier 支撑。
+
+**证明。** 由于 `L` 只置换行，输出逐项模一对 `H` 与 `H_0` 等价。设 `sigma=sum y_j`，则两个未归一化输出 channel 为：
+
+```math
+(A_0+\sigma)\mathbf1+Qy,\qquad
+(\overline{B_0}-\sigma)\mathbf1-\overline Py.
+```
+
+若 `y` 有三个不同的单位相位，两个输出 channel 各自等模迫使对应实线性泛函为零。`P,Q` 非零，故：
+
+```math
+\sigma=-A_0,\qquad \sigma=\overline{B_0}.
+```
+
+这与 `Re(A_0+conjugate(B_0))=3` 矛盾。若 `y` 为常值，输出条件就是命题第一项；`A_0B_0!=0`，所以恰有两个相反的相位解。
+
+非恒定情形中，`y` 必恰有两个不同分量。`H_0` 与同步坐标置换交换，所以可写：
+
+```math
+y=(m+d,m+d,m-2d),\qquad d\ne0.
+```
+
+记 `t=|d|²`、`eta=Im(m conjugate(d))`。输入分量模一等价于：
+
+```math
+\operatorname{Re}(m\overline d)=t/2,\qquad
+|m|^2+2t=1,\qquad \eta^2=t-\frac94t^2.
+\tag{47.3}
+```
+
+像第 46 节那样写 `p+q=-1+ih`，则：
+
+```math
+1<h\le\sqrt3,\qquad
+p=\frac{a-1+i(h+a/h)}2,\quad
+q=\frac{-a-1+i(h-a/h)}2,\qquad
+ a^2=\frac{h^2(3-h^2)}{1+h^2}.
+\tag{47.4}
+```
+
+两个输出 channel 的等模条件为：
+
+```math
+\operatorname{Re}\bigl(\overline Q(A_0+3m)\overline d\bigr)=0,
+\qquad
+\operatorname{Re}\bigl(P(3m-\overline{B_0})\overline d\bigr)=0.
+\tag{47.5}
+```
+
+写 `d=X+iY`，代入 `m conjugate(d)=t/2+i eta`，解这个实二元线性系统得到：
+
+```math
+X=\eta h,\qquad
+Y=-\frac{a\eta(1+h^2)}{h^2}-\frac{3t}{2h}.
+\tag{47.6}
+```
+
+这里没有除以可能为零的参数：未约分的分母所含因子满足：
+
+```math
+a^2h^2-a^2+h^4-9h^2=-\frac{4h^2(h^2+3)}{1+h^2}<0.
+```
+
+令 `N=A_0+B_0m`，第一输出 channel 的范数条件为 `|N|²+2|Q|²t=6`，亦即：
+
+```math
+\operatorname{Re}(\overline{A_0}B_0m)=-3at.
+\tag{47.7}
+```
+
+把式 (47.6) 代入 `|d|²=t` 和式 (47.7)，再用式 (47.3)–(47.4)，由于 `t>0`，得到：
+
+```math
+9h(1+h^2)t-6a(1+h^2)\eta-2h(h^2+3)=0,
+```
+
+```math
+9a(1+h^2)t-6h^3\eta-a(7h^2+3)=0.
+\tag{47.8}
+```
+
+具体地，`|d|²-t` 的展开余项是第一个左侧乘以 `-t/(2h³)`；式 (47.7) 左侧移项后乘以 `t`，展开余项是第二个左侧乘以 `-t/(2h²)`。
+
+若 `2h²=3`，消去式 (47.8) 中的 `t` 就给出 `a(5h²-3)=0`，与式 (47.4) 矛盾。否则唯一解为：
+
+```math
+\eta=-\frac{a(5h^2-3)}{6h(2h^2-3)},\qquad
+ t=\frac{3h^4-4h^2-3}{3(1+h^2)(2h^2-3)}.
+\tag{47.9}
+```
+
+此时式 (47.3) 中最后一个条件的余项恰为：
+
+```math
+\eta^2-t+\frac94t^2
+=-\frac{h^2(h^2+3)(4h^4-11h^2+3)}{9(1+h^2)^2(2h^2-3)^2}.
+```
+
+故 `4h⁴-11h²+3=0`。二次多项式 `4s²-11s+3` 的两个根中，只有 `s=(11+sqrt(73))/8` 落在 `(1,3]`。式 (47.4) 随即给出式 (47.1)，而 `t=(37-sqrt(73))/108=2a²/3`。式 (47.6) 和 (47.9) 唯一确定 `d`，再由 `m=d(1/2+i eta/t)` 唯一确定 `m`。这证明非恒定解至多是命题中三个置换。
+
+反过来，对式 (47.1) 的任一符号，式 (47.2) 满足：
+
+```math
+4s^2-11s+3=0,\quad 9a^2+s-6=0,\quad
+|d|^2=t,\quad \eta^2=t-\frac94t^2,\quad |m|^2=1-2t.
+```
+
+因此 `|alpha|=|beta|=1`。式 (47.5) 保证两个输出 channel 各自等模；式 (47.7) 保证第一个归一化输出 channel 的平方范数为三，酉性又使第二个的平方范数为三。故两个 channel 均逐项模一，三个置换都可达。由于 `t>0`、`t<1/2`，`d,m` 均非零，故三个置换彼此不同，且其第二 channel 的 Fourier 分量模为 `sqrt(3)|m|,sqrt(3)|d|,sqrt(3)|d|`，全部非零。证毕。
+
+### 47.2 例外射线的精确正交图
+
+**推论 47.2。** 固定式 (47.1) 的任一参数，令 `y_j` 为命题 47.1 的三个非恒定向量，并置：
+
+```math
+v_j=\frac1{\sqrt6}(\mathbf1,y_j),\qquad
+w_j=\Theta_0v_j=\frac1{\sqrt6}(-\overline{y_j},\mathbf1),
+\qquad \Theta_0(x,y)=(-\overline y,\overline x).
+```
+
+这六条实际共同无偏射线的诱导正交图恰为 `K_{3,3}`。加入六条 canonical mode-local 射线后，十二条射线的诱导正交图恰为不相交并 `K_6 ⊔ K_{3,3}`。
+
+**证明。** 第 35 节的反酉恒等式在此 `I+J` block 形式中为 `H_0 Theta_0=-Theta_0 H_0`，所以 `v_j,w_j` 均共同无偏于实际列基对 `(I,H_0*)`。两个不同位置的 `(1,1,-2)` 型向量内积为 `-3`，故当 `j!=k` 时：
+
+```math
+\langle y_j,y_k\rangle=3|m|^2-3t=3-9t,\qquad
+\langle v_j,v_k\rangle=1-\frac32t=1-a^2>0.
+```
+
+`w_j,w_k` 的内积是其共轭，也非零。又 `sum y_j=3m` 与 `j` 无关，所以所有交叉内积都为零：
+
+```math
+\langle v_j,w_k\rangle
+=\frac{\overline{\sum y_j}-\overline{\sum y_k}}6=0.
+```
+
+这就给出六个不同顶点的 `K_{3,3}`，特别是其中没有正交三角形。
+
+为核对与 canonical 射线的关系，令 `f_l` 为逐项模一的第 `l` 个 Fourier mode，`A_l,B_l` 为归一化 `H_0` 的相应 mode entries，取两个相反相位 `gamma_l^±` 满足 `Re(conjugate(A_l)B_l gamma_l^±)=0`。这里 `A_lB_l!=0`。六条 canonical 射线为：
+
+```math
+c_l^\pm=\frac1{\sqrt6}(f_l,\gamma_l^\pm f_l),\qquad l=0,1,2.
+```
+
+它们在同一 mode 内成正交对，不同 mode 之间也正交，故给出 `K_6`。对 `l=0`：
+
+```math
+\langle v_j,c_0^\pm\rangle=\frac{1+\gamma_0^\pm\overline m}{2},\qquad
+\langle w_j,c_0^\pm\rangle=\frac{\gamma_0^\pm-m}{2},
+```
+
+因 `|m|<1` 均非零。对 `l=1,2`，`v_j` 的第一 channel 与 `f_l` 正交，但第二 channel 的对应 Fourier 分量非零，所以 `v_j` 与 `c_l^±` 不正交；`w_j` 则由共轭 Fourier 分量得到同样结论。因此两个子图之间没有边。证毕。
+
+### 47.3 基方向与结论范围
+
+对三个额外非恒定点，`(x,y)/sqrt(6)` 共同无偏于 `(I,H*)`。在第 46 节的实际列基方向 `(I,H_0)` 中，应使用 `v=H_0(x,y)^T/sqrt(6)`，于是 `H_0*v=(x,y)^T/sqrt(6)`。其输出侧 `Delta` 为零，而六维向量的总 mode 支撑仍是完整的。因此第 46 节的“两条 channel 均满支撑”不能弱化为“向量不是 mode-local”。对推论 47.2 的全部射线同时乘以 `H_0`，所有内积和图结论保持。
+
+命题 47.1 只分类第一 channel 为零 Fourier mode 的纤维；它没有分类第一 channel 为另外两个单模的情形，也没有分类两条 channel 都满支撑的情形。推论 47.2 只给出这十二条显式射线的诱导图，不排除它们与其余共同无偏射线之间的边，因而尚不排除由其他射线参与的 completion 或 quartet。
