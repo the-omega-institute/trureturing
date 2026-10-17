@@ -3067,3 +3067,1729 @@ Thus the remaining band is exactly
 excluded in Proposition 56.1. The original column-basis statement
 follows from the unitary basis-direction argument at the end of §55.
 This completes the proof of Proposition 57.1.
+
+## 58. Zero-mode single-canonical orthogonality rigidity
+
+### 58.1 Actual convention and theorem
+
+Let
+
+\[
+ |b|<1,\quad h=\sqrt{\frac{3-b^2}{1+b^2}}>1,\quad a=hb,\quad
+ P=\frac{a-3+i(h+b)}2,\quad Q=\frac{-a-3+i(h-b)}2,
+ \quad A=P+3,\quad B=Q+3,
+\]
+
+where \(J\) is the three-by-three all-ones matrix and \(I\) is the
+three-by-three identity. Let the actual seed be
+
+\[
+ H_0=\frac1{\sqrt6}
+ \begin{pmatrix}J+PI&J+QI\\J+\bar QI&-J-\bar PI\end{pmatrix}.
+\]
+
+Indices are in \(\mathbb Z_3\), and \(f_l(j)=\omega^{lj}\), where
+\(\omega=e^{2\pi i/3}\). The parameter map is the one in (57.32),
+so \(|b|<1\) covers precisely \(-1<a<1\); in particular
+\(1-a^2=(1-b^2)^2/(1+b^2)>0\).
+The Fourier convention, with no additional square-root factor, is
+
+\[
+ x=\sum_{l=0}^2u_lf_l,\qquad y=\sum_{l=0}^2z_lf_l,
+ \qquad
+ \binom{U_l}{V_l}=T_l\binom{u_l}{z_l},
+\]
+
+where
+
+\[
+ T_0=\frac1{\sqrt6}\begin{pmatrix}A&B\\\bar B&-\bar A\end{pmatrix},
+ \qquad
+ T_1=T_2=\frac1{\sqrt6}
+                 \begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+\]
+
+Here \(U,V\) are the Fourier coefficients of the actual two output
+channels. These blocks are unitary. For any coefficient triple \(q\),
+its inverse Fourier transform has three unit entries if and only if
+
+\[
+ \sum_l|q_l|^2=1,\qquad \sum_l\bar q_lq_{l+1}=0.
+\]
+
+This follows by expanding its squared moduli in the basis
+\(1,f_1,f_2\). Thus these are the original input and output flatness
+equations for each of \(q=u,z,U,V\).
+The canonical input rays, for \(l=0,1,2\) and \(\epsilon=\pm1\), are
+
+\[
+ c_l^\epsilon=\frac1{\sqrt6}(f_l,g_l^\epsilon f_l),\qquad
+ g_l^\epsilon=\frac{\epsilon i\alpha_l\bar\beta_l}
+ {|\alpha_l||\beta_l|},
+\]
+
+where \((\alpha_0,\beta_0)=(A,B)\) and
+\((\alpha_1,\beta_1)=(\alpha_2,\beta_2)=(P,Q)\).
+Here \(|A|^2=3+2a, |B|^2=3-2a, |P|^2=3-a, |Q|^2=3+a\),
+so none of these denominators vanishes. These six rays form an
+orthonormal basis, and each is actual common-flat. Orthogonality of an
+input ray to \(c_k^\epsilon\) is exactly
+\(u_k+\overline{g_k^\epsilon}z_k=0\).
+
+**Proposition 58.1.** Suppose every coordinate of \(x,y\in\mathbb C^3\)
+has modulus one and every coordinate of \(H_0(x,y)\) has modulus one.
+If \((x,y)/\sqrt6\) is orthogonal to either zero-mode canonical ray,
+then it is one of the six canonical rays. This includes \(a=0\).
+
+All statements concern the same shared input phases and the two original
+output channels. Explicitly, a unit vector \(v\) is common-unbiased to
+the column bases \((I,H_0)\) if and only if
+\((x,y)=\sqrt6H_0^*v\) and \(H_0(x,y)=\sqrt6v\) both have unit entries.
+The corresponding canonical column rays are \(H_0c_l^\epsilon\),
+and the common unitary transport preserves every inner product.
+Only a common projective phase of the input is free.
+
+### 58.2 Means, degeneracies, and canonical parameter
+
+Put \(X=\sum x_j\), \(Y=\sum y_j\). Orthogonality to
+\(c_0^{-\epsilon}\) is precisely \(Y=gX\), where
+\(g=g_0^\epsilon\). Thus \(|g|=1\) and
+\(\operatorname{Re}(A\bar B\bar g)=0\).
+Set
+
+\[
+ U=A+Bg,\qquad V=\bar B-\bar Ag;
+ \qquad |U|^2=|V|^2=6.                         \tag{58.1}
+\]
+
+If \(X=0\), both channel zero-mode coefficients vanish. A unit-phase
+triple with any zero Fourier coefficient is monochromatic: after
+modulation its three phases sum to zero and hence are the three cube
+roots of one common phase, in some order. The two input channel modes
+must agree, since otherwise an output channel would have exactly two
+nonzero Fourier coefficients, which is incompatible with three unit
+moduli. Therefore this case is canonical.
+
+If one input channel is constant, \(|X|=|Y|=3\) makes the other constant,
+and (58.1) makes the ray canonical. Otherwise multiply the entire input by
+one common phase to arrange
+
+\[
+ X=3t,\qquad Y=3gt,\qquad 0<t<1.              \tag{58.2}
+\]
+
+The antiunitary \(\Theta(x,y)=(-\bar y,\bar x)\) satisfies
+\(H_0\Theta=-\Theta H_0\) and exchanges the two zero-mode canonical
+rays projectively. Thus, if either channel has three distinct entries,
+it suffices to treat the case where \(x\) has three distinct entries.
+The case where both channels have exactly two distinct entries is
+retained separately below.
+
+For later algebra put
+
+\[
+ s=h^2,\quad \lambda=\frac{2h^3}{s+3},\quad
+ \rho=\lambda+w,\qquad w^2=1+\lambda^2,\qquad
+ b^2=\frac{3-s}{1+s}.                           \tag{58.3}
+\]
+
+Both real signs of \(w\) are retained. Define
+
+\[
+ D=-b(h+\rho)+i(3\rho-h),\qquad
+ N=-3-\rho h+i(b-\rho a),\qquad
+ g=\frac{\bar N}{\bar D}.                       \tag{58.4}
+\]
+
+These give exactly the two canonical phases in (58.1). Here is a direct
+check of the parameterization and its denominators. Let
+
+\[
+ L_0=3-ib-(a+ih)\bar g,\qquad
+ L_1=(3+ib)\bar g+a-ih.
+\]
+
+The two summands in \(L_1\) have squared moduli \(9+b^2\) and
+\(3-b^2\), so \(L_1\ne0\). Also
+\(\operatorname{Re}(L_0\bar L_1)=4\operatorname{Re}(A\bar B\bar g)=0\).
+Consequently \(-L_0/L_1=i\rho\) with \(\rho\) real.
+The equation \(|g|=1\) then gives
+
+\[
+ (s+3)\rho^2-4h^3\rho-(s+3)=0.
+\]
+
+Solving \(L_0+i\rho L_1=0\) gives (58.4), and substitution gives
+\(L_1=-12/D\). Conversely, (58.3)--(58.4) give a unit canonical phase.
+In particular \(D\ne0\); the norm identity (58.12) below is another
+explicit verification throughout the domain.
+
+### 58.3 Three distinct phases: necessary equations without lost zero factors
+
+Let \(u=x-t\mathbf1\) and \(\xi=x_0x_1x_2\). The elementary
+symmetric functions of the three unit phases give the coordinatewise
+identities
+
+\[
+ u^2=t u+\xi\bar u+2t(t-\xi)\mathbf1,
+ \qquad |u|^2=(1-t^2)\mathbf1-t(u+\bar u).       \tag{58.5}
+\]
+
+The vectors \(u,\bar u\) are linearly independent: otherwise the
+three distinct unit-circle points \(x_j\) would lie on a real affine
+line. They form a basis of the complex zero-sum plane. Therefore there
+are unique complex \(c,d\) with
+
+\[
+ y=gt\mathbf1+c u+d\bar u.
+\]
+
+For a channel \(kt\mathbf1+C u+D_1\bar u\), the coefficient of \(u\)
+in its squared-modulus vector is
+
+\[
+ t(\bar k C+k\bar D_1-|C|^2-|D_1|^2+C\bar D_1)
+       +\bar\xi\bar C D_1.                    \tag{58.6}
+\]
+
+Both this coefficient and its conjugate must vanish for a flat channel.
+Apply (58.6) to the actual triples
+
+\[
+ (k,C,D_1)=(g,c,d),\quad
+ (U,P+Qc,Qd),\quad(V,\bar Q-\bar Pc,-\bar Pd).
+\]
+
+The sum of the last two equations minus six times the first gives
+
+\[
+ L_0+L_1c+\bar L_1\bar d=0.
+\]
+
+Hence write, with real \(X_1,Y_1\),
+
+\[
+ d=D(X_1+iY_1),\qquad c=i\rho-D(X_1-iY_1).     \tag{58.7}
+\]
+
+This is an invertible real-linear parameterization since \(D\ne0\).
+Put \(e=\bar\xi/t\), and define
+
+\[
+ \begin{aligned}
+ Y_c&=\bar g c+g\bar d-|c|^2-|d|^2+c\bar d,\\
+ T_c&=\bar U(P+Qc)+U\bar Q\bar d-|P+Qc|^2-|Qd|^2
+                                  +(P+Qc)\bar Q\bar d,\\
+ E_c&=\bar c(T_c-|Q|^2Y_c)-Q\bar P Y_c,\\
+ Z(X_1,Y_1)&=iD E_c.
+ \end{aligned}                                               \tag{58.8}
+\]
+
+The first two equations (58.6), divided only by \(t>0\), are
+
+\[
+ Y_c+e\bar c d=0,\qquad
+ T_c+e(|Q|^2\bar c+Q\bar P)d=0.
+\]
+
+Multiplying their difference by \(\bar c\) and subtracting
+\(Q\bar P\) times the first proves \(E_c=0\). No division by
+\(c\) or \(d\) occurs; their zero cases remain included.
+
+There is one more necessary polynomial, from the constant coefficient
+of the original \(|y_j|^2=1\) equations. Write
+\(A_c=|c|^2+|d|^2\), \(B_c=|cd|^2\), and set
+
+\[
+ \mathcal N=(A_c-1)(|Y_c|^2-B_c)
+                   +4B_c\operatorname{Re}(c\bar d+Y_c).       \tag{58.9}
+\]
+
+Then \(\mathcal N=0\). Indeed the original constant equation is
+\((A_c-1)(1-t^2)+4t\operatorname{Re}(c\bar d(t-\xi))=0\).
+Use \(|e|^2=t^{-2}\) and \(Y_c=-e\bar c d\), then multiply by
+\(B_c\), to obtain (58.9). This is only a necessary implication and does
+not divide by \(B_c\). Thus it introduces no excluded zero branch.
+
+### 58.4 Exact quadratic certificate for \(1<s<3\)
+
+All coefficients in (58.8)--(58.9) belong to the real algebra generated by
+\(h,b,w\), with the two square relations (58.3), and its complexification.
+For a real coefficient \(F\), use the four-conjugate product
+
+\[
+ \mathfrak N(F)=\prod_{\sigma,\tau\in\{1,-1\}}
+                 F(h,\sigma b,\tau w).                       \tag{58.10}
+\]
+
+The following supplies full coefficient definitions and finite arithmetic
+rules for the certificate, without requiring expanded high-degree rows.
+Expand the explicitly defined quadratic (58.8) as
+
+\[
+ Z=z_{00}+z_{10}X_1+z_{01}Y_1+z_{20}X_1^2
+                  +z_{11}X_1Y_1+z_{02}Y_1^2.
+\]
+
+Its three quadratic coefficients are real. Coefficients can equivalently
+be reconstructed by evaluating at \((0,0),(1,0),(-1,0),(0,1),(0,-1),(1,1)\):
+the linear coefficients are the corresponding half-differences, the
+pure quadratic coefficients are half-sums minus \(z_{00}\), and the
+mixed coefficient is \(Z(1,1)-Z(1,0)-Z(0,1)+Z(0,0)\).
+Set
+
+\[
+ L=\operatorname{Im}z_{10},\quad
+ x_0=-\operatorname{Im}z_{00}/L,\quad
+ x_1=-\operatorname{Im}z_{01}/L,
+\]
+
+and define the real coefficients \(q_j\) by
+
+\[
+ q_0+q_1Y_1+q_2Y_1^2=\operatorname{Re}Z(x_0+x_1Y_1,Y_1).
+                                                               \tag{58.11}
+\]
+
+Direct multiplication with (58.3), or successive reduction of \(b^2\)
+and \(w^2\) by their displayed values, gives
+
+\[
+\begin{aligned}
+ \mathfrak N(|D|^2)&=
+ \frac{2^8 3^4(s+1)^2(4s^2-3s+9)^2}{(s+3)^4},\\
+ \mathfrak N(L)&=
+ \frac{2^8 3^8(s-3)^2(s+1)^2(3s^2-2s+3)^2}{(s+3)^2},\\
+ \mathfrak N(q_2)&=
+ \frac{2^{20}3^4(s+1)^2(4s^2-3s+9)^4G(s)^2}
+ {(s-3)^4(3s^2-2s+3)^4},\qquad
+ G(s)=s^3+25s^2-84s+36.                         \tag{58.12}
+\end{aligned}
+\]
+
+The first two quantities are nonzero for \(1<s<3\). If \(G(s)\ne0\),
+normalize (58.11) to the monic polynomial
+\(Q_2(Y_1)=Y_1^2+\widehat q_1Y_1+\widehat q_0\).
+Substitute \(X_1=x_0+x_1Y_1\) into (58.9) and reduce every power by
+\(Y_1^2=-\widehat q_1Y_1-\widehat q_0\), obtaining
+\(n_0+n_1Y_1\). Thus a common zero would force
+
+\[
+ R=n_0^2-\widehat q_1n_0n_1+\widehat q_0n_1^2=0.
+\]
+
+The same exact arithmetic rules give the identity
+
+\[
+ \mathfrak N(R)=
+ \frac{2^{16}3^{24}s^4(s-1)^4(s+1)^8
+ (s^2+24s-9)^4(s^3-2s^2-3s+9)^4}
+ {(s+3)^{16}G(s)^8}.                            \tag{58.13}
+\]
+
+Every numerator factor is nonzero on \(1<s<3\). For the only less
+immediate factor, write \(s=2+v\), \(-1<v<1\); then
+\(s^3-2s^2-3s+9=3+v+v^2(4+v)>2\).
+Thus (58.13) contradicts \(R=0\).
+
+#### 58.4.1 The exceptional leading coefficient
+
+The locus \(G(s)=0\) is not discarded. Put
+
+\[
+ D_4(s)=9s^4-35s^3+37s^2+15s-18,
+\quad
+ w_0=-\frac{2h(s-3)(s+1)(9s^3-16s^2+30s-9)}{(s+3)D_4(s)}.
+                                                               \tag{58.14}
+\]
+
+There are exactly two algebraic choices \(w=w_0\) and \(w=-w_0\),
+because
+
+\[
+ w_0^2-(1+\lambda^2)=
+ -\frac{(s+1)(3s^2-2s+3)^2G(s)}{D_4(s)^2}.
+\]
+
+The denominator is nonzero there:
+\(\operatorname{Res}_s(G,D_4)=-2^7 3^{15}\).
+For \(w=w_0\), (58.11) has \(q_2=0\), and reduction modulo \(G\) gives
+
+\[
+ q_1=-\frac{16bh}{81}(113s^2+3080s-2505)\ne0.
+\]
+
+At its forced root \(Y_1=-q_0/q_1\), the original polynomial (58.9)
+reduces to
+
+\[
+ \mathcal N=\frac{4377023s^2+120515585s-62310990}{472392}>0,
+                                                               \tag{58.15}
+\]
+
+since \(s>1\). For \(w=-w_0\), the quadratic leading coefficient is
+nonzero; its product under \(b\mapsto-b\) is
+
+\[
+ \frac{147456s(s+1)^2(4s^2-3s+9)^2
+ (9s^3-16s^2+30s-9)^2}
+ {(s+3)^2(3s^2-2s+3)^4}>0.
+\]
+
+Here \(9s^3-16s^2+30s-9=9s(s-1)^2+2s^2+21s-9>0\).
+The same monic reduction defining \(R\) gives, modulo \(G\),
+
+\[
+ R=\frac{-4595029s^2+13975190s-5899332}{128}.
+\]
+
+Its numerator cannot vanish at a root of \(G\), since their resultant
+is \(2^4 3^{17}\cdot11\cdot41\ne0\).
+These identities resolve both branches of (58.14), including every
+vanishing-leading-coefficient case.
+
+#### 58.4.2 The central parameter
+
+For \(a=b=0\), \(h=\sqrt3\), write \(g=\epsilon i\).
+The linear equation in §58.3 becomes
+\(c=\bar d+i(\sqrt3-2\epsilon)\).
+The equation \(E_c=0\) is, after a nonzero scalar factor,
+
+\[
+ \bar d^2+d^2-(1+\epsilon\sqrt3)|d|^2
+                 +i(\epsilon-\sqrt3)(d+\bar d)=0.
+\]
+
+Its imaginary part forces \(\operatorname{Re}d=0\), and its real
+part then forces \((3+\epsilon\sqrt3)(\operatorname{Im}d)^2=0\).
+Thus \(d=0\), but the first original equation (58.6) divided by \(t\)
+is then \(-9+5\epsilon\sqrt3=0\), impossible.
+This finishes the three-distinct-phase case, without assuming \(a\ne0\).
+
+### 58.5 Both channels have two distinct phases
+
+Use a simultaneous permutation and a common phase to write
+\(x=(1,1,q)\), \(|q|=1\), \(q\ne1\).
+Equality \(|Y|=|X|\) implies that the relative phase of the two values
+in \(y\) is either \(q\) or \(\bar q\), because
+\(|2+q|^2=5+4\operatorname{Re}q\).
+Consequently
+
+\[
+ y=gS^m x\quad\hbox{or}\quad
+ y=\gamma S^m\bar x,\qquad
+ \gamma=g\frac{2+q}{2+\bar q},\quad m=0,1,2.      \tag{58.16}
+\]
+
+Every Fourier coefficient of either input channel is nonzero here:
+\(q\ne1\), and \(2+q\ne0\).
+Here \(S(x_0,x_1,x_2)=(x_1,x_2,x_0)\). The first alternatives in
+(58.16) are excluded by Proposition 46.1 of the main theory, which
+rules out a shared phase times any cyclic shift for full-support actual
+inputs on the whole open real branch, including \(a=0\). To match its
+matrix convention exactly, set
+\(p_{\rm seed}=P+1,\ q_{\rm seed}=Q+1\). Its unnormalized upper blocks
+are \(J+PS,J+QS\), and its lower blocks are explicitly
+\(J+\bar Q S^2,-J-\bar P S^2\), namely \(B^*,-A^*\) in that convention.
+Left multiplication by \(\operatorname{diag}(S^2,S)\)
+gives exactly the displayed \(H_0\). This is only an output permutation,
+so preserves actual flatness and leaves both input channels unchanged.
+Furthermore \(y=gS^mx\) makes the two input autocorrelation rows
+proportional, hence gives precisely the forbidden zero determinant.
+This invocation uses no cyclic orthogonality assumption.
+
+A transposition of the two equal entries of \(x\) interchanges the
+remaining conjugate cases \(m=1,2\), while commuting with \(H_0\).
+Thus only \(m=0,1\) remain.
+For finite real \(v\), put
+
+\[
+ q=\frac{1+iv}{1-iv},\quad
+ D_v=(1-iv)(3+iv),\quad
+ X_v=(D_v,D_v,(1+iv)(3+iv)),
+\]
+
+and put \(Y_v=(y_a,y_a,y_b)\) for \(m=0\), or
+\(Y_v=(y_a,y_b,y_a)\) for \(m=1\), where
+
+\[
+ y_a=g(1+iv)(3-iv),\qquad y_b=g(1-iv)(3-iv).
+\]
+
+Then the actual input is \((X_v,Y_v)/D_v\), and
+\(|D_v|^2=(1+v^2)(9+v^2)>0\). Form its six original unnormalized
+output numerators
+
+\[
+ F_j=PX_{v,j}+QY_{v,j}+\sum X_v+\sum Y_v,
+\quad
+ F_{j+3}=\bar QX_{v,j}-\bar PY_{v,j}+\sum X_v-\sum Y_v.
+\]
+
+Order the six residual polynomials as top 0, bottom 0, top 1, bottom 1,
+top 2, bottom 2, and divide each
+\(|F_j|^2-6|D_v|^2\) by \(v\), obtaining real cubics \(p_0,\ldots,p_5\).
+This division is legitimate for the nonconstant finite case \(v\ne0\).
+The value \(v=0\) is the already classified constant canonical input.
+
+Here are explicit coefficient operations specifying a small certificate.
+Let \(k=[v^3]p_0\), \(p_*=p_0/k\),
+\(r_j=p_j-([v^3]p_j)p_*\) for \(1\le j\le5\), and
+\(\ell=[v^2]r_1\).
+For \(1<s<3\), exact reduction using (58.3) gives
+
+\[
+\begin{aligned}
+ \mathfrak N(k)&=\frac{2^8(s+3)^2(s^2-2s+3)^2}{(4s^2-3s+9)^2}>0,\\
+ \mathfrak N(\ell)&=
+ \frac{2^{12}3^4(s-1)^4(s+3)^2}{(s+1)^2(s^2-2s+3)^2}>0,\\
+ Q_v:=r_1/\ell&=v^2-\frac{2b(s+1)}{s-1}v-\frac{s+3}{s-1}.
+                                                               \tag{58.17}
+\end{aligned}
+\]
+
+For \(j=2,3,4,5\), let
+\(L_j=r_j-([v^2]r_j)Q_v=A_jv+B_j\).
+Then
+
+\[
+ (s-3)B_j=b(3-5s)A_j,
+\]
+
+and the norm of \(\sum_{j=2}^5A_j^2\) is respectively
+
+\[
+\begin{cases}
+\displaystyle
+ \frac{2^{44}3^8(s-3)^4(s+3)^8}
+ {(s-1)^8(4s^2-3s+9)^4},&m=0,\\[6pt]
+\displaystyle
+ \frac{2^{32}(s-3)^4(s+3)^8(4s^3-7s^2+30s+9)^4}
+ {(s-1)^8(s+1)^4(4s^2-3s+9)^4},&m=1.
+\end{cases}                                                   \tag{58.18}
+\]
+
+Both are nonzero, since
+\(4s^3-7s^2+30s+9=4s(s-1)^2+s^2+26s+9>0\).
+Thus at least one retained linear equation forces
+\(v=b(5s-3)/(s-3)\). But substituting this into (58.17) gives
+
+\[
+ Q_v(v)=-\frac{4(4s^2-3s+9)}{(s-3)(s+1)}>0,
+\]
+
+a contradiction. The missing circle-chart point \(q=-1\) is also
+excluded: its first residual is the leading degree-four coefficient
+\(k\), which is nonzero by (58.17).
+
+At \(a=b=0\), for either \(g=\epsilon i\), the first two cubics
+for both \(m=0,1\) are exactly
+
+\[
+ -4\{v^3+9v+\epsilon(3v^2-9)\},\qquad
+ -4\{v^3+9v-\epsilon(3v^2-9)\}.
+\]
+
+Their sum forces \(v(v^2+9)=0\), hence \(v=0\) for real \(v\),
+where neither cubic vanishes. Their leading coefficients are \(-4\),
+so the point \(q=-1\) is excluded as well. All two-valued cases are
+therefore impossible.
+
+### 58.6 Conclusion and exact scope
+
+All mean-zero, constant-channel, distinct-channel, repeated-coordinate,
+central, and finite/infinite phase-chart cases have been retained.
+The theorem follows for both zero-mode canonical rays throughout
+\(-1<a<1\). The endpoint \(h=1\), or \(b=\pm1\), is not included;
+the certificate deliberately has vanishing factors there.
+
+This constrains mixed orthogonality without assuming a basis or a triple
+is covariant under a cyclic permutation. It does not by itself establish
+single-canonical rigidity for the two nonzero modes, classify all mixed
+orthogonal triples, or resolve the general fourth-basis problem.
+
+### 58.7 Endpoint check
+
+The open endpoint cannot be added to this theorem. At \(b=h=a=1\),
+put \(z=(1-2i)/\sqrt5\), and take
+\(x=(1,z,-z)\), \(y=(-1,1,-z)\).
+Here \(P=-1+i,Q=-2\), \(g_0^-=z\). All six input entries have
+modulus one, and direct multiplication gives six squared output moduli
+six before division by \(\sqrt6\). Moreover
+\(\sum x+\bar z\sum y=1-1=0\).
+Thus this is a genuine noncanonical common-flat ray orthogonal to a
+zero-mode canonical ray at the excluded endpoint. Its input channels
+are not monochromatic, so it is not one of the canonical rays.
+
+## 59. Single-canonical orthogonality rigidity at the central seed
+
+### 59.1 Statement, actual Fourier equations, and missing modes
+
+Use the actual matrix, Fourier convention, and canonical rays of §58.1.
+At the central seed,
+
+\[
+ a=b=0,\qquad h=\sqrt3,\qquad
+ P=Q=\frac{-3+i\sqrt3}{2},\qquad
+ A=B=\frac{3+i\sqrt3}{2},\qquad g_l^+=i.
+\tag{59.1}
+\]
+
+**Proposition 59.1.** At this seed, every actual common-flat input ray
+orthogonal to any one of the six canonical rays is canonical. For a
+fixed canonical ray its actual common-flat orthogonal rays are exactly
+the other five members of the canonical orthonormal basis.
+
+The zero-mode cases are Proposition 58.1. First consider orthogonality
+to \(c_1^+\), which is exactly \(z_1=-iu_1\). If \(u_1=0\), both
+selected-mode coefficients vanish. A unit-phase triple with one zero
+Fourier coefficient is monochromatic, as proved in §58.2. Hence both
+input channels are monochromatic. Their modes must agree: otherwise an
+output channel has exactly two nonzero Fourier coefficients, since all
+entries of the blocks \(T_l\) are nonzero, contradicting that same
+unit-phase property. With a common mode, actual flatness gives one of
+the two canonical phases. This treats the missing selected mode.
+
+Otherwise use only a common phase to take \(u_1=t>0\). Suppose the
+ray is noncanonical. Then every \(u_l\) and \(z_l\) is nonzero.
+Indeed a zero coefficient in either channel would make that channel
+monochromatic. Its selected-mode coefficient is nonzero, so its sole
+mode would be 1 and its coefficient would have modulus one. The equal
+selected-mode modulus in the other channel and its norm equation
+\(\sum_l|z_l|^2=1\), or \(\sum_l|u_l|^2=1\), force that channel
+to be monochromatic at mode 1 as well. This would be canonical.
+
+### 59.2 Normalized mode maps and the rank-one case
+
+Put
+
+\[
+ \gamma=-i,\qquad r=\frac{z_0}{\gamma u_0},\quad
+ s=\frac{z_2}{\gamma u_2},\quad R=\bar r,\quad T=\bar s,
+ \qquad \omega=\frac{-1+i\sqrt3}{2},
+\]
+
+and define
+
+\[
+ \begin{aligned}
+ A_1&=(1+i)/2,& B_1&=(1-i)/2,\\
+ F&=\omega^2(A_1+B_1r),&G&=\omega(B_1+A_1r),\\
+ D&=A_1+B_1s,&E&=B_1+A_1s.
+ \end{aligned}
+\tag{59.2}
+\]
+
+These are the actual output amplitudes relative to the selected mode's
+fixed unit output phases. More explicitly,
+
+\[
+ T_1\binom{1}{\gamma}=\binom{\lambda}{\mu},\qquad
+ \lambda=\frac{P(1-i)}{\sqrt6},\quad
+ \mu=\frac{\bar P(1+i)}{\sqrt6},\quad
+ |\lambda|=|\mu|=1.
+\]
+
+Dividing the two whole output channels by \(\lambda,\mu\) gives
+Fourier triples \((Fu_0,t,Du_2)\) and \((Gu_0,t,Eu_2)\).
+Dividing the two input channels by \(1,\gamma\) gives
+\((u_0,t,u_2)\) and \((ru_0,t,su_2)\). These fixed unit divisions
+only preserve their norm and autocorrelation equations; they do not
+choose independent phases for an actual candidate.
+
+Let
+
+\[
+ c=(\bar u_0u_1,\bar u_1u_2,\bar u_2u_0).
+\]
+
+All three coordinates are nonzero. The two original input flatness
+conditions give
+
+\[
+ (1,1,1)\mathbin{\cdot}c=0,\qquad
+ (R,s,rT)\mathbin{\cdot}c=0.
+\tag{59.3}
+\]
+
+If \(R=s\), subtracting the two equations gives \(rT=R\), since
+\(c_2\ne0\). Now \(T=r\), so \(r^2=\bar r\). As \(r\ne0\),
+this implies \(|r|=1\) and \(r^3=1\). Hence
+\(r=\omega^m,s=\omega^{-m}\), with \(m=0,1,2\).
+For these three values, respectively, the matrix with rows
+
+\[
+ (1,1,1),\qquad(\bar F,D,\bar D F),\qquad
+ (\bar G,E,\bar E G)
+\]
+
+has determinants
+
+\[
+ 3\sqrt3\,i,\qquad
+ \frac94-\frac{3\sqrt3}{4}i,\qquad
+ -\frac94-\frac{3\sqrt3}{4}i.
+\tag{59.4}
+\]
+
+Each is nonzero, whereas the remaining actual autocorrelation equations
+would make its product with \(c\) zero. Thus the rank-one input-row
+case is impossible. No determinant-zero stratum is dropped here.
+
+### 59.3 Independent input rows and the norm obstruction
+
+It remains to treat \(R\ne s\). The two rows in (59.3) are
+independent and have null vector
+
+\[
+ n=(s-rT,rT-R,R-s).
+\]
+
+Consequently \(c=\tau n\) for some \(\tau\ne0\), and all three
+\(n_j\) are nonzero. Put
+
+\[
+ \mathcal P=(\bar F,D,\bar D F)\mathbin{\cdot}n,\qquad
+ \mathcal Q=(\bar G,E,\bar E G)\mathbin{\cdot}n,\qquad
+ L=-\frac12-\frac{\sqrt3}{6}+i\frac{1+\sqrt3}{2}.
+\]
+
+The two original output flatness equations require
+\(\mathcal P=\mathcal Q=0\). Expansion of the explicit formulas
+(59.2), with \(R=\bar r,T=\bar s\), gives the identity
+
+\[
+ L\mathcal P+\bar L\mathcal Q
+           =(R-s)(rT+2+\sqrt3).
+\tag{59.5}
+\]
+
+As \(R-s\ne0\), it follows that
+
+\[
+ rT=-k,\qquad Rs=-k,\qquad k=2+\sqrt3>0.
+\tag{59.6}
+\]
+
+In particular \(s=-k/R,T=-k/r\); the denominators are nonzero by
+full support.
+
+Let \(w_l=|u_l|^2\). Since \(c=\tau n\),
+
+\[
+ \frac{w_2}{w_0}=
+ \frac{|c_1|^2}{|c_0|^2}=
+ \frac{|n_1|^2}{|n_0|^2}.
+\]
+
+Both input coefficient triples have squared norm one, and their
+selected-mode masses agree. Their norm difference therefore forces
+
+\[
+ N=(|r|^2-1)|n_0|^2+(|s|^2-1)|n_1|^2=0.
+\tag{59.7}
+\]
+
+On the relations (59.6), direct substitution gives
+
+\[
+ \begin{aligned}
+ |r|^2N&=(6+4\sqrt3)J,\\
+ J&=v^2+k^2+(1+\sqrt3)x(k-v),\qquad
+ v=|r|^2>0,\quad x=\operatorname{Re}r.
+ \end{aligned}
+\tag{59.8}
+\]
+
+Because \(|x|\le\sqrt v\) and \((1+\sqrt3)^2=2k\),
+
+\[
+ J\ge v^2+k^2-\sqrt{2kv}\,|k-v|
+   \ge\frac{v^2+k^2}{2}>0.
+\tag{59.9}
+\]
+
+The second inequality is \(2AB\le A^2+B^2\) with
+\(A=|k-v|, B=\sqrt{2kv}\), for which \(A^2+B^2=v^2+k^2\).
+This contradicts (59.7). Every denominator used in this argument was
+nonzero on the retained full-support branch, and every equation was
+an original flatness consequence. The case \(c_1^+\) is proved.
+
+### 59.4 Symmetries, endpoint, and scope
+
+Synchronous reflection \(j\mapsto-j\) commutes with \(H_0\) and
+exchanges modes 1 and 2. The antiunitary
+\(\Theta(x,y)=(-\bar y,\bar x)\) preserves unit entries and satisfies
+\(H_0\Theta=-\Theta H_0\) by block multiplication. Thus it preserves
+actual common-flatness. At (59.1) it maps \(c_l^\epsilon\)
+projectively to \(c_{-l}^{-\epsilon}\). Reflection followed by
+\(\Theta\) flips the sign at a fixed nonzero mode. This proves all
+four nonzero-mode cases. Together with Proposition 58.1 it proves
+Proposition 59.1, without assuming cyclic covariance of any basis or
+triple.
+
+For comparison, the excluded endpoint \(b=h=a=1\) has a genuine
+noncanonical ray orthogonal to \(c_1^+\). Let \(\zeta=e^{i\pi/12}\),
+\(M=\sqrt6H_0\), and
+
+\[
+ v=(1,\zeta^{-4},\zeta^{-7},\zeta^{-8},\zeta,\zeta^{-3}),
+ \qquad P=-1+i,\quad Q=-2,\quad g_1^+=\frac{1+i}{\sqrt2}.
+\]
+
+Substitution, using \(\zeta^4=(1+i\sqrt3)/2\), gives
+
+\[
+ (|(Mv)_j|^2)_{j=0}^5=(6,6,6,6,6,6),\qquad
+ \langle c_1^+,v\rangle=0.
+\]
+
+The squared moduli of the two channel Fourier triples are respectively
+\((\alpha,1/9,\beta)\) and \((\beta,1/9,\alpha)\), where
+
+\[
+ \alpha=\frac{8+3\sqrt2-\sqrt6}{18}>0,\qquad
+ \beta=\frac{8-3\sqrt2+\sqrt6}{18}>0.
+\]
+
+Thus all six Fourier coefficients are nonzero, and this endpoint ray
+is noncanonical. The endpoint calculation makes no assertion about
+nonzero-mode orthogonality on \(0<|a|<1\).
+
+Proposition 59.1 classifies only the common-flat rays orthogonal to an
+already specified canonical ray at the central seed. Proposition 58.1
+provides the zero-mode classification throughout the open real branch.
+These results impose mixed-orthogonality constraints without a covariance
+hypothesis. They do not prove that an arbitrary further orthonormal
+basis must contain a canonical ray, classify the remaining nonzero-mode
+fibres away from the center, or settle the general fourth-basis problem.
+
+## 60. Single-canonical orthogonality rigidity on the open real branch
+
+### 60.1 Actual rays and statement
+
+Use the actual seed and input-ray convention of §58.1. Thus, with
+\(J_3\) the three-by-three all-ones matrix,
+
+\[
+ \begin{gathered}
+ |b|<1,\qquad c=\sqrt{1+b^2},\qquad d=\sqrt{3-b^2},\qquad
+ k=\sqrt{4b^4-3b^2+9},\qquad a=bd/c,\quad h=d/c,\\
+ P=\frac{a-3+i(h+b)}2,\qquad Q=\frac{-a-3+i(h-b)}2,\\
+ M=\sqrt6H_0=
+ \begin{pmatrix}J_3+PI&J_3+QI\\J_3+\bar QI&-J_3-\bar PI\end{pmatrix}.
+ \end{gathered}
+\tag{60.1}
+\]
+
+All three square roots are positive. An actual common-flat input ray
+is represented by a unit vector \(w\) such that every coordinate of
+both \(w\) and \(H_0w\) has modulus \(1/\sqrt6\). The corresponding
+common-unbiased column ray for the bases \((I,H_0)\) is \(H_0w\).
+This common unitary transport preserves orthogonality.
+
+With \(f_l(j)=\omega^{lj}\), \(\omega=e^{2\pi i/3}\), the canonical
+input rays of §58.1 have the equivalent explicit phases
+
+\[
+ g_0=\frac{-2b^3+i(b^2+3)}{ck},\qquad
+ g_1=g_2=\frac{b+i}{c},\qquad
+ c_l^\epsilon=\frac1{\sqrt6}(f_l,\epsilon g_lf_l),
+ \quad l\in\mathbb Z_3,\quad\epsilon\in\{1,-1\}.
+\tag{60.2}
+\]
+
+**Proposition 60.1 (repo-derived).** For every \(|b|<1\), the actual
+common-flat input rays orthogonal to any specified \(c_l^\epsilon\)
+are exactly the other five canonical rays. Equivalently, among common-
+unbiased column rays for \((I,H_0)\), the rays orthogonal to a specified
+\(H_0c_l^\epsilon\) are exactly the other five \(H_0c_j^\delta\).
+No covariance condition is imposed on the ray or on a basis containing it.
+
+The zero-mode cases are Proposition 58.1 and the central seed is
+Proposition 59.1. The new part is \(l=1,2\), \(0<|b|<1\).
+The proof below gives an explicit positive sextic identity in the original
+flatness equations. Algebraic enumeration of common-unbiased vectors is
+also considered by Brierley–Weigert,
+[*Constructing Mutually Unbiased Bases in Dimension Six*](https://arxiv.org/abs/0901.4051v2);
+that enumeration is not a premise of the parameter-uniform identity here.
+
+### 60.2 Canonical-complement coordinates and all flatness equations
+
+First select \(c_1^+\). Let \(C\) have the following five columns in
+unit-entry normalization, in the displayed order:
+
+\[
+ (0,+),(0,-),(1,-),(2,+),(2,-),\qquad
+ m=(0,0,1,2,2),\qquad \boldsymbol g=(g_0,-g_0,-g_1,g_1,-g_1).
+\tag{60.3}
+\]
+
+Thus column \(j\) is \((f_{m_j},\boldsymbol g_jf_{m_j})\). Directly from (60.1)–(60.2),
+
+\[
+ C^*C=6I_5,\qquad M^*M=6I_6,\qquad |(MC)_{rj}|^2=6.
+\]
+
+Every vector orthogonal to \(c_1^+\) is uniquely \(Cz\).
+For \(z\ne0\), the unit vector \(Cz/(\sqrt6\|z\|)\) is actual
+common-flat if and only if
+
+\[
+ |(Cz)_r|^2=\|z\|^2,\qquad |(MCz)_r|^2=6\|z\|^2
+ \quad(0\le r\le5).
+\tag{60.4}
+\]
+
+Define
+
+\[
+ \alpha_j=P+3\,\mathbf1_{m_j=0},\qquad
+ \beta_j=Q+3\,\mathbf1_{m_j=0},\qquad
+ o_j=\alpha_j+\beta_j\boldsymbol g_j,\qquad
+ p_j=\bar\beta_j-\bar\alpha_j\boldsymbol g_j.
+\]
+
+For \(v\in\mathbb C^5\) and \(r\in\mathbb Z_3\), put
+
+\[
+ q(v,r)=\sum_{\substack{i\ne j\\m_j-m_i=r\pmod3}}
+                 \bar v_i v_j\bar z_i z_j.
+\]
+
+Use the ordered generators
+
+\[
+ \begin{array}{c|cccccccccc}
+ s&0&1&2&3&4&5&6&7&8&9\\\hline
+ q_s&q(\mathbf1,0)&q(o,0)&q(\mathbf1,1)&\overline{q_2}&
+ q(\boldsymbol g,1)&\overline{q_4}&q(o,1)&\overline{q_6}&q(p,1)&\overline{q_8}\\
+ \gamma_s&0&0&1&2&1&2&1&2&1&2
+ \end{array}
+\tag{60.5}
+\]
+
+Conjugation exchanges \(z\) and \(\bar z\), as well as conjugating
+coefficients. Thus \(q_0,q_1\) are real and the other eight generators
+are four conjugate pairs. Equations (60.4) are equivalent to
+\(q_s=0\) for all ten generators. Indeed, in each three-coordinate
+channel the squared moduli have only Fourier grades \(0,1,2\).
+The grade-zero diagonals cancel by \(|\boldsymbol g_j|^2=1\) and
+\(|o_j|^2=|p_j|^2=6\); the omitted bottom-channel means follow from
+\(C^*C=6I_5\) and \(M^*M=6I_6\). The remaining coefficients are
+exactly the four grade-one autocorrelations and their conjugates.
+This keeps every original input and output flatness condition.
+
+### 60.3 The explicit sextic coefficient matrix
+
+All tuple and matrix indices in this subsection are zero-based.
+Let \(\mathcal A\) be the lexicographically ordered 15 weakly increasing
+pairs from \(\{0,\ldots,4\}\), and let \(\mathcal T\) be the analogous
+35 triples. Write \(z^u=\prod_{j\in u}z_j\) without multinomial factors,
+and \(\operatorname{gr}(u)=\sum_{j\in u}m_j\pmod3\).
+The cubic grade sizes are \((13,11,11)\).
+
+Order coefficient positions lexicographically as pairs
+\((u,v)\in\mathcal T^2\) with equal grade, omitting only the five
+pure-cube diagonals \(((j,j,j),(j,j,j))\). Position \((u,v)\)
+is the coefficient of \(\overline{z^u}z^v\). There are
+\(13^2+11^2+11^2-5=406\) positions. Every omitted coefficient is zero
+in every source below, since every canonical column itself satisfies
+(60.4).
+
+For \(s=0,\ldots,9\), then \(u\in\mathcal A\), then
+\(v\in\mathcal A\), in those orders, retain the source polynomial
+
+\[
+ q_s\overline{z^u}z^v
+ \quad\hbox{exactly when}\quad
+ \operatorname{gr}(v)-\operatorname{gr}(u)+\gamma_s=0\pmod3.
+\tag{60.6}
+\]
+
+There are 750 sources. Their 406-dimensional coefficient rows
+\(R_0,\ldots,R_{749}\) are specified by (60.5)–(60.6): a quadratic
+term \(a_{ij}\bar z_i z_j\) contributes \(a_{ij}\) at the position
+obtained by sorting \((i)+u\) and \((j)+v\), with contributions added
+when positions coincide.
+
+For coefficient arithmetic let
+
+\[
+ \mathbb F=\mathbb Q(b)(i,c,d,k),\qquad
+ \mathbb L=\mathbb Q(b)(i,c,d),
+\]
+
+with the quadratic relations in (60.1) and \(i^2=-1\).
+These are multiquadratic fields of degrees 16 and 8 over \(\mathbb Q(b)\).
+Let \(\tau\) change the sign of \(k\) and exchange canonical indices
+0 and 1 in every tuple, followed by sorting. On coefficient rows it is
+the induced position permutation followed by \(k\)-conjugation.
+It permutes the source rows by
+\((s,u,v)\mapsto(s,\tau u,\tau v)\), as follows directly from (60.2).
+
+Define 750 \(\tau\)-fixed source rows by scanning the original indices
+in increasing order and processing each orbit at its smallest index.
+Retain a fixed row; for a two-row orbit beginning with \(R\), append
+\(R+\tau R\) and \(k(R-\tau R)\), in that order. This basis change
+is invertible, using only division by \(2k\).
+
+Encode a fixed coefficient vector by scanning its original 406 positions
+in increasing order and processing each position orbit at its smallest
+index. A fixed position has value \(A\in\mathbb L\) and contributes
+one coordinate \(A\). For a two-position orbit the values are
+\(A+kB,A-kB\); append \(A,B\), in that order. This is an injective
+\(\mathbb L\)-linear encoding into 406 coordinates. Denote the resulting
+ordered \(750\times406\) source matrix by \(\mathcal B\).
+Its entries lie in \(\mathbb L\). These rules specify every entry
+and every index of \(\mathcal B\); they impose no symmetry on a candidate
+ray.
+
+### 60.4 A positive diagonal target
+
+Let \(X(z)\) be the 30 mixed cubic monomials, omitting the five pure
+cubes, and let \(e\) select the monomial \(z_0z_1z_2\). Put \(x=b^2\) and
+
+\[
+ \begin{aligned}
+ S(x)={}&767x^6-9225x^5+26487x^4-16011x^3
+              +25758x^2+34992x+5832,\\
+ T(x)={}&5408x^{10}-18831x^9-691668x^8+4787046x^7-4239945x^6\\
+       &-13850757x^5-10793574x^4-49618656x^3
+              -57874581x^2-23737698x-3306744,\\
+ D(x)={}&3(x+1)(x+3)^2S(x),\qquad
+ G(x)=D(x)I_{30}-T(x)ee^*.
+ \end{aligned}
+\tag{60.7}
+\]
+
+The coefficient vector of \(X^*G X\) is \(\tau\)-fixed: both its mixed
+cubic diagonal and the selected monomial are invariant under exchanging
+indices 0 and 1. Let \(t\in\mathbb L^{406}\) be its encoding from §60.3.
+
+**Lemma 60.2.** On \(0\le x\le1\),
+\(D(x)\ge157464\), \(-T(x)\ge3306744\), and
+\(G(x)\succeq157464I_{30}\).
+
+**Proof.** In the Bernstein basis
+\(\binom njx^j(1-x)^{n-j}\), the degree-nine coefficients of
+\(D/3306744\), in increasing order of \(j\), are
+
+\[
+ \left(\frac1{21},\frac{50}{567},\frac{4051}{27216},
+ \frac{89515}{381024},\frac{21635}{61236},\frac{165247}{321489},
+ \frac{67265}{91854},\frac{121699}{118098},
+ \frac{254800}{177147},\frac{39200}{19683}\right).
+\]
+
+The degree-ten coefficients of \(-T/3306744\) are
+
+\[
+ \left(1,\frac{481}{280},\frac{64063}{22680},\frac{50411}{11340},
+ \frac{3200957}{476280},\frac{33686543}{3429216},
+ \frac{59929859}{4286520},\frac{35809987}{1837080},
+ \frac{55250306}{2066715},\frac{4979375}{137781},
+ \frac{19917500}{413343}\right).
+\]
+
+The first list has minimum \(1/21\), the second minimum 1.
+The Bernstein basis is nonnegative and sums to one on this interval.
+The two scalar bounds and the matrix bound follow. \(\square\)
+
+### 60.5 The finite minor and source identity
+
+Let \(\rho=(\rho_1,\ldots,\rho_{405})\) and
+\(\kappa=(\kappa_1,\ldots,\kappa_{405})\) be the ordered integer lists
+in §60.8. The entries of each list are distinct, and the entries of
+\(\kappa\) are exactly \(\{0,\ldots,405\}\setminus\{385\}\).
+Define
+
+\[
+ V=\mathcal B[\rho,\kappa],\qquad w=\mathcal B[\rho,385].
+\tag{60.8}
+\]
+
+**Lemma 60.3.** The following exact identities hold in \(\mathbb L\):
+
+\[
+ N_{\mathbb L/\mathbb Q(b)}(\det V)=\mathcal R(b^2),\qquad
+ t_{385}\det V-t_\kappa\operatorname{adj}(V)w=0,
+\tag{60.9}
+\]
+
+where \(\mathcal R\) is the explicit rational function in §60.7.
+Moreover \(\det V\ne0\) at every real parameter \(0<|b|<1\).
+
+**Proof.** The following finite row recurrence gives the two identities
+using only the entries specified in §60.3 and the lists in §60.8.
+For \(r=1,\ldots,405\), set
+
+\[
+ \begin{aligned}
+ Y_{r,0}&=\mathcal B[\rho_r,:],\\
+ Y_{r,s}&=Y_{r,s-1}-(Y_{r,s-1})_{\kappa_s}N_s
+                     &&(1\le s<r),\\
+ p_r&=(Y_{r,r-1})_{\kappa_r},\qquad N_r=Y_{r,r-1}/p_r.
+ \end{aligned}
+\tag{60.10}
+\]
+
+Also set \(u_0=t\) and
+\(u_r=u_{r-1}-(u_{r-1})_{\kappa_r}N_r\).
+Substitution of (60.2), (60.5)–(60.7) into this recurrence, reducing
+coefficients by
+
+\[
+ i^2=-1,\qquad c^2=1+b^2,\qquad d^2=3-b^2,
+\]
+
+gives the exact finite identities
+
+\[
+ p_r\ne0\quad(1\le r\le405),\qquad u_{405}=0,\qquad
+ \prod_{r=1}^{405}\prod_{\eta\in\{1,-1\}^3}
+ p_r(\eta_1i,\eta_2c,\eta_3d)=\mathcal R(b^2).
+\tag{60.11}
+\]
+
+Here \(b\) is fixed in each conjugate product. The inner product always
+has eight factors, including repeated factors when a pivot lies in a
+proper subfield. Equations (60.10)–(60.11), with all tuple rules,
+integer lists and polynomial coefficients given in this section,
+are a finite rational identity specification; no sampling of the real
+parameter is used.
+
+The row operations on the selected minor are lower triangular with unit
+diagonal, and the resulting diagonal is \((p_1,\ldots,p_{405})\).
+Consequently \(\det V=\prod_rp_r\), giving the norm identity.
+The zero target remainder means that \(t\) is in the span of the selected
+rows over \(\mathbb L\). Solving the \(\kappa\)-coordinates by the adjugate
+formula and retaining coordinate 385 gives the second identity in (60.9).
+The factorization and exact Sturm counts in §60.7 show
+\(\mathcal R(b^2)\ne0\) for \(0<|b|<1\). Thus the minor is nonzero
+at every such parameter. \(\square\)
+
+All entries of the original matrix and target are defined on this
+interval: their denominators involve only the positive quantities
+\(c,k\), and the descent uses \(2k\). Define the explicit row of
+source multipliers
+
+\[
+ \lambda=\frac{t_\kappa\operatorname{adj}(V)}{\det V}.
+\]
+
+The selected coordinates and the remaining identity in (60.9) give
+
+\[
+ \lambda\mathcal B[\rho,:]=t.
+\tag{60.12}
+\]
+
+Equivalently, \(\lambda_r\) is the determinant of \(V\) with row \(r\)
+replaced by \(t_\kappa\), divided by \(\det V\).
+Undoing the injective coordinate encoding and the invertible source
+basis change expresses \(X^*G X\) as a linear combination of the ten
+original quadratics times bidegree-\((2,2)\) forms. After replacing each
+conjugate pair \(q,\bar q\) by \(\operatorname{Re}q,\operatorname{Im}q\),
+taking the Hermitian part gives real Hermitian quartic multipliers for
+the ten real quadratic constraints. No rank assertion for unselected
+sources is needed.
+
+### 60.6 Rigidity, transports, and the orthogonality component
+
+**Proof of Proposition 60.1.** For \(0<|b|<1\), let \(Cz\) be any
+actual common-flat vector orthogonal to \(c_1^+\). Every generator in
+(60.5) vanishes, so (60.12) gives \(X(z)^*G X(z)=0\).
+Lemma 60.2 implies that every mixed cubic monomial vanishes.
+If two coordinates \(z_i,z_j\) were nonzero, then \(z_i^2z_j\ne0\),
+a contradiction. Hence precisely one canonical coordinate is nonzero.
+Conversely, each of the other five canonical rays is common-flat and
+orthogonal to the selected member. This treats every missing-mode,
+repeated-coordinate and singular candidate without division by a
+candidate coordinate.
+
+At \(b=0\), the conclusion is Proposition 59.1; since \(a=bd/c\),
+this is exactly the case \(a=0\), not a limiting argument.
+For the remaining nonzero-mode choices, synchronous reflection
+\(R(x,y)=(R_3x,R_3y)\), \((R_3x)_j=x_{-j}\), commutes with \(M\)
+because its blocks are linear combinations of \(I,J_3\).
+It exchanges modes 1 and 2 and preserves all original flatness equations.
+The antiunitary
+
+\[
+ \Theta(x,y)=(-\bar y,\bar x)
+\]
+
+satisfies \(M\Theta=-\Theta M\) by block multiplication, preserves
+coordinate moduli and orthogonality, and obeys
+
+\[
+ \Theta c_l^\epsilon
+   =(-\epsilon\bar g_l)c_{-l}^{-\epsilon}.
+\tag{60.13}
+\]
+
+Thus \(R\Theta\) flips the canonical sign at a fixed nonzero mode.
+Reflection and this antiunitary prove all four nonzero-mode cases.
+Proposition 58.1 supplies both zero-mode cases throughout the open branch.
+Finally the common unitary map \(w\mapsto H_0w\) gives the column-ray
+statement, with canonical rays \(H_0c_l^\epsilon\). \(\square\)
+
+**Corollary 60.4.** For a fixed \(|b|<1\), define a graph whose vertices
+are all actual common-flat input projective rays, with an edge between
+two distinct vertices exactly when the rays are orthogonal. The six
+canonical rays form a connected component isomorphic to \(K_6\).
+Any orthonormal common-flat input basis containing one canonical ray
+is exactly the canonical basis. The unitary image graph on common-
+unbiased column rays for \((I,H_0)\) has the same properties.
+
+**Proof.** The canonical rays are pairwise orthogonal. Proposition 60.1
+says that every neighbor of a canonical vertex is one of the other five
+canonical vertices, so no edge joins this \(K_6\) to a noncanonical
+vertex. In an orthonormal basis containing one canonical member, the
+other five rays must therefore be five distinct members of the remaining
+canonical set. The unitary transport preserves every edge. \(\square\)
+
+This is a connected-component statement about the orthogonality graph.
+It does not assert topological isolation in the common-flat ray space,
+or that every common-flat orthonormal basis intersects the canonical set.
+The genuine noncanonical endpoint ray in §59.4 shows why the restriction
+\(|b|<1\) cannot simply be replaced by \(|b|\le1\); no limiting
+interior existence claim follows from that example. The general
+fourth-basis problem remains outside Proposition 60.1.
+
+### 60.7 Exact determinant-norm factors and their real domain
+
+Let \(K(x)=4x^2-3x+9\). The rational function in (60.9) is
+
+\[
+ \mathcal R(x)=
+ \frac{2^{1988}3^{660}x^{80}(1-x)^{16}(3-x)^{40}(3-2x)^{32}
+       (x+3)^{88}\prod_{j=1}^{11}P_j(x)^{e_j}}
+      {(x+1)^{270}K(x)^{62}},
+\tag{60.14}
+\]
+
+where
+
+\[
+ (e_1,\ldots,e_{11})=(16,4,16,4,4,4,4,2,2,2,2).
+\]
+
+The following tuples list every coefficient of \(P_j\) in ascending
+powers of \(x\); that is, \(P_j(x)=\sum_r(p_j)_r x^r\).
+
+\[
+ \begin{aligned}
+ p_{1}=(&-9,-24,5).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{2}=(&-9,-30,7).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{3}=(&-9,-33,8).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{4}=(&-9,21,-19,3).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{5}=(&-324,-351,270,-75,8).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{6}=(&-81,-189,-216,-12,32).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{7}=(&-81,378,-405,-192,32).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{8}=(&81,-189,99,129,16).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{9}=(&2916,11664,20169,5643,-4185,\\
+ &585,16).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{10}=(&-4100625,47949975,-210851586,212963742,-40916421,\\
+ &-73185093,43808328,-10234752,991232).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{11}=(&1282705047207776784384,17215318528057824712704,117232526299052210372352,\\
+ &505282761775449928525824,1409704380811059458455152,2335901061655227495757752,\\
+ &1474962677995745920220001,-1909801390330985930605773,-3511486262570731457658129,\\
+ &1661019846163040543381397,7657048978562045876624982,3359618446652249049989226,\\
+ &-6226967472725127178769526,-4670182461179383581430458,4999955256271492464436875,\\
+ &4307642585746602561959265,-3242410090449421741867395,-1772334863614797885415233,\\
+ &2649027185702825742609660,-539028424008867911993172,-1505112163740993757788180,\\
+ &904965947457086549690748,496032837243307130120103,-739936700875474171595451,\\
+ &322173056215180488319353,-26849528299681425805437,-38267528432505658185546,\\
+ &22066478208799721613306,-6399100142306834162886,1141753511451204587430,\\
+ &-119446066296363146931,3523669184413730247,1014933738876390331,\\
+ &-186302374215273975,16125516781605400,-772113170228400,\\
+ &16726464040000).
+ \end{aligned}
+\]
+
+For each listed polynomial use the Sturm chain starting with
+\(P_j,P_j'\) and repeatedly taking minus the polynomial remainder.
+Omit zero entries when counting endpoint sign variations. The exact
+variation pairs are
+
+\[
+ \begin{array}{c|rrrrrrrrrrr}
+ j&1&2&3&4&5&6&7&8&9&10&11\\\hline
+ V_j(0)&1&1&1&2&2&2&2&1&2&4&16\\
+ V_j(1)&1&1&1&2&2&2&2&1&2&4&16
+ \end{array}
+\tag{60.15}
+\]
+
+None of these polynomials vanishes at either endpoint. Sturm's theorem
+therefore gives no root of any \(P_j\) in \((0,1)\).
+The other factors in (60.14) are nonzero on \(0<x<1\), and
+\(K(x)=4(x-3/8)^2+135/16>0\). Thus \(\mathcal R(x)\ne0\)
+on \((0,1)\). Its only relevant excluded parameter values are the
+central seed \(b=0\) and the endpoints \(b=\pm1\); in particular
+\(b=\pm\sqrt3/2\) require no extra chart for this minor.
+
+### 60.8 Ordered minor data
+
+The two following lists are read by concatenating their displayed rows.
+They are the source and coefficient orders used in (60.8)–(60.11).
+Their entries are the zero-based indices fixed in §60.3.
+
+\[
+ \begin{aligned}
+ \rho=(&62,63,64,67,68,69,72,73,74,12,18,30,32,40,42,49,54,58,13,14,\\
+ &52,53,57,59,0,1,2,3,5,10,11,20,24,34,44,46,48,61,71,6,\\
+ &7,8,9,17,19,22,23,27,28,29,31,35,36,39,41,50,51,55,56,60,\\
+ &66,70,15,16,25,26,33,37,38,43,45,47,21,65,4,197,198,199,289,294,\\
+ &299,164,204,209,224,272,273,274,277,217,238,218,283,196,201,208,249,257,269,213,\\
+ &222,239,161,163,172,174,180,194,276,281,286,298,192,291,159,211,216,221,230,232,\\
+ &234,271,165,166,176,178,186,188,200,203,207,212,237,241,243,250,251,259,260,261,\\
+ &275,280,285,297,175,185,240,242,160,162,235,253,263,278,187,244,246,290,219,171,\\
+ &173,182,215,231,293,191,202,205,258,262,236,181,292,179,177,284,206,227,270,193,\\
+ &155,157,255,265,153,220,167,154,168,152,228,156,252,195,233,158,150,151,229,210,\\
+ &245,422,367,388,389,372,355,352,310,312,387,401,411,400,410,391,392,311,413,337,\\
+ &412,326,336,335,416,356,314,431,359,396,440,393,390,365,366,424,430,323,317,417,\\
+ &397,436,324,325,398,338,402,346,418,415,414,441,345,399,368,419,420,444,374,357,\\
+ &432,358,304,348,375,404,377,332,305,429,369,342,448,306,344,331,426,322,409,334,\\
+ &406,407,363,309,362,353,379,329,351,380,330,307,376,300,303,129,92,118,90,140,\\
+ &131,134,141,85,86,147,112,114,115,117,116,144,110,142,111,149,135,136,108,91,\\
+ &81,83,120,121,95,122,78,77,79,137,75,76,124,487,637,505,655,506,656,566,\\
+ &716,567,717,518,668,488,669,486,636,485,635,477,627,464,614,516,666,508,658,562,\\
+ &712,563,713,583,582,733,732,564,714,489,597,747,544,694,454,460,631,605,538,688,\\
+ &546,697,588,738,494,539,572,722,473,623,475,625,549,699,556,513,586,510,660,576,\\
+ &726,541,693,452,550).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ \kappa=(&365,366,367,378,379,380,391,392,393,28,61,83,240,280,107,163,333,353,146,137,\\
+ &328,332,349,344,0,1,2,3,9,26,27,216,196,244,286,316,309,363,399,10,\\
+ &11,12,13,60,215,194,195,231,232,82,239,271,272,279,106,181,182,207,208,362,\\
+ &375,398,52,53,76,77,86,100,101,108,159,161,193,374,8,297,298,299,364,376,\\
+ &389,40,187,213,287,291,165,167,189,370,44,263,219,294,305,320,158,242,288,241,\\
+ &396,48,37,39,166,168,190,222,330,341,228,276,220,373,15,324,369,348,17,19,\\
+ &21,290,50,51,81,184,103,212,304,307,319,358,42,55,57,72,73,264,94,95,\\
+ &329,340,227,275,80,102,54,58,131,132,118,176,202,191,277,62,66,257,387,293,\\
+ &295,192,368,18,252,281,325,334,92,273,134,237,253,331,233,217,160,110,289,354,\\
+ &63,65,85,105,7,347,116,104,79,6,87,84,32,157,22,14,4,5,16,175,\\
+ &93,292,371,45,49,397,346,308,31,33,43,171,197,172,198,56,59,30,98,211,\\
+ &200,133,144,268,113,318,41,352,321,67,260,151,150,382,383,296,351,169,174,266,\\
+ &64,235,170,224,164,267,153,322,115,251,139,259,310,68,386,114,302,402,401,395,\\
+ &218,394,155,300,123,243,124,229,269,355,388,261,283,234,284,221,313,69,38,78,\\
+ &88,135,89,120,384,356,148,323,327,20,236,173,122,75,162,186,210,109,179,255,\\
+ &199,250,258,35,34,403,141,254,274,282,138,404,99,390,140,400,117,225,178,127,\\
+ &96,90,306,119,121,156,129,130,29,377,25,97,311,270,145,201,335,338,345,147,\\
+ &342,36,112,372,111,278,285,246,245,205,206,226,180,125,126,337,339,350,336,142,\\
+ &317,143,315,249,262,203,204,209,265,343,405,247,91,154,136,128,183,230,46,47,\\
+ &185,238,326,256,23,248,314,303,70,71,223,177,214,188,360,361,357,381,359,312,\\
+ &301,149,152,74,24).
+ \end{aligned}
+\]
+
+## 61. A recovered central completion and its joint local isolation
+
+### 61.1 The central representative and the new local statement
+
+Retain the actual input-ray convention and the one-parameter matrix
+\(M(b)=\sqrt6H_0(b)\) of (60.1). At \(b=0\), put
+
+\[
+ \omega=\frac{-1+i\sqrt3}{2},\qquad
+ A=J_3+(\omega-1)I_3,\qquad
+ M(0)=\begin{pmatrix}A&A\\\bar A&-\bar A\end{pmatrix}.
+\tag{61.1}
+\]
+
+Define the unit phases
+
+\[
+ \begin{aligned}
+ \gamma&=-\frac{\sqrt3+5i}{2\sqrt7},\\
+ t&=-\frac12-\frac{3\sqrt{21}}{28}
+       +i\left(-\frac{\sqrt3}{4}+\frac{3\sqrt7}{14}\right),\\
+ \delta&=-\frac{3+i\sqrt7}{4},\qquad
+ \tau=\omega^2t,\qquad \sigma=\omega^2\delta.
+ \end{aligned}
+\tag{61.2}
+\]
+
+For \(m=0,1,2\), let \(f_m=(1,\omega^m,\omega^{2m})\), and set
+
+\[
+ \begin{gathered}
+ u_m=((1,1,\tau)\odot f_m,(\gamma,\gamma,\sigma)\odot f_m),\\
+ \Theta(x,y)=(-\bar y,\bar x),\qquad
+ U=(u_0,u_1,u_2,\Theta u_0,\Theta u_1,\Theta u_2),\\
+ V=U\operatorname{diag}(1,1,1,-\gamma,-\gamma,-\gamma).
+ \end{gathered}
+\tag{61.3}
+\]
+
+Here \(\odot\) is coordinatewise multiplication. The first row of \(V\)
+is \((1,1,1,1,1,1)\). The columns of \(U/\sqrt6\) and \(V/\sqrt6\)
+represent the same six rays.
+
+Alternative completions at this central Fourier-equivalent point are
+already part of the Fourier-family literature; see the explicit bridge
+and attribution in §61.5. Their existence is used here as an intermediate
+fact, with an explicit representative and original-equation proof.
+The new statement is isolation relative to the prescribed real branch,
+with no restriction on nearby basis coordinates.
+
+**Theorem 61.1 (repo-derived joint local isolation).**
+The point \((0,[V/\sqrt6])\) is locally isolated in the space of pairs
+\((b,[B])\) for which \(|b|<1\) and \(B\) is an actual common-flat
+orthonormal basis for \(H_0(b)\). Brackets identify independent column
+phases and column permutations only.
+
+More explicitly, after matching the six columns and normalizing their
+first entries, there is a neighborhood of \((0,V)\) in which the only
+unit-entry matrix \(Z\) satisfying
+
+\[
+ Z^*Z=6I_6,\qquad |(M(b)Z)_{rk}|^2=6\quad(0\le r,k\le5)
+\tag{61.4}
+\]
+
+is \(b=0, Z=V\). This excludes distinct nearby solutions, not only
+smooth continuations of the displayed basis. It makes no classification
+claim about other central completions or other points of the branch.
+
+### 61.2 The original central flatness equations
+
+Directly from (61.2),
+\(|\gamma|^2=|t|^2=|\delta|^2=1\). Character orthogonality gives
+\(u_m^*u_n=6\delta_{mn}\). In \(u_m^*\Theta u_n\), the upper and
+lower terms cancel coordinatewise. Since \(\Theta\) preserves norms
+and orthogonality, \(U^*U=6I_6\), and every entry of \(U\) has modulus 1.
+
+For \(e\in\{+1,-1\}\), put
+
+\[
+ r_e=1+e\gamma,\qquad s_e=\tau+e\sigma,\qquad
+ R_e=|r_e|^2,\quad S_e=|s_e|^2,\quad z_e=\bar r_es_e.
+\]
+
+Their exact values are
+
+\[
+ \begin{aligned}
+ R_+&=2-\frac{\sqrt{21}}7,& S_+&=2+\frac{2\sqrt{21}}7,\\
+ z_+&=-\frac{1+\sqrt{21}}4
+       +\frac{3i(\sqrt7+7\sqrt3)}{28},\\
+ R_-&=2+\frac{\sqrt{21}}7,& S_-&=2-\frac{2\sqrt{21}}7,\\
+ z_-&=\frac{\sqrt{21}-1}4
+       +\frac{3i(\sqrt7-7\sqrt3)}{28}.
+ \end{aligned}
+\tag{61.5}
+\]
+
+Consequently
+
+\[
+ 2R_e+S_e=6,\qquad
+ \omega^2R_++z_++\omega\bar z_+=0,\qquad
+ \omega R_-+z_-+\omega^2\bar z_-=0.
+\tag{61.6}
+\]
+
+The rows of \(A\operatorname{diag}(r_+,r_+,s_+)\) have zero cyclic
+three-point autocorrelation and squared norm 6. The same is true of
+\(\bar A\operatorname{diag}(r_-,r_-,s_-)\). Their three-point Fourier
+transforms therefore have every squared modulus6. These are precisely
+the upper and lower channels of \(M(0)u_m\). The identity
+\(M(0)\Theta=-\Theta M(0)\) gives the other three columns. Thus
+
+\[
+ |U_{rk}|^2=1,\qquad U^*U=6I_6,\qquad |(M(0)U)_{rk}|^2=6.
+\tag{61.7}
+\]
+
+For a normalized input \(U_{:k}/\sqrt6\), the output is
+\(M(0)U_{:k}/6\), so (61.7) is exactly the original common-flatness
+condition. The same equations hold after the column phases defining \(V\).
+
+The first two upper coordinates of \(u_m\) fix its Fourier character
+as \(m\), whereas
+
+\[
+ \Re\tau=-\frac18+\frac{9\sqrt{21}}{56}\in(0,1).
+\]
+
+Hence \(\tau\ne1\), so no \(u_m\) is canonical. The antiunitary
+\(\Theta\) permutes the canonical rays by (60.13), so none of
+\(\Theta u_m\) is canonical either. Direct character sums give the
+following four possible squared moduli of normalized overlaps with the
+canonical basis:
+
+\[
+ \frac{1\pm1/\sqrt7}{4},\qquad
+ \frac{1\pm1/\sqrt7}{8}.
+\tag{61.8}
+\]
+
+All are positive and different from \(1/6\). In particular the recovered
+completion and the canonical completion are not mutually unbiased.
+
+### 61.3 A complete unrestricted phase chart and its minor
+
+For each column \(k=0,\ldots,5\), fix only its first entry to 1.
+Every sufficiently nearby unit-entry matrix then has a unique expression
+with all \(\theta_{r,k}\) in a sufficiently small neighborhood of \(0\):
+
+\[
+ Z_{rk}(\theta)=V_{rk}e^{i\theta_{r,k}},\qquad
+ \theta_{0,k}=0,\qquad
+ \theta_{r,k}\in\mathbb R\quad(1\le r\le5).
+\tag{61.9}
+\]
+
+The 30 remaining phases are independent coordinates. No row phase has
+been removed, and no covariance or cross-column relation is imposed.
+In particular, all five simultaneous row-phase directions remain present.
+
+Define a real-analytic map \(\Phi(b,\theta)\in\mathbb R^{60}\), with
+zero-based row order as follows:
+
+1. For \((j,k)\) in lexicographic order with \(0\le j<k\le5\), append
+   \(\Re((Z^*Z)_{jk})\), then \(\Im((Z^*Z)_{jk})\). These are rows 0–29.
+2. For \(k=0,\ldots,5\), then \(a=0,\ldots,4\), append
+   \(|(M(b)Z)_{ak}|^2-6\). These are rows 30–59.
+
+The input moduli and Gram diagonal are automatic. Since
+\(M(b)^*M(b)=6I_6\), every input column has output squared norm 36.
+Thus the omitted sixth output condition follows from the first five,
+throughout the branch, not merely to first order. Consequently
+\(\Phi=0\) is equivalent to all conditions in (61.4).
+
+For the actual coefficients of (60.1),
+\(a'(0)=\sqrt3\), \(h'(0)=0\), and therefore
+
+\[
+ p=\frac{\sqrt3+i}{2},\qquad
+ M'(0)=\begin{pmatrix}pI_3&-pI_3\\-\bar pI_3&-\bar pI_3\end{pmatrix}.
+\tag{61.10}
+\]
+
+Put \(Y=M(0)V\), \(Y'=M'(0)V\). Order the Jacobian columns as
+
+\[
+ (\theta_{1,0},\ldots,\theta_{5,0},
+   \theta_{1,1},\ldots,\theta_{5,1},\ldots,
+   \theta_{1,5},\ldots,\theta_{5,5},b).
+\]
+
+For \(j<k\), the complex Gram derivative in the column
+\(\theta_{r,\ell}\) is
+
+\[
+ i\bar V_{rj}V_{rk}(\delta_{\ell k}-\delta_{\ell j}).
+\]
+
+Its real and imaginary parts give the two Gram rows; their \(b\)-entries
+are zero. The output-row entries are
+
+\[
+ \begin{aligned}
+ \partial_{\theta_{r,\ell}}\Phi^{\rm out}_{ak}
+   &=2\delta_{\ell k}\Re\!\left(i\bar Y_{ak}M(0)_{ar}V_{rk}\right),\\
+ \partial_b\Phi^{\rm out}_{ak}
+   &=2\Re(\bar Y_{ak}Y'_{ak}).
+ \end{aligned}
+\tag{61.11}
+\]
+
+These formulas specify the full \(60\times31\) real Jacobian
+\(\mathcal J=D\Phi(0,0)\) over \(\mathbb Q(\sqrt3,\sqrt7)\).
+Choose its rows in the following exact order:
+
+\[
+ \begin{aligned}
+ \rho=(&0,1,2,3,4,5,6,7,8,9,12,13,14,16,18,19,20,\\
+       &24,25,26,27,30,31,32,33,34,35,36,37,45,46).
+ \end{aligned}
+\]
+
+For \(B=\mathcal J[\rho,:]\), expansion in this specified field gives
+
+\[
+ \det B=\frac{25\cdot3^{24}(84+31\sqrt{21})}{2^{14}7^2}>0,
+ \qquad
+ N_{\mathbb Q(\sqrt3,\sqrt7)/\mathbb Q}(\det B)
+   =\frac{3^{98}5^{16}}{2^{56}7^6}.
+\tag{61.12}
+\]
+
+The determinant uses the positive \(b\)-derivative in (61.11).
+Its degree-four norm includes both repetitions of the quadratic
+conjugates, since the determinant lies in \(\mathbb Q(\sqrt{21})\).
+Indeed \((84+31\sqrt{21})(84-31\sqrt{21})=-3\cdot5^4\cdot7\).
+Thus (61.12) is a nonzero minor of the unrestricted joint derivative,
+not of a restricted construction of bases.
+
+### 61.4 Proof of joint local isolation
+
+The 31 selected components of \(\Phi\) define a real-analytic map
+from an open neighborhood of 0 in \(\mathbb R^{31}\) to
+\(\mathbb R^{31}\). The positive radicals in (60.1) are analytic near
+\(b=0\), and the phase chart is analytic. Equations (61.7) make 0 an
+exact zero, and (61.12) makes its derivative invertible.
+
+The inverse-function theorem therefore gives a neighborhood in which 0
+is the unique zero of those 31 components. Every actual common-flat
+orthonormal basis in the chart satisfies all 60 components, hence the
+selected 31. It follows that \(b=0\) and \(\theta=0\).
+
+Finally, the six rays are distinct, so their ordering can be fixed
+locally; column permutations are a discrete action. Together with the
+explicit column-phase normalization, this proves Theorem 61.1.
+It also excludes any distinct sequence of solutions converging to this
+point, including a nondifferentiable continuation through it. The result
+concerns the prescribed family \(H_0(b)\), not arbitrary nearby
+Hadamard-pair parameters.
+
+### 61.5 Graph distinction and the known Fourier point
+
+**Corollary 61.2 (repo-derived graph distinction).** At \(b=0\), the six
+rays in (61.3) form an all-noncanonical orthogonality clique. No automorphism
+of the full common-flat orthogonality graph sends the canonical \(K_6\)
+onto this clique. In particular, no fixed-pair unitary or antiunitary
+symmetry preserving the common-flat locus does so.
+
+**Proof.** Let \(R_3\) interchange zero-based positions 1 and 2 in three
+coordinates, and put \(R=\operatorname{diag}(R_3,R_3)\). For any
+\(w=(x,y)\), symmetry of \(R_3\) gives
+
+\[
+ \langle w,R\Theta w\rangle
+ =-\bar x^TR_3\bar y+\bar y^TR_3\bar x=0.
+\]
+
+Since \(R\) commutes with \(M(0)\), the ray of
+\(v=R\Theta u_2\) is common-flat and orthogonal to \(u_2\).
+All six displayed basis rays have second/first upper-coordinate ratio
+in \(\{1,\omega,\omega^2\}\). For \(v\), that ratio is
+\(\overline{\delta/\gamma}\), whose real part is
+
+\[
+ \frac{35+3\sqrt{21}}{56}\in(0,1).
+\]
+
+Thus \(v\) is outside the displayed basis. The vertex \([u_2]\) has
+its five basis neighbors and this sixth distinct neighbor. Proposition 60.1
+gives degree exactly 5 for each canonical vertex. Graph automorphisms
+preserve degree, proving the claim. This does not preclude ordinary
+Hadamard equivalence that changes the fixed pair.
+
+For the literature identification, let \(\zeta=e^{\pi i/3}\) and define
+
+\[
+ F_{jk}=\frac{\zeta^{jk+(j\bmod2)\mathbf1_{k\in\{1,4\}}}}{\sqrt6},
+ \qquad 0\le j,k\le5.
+\tag{61.13}
+\]
+
+This is \(F(1/6,0)\) in Brierley–Weigert's Fourier-family convention,
+Appendix A.2, equation (35) of
+[*Constructing Mutually Unbiased Bases in Dimension Six*](https://arxiv.org/abs/0901.4051v2).
+Let \(\Pi\) reorder rows as \((3,0,4,2,5,1)\), and put
+
+\[
+ \begin{aligned}
+ D_L&=\operatorname{diag}(1,\zeta^4,\zeta^2,\zeta^2,\zeta^2,\zeta^2),\\
+ D_R&=\operatorname{diag}(\zeta^4,1,1,\zeta,\zeta^3,\zeta^3).
+ \end{aligned}
+\]
+
+The entrywise identity is
+
+\[
+ \Pi H_0(0)=D_LFD_R.
+\tag{61.14}
+\]
+
+Thus, if a unit column vector \(v\) is unbiased to \((I,F)\), then
+\(v\) and \(F^*v\) are flat, and
+
+\[
+ w=D_R^*F^*v,\qquad H_0(0)w=\Pi^*D_Lv
+\tag{61.15}
+\]
+
+are the corresponding actual input and output. The inverse is
+\(v=D_L^*\Pi H_0(0)w\); this is a unitary bijection preserving
+orthogonality. The usual common-unbiased column basis associated with
+(61.3) for the actual pair \((I,H_0(0))\) is \(H_0(0)U/\sqrt6\).
+
+Brierley–Weigert §4.2 discusses multiple completions at this Fourier
+point. Szöllősi's
+[*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*](https://arxiv.org/abs/0811.3930v2),
+Lemma 3.1, supplies the central Fourier-intersection context.
+Theorem 1.4 of Jaming–Matolcsi–Móra–Szöllősi–Weiner,
+[*A generalized Pauli problem and an infinite family of MUB-triplets in dimension 6*](https://arxiv.org/abs/0902.0882v2),
+excludes a quartet containing a Fourier-family pair. These are established
+context and intermediate identifications, not premises of the determinant
+in (61.12). No exact census, exhaustive classification, or priority for
+the existence of alternative completions is inferred. Identifying the
+particular radical representative with a catalogued source basis is
+unnecessary for the original-equation proof or the local-isolation result.
+
+The example rules out universal intersection with the canonical component.
+It does not establish persistence away from the center or a general
+fourth-MUB result; the explicit cross-overlaps (61.8) already distinguish
+two alternative completions from four mutually unbiased bases.
+
+后续结果见[理论续卷 II](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_II.md)：第 62 节给出移动 canonical 基穿过中心参数的局部唯一性，第 63 节确定本节六条非 canonical 射线的局部正交图。

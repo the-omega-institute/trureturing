@@ -315,9 +315,9 @@ def completeSourceLaw (ν : PMF Depth) (f : FiniteFields) :
     Measure NativeFullResidual.FullTranscript :=
   (jointLaw ν).map (fun t => RarePriorFullFields.fieldsTranscript f t.2)
 
-instance (ν : PMF Depth) (f : FiniteFields) : IsProbabilityMeasure (completeSourceLaw ν f) :=
-  Measure.isProbabilityMeasure_map
-    ((RarePriorGeneratedLaw.fields_measurable f).comp measurable_snd).aemeasurable
+instance (ν : PMF Depth) (f : FiniteFields) : IsProbabilityMeasure (completeSourceLaw ν f) := by
+  unfold completeSourceLaw
+  infer_instance
 
 private theorem complete_mix (t : Parameter) (ops : List Operation)
     (c : AcquiredNativeState) (hc : run ops = some c) (f : FiniteFields) :

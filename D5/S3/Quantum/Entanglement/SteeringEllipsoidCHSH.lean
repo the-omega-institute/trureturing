@@ -447,7 +447,7 @@ private lemma pure_bob_support (ρ : TwoQubit) (hρ : ρ.PosSemidef)
   have hρE : ρ * E = 0 := by
     ext i j
     have hz : ρ *ᵥ (E *ᵥ Pi.single j 1) = 0 :=
-      (hρ.dotProduct_mulVec_zero_iff _).mp (by
+      (hρ.dotProduct_mulVec_zero_iff).mp (by
         rw [star_mulVec, ← dotProduct_mulVec, mulVec_mulVec, mulVec_mulVec,
           hZ', zero_mulVec, dotProduct_zero])
     rw [mulVec_mulVec, mulVec_single_one] at hz

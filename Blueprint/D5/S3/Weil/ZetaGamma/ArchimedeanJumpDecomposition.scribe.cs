@@ -12,6 +12,19 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
         H("Archimedean Jump Decomposition"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("archimedean-jump-density-geometric-series"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum"),
+                H("Actual jump density as a positive rate series"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real x>0, archimedeanJumpDensity(x) equals the sum over natural n "
+                    + "of exp(-((2*n)+1/2)*x). The geometric ratio exp(-2*x) lies in [0,1). "
+                    + "This is the original density-series proof used by the Levy decomposition; "
+                    + "the extended periodic comparison consumes the same declaration directly."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("archimedean-jump-decomposition"),
                 DeclarationHandle.Create(
                     "D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition."
@@ -84,11 +97,49 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
                     + "established. No finiteness of either full energy is included "
                     + "in the original L2 premise.")),
             Paragraph(Text(
-                "This is an application of the existing density, interval transport "
-                    + "and Mathlib integration results. It identifies the actual "
-                    + "zero-extension and periodic energy domains and their finite "
-                    + "boundary difference. A Fourier coefficient description, "
-                    + "closed-form/core realization, and positivity of the full "
+                "The periodic energy also has an exact Fourier description on every "
+                    + "such interval L2 input. Put omega_n=2*pi*n/d for n in Z, "
+                    + "w(t)=Re(digamma(1/4+i*t/2))-Re(digamma(1/4)), and "
+                    + "c_n=sqrt(d)*fourierCoeff(v,n). Mathlib's circle coefficient "
+                    + "uses Haar measure of total mass one: equivalently, c_n is "
+                    + "1/sqrt(d) times the Lebesgue integral over I of "
+                    + "u(x)*exp(-i*omega_n*x). Thus sum_n |c_n|^2 equals the "
+                    + "original Lebesgue L2 mass; the factor sqrt(d) is essential.")),
+            Paragraph(Text(
+                "With all terms interpreted in ENNReal, the full periodic energy "
+                    + "is integral_{s>0} ofReal(rho(s))*ofReal("
+                    + "integral_I |u(x)-v(x-s)|^2 dx) ds "
+                    + "=sum_{n in Z} ofReal(w(omega_n))*ofReal(|c_n|^2). "
+                    + "This equality holds before imposing any full-energy "
+                    + "finiteness premise and permits both sides to be infinite. "
+                    + "The original Levy representation proves w(t)>=0 for every "
+                    + "real t and identifies each frequency integral with this "
+                    + "actual digamma increment.")),
+            Paragraph(Text(
+                "For each fixed displacement s, L2 Parseval gives the squared "
+                    + "mass of the periodic difference as the coefficient sum "
+                    + "with multiplier |1-exp(-i*omega_n*s)|^2="
+                    + "2*(1-cos(omega_n*s)). Nonnegative Tonelli exchanges the "
+                    + "sum with the s-integral. The already proved one-frequency "
+                    + "Levy integrability and digamma identity then evaluate "
+                    + "each weight. Only the finite L2 difference mass is "
+                    + "converted from a real integral to its ENNReal integral; "
+                    + "no infinite total energy is converted to a real number.")),
+            Paragraph(Text(
+                "Combining this extended identity with the full boundary-domain "
+                    + "equivalence yields the exact coefficient domain: F0 is "
+                    + "integrable on (0,infinity) if and only if "
+                    + "sum_{n in Z} ofReal(w(omega_n))*ofReal(|c_n|^2) is finite. "
+                    + "The original premises remain a>0 and interval MemLp 2. "
+                    + "On this common domain the finite identity E0=Ep+B_0 "
+                    + "continues to hold.")),
+            Paragraph(Text(
+                "These interval and Fourier conclusions apply the existing "
+                    + "Gamma density and Levy proof together with the interval "
+                    + "transport, Parseval and integration results. A closed form "
+                    + "realization, a smooth compactly supported form core, "
+                    + "identification with the full raw real-line Fourier "
+                    + "multiplier on this domain, and positivity of the full "
                     + "signed Weil form require further arguments. The displayed "
                     + "public theorem above retains its smooth even test carrier "
                     + "and exact ArchimedeanConvergent premise.")))));

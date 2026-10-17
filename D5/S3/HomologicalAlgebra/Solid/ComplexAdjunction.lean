@@ -6,7 +6,7 @@
    utility: none
    digest: Unbounded solid derived construction with exact protected objects and all quasi-isomorphisms. -/
 
-import D5.S3.HomologicalAlgebra.Solid.ExactFunctorNatTrans
+import Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor
 import D5.S3.HomologicalAlgebra.Solid.Definitions
 
 noncomputable section
@@ -15,7 +15,7 @@ set_option backward.isDefEq.respectTransparency.types false
 open CategoryTheory Limits
 namespace CWSolid
 
-/-- An additive adjunction lifts degreewise to complexes of any shape. -/
+/-- An adjunction of zero-preserving functors lifts degreewise to complexes of any shape. -/
 def mapHomologicalComplexAdjunction
     {C D : Type*} [Category* C] [Category* D]
     [HasZeroMorphisms C] [HasZeroMorphisms D]
@@ -24,18 +24,18 @@ def mapHomologicalComplexAdjunction
     F.mapHomologicalComplex c ⊣ G.mapHomologicalComplex c where
   unit := (Functor.mapHomologicalComplexIdIso C c).inv ≫
     adj.unit.mapHomologicalComplex c ≫
-    (Functor.mapHomologicalComplexCompIsoZero (Iso.refl (F ⋙ G)) c).inv
-  counit := (Functor.mapHomologicalComplexCompIsoZero (Iso.refl (G ⋙ F)) c).hom ≫
+    (Functor.mapHomologicalComplexCompIso (Iso.refl (F ⋙ G)) c).inv
+  counit := (Functor.mapHomologicalComplexCompIso (Iso.refl (G ⋙ F)) c).hom ≫
     adj.counit.mapHomologicalComplex c ≫
     (Functor.mapHomologicalComplexIdIso D c).hom
   left_triangle_components K := by
     ext i
-    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIsoZero,
+    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIso,
       NatIso.mapHomologicalComplex, HomologicalComplex.Hom.isoOfComponents,
       Functor.mapHomologicalComplex] using adj.left_triangle_components (K.X i)
   right_triangle_components K := by
     ext i
-    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIsoZero,
+    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIso,
       NatIso.mapHomologicalComplex, HomologicalComplex.Hom.isoOfComponents,
       Functor.mapHomologicalComplex] using adj.right_triangle_components (K.X i)
 

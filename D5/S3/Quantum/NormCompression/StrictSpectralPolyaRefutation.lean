@@ -99,6 +99,7 @@ proof_shape: result: content; escape_witness: real_minimizers_separated; consume
 
 import D5.S3.Quantum.NormCompression.UpperBranchReduction
 import D5.S3.Resource.LogDet.PathSpectralClassical
+import Mathlib.Analysis.CStarAlgebra.Matrix
 
 noncomputable section
 namespace D5.S3.Quantum.NormCompression.StrictSpectralPolyaRefutation
@@ -206,8 +207,7 @@ private theorem entry_le_sv0 {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℂ) (i : F
   have hv : ‖v‖ = 1 := OrthonormalBasis.norm_eq_one _ _
   have ha : Matrix.toEuclideanLin A v = WithLp.toLp 2 (fun k => A k j) := by
     ext k
-    simp [v, EuclideanSpace.basisFun_apply, Matrix.toEuclideanLin_apply,
-      Matrix.mulVec, dotProduct]
+    simp [v, EuclideanSpace.basisFun_apply, Matrix.mulVec_single_one]
   rw [hv, mul_one, ha] at hb
   exact (PiLp.norm_apply_le (WithLp.toLp 2 (fun k => A k j)) i).trans hb
 
@@ -550,7 +550,7 @@ private theorem diagonal_power_bound {n : ℕ} {p : ℝ} (hp : 2 ≤ p)
   have he : Matrix.toEuclideanLin A ((EuclideanSpace.basisFun (Fin n) ℂ) i) =
       WithLp.toLp 2 (fun k => A k i) := by
     ext k
-    simp [EuclideanSpace.basisFun_apply, Matrix.toEuclideanLin_apply, Matrix.mulVec, dotProduct]
+    simp [EuclideanSpace.basisFun_apply, Matrix.mulVec_single_one]
   rw [he]
   exact PiLp.norm_apply_le (WithLp.toLp 2 (fun k => A k i)) i
 

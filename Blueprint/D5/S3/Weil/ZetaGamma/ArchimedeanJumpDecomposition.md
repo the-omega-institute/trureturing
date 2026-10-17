@@ -4,7 +4,19 @@
 
 The completed-zeta Archimedean term is its mass contribution plus a nonnegative continuous translation energy.
 
-**Theorem 1.1 (Archimedean jump decomposition).**
+**Theorem 1.1 (Actual jump density as a positive rate series).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real x>0, archimedeanJumpDensity(x) equals the sum over natural n of exp(-((2*n)+1/2)*x). The geometric ratio exp(-2*x) lies in [0,1). This is the original density-series proof used by the Levy decomposition; the extended periodic comparison consumes the same declaration directly.
+
+**Theorem 1.2 (Archimedean jump decomposition).**
 
 $$\forall f\in \mathcal{W}, hArch: \operatorname{ArchimedeanConvergent}(\operatorname{convolutionSquare}\left(f\right)) \Rightarrow \operatorname{archimedeanTerm}\left(\operatorname{convolutionSquare}\left(f\right), hArch\right) = \operatorname{archimedeanConstant} \cdot \operatorname{l2Mass}\left(f\right) + \operatorname{archimedeanJumpEnergy}\left(f\right) \land 0 \le \operatorname{archimedeanJumpEnergy}\left(f\right)$$
 
@@ -30,9 +42,18 @@ The boundary pairing at epsilon=0 is absolutely integrable under the interval L2
 
 Consequently F0 is integrable on (0,infinity) if and only if Fp is integrable there. On this common finite domain the full energies obey E0=Ep+B_0. To obtain the forward direction, start with the finite full zero-extension energy, subtract the convergent boundary sequence from its cutoff integrals, and apply the nonnegative AECover integrability theorem to Fp. Starting with the finite periodic energy and adding the boundary sequence proves the converse. The sets (1/(n+1),infinity) cover (0,infinity), so each limit identifies the full integral only after its integrability has been established. No finiteness of either full energy is included in the original L2 premise.
 
-This is an application of the existing density, interval transport and Mathlib integration results. It identifies the actual zero-extension and periodic energy domains and their finite boundary difference. A Fourier coefficient description, closed-form/core realization, and positivity of the full signed Weil form require further arguments. The displayed public theorem above retains its smooth even test carrier and exact ArchimedeanConvergent premise.
+The periodic energy also has an exact Fourier description on every such interval L2 input. Put omega_n=2*pi*n/d for n in Z, w(t)=Re(digamma(1/4+i*t/2))-Re(digamma(1/4)), and c_n=sqrt(d)*fourierCoeff(v,n). Mathlib's circle coefficient uses Haar measure of total mass one: equivalently, c_n is 1/sqrt(d) times the Lebesgue integral over I of u(x)*exp(-i*omega_n*x). Thus sum_n |c_n|^2 equals the original Lebesgue L2 mass; the factor sqrt(d) is essential.
+
+With all terms interpreted in ENNReal, the full periodic energy is integral_{s>0} ofReal(rho(s))*ofReal(integral_I |u(x)-v(x-s)|^2 dx) ds =sum_{n in Z} ofReal(w(omega_n))*ofReal(|c_n|^2). This equality holds before imposing any full-energy finiteness premise and permits both sides to be infinite. The original Levy representation proves w(t)>=0 for every real t and identifies each frequency integral with this actual digamma increment.
+
+For each fixed displacement s, L2 Parseval gives the squared mass of the periodic difference as the coefficient sum with multiplier |1-exp(-i*omega_n*s)|^2=2*(1-cos(omega_n*s)). Nonnegative Tonelli exchanges the sum with the s-integral. The already proved one-frequency Levy integrability and digamma identity then evaluate each weight. Only the finite L2 difference mass is converted from a real integral to its ENNReal integral; no infinite total energy is converted to a real number.
+
+Combining this extended identity with the full boundary-domain equivalence yields the exact coefficient domain: F0 is integrable on (0,infinity) if and only if sum_{n in Z} ofReal(w(omega_n))*ofReal(|c_n|^2) is finite. The original premises remain a>0 and interval MemLp 2. On this common domain the finite identity E0=Ep+B_0 continues to hold.
+
+These interval and Fourier conclusions apply the existing Gamma density and Levy proof together with the interval transport, Parseval and integration results. A closed form realization, a smooth compactly supported form core, identification with the full raw real-line Fourier multiplier on this domain, and positivity of the full signed Weil form require further arguments. The displayed public theorem above retains its smooth even test carrier and exact ArchimedeanConvergent premise.
 
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
 - Dependency: [D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity](../TestFunctions/ConvolutionSquarePositivity.md)

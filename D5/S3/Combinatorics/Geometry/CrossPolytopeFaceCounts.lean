@@ -13,6 +13,7 @@ import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.Order.Extension.Linear
 import Mathlib.Order.Fin.Basic
+import Mathlib.Data.Fintype.Sort
 import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.PiProd
 import Mathlib.Analysis.Convex.Topology
 import Mathlib.Algebra.Group.Pointwise.Set.BigOperators

@@ -148,7 +148,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
   let finiteLaw (n : ℕ) : ProbabilityMeasure (Fin (n + 1) → S) :=
     ⟨(pLaw n).toMeasure, inferInstance⟩
   let laws (l : ℕ) : ProbabilityMeasure (Fin 1 → B l) :=
-    (finiteLaw (2 * l)).map (measurable_of_countable (fun w _ => w)).aemeasurable
+    (finiteLaw (2 * l)).map (fun w _ => w)
   have laws_compatible (l : ℕ) :
       (laws (l + 1) : Measure (Fin 1 → B (l + 1))).map (fun y j => bond l (y j)) =
         (laws l : Measure (Fin 1 → B l)) := by
@@ -190,7 +190,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
       have h3 : -t ≤ (t.natAbs : ℤ) := by simpa using (Int.le_natAbs (a := -t))
       omega⟩
   have unpack_measurable : Measurable unpack := by
-    apply measurable_pi_lambda
+    apply Measurable.of_eval
     intro t
     exact (measurable_pi_apply _).comp ((measurable_pi_apply _).comp measurable_subtype_coe)
   have unpack_block (x : T) (l : ℕ) (i : Fin (2 * l + 1)) :
@@ -213,7 +213,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
     dsimp [t] at *
     omega
   let ν : ProbabilityMeasure (ℤ → S) :=
-    threadLaw.map (unpack_measurable.comp (measurable_pi_apply 0)).aemeasurable
+    threadLaw.map (fun z => unpack (z 0))
   have ν_center (l : ℕ) :
       (ν : Measure (ℤ → S)).map (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) =
         (pLaw (2 * l)).toMeasure := by
@@ -227,7 +227,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
       exact unpack_block (z 0) l i
     rw [he, ← Measure.map_map (f := levelProjection bond 1 l)
       (by fun_prop) (by
-        exact measurable_pi_lambda _ fun j =>
+        exact Measurable.of_eval fun j =>
           (measurable_pi_apply l).comp
             (measurable_subtype_coe.comp (measurable_pi_apply j))), hthread]
     change (((pLaw (2 * l)).toMeasure).map (fun w (_ : Fin 1) => w)).map
@@ -271,12 +271,12 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
       (hρ : ∀ l, (ρ : Measure (ℤ → S)).map
         (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) =
         (pLaw (2 * l)).toMeasure) : ρ = ν := by
-    have hu : ρ.map pack_measurable.aemeasurable = threadLaw := by
+    have hu : ρ.map pack = threadLaw := by
       apply unique_thread
       intro l
       change ((ρ : Measure (ℤ → S)).map pack).map (levelProjection bond 1 l) = _
       rw [Measure.map_map (by
-        exact measurable_pi_lambda _ fun j =>
+        exact Measurable.of_eval fun j =>
           (measurable_pi_apply l).comp
             (measurable_subtype_coe.comp (measurable_pi_apply j))) pack_measurable]
       have he : levelProjection bond 1 l ∘ pack =
@@ -295,7 +295,7 @@ private theorem bilateral_chain {S : Type u} [Fintype S] [Nonempty S]
     exact ProbabilityMeasure.toMeasure_injective he
   have ν_shift (a : ℤ) : (ν : Measure (ℤ → S)).map (fun x t => x (a + t)) = ν := by
     have hm : Measurable (fun x : ℤ → S => fun t => x (a + t)) := by fun_prop
-    have hu := ν_unique (ν.map hm.aemeasurable) (fun l => by
+    have hu := ν_unique (ν.map (fun x t => x (a + t))) (fun l => by
       change ((ν : Measure (ℤ → S)).map (fun x t => x (a + t))).map _ = _
       rw [Measure.map_map (by fun_prop) hm]
       have he : (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) ∘
@@ -377,7 +377,7 @@ private theorem raw_law (θ : Presentation H) :
   let decode : (ℤ → H × Bool) → PathSpace H := fun z =>
     (fun t => (z t).1, fun t => (z (t + 1)).2)
   have hd : Measurable decode := by dsimp [decode]; fun_prop
-  let J : ProbabilityMeasure (PathSpace H) := ν.map hd.aemeasurable
+  let J : ProbabilityMeasure (PathSpace H) := ν.map decode
   refine ⟨J, ?_, ?_⟩
   · intro t n h w
     let v (b : Bool) : Fin (n + 1) → H × Bool :=
@@ -453,8 +453,8 @@ private theorem raw_law (θ : Presentation H) :
   · intro a
     change ((ν : Measure _).map decode).map (shift a) = (ν : Measure _).map decode
     rw [Measure.map_map (by
-      exact (measurable_pi_lambda _ fun t => (measurable_pi_apply (a + t)).comp measurable_fst).prodMk
-        (measurable_pi_lambda _ fun t => (measurable_pi_apply (a + t)).comp measurable_snd)) hd]
+      exact (Measurable.of_eval fun t => (measurable_pi_apply (a + t)).comp measurable_fst).prodMk
+        (Measurable.of_eval fun t => (measurable_pi_apply (a + t)).comp measurable_snd)) hd]
     have he : shift a ∘ decode = decode ∘ (fun z t => z (a + t)) := by
       funext z
       apply Prod.ext <;> funext t

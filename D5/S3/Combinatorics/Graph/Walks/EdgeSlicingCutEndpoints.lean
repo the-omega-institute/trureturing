@@ -6,6 +6,7 @@
    utility: none
    digest: Actual Hamilton cycle slices retain actual cut-edge endpoints. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 

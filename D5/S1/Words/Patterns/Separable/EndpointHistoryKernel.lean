@@ -9,6 +9,9 @@
 import D5.S1.Words.Patterns.Separable.MinimumCutKernel
 import Mathlib.Data.List.OfFn
 
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
+
 /-!
 Histories describe subsets of actual avoiding permutations. A blocked sign means
 absence of that proper-cut sign, including the genuine singleton convention.
@@ -304,8 +307,8 @@ theorem endpoint_history_count_kernel {state : Option Bool} {length : ℕ}
   have mass {size : ℕ} (event : Avoider size → Prop) : actualMass size event =
       (Nat.card {π : Avoider size // event π} : ℝ) / Nat.card (Avoider size) := by
     let : Nonempty (Avoider size) := ⟨identityAvoider size⟩
-    change ((PMF.uniformOfFintype (Avoider size)).toOuterMeasure {π | event π}).toReal = _
-    rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+    change ((uniformPmf (Avoider size)).toOuterMeasure {π | event π}).toReal = _
+    rw [uniformPmf_toOuterMeasure_apply]
     simp only [ENNReal.toReal_div, ENNReal.toReal_natCast, Nat.card_eq_fintype_card]
     rw [Fintype.card_congr (Equiv.subtypeEquivRight
       (fun π : Avoider size => show (π ∈ {π | event π}) ↔ event π from Iff.rfl))]

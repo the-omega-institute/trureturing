@@ -39,7 +39,7 @@ theorem alternating_five_hom_to_pgroup_trivial
   letI : Fact p.Prime := ⟨hp⟩
   letI : IsSimpleGroup (alternatingGroup (Fin 5)) :=
     alternatingGroup.isSimpleGroup (by norm_num)
-  rcases IsSimpleGroup.eq_bot_or_eq_top_of_normal phi.ker inferInstance with hker | hker
+  rcases IsSimpleGroup.eq_bot_or_eq_top_of_normal phi.ker with hker | hker
   · have hinjective : Function.Injective phi := (MonoidHom.ker_eq_bot_iff phi).mp hker
     have hsourceP : IsPGroup p (alternatingGroup (Fin 5)) :=
       IsPGroup.of_injective hP phi hinjective

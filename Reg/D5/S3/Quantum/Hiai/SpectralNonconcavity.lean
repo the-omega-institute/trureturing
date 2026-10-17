@@ -74,9 +74,7 @@ noncomputable def evidence : Registration arena (type_of% (@off_midpoint_violati
   dependence := by
     intro i
     exact ⟨(), 0, 1, by
-      norm_num [actual, realize]
-      intro he
-      cases he⟩
+      norm_num [actual, realize]⟩
 
 noncomputable def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

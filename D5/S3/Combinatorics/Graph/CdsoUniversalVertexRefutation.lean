@@ -175,10 +175,10 @@ theorem result : ¬ claim := by
       have hab : G.Adj a b := by simpa only [mem_edgeFinset, mem_edgeSet] using hm.1
       have hav : v ≠ a := by
         intro h
-        exact hm.2 ((G.mem_incidenceFinset v _).mpr ((G.mk'_mem_incidenceSet_iff).mpr ⟨hab, Or.inl h⟩))
+        exact hm.2 ((mem_incidenceFinset (G := G) (v := v)).mpr ((G.mk'_mem_incidenceSet_iff).mpr ⟨hab, Or.inl h⟩))
       have hbv : v ≠ b := by
         intro h
-        exact hm.2 ((G.mem_incidenceFinset v _).mpr ((G.mk'_mem_incidenceSet_iff).mpr ⟨hab, Or.inr h⟩))
+        exact hm.2 ((mem_incidenceFinset (G := G) (v := v)).mpr ((G.mk'_mem_incidenceSet_iff).mpr ⟨hab, Or.inr h⟩))
       have hshape (x y : Fin 7) : G.Adj x y ↔
           x ≠ y ∧ (x = v ∨ y = v ∨ (x = a ∧ y = b) ∨ (x = b ∧ y = a)) := by
         constructor
