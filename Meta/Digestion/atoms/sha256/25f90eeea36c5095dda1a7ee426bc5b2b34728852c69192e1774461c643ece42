@@ -1,0 +1,34 @@
+**定理 4.2（矩形词的原律根和界）。** 固定一个满足 (4.1) 的类 $C$。令 $n_C=|C|$、$m=|w_C|$，并置
+
+$$
+u=\min_{I_C\times J_C}B_C(s,t)>0,\quad
+v=\max_{I_C\times J_C}B_C(s,t),\quad
+\rho=1-u/v<1,\quad b=m+n_C.
+$$
+
+固定任一 $r\in I_C$，对每个 $h\in C$ 选一条从 $h$ 到 $r$ 的带发射标签的正路径：若 $w_C$ 首位为 $0$，取简单正 $A$-路径，长度至多 $n_C-1$；若 $w_C$ 首位为 $1$，先取一条到某个 $u$ 的简单正路径，再接一条正的 $0$-边 $u\to r$，长度至多 $n_C$。令 $d_h$ 为沿选定标签的矩阵项乘积，$d_r=1$（从块起点直接发词时不需要前置边）。这种选择总能做到：若 $w_C$ 首位为 $1$，$r$ 有正的 $1$-出边；若所有入 $r$ 的正边都发射 $1$，便得到正的相邻 $11$ 路径，和正权类上的标量 no11 条件矛盾，故存在正的 $0$-入边。定义
+
+$$
+\varepsilon=\min_{h\in C}d_h(B_C\mathbf1)(r)>0,\qquad
+\eta=1-\varepsilon(1-\rho^2)\in[0,1).
+\tag{4.2}
+$$
+
+对该类条件可见律 $P_C$ 的所有 $j\ge0$，
+
+$$
+e_L^{P_C}(j),e_R^{P_C}(j)\le\eta^{\lfloor j/b\rfloor}.
+\tag{4.3}
+$$
+
+用 $0^0=1$，则
+
+$$
+\begin{aligned}
+A_{P_C}(R)&\le\frac{2b\,\eta^{\lfloor R/b\rfloor/2}}{1-\sqrt\eta},
+&\tau_{P_C}(R)&\le\frac{2b\,\eta^{\lfloor R/b\rfloor}}{1-\eta},\\
+A_{P_C}(0)&\le\frac{2b}{1-\sqrt\eta}.
+\end{aligned}
+\tag{4.4}
+$$
+

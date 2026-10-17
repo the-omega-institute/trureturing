@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.OriginalResidualFiniteTransfer
 import Reg.Support.DependentFamily
 import Reg.D5.S3.Arith.Robin.OriginalResidualFiniteTransfer.CenteredPairSharp
+import Reg.D5.S3.Arith.Robin.OriginalResidualFiniteTransfer.FirstMomentHigh
 
 namespace Reg.D5.S3.Arith.Robin.OriginalResidualFiniteTransfer
 
