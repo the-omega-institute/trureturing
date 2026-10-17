@@ -2195,3 +2195,257 @@ Y = (
   -206720652473969, -74112146882584, -459491299163216, -1663281799341056, 571455845871278, -385391490325439
 ) / 10^15
 ```
+
+## 71. Scope of the external rank and real-entry exclusion arguments
+
+### 71.1 Statements, conventions, and the boundary of this note
+
+Chen--Yu's [Theorem 3, arXiv:1610.04875v3](https://arxiv.org/pdf/1610.04875v3)
+states that a quartet containing identity cannot contain another basis of
+operator Schmidt rank at most two on \(\mathbb C^2\otimes\mathbb C^3\).
+Their Definition 4 uses “MUB trio” for the three Hadamards in addition to
+identity. The rank-two part invokes Lemma 13(ii.d), proved in Appendix D.
+The 2026 [McNulty--Weigert review, Theorem 7.12](https://arxiv.org/pdf/2410.23997)
+repeats that exclusion.
+
+The actual family has exactly this rank and tensor convention, as shown
+below. Thus the stated theorem would exclude the whole branch if imported.
+However, the following exact examples invalidate two specific intermediate
+steps in the inspected proof. A separate example contradicts the
+two-representative classification in
+[Liang--Chen, arXiv:2504.15576v3, Lemma 1](https://arxiv.org/pdf/2504.15576v3).
+The conclusions here concern those intermediate claims. They neither
+construct a quartet nor disprove the no-quartet conclusions, which could
+have alternative proofs. The local theorems in §§62--69 do not depend on
+these external exclusions. No novelty claim about the whole-branch exclusion problem is made.
+
+### 71.2 Exact Schmidt rank of the actual family
+
+Use the ordered tensor basis
+\((e_0\otimes f_0,e_0\otimes f_1,e_0\otimes f_2,
+e_1\otimes f_0,e_1\otimes f_1,e_1\otimes f_2)\).
+For \(-1<b<1\), put
+
+\[
+h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+P=\frac{bh-3+i(h+b)}2,\qquad
+Q=\frac{-bh-3+i(h-b)}2.
+\tag{71.1}
+\]
+
+Writing \(J=J_3\) and \(I=I_3\), the actual unit-entry matrix is
+
+\[
+M=\sqrt6H_0(b)=
+\begin{pmatrix}J+PI&J+QI\\J+\bar QI&-J-\bar PI\end{pmatrix}
+=F_2\otimes J+L\otimes I,
+\quad
+F_2=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+L=\begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+\tag{71.2}
+\]
+
+Indeed,
+
+\[
+\frac12F_2^*L=-\frac32I_2+\frac i2K,\qquad
+K=\begin{pmatrix}b&h(1+ib)\\h(1-ib)&-b\end{pmatrix},
+\qquad K^2=3I_2.
+\tag{71.3}
+\]
+
+Since \(h>0\), \(K\) is not scalar; hence \(F_2,L\) are linearly
+independent. So are \(J,I\). Therefore \(H_0(b)\) has operator Schmidt
+rank exactly two. No change of tensor factorization is used.
+
+Retaining independent real \(b,h\), direct multiplication also gives
+
+\[
+D=(1+b^2)h^2+b^2-3,\qquad
+M^*M=(6+D/2)I_6,\qquad
+|1+P|^2=|1+Q|^2=1+D/4.
+\tag{71.4}
+\]
+
+These verify the original Hadamard equations at \(D=0\).
+
+### 71.3 A unitary counterexample to the equal-magnitude step
+
+At \(\alpha=\beta=\pi/4\), the Appendix D argument immediately before
+(D11) infers \(v_{jk}=\pm i w_{jk}\) from its entrywise conditions.
+Consider instead
+
+\[
+V=\begin{pmatrix}
+1/\sqrt3&1/\sqrt3&1/\sqrt3\\
+1/\sqrt2&-1/\sqrt2&0\\
+1/\sqrt6&1/\sqrt6&-2/\sqrt6
+\end{pmatrix},\qquad
+R=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\qquad W=iRV.
+\tag{71.5}
+\]
+
+Both \(V,W\) are unitary. Their entries are respectively real and
+imaginary, and column normalization of \(V\) gives, at every position,
+
+\[
+\operatorname{Re}(\bar v_{jk}w_{jk})=0,\qquad
+|v_{jk}|^2+|w_{jk}|^2=2/3.
+\tag{71.6}
+\]
+
+But \(v_{23}=0\), whereas \(w_{23}=-2i/\sqrt6\); thus neither sign
+in \(v_{23}=\pm i w_{23}\) is possible. Global unitarity does not
+repair the stated inference.
+
+This example gives a genuine six-dimensional flat unitary:
+
+\[
+H=\frac12\begin{pmatrix}V+W&V-W\\V-W&V+W\end{pmatrix}
+=(F_2/\sqrt2\otimes I)\operatorname{diag}(V,W)
+ (F_2/\sqrt2\otimes I).
+\tag{71.7}
+\]
+
+Unitarity follows from the factorization; (71.6) makes each squared entry
+modulus \(1/6\). Linear independence of \(V,W\) gives Schmidt rank two.
+This uses precisely \(\alpha=\beta=\pi/4,\gamma=0\) in the source's
+normal form. Its auxiliary matrices may have zero entries, but \(H\)
+has none. This is a counterexample to an intermediate implication, not
+to the claimed quartet exclusion.
+
+### 71.4 Phase normalization and a second flat unitary
+
+For flat three-by-three \(V,W\), write
+\(v_{jk}\bar w_{jk}=e^{i\theta_{jk}}/3\). Substituting into Eq. (41)
+of the same source yields
+
+\[
+\cos(2\alpha)\cos(2\beta)
++\cos\theta_{jk}\sin(2\alpha)\sin(2\beta)=0.
+\tag{71.8}
+\]
+
+Thus, when the sine factors are nonzero,
+\(\cos\theta_{jk}=-\cot(2\alpha)\cot(2\beta)\). The additional
+factor \(1/3\) in the arccos expression following (D12) does not arise
+from that substitution.
+
+This difference matters for genuine Hadamards. With
+\(\omega=(-1+i\sqrt3)/2\), set
+
+\[
+V=\frac{J+(\omega-1)I}{\sqrt3},\qquad
+W=\frac{\omega[J+(\bar\omega-1)I]}{\sqrt3},\qquad
+c^2=\frac{1+1/\sqrt3}{2},\quad s^2=\frac{1-1/\sqrt3}{2},
+\quad cs=1/\sqrt6.
+\tag{71.9}
+\]
+
+Both \(V,W\) are flat unitaries. Their relative phases
+\(3v_{jk}\bar w_{jk}\) equal \(\omega\) on the diagonal and
+\(\bar\omega\) off it, so every real part of \(v_{jk}\bar w_{jk}\)
+is \(-1/6\). Dephasing gives opposite Fourier orientations for \(V,W\),
+as required in the corresponding case of the source argument.
+
+Choose \(\alpha=\beta\in(0,\pi/4)\) with
+\(\cos(2\alpha)=1/\sqrt3\), so \(c=\cos\alpha,s=\sin\alpha\).
+Then
+
+\[
+G=\begin{pmatrix}
+c^2V+s^2W&cs(V-W)\\cs(V-W)&s^2V+c^2W
+\end{pmatrix}
+\tag{71.10}
+\]
+
+is the source normal form with \(\gamma=0\), hence unitary. Directly,
+
+\[
+|c^2v+s^2w|^2=\frac{1-2/6}{3}-\frac1{18}=\frac16,
+\qquad
+|cs(v-w)|^2=\frac16\left(\frac23+\frac13\right)=\frac16.
+\tag{71.11}
+\]
+
+The other two blocks have the same modulus. Thus \(G\) is a rank-two
+CHM with \(\cot(2\alpha)\cot(2\beta)=1/2\) and all relative phase
+cosines \(-1/2\), rather than \(-1/6\). Also \(2\alpha>\pi/4\).
+The corrected relation therefore permits the \(2\pi/3\) phase spacing
+discarded by the printed final angle argument. Again, no quartet follows.
+
+### 71.5 The 24-real-entry interior matrix and its invariant
+
+The inspected Reply's Lemma 1, printed p. 2, assumes only an order-six
+CHM with more than 22 real entries and concludes equivalence to one of
+its two displayed matrices. The first has fourth-root entries and the
+second sixth-root entries. There is no printed quartet or all-real-row
+hypothesis in that lemma.
+
+At the actual interior parameter \(b=1/2\), put
+
+\[
+u=\frac{\sqrt{55}-10+i(2\sqrt{55}+5)}{20},\qquad
+v=\frac{-\sqrt{55}-10+i(2\sqrt{55}-5)}{20}.
+\tag{71.12}
+\]
+
+The unit-entry matrix is
+
+\[
+M=\begin{pmatrix}
+u&1&1&v&1&1\\1&u&1&1&v&1\\1&1&u&1&1&v\\
+\bar v&1&1&-\bar u&-1&-1\\
+1&\bar v&1&-1&-\bar u&-1\\
+1&1&\bar v&-1&-1&-\bar u
+\end{pmatrix}.
+\tag{71.13}
+\]
+
+Equation (71.4), with \(h=\sqrt{55}/5\), proves \(M^*M=6I\)
+and unit entry moduli. Precisely 24 entries are real. The other twelve
+have nonzero imaginary parts because \(2\sqrt{55}-5>0\).
+
+For a unit-entry matrix \(A\), its Haagerup cross-ratio set is
+
+\[
+\Lambda(A)=\{a_{ij}a_{k\ell}\bar a_{i\ell}\bar a_{kj}:
+             i,j,k,\ell\in\{1,\ldots,6\}\}.
+\tag{71.14}
+\]
+
+Row and column phases cancel, and permutations merely relabel this set.
+It is therefore invariant under monomial equivalence, which is broader
+than permutation equivalence. Transpose preserves it and conjugation
+conjugates it. Fourth-root matrices have cross-ratio real parts in
+\(\{-1,0,1\}\); sixth-root matrices have them in
+\(\{-1,-1/2,1/2,1\}\).
+
+Rows 1,2 and columns 1,2 of (71.13) give \(u^2\in\Lambda(M)\), with
+
+\[
+\operatorname{Re}(u^2)
+=2\left(\frac{\sqrt{55}-10}{20}\right)^2-1
+=-\frac9{40}-\frac{\sqrt{55}}{10}.
+\tag{71.15}
+\]
+
+This is irrational. Consequently \(M\) is not monomial equivalent to
+either representative, even allowing transpose or conjugation. It is an
+exact counterexample to that two-representative classification as printed.
+It does not contradict exclusion of the two representatives themselves.
+
+### 71.6 Consequence for the scope of the present results
+
+The [2025 McNulty--Weigert Comment](https://arxiv.org/pdf/2504.13067)
+addresses a different step, Lemma 11(v), Part 6, concerning real submatrices.
+The explicit examples above identify separate boundaries in the inspected
+rank-two and real-entry arguments. They do not establish that those
+no-quartet statements are false, that no repair exists, or that all relevant
+literature has been exhausted.
+
+Accordingly, the reported global exclusions are not imported here as
+certificates for the whole actual branch. The exact central census and
+the local basis and ambient no-quartet theorems retain their independent
+proofs. The ray pair in §70 limits a sufficient pair-gap method and does
+not provide two additional mutually unbiased bases.
