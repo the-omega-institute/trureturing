@@ -1926,3 +1926,109 @@ Their 4×4 Gram matrix has rank at most three and trace four, so Tr G²≥16/3. 
 The same bound holds for every original unrestricted product by (2). Together with §70's explicit tetrahedral product, the one-product optimum lies between the number in (10), approximately 8.56×10^(-5), and 1/2. The lower value improves §70's 1/40000 but is not claimed optimal; the principal conclusion is the exact resource-preserving reduction for the entire collapsed-fibre channel class.
 
 The Choi, Schur-product and Hermiticity-preserving diamond facts used here are standard; see [Watrous, The Theory of Quantum Information, §§2.2,3.3,4.1.3](https://cs.uwaterloo.ca/~watrous/TQI/) and [Watrous, Simpler semidefinite programs for completely bounded norms](https://arxiv.org/abs/1207.5726). Sections 54 and 63–65 describe exact-support Gram constructions; §§70–71 retain unrestricted physical leakage in quantitative obstructions. The reduction above compares unrestricted approximation with calibrated implementations at the same shared resource by a reference-tagged trace-compensation argument. It asserts no general diagonal-repair contraction, no four-fibre exact optimum and no arbitrary-channel or full-RT theorem.
+
+## 73. A qutrit-environment product beating the tetrahedral approximation
+
+### 73.1 Statement and precise comparison class
+
+For the uniform four-fibre qubit channel F_(4,2) with the fixed MC input and output encodings of §§66 and 70, there exists a single physical product CPTP channel whose unhalved diamond error is strictly less than 1/3. It uses local Stinespring environments of dimension three and exactly calibrates the fibre outputs. In particular, the tetrahedral product's error 1/2 is not the unrestricted one-product optimum.
+
+There is also an exact restricted comparison: among calibrated products constructed from four orthonormal qubit-environment bases on one party and their entrywise conjugates on the other party, the minimum error is 1/2. Thus the construction below strictly improves this entire conjugate-paired, common-qubit-environment class. No lower bound of 1/2 is asserted for arbitrary unequal local frames, and the unrestricted optimum is not determined.
+
+### 73.2 Explicit rational local isometries
+
+Let I denote the 3×3 identity and define Hermitian integer matrices
+
+    A_1 = 0,
+
+    A_2 = [[ 5,       −2+14i,  8−3i ],
+           [−2−14i,  −6,     −1+4i ],
+           [ 8+3i,   −1−4i,   3    ]],
+
+    A_3 = [[−4,        12+10i, −5−3i ],
+           [12−10i,    14,      5+2i ],
+           [−5+3i,      5−2i, −11    ]],
+
+    A_4 = [[ 1,       −5−12i,  1+7i ],
+           [−5+12i,    3,      3+4i ],
+           [ 1−7i,     3−4i,  −4    ]].
+
+Set H_f=A_f/32 and U_f=(I+iH_f)(I−iH_f)^(-1). Since H_f is Hermitian, I−iH_f is invertible and U_f is unitary. All entries are Gaussian rationals. Let v_(f,0),v_(f,1) be its first two columns. Define local Stinespring isometries by
+
+    V_A|f,j>=|f>⊗v_(f,j),
+    V_B|f,j>=|f>⊗conj(v_(f,j)).
+
+Within each fibre the two records are orthonormal, while distinct output labels are orthogonal. Hence these formulas define isometries on the entire eight-dimensional local input. Trace out their three-dimensional environments to obtain A and B. For f≠g, the encoded output coefficient on |ff><gg| is
+
+    C_(fi,gj)=|<v_(f,i),v_(g,j)>|²,
+
+and within each fibre it is δ_ij. Thus this is one common physical product implementation on every coherent input, not a collection of pairwise maps.
+
+Let V be the 3×8 concatenation of the selected columns, Q=V*V, and let K be the target kernel with K_ff=I₂ and K_fg=J₂/2 for f≠g. Define the real symmetric rational matrix
+
+    D=Q⊙conj(Q)−K.
+
+Its diagonal 2×2 blocks vanish. The full encoded channel difference is the collapsed-fibre map with kernel D, followed by the output MC isometry.
+
+### 73.3 An exact rational full-reference certificate
+
+Define Z=M/10000, where
+
+    M = [[1576, 235, 359, 589, 678, 951, 947, 210],
+         [ 235, 283, 110, 171, 124, 147,−234, 459],
+         [ 359, 110,3128,  42, 918, −62, 806, 109],
+         [ 589, 171,  42,3010, −39, 711,  33, 993],
+         [ 678, 124, 918, −39,3036,−189, 670,  74],
+         [ 951, 147, −62, 711,−189,3168, −30, 725],
+         [ 947,−234, 806,  33, 670, −30,2998,−111],
+         [ 210, 459, 109, 993,  74, 725,−111,3197]].
+
+The following exact rational inequalities certify the desired bound:
+
+    Z−D>0,  Z+D>0,
+    I₂/3−Z_ff>0  for f=1,2,3,4.                          (1)
+
+For completeness, they can be verified without eigenvalue approximation by the scalar LDL recurrence. For any real symmetric matrix B, put L_jj=1 and recursively
+
+    p_j=B_jj−Σ_(h<j)L_jh² p_h,
+    L_ij=(B_ij−Σ_(h<j)L_ih L_jh p_h)/p_j  (i>j).
+
+Substitute the displayed rational matrices, with D defined by the rational Cayley inverses above. Every pivot exceeds the corresponding positive rational lower bound in the following lists; every listed integer is divided by 10^6:
+
+    B=Z−D: 157599,24794,123304,5523,1753,1884,1498,1391;
+    B=Z+D: 157599,24794,215316,281499,137603,23444,3121,2938;
+    B=I₂/3−Z_11: 175732,301889;
+    B=I₂/3−Z_22: 20532,31473;
+    B=I₂/3−Z_33: 29732,4518;
+    B=I₂/3−Z_44: 33532,9958.
+
+These are finite rational inequalities, obtained by the stated recurrence; positivity of all pivots proves (1) by B=L diag(p_j)L^T.
+
+To see why (1) controls arbitrary references, use the exact reference norm of §72:
+
+    ||(A⊗B)J_in−J_out F_(4,2)||diamond
+      =max_(ρ=⊕_fρ_f≥0,Trρ=1)||√ρ D √ρ||₁.
+
+From Z≥±D, the Hermitian matrix √ρD√ρ lies between ±√ρZ√ρ. Resolving its positive and negative spectral subspaces gives
+
+    ||√ρD√ρ||₁≤Tr(ρZ)
+      ≤max_f λ_max(Z_ff)<1/3.
+
+This proves the claimed strict full-reference upper bound. The positive-definite certificate gives a uniform margin; no numerical optimizer output or numerical eigenvalue is used as a premise of this bound.
+
+### 73.4 Why every conjugate-paired qubit environment costs at least one half
+
+Consider any four orthonormal bases v_(f,0),v_(f,1) in C², with conjugate records on the other party. Let n_f∈R³ be the unit Bloch vector of |v_(f,0)><v_(f,0)|. Their retained cross coefficients are
+
+    C_(fi,gj)=[1+(−1)^(i+j)n_f·n_g]/2  (f≠g).
+
+Take the normalized logical input
+
+    |ψ>=(1/2)Σ_(f=1)^4 |f,−>,
+    |f,−>=(|f,0>−|f,1>)/√2.
+
+The difference between the physical and target outputs, after identifying the output MC code with C⁴, is (G−I₄)/4, where G_fg=n_f·n_g. This follows by summing the four internal signs for each cross-fibre block; all diagonal output errors vanish. The Gram matrix G is positive semidefinite, has trace four and rank at most three. Hence G−I₄ has trace zero and an eigenvalue −1, so its trace norm is at least two. This input already gives diamond error at least 1/2. Section 70's tetrahedral bases attain 1/2, proving the exact restricted optimum.
+
+The qutrit-environment construction above therefore shows that imposing a common qubit environment with conjugate records can change the one-product approximation optimum. It neither settles the optimum over all qubit-environment products nor the unrestricted optimum.
+
+The Gram, Schur-product and diamond-order ingredients are standard and credited in §§54 and 72 and in [Watrous, The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/). The displayed finite channel and rational certificate supply the strict counterexample to tetrahedral optimality for this fixed coherent target. No general RT recovery claim is made.
