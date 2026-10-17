@@ -1,5 +1,7 @@
 using System.Reflection;
 using System.Collections.Immutable;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using StrataLint.Engine;
@@ -9,6 +11,8 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeScriptHostTests
 {
+    private static readonly object LoadDiagnosticGate = new();
+
     [Theory]
     [InlineData(null)]
     [InlineData("   ")]
@@ -196,6 +200,80 @@ public sealed class ScribeScriptHostTests
         Assert.Equal(ScribeScriptFailureCode.TypeLoad, result.Failure?.Code);
         Assert.Contains(path, result.Failure!.ToString(), StringComparison.Ordinal);
         Assert.Null(result.Definition);
+    }
+
+    [Fact]
+    public void TypeLoadDiagnosticReconstructsTheCompleteLiveImage()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+        var output = new StringWriter();
+        ScribeScriptResult result;
+        lock (LoadDiagnosticGate)
+        {
+            var previous = ScribeScriptHost.LoadDiagnosticWriter;
+            ScribeScriptHost.LoadDiagnosticWriter = output;
+            try
+            {
+                result = ScribeScriptHost.ExecuteWithEntryType(root.Path, path, "Missing.Entry");
+            }
+            finally
+            {
+                ScribeScriptHost.LoadDiagnosticWriter = previous;
+            }
+        }
+
+        Assert.Equal(ScribeScriptFailureCode.TypeLoad, result.Failure?.Code);
+        var lines = output.ToString().Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        Assert.Contains(lines, line => line == "STRATALINT_SCRIBE_LOAD_DIAGNOSTIC_BEGIN version=1");
+        Assert.Contains(lines, line => line == "STRATALINT_SCRIBE_LOAD_DIAGNOSTIC_END chunks=1");
+        var fields = lines
+            .Where(line => line.StartsWith("STRATALINT_SCRIBE_LOAD_DIAGNOSTIC_FIELD ", StringComparison.Ordinal))
+            .Select(line => line["STRATALINT_SCRIBE_LOAD_DIAGNOSTIC_FIELD ".Length..])
+            .Select(line => line.Split('=', 2))
+            .ToDictionary(parts => parts[0], parts => parts[1], StringComparer.Ordinal);
+        Assert.Equal(path, Decode(fields["source_utf8_base64"]));
+        Assert.Equal("Missing.Entry", Decode(fields["entry_utf8_base64"]));
+        Assert.Equal("true", fields["payload_complete"]);
+        Assert.Equal("true", fields["failure_exception_complete"]);
+        Assert.Contains("TypeLoadException", Decode(fields["failure_exception_utf8_base64"]), StringComparison.Ordinal);
+
+        var chunks = lines
+            .Where(line => line.StartsWith("STRATALINT_SCRIBE_LOAD_DIAGNOSTIC_CHUNK ", StringComparison.Ordinal))
+            .Select(ParseChunk)
+            .OrderBy(chunk => chunk.Index)
+            .ToArray();
+        Assert.Single(chunks);
+        var image = chunks.SelectMany(chunk => chunk.Bytes).ToArray();
+        Assert.Equal(int.Parse(fields["image_length"], System.Globalization.CultureInfo.InvariantCulture), image.Length);
+        Assert.Equal(fields["image_sha256"], Convert.ToHexStringLower(SHA256.HashData(image)));
+    }
+
+    [Fact]
+    public void CurrentMarkdownLoadSampleIsFiniteAndKeepsFailureSemantics()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Synthetic/CurrentMarkdown.scribe.cs";
+        Write(root, path, """
+            namespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;
+            internal sealed class CurrentMarkdown : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Current Markdown"), Blocks(Paragraph(Text("content")))));
+            }
+            """);
+
+        // One bounded sample: two sequential loads, one collection checkpoint, and
+        // two concurrent loads through the ordinary batch path.
+        for (var index = 0; index < 2; index++)
+            Assert.True(ScribeScriptHost.Execute(root.Path, path).IsSuccess);
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+        var results = ScribeScriptHost.ExecuteBatch(root.Path, [path, path]);
+        Assert.Equal(2, results.Length);
+        Assert.All(results, result => Assert.True(result.IsSuccess, result.Failure?.ToString()));
     }
 
     [Fact]
@@ -429,6 +507,24 @@ public sealed class ScribeScriptHostTests
             }
             """);
     }
+
+    private static string Decode(string value) => Encoding.UTF8.GetString(Convert.FromBase64String(value));
+
+    private static DiagnosticChunk ParseChunk(string line)
+    {
+        var fields = line["STRATALINT_SCRIBE_LOAD_DIAGNOSTIC_CHUNK ".Length..]
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(field => field.Split('=', 2))
+            .ToDictionary(parts => parts[0], parts => parts[1], StringComparer.Ordinal);
+        var bytes = Convert.FromBase64String(fields["base64"]);
+        Assert.Equal(int.Parse(fields["length"], System.Globalization.CultureInfo.InvariantCulture), bytes.Length);
+        return new(
+            int.Parse(fields["index"], System.Globalization.CultureInfo.InvariantCulture),
+            int.Parse(fields["offset"], System.Globalization.CultureInfo.InvariantCulture),
+            bytes);
+    }
+
+    private sealed record DiagnosticChunk(int Index, int Offset, byte[] Bytes);
 
     private sealed class FieldDefinition : IScribeDocumentDefinition
     {
