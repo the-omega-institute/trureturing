@@ -9322,3 +9322,110 @@ claim. The actual-center/full-border/cofinal positivity, Robin and
 RH questions remain open.
 
 The [two new consumers, complete retained row, finite joint metric and inverse actions](https://github.com/the-omega-institute/trureturing-experiments/tree/f9610d3a5a732abaf68e733e50a7e34e66148ced/docs/reports/weil-c27) preserve the source and target bindings and reproduction entry.
+
+
+### Two new far pairings on the saved good-block inverse actions
+
+The complete18-coordinate far row on the old lift is already saved
+above. It is reused, rather than queried again. The new finite joint
+metric also saves two different directions,
+$Y_1=P^{-1}r_g^*$ and $Y_2=P^{-1}b_{J,g}^*$, on the SAME1263-positive
+principal block. The missing observations are now the two actual
+same-source contractions
+
+$$
+u=f_gY_1,\qquad v=f_gY_2,\qquad
+f=\kappa u_F^*W_FR_F,\quad\kappa=33/32.
+$$
+
+These profiles are not columns of the old18-dimensional lift, and
+their inverse actions are already supplied. No new solve, general
+inverse or target reconstruction is needed.
+
+Let $H$ be the existing1281-by112 far feature map and let
+$\iota_g$ embed the positive coordinates with zeros on the remaining
+18 coordinates. Aggregate
+
+$$
+h_i=H^*\iota_gY_i,\qquad L_i\ge\|\iota_gY_i\|_2
+$$
+
+before source functionals or error estimates. The norm caps are
+computed directly on the full embedded retained vectors. The signed
+masked kernel $K$ is not assumed PSD. The full paid Gram comparison
+and the accepted directional jet estimate give two independently
+valid bounds on the same physical profile:
+
+$$
+\|R_F\iota_gY_i\|_{W_F}^2
+\le \min\left\{\operatorname{up}(h_i^*Kh_i)+\varepsilon L_i^2,\
+N_{i,\mathrm{jet}}^2\right\}.
+$$
+
+Here $\varepsilon$ is the already transported COMPLETE far allowance,
+at least the original512-grid allowance. Matrix arrays use640bits.
+The directional bound retains its omitted moments, masking,
+rounding and actual-symbol forward payment. The original physical
+weight is already present; this norm bound adds no $\kappa$ factor.
+
+The existing cached finite and analytic-tail maps are applied once
+to each new aggregated profile. The raw mixed part uses the saved
+left-kernel row on the same two-column feature matrix. All source,
+symbol, smooth, actual-symbol forward, raw mixed and Abel allowances
+are retained. Uniform forward and raw mixed errors scale by $L_i$
+through the existing homogeneous contract. Approximate cached symbols
+are not identified with the actual symbol.
+
+| New observation | Outward enclosure |
+|---|---|
+| $u=f_gP^{-1}r_g^*$ | $[20.231424206590496643,\ 20.240043090713776357]$ |
+| $v=f_gP^{-1}b_{J,g}^*$ | $[2.786887993197035236,\ 2.788073520641284838]$ |
+| Complete $G_{2,12}=c+u$ | $[683.456490591670613158,\ 683.465109475822996702]$ |
+| $G_{2,22}-z=d+2v$ | $[97.741734616883793577,\ 97.744105671790482675]$ |
+
+The single1024-working/640-export application takes<4.991544seconds,
+excluding serialization. Its30181-byte packet has SHA256
+`39ddee410fa83bf4d35cb97f33bc9e63568dff8d9404dee331b0b3925336a858`;
+the source has SHA256
+`62c0da60931ae22580a8e1f16b79180ef9f26c40bae4aaf08b047e2006b09d2b`.
+It makes two new feature, norm, finite-functional and cached-tail
+applications, with one two-column raw mixed product. Old source
+recovery, old lift queries, target reconstruction, inverse/solve,
+scientific producer and fixture replays are all0. No scan or retry
+follows.
+
+For these two profiles the directional jet caps are selected; their
+improvement over the full paid Gram caps is below the displayed precision.
+The physical norm-squared uppers are at most241.529430992648325580 and
+4.573192066649095956. The total explicit functional allowances are
+at most0.004309442047589309 and0.000592763720310256, including
+the respective Abel allowances0.004032646541103321 and
+0.000554676109821741. The positive signs do not result from dropping
+these nonzero analytic payments.
+
+Write the previously saved finite metric as
+$G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$.
+The actual complete joint metric is enclosed through
+
+$$
+G_2=
+\begin{pmatrix}a&c+u\\c+u&d+2v\end{pmatrix}
++\begin{pmatrix}0&0\\0&z\end{pmatrix},
+\qquad z=f_gP^{-1}f_g^*\ge0.
+$$
+
+The unknown $z$ still has no new upper bound. The matrix before the
+$z$ term need not be PSD and is not substituted for $G_2$.
+The two response intervals contain functionals of ONE actual source;
+their endpoints are not asserted independently attainable.
+The saved old18-coordinate far row also retains its earlier broad
+error-transport limitation. These observations alone do not certify
+the complete joint border or remove the cofinal obligation.
+
+All inherited common-form/domain, residual-map, source, normalization
+and comparison premises remain. This is a new source-specific
+application of accepted functional and error-estimation methods,
+without a generic-method novelty or Lean-proof claim. Actual-center,
+full-border/cofinal positivity, Robin and RH remain open.
+
+The [new two-profile source, directed cross terms, partial complete metric and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/d90d6869c73e1fbcdb4321e0879b55902b4abd81/docs/reports/weil-c27) preserve this same-source application and all explicit payments.
