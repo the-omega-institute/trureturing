@@ -2637,3 +2637,94 @@ Its nonnegative root is (sqrt(12k)-6)/k. This proves (6). At k=12, (8) rules out
 ### 78.4. Attribution and scope
 
 Singular value decomposition, the operator/nuclear norm triangle inequalities, and the variational characterization of the sum of the two largest singular values are standard matrix-analysis ingredients; see [Watrous, The Theory of Quantum Information, Chapter 1](https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf) for singular values, Schatten norms, and their variational formulations. No priority claim is made for these ingredients. The original-channel calibration and trace-norm tests are the results of sections 72 and 77. The centroid lemma proves the particular sharp high-purity tradeoff (1), and (5) transports its constructed anchor to all original Schmidt sign-pairs simultaneously. This is a paper theorem concerning the fixed uniform fibre family. The channel lower bound is not an exact optimum, does not restrict the environment dimension, and does not apply to arbitrary finite LOSR mixtures, which can realize the target exactly.
+
+## 79. An exact tetrahedral marker family with quarter-error product realization
+
+### 79.1. Physical family and its exact diamond error
+
+Let F_(4,2) be the uniform four-fibre target of sections 66 and 72, with fixed MC encodings. Let the four tetrahedral Bloch vectors be
+
+    n_1=(1,1,1)/sqrt(3), n_2=(1,-1,-1)/sqrt(3),
+    n_3=(-1,1,-1)/sqrt(3), n_4=(-1,-1,1)/sqrt(3).
+
+For each f choose an orthonormal qubit basis u_(f,0),u_(f,1) whose projectors are (I+(-1)^j n_f dot sigma)/2. For a complex parameter eta with |eta|<=1, choose unit marker vectors a_0,a_1 satisfying <a_1,a_0>=eta; for example
+
+    a_0=e_0, a_1=conj(eta)e_0+sqrt(1-|eta|^2)e_1.
+
+Define local Stinespring isometries on the full eight-dimensional local inputs by
+
+    V_A|f,j>=|f> tensor u_(f,j) tensor a_j,
+    V_B|f,j>=|f> tensor conj(u_(f,j)).                  (1)
+
+Tracing the environments gives one physical product channel, denoted A_eta tensor B. It acts on every coherent input with the same maps. Its exact unhalved, arbitrary-reference diamond error is
+
+    ||(A_eta tensor B) J_in-J_out F_(4,2)||diamond
+       =1/4+|eta-3/4|.                                (2)
+
+In particular eta=3/4 gives an exact error of 1/4. This is the unique optimal parameter within this marker family. The original unrestricted product optimum is not determined: together with section 78 it lies in
+
+    [sqrt(3)-3/2, 1/4].                               (3)
+
+At eta=3/4 the local channels in (1) have Kraus ranks exactly four and two, respectively. This is an attaining resource count for (2), not a minimal-resource claim for quarter error.
+
+### 79.2. All coherent matrix units and the marker mechanism
+
+The vectors on the right of (1) are orthonormal over all input labels: different f have orthogonal output labels, and within a fibre the u_(f,j) are orthogonal. Thus both maps are isometries, including when marker vectors coincide. For f!=g the tetrahedral identity n_f dot n_g=-1/3 gives
+
+    |<u_(f,i),u_(g,j)>|^2
+       =(1+(-1)^(i+j) n_f dot n_g)/2
+       =1/3 if i=j, and 2/3 if i!=j.                 (4)
+
+The conjugate qubit records on the other party cancel the phases of these overlaps. With the convention that the output coefficient for |f,i><g,j| is the environment inner product in the order (g,j),(f,i), the retained coefficients are therefore
+
+    C_(f0,g0)=C_(f1,g1)=1/3,
+    C_(f0,g1)=2eta/3, C_(f1,g0)=2conj(eta)/3          (f!=g).
+
+For f=g the coefficient is delta_ij. The target has the same diagonal blocks I_2 and every off-diagonal block J_2/2. Consequently the difference kernel is
+
+    D=(J_4-I_4) tensor R_eta,
+    R_eta=[[-1/6, 2eta/3-1/2],
+           [2conj(eta)/3-1/2, -1/6]].                (5)
+
+This verifies every matrix unit, not only a selected input state. At eta=3/4 the unequal-bit coefficients match the target exactly, leaving R_eta=-I_2/6.
+
+### 79.3. Full-reference norm and an attaining input
+
+Write Q_4=id-Delta_4, where Delta_4 is complete dephasing in the fibre basis. On the logical input C^4 tensor C^2 define the Hermitian scalar functional
+
+    phi_R(X)=Tr(R^T X).
+
+By (5), the logical channel difference, before the fixed output MC isometry, is exactly
+
+    Q_4 composed with (id_4 tensor phi_(R_eta)).       (6)
+
+The transpose in this functional is necessary: Tr(R^T |i><j|)=R_ij. The eigenvalues of the Hermitian matrix R_eta are
+
+    -1/6 +/- |2eta/3-1/2|.
+
+For any Hermitian two-dimensional matrix R, (6) has diamond norm
+
+    ||Q_4||diamond ||R||op.                           (7)
+
+To prove the upper bound with arbitrary references, diagonalize R^T=sum_s beta_s Pi_s. On a normalized positive input with any reference, the two partial traces obtained by the orthogonal projections Pi_s are positive operators with traces summing to one. Applying Q_4 to each, using its diamond norm, and applying the triangle inequality bounds the output trace norm by ||Q_4||diamond max_s|beta_s|. A Hermiticity-preserving map's diamond norm can be optimized on normalized positive inputs with a reference, so this proves the upper bound. Conversely choose a bit eigenstate of R^T with eigenvalue of maximal absolute value and an input attaining the norm of Q_4. This proves (7).
+
+For completeness ||Q_4||diamond=3/2. Let Z=diag(1,i,-1,-i). The identity Delta_4=(1/4)sum_(a=0)^3 Ad_(Z^a) gives
+
+    Q_4=(3/4)id-(1/4)sum_(a=1)^3 Ad_(Z^a),
+
+so the triangle inequality gives the upper bound 3/2. On the normalized uniform vector |s>=(1/2)sum_f |f>, Q_4(|s><s|) has eigenvalues 3/4,-1/4,-1/4,-1/4, attaining 3/2 without any reference. Therefore
+
+    ||Q_4||diamond ||R_eta||op
+       =(3/2)(1/6+|2eta/3-1/2|)=1/4+|eta-3/4|.
+
+The fixed output MC isometry preserves these norms and proves (2). At eta=3/4 any normalized bit state tensored with |s> attains the value 1/4. The physical input is its fixed MC encoding. All arbitrary-reference inputs obey the matching upper bound.
+
+### 79.4. Exact local ranks and scope
+
+When |eta|<1, the markers a_0,a_1 are linearly independent. For each fixed j, the four qubit vectors u_(f,j) span C^2: their projectors have distinct Bloch vectors and are not a common line. Hence the A-environment records span
+
+    C^2 tensor span{a_0,a_1}=C^4,
+
+while the B-environment records span C^2. In a calibrated Stinespring map (1), the Kraus operators indexed by an environment basis are linearly independent precisely when those records span the environment: a linear combination of the Kraus operators vanishes if and only if its environment covector annihilates every record. Thus the local Kraus ranks are exactly (4,2), in particular at eta=3/4. The construction uses no shared randomness or communication.
+
+The tetrahedral Bloch identity is the same standard qubit geometry used in sections 70 and 73; the marker is an ordinary Stinespring environment record. The norm facts and the Hermiticity-preserving diamond formulation are standard; see [Watrous, The Theory of Quantum Information, section 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). The explicit calculation above optimizes this entire complex marker family and gives a common physical implementation attaining 1/4. It supplies an upper bound for the unrestricted problem, not a proof that all original leakage-bearing product channels have error at least 1/4. Sections 72 and 78 retain their stated unrestricted scope.
