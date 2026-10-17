@@ -95,4 +95,60 @@ noncomputable def reachable_scan_frontier_registration :
   familyRecord := none
   options := #[]
 
+abbrev progressArena : Arena where
+  signature := frontierSignature
+  Law R := ∀ (u : Source) (σ : Nat → Bool) (n : Nat),
+    let w := R.readout () (u,σ) n
+    Safe w.source w.config ∧
+    ∀ (q : Bool) (v : Work), w.config = .active q v →
+      v.pc.val ∈ [20,21,22,23,24,26,27,28,31] → ScanFinishes w.source (.active q v)
+
+private theorem progress_bad : ¬ progressArena.Law frontierBad := by
+  intro h
+  have no := (h (.of true) (fun _ => false) 0).1
+  simpa [frontierBad,realize,Safe,Frontier,go] using no
+
+def progressProof : Registration progressArena (type_of% (@reachable_scan_frontier_progress)) where
+  actual := frontierActual
+  bridge := Iff.rfl
+  variation := ⟨@reachable_scan_frontier_progress,frontierBad,progress_bad⟩
+  sensitivity := ⟨fun i => ⟨frontierBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,progress_bad⟩,fun i => nomatch i⟩
+  dependence := frontier_dependence
+
+noncomputable def reachable_scan_frontier_progress_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress.reachable_scan_frontier_progress)
+      (Realization frontierSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress.reachable_scan_frontier_progress
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress.progressProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨progressArena⟩
+  objectArena := .source ⟨progressArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source progressArena ⟨progressProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize frontierSignature
+    (fun _ p n => trajectory p.2 ⟨.entry,p.1,false⟩ n) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","body","fn","arg","fn","arg","arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress

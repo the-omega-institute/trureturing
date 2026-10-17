@@ -259,7 +259,7 @@ private theorem trajectory_safe (u : Source) (σ : Nat → Bool) (n : Nat) :
   | succ n ih => exact safe_event _ _ _ _ ih
 
 /-- Every finite independently interleaved prefix retains the actual cursor
-conditions. In particular no such prefix enters the error control. -/
+conditions. In particular no such lead enters the error control. -/
 theorem reachable_scan_frontier (u : Source) (σ : Nat → Bool) (n : Nat) :
     Safe (trajectory σ ⟨.entry,u,false⟩ n).source
       (trajectory σ ⟨.entry,u,false⟩ n).config ∧
@@ -270,5 +270,233 @@ theorem reachable_scan_frontier (u : Source) (σ : Nat → Bool) (n : Nat) :
   intro q v hv error
   rw [hv] at safe
   simp only [Safe,Frontier,error] at safe
+
+/-- A stationary comparison reaches its actual exit control, with a finite
+update-free prefix that composes with every subsequent legal execution. -/
+def ScanFinishes (U : Source) (c : State) : Prop :=
+  ∃ v : Work, v.pc = 8 ∧ Continues U c (.active false v)
+
+private theorem finish_prefix {U : Source} {c d : State}
+    (lead : Continues U c d) (next : ScanFinishes U d) : ScanFinishes U c := by
+  obtain ⟨v,hv,tail⟩ := next
+  refine ⟨v,hv,?_⟩
+  intro h b run
+  obtain ⟨t,ht,rt⟩ := tail h b run
+  obtain ⟨s,hs,rs⟩ := lead (t ++ h) b rt
+  exact ⟨s ++ t,by simp [hs,ht],by simpa [List.append_assoc] using rs⟩
+
+private theorem finish_local {U : Source} {c d : State}
+    (hop : step c = .localStep d) (next : ScanFinishes U d) : ScanFinishes U c := by
+  obtain ⟨v,hv,tail⟩ := next
+  refine ⟨v,hv,?_⟩
+  intro h b run
+  obtain ⟨t,ht,rt⟩ := tail h b run
+  exact ⟨.observer .localStep :: t,by simp [ht],Run.localStep hop rt⟩
+
+private theorem finish_read {U : Source} {c : State} {p : Address} {f : Reply → State}
+    (hop : step c = .read p f) (next : ScanFinishes U (f (readout p U))) :
+    ScanFinishes U c := by
+  obtain ⟨v,hv,tail⟩ := next
+  refine ⟨v,hv,?_⟩
+  intro h b run
+  obtain ⟨t,ht,rt⟩ := tail h b run
+  exact ⟨.observer (.read p (readout p U)) :: t,by simp [ht],Run.read hop rfl rt⟩
+
+private theorem finish_eight (U : Source) (w : Work) (hp : w.pc = 8) :
+    ScanFinishes U (.active false w) := by
+  refine ⟨w,hp,?_⟩
+  intro h b run
+  exact ⟨[],by simp,run⟩
+
+private theorem finish_twenty (U : Source) (w : Work) (z : Address)
+    (present : PairPresent U z)
+    (after : ∀ v : Work, v.pc = 27 → v.operand = true :: z →
+      ScanFinishes U (.active false v)) :
+    ScanFinishes U (.active false (pairStart w z)) := by
+  have access := ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1
+  have exists_at (p : Address) (hp : readout p U ≠ .absent) :
+      ∃ T : Source, subtree p U = some T := by
+    have hr := access p [] U
+    simp only [List.append_nil] at hr
+    cases he : subtree p U with
+    | none => simp [he] at hr; exact (hp hr).elim
+    | some T => exact ⟨T,rfl⟩
+  obtain ⟨A,ha⟩ := exists_at (false :: z) (present false)
+  obtain ⟨B,hb⟩ := exists_at (true :: z) (present true)
+  have left (a : Address) : readout (false :: (z ++ a)) U = readout a A := by
+    simpa only [List.cons_append,ha] using access (false :: z) a U
+  have right (a : Address) : readout (true :: (z ++ a)) U = readout a B := by
+    simpa only [List.cons_append,hb] using access (true :: z) a U
+  by_cases root : z = []
+  · subst z
+    obtain ⟨v,hv,_,_,_,lead⟩ := pair_complete U A B w left right
+    exact ⟨v,hv,lead⟩
+  · by_cases equal : A = B
+    · subst B
+      exact finish_prefix (pair_equal_scan U A w z left right)
+        (after (pairDone w z (rightLeafReply A)) rfl rfl)
+    · obtain ⟨v,hv,_,_,_,lead⟩ := pair_unequal_scan U A B w z left right equal
+      apply finish_prefix lead
+      apply finish_local (d := .active false (put 8 9 v))
+      · simp [step,lift,privateStep,localInstruction,hv,put]
+      · exact finish_eight U _ rfl
+
+private theorem finish_after (U : Source) (z : Address) :
+    ∀ w : Work, w.pc = 27 → w.operand = true :: z → PairPresent U z →
+      ScanFinishes U (.active false w) := by
+  induction z using List.reverseRecOn with
+  | nil =>
+    intro w hp ho _
+    apply finish_local (d := .active false (put 8 10 w))
+    · simp [step,lift,privateStep,localInstruction,hp,ho,put]
+    · exact finish_eight U _ rfl
+  | append_singleton s d ih =>
+    intro w hp ho present
+    have forks : PairBranch U s := by
+      simpa using pair_retract U (s ++ [d]) present (by simp)
+    have parent : PairPresent U s := fun b => by rw [forks b]; decide
+    cases d with
+    | true =>
+      apply finish_local (d := .active false {w with operand := true :: s})
+      · simp [step,lift,privateStep,localInstruction,hp,ho,pop,lastBit,
+          List.getLast?_cons,List.dropLast_cons_of_ne_nil]
+      · exact ih _ hp rfl parent
+    | false =>
+      let a : Work := {w with pc := 28,operand := true :: s}
+      let b : Work := {w with pc := 31,operand := true :: (s ++ [true])}
+      apply finish_local (d := .active false a)
+      · simp [step,lift,privateStep,localInstruction,hp,ho,pop,lastBit,a,
+          List.getLast?_cons,List.dropLast_cons_of_ne_nil]
+      apply finish_local (d := .active false b)
+      · rfl
+      apply finish_local (d := .active false (pairStart w (s ++ [true])))
+      · rfl
+      apply finish_twenty U w (s ++ [true]) (pair_descend U s forks true)
+      intro v hv hvo
+      apply finish_local (d := .active false {v with operand := true :: s})
+      · simp [step,lift,privateStep,localInstruction,hv,hvo,pop,lastBit,
+          List.getLast?_cons,List.dropLast_cons_of_ne_nil]
+      · exact ih _ hv rfl parent
+
+private theorem finish_start (U : Source) (w : Work) (z : Address)
+    (hp : w.pc = 20) (ho : w.operand = false :: z) (present : PairPresent U z) :
+    ScanFinishes U (.active false w) := by
+  have hw : pairStart w z = w := by cases w; simp_all [pairStart]
+  have h := finish_twenty U w z present (fun v hv hvo => finish_after U z v hv hvo present)
+  simpa only [hw] using h
+
+private theorem finish_switch (U : Source) (w : Work) (z : Address)
+    (hp : w.pc = 31) (ho : w.operand = true :: z) (present : PairPresent U z) :
+    ScanFinishes U (.active false w) := by
+  apply finish_local (d := .active false (pairStart w z))
+  · simp [step,lift,privateStep,localInstruction,hp,ho,switch,pairStart]
+  · exact finish_start U _ z rfl rfl present
+
+private theorem finish_child (U : Source) (w : Work) (z : Address)
+    (hp : w.pc = 26) (ho : w.operand = false :: z) (forks : PairBranch U z) :
+    ScanFinishes U (.active false w) := by
+  apply finish_local (d := .active false (pairStart w (z ++ [false])))
+  · simp [step,lift,privateStep,localInstruction,hp,ho,pairStart]
+  · exact finish_start U _ (z ++ [false]) rfl rfl (pair_descend U z forks false)
+
+private theorem finish_descend (U : Source) (w : Work) (z : Address)
+    (hp : w.pc = 24) (ho : w.operand = true :: z) (forks : PairBranch U z) :
+    ScanFinishes U (.active false w) := by
+  let next : Work := {w with pc := 26,operand := false :: z}
+  apply finish_local (d := .active false next)
+  · simp [step,lift,privateStep,localInstruction,hp,ho,switch,next]
+  · exact finish_child U next z rfl rfl forks
+
+private theorem finish_sibling (U : Source) (w : Work) (z : Address)
+    (hp : w.pc = 28) (ho : w.operand = true :: z) (forks : PairBranch U z) :
+    ScanFinishes U (.active false w) := by
+  let next : Work := {w with pc := 31,operand := true :: (z ++ [true])}
+  apply finish_local (d := .active false next)
+  · simp [step,lift,privateStep,localInstruction,hp,ho,next]
+  · exact finish_switch U next (z ++ [true]) rfl rfl (pair_descend U z forks true)
+
+private theorem finish_decision (U : Source) (w : Work) (z : Address)
+    (hp : w.pc = 23) (ho : w.operand = true :: z) (present : PairPresent U z)
+    (left : Saved U (false :: z) w.leftReply) (right : Saved U (true :: z) w.rightReply) :
+    ScanFinishes U (.active false w) := by
+  by_cases different : w.leftReply ≠ w.rightReply
+  · apply finish_local (d := .active false (go 29 w))
+    · simp [step,lift,privateStep,localInstruction,hp,different,go]
+    apply finish_local (d := .active false (put 8 9 (go 29 w)))
+    · rfl
+    · exact finish_eight U _ rfl
+  · have equal : w.leftReply = w.rightReply := not_ne_iff.mp different
+    by_cases branch : w.leftReply = .branch
+    · have rightBranch : w.rightReply = .branch := equal.symm.trans branch
+      apply finish_local (d := .active false (go 24 w))
+      · simp [step,lift,privateStep,localInstruction,hp,branch,rightBranch,go]
+      apply finish_descend U (go 24 w) z rfl ho
+      intro b
+      cases b with
+      | false => exact left.2 branch
+      | true => exact right.2 (equal.symm.trans branch)
+    · have leaf : w.leftReply = .alpha ∨ w.leftReply = .beta := by
+        cases he : w.leftReply <;> simp_all [Saved]
+      apply finish_local (d := .active false (go 27 w))
+      · simp [step,lift,privateStep,localInstruction,hp,different,branch,leaf,go]
+      · exact finish_after U z (go 27 w) rfl ho present
+
+private theorem finish_right_read (U : Source) (w : Work) (z : Address)
+    (hp : w.pc = 22) (ho : w.operand = true :: z) (present : PairPresent U z)
+    (left : Saved U (false :: z) w.leftReply) : ScanFinishes U (.active false w) := by
+  apply finish_read (p := w.operand)
+    (f := fun y => .active false {w with pc := 23,rightReply := y})
+  · simp [step,lift,privateStep,receipt,follow,hp]
+    funext y
+    cases y <;> rfl
+  apply finish_decision U {w with pc := 23,rightReply := readout w.operand U}
+    z rfl ho present left
+  simpa only [ho] using
+    (show Saved U (true :: z) (readout (true :: z) U) from ⟨present true,fun h => h⟩)
+
+private theorem finish_frontier (U : Source) (q : Bool) (w : Work)
+    (safe : Frontier U q w) (phase : w.pc.val ∈ [20,21,22,23,24,26,27,28,31]) :
+    ScanFinishes U (.active q w) := by
+  rcases w with ⟨⟨pc,hpc⟩,g,o,r,a,b,c⟩
+  change pc ∈ [20,21,22,23,24,26,27,28,31] at phase
+  simp only [List.mem_cons,List.not_mem_nil,or_false] at phase
+  rcases phase with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+  all_goals simp only [Frontier] at safe
+  · rcases safe with ⟨rfl,z,ho,present⟩
+    exact finish_start U _ z rfl ho present
+  · rcases safe with ⟨rfl,z,ho,present,left⟩
+    let next : Work := ⟨22,g,true :: z,r,a,b,c⟩
+    apply finish_local (d := .active false next)
+    · simp [step,lift,privateStep,localInstruction,ho,switch,next]
+    · exact finish_right_read U next z rfl rfl present left
+  · rcases safe with ⟨rfl,z,ho,present,left⟩
+    exact finish_right_read U _ z rfl ho present left
+  · rcases safe with ⟨rfl,z,ho,present,left,right⟩
+    exact finish_decision U _ z rfl ho present left right
+  · rcases safe with ⟨rfl,z,ho,forks⟩
+    exact finish_descend U _ z rfl ho forks
+  · rcases safe with ⟨rfl,z,ho,forks⟩
+    exact finish_child U _ z rfl ho forks
+  · rcases safe with ⟨rfl,z,ho,present⟩
+    exact finish_after U z _ rfl ho present
+  · rcases safe with ⟨rfl,z,ho,forks⟩
+    exact finish_sibling U _ z rfl ho forks
+  · rcases safe with ⟨rfl,z,ho,present⟩
+    exact finish_switch U _ z rfl ho present
+
+/-- An actual prefix can stop between either read, during descent or during
+upward retraction. Its current comparison resumes on that same current source. -/
+theorem reachable_scan_frontier_progress (u : Source) (σ : Nat → Bool) (n : Nat) :
+    Safe (trajectory σ ⟨.entry,u,false⟩ n).source
+      (trajectory σ ⟨.entry,u,false⟩ n).config ∧
+    ∀ (q : Bool) (v : Work),
+      (trajectory σ ⟨.entry,u,false⟩ n).config = .active q v →
+      v.pc.val ∈ [20,21,22,23,24,26,27,28,31] →
+      ScanFinishes (trajectory σ ⟨.entry,u,false⟩ n).source (.active q v) := by
+  have safe := (reachable_scan_frontier u σ n).1
+  refine ⟨safe,?_⟩
+  intro q v hv phase
+  rw [hv] at safe
+  exact finish_frontier _ q v safe phase
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress

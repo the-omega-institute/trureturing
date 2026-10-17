@@ -37,6 +37,17 @@ internal sealed class NativeSelectedRAProgressDocument : IScribeDocumentDefiniti
                     + "Every active configuration therefore has control different from ninety nine. "
                     + "The induction follows actual writer and observer events. Existing addresses and branches survive substitution. "
                     + "The comparison can descend only through two saved branches; upward retraction exposes a parent branch before the sibling switch."))),
+                DescribeRole.Theorem),
+            Def("ScanFinishes", "A finite stationary comparison continuation",
+                "The current whole configuration has a finite update-free continuation to an active Work configuration at control eight. The continuation composes with every subsequent returning execution. It preserves the actual current source; it imposes no bound on tree size, cursor length or earlier interference."),
+            Describe.Lean(DescribeId.Create("native-selected-ra-reachable-frontier-progress"),
+                DeclarationHandle.Create(Prefix + "reachable_scan_frontier_progress"),
+                H("Resuming every reachable comparison phase"), StatementSource.FromAuthor(Progress()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "Every finite actual prefix has a safe frontier. If its control is twenty, twenty one, twenty two, twenty three, twenty four, twenty six, twenty seven, twenty eight or thirty one, its comparison resumes to control eight on the actual current source. "
+                    + "A saved branch remains an actual branch after substitution, so an interrupted read pair can safely finish its decision. "
+                    + "The stationary equal and unequal subtree scans handle each pending subtree. Reverse induction on the cursor handles upward retraction and the next right sibling. "
+                    + "This conclusion concerns the comparison phase; guard search, validation, retry and final handoff are separate phases."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
@@ -50,6 +61,19 @@ internal sealed class NativeSelectedRAProgressDocument : IScribeDocumentDefiniti
     private static Formula All(string n, Formula type, Formula body) =>
         Seq(Forall, Sp, V(n), Colon, Sp, type, Comma, Sp, Par(body));
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula Progress()
+    {
+        Formula w = Call("trajectory", V("s"), Call("world", Op("entry"), V("u"), Op("false")), V("n"));
+        Formula controls = Seq(OpenBracket, D(2,0), Comma, D(2,1), Comma, D(2,2), Comma,
+            D(2,3), Comma, D(2,4), Comma, D(2,6), Comma, D(2,7), Comma, D(2,8), Comma, D(3,1), CloseBracket);
+        Formula phase = Seq(Call("control", V("r")), Sp, InMacro, Sp, controls);
+        Formula conclusion = Call("ScanFinishes", Call("source", w), Call("active", V("q"), V("r")));
+        Formula active = All("q", Op("Bool"), All("r", Op("Work"),
+            Seq(Par(EqOf(Call("config", w), Call("active", V("q"), V("r")))), Sp, Implies, Sp,
+                Par(Seq(Par(phase), Sp, Implies, Sp, conclusion)))));
+        return Disp(All("u", Op("Source"), All("s", Seq(Op("Nat"), Sp, To, Sp, Op("Bool")),
+            All("n", Op("Nat"), Seq(Call("Safe", Call("source", w), Call("config", w)), Sp, Land, Sp, Par(active))))));
+    }
     private static Formula Reachable()
     {
         Formula w = Call("trajectory", V("s"), Call("world", Op("entry"), V("u"), Op("false")), V("n"));
