@@ -294,6 +294,32 @@ private theorem attaining (t u : Fin 2 → ℝ)
     Complex.norm_real, Real.norm_eq_abs, sq_abs]
   ring
 
+private theorem replacement_value (t u : Fin 2 → ℝ)
+    (ht : ∀ j, 0 < t j) (hu : ∀ j, 0 < u j) :
+    coherentValue (replacement t) (replacement u) =
+      (Real.sqrt (t 0 ^ 2 + u 0 ^ 2) + Real.sqrt (t 1 ^ 2 + u 1 ^ 2)) ^ 2 / 4 := by
+  let S : Set ℝ := {p : ℝ | ∃ (R E : Type) (_ : Fintype R) (_ : Fintype E)
+    (_ : DecidableEq R) (_ : DecidableEq E) (e0 : E)
+    (ψ : R × Fin 2 → ℂ) (V : Matrix.unitaryGroup (R × Fin 2 × E × Fin 2) ℂ),
+    (∑ x, ‖ψ x‖ ^ 2) = 1 ∧ p = successProbability (replacement t) (replacement u) ψ V e0}
+  let b := (Real.sqrt (t 0 ^ 2 + u 0 ^ 2) + Real.sqrt (t 1 ^ 2 + u 1 ^ 2)) ^ 2 / 4
+  have hmem : b ∈ S := by
+    refine ⟨Unit, Unit, inferInstance, inferInstance, inferInstance, inferInstance,
+      (), input0, ⟨controlled t u, controlled_unitary t u ht⟩, ?_, ?_⟩
+    · norm_num [input0.eq_1, Fintype.sum_prod_type, Fin.sum_univ_two]
+    · exact (attaining t u ht hu).symm
+  have hupper : ∀ p ∈ S, p ≤ b := by
+    rintro p ⟨R, E, fR, fE, dR, dE, e0, ψ, V, hψ, rfl⟩
+    letI := fR
+    letI := fE
+    letI := dR
+    letI := dE
+    exact success_upper t u ht hu ψ hψ V e0
+  have hbounded : BddAbove S := ⟨b, hupper⟩
+  rw [coherentValue.eq_1]
+  change sSup S = b
+  exact le_antisymm (csSup_le ⟨b, hmem⟩ hupper) (le_csSup hbounded hmem)
+
 end
 
 end D5.S3.Quantum.QuantumChannels.CoherentDiscriminationTriangleRefutation
