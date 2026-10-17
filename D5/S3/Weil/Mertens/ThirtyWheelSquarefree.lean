@@ -4,7 +4,8 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Universal count and first-moment lower bounds for squarefree integers in the thirty-wheel. -/
+   digest: Universal count and first-moment lower bounds for squarefree integers
+     in the thirty-wheel. -/
 
 import Mathlib.Data.Nat.Squarefree
 import Mathlib.Data.Nat.Sqrt
@@ -13,7 +14,6 @@ import Mathlib.Data.Rat.Cast.Order
 import Mathlib.Tactic
 
 set_option autoImplicit false
-set_option maxHeartbeats 800000
 
 open Finset
 open scoped BigOperators
@@ -45,9 +45,13 @@ private lemma U_step (n : ℕ) :
   simpa [U] using wheel_step n (fun _ => 1)
 
 private lemma J_step (n : ℕ) :
-    J (n+1) = J n + if (n+1).Coprime 30 then (n+1 : ℕ) else 0 :=
-  wheel_step n (fun d => (d : ℚ))
+    J (n+1) = J n + if (n+1).Coprime 30 then (n+1 : ℕ) else 0 := by
+  by_cases h : (n+1).Coprime 30
+  · simpa only [J, if_pos h] using wheel_step n (fun d => (d : ℚ))
+  · simpa only [J, if_neg h, Nat.cast_zero] using wheel_step n (fun d => (d : ℚ))
 
+set_option maxHeartbeats 800000 in
+-- The local budget covers expansion of the finite wheel at 29.
 /-- The finite remainder data give exact formulas, rather than asymptotic densities. -/
 private lemma wheel_exact (Y : ℕ) :
     U Y = 8 * (Y / 30 : ℕ) + U (Y % 30) ∧
@@ -63,7 +67,7 @@ private lemma wheel_exact (Y : ℕ) :
       have hc : ¬ (n+1).Coprime 30 := by rw [coprime_mod, hm]; decide
       rw [U_step, J_step, if_neg hc, if_neg hc, hd, hm, ih.1, ih.2, h]
       have hu29 : U 29 = 8 := by decide
-      have hj29 : J 29 = 120 := by decide
+      have hj29 : J 29 = 120 := by decide +kernel
       have hu0 : U 0 = 0 := by decide
       have hj0 : J 0 = 0 := by decide
       simp only [hu29, hj29, hu0, hj0]
@@ -78,14 +82,16 @@ private lemma wheel_exact (Y : ℕ) :
         have he : (n : ℚ) = (n%30 : ℕ) + 30*(n/30 : ℕ) := by exact_mod_cast hn.symm
         push_cast
         constructor <;> nlinarith
-      · simp only [if_neg hh, if_neg ((not_congr hc).mpr hh), add_zero, mul_zero]
-        constructor <;> ring
+      · constructor <;>
+          simp only [if_neg hh, if_neg ((not_congr hc).mpr hh), Nat.cast_zero, add_zero]
 
+set_option maxHeartbeats 800000 in
+-- The local budget covers the thirty explicit finite-range calculations.
 private lemma residue_certificate (r : ℕ) (hr : r < 30) :
     -10 ≤ 15 * U r - 4 * r ∧ 15 * U r - 4 * r ≤ 14 ∧
     0 ≤ 15 * J r - 2 * (r : ℚ)^2 + 10 * r ∧
     0 ≤ 2 * (r : ℚ)^2 + 16 * r - 15 * J r := by
-  interval_cases r <;> decide
+  interval_cases r <;> decide +kernel
 
 private lemma wheel_bounds (Y : ℕ) :
     (4 * (Y : ℚ) - 10)/15 ≤ U Y ∧ U Y ≤ (4 * Y + 14)/15 ∧
@@ -119,13 +125,15 @@ private lemma wheel_representation {k : ℕ} (hk : 7 ≤ k) (hc : k.Coprime 30) 
     rw [he, Nat.coprime_add_mul_left_left] at hc
     exact hc
   refine ⟨r+7, ?_, t, Nat.le_trans (Nat.div_le_self _ _) (Nat.sub_le _ _), he⟩
-  interval_cases r <;> norm_num [bases] at hb ⊢
+  interval_cases r <;> norm_num at hb
+  all_goals norm_num [bases]
 
 private lemma reciprocal_step (a : ℚ) (ha : 0 < a) :
     1/(a+30)^2 ≤ 1/(30*a) - 1/(30*(a+30)) := by
   have ha30 : 0 < a+30 := by linarith
   have he : 1/(30*a) - 1/(30*(a+30)) = 1/(a*(a+30)) := by
-    field_simp [ne_of_gt ha, ne_of_gt ha30] <;> ring
+    field_simp [ne_of_gt ha, ne_of_gt ha30]
+    ring
   rw [he]
   exact one_div_le_one_div_of_le (mul_pos ha ha30) (by nlinarith)
 
@@ -156,9 +164,9 @@ private lemma progression_bound (b n : ℕ) :
       rw [show n+2 = 2+n by omega, sum_range_add]
       norm_num [sum_range_succ]
       congr 1
-      apply sum_congr rfl
-      intro t ht
-      congr 2 <;> ring
+      funext t
+      congr 2
+      ring
     _ ≤ _ := by
       have := reciprocal_tail b n
       have : 0 ≤ (1 : ℚ)/(30*((b:ℚ)+30+30*n)) := by positivity
@@ -172,14 +180,15 @@ private lemma reciprocal_bound (K : ℕ) :
     intro k hk
     obtain ⟨hi, hc⟩ := mem_filter.mp hk
     obtain ⟨b, hb, t, ht, he⟩ := wheel_representation (mem_Icc.mp hi).1 hc
-    exact mem_image.mpr ⟨(b,t), mem_product.mpr ⟨hb, mem_range.mpr (by have := (mem_Icc.mp hi).2; omega)⟩, he.symm⟩
+    exact mem_image.mpr ⟨(b,t), mem_product.mpr
+      ⟨hb, mem_range.mpr (by have := (mem_Icc.mp hi).2; omega)⟩, he.symm⟩
   calc
     _ ≤ ∑ k ∈ rectangle.image value, (1 : ℚ)/(k:ℚ)^2 :=
       sum_le_sum_of_subset_of_nonneg hsub (by intros; positivity)
     _ ≤ ∑ p ∈ rectangle, (1 : ℚ)/(value p : ℚ)^2 :=
       sum_image_le_of_nonneg (by intros; positivity)
     _ = ∑ b ∈ bases, ∑ t ∈ range (K+1), (1 : ℚ)/(b+30*t : ℕ)^2 := by
-      rw [sum_product]; rfl
+      rw [sum_product]
     _ ≤ ∑ b ∈ bases, (1/(b:ℚ)^2 + 1/((b:ℚ)+30)^2 + 1/(30*((b:ℚ)+30))) := by
       apply sum_le_sum
       intro b hb
@@ -187,7 +196,8 @@ private lemma reciprocal_bound (K : ℕ) :
     _ < 1/18 := by norm_num [bases]
 
 private lemma small_unit {d : ℕ} (hd : d < 7) (hc : d.Coprime 30) : d = 1 := by
-  interval_cases d <;> norm_num at hc ⊢
+  interval_cases d <;> norm_num at hc
+  all_goals norm_num
 
 private lemma wheel_split (K : ℕ) (hK : 1 ≤ K) :
     wheel K = insert 1 (indices K) := by
@@ -228,7 +238,7 @@ private lemma prime_square_cover (X d : ℕ) (hd : d ∈ bad X) :
     subst d
     norm_num at hc
   have hn := mt Nat.squarefree_iff_prime_squarefree.mpr hns
-  push_neg at hn
+  push Not at hn
   obtain ⟨p, hp, hpd⟩ := hn
   have hpc : p.Coprime 30 := hc.of_dvd_left (dvd_trans (dvd_mul_right p p) hpd)
   have hp7 : 7 ≤ p := by
@@ -252,12 +262,20 @@ private lemma bad_union (X : ℕ) (f : ℕ → ℚ) (hf : ∀ d, 0 ≤ f d) :
       intro d hd
       by_cases hs : Squarefree d
       · simp only [not_not.mpr hs, if_false]
-        exact sum_nonneg (by intro k hk; split_ifs; exact hf d; exact le_rfl)
+        exact sum_nonneg (by
+          intro k hk
+          split_ifs
+          · exact hf d
+          · exact le_rfl)
       · obtain ⟨k, hk, hkd⟩ := prime_square_cover X d (mem_filter.mpr ⟨hd, hs⟩)
         simp only [hs, not_false_eq_true, if_true]
         have h := single_le_sum (s := indices (Nat.sqrt X))
           (f := fun k => if k*k ∣ d then f d else 0)
-          (by intro k hk; split_ifs; exact hf d; exact le_rfl) hk
+          (by
+            intro k hk
+            split_ifs
+            · exact hf d
+            · exact le_rfl) hk
         simpa only [if_pos hkd] using h
     _ = _ := by rw [sum_comm]; simp only [multiples, sum_filter]
 
@@ -307,13 +325,14 @@ private lemma square_multiple_bounds (X k : ℕ) (hk : 0 < k) :
   change U (X/(k*k)) ≤ (4*(X:ℚ)/15)*(1/a)+14/15 ∧
     a * J (X/(k*k)) ≤ (2*(X:ℚ)^2/15)*(1/a)+16*(X:ℚ)/15
   constructor
-  · rw [show (4*(X:ℚ)/15)*(1/a)+14/15 = (4*(X:ℚ)/15+(14/15)*a)/a by field_simp [ne_of_gt ha] <;> ring]
+  · rw [show (4*(X:ℚ)/15)*(1/a)+14/15 = (4*(X:ℚ)/15+(14/15)*a)/a by
+      field_simp [ne_of_gt ha]]
     apply (le_div_iff₀ ha).mpr
     have h := mul_le_mul_of_nonneg_left hu ha.le
     change a * U (X/(k*k)) ≤ a * ((4*y+14)/15) at h
     nlinarith
   · rw [show (2*(X:ℚ)^2/15)*(1/a)+16*(X:ℚ)/15 =
-        (2*(X:ℚ)^2/15+(16*(X:ℚ)/15)*a)/a by field_simp [ne_of_gt ha] <;> ring]
+        (2*(X:ℚ)^2/15+(16*(X:ℚ)/15)*a)/a by field_simp [ne_of_gt ha]]
     apply (le_div_iff₀ ha).mpr
     have h := mul_le_mul_of_nonneg_left hj (sq_nonneg a)
     change a^2 * J (X/(k*k)) ≤ a^2 * ((2*y^2+16*y)/15) at h
@@ -343,7 +362,9 @@ private lemma bad_bounds (X : ℕ) (hX : 1 ≤ X) :
         apply sum_le_sum
         intro k hk
         exact (square_multiple_bounds X k (by have := (mem_Icc.mp (mem_filter.mp hk).1).1; omega)).1
-      _ = _ := by simp [R, sum_add_distrib, mul_sum] <;> ring
+      _ = _ := by
+        simp [R, sum_add_distrib, mul_sum]
+        ring
   have hweight : (∑ d ∈ bad X, (d:ℚ)) ≤ (2*(X:ℚ)^2/15)*R+(16*(X:ℚ)/15)*(A.card:ℚ) := by
     calc
       _ ≤ ∑ k ∈ A, ∑ d ∈ multiples X k, (d:ℚ) := bad_union X _ (fun _ => Nat.cast_nonneg _)
@@ -358,7 +379,9 @@ private lemma bad_bounds (X : ℕ) (hX : 1 ≤ X) :
         apply sum_le_sum
         intro k hk
         exact (square_multiple_bounds X k (by have := (mem_Icc.mp (mem_filter.mp hk).1).1; omega)).2
-      _ = _ := by simp [R, sum_add_distrib, mul_sum] <;> ring
+      _ = _ := by
+        simp [R, sum_add_distrib, mul_sum]
+        ring
   constructor
   · have hr := mul_le_mul_of_nonneg_left hR (show 0 ≤ 4*(X:ℚ)/15 by positivity)
     have hc := mul_le_mul_of_nonneg_left hA (show (0:ℚ) ≤ 14/15 by norm_num)
@@ -382,7 +405,8 @@ private lemma good_bad_split (X : ℕ) (hX : 1 ≤ X) (f : ℕ → ℚ) :
       · exact ⟨⟨by omega,by decide⟩,squarefree_one⟩
       · exact ⟨⟨by omega,hc⟩,hsq⟩
   have hn : 1 ∉ good X := by simp [good]
-  rw [← sum_filter_add_sum_filter_not (wheel X) Squarefree f, hs, sum_insert hn]
+  simpa only [bad, hs, sum_insert hn] using
+    (sum_filter_add_sum_filter_not (wheel X) Squarefree f).symm
 
 /-- Both estimates hold for every natural cutoff; every subtraction is rational. -/
 theorem count_weight_lower_bound (X : ℕ) :

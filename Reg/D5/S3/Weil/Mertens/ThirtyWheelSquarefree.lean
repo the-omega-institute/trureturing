@@ -61,7 +61,8 @@ def family : Registration arena (type_of% @count_weight_lower_bound) where
     intro i
     refine ⟨(), 0, 7, ?_⟩
     have hs : Squarefree (7:ℕ) := (show Nat.Prime 7 by norm_num).squarefree
-    cases i <;> norm_num [actual, realize, good, hs]
+    have hc : Nat.Coprime 7 30 := by decide
+    cases i <;> norm_num [actual, realize, good, Finset.filter_singleton, hs, hc]
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@count_weight_lower_bound) (Realization signature) Type Unit where
