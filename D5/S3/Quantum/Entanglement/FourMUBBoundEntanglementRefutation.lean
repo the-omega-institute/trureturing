@@ -79,7 +79,7 @@ private theorem walsh_product (x k l : Fin 8) :
     walsh x k * walsh x l = walsh x (Fin.xor k l) := by
   revert x k l
   decide
-theorem xor_zero (k l : Fin 8) : Fin.xor k l = 0 ↔ k = l := by
+private theorem xor_zero (k l : Fin 8) : Fin.xor k l = 0 ↔ k = l := by
   exact xor_eq_zero_iff (α := Fin (2 ^ 3))
 private theorem phase_normSq (α : Fin 3) (x : Fin 8) :
     Complex.normSq (phase α x) = 1 := by
@@ -528,7 +528,7 @@ private theorem rawState_apply (p : Fin 2) (x z y w : Fin 8) :
       if Fin.xor x z = Fin.xor y w then sector p (Fin.xor x z) x y else 0 := by
   simp [rawState, Matrix.blockDiagonal', Matrix.submatrix]
 
-theorem xor_cancel (x h : Fin 8) : Fin.xor x (Fin.xor x h) = h := by
+private theorem xor_cancel (x h : Fin 8) : Fin.xor x (Fin.xor x h) = h := by
   exact xor_cancel_left (α := Fin (2 ^ 3)) x h
 private theorem xor_relation (x z y w : Fin 8) :
     Fin.xor x w = Fin.xor y z ↔ Fin.xor x z = Fin.xor y w := by
