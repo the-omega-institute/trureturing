@@ -768,3 +768,129 @@ There is also a strictly positive, though not quantified here, unrestricted diam
 The argument consumes §54's arbitrary-dimensional common-channel normal form. Sections58–60 settle particular two-dimensional channel problems; the present family proves that exact feasibility of all coordinate two-dimensional restrictions does not certify a common higher-dimensional physical channel. The quantifier over pairs here means every coordinate-label pair, not every arbitrary two-dimensional subspace. The fixed qutrit encoding and all coherent matrix units are retained throughout, so the obstruction concerns common implementation rather than independent state conversion.
 
 Choi positivity, Gram representations and equality in Cauchy–Schwarz, and finite-dimensional convex-hull compactness are standard ingredients. PIO constructions and their relation to zero-communication transformations of maximally correlated systems are established background: Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . Their forward PIO construction is not asserted to classify all arbitrary-dimensional local CPTP maps. A standard reference for Choi matrices and channels is Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . No literature-priority claim is made for these ingredients. The result established here is the explicit CPTP family with pairwise coherent implementations and the proved obstruction to one full-code physical LOSR implementation; it is not a general gravitational or RT recovery theorem.
+
+## 62. A quantitative qutrit common-channel obstruction allowing physical leakage
+
+### 62.1. Model and explicit bounds
+
+Use the fixed MC encoding J(T)=VTV* with V|i>=|ii>, and the qutrit channel E_(p,q) of §61, where 0<q<1 and 0<p≤q(1−q). Competitors are all finite physical LOSR channels Φ=Σ_b w_b A_b⊗B_b on the two physical qutrits. They need not preserve the code. The error is the unhalved diamond norm
+
+    δ(Φ)=||Φ∘J−J∘E_(p,q)||_diamond,
+
+including arbitrary passive references. Then
+
+    [2p/(10+sqrt(100+38p))]^2 ≤ inf_Φ δ(Φ) ≤ p/2.
+
+At the explicit CPTP point p=1/4,q=1/2, this gives
+
+    [1/(2(10+sqrt(219/2)))]^2 ≤ inf_Φ δ(Φ) ≤ 1/8.
+
+The lower bound is strictly positive and explicit; the two bounds are not claimed equal or sharp. The upper bound is realized by one finite common physical channel on the whole qutrit input, not separate optimizers for different pairs.
+
+### 62.2. A dimension-independent inequality for actual physical outputs
+
+The following estimate holds in every dimension d≥3, with any three distinct labels renamed 1,2,3. For a physical LOSR channel Φ, let
+
+    p_i = <ii|Φ(J(|i><i|))|ii>,
+    λ_ij = <ii|Φ(J(|i><j|))|jj>,
+    ℓ_i = Tr[(I−P_code) Φ(J(|i><i|))],
+
+where P_code=Σ_k |kk><kk|. Thus ℓ_i is the actual basis-input code leakage. Define the real functional
+
+    W(Φ)=2 Re λ12+2 Re λ23−Re λ13−p_1−2p_2.
+
+Then
+
+    W(Φ) ≤ 3 sqrt(2ℓ_1)+4 sqrt(2ℓ_2)+3 sqrt(2ℓ_3)+2ℓ_1+4ℓ_2.       (1)
+
+In particular, exact code support implies W≤0. This linear three-label constraint strengthens the saturated-path contradiction into a usable stability estimate. Its constants do not depend on d, branch count, or local Stinespring environment dimensions.
+
+Proof. First consider one positive-weight product branch A⊗B. Choose finite Stinespring isometries and expand their images of the input basis as
+
+    U_A|i>=Σ_k |k> a_(k,i),    U_B|i>=Σ_k |k> b_(k,i),
+
+where the a and b are environment vectors. Put a^i_k=||a_(k,i)||² and b^i_k=||b_(k,i)||²; each is a probability distribution. The branch's leakage on input i is
+
+    ℓ_(b,i)=1−Σ_k a^i_k b^i_k.
+
+Choose f_b(i) maximizing a^i_k b^i_k, and write M_(b,i) for that maximum. Cauchy–Schwarz gives Σ_k sqrt(a^i_k b^i_k)≤1, hence
+
+    1−ℓ_(b,i)=Σ_k a^i_k b^i_k ≤ sqrt(M_(b,i)),
+    1−M_(b,i) ≤ 2ℓ_(b,i).
+
+For each i let e_(b,i) be the unit environment vector obtained by normalizing a_(f_b(i),i)⊗b_(f_b(i),i). If this vector is zero, choose any unit vector in the same environment space; in that case M_(b,i)=0 and ℓ_(b,i)=1. Define
+
+    g_(b,i)=a_(i,i)⊗b_(i,i),
+    h_(b,i)=1_(f_b(i)=i) e_(b,i).
+
+If f_b(i)=i, then g_(b,i)=sqrt(M_(b,i)) e_(b,i). Otherwise ||g_(b,i)||²≤1−M_(b,i), since its output probability is disjoint from the maximizing joint output. In both cases,
+
+    ||g_(b,i)−h_(b,i)||²≤2ℓ_(b,i),
+    | ||g_(b,i)||²−||h_(b,i)||² |≤2ℓ_(b,i).                 (2)
+
+The vectors g encode the actual retained matrix-unit coefficients:
+
+    p_i=E_b ||g_(b,i)||²,    λ_ij=E_b <g_(b,j),g_(b,i)>.
+
+Define rounded quantities p̃_i=E_b ||h_(b,i)||² and λ̃_ij=E_b <h_(b,j),h_(b,i)>. All g and h have norm at most one. The triangle inequality followed by Cauchy–Schwarz in the branch probability space yields
+
+    |p_i−p̃_i|≤2ℓ_i,
+    |λ_ij−λ̃_ij|≤sqrt(2ℓ_i)+sqrt(2ℓ_j).                    (3)
+
+No physical implementation of the rounded vectors is asserted or needed. They are auxiliary vectors on a single common branch probability space.
+
+For each branch write E_i=1_(f_b(i)=i), so h_i=E_i e_i. The following pointwise Gram/event inequality holds:
+
+    2 Re<h_2,h_1>+2 Re<h_3,h_2>−Re<h_3,h_1>
+       ≤ ||h_1||²+2||h_2||².                              (4)
+
+To verify it, if all three E_i equal one, subtracting the left side from the right side gives ||e_1−2e_2+e_3||²/2≥0. If E_1=E_2=1,E_3=0, the left side is at most2 while the right side is3. If E_1=E_3=1,E_2=0, the left side is at most1 and the right side is1. If E_2=E_3=1,E_1=0, the left side is at most2 and the right side is2. With at most one event present, the left side vanishes and the right side is nonnegative. These cases exhaust all possibilities.
+
+Averaging (4) gives W̃≤0. Applying (3) to its three coherence coefficients with absolute weights2,2,1, and its population coefficients with weights1,2, proves (1). In particular the square-root coefficients are3,4,3. This proof uses the actual arbitrary local channels, not a code-preserving ansatz or an assumed approximate version of §54.
+
+### 62.3. From the output inequality to an unrestricted diamond certificate
+
+Let Ψ=Φ∘J and Ψ_*=J∘E_(p,q), and set δ=||Ψ−Ψ_*||_diamond. Each basis input is a normalized density operator. Its output difference is Hermitian and trace zero, with trace norm at most δ. For any effect 0≤F≤I, its expectation difference is therefore at most δ/2 in absolute value. Since the target output has no leakage,
+
+    ℓ_i≤δ/2,    |p_i−p_i^*|≤δ/2.
+
+For off-diagonal input |i><j|, the input trace norm is one. By the definition of the diamond norm, ||(Ψ−Ψ_*)(|i><j|)||_1≤δ; taking the indicated matrix element gives
+
+    |λ_ij−λ_ij^*|≤δ.
+
+There is no use here of an unnormalized Choi entry as a diamond witness. These are direct norm consequences on normalized states or trace-norm-one matrix units. They remain valid when the definition optimizes over arbitrary references.
+
+For the target, p_1^*=p,p_2^*=q, λ12^*=p,λ23^*=q,λ13^*=0, so W(Ψ_*)=p. The total coefficient error in W is at most (2+2+1)δ+(1+2)δ/2=13δ/2. Combining this with (1) gives
+
+    p ≤ W(Φ)+13δ/2 ≤ 10sqrt(δ)+(19/2)δ.
+
+Writing x=sqrt(δ) and solving the increasing quadratic on x≥0 gives
+
+    x ≥ (sqrt(100+38p)−10)/19
+      = 2p/(10+sqrt(100+38p)),
+
+which proves the lower bound. The basis-state trace-zero argument explains all factors of two.
+
+### 62.4. A finite common-channel upper bound
+
+Let P=|1><1| and Q=|2><2|+|3><3| on a physical qutrit. Let S=P−Q, and let D=(3/4)id+(1/4)Ad_S. Thus D retains all populations and the23 coherence, while multiplying both12 and13 coherences by1/2. Define the local CPTP map
+
+    F(T)=QTQ+|3><1|T|1><3|,
+
+whose Kraus matrices are Q and |3><1|. Let R3 be the product channel resetting both physical outputs to |3>. The common physical LOSR channel
+
+    Φ_up=p(D⊗id)+(q−p)(F⊗F)+(1−q)R3
+
+has nonnegative weights summing to one. It has exactly the target's populations, retained coherence coefficients λ12=p/2, λ23=q, λ13=p/2, and no other code coherences. Hence its only differences from the target are the two coefficients +p/2 on12 and −p/2 on13, together with their adjoints.
+
+To evaluate its full diamond error, work on the logical qutrit and define O(T)=PTQ+QTP=(T−STS)/2, and U=diag(1,1,−1). The logical difference is
+
+    Δ=(p/2) Ad_U∘O.
+
+The triangle inequality and the diamond norm one of unitary channels give ||O||_diamond≤1. Equality follows from the normalized input (|1>+|2>)/sqrt(2), whose O-image has eigenvalues1/2,−1/2 and0. Unitary conjugation and the isometric output encoding preserve the diamond norm. Therefore the displayed common implementation has error exactly p/2, including arbitrary references. This establishes the upper bound without identifying it as optimal.
+
+### 62.5. Scope and sources
+
+Section61 supplied exact incompatibility and a compactness-only positive gap. The present estimate supplies an explicit leakage-tolerant gap and a finite coherent full-code upper construction. The general inequality (1) applies in every finite dimension to any three selected labels. The result does not determine the exact global projection of the qutrit family, nor give a uniform positive gap as p tends to zero.
+
+Stinespring dilation, Cauchy–Schwarz, the trace-zero effect bound and elementary diamond-norm properties are standard; see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . The finite dephasing/label constructions use the established local incoherent-operation background already attributed in §§54 and61; see Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No literature-priority, formal-kernel, arbitrary-channel, or full RT recovery claim is made.
