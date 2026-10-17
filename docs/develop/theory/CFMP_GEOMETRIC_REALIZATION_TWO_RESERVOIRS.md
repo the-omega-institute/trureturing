@@ -4833,3 +4833,101 @@ Thus in this branch there are at most 1+4+2=7 actual owners containing
 any high label, and every genuine one outside the interacting core is
 single-high axial with pair {C,D}. This conclusion does not restrict
 the size of the external low-only region or eliminate the branch.
+
+## 242. Exact target and inherited facts
+
+Retain all mixed-flat five-reservoir hypotheses and the four-owner
+interacting core K. Use the proved forced double-face return: both
+marked {M,Z,C} faces of tau=(Z,M,C,D,M,C) pair to one other owner rho.
+Write eta,xi for the other two core owners. Transverse labels in each
+chosen frame are distinct. All original edge links are complete circles
+of degree at least six, and all original edge angle sums hold.
+
+We reuse: m>1+c+d, c,d<m-2, z>1+m+c, u>m; the genuine M/Z capacity
+3*pi; no special edge has a fixed pair contained in P={M,Z,U}; and every
+high label occurring in K occurs in at least two distinct K owners.
+Marked faces, those with two distinct P labels, pair inside K. A nonempty
+closed set of original normal intervals for one actual edge is its whole
+normal circle, so a closed set of at most five slots is impossible.
+
+We prove rho has one of the following roles, up to the usual interchange
+of the transverse pair and axes:
+ (A) (M,Z,C,Q,Z,C), with Q arbitrary;
+ (B) (C,M,Z,U,M,Z).
+No exclusion of these two remaining roles is asserted.
+
+## 243. The axial-Z role is impossible
+
+The three roles at a face {M,Z,C} are axial Z with pair {M,C}, axial M
+with pair {Z,C}, and axial C with pair {M,Z}. In the first, rho's other
+axis cannot also be Z, because (z-1)^2>(m+c)^2 would make rho flat.
+Its unique Z slot therefore has its two incident faces paired to tau's
+two Z faces. The two original Z intervals close and force degree(Z)=2.
+This excludes the first role. The axial-M role is exactly (A).
+
+## 244. Setup for the axial-C role with Q not U
+
+Suppose rho=(C,M,Z,Q,M,Z), with Q not U. A special Q is impossible by
+the fixed-pair exclusion for {M,Z}. Thus Q is one of M,Z,C,D. Tau and
+rho have no U, so the two other core owners eta and xi must both contain
+U by the two-owner occurrence property.
+
+After removing the two face occurrences paired to tau, rho's remaining
+two faces have multiset labels {Q,M,Z}. This description remains valid
+when Q=C and the two axial labels coincide. They cannot pair to each
+other: every Z-incident face of tau and rho would then be paired within
+those two owners. Tau has one Z slot and rho at most three, so a nonempty
+closed Z subset would have at most four slots. They cannot pair to an
+unused tau face, which has labels {D,M,C} and contains no Z.
+
+If the two faces meet eta and xi separately, each target owner has a
+face not containing U and also contains U. Consequently U is the other
+axis and is unique in each target. Their transverse pairs contain M or
+Z, so every incident U face is marked. All U slots in K, at most two,
+would close internally, contradiction. Thus both remaining rho faces
+meet the same owner, say eta.
+
+Eta contains U but has a face {Q,M,Z}, not containing U, so it has
+exactly one U axis. All its U faces are marked. They cannot pair to
+each other (degree U one), or to tau or rho (no U), so both meet xi.
+
+## 245. Exhaustion of Q and the target frame
+
+If Q=M or Z, the face {Q,M,Z} has only the two distinct high labels
+M,Z. Distinct transverse labels therefore force eta's transverse pair
+to be {M,Z}, with axes Q and U. Its U faces are {U,M,Z}. A matching
+face in xi forces two high transverse labels and the third high axis;
+every U face of xi is marked, and xi has at most three U slots. Together
+with eta's one, all U slots in K close with degree at most four.
+
+It remains that Q=C or D is low. Eta has one of three roles:
+ (i)  (Q,M,Z,U,M,Z),
+ (ii) (Z,M,Q,U,M,Q),
+ (iii)(M,Z,Q,U,Z,Q).
+In (i), its U faces are again {U,M,Z}. The same xi role and closed-U
+argument gives degree(U)<=4.
+
+In (ii), every Z face in tau, rho, and eta is marked. Their original Z
+counts are respectively one, two, and one. Xi has a face {U,M,Q}, so
+it can contain Z only as its other axis, at most once. If present, that
+Z axis has a transverse pair containing U or M, hence both its faces
+are marked. All Z slots in K therefore close, with at most 1+2+1+1=5
+slots. This contradicts minimum degree six.
+
+In (iii), use the exact M/Z angle expenses. Tau consumes more than pi.
+Eta has axis M and pair {Z,Q}, with q<m-2 and z>m+2, so its individual
+response gives theta_M+2*beta_Z>pi, as in the established Section210
+role estimate (replace its low C by Q). Rho has pair {M,Z} and both
+axes low, C and Q. Write a=z>b=m>3 and r=c,o=q. Then
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0,
+using r<=b and o<=a. Also K_pair>8/9. Hence its transverse sum
+beta_M+beta_Z=2*atan(sqrt(K_pair*L/J)) exceeds pi/2, and its four
+original M/Z slots consume more than pi. The three distinct owners
+tau,rho,eta exceed the entire genuine M/Z budget 3*pi, contradiction.
+
+All Q other than U are excluded in the axial-C role. This leaves
+precisely (B), together with the unexcluded axial-M family (A).
+The argument retains repeated low axes, arbitrary other labels in xi,
+and self-pairings. It does not replace the external low-only boundary
+by closed equations or prove five-reservoir realization.
