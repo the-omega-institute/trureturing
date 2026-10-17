@@ -1417,3 +1417,354 @@ The entire full flat set is used when selecting M. Selecting a maximum
 only within one flat face-component would not justify comparisons with
 pi-selected H axes in another component. No such component-local
 substitution is made here.
+
+
+## 137. Four-reservoir hypotheses and notation
+
+The following proof uses the paired angle identities of Sections 95--96,
+the special-edge barrier of Section 112, and the maximal-selected escape
+of Sections 130--136. These are statements about the original shared
+length field and actual face-pair quotient.
+
+Use an actual finite ideal tetrahedron face pairing whose complete edge
+links are circles. Count local edge occurrences throughout, including
+repeated labels, distinct-face self-gluings, and repeated appearances of a
+tetrahedron in a normal circle. Every global edge has degree at least six.
+
+Let the actual global edge set be E = H disjoint-union S, with |H|=4. Each
+tetrahedron has a fixed vertex-induced frame, in edge order
+(12,13,14,34,24,23),
+
+    (R,A,B,O,A,B),       A,B in H, A != B.
+
+The axial labels R,O are unrestricted and may repeat each other or a
+reservoir label. All tetrahedra use one common positive global length field,
+with x_e = cosh(ell_e)>1. Every original extended edge-angle sum is 2*pi.
+Assume at least one tetrahedron is flat.
+
+The maximal-selected escape theorem gives all four distinct labels
+
+    H={M,C,D,Z}
+
+and a genuine tetrahedron tau with frame
+
+    (Z,M,C,D,M,C).
+
+Write m,c,d,z for their respective cosh lengths. M is maximal in value
+among H labels with a flat pi occurrence; it has exactly one flat pi
+occurrence. Z has no flat pi occurrence. The escape theorem initially gives
+
+    m >= 1+c+d,          z >= 1+m+c.
+
+The source flat block sigma has axial label M and reservoir pair {C,D}.
+The selected transverse M angle in tau is at most pi/2.
+
+An axial run of Z is a maximal consecutive sequence of occurrences that
+are axial in their fixed frames. Its actual reservoir pair is constant:
+the other two edge slots of each crossed face transport that pair. Call a
+run dominant when its pair {A,B} satisfies z>=1+x_A+x_B. Such a pair cannot
+contain Z. The entire star being axial is treated separately below.
+
+## 138. Inputs used in the proof
+
+For a paired block (r,a,b,o,a,b):
+
+* Axial flatness is equivalent to (r-1)(o-1)>=(a+b)^2.
+* Genuine blocks satisfy (r+1)(o+1)>(a-b)^2.
+* A transverse-selected flat block contributes two pi occurrences to its
+  selected actual reservoir label.
+* Every special edge q in S has a fixed actual reservoir pair {A,B}
+  around its complete star and x_q<1+x_A+x_B.
+* In a genuine block with r>=1+a+b, if theta is the axial r angle and
+  beta,delta are the a,b transverse angles, then
+
+      2*theta+beta+delta > pi.                    (137.1)
+
+* For genuine paired blocks, a>b implies beta>delta, by (95.5).
+* In a genuine block (q,z,a,b,z,a), the cosine numerator for either
+  transverse Z angle is
+
+      N(q)=a(q+b)+z(qb+a^2-z^2+1),                (137.2)
+
+  with positive denominator. Its coefficient of q is a+zb>0, and
+
+      N(1+z+a)=[a+z(1+z+a)]*(1+a+b-z).           (137.3)
+
+These facts concern original angles of the same common length field.
+
+## 139. All four reservoirs are witnessed, and Z has no flat occurrences
+
+The genuine block tau contains every H label, so all four have genuine
+witnesses. A flat block cannot select a transverse pair: its two pi
+occurrences would exhaust the selected H label's full angle budget and
+contradict its positive genuine angle. Thus every flat block selects its
+axial pair.
+
+Z cannot occur axially in a flat block, since it has no flat pi occurrence.
+It cannot occur transversely either. Indeed, suppose the pair is {Z,A}.
+Every H-valued selected axis has value at most m<z, and every S-valued
+selected axis has value less than 1+z+x_A. If both axes are in H, their
+shifted product is less than (z-1)^2; if exactly one is in S, it is less
+than (z-1)(z+x_A); and if both are in S it is less than (z+x_A)^2. Each
+case contradicts axial flatness for the pair {Z,A}. Consequently every
+occurrence in the complete Z star is genuine.
+
+Similarly M has no flat transverse occurrence: both selected H axes have
+value at most m, and the special-edge bound gives the same shifted-product
+contradiction with pair {M,A}. Every flat axial M occurrence has angle pi.
+Therefore M has exactly one flat occurrence in total, and the sum of all
+its genuine angles is exactly pi.
+
+The initial inequalities are strict. Let O be the opposite axis of M in
+sigma. If O is in H it is selected, so O cannot be Z. It cannot be M
+because that would give M two flat pi occurrences. Thus O is C or D,
+whose value is strictly less than 1+c+d. If O is in S the special-edge
+bound also gives x_O<1+c+d. Axial flatness now implies
+
+    m > 1+c+d.                                   (137.4)
+
+The escape cosine numerator at z0=1+m+c equals
+[c+m(1+m+c)]*(1+c+d-m), which is strictly negative by (137.4).
+Since the actual escape M angle is at most pi/2 and this numerator strictly
+increases with z, it follows that
+
+    z > 1+m+c.                                   (137.5)
+
+In particular z>m>c,d and m>c.
+
+## 140. A proper dominant Z run and its return block
+
+The whole Z star cannot be axial. Otherwise its reservoir pair is {M,C}
+everywhere, by transport from tau. No genuine owner can contain two axial
+Z occurrences, since (z-1)^2>(m+c)^2 would make it axial-flat. Thus its
+n>=6 occurrences have distinct owners. Their angles theta_i sum to 2*pi.
+Their transverse M angles beta_i consume two distinct M slots each, so
+2*sum(beta_i)<=pi. Since m>c, delta_i<beta_i, hence
+sum(beta_i+delta_i)<pi. Summing (137.1) gives
+
+    n*pi < 2*(2*pi)+sum(beta_i+delta_i) < 5*pi,
+
+contrary to n>=6.
+
+Let I be the proper maximal axial run containing the occurrence in tau.
+Its reservoir pair is {M,C}, and it is strictly dominant by (137.5). There
+are two distinct transverse Z boundary occurrences: the total number of
+transverse Z slots in the full circle is even, because each owner with Z
+as a reservoir contributes exactly two such slots.
+
+More generally, consider a boundary of any dominant axial Z run with
+pair {A,B}. Across its actual face the boundary block has reservoirs
+{Z,A}, shared axial label B, and other axial label Q, after interchanging
+A,B if necessary. Put a=x_A,b=x_B,q=x_Q. If Q is in H, q<=z<1+z+a;
+if Q is in S, the special-edge bound gives q<1+z+a. Dominance gives
+z>=1+a+b. Equations (137.2)--(137.3) therefore show N(q)<0. Hence every such
+boundary Z angle is strictly greater than pi/2.
+
+Every transverse Z owner has two equal Z angles. Thus two different
+owners with obtuse Z angles would contribute more than 2*pi to the same
+actual Z edge. There is exactly one such owner rho, and both endpoints
+of I are its two distinct transverse Z occurrences. Write their common
+angle as gamma; then gamma>pi/2. Every other transverse Z owner has its
+Z angle at most pi/2.
+
+There is exactly one dominant axial Z run. To prove this, at a transverse
+Z occurrence in a block with pair {Z,A} and axes B,Q, the two incident
+faces have complementary label pairs {A,B} and {A,Q}. If it bordered a
+dominant axial run on both sides, then
+
+    z>=1+a+b,          z>=1+a+q.
+
+These imply (z-a)^2>=(b+1)(q+1), contradicting genuineness. Thus each of
+rho's two transverse Z occurrences borders a dominant run on at most
+one side. The run I already uses both of those available incidences;
+any other dominant run would also have to use them. This is impossible.
+
+The argument is on actual local slots in one circular edge link. It does
+not require different boundary owners, and it does not discard self-gluing.
+
+## 141. The unique dominant run has one or two occurrences
+
+Let g>=1 be the number of axial Z occurrences in I, theta_i their angles,
+and beta_i,delta_i the corresponding M,C transverse angles. Put
+
+    Theta=sum(theta_i),       B=sum(beta_i).
+
+The owners of these g occurrences are distinct: a repeated owner would
+have both axes Z and would be axial-flat by (137.5). None is rho, whose
+reservoir pair contains Z. Their two transverse M slots each are therefore
+distinct actual occurrences, and the full M budget gives 2*B<=pi.
+In fact 2*B<pi: rho is genuine, contains M on the shared endpoint face,
+and is a different owner, so it supplies a further positive M occurrence.
+
+The two transverse Z slots of rho consume 2*gamma>pi. Therefore
+Theta<pi. Also m>c gives sum(beta_i+delta_i)<2*B<pi. Summing (137.1) over I,
+
+    g*pi < 2*Theta+sum(beta_i+delta_i) < 3*pi.
+
+Consequently
+
+    g is either 1 or 2.                            (137.6)
+
+For g=2 the same inequality gives Theta+B>pi. Since B<pi/2,
+
+    Theta>pi/2,          pi/2<gamma<3*pi/4.         (137.7)
+
+The second upper bound follows from 2*gamma+Theta<2*pi. That last
+inequality is strict in both cases g=1,2: the g run slots and rho's two
+transverse slots account for at most four of degree(Z)>=6 genuine
+occurrences. There remain at least 4-g additional positive Z occurrences.
+If rho has an axial Z slot as well, it is one of these residual slots.
+
+## 142. Exact return-label alternatives, including repetitions
+
+The return rho has one of the following forms, in fixed paired coordinates
+up to a vertex-induced reindexing:
+
+    (C,Z,M,Q,Z,M),       or       (M,Z,C,Q,Z,C).    (137.8)
+
+Write a for the companion reservoir value (m or c), b for the shared
+axial value (c or m), and q=x_Q. Genuine transverse discriminant and (137.5)
+give the necessary strict bounds
+
+    q > (z-a)^2/(b+1)-1 > b,
+    q < 1+z+a.                                    (137.9)
+
+If Q is in S, its actual fixed pair is {Z,A}, and (137.9) gives its interval.
+No condition that Q be a fourth distinct H label is imposed.
+
+If Q is in H, the complete possibilities are:
+
+* Companion M, shared axis C: Q can be M or Z. It can also be D only
+  when d>(z-m)^2/(c+1)-1>c. It cannot be C.
+* Companion C, shared axis M: Q can only be Z, since q>m and every other
+  H value is at most m.
+
+Each listed possibility still has to satisfy all inequalities and all
+remaining complete edge equations; this is a list of necessary alternatives,
+not an assertion of their existence.
+
+If Q=Z, rho has one additional axial Z occurrence besides its two
+transverse Z occurrences. If Q=M in the first form, rho has an axial M
+occurrence besides its two transverse M occurrences. Both multiplicities
+must be retained in the full budgets.
+
+Every axial Z occurrence outside I has a non-dominant reservoir pair.
+Since H={M,C,D,Z}, its pair either contains Z itself, or is {M,D} with
+
+    d>z-m-1>c.                                    (137.10)
+
+Indeed the other possible pairs not containing Z are {M,C} and {C,D},
+both dominant by (137.4)--(137.5). A {M,D} pair is non-dominant exactly when
+z<1+m+d. Pairs containing Z are permitted and never dominant; these are
+precisely the repeated-role cases that cannot be suppressed in a full-star
+argument.
+
+## 143. Both ends of the source M run enter the same short Z run
+
+Every genuine transverse M angle is strictly less than pi/2. Its owner
+supplies two equal such angles, while M has exactly one flat occurrence
+and at least five genuine occurrences. There are therefore at least three
+further positive occurrences sharing M's remaining pi budget with those
+two slots.
+
+Consider the proper axial M run containing sigma, as in the escape
+theorem. Its pair is {C,D} and its two distinct transverse boundary slots
+are genuine. At either boundary, actual face transport gives a block
+
+    (Q,M,A,B,M,A),       {A,B}={C,D}.
+
+The boundary M angle is strictly less than pi/2. The same increasing
+cosine numerator used by the escape theorem, together with (137.4), forces
+x_Q>1+m+x_A. The special-edge bound excludes Q in S. Among the four H
+labels, only Z has value greater than m, so Q=Z.
+
+Consequently each source-run endpoint owner contains a dominant axial Z
+occurrence. Both must lie in the unique run I. That run's actual reservoir
+pair is fixed; hence both endpoint companions A are the same label C
+(after the initial choice of names). The endpoint owners are thus either
+one common tetrahedron or two distinct tetrahedra with the identical
+labelled frame
+
+    (Z,M,C,D,M,C).                                 (137.11)
+
+If they are distinct, they occupy both of I's two available axial slots.
+If they are the same owner, I may still contain a second owner. Nothing
+here identifies two distinct actual tetrahedra just because their length
+vectors are equal.
+
+There is also an immediate residual-face restriction that keeps the
+repeated-label cases explicit. The two faces of rho used by I are its
+faces incident to the shared axis B. Each other face incident to a
+transverse Z slot has labels {Z,A,Q}, with the tracked target being its Z
+slot. If Q is in S, the next Z occurrence cannot be axial, since its
+reservoir pair would contain a special label. If Q=A, it cannot be axial
+because its two reservoir labels would coincide. In particular, the
+case (C,Z,M,M,Z,M) forces transverse Z neighbors across both unused
+return faces, whose labels are {Z,M,M}. These neighbors have reservoir
+pair {Z,M} and an axial M slot. If Q=Z instead, axial neighbors with
+reservoir pair {Z,A} remain permitted and are non-dominant.
+
+## 144. An actual dual cycle and a conditional realization theorem
+
+Form the dual multigraph of the original face pairing: its vertices are
+the actual tetrahedra and its edges are paired face pairs. Self-loops and
+parallel edges are retained.
+
+The g owners of I are distinct, and rho is different from every one of
+them. The consecutive faces crossed by the Z normal circle give a dual
+cycle through those g owners and rho, of length g+1. For g=1 it consists
+of two distinct face pairings between rho and the single run owner. For
+g=2 it is a triangle on three distinct tetrahedra.
+
+Here the face pairings really are distinct. Each run owner has exactly
+one local Z slot, axial, and its two incident faces are different. Its
+other axis cannot also be Z because that would make the owner flat.
+The two boundary transverse Z slots of rho are opposite local edges;
+no tetrahedral face contains both. Hence the two return faces in rho
+are different as well. The cycle is therefore an actual dual cycle,
+not a repeated traversal of one paired face caused by a repeated label.
+
+**Theorem 144.1.** Under Section 137's hypotheses, a nonempty flat set forces
+either two distinct tetrahedra joined by two different face pairings,
+or three distinct tetrahedra forming a dual triangle.
+
+**Corollary 144.2.** In an actual finite ideal face pairing with complete circular edge links,
+suppose |H|<=4, every edge degree is at least six, and
+the fixed paired frames and common positive zero-curvature length field
+exist. If no two distinct tetrahedra share two paired faces and no three
+distinct tetrahedra form a dual triangle, every tetrahedron is genuine.
+Self-loops elsewhere in the dual multigraph are allowed.
+
+For |H|=4 this is the contrapositive of Theorem 144.1. For |H|<=3 it follows
+from the maximal-selected four-label escape theorem already in the source.
+
+Under the standard original-manifold hypotheses used by the source
+realization theorem (a finite connected orientable ideal triangulation
+of a compact 3-manifold with all boundary components of genus at least
+two), this gives a conditional hyper-ideal realization of the original
+triangulation. The existing strict-angle-structure and Luo--Yang inputs
+supply the common positive generalized zero-curvature field. Corollary
+8.2 removes its flat blocks. Common edge lengths make paired truncated
+faces isometric, the full 2*pi equations remove edge singularities, and
+the truncation triangles give totally geodesic boundary.
+
+This criterion does not assert that every four-reservoir pairing avoids
+these dual cycles, or that the unrestricted four-reservoir case is realized.
+
+## 145. Scope
+
+This proves a necessary configuration using the complete Z equation,
+the complete M equation, all shared actual lengths, and minimum degree:
+all of Z is genuine; its unique dominant axial run has length one or two;
+the two ends return to two slots of one obtuse transverse owner; the
+remaining slots obey (137.7)--(137.10) and retain all repeated labels.
+Both ends of the source M run have the additional coupling (137.11), and
+the short return forces the actual dual cycle in Theorem 144.1.
+
+It does not yet exclude the four-reservoir case. The residual arc can
+contain non-dominant axial runs whose reservoir pairs contain Z, the
+possible pair {M,D}, and transverse owners with S or repeated H axes.
+No compatible complete quotient realizing these residual possibilities,
+and no contradiction eliminating all of them, is asserted here. In
+particular the unselected edge Z has a full 2*pi budget, not M's remaining
+pi budget. The proof never transfers that half-budget to Z.
