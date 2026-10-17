@@ -3214,3 +3214,583 @@ requirements, is neither completed nor narrowed by these finite results.
 [JSce3]: https://github.com/the-omega-institute/trureturing/blob/ce3eb5de2f708f7b584dd86df8868682fc0fdbe6/docs/develop/theory/FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 87. Finite activity, attached records, and one complete original-class witness
+
+The following statements use the conditional source dictionary already fixed in
+FA.35--FA.37. Let
+
+$$
+\begin{gathered}
+\theta=ab/(h_0h_1),\qquad \omega=cd/(h_0h_2),\qquad
+\delta=\theta+\omega,\qquad s_0=\sqrt\delta,\\
+\alpha=\theta/\delta,\qquad \beta=\omega/\delta,\qquad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\qquad
+L=\operatorname{diag}(s_0,1,1),\\
+\mathscr C=\{(1,z,w)^T:\alpha z^2+\beta w^2=1\},\\
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+(K_0,K_1,K_2)=(D,T,S),\quad G=LNL,\\
+K_h=s_0D+zT+wS,\quad \ell(h)=h^T Gh,\quad
+H_0=(1-\delta)N_{00},\\
+n_h=(0,dw/h_2,-bz/h_1)^T,\quad f(h)=n_h^T\Delta n_h,\\
+\mathfrak c(h)=
+\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+     {h_0^2\delta+b^2z^2+d^2w^2}.
+\end{gathered}
+\tag{FA.87}
+$$
+
+All source-root, null, rank, TP, minimax and sharp-cost hypotheses in these
+formulas remain conditional. The failure covariance is physically whitened by
+
+$$
+M_2=\operatorname{diag}(m_1,m_2),\qquad
+\Xi=M_2^{1/2}\Delta_{\{1,2\}}M_2^{1/2}
+ =\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},
+\quad d_f=\frac{11m_1}{64},\quad
+z_f=\sqrt{m_1m_2}\,\Delta_{12},\quad
+L_f=\sqrt{d_f^2+4z_f^2}.
+\tag{FA.88}
+$$
+The physical spectral effects are
+$M_2^{1/2}e_\pm e_\pm^TM_2^{1/2}$, where $e_\pm$ are unit spectral
+vectors of $\Xi$; the unwhitened vectors are not physical failure directions.
+
+**Proposition 87.1 (finite activity excludes a nonzero failure-only label).**
+Consider one generated actual label whose entire decoder fibre has activity at
+most $A<\infty$. If its survivor rate is any measurable positive operator rate
+and its terminal processing is trace preserving on survivors, then
+
+$$
+L_{\mathrm{dec}}\succeq e^{-A}I.
+\tag{FA.89}
+$$
+Consequently every nonzero positive encoded state has strictly positive terminal
+live mass. A nonzero actual label carrying only failure mass is therefore not in
+the finite-$A$ class.
+
+**Proof.** For a positive encoded state $Y$, let
+$p(u)=\operatorname{tr}\mathcal S_u(Y)$. Trace balance and the operator norm give
+$p'(u)\ge-\|R(u)\|p(u)$. Gronwall's inequality and terminal trace preservation
+therefore give
+$p(1)\ge\exp(-\int_0^1\|R(u)\|du)p(0)\ge e^{-A}p(0)$.
+Since this holds for every $Y\succeq0$, the operator inequality follows. A
+nonzero failure-only label would have zero terminal live mass on a nonzero
+positive input, contradicting the inequality. This argument permits
+noncommuting Hamiltonians, unobserved trace-preserving survivor controls and
+multiple Kraus operators. $\square$
+
+For example, the scalar failure density $g(u)=2/(1+u)^2$ with total failure one
+has survival $(1-u)/(1+u)$ and hazard
+
+$$
+r(u)=\frac{2}{1-u^2},\qquad
+\int_0^1r(u)\,du=\infty.
+\tag{FA.90}
+$$
+Thus the absence of a terminal failure atom does not make that row finite
+activity. The same obstruction applies to a completion that sends the entire
+complement to failure.
+
+**Theorem 87.2 (attached finite-$A$ parameterization).** In the weak range
+$0\le s<s_0$, index by $j$ exactly the actual low labels that are nonzero on
+supported inputs. In the original all-complex, multi-Kraus equality class,
+each such label has one normalized direction $h_j\in\mathscr C$ and numbers
+$p_j>0$, $0\le b_j\le t\mathfrak c(h_j)$, where $t=e^A-1$, such that
+
+$$
+K_j=\sqrt{p_j}K_{h_j},\qquad
+N_j=p_jb_jn_{h_j}n_{h_j}^T,
+\tag{FA.91}
+$$
+
+$$
+\sum_jp_jh_jh_j^T=I_3,\qquad
+\sum_jp_jb_jn_{h_j}n_{h_j}^T=M.
+\tag{FA.92}
+$$
+The actual contrast and full-label record TV are respectively bounded by
+
+$$
+\mathsf V\le s_0\sum_jp_j|z_j|,
+\qquad
+T_{\mathrm{actual}}=\frac12\left[H_0+
+ \sum_jp_j|\ell(h_j)+b_jf(h_j)|\right].
+\tag{FA.93}
+$$
+The contrast bound is attained by the deterministic report
+$\operatorname{sgn}(z_j)$, with an arbitrary report at $z_j=0$.
+Here $K_j,N_j$ are supported data. A nonzero full-$M_5$ CP acquisition map
+can vanish on all supported inputs: the complementary qubit with encoder
+$W^\dagger$, rate zero and live decoder $EJ_0$ in Theorem 75.1 is such
+a label. It is absent from the indexed sums and contributes zero to supported
+contrast and TV, but remains an actual label in the total alphabet; its entire
+fibre still obeys the activity bound. Thus nonzero on the full input algebra
+is distinct from nonzero on supported inputs. At $t=0$ the class is empty
+when $M\ne0$.
+
+**Proof.** Proposition 87.1 supplies a nonzero supported live product in every
+indexed label, since its supported encoder is nonzero. The supplied equality
+face makes that product a rank-two real-null product. Its common-image and
+common-kernel rigidity forces all nonzero supported live Kraus products in
+that label onto one normalized direction. Pulling a supported failure effect
+through the same factor gives a rank-one effect on $\mathbb Rn_{h_j}$;
+the Schur complement of the positive $00$ pivot is exactly
+$N_j\preceq tK_j^\dagger K_j$, which is (FA.91). Summing the complete live Gram
+and failure covariance gives (FA.92). The report inequality is
+$|\sum_jp_jm_jz_j|\le\sum_jp_j|z_j|$ for $|m_j|\le1$, and the stated signs
+attain it. If $t=0$, (FA.91) forces every $N_j=0$, contradicting $M\ne0$.
+No prescribed noncommuting time law is inferred from these endpoint moments.
+$\square$
+
+**Theorem 87.3 (one common original-class output constructor).** Fix a weak
+request $0\le s<s_0$ and a finite family satisfying (FA.91)--(FA.92) with
+$\sum_jp_j|z_j|\ge\tau:=s/s_0$. Give low label $j$ the deterministic report
+$\operatorname{sgn}(z_j)$, arbitrary at zero, and choose isometries
+$J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger$. Put
+
+$$
+\begin{gathered}
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j,\\
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\qquad
+B_j=K_jJ_jQ_j^{-1/2},\\
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2},
+\end{gathered}
+\tag{FA.94}
+$$
+so that $B_j^\dagger B_j+F_j=I_2$ and
+$L_{\mathrm{dec},j}=B_j^\dagger B_j\succ0$. Use
+
+$$
+G_{\mathrm{time}}(u)=\frac{2u}{1+u},\qquad
+Z_j(u)=\sqrt{I-G_{\mathrm{time}}(u)F_j},\qquad
+R_j(u)=2(1+u)^{-2}F_j[I-G_{\mathrm{time}}(u)F_j]^{-1}.
+\tag{FA.95}
+$$
+
+The current-survivor jump on each of the five labelled Borel components is
+
+$$
+Y\longmapsto w_\ell\,\frac{2}{(1+u)^2}
+\operatorname{tr}\!\left(F_jZ_j(u)^{-1}YZ_j(u)^{-1}\right)P_f,
+\quad w=(0,\tfrac14,\tfrac12,\tfrac14,0),
+\tag{FA.96}
+$$
+and the survivor terminal map uses $EB_j(I-F_j)^{-1/2}$. Its activity is
+
+$$
+\int_0^1\|R_j(u)\|du
+=\log\left(1+\frac{b_j}{\mathfrak c(h_j)}\right)\le A.
+\tag{FA.97}
+$$
+
+Choose isometries $W_\perp:\mathbb C^2\to\operatorname{ran}(I-P)$ and
+$J_0:\mathbb C^2\to\mathbb C^3$, and use one counted high label
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\ W_\perp^\dagger\end{pmatrix}.
+\tag{FA.98}
+$$
+Its rate is zero, its binary report is deterministically $+$, and its two
+terminal Kraus indices are hidden. For every $X\in M_5$ and every passive
+reference, the resulting full output satisfies
+
+$$
+\Phi^L(X)=E\left[\Lambda_*(E^\dagger XE)+
+J_0W_\perp^\dagger XW_\perp J_0^\dagger\right]E^\dagger,
+\tag{FA.99}
+$$
+
+$$
+\Phi^f_\ell(\mathcal B)(X)=w_\ell\left(\int_{\mathcal B}\frac{2\,du}{(1+u)^2}\right)
+\operatorname{tr}(EME^\dagger X)P_f,
+\tag{FA.100}
+$$
+with conditional reference operator
+$w_\ell(\int_{\mathcal B}g)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$. The five components include the two
+zero components. The total encoder effect is $I_5$; failures occur first at
+absolute time $6+u$, only survivors receive the terminal map, and no later
+positive-carrier action or forced deadline absorption is introduced. Under the
+inherited source identities, the same instrument preserves
+
+$$
+e_{5,e,n}=e_{27,e,n}=E_*,\qquad e_{16,e,n}<E_*,\qquad e,n\in\{\pm1\},
+\tag{FA.101}
+$$
+and its whole dimension-five high fibre (supported dimension three plus
+coherent complementary dimension two) is charged by the dimension-at-least-three
+acquisition event and has the original sharp worst-history joint cost. This
+constructor uses the allowed JR free complement and is distinct
+from the fixed certain-failure CA10 completion.
+
+**Proof.** The identities in (FA.94) are direct matrix multiplication. Since
+$F_j\prec I$, (FA.95) is positive on the whole fibre and integration of the
+rank-one eigenvalue gives (FA.97). Equations (FA.99)--(FA.100) follow by
+summing the live and failure Kraus components; tensoring the same calculation
+with $I_R$ gives the reference identity. The source error and cost identities
+are inherited exactly. The low reports attain
+$\mathsf V=s_0\sum_jp_j|z_j|\ge s$, while the deterministic high report
+contributes no $01$ effect. The moment and capacity identities alone give the
+displayed CP outputs; membership at the requested contrast also uses the
+stated available-contrast hypothesis. $\square$
+
+**Corollary 87.4 (weak total actual alphabet).** Let $n_{\mathrm{opt}}(s,A)$ be
+the minimum number of actual low labels nonzero on supported inputs among
+weak height maximizers, and assume the weak finite-$A$ class is nonempty. Then
+
+$$
+N_{\mathrm{opt}}^{\mathrm{total}}(s,A)=n_{\mathrm{opt}}(s,A)+1.
+\tag{FA.102}
+$$
+The same equality holds with $n_{\mathrm{feas}}$ and $N_{\mathrm{feas}}$.
+Total counts include every nonzero full-$M_5$ acquisition map, including
+supported-zero labels; these are excluded only from the supported low count.
+
+**Proof.** Every competitor has its supported-nonzero low labels and at least
+one positive-supported high acquisition label. Any additional supported-zero
+labels also count, so the total is at least the supported low count plus one.
+Starting with a minimum supported-low-label optimum, use (FA.94)--(FA.100),
+placing the coherent complement inside the one high fibre. All high differences
+are nonnegative and sum to $H_0$ there, and the low TV is unchanged. The low
+sign reports attain at least the original contrast, and the deterministic high
+report contributes none, so the same inequality request is satisfied. This is
+a reconstruction of a common instrument, not an effect-only merge of arbitrary
+channels. $\square$
+
+## 88. A strict finite-interior submaximal-height counterexample
+
+Set
+
+$$
+V_f=\frac{m_2h_1^2}{b^2},\quad W_f=\frac{m_1h_2^2}{d^2},\quad
+\mu_f=\alpha V_f+\beta W_f,\quad
+\nu=\frac{\mu_f}{c_*(V_f/\mu_f)},\quad
+\nu_f=u_f=V_f/\mu_f,\quad \upsilon_f=W_f/\mu_f.
+\tag{FA.103}
+$$
+Under the supplied source enclosure, $0<\nu_f<1<\upsilon_f<3$ and
+$\alpha\nu_f+\beta\upsilon_f=1$. Let
+
+$$
+ h^F_{\sigma\upsilon}=(1,\sigma\sqrt{\nu_f},\upsilon\sqrt{\upsilon_f}),\qquad
+\Sigma_f=\frac{\mu_f}{4}\sum_{\sigma,\upsilon=\pm1}\delta_{h^F_{\sigma\upsilon}}.
+\tag{FA.104}
+$$
+For $0<q\le10^{-5}$ set $t=\nu/q$ and $A=\log(1+t)$. Four failure-bearing labels have weight $q/4$ and saturated coefficient
+$b_F=\mu_f/q$; their total failure covariance is $M$.
+The remaining Gram is
+
+$$
+B_q=\operatorname{diag}(m,d_1,d_2),\qquad
+m=1-q,\quad d_1=1-q\nu_f,\quad d_2=1-q\upsilon_f,
+\quad m=\alpha d_1+\beta d_2.
+\tag{FA.105}
+$$
+It is positive definite. The unique maximum-contrast completion is the four
+corner measure
+
+$$
+h^4_{\sigma\upsilon}=(1,\sigma\sqrt{d_1/m},\upsilon\sqrt{d_2/m}),\qquad
+p^4_{\sigma\upsilon}=m/4,
+\tag{FA.106}
+$$
+with height contribution $J_4(q)=\frac m4\sum|\ell(h^4_{\sigma\upsilon})|$.
+Indeed, Cauchy--Schwarz gives the upper bound $\sqrt{md_1}$ and equality fixes
+both absolute coordinates and then all four cross moments.
+
+A different null decomposition is
+
+$$
+\begin{gathered}
+\chi_q=m+\alpha d_1,\quad h^0=(1,\alpha^{-1/2},0),\quad
+p_0=\frac{m\alpha d_1}{\chi_q},\\
+h^\pm=\left(1,-\frac{\sqrt\alpha d_1}{m},
+ \pm\frac{\sqrt{d_2\chi_q}}m\right),\quad
+p_\pm=\frac{m^2}{2\chi_q}.
+\end{gathered}
+\tag{FA.107}
+$$
+All three weights are positive, all three directions lie in $\mathscr C$, and
+
+$$
+p_0h^0(h^0)^T+p_+h^+(h^+)^T+p_-h^-(h^-)^T=B_q,
+\tag{FA.108}
+$$
+while their contrast is
+
+$$
+\kappa_3(q)=\frac{2m\sqrt\alpha d_1}{m+\alpha d_1}<\sqrt{md_1}.
+\tag{FA.109}
+$$
+Define $J_3(q)=p_0|\ell(h^0)|+p_+|\ell(h^+)|+p_-|\ell(h^-)|$.
+
+**Theorem 88.1 (strict height gain below maximum contrast).** Under the inherited
+source-box inequalities, for every $0<q\le10^{-5}$,
+
+$$
+J_3(q)>J_4(q).
+\tag{FA.110}
+$$
+
+**Proof.** Write
+$G=(g_{ij})$ and compare the continuous extensions at $q=0$. The source
+signs leave only $(1,-1,-1)$ among the four corners and only
+$(1,-\sqrt\alpha,-\sqrt{1+\alpha})$ among the three rays with negative
+$\ell$. Direct expansion gives
+
+$$
+\begin{aligned}
+D_0:=J_3(0)-J_4(0)
+={}&\frac{\beta(g_1-g_0)}{2(1+\alpha)}-\frac{g_2}{2}
+-\frac{g_{01}(1-\sqrt\alpha)^2}{1+\alpha}\\
+&+g_{02}\left(\frac2{\sqrt{1+\alpha}}-1\right)
++g_{12}\left(1-2\sqrt{\frac\alpha{1+\alpha}}\right).
+\end{aligned}
+\tag{FA.111}
+$$
+The directed source box supplies
+$0.8777<\alpha<0.8778$, $g_2<0.001678$,
+$g_{01}<0.002371$, $g_{02}>0.002208$,
+$\sqrt\alpha>0.936$, $\sqrt{1+\alpha}<1.371$ and
+$1+\alpha>1.877$. Therefore
+
+$$
+D_0>
+\frac{2208}{10^6}\left(\frac{2000}{1371}-1\right)-\frac{1678}{2\cdot10^6}
+-\frac{2371}{10^6}\frac{(64/1000)^2}{1877/1000}
+>\frac1{6250}.
+\tag{FA.112}
+$$
+On $0\le q\le10^{-5}$, the same enclosure gives $\|G\|<0.006$. The
+explicit derivatives of (FA.106)--(FA.107) bound
+$|J_4'|\le20\|G\|$ and $|J_3'|\le48\|G\|$, hence
+$|(J_3-J_4)(q)-D_0|\le68\|G\|q<q$. Thus
+$J_3-J_4>1/6250-q>0$.
+
+For $\tau_3(q)=q\sqrt{\nu_f}+\kappa_3(q)$, every
+$0\le\tau\le\tau_3(q)$ is feasible for both completions. Since
+$q<1/\upsilon_f$, $t>t_0$, and
+$\tau_3(q)<q\sqrt{\nu_f}+\sqrt{(1-q)(1-q\nu_f)}=\tau_{\max}(t)$,
+these are strict interior points above the minimum-budget boundary. The
+common constructor of Theorem 87.3 gives the same twelve error values, five
+Borel components, sharp joint cost and first-event clock. Therefore this is an
+original-class attainable height comparison, not a claim of global optimality
+or minimum alphabet. It refutes only the substitution of maximum contrast for
+height optimization below that contrast. $\square$
+
+## 89. Continuous null roofs and the complete rank-two fixed-allocation branch
+
+Let
+
+$$
+\mathcal K_Q=\{B\succeq0:\operatorname{tr}(QB)=0\},\qquad
+\mathcal R_\varphi(B)=\max_{\mu\ge0,\ \int hh^T d\mu=B}\int\varphi(h)d\mu,
+\tag{FA.113}
+$$
+for $\varphi\in C(\mathscr C)$. Every $B\in\mathcal K_Q$ has a null
+representation: apply the zero-diagonal orthogonal-basis argument to
+$B^{1/2}QB^{1/2}$ on its range and pull the basis back by $B^{1/2}$.
+The mass of every representing measure is $B_{00}$, and $\mathscr C$ is compact.
+
+**Theorem 89.1 (continuity on the whole PSD cone).**
+$\mathcal R_\varphi$ is continuous on all of $\mathcal K_Q$ for every continuous
+real payoff $\varphi$. In particular, the available-contrast roof
+$\mathcal V_Q(B)=\mathcal R_{|z|}(B)$ is continuous at every rank.
+
+**Proof.** Compactness of the ellipse and fixed mass give attainment and weakly
+convergent maximizing subsequences, hence upper semicontinuity. At $B\succ0$,
+choose $\varepsilon_n\downarrow0$ with
+$B_n\succeq(1-\varepsilon_n)B$ and write
+$R_n=B_n-(1-\varepsilon_n)B\in\mathcal K_Q$. Mixing representing measures
+for $B$ and $R_n$ gives lower semicontinuity. If $\operatorname{rank}B=2$,
+the compression $B^{1/2}QB^{1/2}$ has nonzero eigenvalues $\kappa,-\kappa$:
+a real two-plane cannot be totally isotropic for signature $(1,2)$. Its two
+null lines are the pullbacks of the vectors
+$(a_++a_-)/\sqrt2$ and $(a_+-a_-)/\sqrt2$, and their weights are uniquely
+fixed by $B$. Thus every representing measure for $B_n\to B$ converges to
+that unique two-atom measure. Rank one has one atom and rank zero has the zero
+measure, so the same argument gives lower semicontinuity at all boundary ranks.
+$\square$
+
+**Corollary 89.2 (rank-at-most-two fixed-allocation value and count).**
+Let $F$ be a finite oriented failure allocation
+$\Sigma=\sum_{h\in F}a_h\delta_h$ with
+$\sum a_hn_hn_h^T=M$, and let
+
+$$
+B=I-\sum_{h\in F}\frac{a_h}{t\mathfrak c(h)}hh^T\succeq0,
+\qquad \operatorname{rank}B\le2.
+\tag{FA.114}
+$$
+Write its unique null representation as $B=\sum_{h\in R}r_hhh^T$ and set
+$C_h=t\mathfrak c(h)$. The fixed-allocation feasible contrast condition is
+
+$$
+\tau\le\sum_{h\in F}\frac{a_h}{C_h}|z_h|+\sum_{h\in R}r_h|z_h|.
+\tag{FA.115}
+$$
+For every such request the fixed-allocation maximum height is
+
+$$
+\mathcal H_F(t)=\frac12\left[H_0+
+\sum_{h\in F}\frac{a_h}{C_h}|\ell(h)+C_hf(h)|+
+\sum_{h\in R}r_h|\ell(h)|\right].
+\tag{FA.116}
+$$
+Its minimum low actual-label count is
+
+$$
+|F\cup R|+\#\{h\in F\cap R:\ell(h)[\ell(h)+C_hf(h)]<0\}.
+\tag{FA.117}
+$$
+The total actual alphabet of the constructor is one larger.
+
+**Proof.** Saturating every fixed failure direction leaves the unique residual
+measure of (FA.114), independent of the requested contrast. For a common
+direction, convexity gives
+$|\ell+bf|\le(1-b/C_h)|\ell|+(b/C_h)|\ell+C_hf|$.
+Endpoint splitting attains equality. If the two endpoint values have opposite
+strict signs and both masses are positive, every interior coefficient has
+strict loss and two labels are necessary; equal signs, a zero endpoint or a
+zero mass permit one label. Distinct directions cannot share an actual low
+label by Theorem 87.2. Axes, coincident directions and zero weights are
+removed by the same formula. $\square$
+
+## 90. A nine-coordinate common-attainer bound
+
+**Theorem 90.1 (at most nine low labels).** Every nonempty weak finite-$A$
+class has a height maximizer with at most nine actual low labels nonzero on
+supported inputs, and Theorem 87.3 then gives a total alphabet of at most ten.
+This is an existence
+upper bound, not a minimum or a parameter classification.
+
+**Proof.** Use the attained finite family supplied by FA72 and split every atom
+into pure-live and saturated endpoints; absolute-value convexity does not lower
+height and preserves all original moment constraints. For each resulting atom
+$(h_i,p_i,b_i)$ record
+
+$$
+\Gamma_i=(1,z_i,w_i,z_i^2,z_iw_i,
+ b_i,b_iz_i^2,b_iz_iw_i,|z_i|)\in\mathbb R^9.
+\tag{FA.118}
+$$
+The first five coordinates fix the complete live Gram. The next three fix the
+failure covariance because
+$\sum p_ib_i=\mu_f$, $\sum p_ib_iz_i^2=V_f$ and
+$\sum p_ib_iz_iw_i=0$; the remaining failure second moment follows from the
+null ellipse. The last coordinate preserves available contrast. If more than
+nine weights are positive, a nonzero dependence $\sum d_i\Gamma_i=0$
+allows both small perturbation signs. Height is affine along this segment, so
+optimality forces its derivative to vanish. Continue in one sign until a weight
+is zero and iterate. The resulting family has at most nine atoms, all moments,
+contrast and height unchanged. The common constructor turns them into actual
+labels, with deterministic reports and hidden Kraus indices counted only as
+specified by the original record. $\square$
+
+## 91. Literature boundaries and the unresolved dual
+
+The following primary results are used only at the stated interfaces. Huang--
+Zhang, June 2005 author manuscript, §2 opening and Theorem 2.1, distinguishes
+one real quadratic-form equal-trace decomposition from the stronger two-form
+complex Hermitian statement. The real transfer fails for
+$A=\operatorname{diag}(1,-1)$ and $B=\begin{pmatrix}0&1\\1&0\end{pmatrix}$:
+a nonzero real vector cannot satisfy both quadratic equations. Uhlmann,
+*Roofs and Convexity*, Propositions 2.2 and 3.5, gives common flat
+ decompositions and attainment under compactness and continuous extreme payoff;
+it does not retain the present covariance, capacity and joint objective.
+Dette--Melas, Theorem 3.1 with (3.2)--(3.4), requires a specified information
+matrix and Chebyshev systems. The nine coordinates in (FA.118) do not form
+such a system: on the pure-live sheet the three $b$-coordinates vanish.
+Xia--Wang--Sheu, Theorem 3, has a separate equality exception whose hypotheses
+are not those of the capacity-cleared quartic terms here. Leppäjärvi--Sedlák,
+Definition 7 in §6.1, requires equality of each output CP map, which is why
+(FA.99)--(FA.100) are stated componentwise. Zhu--Zhang--An--Zeng, (2)--(4),
+gives a Stiefel parameterization for a fixed state decomposition but no global
+finite-activity certificate. Hsieh--Tavakoli--Ku--Skrzypczyk, Result 1,
+defines robustness into non-interactive instruments; that SDP is not the
+actual-label integrated-rate resource used here. Pinelis, Theorem 1,
+Corollaries 4--5 and Proposition 6, supports finite atomic extreme
+representations under its compact cone hypotheses; (FA.118) supplies the
+nine-coordinate original-data specialization.
+
+A valid conditional dual upper bound for the still-unsolved global problem is
+obtained from matrices $Y,Z$ and $\lambda\ge0$ satisfying, on every
+$h\in\mathscr C$,
+
+$$
+ h^TYh\ge|\ell(h)|+\lambda|z|,
+\qquad
+ h^TYh+t\mathfrak c(h)n_h^TZn_h
+ \ge|\ell(h)+t\mathfrak c(h)f(h)|+\lambda|z|.
+\tag{FA.119}
+$$
+Integration bounds the unhalved low-label objective
+$\sum_jp_j|\ell(h_j)+b_jf(h_j)|$ by
+$\operatorname{tr}Y+\operatorname{tr}(ZM)-\lambda\tau$.
+Consequently the full record TV is at most
+$[H_0+\operatorname{tr}Y+\operatorname{tr}(ZM)-\lambda\tau]/2$.
+No all-parameter choice of $Y,Z,\lambda$, common contacts or positive weights
+is supplied here; (FA.119) is a precise missing bridge, not an evaluated
+frontier.
+
+## 92. Programme boundary and current-source interfaces
+
+When its available-contrast hypothesis holds, the common constructor of
+Theorem 87.3 preserves the complete original experiment: one unknown
+reached-cut specimen; all twelve histories; one common full-complex CPTP
+instrument; live coherences and passive references; five separately labelled
+Borel failure maps including zero components; the contrast inequality; the
+sharp jointly counted dimension-at-least-three acquisition cost; and the same
+FIRST clock at $6+u$. It preserves all individual errors
+$e_5=e_{27}=E_*$ and $e_{16}<E_*$. The constructor is conditional on the
+source-root, equality-face, TP and minimax antecedents and does not certify
+native access, calibration, coherent storage, decoder actuation, aligned clock,
+archives, controller or permission semantics.
+
+The complete evaluated $\mathcal T_A(s)$ for every feasible interior point is
+still open: global oriented failure allocation, full-rank submaximal live-height
+optimization, all contacts and rank transitions, and a universal bound with a
+matching evaluated common attainer for that frontier have not been supplied.
+The complete precontact and
+contact $K(s)$ coefficients, gluing and degeneracies remain open. The exact
+finite-$A$ optimizer alphabet partition remains open beyond (FA.102),
+(FA.114)--(FA.117), the strong four/five results already supplied by FA, and
+the upper bound (FA.118).
+
+The completed conditional JS source supplies global limiting-budget selection
+by its unique clamped scalar root and strictly monotone inversion
+([JS, Theorem 11.3][JSsel]). Its Proposition 12.2 distinguishes this selection
+from the inventory of transition zeros. JS Theorem 14.1 supplies the
+quantitative critical strip for every complete actual record, Theorem 14.2
+supplies the uniform $O(t^{-1})$ value error on actually feasible sub-spectral
+product intervals bounded away from the spectral threshold, and Theorem 16.2
+supplies the compact-uniform spectral product/value layer. These supplied
+limiting and uniform results are retained at their stated conditional scopes;
+they are not exact finite-frontier evaluations.
+
+As specified in JS Definition 18.2, the full source-specific transition-zero
+inventory in JS.58, including isolation, ordering, multiplicities and sign
+intervals, remains open. The critical five-label and static-contact joint
+layers and the other required next terms also remain open. Global selection
+of the limiting optimizer does not establish a single support transition or
+close these remaining obligations. No static failure-line count is identified
+with a finite actual alphabet, hidden Kraus multiplicity or joint quantum
+dimension.
+
+The current transition-band source contributes conditional scalar contact,
+curvature and selected-branch information at its own source scope; it does not
+evaluate the finite-$A$ quantum frontier. The current self-calibration source
+proves a finite-record common-gain reconstruction under its own control
+contract; it does not provide specimen access, quantum acquisition or native
+permission. The current static-compatibility source uses an explicitly added
+separator/control contract for its encoded chain; it does not supply the
+original quantum acquisition/action bridge. These interfaces therefore leave
+the unresolved full-programme obligations just listed unchanged. The
+through-2027 quantum-first AURIC
+FIB ATOM programme is neither completed nor narrowed by this finite source
+increment.
+
+[JSsel]: https://github.com/the-omega-institute/trureturing/blob/f1451cc068cd7e7717629ff6e0c0b171ba91282a/docs/develop/theory/FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md
+
+## 追加锚（本行以下为增补区）
