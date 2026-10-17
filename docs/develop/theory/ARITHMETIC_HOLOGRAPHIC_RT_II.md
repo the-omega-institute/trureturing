@@ -1422,3 +1422,57 @@ In particular h=2^s follows from the classical Sylvester recursion, giving an in
 The Bloch-sphere parametrization, orthogonal projectors, and tensor products of orthogonal matrices are standard. The MUB/traceless-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and the Pauli construction to Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . Hadamard recursion and its tensor closure are classical. The balanced-frame reduction here uses the actual physical saturation theorem of §66 to certify resource minima, and the displayed real matrix supplies an explicit attainer beyond its Hadamard-order hypothesis. No priority claim is made for the underlying block-matrix identities.
 
 These statements concern exact finite physical implementation of the specified uniform multi-fibre channel family. They retain full coherent-input and arbitrary-reference equality. They give neither a general positive-error diamond formula nor arbitrary-channel or full-RT recovery.
+
+## 68. Packed shared-entropy optimum for qubit multi-fibre channels
+
+### 68.1 Universal entropy bound and equality criterion
+
+Consider exact finite physical LOSR implementation of F_(k,2) from §66, with fixed MC encodings and one common channel on every coherent input and passive reference. Let k≥3 and write k=3q+s, q≥1, s∈{0,1,2}. Set
+
+    p*=(3/k repeated q times, s/k if s>0),
+    H*=−q(3/k)log₂(3/k)−(s/k)log₂(s/k),                 (1)
+
+where the final term is zero when s=0. Every implementation has shared entropy at least H*. It has at least q+1_(s>0) product branches. Equality in the entropy bound holds only when the positive branch weights, up to permutation, are p*.
+
+Moreover, the following are equivalent:
+
+1. An exact finite physical implementation attains entropy H*.
+2. There is a real orthogonal k×k matrix whose rows are grouped into q blocks of three and, when s>0, one final block of s, with every column having squared norm 3/k in each triple and s/k in the final block.
+
+When these hold, one implementation simultaneously minimizes branch count and entropy. For s=0 this recovers the balanced-frame criterion of §67. The statement is an attainment criterion; it does not assert existence of these matrices for every k or a positive-error approximation result.
+
+Proof of the bound. Every weight is at most a=3/k by §66. Among finite probability vectors with that cap, the entropy-minimizing vector is p*. A direct argument avoids an assumed optimum dimension: if two positive coordinates x≤y are both strictly below a, transfer min{x,a−y} from x to y. Strict concavity of −u log₂u shows that entropy strictly decreases under this nonzero transfer. One coordinate becomes zero or the other reaches a. Repeating finitely many times leaves at most one nonzero unsaturated coordinate. The total mass then forces precisely q coordinates equal to a and, if nonzero, the residual s/k. The same argument proves that equality requires p*. The branch bound follows from the same cap, or §66's dimension bound.
+
+### 68.2 Physical saturation and a rectangular-frame equality analysis
+
+The physical normal form of §66 supplies unit Bloch vectors n_(t,f)∈R³ for each branch and fibre. If w_t are the branch weights, the k vectors
+
+    v_f=(sqrt(w_t)n_(t,f))_t
+
+are orthonormal in R^(3r), where r is the number of positive branches. This conclusion holds for arbitrary original product CPTP factors and local environments: exact pure basis outputs and the saturated cross-coherence equations force the common-span basis structure first.
+
+Suppose entropy H* is attained. The preceding equality condition gives r=q+1_(s>0), with q weights 3/k and an optional last weight s/k. Let V be the matrix whose columns are v_f and P=VV*, an orthogonal projection. For a branch t of weight 3/k, the corresponding 3×3 diagonal block P_tt has trace
+
+    Σ_(f=1)^k w_t ||n_(t,f)||²=3.
+
+Since 0≤P_tt≤I_3, it equals I_3. Positivity of I−P then forces all off-diagonal blocks incident to this block to vanish: a positive matrix with a zero diagonal compression has zero cross compression, by Cauchy–Schwarz for its positive quadratic form. Therefore, if s>0,
+
+    P=I_(3q) ⊕ P_tail,
+
+where P_tail is an orthogonal projection of rank s in R³; if s=0, P=I_k. An orthogonal rotation of the last three Bloch coordinates diagonalizes P_tail to I_s⊕0. This rotation preserves every column-block norm. Discarding the resulting zero rows gives a square orthogonal k×k matrix with exactly the asserted block norms. The rotation is a change in the real frame used for the existence proof; no unsupported claim that every such rotation is a local unitary is needed.
+
+Conversely, from a matrix as in condition2, divide each column block by the square root of its assigned weight, padding the s-row block with zeros to make three coordinates. These are unit Bloch vectors. Orthogonality of the original columns gives averaged unbiasedness with weights p*. Pick qubit eigenvectors for each direction and coordinatewise conjugate records on the second party. The construction in §66 defines one product channel per branch and realizes every encoded matrix unit. Its branch count and entropy attain both bounds. All environments can have dimension two. The choice of channel is simultaneous over all fibres, rather than optimized separately for each pair.
+
+### 68.3 Exact infinite family from scalar Hadamard matrices
+
+Suppose a real Hadamard matrix H of order k is given. The normalized matrix H/sqrt(k) is orthogonal and every entry has squared modulus 1/k. Grouping rows into triples and a final s-row block immediately satisfies condition2. Hence F_(k,2) has exact branch minimum ceil(k/3) and exact entropy minimum H*.
+
+In particular, for every k=2^j with j≥2, the classical Sylvester recursion supplies H, so this is an infinite family in which k need not be divisible by three. For k=4 the optimal weights are (3/4,1/4), and for k=8 they are (3/8,3/8,1/4). These weights attain the stated exact coherent-channel targets. They improve on a uniform distribution over the minimum number of branches whenever s>0: strict entropy concavity makes H*<log₂ceil(k/3).
+
+The construction uses a scalar Hadamard matrix of order k followed by row grouping. It neither asserts a Hadamard matrix of order ceil(k/3) nor forms a tensor product of two three-dimensional Bloch frames. When no suitable matrix is supplied, (1) remains a lower bound and the equality criterion remains conditional.
+
+### 68.4 Attribution and boundaries
+
+The cap w_t≤3/k and physical weighted-basis characterization are the channel results of §66. The entropy minimization under a probability cap is the standard concavity/majorization principle, proved directly here. The real-frame equality analysis extends §67 from equal three-row blocks to a possible final lower-dimensional block. Hadamard matrices and the Sylvester recursion are classical; the MUB and orthogonal-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . No novelty claim is made for these established ingredients.
+
+The entropy is that of the shared classical variable in an exact finite LOSR decomposition. Local private randomness is absorbed into the arbitrary local channels. The theorem supplies an exact physical resource optimum for the stated families and a general equality criterion, with all coherent inputs and passive references retained. It is not a classification of arbitrary channels or an unrestricted positive-error diamond formula.
