@@ -28,15 +28,14 @@ internal sealed class FixedMarginalNegativityRefutationDocument : IScribeDocumen
                 Paragraph(Text(
                     "Partial transposition acts on B alone, exchanging the second row and column indices:"),
                     Math(In(PartialTransposeFormula())), Text(".")))),
-            Node("marginalA", "The first fixed marginal", MarginalFormula("marginalA", L1, L2),
+            Node("orderedMarginal", "The ordered fixed marginal",
+                MarginalFormula("orderedMarginal", Subscript(F.Id("x"), D(1)), Subscript(F.Id("x"), D(2))),
                 Blocks(Paragraph(Text(
-                    "The first diagonal matrix in Eq. (24). Its entries are 1 − λ₁ − λ₂, λ₁ and λ₂, "
-                        + "in the basis order 0,1,2. This definition is made for all real parameters; "
+                    "The two diagonal matrices ρ_A and ρ_B in Eq. (24) share this form, "
+                        + "with parameters (λ₁, λ₂) for A and (μ₁, μ₂) for B. "
+                        + "Its entries are 1 − x₁ − x₂, x₁ and x₂ in the basis order 0,1,2. "
+                        + "This definition is made for all real parameters; "
                         + "the conjecture below imposes their ordering and positivity.")))),
-            Node("marginalB", "The second fixed marginal", MarginalFormula("marginalB", M1, M2),
-                Blocks(Paragraph(Text(
-                    "The second diagonal matrix in Eq. (24), with entries 1 − μ₁ − μ₂, μ₁ and μ₂. "
-                        + "The order of the tensor factors makes this the marginal on B.")))),
             Node("candidate", "The candidate of Eq. (27)", CandidateFormula(),
                 Blocks(Paragraph(Text(
                     "The vector φ has amplitudes √(1 − λ₁ − λ₂), √μ₁ and √μ₂ on |00⟩, |11⟩ and |22⟩. "
@@ -208,8 +207,8 @@ internal sealed class FixedMarginalNegativityRefutationDocument : IScribeDocumen
         var r = F.Id("R");
         var conclusion = LeTo(LocalCall("negativity", r), LocalCall("negativity", LocalCall("candidate", L1, L2, M1, M2)));
         var states = All(r, Matrices, Imp(And(LeTo(D(0), r), EqualTo(Trace(r), D(1))),
-            Imp(EqualTo(PartialTrace("B", r), LocalCall("marginalA", L1, L2)),
-                Imp(EqualTo(PartialTrace("A", r), LocalCall("marginalB", M1, M2)), conclusion))));
+            Imp(EqualTo(PartialTrace("B", r), LocalCall("orderedMarginal", L1, L2)),
+                Imp(EqualTo(PartialTrace("A", r), LocalCall("orderedMarginal", M1, M2)), conclusion))));
         return IffOf(Named("claim"), Parameters(
             Imp(LeTo(L2, L1), Imp(LeTo(L1, Remaining(L1, L2)), Imp(LeTo(D(0), L2),
             Imp(LeTo(M2, M1), Imp(LeTo(M1, Remaining(M1, M2)), Imp(LeTo(D(0), M2),

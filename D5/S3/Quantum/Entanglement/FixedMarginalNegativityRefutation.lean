@@ -28,13 +28,9 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation
 noncomputable def negativity (R : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : ℝ :=
   (traceNorm (partialTransposeB R) - 1) / 2
 
-/-- The first fixed marginal in Eq. (24). -/
-noncomputable def marginalA (l₁ l₂ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
-  diagonal ![((1 - l₁ - l₂ : ℝ) : ℂ), (l₁ : ℂ), (l₂ : ℂ)]
-
-/-- The second fixed marginal in Eq. (24). -/
-noncomputable def marginalB (m₁ m₂ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
-  diagonal ![((1 - m₁ - m₂ : ℝ) : ℂ), (m₁ : ℂ), (m₂ : ℂ)]
+/-- The ordered diagonal marginal of Eq. (24), for both `ρ_A` and `ρ_B`. -/
+noncomputable def orderedMarginal (x₁ x₂ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  diagonal ![((1 - x₁ - x₂ : ℝ) : ℂ), (x₁ : ℂ), (x₂ : ℂ)]
 
 /-- The candidate of Eq. (27), written in the matrix form of Eq. (30). -/
 noncomputable def candidate (l₁ l₂ m₁ m₂ : ℝ) :
@@ -53,8 +49,8 @@ def claim : Prop :=
     m₂ ≤ m₁ → m₁ ≤ 1 - m₁ - m₂ → 0 ≤ m₂ →
     m₁ + m₂ ≤ l₁ + l₂ → m₁ < l₁ → m₂ < l₂ →
     ∀ R : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ,
-      IsDensity R → partialTraceRight R = marginalA l₁ l₂ →
-      partialTraceLeft R = marginalB m₁ m₂ →
+      IsDensity R → partialTraceRight R = orderedMarginal l₁ l₂ →
+      partialTraceLeft R = orderedMarginal m₁ m₂ →
       negativity R ≤ negativity (candidate l₁ l₂ m₁ m₂)
 
 private noncomputable def chi : Fin 3 × Fin 3 → ℂ :=
@@ -66,7 +62,7 @@ private noncomputable def rho0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
 
 private noncomputable def rho : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
   (99/100 : ℂ) • rho0 + (1/100 : ℂ) •
-    (marginalA (47/100) (4/100) ⊗ₖ marginalB (5/100) (1/100))
+    (orderedMarginal (47/100) (4/100) ⊗ₖ orderedMarginal (5/100) (1/100))
 
 private theorem rho_density : IsDensity rho := by
   constructor
@@ -78,54 +74,54 @@ private theorem rho_density : IsDensity rho := by
         fin_cases i <;> fin_cases j <;> norm_num [Complex.le_def, Matrix.cons_val_two]
       · norm_num [Complex.le_def, Matrix.cons_val_two]
     · apply PosSemidef.smul (a := (1/100 : ℂ))
-      · rw [marginalA.eq_1, marginalB.eq_1, diagonal_kronecker_diagonal]
+      · simp only [orderedMarginal.eq_1, diagonal_kronecker_diagonal]
         apply PosSemidef.diagonal
         rintro ⟨i, j⟩
         fin_cases i <;> fin_cases j <;> norm_num [Complex.le_def, Matrix.cons_val_two]
       · norm_num [Complex.le_def, Matrix.cons_val_two]
-  · norm_num [rho.eq_1, rho0.eq_1, chi.eq_1, marginalA.eq_1, marginalB.eq_1,
+  · norm_num [rho.eq_1, rho0.eq_1, chi.eq_1, orderedMarginal.eq_1,
       Matrix.trace, Matrix.vecMulVec_apply, Matrix.kronecker_apply,
       Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.cons_val_two, map_ofNat]
 
-private theorem rho_marginalA : partialTraceRight rho = marginalA (47/100) (4/100) := by
-  have h0 : partialTraceRight rho0 = marginalA (47/100) (4/100) := by
+private theorem rho_marginalA : partialTraceRight rho = orderedMarginal (47/100) (4/100) := by
+  have h0 : partialTraceRight rho0 = orderedMarginal (47/100) (4/100) := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [partialTraceRight, rho0.eq_1, chi.eq_1,
-        marginalA.eq_1, marginalB.eq_1, Matrix.vecMulVec_apply,
+        orderedMarginal.eq_1, Matrix.vecMulVec_apply,
         Fin.sum_univ_three, Matrix.cons_val_two, map_ofNat]
-  have ht : (marginalB (5/100) (1/100)).trace = 1 := by
-    norm_num [marginalA.eq_1, marginalB.eq_1, Matrix.trace, Fin.sum_univ_three,
+  have ht : (orderedMarginal (5/100) (1/100)).trace = 1 := by
+    norm_num [orderedMarginal.eq_1, Matrix.trace, Fin.sum_univ_three,
       Matrix.cons_val_two]
   rw [rho.eq_1]
   ext i j
   simp only [partialTraceRight, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
     Finset.sum_add_distrib, ← Finset.mul_sum]
   change (99/100 : ℂ) * partialTraceRight rho0 i j + (1/100 : ℂ) *
-    partialTraceRight (marginalA (47/100) (4/100) ⊗ₖ marginalB (5/100) (1/100)) i j = _
+    partialTraceRight (orderedMarginal (47/100) (4/100) ⊗ₖ orderedMarginal (5/100) (1/100)) i j = _
   erw [h0, partialTraceRight_kronecker
-    (marginalA (47/100) (4/100)) (marginalB (5/100) (1/100)), ht]
+    (orderedMarginal (47/100) (4/100)) (orderedMarginal (5/100) (1/100)), ht]
   simp only [one_smul]
   ring
 
-private theorem rho_marginalB : partialTraceLeft rho = marginalB (5/100) (1/100) := by
-  have h0 : partialTraceLeft rho0 = marginalB (5/100) (1/100) := by
+private theorem rho_marginalB : partialTraceLeft rho = orderedMarginal (5/100) (1/100) := by
+  have h0 : partialTraceLeft rho0 = orderedMarginal (5/100) (1/100) := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [partialTraceLeft, rho0.eq_1, chi.eq_1,
-        marginalA.eq_1, marginalB.eq_1, Matrix.vecMulVec_apply,
+        orderedMarginal.eq_1, Matrix.vecMulVec_apply,
         Fin.sum_univ_three, Matrix.cons_val_two, map_ofNat]
-  have ht : (marginalA (47/100) (4/100)).trace = 1 := by
-    norm_num [marginalA.eq_1, marginalB.eq_1, Matrix.trace, Fin.sum_univ_three,
+  have ht : (orderedMarginal (47/100) (4/100)).trace = 1 := by
+    norm_num [orderedMarginal.eq_1, Matrix.trace, Fin.sum_univ_three,
       Matrix.cons_val_two]
   rw [rho.eq_1]
   ext i j
   simp only [partialTraceLeft, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
     Finset.sum_add_distrib, ← Finset.mul_sum]
   change (99/100 : ℂ) * partialTraceLeft rho0 i j + (1/100 : ℂ) *
-    partialTraceLeft (marginalA (47/100) (4/100) ⊗ₖ marginalB (5/100) (1/100)) i j = _
+    partialTraceLeft (orderedMarginal (47/100) (4/100) ⊗ₖ orderedMarginal (5/100) (1/100)) i j = _
   erw [h0, partialTraceLeft_kronecker
-    (marginalA (47/100) (4/100)) (marginalB (5/100) (1/100)), ht]
+    (orderedMarginal (47/100) (4/100)) (orderedMarginal (5/100) (1/100)), ht]
   simp only [one_smul]
   ring
 
@@ -146,7 +142,7 @@ private theorem rho_pt_eq : partialTransposeB rho = rhoPT := by
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, Fin.reduceEq,
       Fin.reduceFinMk, partialTransposeB, rho.eq_1, rho0.eq_1, chi.eq_1, rhoPT.eq_1,
-      marginalA.eq_1, marginalB.eq_1, Matrix.vecMulVec_apply, Matrix.kronecker_apply,
+      orderedMarginal.eq_1, Matrix.vecMulVec_apply, Matrix.kronecker_apply,
       Matrix.cons_val_two, map_ofNat]
 
 private noncomputable def K : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
