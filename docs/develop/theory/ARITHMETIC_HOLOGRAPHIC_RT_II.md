@@ -1228,3 +1228,320 @@ The retained-matrix contraction proof extends §64's vector argument to two arbi
 Birkhoff and doubly substochastic decompositions are established matrix theory; see Lei Cao, A short note on doubly substochastic analog of Birkhoff's theorem, https://arxiv.org/abs/1801.01232 . Unistochastic matrices and the distinction from bistochastic matrices are standard; see Bengtsson, Ericsson, Kuś, Tadej and Życzkowski, Birkhoff's polytope and unistochastic matrices, N=3 and N=4, https://arxiv.org/abs/math/0402325 . For channel and diamond facts see Watrous, The Theory of Quantum Information, https://cs.uwaterloo.ca/~watrous/TQI/ . PIO/zero-communication background remains credited to Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These standard ingredients are not claimed novel, and no global priority claim is made for the family result.
 
 The theorem concerns the specified two-fibre compression channels and fixed MC encodings, with unrestricted physical LOSR competitors for that target family. It does not classify arbitrary logical channels or assert full RT recovery. This is paper mathematics without a formal-kernel claim.
+
+## 66. Exact shared-randomness cost for uniform multi-fibre compression
+
+### 66.1 Channel family and resource statements
+
+Let d≥2 and k≥2. The logical input has orthonormal labels |f,i>, with 1≤f≤k and 1≤i≤d; the logical output has labels |f>. Fix MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|. Define the logical map F_(k,d) on all matrix units by
+
+    F(|f,i><f,j|)=δ_ij |f><f|,
+    F(|f,i><g,j|)=(1/d)|f><g|  when f≠g.
+
+This is CPTP. Consider exact physical implementations Φ∘J_in=J_out∘F, where Φ=Σ_(t=1)^r w_t(A_t⊗B_t), all w_t>0, Σ_t w_t=1, and A_t,B_t are arbitrary local CPTP maps C^(kd)→C^k. The same channel must implement every encoded matrix unit, hence all coherent inputs and passive references. Arbitrary local ancillas and physical outputs are allowed; exactness, rather than an imposed ansatz, will force the needed output structure.
+
+The following resource statements hold.
+
+1. A single product channel implements F_(k,d) iff k mutually unbiased orthonormal bases exist in C^d.
+2. Every exact r-branch implementation satisfies
+
+    k(d−1)≤r(d²−1),  hence r≥ceil(k/(d+1)).                 (1)
+
+   More strongly, every branch weight obeys w_t≤(d+1)/k. Its Shannon entropy is therefore at least max{0,log₂(k/(d+1))}.
+3. An exact finite implementation exists for every k,d, with at most d^(k−1) product branches.
+4. If a real Hadamard matrix of order r exists, then for d=2 and k=3r the minimum number of product branches is exactly r, and the minimum Shannon entropy of the shared branch variable is exactly log₂r. More generally the same branch minimum r holds for any 3(r−1)<k≤3r obtained by restricting this construction. For d=2, every restriction to at most three whole fibres admits one product implementation.
+
+The last assertion concerns coordinate-fibre restrictions, not every subspace of the logical input. The entropy counts the shared classical branch variable in an exact finite LOSR decomposition; local private randomness is already absorbed into the arbitrary CPTP factors.
+
+### 66.2 Complete positivity and branchwise pure-output records
+
+Put u=(1,...,1)/sqrt(d). The nonzero Choi block of F has diagonal blocks I_d and off-diagonal blocks uu*. It is the sum of the positive matrices
+
+    I_k⊗(I_d−uu*) + J_k⊗uu*,
+
+where J_k is the all-ones matrix. Thus F is completely positive. The matrix-unit prescription is trace preserving, including distinct labels in one fibre.
+
+For each input basis state, exactness gives
+
+    Σ_t w_t A_t(|f,i><f,i|)⊗B_t(|f,i><f,i|)=|ff><ff|.
+
+A convex combination of density matrices equals a rank-one projector only if every positive-weight term equals that projector: take expectations on its orthogonal complement, whose summands are nonnegative. Taking marginals therefore forces each local output to be |f><f|. In Stinespring dilations the corresponding vectors have the form
+
+    U_A,t|f,i>=|f> e_(t,f,i),
+    U_B,t|f,i>=|f> h_(t,f,i).
+
+For each fixed t,f the d records e_(t,f,i) form an orthonormal family, as do the h records, because the dilation is isometric. No relation between different fibres has yet been assumed.
+
+For two distinct fibres f,g define the cross-record matrices
+
+    R_(t,fg)[i,j]=<e_(t,g,j),e_(t,f,i)>,
+    T_(t,fg)[i,j]=<h_(t,g,j),h_(t,f,i)>.
+
+They are d×d contractions, being cross-Gram matrices of two orthonormal families (up to entrywise conjugation, which preserves norm). The actual branch coefficient of |ff><gg| is R_ij T_ij. The target requires
+
+    Σ_t w_t R_(t,fg)[i,j] T_(t,fg)[i,j]=1/d.             (2)
+
+### 66.3 Saturation forces common spans and averaged unbiasedness
+
+Fix f≠g and a row i. Equation (2) and Cauchy–Schwarz imply the chain
+
+    1=Σ_j |Σ_t w_t R_t[i,j]T_t[i,j]|
+      ≤Σ_t w_t Σ_j|R_t[i,j]T_t[i,j]|
+      ≤Σ_t w_t ||R_t[i,:]||₂ ||T_t[i,:]||₂
+      ≤Σ_t w_t=1.
+
+All inequalities are equalities. Positivity of every w_t implies that each branch row has both norms one and equal entrywise magnitudes: |R_t[i,j]|=|T_t[i,j]|. Equality in each triangle inequality, together with the strictly positive target value 1/d, forces every nonzero product R_t[i,j]T_t[i,j] to have phase zero. Hence
+
+    R_t[i,j]T_t[i,j]=|R_t[i,j]|²,
+    Σ_t w_t |R_(t,fg)[i,j]|²=1/d.                       (3)
+
+This includes zero entries without assigning their phase.
+
+A square contraction R_t with every row norm one has R_t R_t*≤I and trace d, hence R_t R_t*=I. It is unitary. A unitary cross-Gram matrix between two orthonormal d-frames forces their spans to coincide: every vector of the first frame has projection norm one onto the span of the second. For each branch t, compare every fibre with fibre 1. All e frames therefore span the same d-dimensional environment space; the same is true independently of the h frames. Identify the former space with C^d. Then (3) is exactly averaged unbiasedness of k orthonormal bases in C^d, with the same weights for every pair.
+
+Conversely, suppose such bases e_(t,f,i) and weights satisfy (3). Choose h_(t,f,i)=conjugate(e_(t,f,i)) in a fixed coordinate system. The two local isometries displayed above then have cross-coefficient |<e_(t,g,j),e_(t,f,i)>|². Their mixture implements (2). Within a fibre both records are orthonormal, so the remaining matrix units also agree. Thus these weighted basis families characterize exact finite implementation with r branches. This converse uses one globally consistent conjugate family, with no entry-dependent choice of channel.
+
+For r=1, condition (3) is precisely the definition of k mutually unbiased bases. This proves the first resource statement in both directions.
+
+### 66.4 Weighted Hilbert–Schmidt packing and branch entropy
+
+Let H_0(d) be the real Hilbert space of traceless Hermitian d×d matrices, with inner product Tr(XY) and dimension d²−1. For each t,f put P_(t,f,i)=|e_(t,f,i)><e_(t,f,i)|. For real vectors x∈R^d with Σ_i x_i=0 define
+
+    V_f x = ( sqrt(w_t) Σ_i x_i P_(t,f,i) )_(t=1)^r
+             ∈ ⊕_(t=1)^r H_0(d).
+
+Within a fibre, orthogonality of the projectors and Σ_t w_t=1 give <V_f x,V_f y>=Σ_i x_i y_i. Thus each V_f is an isometry on the (d−1)-dimensional zero-sum space. For f≠g, equation (3) gives
+
+    <V_f x,V_g y>
+       =Σ_ij x_i y_j Σ_t w_t Tr(P_(t,f,i)P_(t,g,j))
+       =(1/d)(Σ_i x_i)(Σ_j y_j)=0.
+
+The k image subspaces are mutually orthogonal. Counting dimensions proves (1).
+
+For the stronger weight statement, combine the V_f into an isometry V from the direct sum of k zero-sum spaces into ⊕_t H_0(d). The orthogonal projection VV* is at most the identity. Its t-th diagonal block is w_t Σ_f Q_(t,f), where Q_(t,f) is the orthogonal projection onto the traceless diagonal subspace for basis (t,f). Taking the trace on that block gives
+
+    w_t k(d−1)≤d²−1,
+
+so w_t≤(d+1)/k. Consequently −Σ_t w_t log₂w_t≥log₂(k/(d+1)); nonnegativity of entropy supplies the stated maximum with zero. This argument allows arbitrary positive, unequal weights and arbitrarily large original local environments.
+
+### 66.5 Finite implementations and sharp qubit constructions
+
+Finite existence for arbitrary k,d needs no assumption about complete MUB sets. Take one fixed standard basis in C^d and assign each fibre f a cyclic shift s_f∈Z/d of that basis, with s_1=0. Average uniformly over the d^(k−1) choices of the remaining shifts. For distinct fibres the difference s_f−s_g is uniform, so every squared overlap averages to 1/d. The converse above produces an exact finite physical channel.
+
+For the sharp qubit family let H be an r×r real Hadamard matrix, H*H=rI, with entries ±1. Label the k=3r fibres by (a,c), where a∈{X,Y,Z} is a Pauli axis and 1≤c≤r a column of H. At branch t, weight 1/r, let the two basis projectors in fibre (a,c) be
+
+    P_(t,(a,c),i)=[I+(-1)^i H_(t,c) σ_a]/2,  i∈{0,1}.
+
+Choose arbitrary normalized representatives e for these rank-one projectors, and use their coordinatewise conjugates on the other party. For a≠b, the squared overlap of any representatives is Tr(P_a P_b)=1/2. For a=b and c≠c',
+
+    Tr(P_(t,(a,c),i)P_(t,(a,c'),j))
+       =[1+(-1)^(i+j)H_(t,c)H_(t,c')]/2.
+
+Hadamard column orthogonality makes its branch average 1/2. Thus all distinct fibres satisfy (3), simultaneously, and this one r-branch channel implements all coherent matrix units. The lower bound k≤3r' for any implementation with r' branches forces r'≥r. The weight bound is w_t≤1/r for any implementation; its entropy is at least log₂r, attained by the uniform construction.
+
+Restricting to any k fibres with 3(r−1)<k≤3r preserves this r-branch construction and yields ceil(k/3)=r as lower bound. For d=2, independently, any specified subset of at most three fibres admits one product realization by assigning those fibres distinct Pauli eigenbases. Such independently feasible restrictions need not share a single product realization for the full channel when k>3.
+
+Real Hadamard matrices are not asserted to exist at every order. Orders r=2^s are available by the classical recursion H_1=[1], H_(2r)=[[H_r,H_r],[H_r,−H_r]], whose product with its transpose is 2r I. Therefore the exact resource families include k=3·2^s for every s≥0, as well as any other given Hadamard order. For r=1 the construction is the usual three Pauli bases. The cases k=1 or d=1, outside the main assumptions, admit a single product channel and require no packing argument.
+
+### 66.6 Attribution and mathematical boundary
+
+The orthogonal traceless-subspace description and the classical MUB bound k≤d+1 are standard; see Boykin, Sitharam, Tiep and Wocjan, Mutually Unbiased Bases and Orthogonal Decompositions of Lie Algebras, https://arxiv.org/abs/quant-ph/0506089 . Pauli/generalized-spin constructions of MUBs are established; see Pittenger and Rubin, Mutually Unbiased Bases, Generalized Spin Matrices and Separability, https://arxiv.org/abs/quant-ph/0308142 . The Hadamard recursion is classical, and its elementary verification is included above. PIO/zero-communication background remains Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These ingredients are not claimed new.
+
+The channel statement extends §65's saturated two-fibre contractions to a single common implementation for all fibres. Its physical equality analysis identifies the exact weighted-basis resource, gives a branch and entropy obstruction for arbitrary product CPTP factors, and supplies sharp finite families. It is an exact-implementation resource theorem, not a positive-error diamond optimum or a classification of arbitrary RT channels. Equality of the prescribed linear maps includes all reference extensions; no global-priority claim is made.
+
+## 67. Balanced real frames and exact nine-fibre randomness cost
+
+### 67.1 Exact equality criterion for qubit fibres
+
+Use the uniform multi-fibre compression channel F_(k,2) and fixed MC input/output encodings of §66. A physical branch is an arbitrary product of local CPTP maps; branch count and Shannon entropy refer to an exact finite LOSR decomposition, with positive weights and one common channel on all coherent inputs and passive references.
+
+For every integer r≥1, the following are equivalent:
+
+1. F_(3r,2) has an exact implementation using r product branches.
+2. There exists a real orthogonal matrix O of size 3r whose rows are grouped into r consecutive blocks of three, such that the restriction of every column to every block has squared norm 1/r.
+
+When these conditions hold, the minimum branch count is r and the minimum shared entropy is log₂r. Every r-branch implementation has uniform weights. The balanced-block condition concerns Euclidean norms, not equal magnitudes of all individual entries; it is weaker than a real Hadamard construction.
+
+Proof. By the physical equality analysis of §66, each positive branch supplies a family of qubit orthonormal bases in one common two-dimensional environment. Write its rank-one projectors as
+
+    P_(t,f,i)=[I+(-1)^i n_(t,f)·σ]/2,
+
+where n_(t,f)∈R³ is a unit Bloch vector. Averaged unbiasedness is equivalent to
+
+    Σ_t w_t n_(t,f)·n_(t,g)=0  for f≠g.
+
+Thus the 3r vectors with t-th block sqrt(w_t)n_(t,f) are orthonormal columns in R^(3r). They form a square orthogonal matrix O. Its t-th three-row block has total squared Frobenius norm three, while summing its 3r column-block norms gives 3r w_t. Consequently w_t=1/r, and every column-block norm is 1/sqrt(r).
+
+Conversely, from such O define n_(t,f)=sqrt(r) times its t-th column block, and choose the corresponding qubit eigenbases. Orthogonality of distinct columns gives average Bloch inner product zero with weights 1/r. Using conjugate records on the second party, the common physical construction in §66 implements every encoded matrix unit exactly. Its branch lower bound and weight/entropy lower bound give the stated minima. This is an equality criterion for the physical resource problem, with arbitrary original local environments already covered by §66.
+
+### 67.2 An explicit order-three balanced block construction
+
+Let I and J be the 3×3 identity and all-ones matrices and define
+
+    S=[[0,-1,1],[1,0,-1],[-1,1,0]],
+    C=−(I+J+sqrt(5)S)/4,
+    A=(C+2I)/3,    B=(C−I)/3.
+
+Equivalently, C is the real circulant matrix with first row (−1/2,(−1+sqrt(5))/4,(−1−sqrt(5))/4). Its subsequent rows are cyclic right shifts. The square root occurs in these exact orthogonality identities; no broader physical interpretation is needed.
+
+Then the real 9×9 block matrix
+
+    O=[[A,B,B],[B,A,B],[B,B,A]]                           (1)
+
+is orthogonal, and every column in every three-row block has squared norm 1/3.
+
+Proof. We have S^T=−S, S²=J−3I, JS=SJ=0 and J²=3J. Hence
+
+    (I+J+sqrt(5)S)(I+J−sqrt(5)S)
+       =(I+J)²−5S²=16I.
+
+Therefore C is orthogonal, and each diagonal entry is −1/2. Let P=J/3 be the orthogonal projection onto the uniform direction in the outer block index. Since A−B=I and A+2B=C, equation (1) is
+
+    O=P⊗C+(I−P)⊗I.
+
+The two summands act on orthogonal outer subspaces; thus O O^T=I. For every standard coordinate vector e_j,
+
+    ||A e_j||²=(1+4+4 C_jj)/9=1/3,
+    ||B e_j||²=(1+1−2 C_jj)/9=1/3.
+
+These are exactly all column-block norms of (1). The preceding criterion gives an exact implementation of F_(9,2) with three product branches and shared entropy log₂3; neither quantity can be smaller. All local environments in this construction have dimension two. The local isometries map |f,i> to |f> times the eigenvector of the Bloch direction sqrt(3) O_(block t,column f), and the second party uses its coordinatewise conjugate. This explicitly fixes one physical map per branch for all fibres and inputs.
+
+There is no real Hadamard matrix of order three: the inner product of two ±1 rows of length three is an odd integer, hence cannot vanish. Thus this attainer is outside the Hadamard-order hypothesis of §66, rather than an invocation of an unknown Hadamard matrix. Restrictions to seven or eight fibres still have branch minimum three by ceil(k/3), but no entropy equality is asserted for those restrictions. Every restriction to at most three whole fibres has a single product implementation as in §66.
+
+### 67.3 Tensor extension with existing real Hadamard orders
+
+If H is a real Hadamard matrix of order h and O is the 9×9 matrix (1), then (H/sqrt(h))⊗O is a balanced orthogonal matrix with 3h row blocks of size three. Indeed both factors are orthogonal, and every resulting column-block squared norm is (1/h)(1/3)=1/(3h). The criterion therefore gives
+
+    minimum branches for F_(9h,2) = 3h,
+    minimum shared entropy = log₂(3h).
+
+In particular h=2^s follows from the classical Sylvester recursion, giving an infinite exact family with 3·2^s branches. This tensor statement assumes a given Hadamard H and does not assert Hadamard existence at arbitrary orders. Nor does the nine-dimensional construction prove that balanced orthogonal frames exist for every integer r.
+
+### 67.4 Attribution and scope
+
+The Bloch-sphere parametrization, orthogonal projectors, and tensor products of orthogonal matrices are standard. The MUB/traceless-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and the Pauli construction to Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . Hadamard recursion and its tensor closure are classical. The balanced-frame reduction here uses the actual physical saturation theorem of §66 to certify resource minima, and the displayed real matrix supplies an explicit attainer beyond its Hadamard-order hypothesis. No priority claim is made for the underlying block-matrix identities.
+
+These statements concern exact finite physical implementation of the specified uniform multi-fibre channel family. They retain full coherent-input and arbitrary-reference equality. They give neither a general positive-error diamond formula nor arbitrary-channel or full-RT recovery.
+
+## 68. Packed shared-entropy optimum for qubit multi-fibre channels
+
+### 68.1 Universal entropy bound and equality criterion
+
+Consider exact finite physical LOSR implementation of F_(k,2) from §66, with fixed MC encodings and one common channel on every coherent input and passive reference. Let k≥3 and write k=3q+s, q≥1, s∈{0,1,2}. Set
+
+    p*=(3/k repeated q times, s/k if s>0),
+    H*=−q(3/k)log₂(3/k)−(s/k)log₂(s/k),                 (1)
+
+where the final term is zero when s=0. Every implementation has shared entropy at least H*. It has at least q+1_(s>0) product branches. Equality in the entropy bound holds only when the positive branch weights, up to permutation, are p*.
+
+Moreover, the following are equivalent:
+
+1. An exact finite physical implementation attains entropy H*.
+2. There is a real orthogonal k×k matrix whose rows are grouped into q blocks of three and, when s>0, one final block of s, with every column having squared norm 3/k in each triple and s/k in the final block.
+
+When these hold, one implementation simultaneously minimizes branch count and entropy. For s=0 this recovers the balanced-frame criterion of §67. The statement is an attainment criterion; it does not assert existence of these matrices for every k or a positive-error approximation result.
+
+Proof of the bound. Every weight is at most a=3/k by §66. Among finite probability vectors with that cap, the entropy-minimizing vector is p*. A direct argument avoids an assumed optimum dimension: if two positive coordinates x≤y are both strictly below a, transfer min{x,a−y} from x to y. Strict concavity of −u log₂u shows that entropy strictly decreases under this nonzero transfer. One coordinate becomes zero or the other reaches a. Repeating finitely many times leaves at most one nonzero unsaturated coordinate. The total mass then forces precisely q coordinates equal to a and, if nonzero, the residual s/k. The same argument proves that equality requires p*. The branch bound follows from the same cap, or §66's dimension bound.
+
+### 68.2 Physical saturation and a rectangular-frame equality analysis
+
+The physical normal form of §66 supplies unit Bloch vectors n_(t,f)∈R³ for each branch and fibre. If w_t are the branch weights, the k vectors
+
+    v_f=(sqrt(w_t)n_(t,f))_t
+
+are orthonormal in R^(3r), where r is the number of positive branches. This conclusion holds for arbitrary original product CPTP factors and local environments: exact pure basis outputs and the saturated cross-coherence equations force the common-span basis structure first.
+
+Suppose entropy H* is attained. The preceding equality condition gives r=q+1_(s>0), with q weights 3/k and an optional last weight s/k. Let V be the matrix whose columns are v_f and P=VV*, an orthogonal projection. For a branch t of weight 3/k, the corresponding 3×3 diagonal block P_tt has trace
+
+    Σ_(f=1)^k w_t ||n_(t,f)||²=3.
+
+Since 0≤P_tt≤I_3, it equals I_3. Positivity of I−P then forces all off-diagonal blocks incident to this block to vanish: a positive matrix with a zero diagonal compression has zero cross compression, by Cauchy–Schwarz for its positive quadratic form. Therefore, if s>0,
+
+    P=I_(3q) ⊕ P_tail,
+
+where P_tail is an orthogonal projection of rank s in R³; if s=0, P=I_k. An orthogonal rotation of the last three Bloch coordinates diagonalizes P_tail to I_s⊕0. This rotation preserves every column-block norm. Discarding the resulting zero rows gives a square orthogonal k×k matrix with exactly the asserted block norms. The rotation is a change in the real frame used for the existence proof; no unsupported claim that every such rotation is a local unitary is needed.
+
+Conversely, from a matrix as in condition2, divide each column block by the square root of its assigned weight, padding the s-row block with zeros to make three coordinates. These are unit Bloch vectors. Orthogonality of the original columns gives averaged unbiasedness with weights p*. Pick qubit eigenvectors for each direction and coordinatewise conjugate records on the second party. The construction in §66 defines one product channel per branch and realizes every encoded matrix unit. Its branch count and entropy attain both bounds. All environments can have dimension two. The choice of channel is simultaneous over all fibres, rather than optimized separately for each pair.
+
+### 68.3 Exact infinite family from scalar Hadamard matrices
+
+Suppose a real Hadamard matrix H of order k is given. The normalized matrix H/sqrt(k) is orthogonal and every entry has squared modulus 1/k. Grouping rows into triples and a final s-row block immediately satisfies condition2. Hence F_(k,2) has exact branch minimum ceil(k/3) and exact entropy minimum H*.
+
+In particular, for every k=2^j with j≥2, the classical Sylvester recursion supplies H, so this is an infinite family in which k need not be divisible by three. For k=4 the optimal weights are (3/4,1/4), and for k=8 they are (3/8,3/8,1/4). These weights attain the stated exact coherent-channel targets. They improve on a uniform distribution over the minimum number of branches whenever s>0: strict entropy concavity makes H*<log₂ceil(k/3).
+
+The construction uses a scalar Hadamard matrix of order k followed by row grouping. It neither asserts a Hadamard matrix of order ceil(k/3) nor forms a tensor product of two three-dimensional Bloch frames. When no suitable matrix is supplied, (1) remains a lower bound and the equality criterion remains conditional.
+
+### 68.4 Attribution and boundaries
+
+The cap w_t≤3/k and physical weighted-basis characterization are the channel results of §66. The entropy minimization under a probability cap is the standard concavity/majorization principle, proved directly here. The real-frame equality analysis extends §67 from equal three-row blocks to a possible final lower-dimensional block. Hadamard matrices and the Sylvester recursion are classical; the MUB and orthogonal-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . No novelty claim is made for these established ingredients.
+
+The entropy is that of the shared classical variable in an exact finite LOSR decomposition. Local private randomness is absorbed into the arbitrary local channels. The theorem supplies an exact physical resource optimum for the stated families and a general equality criterion, with all coherent inputs and passive references retained. It is not a classification of arbitrary channels or an unrestricted positive-error diamond formula.
+
+## 69. Exact shared entropy for five and seven qubit fibres
+
+### 69.1 Resource statement
+
+For the uniform multi-fibre channel F_(k,2), fixed MC encodings, and exact finite physical LOSR implementations of §§66–68, the following minima are attained by common physical channels:
+
+    k=5: minimum branches 2, minimum entropy H(3/5,2/5);
+    k=7: minimum branches 3, minimum entropy H(3/7,3/7,1/7).
+
+Here H is the Shannon entropy in bits of the shared branch variable, and the product factors may be arbitrary local CPTP maps C^(2k)→C^k. A single choice of channel acts on all coherent inputs and passive references. Local private randomness is already included in those factors.
+
+The lower bounds are §68's universal packed-weight bounds. It remains to construct orthogonal matrices with column-block squared norms (3/5,2/5) and (3/7,3/7,1/7), respectively. These finite cases complete the packed entropy optimum for every integer 3≤k≤9, using the previously proved cases; they do not imply existence at arbitrary k.
+
+### 69.2 Five fibres from one Fourier pair and its complement
+
+For j=0,...,4 put θ_j=2πj/5 and let T be the 2×5 real matrix with columns
+
+    sqrt(2/5)(cos θ_j, sin θ_j)^T.
+
+The finite Fourier sums Σ_j exp(iθ_j)=Σ_j exp(2iθ_j)=0 imply TT^T=I_2. Every column of T has squared norm 2/5. Choose any three orthonormal rows spanning the orthogonal complement of the row space of T and collect them in U. The stacked matrix O=[U;T] is a real orthogonal 5×5 matrix. Each full column has squared norm one, so every column of U has squared norm 3/5.
+
+Consequently O satisfies §68's equality criterion. Its first block gives unit Bloch vectors sqrt(5/3)U[:,j], with branch weight 3/5. Pad T[:,j] with a zero coordinate and multiply by sqrt(5/2) to obtain the other unit Bloch vectors, with branch weight 2/5. Choosing the eigenbases and their coordinatewise conjugates as in §66 supplies the asserted common two-product-channel implementation.
+
+The existence of an orthonormal complement here is ordinary finite-dimensional orthogonal completion. It is used only once, and its constant column norm follows from the full-column norm identity; no iterative constant-diagonal decomposition theorem is assumed.
+
+### 69.3 Seven fibres from a centered spherical frame
+
+Define
+
+    a=(-1+sqrt(7))/6,    b=(-1−sqrt(7))/6,
+    x_0=(0,0,1)^T,
+    x_(z,j)=(sqrt(1−z²)cos(2πj/3),
+             sqrt(1−z²)sin(2πj/3),z)^T,
+
+for z∈{a,b} and j=0,1,2. Both heights lie in (−1,1), so these are seven real unit vectors. Let X be the 3×7 matrix with these columns, in any fixed order.
+
+The three horizontal directions in each triangle sum to zero. Since a+b=−1/3, the sum of all seven vectors is zero. Moreover a²+b²=4/9. Within each triangle, the sine/cosine first moments and mixed second moment vanish, while the squared cosine and sine sums are both 3/2. Thus
+
+    X X^T = diag((3/2)(2−a²−b²),
+                 (3/2)(2−a²−b²),1+3a²+3b²)
+          = (7/3) I_3,
+    X 1_7=0.
+
+Put R=sqrt(3/7)X and c=(1,...,1)/sqrt(7). The three rows of R and the row c are orthonormal. Choose a 3×7 matrix U whose rows form an orthonormal basis of their orthogonal complement. Then O=[R;U;c] is a real orthogonal 7×7 matrix. Each column of R has squared norm 3/7 and each entry of c has squared norm 1/7, so each column of U has squared norm
+
+    1−3/7−1/7=3/7.
+
+This is exactly the row-block condition of §68. Divide the R and U column blocks by sqrt(3/7); pad the c block with two zeros and divide by sqrt(1/7). The resulting unit Bloch vectors, with weights 3/7,3/7,1/7, define the three common product channels by the conjugate-record construction. All local environments can have dimension two. For the last branch all directions are the same north-pole direction; this is allowed, since distinct fibre input labels are kept orthogonal by their distinct output labels.
+
+In particular, for every pair of different fibres f,g the weighted Bloch inner product is zero because distinct columns of O are orthogonal. Therefore each weighted squared basis overlap is 1/2, for both choices of eigenvector label. Within a fibre the two eigenvectors are orthogonal. These facts verify all encoded matrix units, not only basis populations or a collection of independently chosen pair maps. Hence the implementation remains exact after every passive reference extension.
+
+### 69.4 Completion of the finite range and attribution
+
+Combining these two constructions with §§66–68 gives the following optimal positive-weight distributions for the specified channel:
+
+    k=3: (1);
+    k=4: (3/4,1/4);
+    k=5: (3/5,2/5);
+    k=6: (1/2,1/2);
+    k=7: (3/7,3/7,1/7);
+    k=8: (3/8,3/8,1/4);
+    k=9: (1/3,1/3,1/3).
+
+For k=3 use the three Pauli bases; k=4,8 use §68's scalar Hadamard construction; k=6 uses §66 with a Hadamard matrix of order two; and k=9 uses §67's explicit balanced frame. In every case both the number of listed weights and their Shannon entropy are globally minimal over exact finite physical LOSR decompositions.
+
+The Fourier frame and Naimark-complement principles are standard; see Novikov and Sevost'yanova, Maltsev equal-norm tight frames, §2 and Theorem4, https://www.mathnet.ru/eng/im9137 . The identities X1=0 and XX^T=(7/3)I identify the seven-vector configuration as a centered unit-norm tight frame, equivalently a real spherical2-design; this equivalence is classical, explicitly reviewed in Heineken, Morillas and Tarazaga, Balanced frames: a useful tool in signal processing with good properties, Proposition3.5, https://arxiv.org/html/1904.00920 . The elementary moment computation is supplied above, without a novelty claim for spherical designs or a general projection-decomposition theorem.
+
+The physical resource conclusion uses these standard frame ingredients in the exact common-channel equality criterion. It concerns the stated finite range and fixed MC channel family, with arbitrary physical product competitors and all reference extensions. No general-k existence or positive-error diamond optimum is asserted.

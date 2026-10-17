@@ -53,4 +53,271 @@ Coprimality removes $v^2$, and the reciprocity sign from $q\equiv3\pmod4$ cancel
 
 Together with §81, this supplies explicit fixed-golden-field tests in both mutual-residue types. The theorem retains the original integral block hypothesis and all prime/splitting assumptions. No independence from every earlier Cassels or support condition, previously surviving numerical pair, prime-family infinitude, or universal WSS exclusion is asserted.
 
+## 83. A product test on the full odd-depth support
+
+**Theorem 83.1 (directed full-kernel residue constraint).** Let $j,C$ be positive integers, $N=3^j$, and
+
+$$B_N=L_N^2+3=D C^2,$$
+
+where $D$ is the positive squarefree kernel of the original golden block. Let $q\mid D$ be a prime such that
+
+$$\left(\frac q p\right)=1\qquad\text{for every prime }p\mid D,\ p\ne q.$$
+
+There exist integers $u,v$ with $q=u^2-5v^2$ and $u>0$, normalized as follows:
+
+- if $q\equiv1\pmod4$, then $v$ is even and $u\equiv1+v\pmod4$;
+- if $q\equiv3\pmod4$, then $u$ is even and $v$ is odd.
+
+For every such representation, define
+
+$$\chi_q=\begin{cases}(u/5),&q\equiv1\pmod4,\\(u/2\,/5),&q\equiv3\pmod4.\end{cases}$$
+
+Then, choosing either root $s_p^2\equiv5\pmod p$ at each other prime in $D$, one has
+
+$$\boxed{\prod_{\substack{p\mid D\\p\ne q}}\left(\frac{u+v s_p}{p}\right)=\left(\frac{-2}{q}\right)\chi_q.}$$
+
+All factors are nonzero and independent of the chosen roots; an empty product is one. This necessary condition permits arbitrarily many odd-depth primes and imposes no quadratic-residue conditions among the primes other than $q$. The hypothesis is directed: it must not be replaced by an undirected residue graph when both primes are $3\pmod4$. There is no elliptic-rank or Selmer-dimension premise.
+
+**Proof.** Write $\mathcal O_0=\mathbb Z[\phi]$, $\phi=(1+\sqrt5)/2$. The original-support inputs are Theorems TBN3 and GPC5 of the [WSS dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md): every prime $p\mid B_N$ satisfies $p>5$, $(5/p)=1$, $\rho(p)=6N$, and $p\equiv1\pmod{6N}$, while the full squarefree kernel satisfies $D\equiv19\pmod{120}$. Also
+
+$$5F_N^2-1=D C^2,\qquad F_N\equiv2\pmod4.$$
+
+We use the multiplicative convention $\mathcal R(a,b,c)=(-1)^{[a,b,c]}$ and [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48).
+
+First check admissibility for $(5,-D,q)$. The three discriminants are $5,-D,\Delta(q)$; their three-way gcd is one. The pairs $(5,q)$ and $(5,-D)$ are locally split, using the $5$-splitting of every prime of $D$, $(-D/5)=1$, and $5\equiv-D\equiv1\pmod4$ at two. For $(-D,q)$, every prime $p\mid D$, $p\ne q$, contributes $(q/p)=1$. At $q$, the factor is $((D/q)/q)$ because $(-q,q)_q=1$. If $q\equiv1\pmod4$, reciprocity makes every $(p/q)=1$. If $q\equiv3\pmod4$, their product is $(-1)^e$, where $e$ counts the other prime factors of $D$ that are $3\pmod4$. Since $D\equiv3\pmod4$, this $e$ is even. The dyadic factor is one because $-D\equiv1\pmod4$; infinity is trivial, and all remaining places are unit pairs. Thus the shared argument $q\mid D$ is admissible.
+
+Put
+
+$$\beta=-1-F_N\sqrt5,\qquad E=\mathbb Q(\sqrt5,\sqrt{-D}),\qquad K=\mathbb Q(\sqrt{-5D}).$$
+
+Then $\beta+\bar\beta=-2$, $N(\beta)=-D C^2$, and $\beta\in1+4\mathcal O_0$. Corollary 5.2 supplies the cyclic quartic extension $E(\sqrt\beta)/K$. At an odd prime outside $5D$, the conjugates have no common prime divisor; a split prime dividing $C$ has even valuation, and an inert prime cannot divide either conjugate. At any $p\mid D$, use the embedding $F_N\sqrt5\equiv1\pmod p$, in which $\beta\equiv-2$ is a unit. The other valuation is $1+2v_p(C)$, but the two conjugates define the same extension over $E$, since their product is a square there. As five is locally a square, $E=K$ locally and the unit description proves unramifiedness. At five, $-D$ is a square and $\beta$ is a unit. At two, writing $\beta=1+4t$ gives the étale polynomial $T^2-T-t$; $D\equiv3\pmod8$ makes $K$ split and $E$ unramified quadratic. Thus the field is minimally ramified at every finite place. The conjugate-unit evaluation at $q$, including when $q\mid C$, gives
+
+$$\mathcal R(5,-D,q)=\left(\frac{-2}{q}\right),\qquad \mathcal R(5,q,-D)=\left(\frac{-2}{q}\right).$$
+
+We next construct a normalized positive generator. The norm-Euclidean argument of Theorem 81.3 gives a generator $\pi$ of a prime ideal above $q$, and multiplication by $\phi$ if needed makes its norm $q$.
+
+Suppose first that $q\equiv1\pmod4$. The kernel of the norm map on $(\mathcal O_0/4\mathcal O_0)^\times$ is $\{\pm\phi^{2k}:k=0,1,2\}$. Multiplication by a global norm-one unit therefore produces $\delta\equiv1\pmod{4\mathcal O_0}$ with norm $q$. To determine its real sign, use the admissible triple $(5,-1,q)$. Its minimally ramified field is
+
+$$\mathbb Q(\sqrt5,i,\sqrt\phi)=\mathbb Q(\sqrt5,i,\sqrt{1+2i}),\qquad (\phi+i)^2=\phi(1+2i).$$
+
+At odd primes $\phi$ is a unit; at two this is the exact $2$-minimal model preceding Definition 7.5. Hence $\mathcal R(5,-1,q)=(\phi\bmod q\,/q)$. The original rank gives $\operatorname{ord}_q(-\phi^2)=6N$, hence $\phi^{6N}=1$. Since $N$ is odd and $4\mid q-1$, one has $6N\mid(q-1)/2$, so this character is $+1$. Reciprocity gives $\mathcal R(5,q,-1)=1$.
+
+The field defined by $\delta$ is minimally ramified at finite primes: use units away from $5q$, the conjugate unit $2u$ at $q$, a unit at five, and the étale construction from $\delta\equiv1\pmod{4\mathcal O_0}$ at two. For $q\equiv1\pmod8$, $K_q=\mathbb Q(\sqrt{5q})$ and $E_q=\mathbb Q(\sqrt5,\sqrt q)$ have the same unramified quadratic local field at two; for $q\equiv5\pmod8$, $K_q$ is split and $E_q$ is unramified quadratic. Thus $\mathcal R(5,q,-1)$ is the infinite Artin factor. Its value $+1$ forces $\delta$ totally positive. Writing $\delta=1+4(m+n\phi)=u+v\sqrt5$ gives $u=1+4m+2n>0$, $v=2n$, and the asserted normalization. This includes $q\equiv13\pmod{24}$, where $u\equiv3$, $v\equiv2\pmod4$ can occur.
+
+If $q\equiv3\pmod4$, use the generator $\phi^2$ of $(\mathcal O_0/2\mathcal O_0)^\times$ to arrange $\pi\equiv1\pmod{2\mathcal O_0}$. Its real signs agree; changing both signs preserves this congruence, so take $\pi$ totally positive. Writing $\pi=1+2(m+n\phi)=u+v\sqrt5$ gives $u+v$ odd. Its norm $q\equiv3\pmod4$ forces $u$ even and $v$ odd. This case does not need the original rank for generator existence. Primality gives $\gcd(u,v)=1$, $q\nmid2u$, and $5\nmid u$ in both cases.
+
+Take any normalized representation in the statement and put $\gamma=u+v\sqrt5$. For $q\equiv1\pmod4$, the preceding finite-place argument applies to this $\gamma$. For $q\equiv3\pmod4$, odd-prime minimality is the same, but at two Definition 7.6 requires $2$-minimal ramification, not unramifiedness. Corollary 5.2 supplies the equivalent norm element $\alpha=2(u+\sqrt q)$ in $\mathbb Q(\sqrt q)$. Set $\varpi=1+\sqrt q$ and $c_0=(1+q)/2$. The exact identity is
+
+$$\frac{\alpha}{\varpi^2}=\frac{u+\sqrt q}{c_0+\sqrt q}\in1+2\mathcal O_{\mathbb Q_2(\sqrt q)},\qquad N\!\left(\frac{\alpha}{\varpi^2}\right)=5\left(\frac{2v}{1-q}\right)^2.$$
+
+Indeed $u,c_0$ are even, $c_0+\sqrt q$ is a unit, and the numerator differs from the denominator by the even rational integer $u-c_0$. The denominator $\varpi^2$ is a square. This verifies Definition 7.5 and its following characterization for both $q\equiv3,7\pmod8$, including $q\equiv19\pmod{24}$.
+
+The resulting minimally ramified field computes $\mathcal R(5,q,-D)$. Total positivity makes the infinite factor one. At $q$, use $\bar\gamma$ with residue $2u$: the equality $E_q(\sqrt\gamma)=E_q(\sqrt{\bar\gamma})$ follows because $\gamma\bar\gamma=q$ is a square in $E_q$. At every other $p\mid D$, the factor is $(u+v s_p\,/p)$. It is nonzero because $N(\gamma)=q\ne p$, and the two root choices give equal characters because their residues have product $q$ and $(q/p)=1$. Consequently
+
+$$\left(\frac{-2}{q}\right)=\mathcal R(5,q,-D)=\left(\frac{2u}{q}\right)\prod_{\substack{p\mid D\\p\ne q}}\left(\frac{u+v s_p}{p}\right).$$
+
+It remains to simplify the shared-prime factor. If $q\equiv1\pmod4$, quadratic reciprocity for Jacobi symbols gives
+
+$$\left(\frac u q\right)=\left(\frac q u\right)=\left(\frac{-5}{u}\right)=\left(\frac{-1}{u}\right)\left(\frac u5\right).$$
+
+For $v\equiv0\pmod4$ one has $u\equiv1\pmod4$, $q\equiv1\pmod8$; for $v\equiv2\pmod4$ one has $u\equiv3\pmod4$, $q\equiv5\pmod8$. In either case $(2/q)(-1/u)=1$, so $(2u/q)=(u/5)$.
+
+If $q\equiv3\pmod4$, write $u=2^t w$ with $t\ge1$ and $w>0$ odd. Reciprocity and $q=u^2-5v^2$ give $(w/q)=(w/5)$: the reciprocity sign cancels the factor $(-1/w)$ from $(-5/w)$. Thus
+
+$$\left(\frac{2u}{q}\right)=\left(\frac2q\right)^{t+1}\left(\frac w5\right)=\left(\frac{u/2}{5}\right).$$
+
+For $t=1$, $q\equiv7\pmod8$ and the prefactor is one; for $t\ge2$, $q\equiv3\pmod8$ and it is $(-1)^{t+1}=(-1)^{t-1}$, exactly the power of $(2/5)=-1$ required on the right. The Jacobi convention covers $w=1$. Combining these evaluations proves the boxed constraint. ∎
+
+The theorem extends the original integral Fibonacci construction beyond two odd-depth primes. Failure of its product test excludes the stated full kernel at every ternary index and square cofactor satisfying the hypotheses. It does not assert a violating family that survives all earlier support restrictions, independence from every previous Cassels condition, prime-family infinitude, or a universal WSS exclusion.
+
+## 84. Composite cuts without an eligible individual prime
+
+**Theorem 84.1 (composite-cut residue constraint).** Let $j,C$ be positive integers, $N=3^j$, and $B_N=L_N^2+3=D C^2$, where $D$ is the full positive squarefree kernel. Let $d>1$ divide $D$, and put $e=D/d$. Suppose
+
+$$\left(\frac d p\right)=1\quad(p\mid e),\qquad \left(\frac e p\right)=1\quad(p\mid d),$$
+
+where each $p$ is prime. The case $e=1$ is permitted. There exist integers $u,v$ with $d=u^2-5v^2$, normalized as follows:
+
+- if $d\equiv1\pmod4$, then $v$ is even and $u\equiv1+v\pmod4$; $u$ may have either sign;
+- if $d\equiv3\pmod4$, then $u>0$ is even and $v$ is odd.
+
+For every such representation, put
+
+$$\chi_d=\begin{cases}(u/5),&d\equiv1\pmod4,\\(u/2\,/5),&d\equiv3\pmod4.\end{cases}$$
+
+Then
+
+$$\boxed{\prod_{p\mid e}\left(\frac{u+v s_p}{p}\right)=\left(\frac{-2}{d}\right)\chi_d,\qquad s_p^2\equiv5\pmod p.}$$
+
+The symbol with denominator $d$ is a Jacobi symbol. Each factor on the left is nonzero and independent of the chosen root; an empty product is one. Thus failure of this test excludes the full kernel $D$ from the stated original integral orbit. No elliptic-rank or Selmer premise is imposed.
+
+**Proof.** We retain $\mathcal O_0=\mathbb Z[\phi]$, $\phi=(1+\sqrt5)/2$, and the multiplicative Rédei convention of §83. The imported original-support inputs give $D\equiv19\pmod{120}$ and $(5/p)=1$, $p>5$, for every $p\mid D$. We use [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48).
+
+For the triple $(5,-D,d)$, the discriminants $5,-D,\Delta(d)$ have three-way gcd one. Both $(5,-D)$ and $(5,d)$ are locally split: use the $5$-splitting at their odd support primes, the fact that every support prime is a square modulo five, and $5\equiv1\pmod4$ at two. For $(-D,d)$, a prime $p\mid e$ contributes $(d/p)$. If $p\mid d$, write $d=pd'$ and $D=pd'e$. The odd Hilbert-symbol formula gives
+
+$$(-D,d)_p=\left(\frac{-1}{p}\right)\left(\frac{-d'e}{p}\right)\left(\frac{d'}p\right)=\left(\frac e p\right).$$
+
+At two, $-D\equiv1\pmod4$ makes the odd-unit symbol one; infinity is trivial because $d>0$, and all other finite places are unit pairs. Thus the two cut conditions are exactly the remaining local requirements, including the overlapping support $d\mid D$.
+
+The actual Fibonacci element $\beta=-1-F_N\sqrt5$ has norm $-D C^2$, trace $-2$, and belongs to $1+4\mathcal O_0$. The finite-place proof in §83 shows that it defines a minimally ramified field over $\mathbb Q(\sqrt{-5D})$. That proof applies to the entire $D$, with every valuation in $C$ retained. At each $p\mid d$, choose the unit conjugate $\beta\equiv-2\pmod p$, including when $p\mid C$. Since $d>0$, there is no infinite factor. Consequently
+
+$$\mathcal R(5,-D,d)=\prod_{p\mid d}\left(\frac{-2}{p}\right)=\left(\frac{-2}{d}\right),\qquad \mathcal R(5,d,-D)=\left(\frac{-2}{d}\right).$$
+
+The last equality is Rédei reciprocity for the admissible composite triple. It does not multiply symbols whose individual prime arguments might be inadmissible.
+
+For generator existence, the norm-Euclidean property of $\mathcal O_0$ used in Theorem 81.3 makes the product of one prime ideal above each $p\mid d$ principal. This ideal has norm $d$, so a generator has norm $\pm d$; multiplying by $\phi$ if necessary gives norm $d$.
+
+If $d\equiv1\pmod4$, use the six-element norm kernel $\{\pm\phi^{2k}:k=0,1,2\}$ modulo $4\mathcal O_0$ to arrange $\gamma\equiv1\pmod{4\mathcal O_0}$. Writing $\gamma=1+4(m+n\phi)=u+v\sqrt5$ gives $u=1+4m+2n$, $v=2n$. Here $u$ is nonzero odd and may be negative. Since the norm is positive, both real signs agree with $\operatorname{sgn}(u)$; no positivity assertion is needed.
+
+If $d\equiv3\pmod4$, powers of $\phi^2$ arrange $\gamma\equiv1\pmod{2\mathcal O_0}$. Multiplication by $-1$ if needed makes it totally positive while preserving this congruence. Writing $\gamma=1+2(m+n\phi)$ gives integral $u,v$ with $u+v$ odd. The norm condition forces $u$ even and $v$ odd, and positivity gives $u>0$.
+
+For every normalized representation, squarefreeness gives $\gcd(u,v)=1$: a common prime would have its square dividing $d$. It also gives $\gcd(u,d)=1$, since a prime $p\mid u,d$, necessarily different from five, would divide $v$ as well. Furthermore $5\nmid u$ and $\gcd(2u,d)=1$.
+
+Put $E_d=\mathbb Q(\sqrt5,\sqrt d)$, $K_d=\mathbb Q(\sqrt{5d})$, and $F_d=E_d(\sqrt\gamma)$. Since $d>1$ is squarefree and $5\nmid d$, Corollary 5.2 applies without degeneration. At odd primes outside $5d$, $\gamma$ is a unit. At five it is a unit and $d$ is locally a square. At each $p\mid d$, squarefreeness and $\gcd(u,d)=1$ give one conjugate of valuation one and the other the unit $2u$. Because $\gamma\bar\gamma=d$ is a square in $E_d$, these conjugates define the same extension over $E_d$. Locally $E_d=K_d$ by $5$-splitting, so the unit description proves unramifiedness.
+
+For $d\equiv1\pmod4$, $\gamma\in1+4\mathcal O_0$ gives an étale quadratic polynomial at two. If $d\equiv1\pmod8$, $K_d$ and $E_d$ have the same unramified quadratic local field; if $d\equiv5\pmod8$, $K_d$ is split and $E_d$ is unramified quadratic. Thus $F_d/K_d$ is unramified there. A negative real sign of $\gamma$ changes none of these finite-place arguments.
+
+For $d\equiv3\pmod4$, Corollary 5.2 supplies $\alpha=2(u+\sqrt d)$. Set $\varpi=1+\sqrt d$ and $c_0=(1+d)/2$. Then
+
+$$\frac{\alpha}{\varpi^2}=\frac{u+\sqrt d}{c_0+\sqrt d}\in1+2\mathcal O_{\mathbb Q_2(\sqrt d)},\qquad N\!\left(\frac{\alpha}{\varpi^2}\right)=5\left(\frac{2v}{1-d}\right)^2.$$
+
+Both $u,c_0$ are even, $c_0+\sqrt d$ is a unit, and the numerator differs from the denominator by the even integer $u-c_0$. The removed factor is a square. This verifies Definition 7.5's conductor-two condition for both $d\equiv3,7\pmod8$; it does not assert unramifiedness at two. Hence the field satisfies the exact minimal-ramification requirements.
+
+Now evaluate $\mathcal R(5,d,-D)$. Its infinite factor is $\operatorname{sgn}(u)$: the field is real when $\gamma$ is totally positive, while a totally negative $\gamma$ gives the nontrivial infinite Artin factor. At each $p\mid d$, the unit conjugate gives $(2u/p)$. At each $p\mid e$, the factor is $(u+v s_p\,/p)$. The two residues have product $d$ and are nonzero; $(d/p)=1$ makes their characters equal. Therefore
+
+$$\left(\frac{-2}{d}\right)=\operatorname{sgn}(u)\left(\frac{2u}{d}\right)\prod_{p\mid e}\left(\frac{u+v s_p}{p}\right).$$
+
+If $d\equiv1\pmod4$, let $w=|u|>0$ and $s=\operatorname{sgn}(u)$. As $(-1/d)=1$, reciprocity for Jacobi symbols gives
+
+$$\left(\frac u d\right)=\left(\frac w d\right)=\left(\frac d w\right)=\left(\frac{-5}{w}\right)=\left(\frac{-1}{w}\right)\left(\frac w5\right).$$
+
+Here $(w/5)=(u/5)$. If $v\equiv0\pmod4$, then $d\equiv1\pmod8$, $u\equiv1\pmod4$; if $v\equiv2\pmod4$, then $d\equiv5\pmod8$, $u\equiv3\pmod4$. For positive $u$ this gives $(2/d)(-1/w)=1$; for negative $u$, replacing $u$ by $w=-u$ reverses that sign. Thus
+
+$$\left(\frac{2u}{d}\right)=s\left(\frac u5\right),\qquad \operatorname{sgn}(u)\left(\frac{2u}{d}\right)=\left(\frac u5\right)=\chi_d.$$
+
+This explicitly cancels the real sign rather than assuming a positive primary generator.
+
+If $d\equiv3\pmod4$, write $u=2^t w$ with $t\ge1$ and $w>0$ odd. The reciprocity sign in $(w/d)$ cancels the factor $(-1/w)$ from the norm identity, giving $(w/d)=(w/5)$. Hence
+
+$$\left(\frac{2u}{d}\right)=\left(\frac2d\right)^{t+1}\left(\frac w5\right)=\left(\frac{u/2}{5}\right).$$
+
+Indeed $t=1$ implies $d\equiv7\pmod8$ and prefactor one; $t\ge2$ implies $d\equiv3\pmod8$ and prefactor $(-1)^{t+1}=(-1)^{t-1}$, exactly the required power of $(2/5)=-1$. The Jacobi convention covers $w=1$. Combining these formulas proves the boxed constraint. ∎
+
+**Proposition 84.2 (scope of the cut hypothesis).** At the level of quadratic-character conditions, the admissible-cut hypothesis need not supply any individual prime eligible for Theorem 83.1.
+
+**Proof.** Consider four abstract support primes, three of type $1\pmod4$ and one of type $3\pmod4$, with all pairwise Legendre characters equal to $-1$. This character assignment respects quadratic reciprocity. Every two-versus-two cut has both required products equal to $+1$ at each vertex. In contrast, each individual prime has three outgoing nonresidue characters, so none meets Theorem 83.1's hypothesis. This compares the conditions only; it asserts no actual block or prime family realizing this pattern. ∎
+
+The endpoint $d=D$ is allowed and yields $\chi_D=(-2/D)=1$ because $D\equiv19\pmod{120}$; no separate novelty claim is made for that endpoint. The theorem retains the full original integral orbit. It does not establish a violating numerical support surviving all previous restrictions, independence from all earlier Cassels conditions, prime-family infinitude, or a universal WSS exclusion.
+
+## 85. An integral-class height gap without a rank bound
+
+**Theorem 85.1 (exact index recovery and a uniform height gap).** Let $j,C$ be positive integers, $N=3^j$, and $B_N=L_N^2+3=D C^2$, where $D$ is the full positive squarefree kernel. On
+
+$$E_D:Y^2=X(X+5D)(X-15D)$$
+
+put
+
+$$R=(5D B_N,25D^2L_N C F_N),\qquad T_0=(0,0),\qquad S=R+T_0.$$
+
+Then $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$, and $R,S$ are non-torsion. Every affine integral point $K$ with full two-descent squareclasses
+
+$$\delta(K)=(5,D,5D)$$
+
+has $X(K)=5D B_n$ for a positive odd integer $n$ satisfying
+
+$$\boxed{v_3(n)=j.}$$
+
+If $n=N$, then $K=\pm R$. Otherwise $n\ge5N$ and
+
+$$\boxed{\widehat h(K)>3\widehat h(R).}$$
+
+No elliptic-rank or Selmer-dimension premise is imposed.
+
+**Proof.** TBN3 and GPC5 of the [WSS dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md) give $D\equiv19\pmod{120}$ and, for every $q\mid D$, $q>5$, $(5/q)=1$, $\rho(q)=6N$, and $q\equiv1\pmod{6N}$. In particular $7,11\nmid D$.
+
+We use complete two-descent, prime-to-residue-characteristic torsion injection at good reduction, and canonical heights as in [Silverman, *The Arithmetic of Elliptic Curves*, VII.3, VIII.9 and X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). The estimate proved in §74 applies to every positive twist parameter $D$: its fixed-coordinate duplication formula does not require primality. With $z=X/(5D)$,
+
+$$\frac12h(z)-c_0\le\widehat h\le\frac12h(z)+u_0,\qquad c_0=\frac{\log144}{6},\quad u_0=\frac{\log24}{6}.$$
+
+Indeed the duplication map is $(z^2+3)^2/[4z(z+1)(z-3)]$, and the same numerator/denominator estimates and gcd bound apply. The bounded difference $|h(X/(5D))-h(X)|\le\log(5D)$ disappears in the canonical-height doubling limit.
+
+At seven, translating $X=t+D$ gives $Y^2=t^3-D^2t$. The character sum cancels under $t\mapsto-t$, since $-1$ is a nonsquare modulo seven, so the reduced curve has eight points. At eleven the curve with $D=1$ has character values
+
+$$0,1,1,1,0,-1,0,-1,1,1,1\qquad(X=0,\ldots,10),$$
+
+whose sum is four. Its nonzero twists therefore have sixteen or eight points. Torsion injection at seven bounds every primary torsion part other than the seven-primary part by eight; injection at eleven excludes the seven-primary part as well. Thus the rational torsion order divides eight.
+
+The three-coordinate two-descent classes of the four rational two-torsion points are
+
+$$\begin{aligned}
+\delta(O)&=(1,1,1),\\
+\delta(T_0)&=(-3,5D,-15D),\\
+\delta((-5D,0))&=(-5D,1,-5D),\\
+\delta((15D,0))&=(15D,5D,3).
+\end{aligned}$$
+
+None of the three nonzero torsion points has trivial descent class: use the negative first coordinate in the first two cases and the nonsquare third coordinate $3$ in the last. Hence none is a double of a rational point. This excludes four-torsion, and therefore eight-torsion, proving $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$. The displayed point $R$ has nonzero $Y$, so it and its torsion translate $S$ are non-torsion. Direct calculation gives
+
+$$\delta(R)=(5,D,5D),\qquad \delta(S)=(-15,5,-3).$$
+
+Now let $K$ be as in the theorem. Its three root factors are nonzero. Integrality and squarefreeness of $5,D,5D$ imply that there are integers $a,b,\ell$ with
+
+$$X(K)=5a^2,\qquad X(K)+5D=D b^2,\qquad X(K)-15D=5D\ell^2.$$
+
+A rational square times a squarefree integer can be integral only when its square root coordinate is integral. The first two equations give $D\mid a^2$, hence $D\mid a$. Writing $a=Dc$ yields
+
+$$X(K)=5D^2c^2,\qquad \ell^2+3=Dc^2,\qquad b^2=5(Dc^2+1).$$
+
+Thus $b=5f$ and $\ell^2+4=5f^2$. None of $c,\ell,f$ is zero; in particular $\ell=0$ would give $Dc^2=3$, impossible for $D\ge19$. Replace $\ell,f$ by their positive absolute values.
+
+The integral negative-Pell classification used in §76 gives $(\ell,f)=(L_n,F_n)$ for a positive odd $n$. For completeness, $\ell,f$ have the same parity. The solution with $\ell=1$ has $f=1$. If $\ell>1$, then $\ell\ge4$, $f\ge2$, and
+
+$$\ell'=(3\ell-5f)/2,\qquad f'=(3f-\ell)/2$$
+
+are positive integers satisfying the same equation with $\ell'<\ell$. Positivity follows from $9\ell^2-25f^2=4\ell^2-20>0$ and $9f^2-\ell^2=4f^2+4>0$. The inverse transformation multiplies $(\ell'+f'\sqrt5)/2$ by $\phi^2$. Iteration therefore gives precisely the positive odd powers of $\phi$, proving the classification. Consequently $X(K)=5D B_n$ and $B_n=Dc^2$.
+
+Choose any $q\mid D$ and view $\phi$ in $\mathbb F_q$. The original rank is $\operatorname{ord}_q(-\phi^2)=6N$. Put $a=\phi^2$. Because $N$ is odd, $a^{3N}=1$, and the order of $-a$ is twice the odd order of $a$. Hence $\operatorname{ord}(a)=3N$. Since $n$ is odd,
+
+$$B_n=a^n+a^{-n}+1\pmod q.$$
+
+The divisibility $q\mid B_n$ and $q\ne3$ imply that $a^n$ is a nontrivial cube root of unity. Therefore
+
+$$\operatorname{ord}(a^n)=3,\qquad \gcd(3N,n)=N,\qquad v_3(n)=j.$$
+
+Thus $n=Nk$ with $k$ positive odd and $3\nmid k$. If $n=N$, equality of $X$-coordinates gives $K=\pm R$. Otherwise $k\ge5$.
+
+To quantify the gap, put $x=L_N\ge4$. The odd-index identity
+
+$$L_{5N}=x^5+5x^3+5x$$
+
+gives $B_{5N}>x^{10}$. With $t=x^2\ge16$,
+
+$$\frac{x^{10}}{(x^2+3)^3}=t^2\left(\frac{t}{t+3}\right)^3\ge\frac{16^5}{19^3}>144,$$
+
+where the final comparison is $1{,}048{,}576>987{,}696$. Hence $B_{5N}>144B_N^3$. For $n\ge5N$, the height estimate gives
+
+$$\begin{aligned}
+\widehat h(K)&\ge\tfrac12\log B_{5N}-c_0\\
+&>\tfrac32\log B_N+\tfrac12\log144-c_0\\
+&>3\bigl(\tfrac12\log B_N+u_0\bigr)\ge3\widehat h(R).
+\end{aligned}$$
+
+The last strict comparison follows from
+
+$$\tfrac12\log144-c_0-3u_0=\tfrac13\log144-\tfrac12\log24>0,$$
+
+which is equivalent to $144^2>24^3$. This proves the height gap. ∎
+
+**Corollary 85.2 (primitivity in the full Mordell–Weil lattice).** Under the hypotheses of Theorem 85.1, the common class of $R,S$ in $E_D(\mathbb Q)/E_D(\mathbb Q)_{\mathrm{tors}}$ is primitive. Equivalently, if $S=[m]H+T$ with $m\ge1$, $H\in E_D(\mathbb Q)$ and rational torsion $T$, then $m=1$.
+
+**Proof.** The descent class $\delta(S)=(-15,5,-3)$ differs from every torsion class listed above. For $O$ and $(-5D,0)$ use the second coordinate; for $T_0$ the ratio of first coordinates is $5$; for $(15D,0)$ the ratio of third coordinates is $-1$. Thus $S$ cannot be a double plus torsion, excluding even $m$.
+
+Suppose $m\ge3$ is odd. Since the torsion is two-torsion, absorb $T$ into $H'=H+T$ to get $S=[m]H'$. Put $K=H'+T_0$. Then $[m]K=R$.
+
+The point $K$ is integral at every prime. On this integral Weierstrass model, a nonintegral rational point lies in the formal subgroup and has negative $X$ valuation. Its nonzero multiples remain in that subgroup and have negative $X$ valuation; see [Silverman IV.1--2 and VII.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). If $K$ were nonintegral anywhere, $R=[m]K$ would be nonintegral, contrary to its displayed coordinates. The points are non-torsion, so the multiple is not $O$. This includes $2,3,5$ and primes dividing $D$, and requires no prime-to-residue-characteristic condition on $m$. The model is also minimal everywhere: its discriminant $2^8 3^2 5^6D^6$ has every valuation below twelve.
+
+Odd multiplication preserves the two-descent class, so $\delta(K)=\delta(R)$. Also $\widehat h(K)=\widehat h(R)/m^2\le\widehat h(R)$. Theorem 85.1 forces $K=\pm R$, and then $R=[m]K=\pm[m]R$ contradicts non-torsion. Thus $m=1$. ∎
+
+These statements impose an integral-index and divisibility restriction for every actual squarefree kernel. They do not assert that the primitive point generates a group of rank greater than one, impose a universal rank bound, or exhibit a newly excluded prime family. The rank-one generation conclusions in §§76--78 retain their own hypotheses.
+
 ## 追加锚（本行以下为增补区）

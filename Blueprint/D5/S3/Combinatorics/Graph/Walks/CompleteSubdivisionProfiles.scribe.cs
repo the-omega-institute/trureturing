@@ -1,0 +1,76 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
+
+internal sealed class CompleteSubdivisionProfilesDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/CompleteSubdivisionProfiles.";
+
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/farhan2026multiset");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual edges and landmark distance multisets",
+        H("Actual edges and landmark distance multisets"),
+        Blocks(
+            Paragraph(Text("Every actual unordered edge has a unique representation e(u,v) with u different from v. Its distance from a landmark is the minimum of the two actual shortest endpoint distances. Mapping the landmark multiset retains multiplicities. The four distance classes exhaust every landmark, including both original and midpoint vertices. These are the edge-multiset conventions of arXiv:2607.10311v1, section 6.1, printed page 20.")),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-incidence"),
+                DeclarationHandle.Create(Prefix + "incidence"),
+                H("incidence"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("An incidence is the actual unordered edge joining u to the midpoint of uv."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-incidence-mem"),
+                DeclarationHandle.Create(Prefix + "incidence_mem"),
+                H("incidence mem"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Every ordered pair of distinct originals supplies an actual graph edge."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-incidence-eq-iff"),
+                DeclarationHandle.Create(Prefix + "incidence_eq_iff"),
+                H("incidence eq iff"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Two incidence edges coincide exactly when both ordered original indices coincide."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-edge-iff-incidence"),
+                DeclarationHandle.Create(Prefix + "edge_iff_incidence"),
+                H("edge iff incidence"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Every actual graph edge is represented by an ordered pair of distinct originals."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-edge-distance"),
+                DeclarationHandle.Create(Prefix + "edgeDistance"),
+                H("edgeDistance"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The unordered-edge distance is the minimum of its two actual shortest endpoint distances."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-edge-distance-original"),
+                DeclarationHandle.Create(Prefix + "edgeDistance_original"),
+                H("edgeDistance original"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("An original landmark has edge distance zero, one or two according to whether it is the first, second or another original."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-edge-distance-midpoint"),
+                DeclarationHandle.Create(Prefix + "edgeDistance_midpoint"),
+                H("edgeDistance midpoint"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("A midpoint landmark has edge distance zero at the edge midpoint, one when incident to its original endpoint, two when incident only to its other original, and three otherwise."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-edge-distance-le-three"),
+                DeclarationHandle.Create(Prefix + "edgeDistance_le_three"),
+                H("edgeDistance le three"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Every actual edge distance to every graph vertex is at most three."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-profile"),
+                DeclarationHandle.Create(Prefix + "profile"),
+                H("profile"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The distance multiset maps every landmark once and keeps repeated distance values."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-resolves"),
+                DeclarationHandle.Create(Prefix + "Resolves"),
+                H("Resolves"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Resolution means injectivity of the multiset profile on the entire actual unordered edge set."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-profile-count"),
+                DeclarationHandle.Create(Prefix + "profile_count"),
+                H("profile count"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The multiplicity of k is exactly the number of selected vertices at actual edge distance k."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("complete-subdivision-profiles-profile-eq-iff-four-counts"),
+                DeclarationHandle.Create(Prefix + "profile_eq_iff_four_counts"),
+                H("profile eq iff four counts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Equality of profiles on actual edges is equivalent to equality of the four multiplicities for distances zero through three."))), DescribeRole.Theorem))));
+}
