@@ -155,21 +155,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestPreservesExistingAtomizerAuthorityDeltaWithoutLoadingTruth()
-    {
-        var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
-            .Replace(
-                $"atomizer = \"{AtomizerRegistry.GenericId}\"",
-                $"atomizer = \"{AtomizerRegistry.GenericId}\"",
-                StringComparison.Ordinal);
-
-        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
-            fixture,
-            RawChangeSet.Create([DirectorySourceMetadataPath()]));
-    }
-
-    [Fact]
     public void IngestPreservesExistingGenreAuthorityDeltaWithoutLoadingTruth()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
