@@ -7379,3 +7379,213 @@ This is a numerical application of existing equality and inverse
 comparison identities, with no new generic theorem, novelty or Lean
 proof. Actual-center/full-border signs, good-block payment,
 retained/cofinal positivity, Robin tail and RH remain unresolved.
+
+
+### Retain the source relation on a zero-first-coordinate direction
+
+The preceding negative row belongs to a scalar relaxation. Add a
+relation supplied by the original common source before seeking another
+nonnegative certificate. Reuse $P=TRT^*\succeq0$,
+$Q_R=P-e_0e_0^*/\delta$, $y_0=\alpha_0\rho+\beta_J$ and
+$\lambda=y_0[0]\ne0$. Set
+
+$$
+c=\frac{\rho[0]}\lambda,\qquad w=\rho-cy_0.
+$$
+
+Then $w[0]=0$ exactly, so
+
+$$
+Q_Rw^*=Pw^*,\qquad
+fQ_R\rho^*=fPw^*+c\theta,\qquad \theta=fQ_Ry_0^*.
+$$
+
+This is a positive-metric slice of the SAME finite reference form;
+it does not change the actual row. Since the first row of $T$ is the
+negative-pivot elimination row and its other rows form the identity,
+$wT=w_{\rm tail}$. Thus one cached reference-vector action supplies
+
+$$
+v_d=Pw^*=TRw_{\rm tail}^*.
+$$
+
+No new inverse, solve or old reference quadratic is required. The
+coefficient $c$ and every finite row retain their interval uncertainty;
+$w[0]=0$ is imposed using the exact common-parameter identity, not a
+subtraction of rounded coordinates.
+
+The original source relation is
+$f=\kappa u_F^*W_F\mathsf B$, where $\mathsf B=R_FV$ and
+$\kappa=33/32$. Define
+
+$$
+v_b=Q_Ry_0^*,\qquad b=\mathsf Bv_b,\qquad d=\mathsf Bv_d.
+$$
+
+The saved signed observation and the desired new pairing are therefore
+
+$$
+\theta=\kappa\langle u_F,b\rangle_{W_F},\qquad
+\zeta=fPw^*=\kappa\langle u_F,d\rangle_{W_F}.
+$$
+
+The entire signed $\theta$ interval is retained, together with the SAME
+source-energy UPPER $E\ge\|u_F\|_{W_F}^2$. No interior response is
+substituted for the actual one. The tighter saved cap
+$J_b\ge\|b\|_{W_F}^2$ is reused without replaying its quadratic.
+
+For any direction $v$ in this common lift, the original physical
+interface supplies $t_v=D_{\rm phys}Vv$, $h_v=P_0t_v$, and
+$\|t_v\|\le\sqrt{K_{\rm phys}}L_v$, where
+
+$$
+L_v=\sum_j|v_j|\sqrt{(V^*V)_{jj}}.
+$$
+
+Use the cached112-by18 feature map once to obtain $h_d$; $h_b$ is
+already saved. The original operator-norm Gram certificate gives
+
+$$
+\begin{aligned}
+\|d\|_{W_F}^2&\le J_d:=
+\operatorname{up}\left(h_d^TK_0h_d+
+\epsilon_{\rm far}K_{\rm phys}L_d^2\right),\\
+\langle b,d\rangle_{W_F}&\in h_b^TK_0h_d+
+[-e_{bd},e_{bd}],\qquad
+ e_{bd}=\operatorname{up}
+ (\epsilon_{\rm far}K_{\rm phys}L_bL_d).
+\end{aligned}
+$$
+
+The complete interval evaluation also pays uncertainty in both feature
+vectors and the saved kernel. This is a bilinear Gram error; it does
+not infer a vector error by taking the square root of a Gram error.
+Neither rounded kernel centers nor the masked kernel are assumed PSD.
+The physical allowance retains its original512-grid interpretation;
+weighted kernel and Hilbert norms already contain the original far
+weight, with no extra weight or $\kappa$ inserted.
+
+Apply the existing `projected_energy` common-representer bound to the
+SAME three real vectors $(u_F,d,b)$, using squared-norm uppers
+$(E,J_d,J_b)$ and signed pairings
+$s=\theta/\kappa$, $t=\langle b,d\rangle$. At each exact realization,
+
+$$
+\left|\langle u_F,d\rangle-\frac{st}{J_b}\right|
+\le
+\sqrt{\left(E-\frac{s^2}{J_b}\right)
+      \left(J_d-\frac{t^2}{J_b}\right)}.
+$$
+
+The formula remains valid when $J_b$ is only an upper: extend $b$ by
+one orthogonal coordinate to give it squared norm $J_b$, and extend
+$u_F,d$ by zero. The existing interval implementation bounds both
+residual factors and the signed product uniformly. Multiplication by
+$\kappa$ supplies a conditional interval for $\zeta$ and then for
+$fQ_R\rho^*=\zeta+c\theta$.
+
+Retain the earlier scalar-only bound too. With
+$p=\rho Py_0^*$, $r_0=y_0Py_0^*$, $r_\rho=\rho P\rho^*$ and the
+SAME far-row energy cap $A\ge fPf^*$,
+
+$$
+|\zeta|\le\sqrt{A(r_\rho-2cp+c^2r_0)}.
+$$
+
+Here $A$ and source energy $E$ have different meanings and units. The
+two valid intervals are intersected; an empty intersection is an
+inconsistency and stops the application.
+
+For the previously constructed row, reuse its own saved $\tau$ and
+$s=\alpha_*-\alpha_0$ to obtain
+
+$$
+f_{\rm rel}Pw^*=\tau(p-cr_0)-s(r_\rho-cp).
+$$
+
+Its target remains chosen inside the observed interval, not identified
+with the actual $\theta$. Disjoint intervals would exclude this
+particular row under the added source-energy/Gram relation; this test
+neither excludes all negative rows nor decides the actual paid
+comparison.
+
+The uniform physical Gram estimate has new-direction quadratic
+$h_d^TK_0h_d\simeq13.75086838$, but its norm-error payment exceeds2984.69.
+It therefore retains the scalar-only interval and leaves the constructed
+row unexcluded. This identifies the cost of that uniform certificate,
+not an attained physical norm or a source counterexample.
+
+Reuse the preceding directional full-jet estimate on the SAVED new
+features and quadratic. No direction, feature, quadratic or cross is
+recomputed. In the original sharp forward formula, all factors except
+$L_v$ form one uniform coefficient $C_{\rm forw}$. Since
+$\epsilon_b^\sharp\ge C_{\rm forw}L_b$ and $L_b>0$,
+
+$$
+\epsilon_d^\sharp:=\operatorname{up}
+\left(\epsilon_b^\sharp\frac{L_d}{L_b}\right)
+\ge C_{\rm forw}L_d.
+$$
+
+This transfers a uniform forward-error coefficient, not an arbitrary
+norm of the old realization. The original three retained moments and
+existing omitted-block/midpoint payments give $J_{h_d}$ for the full
+new jet. Thus
+
+$$
+\|d\|_{W_F}^2\le J_d^{\rm jet}:=
+\operatorname{up}\left((\sqrt{J_{h_d}}+\epsilon_d^\sharp)^2\right).
+$$
+
+Select the smaller of this cap and the valid uniform physical cap,
+then apply the SAME common-projection bound with the saved old/new
+cross. Intersect the resulting interval with the saved coarse interval.
+The actual signed response and common source stay fixed throughout.
+
+The directional certificate gives the following outward displayed
+bounds. Exact rational caps and640-bit endpoints remain authoritative;
+the actual-pairing rows below also enclose the exported Arb balls.
+
+| Quantity | Enclosure or directed cap |
+|---|---:|
+| Uniform physical squared-norm upper |<2998.447008|
+| Directional full-jet squared-norm upper |<13.750868382|
+| Transferred sharp forward-error upper |<1.416877e-67|
+| Retained scalar-only zero-pairing interval |contained in[−66.425463,66.425463]|
+| Refined actual $\zeta$ interval |contained in[−9.656778,9.656778]|
+| Constructed row's $f_{\rm rel}Pw^*$ |contained in[−20.900041,−20.900040]|
+| Refined actual $fQ_R\rho^*$ interval |contained in[−33.775533,−14.432247]|
+
+The norm cap strictly improves and the actual zero-pairing interval
+strictly narrows. It is disjoint from the particular constructed row's
+pairing. Thus the additional source-energy/norm relation excludes that
+row under the retained original-source premises. The symmetric new
+$\zeta$ bound does not supply its sign. The reference-$\rho$ pairing
+is strictly negative within the same conditional model, but this is
+one far-row pairing, not the paid expression or a full-border sign.
+
+The [sources, exact packets and README](https://github.com/the-omega-institute/trureturing-experiments/tree/64fb7bfb67e4acfe00418f03047e1c860f733d59/docs/reports/weil-c27)
+retain the coarse packet SHA256
+`c4cbbead777f652812c0aa0bd238bf08053daa52be7afbedfa1321da19847a9b`
+and source SHA256
+`612ba841171f1a040c90f376c85cbc326f3e46c2a9ef94e0257094720c0460bb`;
+the directional refinement packet SHA256 is
+`ee401d13ef503a44089c33e958b8f90dab09aefa843050f09713ee6a33729861`
+and its source SHA256 is
+`4c07a0a9a55dd9d87c1f1b741960f29c495246a9a868ecd3b2341bf0b11c07d0`.
+There is one cached-reference vector action, one cached-feature action,
+one new physical-feature quadratic and one old/new feature cross. The
+old direction quadratic, source, sine, moment, tail, inverse, solve and
+trace suppliers are reused. Each consumer has one fixed1024-working/
+640-export application. The refinement only applies the homogeneous
+forward, existing directional norm and common-projection bounds to
+saved outputs; it repeats none of those four finite actions. There is
+no parameter/source/precision/cutoff scan or retry.
+
+This is a numerical application of existing linear, physical-Gram and
+common-projection results. It claims no generic theorem, novelty or
+Lean proof. The actual-form/domain, common-source/lift and original
+physical error premises remain. An interval for an actual far-row
+pairing is not an exact derivative or an actual paid-comparison sign.
+Actual-center/full-border signs, good-block payment, retained/cofinal
+positivity, Robin tail and RH remain unresolved.
