@@ -41,7 +41,7 @@ Witness: A = [[1/4, 0, 1/4], [3/4, 1/2, 0], [0, 1/2, 3/4]], column-stochastic wi
    - A six-cycle contains no 2 × 2 rectangle, so three such rectangles can cover it only as three stars centred at all rows or at all columns.
 2. **Reduction.** By induction on the number of factors, σAτ ∈ G^m forces σ′Aτ′ ∈ G for some permutation matrices σ′ and τ′.
 3. **Exclusion.** No row and column permutation of A lies in G.
-   - The swap has a zero where every permuted copy of A is positive.
+   - The swap has an entry equal to 1, while every entry of A, and hence of every permuted copy, is below 1.
    - The convex hull consists of the matrices [[a, 0, 1 − c], [1 − a, b, 0], [0, 1 − b, c]] with 1 ≥ a ≥ b ≥ c ≥ 0.
    - The permutations of A with that zero pattern have parameters (1/4, 1/2, 3/4), (1/2, 3/4, 1/4) or (3/4, 1/4, 1/2), none weakly decreasing.
 
