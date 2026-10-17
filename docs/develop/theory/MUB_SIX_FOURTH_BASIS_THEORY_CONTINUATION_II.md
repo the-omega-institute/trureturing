@@ -1646,3 +1646,231 @@ they are not mutually unbiased to one another. The theorem excludes
 quartets containing the specified nearby pair, and does not settle
 the general dimension-six fourth-basis problem or every parameter
 of the full Hadamard family.
+
+## 69. An effective but extremely small ambient neighborhood
+
+### 69.1 Explicit local consequence
+
+Retain \(H_\star=H_0(0)\) and the normalized common-flat input locus
+\(\mathcal F(H)\) from §68. Define
+
+\[
+ E=3255\,2^{83},\qquad K=3255\,2^{82}+11,\qquad
+ \rho=2^{-K},\qquad\beta=2^{-(K+1)}.
+\tag{69.1}
+\]
+
+**Theorem 69.1 (effective local exclusion).** If \(H\) is unitary and
+\(\|H-H_\star\|_{\mathrm F}\le\rho\), then
+
+\[
+ \left|\,|v^*w|^2-\frac16\,\right|>\frac1{360}
+ \qquad(v,w\in\mathcal F(H)).
+\tag{69.2}
+\]
+
+Thus every Hadamard unitary in this closed ball defines a pair
+\((I_6,H)\) that cannot belong to a quartet. In the actual family of
+§49, the conclusion applies whenever \(|b|\le\beta\), including zero.
+
+This is an effective version of the local exclusion in §68, obtained
+using a general polynomial-minimum theorem. The radius is astronomically
+small: \(K=15740214171382471854674411531\). It supplies neither useful
+numerical coverage nor exclusion on the remaining open branch. This is
+an analytic paper proof, not a Lean-kernel verification claim.
+
+### 69.2 A compact integer-polynomial problem
+
+Use 21 real variables
+\((x_1,\ldots,x_5,y_1,\ldots,y_5,u_1,\ldots,u_5,v_1,\ldots,v_5,r)\)
+and define
+
+\[
+ z=(1,x_1+iy_1,\ldots,x_5+iy_5),\qquad
+ w=(1,u_1+iv_1,\ldots,u_5+iv_5),
+\]
+
+\[
+ Q=\left(1+\sum_{j=1}^5(x_ju_j+y_jv_j)\right)^2
+  +\left(\sum_{j=1}^5(x_jv_j-y_ju_j)\right)^2-6.
+\tag{69.3}
+\]
+
+In particular \(Q=|z^*w|^2-6\). Let \(T\subset\mathbb R^{21}\) be
+defined by the eleven equalities and three weak inequalities
+
+\[
+\begin{aligned}
+ x_j^2+y_j^2-1&=0,&u_j^2+v_j^2-1&=0 &&(1\le j\le5),\\
+ r^2-3&=0,&r&\ge0,\\
+ 1-10Q&\ge0,&1+10Q&\ge0.
+\end{aligned}
+\tag{69.4}
+\]
+
+Thus \(r=\sqrt3\) on \(T\); the other algebraic conjugate is excluded.
+The set is closed and bounded, hence compact. It is nonempty: choose
+\(z=(1,1,1,1,1,1)\),
+\(w=(1,1,1,-1,i,(1-2i)/\sqrt5)\), and \(r=\sqrt3\).
+Then \(|2+i+(1-2i)/\sqrt5|^2=6\), so \(Q=0\).
+
+Define the following polynomial matrix, with conjugation fixing the
+real indeterminate \(r\):
+
+\[
+ A_2(r)=2J_3+(-3+ir)I_3,\qquad
+ B(r)=\begin{pmatrix}A_2(r)&A_2(r)\\
+ \overline{A_2(r)}&-\overline{A_2(r)}\end{pmatrix}.
+\tag{69.5}
+\]
+
+In particular \(B(\sqrt3)=2\sqrt6H_\star\). Put
+
+\[
+ F_{a,j}=\bigl(\Re(B(r)a)_j\bigr)^2+
+          \bigl(\Im(B(r)a)_j\bigr)^2-24,
+ \qquad G=\sum_{a\in\{z,w\}}\sum_{j=0}^5F_{a,j}^2.
+\tag{69.6}
+\]
+
+These formulas define integer polynomials in the 21 real variables,
+and \(G\ge0\). If \(G=0\) on \(T\), all twelve summands vanish, giving
+\(z/\sqrt6,w/\sqrt6\in\mathcal F(H_\star)\). The exact central gap
+in §68 instead requires
+
+\[
+ |Q|\ge\delta=\frac{9\sqrt7-21}{14}>\frac15>\frac1{10}.
+\]
+
+Here \(\delta>1/5\) follows from
+\(45^2\cdot7-119^2=14>0\), comparing positive quantities. This
+contradicts (69.4). Hence \(G\) has a strictly positive attained minimum
+on the entire compact set \(T\).
+
+### 69.3 Degrees, heights, and an effective lower bound
+
+For an integer polynomial \(p\), let \(\|p\|_1\) be the sum of the
+absolute values of its coefficients. This norm is submultiplicative
+and bounds each coefficient. Each row of (69.5) has four entries
+\(\pm2\) and two entries \(\pm(-1\pm ir)\). Each real or imaginary
+part of \((B(r)a)_j\) therefore has degree at most two and coefficient
+norm at most \(4\cdot2+2(1+1)=12\). Dephasing can only decrease that
+bound. Consequently
+
+\[
+ \deg F_{a,j}\le4,\quad\|F_{a,j}\|_1\le2\cdot12^2+24=312,
+ \qquad\deg G\le8,\quad
+ \|G\|_1\le12\cdot312^2=1168128<2^{21}.
+\tag{69.7}
+\]
+
+The overlap forms in (69.3) have coefficient norms 11 and 10, so
+\(\|Q\|_1\le11^2+10^2+6=227\) and
+\(\|1\pm10Q\|_1\le2271<2^{21}\). The remaining constraints have
+degree at most two and coefficient magnitudes at most three. Thus
+simultaneous valid bounds for all constraints and the objective are
+
+\[
+ n=21,\qquad m=14,\qquad d=8\text{ (even)},\qquad H=2^{21}.
+\tag{69.8}
+\]
+
+We use Theorem 1.1 of G. Jeronimo, D. Perrucci, and E. Tsigaridas,
+“On the Minimum of a Polynomial Function on a Basic Closed Semialgebraic
+Set and Applications,” SIAM J. Optim. 23 (2013), 241–255,
+[DOI 10.1137/110857751](https://doi.org/10.1137/110857751),
+[primary published text, p. 242](https://ri.conicet.gov.ar/bitstream/handle/11336/14866/CONICET_Digital_Nro.18274.pdf?isAllowed=y&sequence=1).
+For a basic closed set in \(\mathbb R^n\), \(n\ge2\), defined by
+\(m\) integer polynomials and an integer objective, assume degrees at
+most an even \(d\) and coefficient magnitudes at most \(H\). On a
+compact connected component, any nonzero objective minimum has absolute
+value at least
+
+\[
+ \bigl(2^{4-n/2}\widetilde H d^n\bigr)^{-n2^nd^n},
+ \qquad\widetilde H=\max\{H,2n+2m\}.
+\tag{69.9}
+\]
+
+No regularity or genericity is required. Choose a global minimizer of
+\(G\) on \(T\) and its connected component. The component is compact,
+and its minimum equals the positive global minimum. Thus (69.9)
+applies even if \(T\) is disconnected. For (69.8),
+\(\widetilde H=2^{21}>70\), and
+
+\[
+ 2^{4-n/2}\widetilde H d^n=2^{155/2},\qquad
+ n2^nd^n=21\,2^{84},\qquad
+ G\ge2^{-3255\,2^{83}}=2^{-E}\quad\text{on }T.
+\tag{69.10}
+\]
+
+This is an application of the cited effective minimum theorem; the
+integer encoding and its normalization above are specific to this family.
+
+### 69.4 Conversion from residual to matrix distance
+
+Suppose \(H\) is unitary,
+\(\eta=\|H-H_\star\|_{\mathrm F}\le\rho\), and (69.2) fails.
+Separately dephase \(v,w\in\mathcal F(H)\) and multiply by \(\sqrt6\)
+to obtain unit-entry vectors \(z,w\) with first coordinate one. Then
+
+\[
+ |Q|=36\left|\,|v^*w|^2-1/6\,\right|\le1/10,
+\]
+
+so these coordinates with \(r=\sqrt3\) belong to \(T\).
+Write \(M_\star=\sqrt6H_\star\) and \(M=\sqrt6H\).
+For either \(a=z,w\), unitarity and \(\|a\|_2=\sqrt6\) give
+
+\[
+ |(M_\star a)_j|\le6,\qquad |(Ma)_j|\le6,\qquad
+ |((M_\star-M)a)_j|\le6\|H_\star-H\|_{\mathrm{op}}\le6\eta.
+\]
+
+Output flatness gives \(|(Ma)_j|^2=6\). Therefore
+
+\[
+ |F_{a,j}|=4\left|\,|(M_\star a)_j|^2-|(Ma)_j|^2\,\right|
+ \le4(6+6)6\eta=288\eta,
+\]
+
+\[
+ G\le12\cdot288^2\eta^2=995328\eta^2
+ <2^{20}\rho^2=2^{-E-2}<2^{-E}.
+\tag{69.11}
+\]
+
+This contradicts (69.10), proving the strict gap (69.2) even on the
+closed-radius boundary. If additional bases \(B,C\) formed a quartet
+with \(I_6,H\), the input vectors \(H^*B_j,H^*C_k\) would lie in
+\(\mathcal F(H)\), while their squared overlap would be \(1/6\).
+Unitarity preserves that overlap, contradicting (69.2).
+
+### 69.5 Actual-family parameter interval and scope
+
+For the parameterization in §49, let
+\(h=\sqrt{(3-b^2)/(1+b^2)}\), \(a=bh\), and retain its coefficients
+\(P=(a-3+i(h+b))/2\), \(Q=(-a-3+i(h-b))/2\).
+Only twelve diagonal block entries change with \(b\), so
+
+\[
+ \|H_0(b)-H_\star\|_{\mathrm F}^2
+ =|P(b)-P(0)|^2+|Q(b)-Q(0)|^2
+ =\frac{b^2h^2+(h-\sqrt3)^2+b^2}{2}.
+\tag{69.12}
+\]
+
+For \(|b|\le1/2\), \(0<h\le\sqrt3\) and
+
+\[
+ |h-\sqrt3|=\frac{4b^2}{(1+b^2)(h+\sqrt3)}
+ \le\frac{4b^2}{\sqrt3}.
+\]
+
+Thus (69.12) is at most
+\(2b^2+(8/3)b^4\le(8/3)b^2\le4b^2\). It follows that
+\(\|H_0(b)-H_\star\|_{\mathrm F}\le2|b|\).
+Since \(\beta=\rho/2<1/2\), every \(|b|\le\beta\) is inside the
+certified ambient ball. This establishes effectiveness of the local
+exclusion, while the status of the rest of the open branch remains unchanged.
