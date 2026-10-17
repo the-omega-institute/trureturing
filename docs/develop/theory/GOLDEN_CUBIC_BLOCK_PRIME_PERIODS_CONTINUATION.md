@@ -691,4 +691,117 @@ where $r\ge11$ is prime.
 
 Theorem 89.2 excludes every composite relative index at this exact original block, including arbitrarily large ones. The surviving prime-index case remains open. Neither existence of a repeated kernel nor a universal WSS exclusion follows, and the finite certificate is not extrapolated to other original indices.
 
+## 90. A real-arc lower bound for repeated kernels in rank one
+
+**Theorem 90.1 (first-return obstruction).** Let $j,c$ be positive integers, let $N=3^j\ge81$, and suppose the actual full block
+
+$$D=B_N=L_N^2+3$$
+
+is squarefree. Assume that $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$\boxed{k>D/2.}$$
+
+**Proof.** Put $n=Nk$. The original and new integral points are
+
+$$R=(5D^2,25D^2L_NF_N),\qquad
+K=(5DB_n,25D^2L_ncF_n).$$
+
+The odd-index Pell identity $L_t^2+4=5F_t^2$ verifies both points on $E_D$. In the descent coordinate order $(X,X+5D,X-15D)$, they have the same class
+
+$$\delta(R)=\delta(K)=(5,D,5D).$$
+
+Theorem 85.1 gives $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$, and Corollary 85.2 gives primitivity of $R$ modulo all rational torsion. The rank-one assumption therefore implies
+
+$$E_D(\mathbb Q)=\mathbb ZR\oplus E_D[2].$$
+
+Write $K=mR+T$. The four torsion descent classes are
+
+$$
+\begin{aligned}
+\delta(O)&=(1,1,1),\\
+\delta((0,0))&=(-3,5D,-15D),\\
+\delta((-5D,0))&=(-5D,1,-5D),\\
+\delta((15D,0))&=(15D,5D,3).
+\end{aligned}
+$$
+
+None equals $(5,D,5D)$. The two negative classes are excluded by signs, the identity by the nonsquare $5$, and the last by its third coordinate: $3$ and $5D$ have different squareclasses since $15D$ is nonsquare. Here $D$ is squarefree and coprime to $15$ by the original-support inputs. The list also shows that no nonzero torsion point has trivial descent class. An even $m$ would give $\delta(K)=\delta(T)$, a contradiction. Hence $m$ is odd, and equality of the two golden classes then forces $\delta(T)=1$ and $T=O$. Thus $K=mR$. Since $n>N$, one has $B_n>D$, so $K\ne\pm R$ and $|m|\ge3$.
+
+**The normalized real arc.** The positive real change of variables
+
+$$z=\frac{X}{5D},\qquad w=\frac{Y}{(5D)^{3/2}}$$
+
+is a real group isomorphism to $E_0:w^2=z(z+1)(z-3)$. Its identity component consists of $z\ge3$ and $O$. With invariant differential $dz/(2w)$, its positive real period is
+
+$$\omega=\int_3^\infty\frac{dt}{\sqrt{t(t+1)(t-3)}}.$$
+
+For $z>3$, define
+
+$$u(z)=\int_z^\infty\frac{dt}{2\sqrt{t(t+1)(t-3)}}.$$
+
+This decreases strictly from $\omega/2$ to $0$. Under the real group parametrization $\mathbb R/\omega\mathbb Z$, the two points of coordinate $z$ have parameters $\pm u(z)$. This is the inverse elliptic integral from analytic uniformization; see Silverman, *The Arithmetic of Elliptic Curves*, VI.1 and VI.5, especially Proposition 5.2, in the [primary text](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf).
+
+Set $u=u(D)$. The original point has parameter $\pm u$, whereas $z(K)=B_n>D$ places the new point strictly in one of the two arcs
+
+$$(0,u)\quad\text{or}\quad(\omega-u,\omega)\pmod\omega.$$
+
+The coordinate function is even, so replace $m$ by $a=|m|\ge3$ when comparing coordinates. If $au\ge\omega$, then $a\ge\omega/u$. If $au<\omega$, it cannot lie in $(0,u)$ because $a>1$, and so it lies in $(\omega-u,\omega)$. Both cases give
+
+$$a>\omega/u-1.\tag{90.1}$$
+
+This treats negative multipliers, both ends of the high-coordinate arc, and the first wrap around the real component.
+
+For $t>3$, one has $t(t+1)(t-3)<t^3$, and for $t\ge D>3$ one has $t(t+1)(t-3)>(t-3)^3$. Therefore
+
+$$\omega>\int_3^\infty t^{-3/2}\,dt=\frac2{\sqrt3},\qquad
+u:=u(D)<\int_D^\infty\frac{dt}{2(t-3)^{3/2}}=\frac1{\sqrt{D-3}}.$$
+
+Substituting these bounds in (90.1) gives
+
+$$a>2\sqrt{\frac{D-3}{3}}-1>\sqrt D.\tag{90.2}$$
+
+For the last inequality, $D\ge144$ suffices: after squaring positive quantities it is equivalent to $D-15>6\sqrt D$, which follows from $(\sqrt D-3)^2>24$ when $\sqrt D\ge12$. Our $N\ge81$ ensures $D\ge144$. Consequently $m^2>D$.
+
+**The original Lucas index.** Use the canonical-height bounds of §74 in precisely the normalized coordinate $z=X/(5D)$:
+
+$$\frac12h(z(P))-\frac{\log144}{6}\le\widehat h(P)
+\le\frac12h(z(P))+\frac{\log24}{6}.$$
+
+These refer to the canonical height on $E_D$; the real coordinate change above does not change that height. Since $z(R)=D$ and $D\ge144$,
+
+$$\widehat h(R)\ge\frac12\log D-\frac{\log144}{6}\ge\frac13\log D.\tag{90.3}$$
+
+Let $\alpha=(1+\sqrt5)/2$ and $v=\alpha^{2N}>1$. Since $N$ and $Nk$ are odd,
+
+$$D=v+1+v^{-1},\qquad
+B_{Nk}=v^k+1+v^{-k}<(v+1+v^{-1})^k=D^k.$$
+
+The strict inequality for $k>1$ follows from the positive mixed terms in the expansion. As $z(K)=B_{Nk}$ is an integer, the upper height estimate gives
+
+$$\widehat h(K)<\frac k2\log D+\frac{\log24}{6}\le\frac{2k}{3}\log D,\tag{90.4}$$
+
+because $k\log D\ge\log24$. Combining $K=mR$, quadraticity, and (90.3)–(90.4),
+
+$$\frac{m^2}{3}\log D\le\widehat h(K)<\frac{2k}{3}\log D.$$
+
+Hence $k>m^2/2>D/2$. ∎
+
+**Corollary 90.2 (the remaining prime indices at N=81).** If $k>1$ is odd, $3\nmid k$, and $B_{81k}$ has the same full squarefree kernel as $B_{81}$, then $k=r$ is prime and
+
+$$r>\frac{7177905237579946589743592924684179}{2}.$$
+
+Thus every prime relative index at most $3588952618789973294871796462342089$ is excluded.
+
+**Proof.** Section 89 certifies the squarefree factorization
+
+$$D=B_{81}=AQ,\qquad A=59779,\qquad Q=120074026624398979403194983601.$$
+
+Exact modular exponentiation gives
+
+$$Q\equiv300\pmod A,\qquad 300^{29889}\equiv59778\equiv-1\pmod A.$$
+
+Euler's criterion proves $(Q/A)=-1$. Theorem 78.1 therefore applies to this actual two-prime block with $C=1$ and gives rational rank one. Theorem 89.2 makes $k$ prime, and Theorem 90.1 gives the strict lower bound. ∎
+
+The general theorem requires actual squarefreeness of $B_N$ and rank one; both are verified in the $N=81$ application. The argument uses the real position of the original generator and does not require an odd-valuation primitive divisor. Larger prime relative indices remain open, and no universal WSS exclusion is asserted.
+
 ## 追加锚（本行以下为增补区）
