@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
-  normalized_sha256: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
-cas_ref: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
-coverage_gids:
-  - gid: D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
-    target_statement_id: sha256:e513fcfff1af94d22aa257a893fe6e24f7fc5e562a14b2407842cb481fa9ad65
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
-  normalized_sha256: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
-cas_ref: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Symmetry/InversionAntisymmetricSum.inversion_antisymmetric_sum_eq_zero
-    target_statement_id: sha256:dd271608110335237725e050ada883b2b6c2776324a902b4e922420963f83ea8
-receipts:
-  unresolved_subitems: []

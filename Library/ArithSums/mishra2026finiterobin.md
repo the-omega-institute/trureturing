@@ -101,3 +101,77 @@ external premises; no notebook or old computation is rerun or certified
 by this note. This dependency map identifies the relevant source
 statements and quantifiers, with no new criterion, unconditional
 signed estimate, cofinal theta sign or Lean result.
+
+## Fixed-r affine applicability of the Chinese remainder theorem
+
+The Chinese remainder theorem is the established input; see the pinned Mathlib [natural-number CRT interface](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/ChineseRemainder.html). The following application retains every fixed Fibonacci rank, arbitrary prescribed factor count and arbitrarily large multiplier. It identifies a limitation of applying the source’s low-omega criterion; it is not a new general CRT theorem, a CA/SA identification or a Robin/RH proof. The section reference below is to [the FIB audit, §258.6](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#2586-omega).
+
+## 461. 固定秩仿射族的素因子复杂度无界
+
+§258.6 把 Mishra--Sarkar 的低 \(\omega\) 条件正确投影到了
+
+$$
+N_{r,g}=1+F_rg,\qquad r\ge3,\quad g\ge1,
+$$
+
+但那里没有给出这个条件在固定秩族上的统一上界。下面的简单 CRT 事实说明，
+这种上界不可能由 Fibonacci 同余本身产生。
+
+### 命题 461.1（任意固定秩都有任意高的 \(\omega\)）
+
+固定 \(r\ge3\)。对任意整数 \(k\ge1\) 和 \(Y\ge1\)，存在整数 \(g\ge Y\)，使得
+
+$$
+N_{r,g}=1+F_rg>5040,\qquad
+\boxed{\omega(N_{r,g})\ge k.}
+\tag{461.1}
+$$
+
+甚至可以要求这 \(k\) 个互异素因子全部大于预先给定的 \(Y\)。
+
+**证明。** 置 \(m=F_r>1\)。选取 \(k\) 个互异素数
+
+$$
+q_1,\ldots,q_k>Y,\qquad q_i\nmid m.
+$$
+
+这是可能的，因为素数无穷，而 \(m\) 只有有限个素因子。对每个 \(i\)，\(m\)
+在模 \(q_i\) 下可逆；令 \(a\) 满足
+
+$$
+a\equiv-m^{-1}\pmod {q_i}\qquad(1\le i\le k).
+$$
+
+中国剩余定理给出模
+
+$$
+Q=q_1\cdots q_k
+$$
+
+的解 \(a_0\)。取 \(t\) 足够大并置 \(g=a_0+tQ\)，则 \(g\ge Y\) 且
+
+$$
+1+mg\equiv0\pmod {q_i}\qquad(1\le i\le k).
+$$
+
+增大 \(t\) 还可保证 \(1+mg>5040\)。这些 \(q_i\) 两两不同且都整除
+\(N_{r,g}\)，故 \(\omega(N_{r,g})\ge k\)。证毕。 \(\square\)
+
+### 推论 461.2（低 \(\omega\) 筛不能覆盖固定秩仿射族）
+
+对每个固定 \(r\ge3\)，不存在常数 \(C_r\) 使全部 \(N_{r,g}\) 都满足
+
+$$
+\omega(N_{r,g})\le C_r.
+$$
+
+因此，任何只覆盖 \(\omega(n)\le C\) 的 Robin 判据，作用到 FIB 仿射族时都只能
+删除一个条件子族。特别地，接受 Mishra--Sarkar 预印本中 \(\omega\le6\) 的外部
+条件，只能得到低复杂度候选的安全性；命题 461.1 说明不能把它提升为固定秩
+FIB 族的统一覆盖。
+
+这条 CRT 结论与 §450 的严格库存筛并不冲突：命题 461.1 的 \(N_{r,g}\) 是
+一般仿射整数，不要求它等于某个严格库存 \(N^-(t)\)，也不声称它是 CA/SA。
+它同样不产生 Robin 反例；它只排除“先由 FIB 同余得到统一低 \(\omega\)，再用有限截断
+完成全称估计”的路线。要推进 Robin，仍需在同一个实际来源上补 CA/价格源识别
+或有符号点值界。

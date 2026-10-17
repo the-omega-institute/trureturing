@@ -1,0 +1,32 @@
+**Theorem 10.1 (exact acquired-selector classification).** SOME-LAWFUL-ACQUIRED-CODE is DP-complete when the entire explicit serving table is input, with the same full actual domain, original labels, selected-entry criterion and separate acquired-data services.
+
+Proof. Given well-formed $(\phi,\psi)$ install Reads $C_1,\ldots,C_4$, a separate gate $G$, disjoint occurrence graphs for the two CNFs, loop Read $D$, and five whole-row Halts $H_0,\ldots,H_4$. The $\phi$ evaluator is $\operatorname{Eval}(\phi;D,H_1)$ and the $\psi$ evaluator is $\operatorname{Eval}(\psi;H_2,D)$ with precisely the occurrence records of Lemma 6.2. Use these complete transitions:
+
+| Read | Fixed literal | alpha successor | Each of beta, branch, absent successors |
+| --- | --- | --- | --- |
+| $C_1$ | $p_{b_1}$ | Entry of $\operatorname{Eval}(\phi;D,H_1)$ | $C_2$ |
+| $C_2$ | $p_{b_2}$ | $H_2$ | $C_3$ |
+| $C_3$ | $p_{b_3}$ | $H_3$ | $C_4$ |
+| $C_4$ | $p_{b_4}$ | $H_4$ | $H_0$ |
+| $G$ | $p_{b_2}$ | Entry of $\operatorname{Eval}(\psi;H_2,D)$ | $D$ |
+| $D$ | $\varepsilon$ | $D$ | $D$ |
+
+Each occurrence has all four successors from Lemma 6.2. Each $H_j$ stores the entire fixed $R_j$. Let $e_0=C_1$, $e_1=G$ and set
+
+$$
+L=4+M_\phi+M_\psi.
+\tag{FTC.24}
+$$
+
+There are exactly $M_\phi+M_\psi+11$ installed records, including unused occurrences, the loop and all Halts. Every nonloop entry-zero run uses at most four classifier calls or $1+M_\phi$ calls. Every nonloop entry-one run uses at most $1+M_\psi$. Entering $D$ never halts. Thus the binary cap covers every nonloop path. All stored words have length three or $3+\ell$, except the paid empty loop literal. The full encoding, including all four successors and whole rows, is polynomial. Once constructed this instance's $T$, entries, words and labels are immutable during any execution or selector computation.
+
+On every actual source, entry zero is good except exactly on $\Pi_1$ sources satisfying $\phi(b(u))$. On $\Pi_1$ a false formula reaches $H_1$ and a true formula enters $D$. On $\Pi_2,\Pi_3,\Pi_4$ the remaining classifier reaches the matching whole-row Halt. On all zero profiles it reaches $H_0$. Entry one is good exactly on $\Pi_2$ sources satisfying $\psi(b(u))$: its gate has alpha exactly in that profile, and there true reaches the correct $H_2$ while false enters $D$. Every other profile immediately enters $D$. These are all-source characterizations, including absences and unexpected leaf replies under (FTC.15).
+
+If $\phi$ is unsatisfiable, entry zero is good everywhere, so Coverage holds. If $\phi$ is satisfiable, an actual satisfying $\Pi_1$ source exists by Lemma 6.1. Both entries fail there, since entry one rejects every $\Pi_1$ source at its gate. Therefore Coverage is equivalent to UNSAT of $\phi$, independently of $\psi$.
+
+The fixed $Z_*$ tuple $B_1,\ldots,B_6$ is always good at entry zero. If $\psi$ is satisfiable, an actual satisfying $\Pi_2$ source is good at entry one and differs from that $Z_*$ source by profile. These give two genuinely distinct actual witnesses. Conversely DistinctPair includes a good entry-one source; by the complete characterization it is a $\Pi_2$ source whose consistent assignment satisfies $\psi$. Therefore DistinctPair is equivalent to SAT of $\psi$, independently of $\phi$.
+
+Theorem 9.3 now gives selector existence exactly for $Q$. This proves DP-hardness, and its reused membership gives DP-completeness. For a malformed paired formula output the fixed valid table with two distinct Halt entries storing only $R_0,R_1$ and cap zero. An actual $R_2$ source is uncovered, so the output is negative. The reduction is a total map on binary strings. Its positive witnesses and universal counterexamples all have actual inverse origins and six whole-distinct values; the converse addresses the full unbounded domain.
+
+The same construction shows Coverage is coNP-complete and DistinctPair NP-complete for variable explicit tables, using the memberships of Theorem 9.3. Fix $\psi$ to true to reduce well-formed UNSAT to Coverage, and fix $\phi$ to false to reduce well-formed SAT to DistinctPair. For a malformed Coverage source input use the two-Halt $R_0,R_1$ table at cap zero, which fails Coverage on an actual $R_2$ source. For a malformed DistinctPair source input use a fixed table with entry zero a Halt storing $R_0$ and entry one an empty-literal self-loop Read, with all four successors itself, at cap zero. Entry one has no good source, so DistinctPair fails. These are total maps for the separate predicate lower bounds. $\square$
+

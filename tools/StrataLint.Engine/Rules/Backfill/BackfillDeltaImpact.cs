@@ -97,13 +97,7 @@ internal static class BackfillDeltaImpactResolver
             || FileValueChanged(entry.SourcePath, current, baseline, changedPaths)
             || FileValueChanged(CasPath(entry), current, baseline, changedPaths)
             || entry.Receipts.TailAuthorization is { } tail
-                && FileValueChanged(tail.Path, current, baseline, changedPaths)
-            || changedPaths.Contains(TheoryAtomizerDataLoader.DataPath)
-                && FileValueChanged(
-                    TheoryAtomizerDataLoader.DataPath,
-                    current,
-                    baseline,
-                    changedPaths))
+                && FileValueChanged(tail.Path, current, baseline, changedPaths))
         {
             return true;
         }

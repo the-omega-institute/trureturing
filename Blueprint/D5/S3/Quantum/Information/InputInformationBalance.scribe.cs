@@ -25,6 +25,18 @@ internal sealed class InputInformationBalanceDocument : IScribeDocumentDefinitio
                 Disp(Seq(Forall, Sp, Rho, Comma, Sp, Call("IsPure", Rho), Sp, Rightarrow, Sp,
                     S(Call("marginalLeft", Rho)), Sp, Eq, Sp,
                     S(Call("marginalRight", Rho))))),
+            Describe.Lean(
+                DescribeId.Create("ar-grouping"),
+                DeclarationHandle.Create(Module + "arGrouping"),
+                H("Regrouping the reference and complementary output"),
+                StatementSource.FromAuthor(ArGroupingDefinition()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary types A, R and B in independent universes, "
+                    + "arGrouping is the equivalence from (A times R) times B to A times "
+                    + "(B times R). It first associates the product to the right and then "
+                    + "exchanges R and B. stateAR uses this equivalence to put B last "
+                    + "before taking its partial trace."))),
+                DescribeRole.Definition),
             Paragraph(Text("For a global state on A times (B times R), stateAB traces out R "
                 + "after regrouping as (A times B) times R. stateAR traces out B after "
                 + "regrouping as (A times R) times B. The proof identifies the A marginals "
@@ -41,7 +53,24 @@ internal sealed class InputInformationBalanceDocument : IScribeDocumentDefinitio
                     Call("quantumMutualInformation", Call("stateAB", Rho)), Sp, Eq, Sp,
                     Num(2), Sp, S(Call("marginalRight", Rho))))))));
 
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
     private static Formula S(Formula state) => Call("vonNeumannEntropy", state);
+
+    private static Formula ArGroupingDefinition()
+    {
+        Formula a = F.Id("A"), r = F.Id("R"), b = F.Id("B");
+        Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+        Formula Method(string name, params Formula[] args) => new Formula.Apply(
+            Seq(Named("Equiv"), Dot, Named(name)), [.. args]);
+        Formula Product(Formula x, Formula y) => Parenthesized(Seq(x, Sp, Times, Sp, y));
+        Formula typedGrouping = Parenthesized(Seq(F.Id("arGrouping"), Sp, Colon, Sp,
+            Call("Equiv", Product(Product(a, r), b), Product(a, Product(b, r)))));
+        Formula body = Method("trans", Method("prodAssoc", a, r, b),
+            Method("prodCongr", Method("refl", a), Method("prodComm", r, b)));
+        return Disp(Seq(Forall, Sp, a, Sp, r, Sp, b, Sp, Colon, Sp, F.Id("Type"),
+            Comma, Sp, typedGrouping, Sp, Eq, Sp, body));
+    }
 
     private static DocumentBlock Result(
         string id, string declaration, string title, string text, Formula statement) =>

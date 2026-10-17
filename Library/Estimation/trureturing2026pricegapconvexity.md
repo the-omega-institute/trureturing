@@ -3399,8 +3399,138 @@ DH1--DH4 are source-specific paper applications of the existing density,
 coefficient, clock, lower-sector and height suppliers. There is no new
 generic density or sampling theorem, literature-priority claim, Lean
 declaration or kernel verification. The signed common-head comparison,
-the complete original target and RH remain unproved. Outside DH1,
-including $\Theta=1$, this reduction has not been established.
+the complete original target and RH remain unproved. The Ingham extension
+below supplies another parameter range for the same reduction; neither
+density application covers $\Theta=1$.
+
+
+## The published Ingham estimate extends the same head reduction below three fifths
+
+Reuse Chourasiya--Simonič,
+[arXiv:2507.15184v2](https://arxiv.org/html/2507.15184v2), Corollary 1
+and Table 1, already used for a different coefficient in
+[the interpolation note](../Weil/corvalan2023interpolation.md#a-zero-density-contour-for-the-actual-band-coefficient).
+For every fixed $1/2<\sigma<1$, their estimate implies
+
+$$
+N(\sigma,T)\ll_\sigma T^{d_I(\sigma)}\log^3(2T),\qquad
+ d_I(\sigma)=\frac{3(1-\sigma)}{2-\sigma}<1.
+$$
+
+The source counts $\beta\ge\sigma$, $0<\gamma\le T$ with
+multiplicity and states its bound for $T\ge3\cdot10^{12}$; bounded
+lower heights are absorbed into the constant. The published estimate
+is used directly. Its exponent improves $g(\sigma)$ for
+$1/2<\sigma<7/10$ and agrees at $7/10$.
+
+Keep every original supplier, fixed $\Theta,\eta,d,a$, full window,
+maximizing tie, outgoing weight and legal height of DH3--DH4. Suppose
+that these originally supplied parameters satisfy
+
+$$
+\boxed{\frac12<\Theta\le\frac7{10},\qquad
+\Delta<\eta<
+ U(\Theta):=\frac{1-\Theta^2}{1+2\Theta-2\Theta^2}.}
+\tag{IH1}
+$$
+
+Here $\Delta=1-\Theta$, $\mu=1/2-\eta$ and
+$\sigma_{\rm safe}=1/2+\Delta\mu/\eta$ retain their meanings.
+For this range, $\Delta<U(\Theta)<1/2$, so IH1 is a nonempty
+restriction on the original parameters. It does not replace their
+supplied $\eta$. Since
+$1-d_I(\Theta)=(2\Theta-1)/(2-\Theta)>0$, its upper restriction
+is equivalent to
+
+$$
+h_I^*:=\frac{\eta-\Delta}{2\Delta[1-d_I(\Theta)]}
+<\frac{1-\eta}{2}.
+$$
+
+Fix $h_I^*<h<(1-\eta)/2$ and any fixed
+$1/2<\sigma_0<\sigma_{\rm safe}<\Theta$. For
+$\sigma\in[\sigma_0,\Theta]$, put
+
+$$
+\mathfrak p_h^I(\sigma)=
+\frac{\eta(\sigma-1/2)}\Delta+h[d_I(\sigma)-1].
+$$
+
+Unlike the convex exponent in DH2, $d_I$ is concave. Its needed
+power bound follows instead from
+
+$$
+(\mathfrak p_h^I)'(\sigma)
+=\frac\eta\Delta-\frac{3h}{(2-\sigma)^2}
+>1-\frac{150}{169}=\frac{19}{169}>0,
+$$
+
+using $\eta/\Delta>1$, $h<1/2$ and
+$(2-\sigma)^2\ge169/100$. Consequently
+
+$$
+\boxed{\varepsilon_I:=\mu-\mathfrak p_h^I(\Theta)
+=h[1-d_I(\Theta)]-\frac{\eta-\Delta}{2\Delta}>0,\qquad
+\mathfrak p_h^I(\sigma)\le\mu-\varepsilon_I.}
+\tag{IH2}
+$$
+
+Apply DH3's finite-bin argument to the same complete coefficient
+$c_{B,a}(\rho)$ with $H_X=X^h$, including $\beta=\Theta$ in the
+last bin if attained. For each fixed bin left endpoint
+$\sigma_j$, the cited density bound and the same dyadic summation give
+$\sum_{\gamma>H_X,\,\beta\ge\sigma_j}m_\rho/\gamma
+\ll H_X^{d_I(\sigma_j)-1+\epsilon}$, with a common sufficiently
+small fixed $\epsilon>0$ over the finitely many bins. Because
+$d_I(\sigma_0)<1$, this reciprocal-height sum converges. Choose the
+fixed bin width $\delta$ and $\epsilon$ so that
+$\eta\delta/\Delta+h\epsilon<\varepsilon_I/2$ and
+$d_I(\sigma_0)+\epsilon<1$. The existing coefficient bound and SC2
+then give
+
+$$
+\boxed{2\sum_{i<m}\delta_i
+\sum_{\substack{X^h<\gamma\le\tau_i\\\beta>\sigma_0}}
+m_\rho|c_{B_i,a}(\rho)|
+\ll L_XX^{\mu-\varepsilon_I/2}=o(M_XL_X).}
+\tag{IH3}
+$$
+
+As in DH3, extending each nonnegative sum above its original height
+is only an upper bound. No coefficient, subtraction, phase or mask
+is replaced. The inequality $h<(1-\eta)/2$ puts $X^h$ below every
+original legal height at one common start. SR3 pays the full sector
+$\beta\le\sigma_0$, and HC2 supplies the same complete height account.
+Thus the actual reduction DH4 also holds under IH1:
+
+$$
+\boxed{\mathcal G_X=
+2\operatorname{Re}
+\sum_{\substack{0<\gamma\le X^h\\\beta>\sigma_0}}
+m_\rho\sum_{i<m}\delta_i c_{B_i,a}(\rho)
++o(M_XL_X).}
+\tag{IH4}
+$$
+
+The error has the same uniformity over all original full windows,
+ties and legal heights. It transfers their original cofinal upper
+comparison with an arbitrarily small fixed loss of strict margin.
+
+For a conditional example outside DH1, take the original parameters
+$\Theta=11/20$, $\eta=23/50$. Then
+$\mu=1/25$, $\sigma_{\rm safe}=62/115<3/5$,
+$d_I(\Theta)=27/29$ and $h_I^*=29/180$.
+The fixed cuts $h=1/5$, $\sigma_0=53/100$ satisfy IH1--IH2 with
+$\varepsilon_I=7/2610$. This supplies no actual value of $\Theta$
+and does not authorize reselecting $\eta$.
+
+IH1--IH4 retain the growing common low head. Every fixed actual
+off-critical zero ultimately lies inside it, and its joint signed
+upper estimate is still required. The extension excludes $\Theta=1$.
+It is an application of existing density, clock, coefficient and height
+results to the original source, with no new density theorem,
+literature-priority claim, Lean declaration or kernel certification.
+The full Robin comparison and RH remain unproved.
 
 
 ## Existing bounded-variation quadrature transports every original core tie
@@ -3640,7 +3770,7 @@ inventory, Fourier decay or phase independence follows.
 
 ### The already reduced common head transports by the same account
 
-If DH1 also holds, retain its same actual growing cutoff $H_X=X^h$,
+If DH1 or IH1 holds, retain the corresponding actual growing cutoff $H_X=X^h$,
 fixed real-part cut $\sigma_0$ and exact common-head readout
 
 $$
@@ -3655,7 +3785,7 @@ $\sup_{B\in\mathscr B_X}|P_X(B)|
 \ll_a\sqrt{R_X}(1+\log^2H_X)$.
 CQ2 pays its transport by
 $O_a(\varepsilon_X^{\rm lab}R_X^{3/2}(1+\log^2H_X))=o_X(1)$.
-Reuse DH4 once and exchange only its finite common sum to obtain
+Reuse DH4 or IH4 once and exchange only its finite common sum to obtain
 
 $$
 \boxed{
@@ -8183,7 +8313,15 @@ does not apply to this remote completion. Conversely, the added support
 does not satisfy the fixed prime-free support contract of the
 archimedean positivity theorem. The all-support constrained criterion
 still needs its positivity estimate. The added remote prime powers
-must also be present in any semilocal comparison; no bound for their
-compressed trace, or for the enlarged completion's semilocal trace,
-is supplied by WT12. The missing same-test signed lower bound, the
-original strict Robin upper and RH remain unproved.
+must also be present in any semilocal comparison. The semilocal note
+now supplies a separate bound for the added term,
+[\(\operatorname{Tr}(D_{S_X}(h_{e_X})P_{S_X})=o(L_X)\)](../Weil/connesconsanimoscovici2024semilocal.md#the-remote-pole-null-completion-has-a-negligible-semilocal-trace),
+using its actual orthogonal projection and the prescribed family
+$S_X=\{\infty\}\cup\{p:p\le\mathsf V_X\}$ for the original test's
+support scale. This family need not contain every prime through the
+remote completion's enlarged support. The stronger comparison on that
+enlarged family still requires a sharper trace estimate or a joint
+signed bound that retains its growing correction. The added remote
+prime powers and the original $H_X$ trace remain part of the same-test
+joint comparison. That signed lower bound, the original strict Robin
+upper and RH remain unproved.

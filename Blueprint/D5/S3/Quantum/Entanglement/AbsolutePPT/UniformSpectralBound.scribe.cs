@@ -27,7 +27,7 @@ internal sealed class UniformSpectralBoundDocument : IScribeDocumentDefinition
     private static Formula Sum(string j, Formula ty, Formula body) => Seq(new Formula.Subscript(F.Sum, Seq(Id(j), Colon, ty)), Sp, body);
     private static Formula PSInt(Formula m) => Call("Matrix.PosSemidef", m);
     private static DocumentBlock Desc(string module, string name, string title, Formula f, string prose, DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null) =>
-        Describe.Lean(DescribeId.Create("appt-"+module.ToLowerInvariant()+"-"+name.ToLowerInvariant().Replace("_","-")),
+        Describe.Lean(DescribeId.Create("appt-"+module.ToLowerInvariant()+"-"+name.ToLowerInvariant().Replace("_","-").Replace(".","-")),
             DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/"+module+"."+name),
             H(title), StatementSource.FromAuthor(Disp(f)), provenance ?? AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
@@ -49,5 +49,6 @@ internal sealed class UniformSpectralBoundDocument : IScribeDocumentDefinition
         "The first qutrit spectral LMI yields the purity bound 3/(8n) for every n at least 11.",
         H("Uniform qutrit APPT spectral bound"),Blocks(
             Desc("UniformSpectralBound","uniform_spectral_bound","K1-only uniform purity estimate",Statement(),
-                "Here n=3+k with k at least 8. An antitone nonnegative real spectrum of mass one is bounded using K1 alone. The argument extracts two boundary inequalities, reconstructs the spectrum from gaps, transfers a 33-ray cone certificate, and bounds every middle-coordinate mixture. The sum 3+k is formed in the natural numbers before its coercion to the reals; the quotient is real division.",DescribeRole.Theorem))));
+                "Here n=3+k with k at least 8. An antitone nonnegative real spectrum of mass one is bounded using K1 alone. The argument extracts two boundary inequalities, reconstructs the spectrum from gaps, transfers a 33-ray cone certificate, and bounds every middle-coordinate mixture. The sum 3+k is formed in the natural numbers before its coercion to the reals; the quotient is real division.",DescribeRole.Theorem),
+            Paragraph(Text("The norm, step-synthesis, gap reconstruction and convex mixture lemmas have their unique source and typed descriptions in HalfspaceConeTransfer. This original qutrit proof and the three-row scalar proof both consume that common dependency; the original declaration names are preserved.")))));
 }

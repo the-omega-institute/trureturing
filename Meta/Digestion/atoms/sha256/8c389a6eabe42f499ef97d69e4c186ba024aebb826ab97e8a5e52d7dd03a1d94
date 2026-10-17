@@ -1,0 +1,36 @@
+**Theorem 2.3 (credited conditional all-size rule, with its common law).** Suppose an actual network has constants $C_i>0$, positive kernels on full rows and local inequalities
+
+$$
+\Phi_i(s)\le C_i\prod_AQ_{i,A}(O_i(s)\mid B_{i,A}(s))^{\gamma_{k_i}(A)}
+\tag{NWO.9}
+$$
+
+on relations covering its positive assignments, with the actual incoming owner groups. Then $Z\le\prod_iC_i$. In particular $\beta_d(w)\le\Omega_d(w)$, where
+
+$$
+A_n(w)=\max_\Theta\sum_{x\in C_\Theta}\prod_iw(x_i),\qquad
+\beta_d(w)=\sup_{n\ge1}A_n(w)^{1/n}.
+\tag{NWO.10}
+$$
+
+Proof. Zero mass is immediate. Otherwise use the one actual Gibbs law $P(s)=Z^{-1}\prod_i\Phi_i(s)$ on positive assignments. Its identity is
+
+$$
+\log_2Z=H_P(s)+\sum_i\mathbb E_P\log_2\Phi_i.
+$$
+
+The whole $O_i$ partition the seeds. For each permutation $\pi$ of actual blocks, let $O_{<i,\pi}$ be preceding owners, and $A_i(\pi)$ the incoming owners preceding $i$. The actual $B_{i,A_i(\pi)}$ is a subtuple of $O_{<i,\pi}$. Thus
+
+$$
+H_P(s)=\sum_iH_P(O_i\mid O_{<i,\pi})
+\le\sum_iH_P(O_i\mid B_{i,A_i(\pi)}).
+$$
+
+Averaging gives precisely the coefficients $\gamma_{k_i}$. Taking expectations of the logarithms in (NWO.9), each conditional relative-entropy inequality
+
+$$
+H_P(O_i\mid B_{i,A})+\mathbb E_P\log_2Q_{i,A}(O_i\mid B_{i,A})\le0
+$$
+
+cancels the corresponding averaged entropy. This proves the cap, counting each original $\log\Phi_i$ once. Shared seeds, repeated ports, self donors, cycles, compatibility zeros and arbitrary joint block weights all remain under this same law. Uniform weights have the coverage in Definition 1.6. Theorem 2.1 supplies simultaneous caps $\Omega_d(w)+\epsilon$ on the finite type list. Apply the cap at every size, take $n$th roots, then let $\epsilon$ decrease to zero; the exact correspondence (NWO.4) gives the claimed pressure bound. $\square$
+

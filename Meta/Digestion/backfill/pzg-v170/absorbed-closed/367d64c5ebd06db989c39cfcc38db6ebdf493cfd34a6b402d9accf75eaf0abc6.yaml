@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
-  normalized_sha256: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
-cas_ref: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
-coverage_gids:
-  - gid: D5/S0/Rewriting/Newman.newman_unique_normal_form
-    target_statement_id: sha256:b4dfdbeff508358d4b8de5d9b2ad7887627325b7b7486525ddbc898f9df2d459
-receipts:
-  unresolved_subitems: []

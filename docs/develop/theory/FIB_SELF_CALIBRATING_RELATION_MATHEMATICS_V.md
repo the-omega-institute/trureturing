@@ -1,0 +1,892 @@
+# FIB 自校准关系数学 V
+
+## 1. 完整目标、共同第五纤维与原时钟
+
+**定义 1.1（采集域与历史）。** Let $\mathcal W_3$ consist of the triples $W=(P,g,\delta)$ such that $P$ is a strictly entrywise positive real $2\times2$ matrix, $\det P=0$, $\operatorname{tr}P=1$, $0\ne g\in\mathbb R[t]$, $\deg g\le3$, and $\delta\in\mathbb R$. Set
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{M,J\}.
+$$
+
+The reading at original clock $i$ is $g(i)\operatorname{tr}(A_iP)+\delta$. The initial reading counts, and every single atom is followed immediately by its reading. Eight readings therefore use clocks $0,\ldots,7$ on one trajectory. Resetting, copying, skipping readings, unread compound actions, empty-action readings, renumbering clocks and additional observation ports are excluded. Actions, stopping and the returned complete target $(P,g,\delta)$ may depend arbitrarily and deterministically on the actual history. All gain signs, lower degrees, sampled roots, repeated roots and real constant drifts are allowed.
+
+For a literal history $H$, write $\mathcal F(H)$ for all its compatible complete targets. Use the failure recursion of [II, Definition 56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md):
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_s(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:
+L_{s-1}(K\cap\mathcal F(H,E,z),(H,E,z)).
+\end{aligned}                                                    \tag{1.1}
+$$
+
+This recursion includes every early stop. Its negation gives recovery of the whole known candidate set within the stated remaining horizon. Counterfactual responses are functions of fixed targets used to define a strategy or prove a collision; they are not acquired readings.
+
+An unnormalized positive rank-one $R$ and nonzero polynomial $H$ represent exactly
+
+$$
+\left(\frac R{\operatorname{tr}R},\ (\operatorname{tr}R)H,\ \delta\right),
+\qquad z_i=H(i)\operatorname{tr}(A_iR)+\delta.                      \tag{1.2}
+$$
+
+The normalizing factor is positive, so signs, roots and degrees are preserved.
+
+**定义 1.2（指定 MMJM 纤维）。** Fix one real $Y$ and the entire history
+
+$$
+H_4(Y)=(0,M,1,M,23/7,J,331/35,M,Y),\qquad
+D=MJM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix}.
+$$
+
+The joint fiber $\mathcal F(Y;m,j)$ consists of the targets in $\mathcal F(H_4(Y))$ whose fifth-$M$ and fifth-$J$ predictions are respectively $m,j$. The non-diagonal hypothesis is $k=m-j\ne0$. Membership in this joint fiber is a promise on the same fixed targets.
+
+The chart of [II, Definitions 69.1–69.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md) is
+
+$$
+\begin{gathered}
+\eta=(DP)_{22}>0,\quad R=P/\eta,\quad H=\eta g,\\
+DR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+R=\begin{pmatrix}(3x-1)y&3x-1\\(1-2x)y&1-2x\end{pmatrix},
+\qquad \frac13<x<\frac12,\quad y>0.
+\end{gathered}                                                     \tag{1.3}
+$$
+
+These inequalities are equivalent to strict positivity of the displayed rank-one $R$. Put $p=xy,s=x+y$. The five trace factors along the parent are
+
+$$
+(T_0,T_1,T_2,T_3,T_4)
+=(3p+1-2x-y,\ s-2p,\ p+1-x,\ s-p,\ p+1),                        \tag{1.4}
+$$
+
+all strictly positive. The joint fifth conditions are exactly
+
+$$
+H(5)=k,\qquad \delta=j-ks.                                      \tag{1.5}
+$$
+
+Thus $(x,y)$ determines the complete target within this joint fiber: it determines $R,\delta$, and the parent readings at $0,1,2,3$ determine $H$ by cubic interpolation using the positive $T_i$. The clock-four equation is still required.
+
+Write $w=H(6)/k$, $r=H(7)/k$. After subtracting $j$ and dividing by $k$, the four sixth responses and their two final responses, in final-$M$, final-$J$ order, are
+
+| Chronological fifth/sixth node | Sixth response | Final response pair |
+| --- | --- | --- |
+| $a=JJ$ | $w(p+1)-s$ | $(r(s+1)-s,rs-s)$ |
+| $b=JM$ | $w(p+x+1)-s$ | $(r(p+2x+y+1)-s,r(p+s)-s)$ |
+| $c=MJ$ | $w(p+y+1)-s$ | $(r(s+2)-s,r(s+1)-s)$ |
+| $d=MM$ | $w(p+s+2)-s$ | $(r(p+2s+3)-s,r(p+x+2y+1)-s)$ |
+
+Equality of these normalized responses is equivalent to actual equality for either sign of $k$. A bad pair at a sixth node means equality of its sixth reading and of both possible final readings for that same pair.
+
+## 2. 稀疏三目标与共同祖先的不相容性
+
+**定理 2.1（共同第五条件下的稀疏祖先排除）。** There are no three legal fixed targets in the chart (1.3) with common fifth predictions $m,j$, $k\ne0$, satisfying all the following conditions:
+
+$$
+\begin{gathered}
+r_1=r_2=1,\qquad r_3\ne1,\qquad a_1=a_2,\quad c_1=c_2,\\
+\{1,3\}\text{ is bad at }d,\qquad
+\{2,3\}\text{ is bad at }b,                                  \tag{2.1}\\
+z_1(W_1)=z_1(W_2),\quad z_3(W_1)=z_3(W_2),\quad
+z_4(W_1)=z_4(W_2)
+\quad\text{along the original word }MMJM.
+\end{gathered}
+$$
+
+The three common ancestor values in the last line need not be $1,331/35,Y$. The sixth sample of target $3$ is unrestricted, including zero.
+
+Proof. Put $x=x_3,y=y_3,e=r_3-1$. Differences of the final responses at $d$ and $b$ give
+
+$$
+x_1+2=(1+e)(x+2),\qquad x_2+1=(1+e)(x+1).
+$$
+
+Their final-$J$ equalities then give
+
+$$
+\begin{aligned}
+x_1&=x+e(x+2),& y_1&=y+\frac{e(x+1)}{x_1+1},\\
+x_2&=x+e(x+1),& y_2&=y+\frac{ex}{x_2}.                         \tag{2.2}
+\end{aligned}
+$$
+
+The first difference also implies $14/15<1+e<15/14$. Consequently
+
+$$
+-1/15<e<1/14,\qquad e\ne0.
+$$
+
+Define the following polynomials in $x,e,y$:
+
+$$
+\begin{gathered}
+B=x+e(x+1)=x_2,\quad C=x+1+e(x+2)=x_1+1,\quad G=BC,\quad U=G+e,\\
+L_1=Cy+e(x+1)=Cy_1,\quad L_2=By+ex=By_2,\quad L=L_1L_2,\quad Z=L-e,\\
+A_1=(x+2)C+x+1,\quad A_2=(x+1)B+x,\\
+Q_1=L_1+C+1,\quad R_2=L_2+B+1,\\
+Q_3=(x+1)y+x+2,\quad R_3=xy+x+1.                              \tag{2.3}
+\end{gathered}
+$$
+
+Source legality gives $B>1/3,C>4/3,L_1,L_2>0$, $G>4/9$ and $U>17/45$. Exact subtraction in (2.2) gives
+
+$$
+y_1-y_2=\frac{e^2}{G},\qquad s_1-s_2=\frac{eU}{G}.             \tag{2.4}
+$$
+
+Common $a,c$ imply $w_1y_1=w_2y_2=n$ and
+
+$$
+n\left(e-\frac{e^2}{L}\right)=\frac{eU}{G}.
+$$
+
+The stratum $Z=0$ would give $0=eU/G$, which is impossible. On every remaining stratum,
+
+$$
+n=\frac{UL}{GZ},\qquad
+w_1=\frac{UL_2}{BZ},\qquad w_2=\frac{UL_1}{CZ}.                \tag{2.5}
+$$
+
+This establishes nonvanishing of $w_1,w_2$ without assuming their signs. The selected sixth collisions are
+
+$$
+w_1Q_1-w_3Q_3=eA_1/C,\qquad
+w_2R_2-w_3R_3=eA_2/B.
+$$
+
+Eliminating $w_3$ and multiplying by the already nonzero $GZ$ gives $E=0$, where
+
+$$
+E=U(CL_2Q_1R_3-BL_1R_2Q_3)
+-eZ(BA_1R_3-CA_2Q_3).                                        \tag{2.6}
+$$
+
+For the sign analysis set
+
+$$
+\begin{gathered}
+\rho=1+e,\quad v=x(x+1),\quad W=\rho v-e,\\
+V=1+2\rho(x+1),\qquad N=1+\rho(x+1)(x+2),\\
+F=(L+G)(Wy-eV)-e\rho vZ.
+\end{gathered}
+$$
+
+Expansion of the factors in (2.3) yields the two polynomial identities
+
+$$
+E=eF,\qquad
+F=Z(Wy-eN)+U(Wy-eV).                                         \tag{2.7}
+$$
+
+These identities use no ancestor values. Since $e\ne0$, (2.6) requires $F=0$.
+
+If $e<0$, then $Z=L-e>0$, $W=\rho v-e>0$, and $N,V>0$, since $\rho>14/15$. Both summands in the second identity (2.7) are strictly positive. Thus $F>0$, a contradiction.
+
+Suppose $e>0$. On the containing rectangle $1/3\le x\le1/2$, $0\le e\le1/14$,
+
+$$
+W=v-e(1-v)\ge\frac49-\frac5{126}=\frac{17}{42}>0.
+$$
+
+The first formula for $F$ and $F=0$ give
+
+$$
+Wy=e\left(V+\rho v\frac{Z}{L+G}\right)<e(V+\rho v)=eN,         \tag{2.8}
+$$
+
+because $L+G>0$, $Z<L+G$ and $\rho v>0$. This inequality holds for both signs of the nonzero $Z$.
+
+For completeness the bound for $N/W$ is uniform. The identity $N=W+\rho(2x+3)$ gives
+
+$$
+\frac{\partial}{\partial x}\frac NW
+=-\frac{\rho[\rho(2x^2+6x+3)+2e]}{W^2}<0.
+$$
+
+For fixed $x$ in this rectangle, $N$ increases with $e$ and $W$ decreases with $e$, while both remain positive. Hence (2.8) implies
+
+$$
+0<\frac ye<\frac NW\le
+\frac{N(1/3,1/14)}{W(1/3,1/14)}
+=\frac{182}{17}<11.                                          \tag{2.9}
+$$
+
+It remains to use the actual ancestor collisions. For $i=1,2$, put $K_i=H_i/k$. Every polynomial of degree at most three with $K_i(5)=K_i(7)=1$, $K_i(6)=w_i$ is exactly
+
+$$
+K_i(t)=1+(1-w_i)q(t)+\alpha_i c(t),\quad
+q(t)=(t-5)(t-7),\quad c(t)=(t-5)(t-6)(t-7),                  \tag{2.10}
+$$
+
+with $\alpha_i\in\mathbb R$. Indeed the first two terms have the three prescribed samples, and their difference from $K_i$ is divisible by $c$. This includes every possible degree drop.
+
+At original clocks $t=1,3,4$, the numerators $n_{1t}=CT_{1t}$, $n_{2t}=BT_{2t}$ of the source traces are
+
+$$
+\begin{array}{c|cc}
+t&n_{1t}&n_{2t}\\ \hline
+1&C(C-1)+(3-2C)L_1&B^2+(1-2B)L_2\\
+3&C(C-1)+(2-C)L_1&B^2+(1-B)L_2\\
+4&(C-1)L_1+C&BL_2+B.
+\end{array}                                                     \tag{2.11}
+$$
+
+Let $(q_1,q_3,q_4)=(24,8,3)$ and $(c_1,c_3,c_4)=(-120,-24,-6)$. Define
+
+$$
+\begin{aligned}
+V_t={}&(1+q_t)Z(Bn_{1t}-Cn_{2t})
+-q_tU(L_2n_{1t}-L_1n_{2t})-eUZ,\\
+\Delta(x,e,y)={}&
+\det\begin{pmatrix}
+c_1n_{11}&c_1n_{21}&V_1\\
+c_3n_{13}&c_3n_{23}&V_3\\
+c_4n_{14}&c_4n_{24}&V_4
+\end{pmatrix}.                                                \tag{2.12}
+\end{aligned}
+$$
+
+The common ancestor reading at $t$ is equivalent to
+
+$$
+K_1(t)T_{1t}-K_2(t)T_{2t}=s_1-s_2=eU/G.
+$$
+
+Substituting (2.5), (2.10), and multiplying by $GZ$, gives
+
+$$
+V_t+c_tZ(Bn_{1t}\alpha_1-Cn_{2t}\alpha_2)=0.                  \tag{2.13}
+$$
+
+Thus the third column of (2.12) is a fixed linear combination of the first two, so $\Delta=0$. No minor or interpolation coefficient has been divided out.
+
+The exact coefficient certificate in Definition 3.1 gives
+
+$$
+\Delta(x,e,ez)=144e^3\Phi(x,e,z),\qquad
+\Phi(x,e,z)>0
+\quad\left(\frac13\le x\le\frac12,\ 0\le e\le\frac1{14},\ 0\le z\le11\right).
+                                                                  \tag{2.14}
+$$
+
+By (2.9), $z=y/e$ is in this box. Hence $\Delta(x,e,y)>0$, contradicting (2.13). The two signs of $e$ and the separately excluded $Z=0$ stratum exhaust the possibilities. All divisions have used positive source coordinates, $k\ne0$, $e\ne0$ or the proved $Z\ne0$; no division by $w_3$, an ancestor gain, a leading gain coefficient, or a minor occurs. ∎
+
+## 3. 祖先行列式的完整有限正系数证书
+
+**定义 3.1（四盒 Bernstein 证书）。** Use exactly the integer polynomial factors (2.3), (2.11), (2.12). Expansion gives a polynomial $\Phi$ characterized by
+
+$$
+\Delta(x,e,ez)=144e^3\Phi(x,e,z),\qquad
+\deg_{x,e,z}\Phi\le(6,10,5).                                  \tag{3.1}
+$$
+
+The identity specifies its polynomial extension at $e=0$; it is an exact polynomial division. Its expanded polynomial has $281$ nonzero monomials.
+
+For $\ell=1,2,3,4$, use the following endpoints:
+
+| $\ell$ | $e_\ell^-$ | $e_\ell^+$ | $z_\ell^-$ | $z_\ell^+$ |
+| --- | --- | --- | --- | --- |
+| 1 | $0$ | $1/28$ | $0$ | $11/2$ |
+| 2 | $0$ | $1/28$ | $11/2$ | $11$ |
+| 3 | $1/28$ | $1/14$ | $0$ | $11/2$ |
+| 4 | $1/28$ | $1/14$ | $11/2$ | $11$ |
+
+Define every rational coefficient by finite coefficient extraction and finite sums:
+
+$$
+\begin{aligned}
+q^\ell_{abc}
+&=[X^aE^bZ_0^c]\,
+\Phi\left(\frac13+\frac X6,
+e_\ell^-+(e_\ell^+-e_\ell^-)E,
+z_\ell^-+(z_\ell^+-z_\ell^-)Z_0\right),\\
+\beta^\ell_{ijk}
+&=\sum_{a=0}^i\sum_{b=0}^j\sum_{c=0}^k
+q^\ell_{abc}
+\frac{\binom ia}{\binom6a}
+\frac{\binom jb}{\binom{10}b}
+\frac{\binom kc}{\binom5c},
+\quad 0\le i\le6,\quad0\le j\le10,\quad0\le k\le5.             \tag{3.2}
+\end{aligned}
+$$
+
+Here coefficient extraction has its usual polynomial meaning; missing monomials have coefficient zero. Thus no auxiliary coefficient file is part of the definition. For an explicit multiplication rule, $[x^ae^by^c](PQ)$ is the sum of $[x^{a'}e^{b'}y^{c'}]P\,[x^{a-a'}e^{b-b'}y^{c-c'}]Q$ over $0\le(a',b',c')\le(a,b,c)$. Together with the displayed determinant this reduces (3.1)–(3.2) to rational additions and multiplications.
+
+The following matrices give all $1848$ integer lower bounds
+
+$$
+n^\ell_{ijk}=\lfloor2\beta^\ell_{ijk}\rfloor>0.                 \tag{3.3}
+$$
+
+Each matrix is indexed by increasing row $i=0,\ldots,6$ and column $j=0,\ldots,10$; the indicated $k$ is fixed. Formula (3.2) and these complete matrices give the exact comparisons $2\beta^\ell_{ijk}\ge n^\ell_{ijk}\ge1$.
+
+$$
+\left(n^{1}_{ij0}\right)_{i,j}=\begin{pmatrix}
+7&7&7&7&7&8&8&8&8&8&8\\
+8&8&9&9&9&9&9&10&10&10&10\\
+10&10&10&11&11&11&11&12&12&12&12\\
+12&13&13&13&13&14&14&14&14&14&15\\
+15&15&16&16&16&16&17&17&17&17&17\\
+18&18&19&19&19&20&20&20&20&21&21\\
+22&22&23&23&23&24&24&24&24&25&25
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{1}_{ij1}\right)_{i,j}=\begin{pmatrix}
+10&10&10&10&11&11&11&11&12&12&12\\
+12&12&13&13&13&14&14&14&14&15&15\\
+15&16&16&16&17&17&17&18&18&18&18\\
+19&20&20&20&21&21&21&22&22&22&22\\
+24&24&25&25&26&26&26&27&27&27&28\\
+30&30&31&31&32&32&32&33&33&33&34\\
+37&37&38&38&39&39&40&40&41&41&41
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{1}_{ij2}\right)_{i,j}=\begin{pmatrix}
+13&13&13&13&13&14&14&14&14&14&13\\
+16&16&17&17&17&17&17&17&17&17&17\\
+21&21&21&21&21&21&21&21&21&21&21\\
+26&26&27&27&27&27&27&27&27&26&26\\
+33&33&33&33&33&33&33&33&33&33&32\\
+41&42&42&42&42&42&41&41&41&40&40\\
+52&52&52&52&52&52&51&51&50&50&49
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{1}_{ij3}\right)_{i,j}=\begin{pmatrix}
+16&16&16&16&16&15&15&15&14&14&13\\
+20&20&20&20&20&20&19&19&18&18&17\\
+26&26&26&25&25&25&24&24&23&22&21\\
+33&33&33&32&32&31&30&29&29&27&26\\
+42&41&41&41&40&39&38&37&36&34&33\\
+53&52&52&51&50&49&47&46&44&43&41\\
+67&66&65&64&62&61&59&57&55&53&50
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{1}_{ij4}\right)_{i,j}=\begin{pmatrix}
+19&19&18&18&17&17&16&15&14&13&12\\
+24&24&23&23&22&21&20&19&18&17&16\\
+31&31&30&29&28&27&26&24&23&21&20\\
+40&39&38&37&35&34&32&31&29&27&25\\
+51&50&48&47&45&43&41&38&36&33&31\\
+64&63&61&59&56&54&51&48&45&42&39\\
+81&79&77&74&71&67&64&60&56&52&48
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{1}_{ij5}\right)_{i,j}=\begin{pmatrix}
+22&21&21&20&19&17&16&15&14&12&11\\
+28&27&26&25&24&22&21&19&17&16&14\\
+37&35&34&32&30&28&26&24&22&20&18\\
+47&45&43&41&38&36&33&30&28&25&22\\
+60&57&55&52&48&45&42&38&35&31&28\\
+76&73&69&65&61&57&52&48&44&39&35\\
+96&92&87&82&77&71&66&60&54&49&44
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{2}_{ij0}\right)_{i,j}=\begin{pmatrix}
+22&21&21&20&19&17&16&15&14&12&11\\
+28&27&26&25&24&22&21&19&17&16&14\\
+37&35&34&32&30&28&26&24&22&20&18\\
+47&45&43&41&38&36&33&30&28&25&22\\
+60&57&55&52&48&45&42&38&35&31&28\\
+76&73&69&65&61&57&52&48&44&39&35\\
+96&92&87&82&77&71&66&60&54&49&44
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{2}_{ij1}\right)_{i,j}=\begin{pmatrix}
+25&24&23&21&20&18&16&15&13&11&10\\
+32&31&29&27&25&23&21&19&17&14&12\\
+42&40&37&35&32&30&27&24&21&18&16\\
+54&51&48&45&41&37&34&30&27&23&20\\
+69&65&61&57&52&47&43&38&33&29&25\\
+87&83&77&72&66&60&54&48&42&37&32\\
+111&105&98&90&83&75&68&60&53&46&40
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{2}_{ij2}\right)_{i,j}=\begin{pmatrix}
+28&27&25&23&21&18&16&14&12&10&8\\
+36&34&32&29&26&24&21&18&15&12&10\\
+47&44&41&37&34&30&26&23&19&16&13\\
+61&57&52&48&43&38&33&29&24&20&17\\
+78&72&67&61&54&48&42&36&31&26&21\\
+99&92&85&77&69&61&53&46&39&32&27\\
+126&117&107&97&87&77&67&57&49&41&34
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{2}_{ij3}\right)_{i,j}=\begin{pmatrix}
+31&29&26&24&21&18&15&13&10&8&6\\
+41&37&34&31&27&23&20&16&13&10&8\\
+52&48&44&39&34&30&25&21&17&13&11\\
+67&62&56&50&44&38&32&26&21&17&14\\
+87&79&72&64&56&48&40&33&27&22&18\\
+111&101&91&81&70&60&51&42&34&28&23\\
+141&128&115&102&89&76&64&53&43&35&29
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{2}_{ij4}\right)_{i,j}=\begin{pmatrix}
+34&31&28&25&21&18&14&11&9&7&5\\
+45&41&36&32&27&22&18&14&11&9&7\\
+58&52&46&40&34&29&23&18&14&11&9\\
+74&67&59&52&44&37&30&24&19&15&12\\
+95&86&76&66&56&46&38&30&24&19&16\\
+122&110&97&84&71&59&48&38&30&24&21\\
+156&139&123&106&89&74&60&48&38&31&27
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{2}_{ij5}\right)_{i,j}=\begin{pmatrix}
+37&33&29&25&21&17&13&10&7&6&5\\
+49&43&38&32&27&21&17&13&10&8&7\\
+63&56&49&41&34&27&21&16&13&10&9\\
+81&72&62&53&43&35&27&21&16&13&12\\
+104&92&80&67&55&44&35&27&21&17&16\\
+134&118&101&85&70&56&44&34&27&22&21\\
+171&150&129&108&89&71&55&43&34&29&27
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{3}_{ij0}\right)_{i,j}=\begin{pmatrix}
+8&9&9&9&9&9&9&9&9&10&10\\
+10&10&10&11&11&11&11&11&11&11&11\\
+12&12&13&13&13&13&13&13&13&13&13\\
+15&15&15&15&15&15&16&16&16&16&16\\
+17&18&18&18&18&18&18&18&19&19&19\\
+21&21&21&21&22&22&22&22&22&22&22\\
+25&25&25&25&25&26&26&26&26&26&26
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{3}_{ij1}\right)_{i,j}=\begin{pmatrix}
+12&12&12&12&13&13&13&13&13&13&13\\
+15&15&15&15&16&16&16&16&16&16&16\\
+18&18&19&19&19&19&19&19&19&19&19\\
+22&23&23&23&23&23&23&24&24&24&24\\
+28&28&28&28&28&29&29&29&29&29&29\\
+34&34&34&34&35&35&35&35&35&35&35\\
+41&42&42&42&42&42&42&43&43&43&42
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{3}_{ij2}\right)_{i,j}=\begin{pmatrix}
+13&13&13&13&13&12&12&12&11&11&10\\
+17&17&16&16&16&15&15&15&14&13&13\\
+21&21&20&20&20&19&19&18&17&16&15\\
+26&26&25&25&24&24&23&22&21&20&19\\
+32&32&31&31&30&29&28&27&26&25&23\\
+40&39&38&38&37&36&35&33&32&30&29\\
+49&48&47&46&45&44&42&41&39&37&35
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{3}_{ij3}\right)_{i,j}=\begin{pmatrix}
+13&13&12&12&11&10&9&8&7&6&5\\
+17&16&15&14&13&12&11&10&9&7&6\\
+21&20&19&18&17&15&14&12&11&9&8\\
+26&25&24&22&21&19&17&16&14&12&10\\
+33&31&30&28&26&24&22&19&17&15&12\\
+41&39&37&34&32&29&27&24&21&18&15\\
+50&48&45&43&40&36&33&30&26&23&19
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{3}_{ij4}\right)_{i,j}=\begin{pmatrix}
+12&11&10&9&8&7&6&5&4&3&2\\
+16&14&13&12&10&9&7&6&5&3&2\\
+20&18&16&15&13&11&9&8&6&5&3\\
+25&23&21&18&16&14&12&10&8&6&5\\
+31&28&26&23&20&18&15&13&10&8&7\\
+39&35&32&29&25&22&19&16&13&11&9\\
+48&44&40&36&32&28&24&20&17&14&12
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{3}_{ij5}\right)_{i,j}=\begin{pmatrix}
+11&10&8&7&6&5&4&3&2&2&2\\
+14&12&11&9&8&6&5&4&4&3&3\\
+18&16&14&12&10&8&7&6&5&5&4\\
+22&20&17&15&12&11&9&8&7&6&6\\
+28&25&22&19&16&14&12&10&9&9&9\\
+35&31&27&24&20&17&15&13&12&12&12\\
+44&39&34&30&26&22&19&17&16&16&16
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{4}_{ij0}\right)_{i,j}=\begin{pmatrix}
+11&10&8&7&6&5&4&3&2&2&2\\
+14&12&11&9&8&6&5&4&4&3&3\\
+18&16&14&12&10&8&7&6&5&5&4\\
+22&20&17&15&12&11&9&8&7&6&6\\
+28&25&22&19&16&14&12&10&9&9&9\\
+35&31&27&24&20&17&15&13&12&12&12\\
+44&39&34&30&26&22&19&17&16&16&16
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{4}_{ij1}\right)_{i,j}=\begin{pmatrix}
+10&8&6&5&4&3&2&1&1&2&2\\
+12&10&8&7&5&4&3&2&2&3&4\\
+16&13&11&9&7&5&4&4&4&4&6\\
+20&17&14&11&9&7&6&5&5&6&8\\
+25&21&18&14&12&9&8&8&8&9&11\\
+32&27&22&18&15&13&11&10&11&12&15\\
+40&34&28&23&19&17&15&14&15&17&20
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{4}_{ij2}\right)_{i,j}=\begin{pmatrix}
+8&6&4&3&2&1&1&2&3&4&6\\
+10&8&6&4&3&2&2&3&4&6&9\\
+13&10&8&6&4&4&4&4&6&8&12\\
+17&13&10&8&6&5&5&6&8&12&15\\
+21&17&13&10&8&7&8&9&12&16&20\\
+27&22&17&14&11&10&11&13&16&21&27\\
+34&28&22&18&15&14&15&17&21&27&35
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{4}_{ij3}\right)_{i,j}=\begin{pmatrix}
+6&4&3&2&2&2&3&5&8&11&14\\
+8&6&4&3&3&4&5&7&10&14&19\\
+11&8&6&5&5&5&7&10&14&19&24\\
+14&11&8&7&6&7&10&13&18&24&31\\
+18&14&11&9&9&10&13&18&24&31&39\\
+23&18&14&12&12&14&18&24&31&40&49\\
+29&23&19&17&17&19&24&31&40&50&62
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{4}_{ij4}\right)_{i,j}=\begin{pmatrix}
+5&4&3&3&4&6&8&12&15&20&24\\
+7&5&5&5&6&8&11&15&20&25&30\\
+9&7&6&7&8&11&15&20&26&32&37\\
+12&10&9&9&11&14&20&26&33&40&46\\
+16&13&12&12&15&19&25&33&42&50&57\\
+21&17&15&16&20&25&33&42&52&62&70\\
+27&22&20&22&26&33&42&54&66&77&86
+\end{pmatrix}.
+$$
+
+$$
+\left(n^{4}_{ij5}\right)_{i,j}=\begin{pmatrix}
+5&4&4&6&8&10&14&17&20&22&22\\
+7&6&6&8&10&14&18&22&26&27&26\\
+9&8&9&10&14&18&23&28&32&33&30\\
+12&11&11&14&18&23&29&35&39&40&35\\
+16&14&15&18&23&30&37&44&48&49&41\\
+21&19&20&24&30&38&47&55&60&58&47\\
+27&25&26&31&39&49&59&68&73&70&54
+\end{pmatrix}.
+$$
+
+For additional exact bounds, the minima of the coefficients in the four boxes are respectively
+
+$$
+\frac{2560}{729},\quad
+\frac{69582848975}{25092716544},\quad
+\frac{9108519137}{8538493824},\quad
+\frac{2710955983953911}{2950903465574400}.                       \tag{3.4}
+$$
+
+The positivity consequence uses only the finite comparisons (3.2)–(3.3). To see this directly, write $B_{i,n}(u)=\binom niu^i(1-u)^{n-i}$. The binomial identity
+
+$$
+u^a=\sum_{i=a}^n\frac{\binom ia}{\binom na}B_{i,n}(u)
+$$
+
+follows on factoring out $u^a$ and expanding $(u+(1-u))^{n-a}$. Applying this identity in the three coordinates gives exactly (3.2) as the tensor Bernstein expansion of the polynomial on each box. For coordinates in $[0,1]$, these basis products are nonnegative and sum to one. Every coefficient is at least $1/2$ by (3.3), so $\Phi\ge1/2>0$ throughout all four boxes. They cover the rectangle in (2.14), including their boundaries. This proves the sign needed in Theorem 2.1 by finite exact rational comparisons, with the polynomial, index ranges and every lower-bound entry specified.
+
+## 4. 共同第五条件下的整个已知三目标策略
+
+**推论 4.1（条件三目标恢复）。** Let $K$ be any explicitly known set of at most three distinct targets in one entire $\mathcal F(Y;m,j)$, $m\ne j$. One deterministic strategy recovers every target of $K$ with at most three further readings, at original clocks $5,6,7$, hence at most eight total readings.
+
+Proof. For exactly three targets, suppose $L_3$. [II, Theorem 73.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md), with precisely this non-diagonal common-fifth hypothesis, supplies labels with $r_1=r_2=1$, $r_3\ne1$, $\delta_1\ne\delta_2$, $a_1=a_2$, $c_1=c_2$. [IV, Theorem 7.1 and Corollary 7.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) exclude constant $b$ or $d$ and supply the sparse mixed bad pairs in (2.1). In particular each nonconstant sixth response has actual fibers of size at most two. The pair $\{1,2\}$ cannot be bad at $b$ or $d$, since at $r=1$ the final pairs
+
+$$
+b:(p+x+1,p),\qquad d:(p+s+3,p+y+1)
+$$
+
+determine $x,y$ and the complete target. The same mixed pair cannot be bad at both nodes: its terminal differences would give $x_i+1=r_3(x_3+1)$ and $x_i+2=r_3(x_3+2)$, forcing $r_3=1$. Thus the two selected mixed pairs can indeed be labeled as in (2.1). All three targets realize the same ancestor readings, so Theorem 2.1 is a contradiction. This argument also covers a constant $a$ or a constant $c$. The separate mixed-sixth-root exclusion of IV, Theorem 8.1 is consistent with it but is not needed: Theorem 2.1 already allows $H_3(6)=0$.
+
+For two distinct targets, II, Theorem 53.2 and Corollary 53.3 give recovery after fifth $J$ within the remaining two readings. A singleton can stop immediately.
+
+To define one whole-$K$ policy, at each node declare zero remaining readings successful exactly for a set of size at most one. With $s>0$ remaining, a nonsingleton node is successful exactly when some next atom has successful remaining subtrees at every reachable actual response. Choose the first qualifying atom in the fixed order $M,J$, execute it once, read, and recurse on the actual child. The preceding nonfailure statements ensure success at the root; induction on $s$ proves correct recovery on every target of $K$. Predictions from the known finite set merely define this finite decision tree. Every executed atom is individually read, and a singleton child stops. ∎
+
+**开放问题 4.2（不受限三目标的共同第五桥梁）。** The implication
+
+$$
+\begin{gathered}
+|K|=3,\quad K\subseteq\mathcal F(H_4(Y)),\quad L_3(K,H_4(Y))\\
+\Longrightarrow\quad
+\exists m\ne j:\ K\subseteq\mathcal F(Y;m,j)
+\end{gathered}
+$$
+
+is an additional unresolved assertion. Corollary 4.1 assumes its right-hand fiber membership; it does not establish this implication. On the diagonal joint fiber $m=j$, all gains have $g(5)=0$, and the separate whole-root-five strategy of II, Theorem 58.1 applies. Neither fact forces an unrestricted triple into any common joint fifth fiber.
+
+## 5. JMMJ 同历史的整个基线漂移根七类
+
+**定义 5.1（两个互补父历史）。** Fix $D_0\in\mathbb R$, $\lambda\ne0$ and $0<\varepsilon<1/6$. Set
+
+$$
+\begin{aligned}
+H_J^-&=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,M,D_0+312\lambda/5),\\
+H_{MJ}^-&=(D_0-21\lambda,M,D_0,J,D_0+5\lambda(1+\varepsilon),M,D_0),\\
+H_J(Y)&=(H_J^-,J,Y),\qquad
+H_{MJ}(Y)=(H_{MJ}^-,M,Y).
+\end{aligned}                                                     \tag{5.1}
+$$
+
+These retain exactly the preceding literal histories of [IV, Theorems 2.1 and 3.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md), with complementary fourth atoms. Define the whole promised classes
+
+$$
+C_J(Y)=\mathcal F(H_J(Y))\cap\{\delta=D_0,g(7)=0\},\qquad
+C_{MJ}(Y)=\mathcal F(H_{MJ}(Y))\cap\{\delta=D_0,g(7)=0\}.        \tag{5.2}
+$$
+
+The baseline $D_0$ in the history is not presumed to equal an unrestricted target's drift.
+
+**定理 5.2（JMMJ 根类的七总读逆）。** For every $Y$, the fixed fifth and sixth atoms $M,M$ recover every target in $C_J(Y)$ by original clock six, with seven total readings. Equivalently, fourth $J$, fifth $M$, sixth $M$ recover the entire $\delta=D_0,g(7)=0$ class compatible with $H_J^-$, without a gain-ray promise.
+
+Proof. The initial read and drift promise give $g(0)=0$. Together with $g(7)=0$, write
+
+$$
+g(t)=t(t-7)(a+bt).
+$$
+
+The cumulative matrices at clocks $1,2,3$ are $J,L_0,J+L_0$, where $L_0=MJ$. Their readings force
+
+$$
+\operatorname{tr}(JP)=\frac{-4\lambda}{a+b},\quad
+\operatorname{tr}(L_0P)=\frac{-24\lambda}{5(a+2b)},\quad
+\operatorname{tr}((J+L_0)P)=\frac{-26\lambda}{5(a+3b)}.          \tag{5.3}
+$$
+
+All three denominators are nonzero, since the corresponding readings differ from $D_0$ and the traces are positive. Positivity also makes $a+b,a+2b,a+3b$ have the same sign. The sum relation among the three traces gives
+
+$$
+20(a+2b)(a+3b)+24(a+b)(a+3b)-26(a+b)(a+2b)
+=2(a+5b)(9a+14b)=0.
+$$
+
+If $b=0$, this would force $a=0$, which is forbidden. The factor $9a+14b=0$ would give opposite signs for $a+b=-5b/9$ and $a+2b=4b/9$, which is impossible. Thus $a=-5b$, $b=\kappa\ne0$ and
+
+$$
+g(t)=\kappa h(t),\quad h(t)=t(t-5)(t-7),\quad
+\kappa/\lambda=1/\operatorname{tr}(JP)>0.                       \tag{5.4}
+$$
+
+This derives the gain ray from the whole promised class. Put $R=(\kappa/\lambda)P$. Then $R$ is positive rank one,
+
+$$
+\operatorname{tr}(JR)=1,\quad \operatorname{tr}(L_0R)=8/5,
+\qquad (P,g,\delta)=(R/\operatorname{tr}R,\lambda(\operatorname{tr}R)h,D_0).
+$$
+
+At clocks $4,5,6$ along the actual complementary suffix $J,M,M$, the cumulative matrices are
+
+$$
+C_0=J(J+L_0)=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+MC_0=\begin{pmatrix}1&1\\3&2\end{pmatrix},\quad
+M^2C_0=\begin{pmatrix}3&2\\4&3\end{pmatrix}.
+$$
+
+The gain samples are $\lambda h(4)=12\lambda$, $\lambda h(5)=0$, $\lambda h(6)=-6\lambda$ in this representative. The mandatory fifth reading is therefore $D_0$. From the actual fourth and sixth readings form
+
+$$
+u=\frac{Y-D_0}{12\lambda},\qquad
+v=-\frac{z_6-D_0}{6\lambda}.
+$$
+
+Solving the four linear trace equations gives the explicit inverse
+
+$$
+R=\begin{pmatrix}
+u-v+21/5&34/5-v\\v-29/5&2v-u-47/5
+\end{pmatrix},\qquad \operatorname{tr}R=v-26/5.                \tag{5.5}
+$$
+
+Indeed substitution into the traces against $J,L_0,C_0,M^2C_0$ gives $1,8/5,u,v$. Strict positivity and rank one are exactly
+
+$$
+\begin{gathered}
+29/5<v<34/5,\qquad v-21/5<u<2v-47/5,\\
+(u-v+21/5)(2v-u-47/5)-(34/5-v)(v-29/5)=0.                     \tag{5.6}
+\end{gathered}
+$$
+
+Conversely every $(u,v)$ satisfying (5.6) yields a legal target with the entire promised preceding history and fourth read $D_0+12\lambda u$. Thus these equations describe the whole class, rather than selected examples. An actual input guarantees them, and $\operatorname{tr}R>0$ makes normalization lawful. No unknown gain sample is used as a divisor. ∎
+
+**命题 5.3（同一互补父历史的非空二目标纤维）。** The class $C_J(D_0+1632\lambda/55)$ contains distinct targets represented by
+
+$$
+R_1=\frac1{55}\begin{pmatrix}12&19\\36&57\end{pmatrix},\qquad
+R_3=\frac1{55}\begin{pmatrix}28&35\\20&25\end{pmatrix},
+\qquad G=\lambda h,\quad \delta=D_0.
+$$
+
+Proof. Both positive matrices have determinant zero, with traces $69/55,53/55$, and satisfy the two trace constraints in the proof of Theorem 5.2. Their $C_0$ traces are both $136/55$. Their $M^2C_0$ traces are $71/11,339/55$, so after the same mandatory fifth-$M$ read $D_0$, their sixth-$M$ reads are respectively $D_0-426\lambda/11$ and $D_0-2034\lambda/55$. The difference is $-96\lambda/55\ne0$. All readings belong to this same complementary history. ∎
+
+## 6. MJMM 同历史的整个基线漂移根七类
+
+**定理 6.1（MJMM 根类的六总读逆）。** For every $Y$, a single fifth atom $J$ recovers every target in $C_{MJ}(Y)$ by original clock five, with six total readings. Fourth $M$ followed by fifth $J$ therefore recovers the entire $\delta=D_0,g(7)=0$ class compatible with $H_{MJ}^-$.
+
+Proof. The clock-one and clock-three readings equal the promised drift. Their positive traces force $g(1)=g(3)=0$. Together with $g(7)=0$ and the nonzero degree-at-most-three condition this gives
+
+$$
+g(t)=\kappa(t-1)(t-3)(t-7).
+$$
+
+The initial read $D_0-21\lambda$ and $\operatorname{tr}P=1$ give $\kappa=\lambda$. No alternative lower-degree gain can occur in this promised class.
+
+At clock two the cumulative matrix is $U_0=JM=(\begin{smallmatrix}1&1\\0&1\end{smallmatrix})$, and $g(2)=5\lambda$. Thus $\operatorname{tr}(U_0P)=1+\varepsilon$, equivalently $P_{21}=\varepsilon$. Strict positivity, rank one and trace one now give the complete parametrization
+
+$$
+P(d)=\begin{pmatrix}1-d&d(1-d)/\varepsilon\\\varepsilon&d\end{pmatrix},
+\qquad 0<d<1.                                                  \tag{6.1}
+$$
+
+Every such $d$ conversely gives the whole preceding history with this gain and drift. Put
+
+$$
+f_2(d)=d(1-d)/\varepsilon+\varepsilon+2d.
+$$
+
+The actual complementary fourth and fifth matrices are
+
+$$
+A_4=M^2U_0=\begin{pmatrix}1&2\\1&3\end{pmatrix},\qquad
+A_5=JA_4=\begin{pmatrix}1&3\\1&2\end{pmatrix}.
+$$
+
+Their traces are respectively $1+\varepsilon+f_2(d)$ and $1+2\varepsilon+f_2(d)-d$, while $g(4)=-9\lambda$, $g(5)=-16\lambda$. Hence the actual readings determine
+
+$$
+q=-\frac{Y-D_0}{9\lambda}-1-\varepsilon=f_2(d),\qquad
+v=-\frac{z_5-D_0}{16\lambda},\qquad
+d=1+2\varepsilon+q-v.                                        \tag{6.2}
+$$
+
+Return (6.1), the forced gain and drift $D_0$. The denominators are known and nonzero. The full possible fourth-coordinate range is
+
+$$
+\varepsilon<q\le\frac1{4\varepsilon}+1+2\varepsilon,            \tag{6.3}
+$$
+
+since the concave quadratic $f_2$ has its maximum at $d=1/2+\varepsilon\in(0,1)$, tends to $\varepsilon$ at $d=0$, and tends to $\varepsilon+2$ at $d=1$. The upper endpoint is included. For two distinct parameters,
+
+$$
+f_2(d)=f_2(d')\ \Longleftrightarrow\ d+d'=1+2\varepsilon.
+$$
+
+Their fifth readings then differ by $16\lambda(d-d')$. In particular the inverse covers both branches of any actual fourth fiber, including its vertex, with no division by a discriminant or by a gain sample. ∎
+
+**命题 6.2（字面 MJMM 二目标消费者）。** At $\varepsilon=1/12$, $\lambda=1$, $D_0=0$, the two parameters $d=1/2,2/3$ realize the same entire history
+
+$$
+(-21,M,0,J,65/12,M,0,M,-93/2).
+$$
+
+Proof. Their $f_2$ values are both $49/12$, so (6.2) gives the shared fourth read $-93/2$. Their actual fifth-$J$ reads are respectively $-76,-220/3$, which differ. Their sources (6.1) are strictly positive, rank one, trace one, and their common gain is $(t-1)(t-3)(t-7)$. Thus the separation occurs in the actual complementary history, with its original baseline and clocks. ∎
+
+## 7. 实际第五子纤维的非基线替代条件
+
+**定理 7.1（小实际子纤维恢复与必要替代）。** At $H_J(Y)$ choose fifth $M$, and at $H_{MJ}(Y)$ choose fifth $J$. For a known family $K$ in either parent, let $K_z$ denote its entire actual response fiber under that specified fifth action.
+
+If every member of $K$ has drift $D_0$ and every $K_z$ has at most two targets, then one deterministic strategy recovers all of $K$ with at most three additional readings. The family itself may be finite or infinite, and its actual fifth and sixth values may vary.
+
+For an unrestricted family $K$ at either parent with $L_3$, at least one actual fiber $K_z$ has $L_2$, and one of the following holds for that same fiber:
+
+1. It contains at least three distinct targets.
+2. It consists of two distinct targets with one common drift $d_*\ne D_0$, both with $g(7)=0$, sharing both possible sixth readings.
+
+Proof. First consider any two distinct targets after one actual five-atom history, with last cumulative matrix $Q$. If the pair has $L_2$, its sixth readings coincide under each atom, and its four terminal readings coincide under each chronological sixth/seventh suffix. Otherwise a separating sixth atom or separating length-two suffix recovers the pair.
+
+The rank-one reconstruction of [II, Theorem 53.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md) applies here to the four terminal functions, independently of that theorem's special MMJM root-six exclusion. For clarity set $X=g(7)QP=(\begin{smallmatrix}a&b\\c&d\end{smallmatrix})$. The terminal readings are
+
+$$
+\begin{aligned}
+r_{MM}&=a+b+c+2d+\delta,&r_{MJ}&=a+c+d+\delta,\\
+r_{JM}&=a+b+d+\delta,&r_{JJ}&=a+d+\delta.
+\end{aligned}                                                     \tag{7.1}
+$$
+
+They determine $b=r_{JM}-r_{JJ}$, $c=r_{MJ}-r_{JJ}$ and $d=r_{MM}-r_{JM}-r_{MJ}+r_{JJ}$. Since $Q$ is invertible, nonnegative and has no zero row, $QP$ is strictly positive rank one. If $d\ne0$, then $a=bc/d$ and $\delta=r_{JJ}-a-d$. If $d=0$, positivity forces $g(7)=0$ and $X=0$, so all four readings equal $\delta$. Thus the four terminal functions determine $X,\delta$ in both strata.
+
+If the common $X$ of the two targets is nonzero, invertibility of $Q$ and trace normalization determine the same $P$ and $g(7)$. With the same drift, the shared ancestor readings at the four distinct original clocks $0,1,2,3$ then determine the same entire gain polynomial, since every source trace is positive. This contradicts distinctness. Therefore an $L_2$ pair at either parent has common drift and two clock-seven roots.
+
+If that drift were $D_0$, both targets would lie in the corresponding whole class (5.2). At $H_J(Y)$ they already share fifth $M$ and, by $L_2$, also sixth $M$; Theorem 5.2 would return the same complete target. At $H_{MJ}(Y)$ their common fifth $J$ and Theorem 6.1 already return the same complete target. Both are contradictions. Thus no distinct baseline-drift pair in an actual specified fifth fiber has $L_2$.
+
+For the recovery assertion, execute the specified fifth atom and read $z$. Stop at a singleton $K_z$. If $K_z$ has two targets, choose the lexicographically first length-two suffix whose sixth or seventh reading separates them; it exists because the pair is not $L_2$. Execute its sixth atom and read; stop if separated, otherwise execute its seventh atom and read. This is one policy on the whole known family, with choices determined by the actual fifth history and its entire remaining fiber. The finite choice among four suffixes requires no regularity assumption on the response-to-action function.
+
+Finally $L_3(K,H)$ requires an $L_2$ actual child for the specified fifth action. It has at least two targets. If it has exactly two, the preceding reconstruction gives the common drift and roots, and the whole-class inverses exclude drift $D_0$. Otherwise it has at least three. All ancestors and both sixth equalities in the two-target case refer to this same fixed pair. ∎
+
+**推论 7.2（非恒定第五三目标与前一层消费者）。** An $L_3$ triple at either complementary parent whose specified fifth response is nonconstant must have a two-target child as in alternative 2 of Theorem 7.1. In particular, a triple entirely at drift $D_0$ can have $L_3$ there only if its specified fifth response is constant.
+
+At $H_J^-$ take fourth $J$, then fifth $M$; at $H_{MJ}^-$ take fourth $M$, then fifth $J$. Any known family at drift $D_0$ whose resulting entire histories through clock five each have at most two targets is recoverable by clock seven, with at most eight total readings.
+
+Proof. A nonconstant response on three targets has actual fibers of size at most two, so the losing child in Theorem 7.1 must use alternative 2. For the preceding-history assertion, the actual fourth read first selects $Y$; apply the whole-family policy of Theorem 7.1 at that parent. This produces a single strategy depending only on actual reads and the known family, for every possible $Y$ and fifth response. ∎
+
+**定义 7.3（剩余同对的全部第六零层）。** In alternative 2 put
+
+$$
+QP_i=t_i\begin{pmatrix}x_iy_i&x_i\\y_i&1\end{pmatrix},\quad
+t_i>0,\quad x_i,y_i>0,\quad c_i=g_i(6)t_i.
+$$
+
+Equality of both sixth readings is exactly $c_1=c_2=c$ and $c(x_1+y_1-x_2-y_2)=0$. When $c=0$, both sixth gains vanish and no sum constraint follows. When $c\ne0$, the sums agree and distinctness forces $x_1\ne x_2$, $y_1\ne y_2$, with
+
+$$
+(x_1-x_2)(y_1-y_2)=-(x_1-x_2)^2<0.
+$$
+
+Indeed equal coordinates would make the normalized sources equal, and the common drift and first four ancestor reads would make the gains equal. Both signs of $c$ remain possible. These equations are necessary conditions together with the entire fixed ancestor and actual fifth history; they do not assert existence of the pair.
+
+## 8. 适用对应与未定数学问题
+
+**约定 8.1（数学接口）。** The chart, failure recursion and known-domain target normalization are those of II. Theorem 2.1 adds the incompatibility of the simultaneous sparse sixth/terminal equations with the same worlds' cubic ancestor equations. Its known-three-target consumer uses II, Theorem 73.1 and IV, Theorem 7.1 only within their common non-diagonal joint fifth fiber. The whole-class inverses in Theorems 5.2 and 6.1 concern the separate literal histories (5.1), and Theorem 7.1 partitions by one actual fifth action rather than a joint fifth promise.
+
+The positive normalization in (1.2) removes exactly $(R,H)\mapsto(cR,H/c)$ for $c>0$ and retains additive drift. This is the specified-orbit notion of identifiability in Li–Lee–Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1). The concrete class inverses above check uniqueness over every compatible target of their promised domains; no bilinear sample threshold is used.
+
+Whole-set adaptive discrimination is also the relevant distinction in van den Bos–Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [Theorem 6.1](https://arxiv.org/html/1907.11034v2). That theorem assumes a suspension automaton with mutually incompatible distinct states and injective splits. Those hypotheses are not imposed on the continuous calibration domain here. The policies in Corollary 4.1 and Theorem 7.1 follow directly from (1.1) and the actual fibers, with every individual read counted.
+
+Polynomial interpolation, rank-one completion and the Bernstein convex-combination identity are tools used inside these applications. The tensor certificate (3.1)–(3.3) proves a sign for the particular ancestor determinant, including both denominator signs retained in Theorem 2.1. It gives no numerical-infeasibility assertion for a different polynomial system. The promised-factor inverse in [III, Theorem 4.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md) keeps its separate known gain-space domain. The fixed-linear-palette obstruction of IV, Theorem 10.2 keeps its specified architecture; nonlinear or data-dependent inversion remains outside it.
+
+**开放问题 8.2（不受限局部与原根）。** The unrestricted joint-fifth bridge of Open Problem 4.2, realizable larger families with variable actual fifth and sixth responses, and feasibility of the full sixteen-slot local system of IV, Theorem 9.2 remain unresolved. The common-fifth sparse exclusion does not supply an inverse on every unrestricted $\mathcal F(H_4(Y))$ or a target-cardinality bound for unrestricted losing families. The exceptional two-target secant system of IV, Theorem 6.1 is not decided by excluding its sparse third-target completion.
+
+At the exact complementary histories (5.1), nonbaseline-drift bad pairs and actual fifth losing fibers with at least three targets remain to be realized or excluded. The necessary alternatives of Theorem 7.1 are not sufficiency conditions. The data of an unrestricted target do not by these results certify $\delta=D_0$ and $g(7)=0$. Thus the two whole promised-class inverses do not recover the unrestricted complementary fibers. The complementary fifth-$M$ subtree at the separate $JMJM$ history of IV, Proposition 3.3, and the earlier initial-$J$, initial-$MJ$ and other root alternatives also remain separate.
+
+The original full question is still whether $n_{\rm det}(3,0)\ge9$ or a lawful full-domain decoder with at most eight total readings exists. The root slot system of IV, Theorem 9.3 has no feasibility determination here. All lower degrees, signed gains, sampled and repeated roots, constant drifts, deterministic nonregular policies and early stops remain in that full question.
+
+## 追加锚（本行以下为增补区）

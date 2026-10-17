@@ -66,7 +66,7 @@ private theorem map_cons_eq (o : Option (List α)) (a b : α) (w : List α) :
     o.map (a :: ·) = some (b :: w) ↔ a = b ∧ o = some w := by
   cases o <;> simp [and_comm]
 
-private theorem mask_projections (u v w : List α) (s : List Side) :
+theorem mask_projections (u v w : List α) (s : List Side) :
     ValidMask u v w s ↔ s.length = w.length ∧
       projection .first w s = u ∧ projection .second w s = v := by
   induction s generalizing u v w with
@@ -127,13 +127,13 @@ private theorem mask_projections (u v w : List α) (s : List Side) :
                   · exact ⟨h2,h3,h1.symm,h4⟩
                   · exact ⟨h3.symm,h1,h2,h4⟩
 
-private def step (p q : Side) : Nat := if p = .second ∧ q = .first then 1 else 0
+def step (p q : Side) : Nat := if p = .second ∧ q = .first then 1 else 0
 
-private def starts : Side → List Side → Nat
+def starts : Side → List Side → Nat
   | _, [] => 0
   | p, q :: s => step p q + starts q s
 
-private def lastSide (p : Side) (s : List Side) : Side := s.getLast?.getD p
+def lastSide (p : Side) (s : List Side) : Side := s.getLast?.getD p
 
 /-- Number of maximal nonempty runs of the inserted source. -/
 def rho (s : List Side) : Nat :=
@@ -144,7 +144,7 @@ private theorem last_independent (p q : Side) (s : List Side) (hs : s ≠ []) :
     lastSide p s = lastSide q s := by
   simp [lastSide, List.getLast?_eq_getLast hs]
 
-private theorem starts_append (p : Side) (s t : List Side) :
+theorem starts_append (p : Side) (s t : List Side) :
     starts p (s ++ t) = starts p s + starts (lastSide p s) t := by
   induction s generalizing p with
   | nil => simp [starts, lastSide]
@@ -200,7 +200,7 @@ private theorem loop_count (l : List Side) (a : Side) (g : List Side)
         simp only [countU,List.countP_cons,pure_head a g hg]
         cases a <;> cases b <;> simp_all [starts,step] <;> omega
 
-private theorem rho_starts (s : List Side) : rho s = starts .second s := by
+theorem rho_starts (s : List Side) : rho s = starts .second s := by
   cases s with
   | nil => rfl
   | cons a s =>
@@ -422,7 +422,7 @@ private theorem labels_full (E : BlockCut α) (N : List Side)
           simp [List.drop_drop, Nat.add_assoc]]
     simp only [List.append_assoc, List.take_append_drop]
 
-private theorem projection_append (q : Side) (a b : List α) (s t : List Side)
+theorem projection_append (q : Side) (a b : List α) (s t : List Side)
     (h : a.length = s.length) :
     projection q (a ++ b) (s ++ t) = projection q a s ++ projection q b t := by
   simp [projection, List.zip_append h]
@@ -464,7 +464,7 @@ private theorem back_valid (u v : List α) (E : BlockCut α) (N : List Side)
   simp only [true_and, List.append_assoc, List.append_cancel_left_eq]
   simp only [← List.append_assoc,List.append_cancel_right_eq]
 
-private theorem projection_pure (q t : Side) (a : List α) :
+theorem projection_pure (q t : Side) (a : List α) :
     projection q a (List.replicate a.length t) = if t = q then a else [] := by
   induction a with
   | nil => simp [projection]
@@ -500,7 +500,7 @@ private theorem starts_self (q : Side) (n : Nat) :
   | zero => rfl
   | succ n ih => cases q <;> simp_all [starts,step,List.replicate_succ]
 
-private theorem starts_pure (p q : Side) (n : Nat) (hn : 0 < n) :
+theorem starts_pure (p q : Side) (n : Nat) (hn : 0 < n) :
     starts p (List.replicate n q) = step p q := by
   cases n with
   | zero => omega
@@ -532,7 +532,7 @@ private theorem pure_decrease (P S : List Side) (a b : Nat)
   rw [hS] at hdiff
   cases q <;> simp [step] at * <;> omega
 
-private theorem intended_successor (u v : List α) (E : BlockCut α) (M : List Side)
+theorem intended_successor (u v : List α) (E : BlockCut α) (M : List Side)
     (hM : ValidMask u v (original E) M) (hE : Admissible E M) :
     ∃ N, ValidMask u v (successor E) N ∧ Commuting E N ∧ rho N + 1 = rho M := by
   obtain ⟨ha,hb,C,hf,hMC,hcase⟩ := (admissible_endpoints E M).mp hE
@@ -582,7 +582,7 @@ noncomputable def c (E : BlockCut α) (u v : List α) : WithTop Nat :=
 noncomputable def b (E : BlockCut α) (u v : List α) : WithTop Nat :=
   minRuns (fun N => ValidMask u v (successor E) N ∧ ¬ Commuting E N)
 
-private theorem le_minRuns (P : List Side → Prop) (k : WithTop Nat) :
+theorem le_minRuns (P : List Side → Prop) (k : WithTop Nat) :
     k ≤ minRuns P ↔ ∀ N, P N → k ≤ (rho N : WithTop Nat) := by
   classical
   unfold minRuns
@@ -599,7 +599,7 @@ private theorem le_minRuns (P : List Side → Prop) (k : WithTop Nat) :
     intro N hN
     exact (h ⟨rho N,N,hN,rfl⟩).elim
 
-private theorem minRuns_le (P : List Side → Prop) (N : List Side) (hN : P N) :
+theorem minRuns_le (P : List Side → Prop) (N : List Side) (hN : P N) :
     minRuns P ≤ (rho N : WithTop Nat) :=
   (le_minRuns P _).mp le_rfl N hN
 

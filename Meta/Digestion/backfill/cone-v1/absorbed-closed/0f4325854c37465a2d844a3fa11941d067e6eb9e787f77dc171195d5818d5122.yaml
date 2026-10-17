@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
-  normalized_sha256: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
-cas_ref: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
-coverage_gids:
-  - gid: D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
-    target_statement_id: sha256:e5b84f10cccadc68e043a285d07cc958abd3596b2566397f94ed194850894eba
-receipts:
-  unresolved_subitems: []

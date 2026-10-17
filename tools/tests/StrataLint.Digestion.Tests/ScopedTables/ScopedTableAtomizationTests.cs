@@ -60,7 +60,7 @@ public sealed class ScopedTableAtomizationTests
         }
         else
         {
-            Assert.Single(document.Claims, atom => Text(atom) == "| 独立 | 7 ");
+            Assert.Single(document.Claims, atom => Text(atom) == boundary + unrelatedTable);
         }
         AssertPartition(bytes, document);
     }
@@ -118,36 +118,26 @@ public sealed class ScopedTableAtomizationTests
 
         var parent = Assert.Single(document.Claims);
         Assert.Equal(expected, Text(parent));
-        var plan = Assert.Single(document.ClausePlans);
-        Assert.Equal(parent.Fingerprints, plan.Parent.Fingerprints);
-        Assert.Equal(2, plan.Children.Length);
-        Assert.Equal(bytes, plan.Segments.SelectMany(static segment => segment.Atom.RawBytes).ToArray());
+        Assert.Empty(document.ClausePlans);
         AssertPartition(bytes, document);
     }
 
     [Fact]
-    public void StandaloneRowsKeepTheirBytesAndIdentitiesAroundScopedClaims()
+    public void StandaloneTableRetainsItsHeaderAllRowsAndColumnMeaning()
     {
         const string table = "| 项 | 值 |\n| --- | --- |\n| 独立甲 | 1 |\n| 独立乙 | 2 |\n\n";
-        var standalone = Atomize(Encoding.UTF8.GetBytes(table));
-        var bytes = Encoding.UTF8.GetBytes(table + "## 命题 3.1\n\n" + Body
-            + "## 目录\n\n" + table);
-
+        var bytes = Encoding.UTF8.GetBytes("## 状态\n\n值表示响应强度。\n\n" + table
+            + "## 命题 3.1\n\n" + Body + "## 目录\n\n" + table);
         var document = Atomize(bytes);
-
-        // Markdig row spans exclude the closing pipe; it remains in the nonclaim slice.
-        Assert.Equal(new[] { "| 独立甲 | 1 ", "| 独立乙 | 2 " }, standalone.Claims.Select(Text));
-        foreach (var row in standalone.Claims)
-        {
-            var copies = document.Claims.Where(atom => Text(atom) == Text(row)).ToArray();
-            Assert.Equal(2, copies.Length);
-            Assert.All(copies, atom => Assert.Equal(row.Fingerprints, atom.Fingerprints));
-        }
+        Assert.Equal(3, document.Claims.Length);
+        Assert.Equal("## 状态\n\n值表示响应强度。\n\n" + table, Text(document.Claims[0]));
+        Assert.Equal("## 命题 3.1\n\n" + Body, Text(document.Claims[1]));
+        Assert.Equal("## 目录\n\n" + table, Text(document.Claims[2]));
         AssertPartition(bytes, document);
     }
 
     private static AtomizedTheoryDocument Atomize(byte[] bytes) =>
-        AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, TheoryAtomizerRules.None);
+        AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes);
 
     private static string Text(DigestionAtom atom) => Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
 
