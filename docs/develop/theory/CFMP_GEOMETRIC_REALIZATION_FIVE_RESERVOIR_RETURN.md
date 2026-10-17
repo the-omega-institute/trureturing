@@ -1219,3 +1219,93 @@ exhausts the two unused rho face occurrences. The preceding reductions
 therefore leave no mixed-flat configuration in the inherited paired
 five-reservoir class. No distinct-neighbor assumption, marked-graph
 connectedness, or closure of an external low-only region was introduced.
+
+## 284. The precise class and theorem
+
+Let N be a connected orientable compact 3-manifold with nonempty
+boundary, every boundary component a closed surface of genus at least
+two. Fix an actual finite ideal face-pairing triangulation of N, whose
+ideal vertex links are exactly those boundary surfaces. Let E be its
+actual global edge set, and suppose every original edge degree is at
+least six, counting all local edge occurrences.
+
+Suppose E=H disjoint union S with |H|<=5. In every tetrahedron choose
+an actual vertex frame whose six global labels, in order
+(12,13,14,34,24,23), are
+ (R,A,B,O,A,B), with A,B in H, A!=B, R,O in E.
+The chosen transverse pair can vary between tetrahedra. Axes may repeat
+or also belong to H. Self-gluings and parallel face pairs are allowed
+subject to the stated actual manifold conditions.
+
+Then the same original triangulation has a genuine nondegenerate
+hyperideal realization with totally geodesic boundary. This is a theorem
+for the displayed paired-frame class with at most five actual reservoir
+labels. It is not a theorem for arbitrary minimum-six triangulations.
+
+## 285. Strict angles and the common positive length input
+
+The original volume's Theorem 42.2 applies under exactly the manifold,
+boundary and minimum-degree hypotheses above. Starting from normalized
+angles a_o=2/d(P(o)), it transports vertex deficits across the actual
+link surfaces while preserving every original edge sum. For a boundary
+link S_nu the total deficit is -2*chi(S_nu)>0. The theorem gives strictly
+positive angles, strict local vertex sums below pi, and every original
+edge sum equal to 2*pi. No assumption that the initial unmodified angle
+assignment already has strict vertex sums is used.
+
+Restore the ideal vertices to the original finite face pairing. Its
+faces are all paired, giving the closed triangulated pseudo-manifold
+used by the hyperideal variational theorem; deleting the ideal vertices
+and truncating recovers N. The positive angle structure satisfies the
+hyperideal definition in Luo–Yang, *Volume and rigidity of hyperbolic
+polyhedral 3-manifolds*, arXiv:1404.5365v2, Definition 6.1.
+Their Theorem 6.3 and Theorem 1.4 supply a volume maximizer and a common
+positive global generalized length vector producing its angles. Every
+original edge still has angle sum 2*pi. Each tetrahedron is genuine or
+has two opposite pi angles and four zero angles. These are the reused
+inputs recorded in the original volume's Corollary 43.1; the present
+corollary does not claim this existence theorem as new.
+
+The source is https://arxiv.org/html/1404.5365v2; the relevant statements
+are Theorem 1.4, Definition 6.1, and Theorem 6.3(a),(c).
+
+## 286. Applying the completed flat exclusion
+
+The fixed paired-frame certificate uses actual global edge labels, so
+the common length vector automatically gives equal lengths in each
+repeated transverse pair. No independent per-tetrahedron assignment or
+new symmetry hypothesis is needed. All actual normal links are circles,
+and all original degrees and face maps are unchanged.
+
+For |H|<=4, the paired-reservoir volume's Theorem 172.1 already proves
+realization under these same original hypotheses. For |H|=5, suppose
+the variational length vector has at least one flat owner. It cannot
+have only flat owners: every flat owner has zero local vertex deficit,
+whereas the sum of the vertex deficits on each boundary link equals
+-2*pi*chi(S_nu)>0 by the original edge equations and the link Euler
+identity. Thus a nonempty flat set would give a mixed-flat configuration.
+It satisfies the exact five-reservoir assumptions of Section 184 and
+the subsequent original-length and face-transport reductions. The
+completed exclusion through Section 283 rules this out. Hence every
+tetrahedron is genuine.
+
+## 287. Realization of the original face pairing
+
+Each paired hexagonal face has the same three alternating original
+edge lengths on its two sides, because the metric uses one length for
+each actual global edge. A right-angled hyperbolic hexagon is determined
+by those lengths, so the prescribed face correspondence is realized by
+an isometry. Glue the genuine truncated hyperideal tetrahedra using
+these isometries. The complete original angle sums 2*pi remove all cone
+defects along the glued edges. The truncation faces meet the hexagonal
+faces orthogonally and glue to the boundary surfaces without bending;
+the boundary is totally geodesic. The actual manifold hypothesis ensures
+the prescribed face quotient is N itself, including repeated labels and
+self-gluings. This realizes the original triangulation as claimed.
+
+No two-copy seed, separate genuine-witness premise, dual-girth condition,
+prohibition of parallel face pairs, role balance or tetrahedron-transitive
+action is added. The strict-angle construction and Luo–Yang existence
+step are reused; the new five-reservoir input is the complete flat
+exclusion. No example separating this class from every earlier criterion,
+Lean certification, or unrestricted CFMP conclusion is claimed.
