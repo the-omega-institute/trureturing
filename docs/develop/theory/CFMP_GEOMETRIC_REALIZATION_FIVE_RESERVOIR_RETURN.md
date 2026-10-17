@@ -2100,3 +2100,135 @@ With all six labels witnessed, the additional reservoir may exceed the
 upper-gap threshold and participate in new genuine return roles. The
 published five-reservoir role exhaustion does not cover those roles.
 No six-reservoir realization or unrestricted CFMP conclusion follows.
+
+## 309. Statement and dependencies
+
+Retain the actual finite paired-framework hypotheses: connected circular
+normal links, degree at least six, fixed distinct-transverse paired frames,
+one common positive generalized length vector and every original 2*pi
+edge equation. Assume exactly six reservoir labels and a nonempty flat set.
+Choose the maximal-selected escape and upper-gap label as before:
+
+    H={M,C,D,Z,U,V}, tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+    u>T(m,z)>m-2.
+
+Use the six-reservoir witness theorem: every reservoir is genuinely
+witnessed and every flat selects its axes. Hence each reservoir has at
+most one original flat pi slot. The arbitrary-reservoir upper-witness
+result also excludes every flat transverse occurrence of any label
+whose value exceeds m-2. The one-upper-gap lemma allows arbitrarily
+many other labels of value at most m-2.
+
+**Theorem.** There are at most two actual flat tetrahedron owners.
+This is a bound on the whole original flat set, not just one face
+component. It does not bound the number of genuine owners, remove
+external low-only regions, or prove six-reservoir flat exclusion.
+
+## 310. The low sixth-label case
+
+Suppose v<=m-2. The one-upper-gap complete-star lemma, with low set
+{C,D,V}, gives u>m. Thus neither U nor Z can be a selected flat axis.
+Nor can M,Z,U be transverse in a flat. Every flat's reservoir pair
+therefore lies in {C,D,V}. The source sigma, with pair {C,D}, uses the
+unique M pi slot. Every other flat avoids M entirely as a selected axis.
+
+Any such other flat has at least one selected H axis, since two special
+axes violate the fixed-pair barrier. Choose its largest selected H
+value x. Its other axis is either H-valued at most x or special with
+shifted value strictly below the sum of its transverse pair values.
+The axial-flat product implies that x is at least one plus that sum.
+Thus X lies outside its transverse pair and is numerically larger than
+both members. Since its available H axes and pair all lie in {C,D,V},
+it selects the unique numerically largest member A of this three-label
+set and has the other two labels as its pair. If the numerical maximum
+is tied, there is no such owner at all.
+
+The genuine A witness gives p_A<=1, so at most one such additional
+owner exists. Together with sigma this gives at most two flat owners.
+An A pi slot already used by sigma only reduces this bound.
+
+## 311. The two-upper-gap case first gives at most three
+
+Suppose v>m-2. No flat has any of M,Z,U,V transversely, so every flat
+has reservoir pair {C,D}. At least one selected H axis is present in
+each flat. Choose its largest selected H value x. As in Section310,
+axial flatness implies x>=1+c+d, so X cannot be C or D. It is not Z,
+which has p_Z=0. Thus every flat selects at least one of M,U,V.
+
+Each of these three genuinely witnessed labels has at most one pi
+slot, so there are at most three actual flat owners. Suppose there
+are exactly three. Each must use exactly one of the available M,U,V
+slots, and all three are used. Therefore p_M=p_U=p_V=1 and
+m-2<u,v<=m. Every H label except Z has value at most m, and z>m.
+For each flat, its selected label X in {M,U,V} is its largest H axis:
+its other axis cannot use another one of M,U,V, since the three owners
+already require all three distinct slots. Hence each chosen X satisfies
+x>=1+c+d as well as x>m-2.
+
+## 312. Each of the three selected axes forces a different dominant Z run
+
+Fix one of these three flat owners and its selected X. Its complete
+genuine angle budget is pi, and its only flat X occurrence is its one
+axial pi slot: flat transverse X occurrences are excluded by x>m-2,
+and axial zeros do not occur because every flat selects its axes.
+
+Its entire X circle cannot be axial. Otherwise its fixed pair is
+{C,D}; there are g=degree(X)-1>=5 genuine X occurrences. They have
+distinct owners, since two X axes with x>=1+c+d would be flat.
+The dominant-axis inequality gives 2*theta_X+beta_C+beta_D>pi for each.
+Their actual C/D expense is therefore greater than
+2*g*pi-4*pi>=6*pi, contrary to complete C/D capacity 4*pi.
+
+Thus the maximal axial X run through the selected flat is proper.
+Its two distinct transverse boundary X slots are genuine; their angles
+sum to at most pi, so choose one at most pi/2. Actual face transport
+gives an owner (W,X,A,B,X,A), {A,B}={C,D}. The exact transverse-X
+cosine numerator increases with w and at w0=1+x+a equals
+
+    [a+x*(1+x+a)]*(1+a+b-x)<=0.
+
+Consequently w>=1+x+a>m, because x>m-2 and a>1. The special-edge
+barrier excludes W in S. Among H only Z has value greater than m,
+so W=Z. This owner gives a dominant axial Z run with pair {X,A}.
+For distinct X in {M,U,V}, these fixed pairs are distinct: A belongs
+to {C,D}, disjoint from all three X labels.
+
+## 313. The actual Z circle allows at most one such dominant run
+
+All Z occurrences are genuine: every flat is axial-selected, p_Z=0,
+and flat transverse Z occurrences have already been excluded. A wholly
+axial Z circle would have one fixed pair, so cannot contain the three
+distinct pairs just obtained. Their runs are proper.
+
+At a boundary of a dominant axial Z run with pair {A,B}, the genuine
+receiver has frame (B,Z,A,Q,Z,A). Every H axis is at most z and every
+special axis has q<1+z+a, so in all cases q<1+z+a. The increasing
+transverse-Z numerator at this upper endpoint is
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Thus the boundary Z angle is greater than pi/2. The complete Z budget
+permits only one actual owner rho with two such transverse slots.
+Every dominant run uses both distinct slots of rho as its boundaries.
+
+At a transverse Z slot of rho, let its companion be A and its axes
+B,Q. The two complementary face pairs are {A,B} and {A,Q}.
+If both sides bordered dominant axial runs, dominance would give
+z>=1+a+b and z>=1+a+q, hence
+
+    (z-a)^2 >= (b+1)*(q+1).
+
+This contradicts the genuine strict inequality for rho. Each of its
+two original Z slots therefore supports at most one dominant-run
+boundary incidence. One proper run already uses both. Two distinct
+proper dominant runs are impossible, a contradiction.
+
+The proposed three-flat case is excluded. Combined with Sections310–311,
+there are at most two actual flat owners, as claimed. QED.
+
+The argument allows arbitrary repeated axes, repeated visits in the
+original normal circles and distinct-face self-gluings. The remaining
+one-flat and two-flat six-reservoir configurations still require new
+joint geometric and face-transport arguments; this theorem alone does
+not assert that either residual configuration exists or is impossible.
