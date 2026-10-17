@@ -44,7 +44,7 @@ private theorem boundActual_law : boundArena.{u,v}.Law boundActual := by
 private abbrev unitAlphabet (_ : ULift.{u} Unit) := ULift.{v} Unit
 
 private def unitSystem : @LanguageSystem (ULift.{u} Unit) unitAlphabet
-    (fun _ => ⊥) where
+    (fun _ => inferInstance) where
   language _ := Set.univ
   nonempty _ := ⟨fun _ _ => ⟨()⟩, trivial⟩
   closed _ := isClosed_univ
@@ -53,8 +53,9 @@ private def unitSystem : @LanguageSystem (ULift.{u} Unit) unitAlphabet
     apply Finite.of_injective (fun _ : Followers (Set.univ : Set (ScopedWord unitAlphabet _)) => ())
     intro q r _
     apply Subtype.ext
-    obtain ⟨u, rfl, _⟩ := q.2
-    obtain ⟨v, rfl, _⟩ := r.2
+    obtain ⟨u, hu, _⟩ := q.2
+    obtain ⟨v, hv, _⟩ := r.2
+    rw [hu, hv]
     rfl
   image_eq h := by
     ext z
@@ -67,7 +68,7 @@ private def unitSystem : @LanguageSystem (ULift.{u} Unit) unitAlphabet
 
 private theorem boundRejected_law : ¬ boundArena.{u,v}.Law boundRejected := by
   intro h
-  have hb := @h (ULift.{u} Unit) unitAlphabet (fun _ => ⊥) unitSystem
+  have hb := @h (ULift.{u} Unit) unitAlphabet (fun _ => inferInstance) unitSystem
     (fun _ => inferInstance) ∅
   change false = true at hb
   contradiction
@@ -112,7 +113,7 @@ noncomputable def registration_bound : Contract.Registration.{_,_,_,0,0,0,_,_,_,
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body","body","body","body","body","body","body"]
+      path := #["body","body","body","body","body","body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -123,4 +124,5 @@ noncomputable def registration_bound : Contract.Registration.{_,_,_,0,0,0,_,_,_,
 
 #print axioms boundRegistration
 
+end
 end Reg.D5.S1.Dynamics.Shadowing.CoherentFollowerCover

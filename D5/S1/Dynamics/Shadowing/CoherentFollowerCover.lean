@@ -68,7 +68,6 @@ def follower {A : Type u} (L : Set (Word A)) (u : List A) : Set (Word A) :=
 def derivative {A : Type u} (q : Set (Word A)) (a : A) : Set (Word A) :=
   follower q [a]
 
-@[simp] private theorem follower_nil {A : Type u} (L : Set (Word A)) : follower L [] = L := rfl
 
 private theorem follower_append {A : Type u} (L : Set (Word A)) (u v : List A) :
     follower L (u ++ v) = follower (follower L u) v := by
@@ -253,21 +252,9 @@ def restrictLetter {F G : Finset I} (h : F ⊆ G) (a : Letter A G) : Letter A F 
 def restrictWord {F G : Finset I} (h : F ⊆ G) (z : ScopedWord A G) : ScopedWord A F :=
   fun n => restrictLetter A h (z n)
 
-@[simp] private theorem restrictLetter_refl (F : Finset I) (a : Letter A F) :
-    restrictLetter A (Finset.Subset.refl F) a = a := rfl
 
-@[simp] private theorem restrictWord_refl (F : Finset I) (z : ScopedWord A F) :
-    restrictWord A (Finset.Subset.refl F) z = z := rfl
 
-private theorem restrictLetter_comp {F G H : Finset I} (hFG : F ⊆ G) (hGH : G ⊆ H)
-    (a : Letter A H) :
-    restrictLetter A hFG (restrictLetter A hGH a) =
-      restrictLetter A (Finset.Subset.trans hFG hGH) a := rfl
 
-private theorem restrictWord_comp {F G H : Finset I} (hFG : F ⊆ G) (hGH : G ⊆ H)
-    (z : ScopedWord A H) :
-    restrictWord A hFG (restrictWord A hGH z) =
-      restrictWord A (Finset.Subset.trans hFG hGH) z := rfl
 
 private theorem restrict_prepend {F G : Finset I} (h : F ⊆ G)
     (u : List (Letter A G)) (z : ScopedWord A G) :
@@ -410,12 +397,6 @@ def vertexOf (F : Finset I) (u : List (Letter A F)) (a : Letter A F)
     rw [S.vector_top, derivative_follower]
     exact hua⟩
 
-private theorem edge_vertexOf (F : Finset I) (u : List (Letter A F)) (a b : Letter A F)
-    (hu : S.IsPrefix F u) (hua : S.IsPrefix F (u ++ [a]))
-    (huab : S.IsPrefix F ((u ++ [a]) ++ [b])) :
-    S.Edge (S.vertexOf F u a hu hua) (S.vertexOf F (u ++ [a]) b hua huab) := by
-  intro H
-  exact S.vector_snoc F u a H
 
 /-- Whole paths, with every vertex allowed at time zero. -/
 def Path (F : Finset I) :=
@@ -550,7 +531,6 @@ private theorem vertex_snoc_prefix {F : Finset I} (v : S.Vertex F) (u : List (Le
   change (derivative (v.context.1 (topFace F)) v.symbol).Nonempty at h
   have heq : v.context.1 (topFace F) = follower (S.language F) u :=
     (congrFun hs (topFace F)).trans (S.vector_top F u)
-  change (derivative (v.context.1 (topFace F)) v.symbol).Nonempty at h
   change (follower (S.language F) (u ++ [v.symbol])).Nonempty
   rw [heq, derivative_follower] at h
   exact h
@@ -742,6 +722,9 @@ theorem coherent_follower_cover [∀ i, Finite (A i)] :
     (∀ {F G H : Finset I} (hFG : F ⊆ G) (hGH : G ⊆ H) (p : S.Path H),
       S.restrictPath hFG (S.restrictPath hGH p) =
         S.restrictPath (Finset.Subset.trans hFG hGH) p) ∧
+    (∀ {F G : Finset I} (h : F ⊆ G),
+      ∀ p ∈ graphLanguage (S.Edge (F := F)) id, ∀ m,
+        PrefixLift (S.Edge (F := G)) (S.restrictVertex h) p m) ∧
     (∀ F, letI := Fintype.ofFinite (Face F)
       Nat.card (S.Vertex F) ≤ Nat.card (Letter A F) *
         ∏ H : Face F, Nat.card (Followers (S.language H.1))) ∧
@@ -752,7 +735,7 @@ theorem coherent_follower_cover [∀ i, Finite (A i)] :
     S.restrictVertex_refl, fun hFG hGH => S.restrictVertex_comp hFG hGH,
     fun h => S.restrictVertex_label h, fun h => S.restrictVertex_edge h,
     S.restrictPath_refl, fun hFG hGH => S.restrictPath_comp hFG hGH,
-    S.vertex_card_bound_product, S.empty_singleton_loop⟩
+    fun h => S.every_prefix_lifts h, S.vertex_card_bound_product, S.empty_singleton_loop⟩
 
 #print axioms path_in_initial_follower
 #print axioms graphLanguage_exact
