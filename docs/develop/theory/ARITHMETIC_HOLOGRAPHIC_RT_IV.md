@@ -1079,3 +1079,196 @@ The implication concerns positive-subquarter local minima on the full calibrated
 (1,1,1,1),\ (2,2,1,0),\ (2,1,1,1),\ (2,2,2,0),\ (2,2,1,1),\ (2,2,2,1)
 \]
 remain outside this conclusion, as do other unequal and lower ranks. The calibration reduction in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md) can change rank and is not asserted to preserve the local-minimum class here. Thus it does not extend this subclass implication to every leaking channel. The unrestricted global optimum remains in the interval \([\sqrt3-3/2,1/4]\).
+
+## 105. Complementary-polar exclusion from the same principal normer
+
+### 105.1. Original domain and the complementary-polar hypothesis
+
+Retain the original calibrated \(\mathbb C^8\to\mathbb C^4\) channels, fixed correlated encoding, four two-coordinate fibres and unhalved arbitrary-reference error \(F(G,H)\) of (104.1). Suppose \((G,H)\) is a local minimum on the full domain \(\mathcal E^2\), with
+\[
+\operatorname{rank}G=7,\qquad \operatorname{rank}H=6,
+\qquad 0<t=F(G,H)<\tfrac14.
+\tag{105.1}
+\]
+Suppose that the support \(S\) of the full kernel vector of \(G\) has occupancy \((2,1,1,0)\). Label its whole original fibre \(F=\{1,2\}\) and its singleton coordinates \(J=\{3,4\}\); the two singleton partners remain outside \(S\).
+
+Use inner products linear in their second argument and choose the supported \(H\) record basis so that \(h_1=e_1,h_2=e_2\). The additional complementary-polar hypothesis is
+\[
+|\langle h_1,h_3\rangle|=|\langle h_2,h_4\rangle|=c,
+\qquad
+|\langle h_2,h_3\rangle|=|\langle h_1,h_4\rangle|=s,
+\qquad c,s\ge0,\quad c^2+s^2=1.
+\tag{105.2}
+\]
+This is a restriction on the two polar angles; for \(c\ne s\) they are unequal. No symmetry is imposed on the outside records or on the other Gram.
+
+**Theorem 105.1.** There is no full-domain local minimum satisfying (105.1), the stated support condition and (105.2).
+
+For the proof, [RT III §§95–97](ARITHMETIC_HOLOGRAPHIC_RT_III.md) give
+\[
+\operatorname{rank}H_S=\operatorname{rank}\mathsf R=2,
+\qquad G_S=H_S\odot\overline{\mathsf R},
+\qquad \mathsf R\succeq0,
+\qquad \mathsf R_{ii}=1,
+\qquad \mathsf R\operatorname{diag}(\overline a)H_S=0,
+\tag{105.3}
+\]
+where \(a\) spans the full kernel of \(G\) and all four supported coordinates are nonzero. The same sections give equality of principal and full complete norms and unrestricted principal one-party best responses. RT III §99 gives uniqueness of every principal norming pair, including singular competitors, and positive definiteness of its density. The same original common normer satisfies
+\[
+W_{ij}=-\frac{\alpha a_i\overline a_j}{2\overline H_{ij}},
+\qquad \alpha>0,
+\tag{105.4}
+\]
+on pairs in distinct supported original fibres. These statements concern a local minimum in the full original domain. They do not assert a joint local minimum on a principal or fixed-rank domain.
+
+### 105.2. Phase normalization and endpoints
+
+If \(c=0\) or \(s=0\), an original cross-fibre product entry vanishes and its matrix-unit error is \(1/2\), contradicting (105.1). Thus \(c,s>0\). Reciprocal diagonal phase changes of the full Grams preserve every product coefficient, positivity, ranks and the original fibre blocks. Together with a record-space basis choice they put the supported records in the form
+\[
+h_3=(cv,s\overline v),\qquad
+h_4=(s\overline v,cv),\qquad |v|=1.
+\tag{105.5}
+\]
+Indeed, let \(\theta_{11},\theta_{12},\theta_{21},\theta_{22}\) be the phases of the four entries of \(H_{FJ}\), with the column labels referring to 3 and 4. Choose \(\theta\) such that
+\[
+4\theta=\theta_{11}+\theta_{22}-\theta_{12}-\theta_{21}
+\pmod {2\pi}.
+\]
+With the convention \(H'_{ij}=e^{-i\phi_i}H_{ij}e^{i\phi_j}\), the choices
+\[
+\phi_1=0,\quad \phi_3=\theta-\theta_{11},\quad
+\phi_4=-\theta-\theta_{12},\quad
+\phi_2=2\theta-\theta_{11}+\theta_{21}
+\]
+make the diagonal cross phases \(\theta\) and the off-diagonal cross phases \(-\theta\). Apply the reciprocal phases to \(G\) on the same eight coordinates, and take \(v=e^{i\theta}\). This normalization does not make \(G\) or an outside record real.
+
+Write
+\[
+v^2=p+iq,\qquad p,q\in\mathbb R,\quad p^2+q^2=1,
+\qquad h=H_{34}=2cs p\in\mathbb R.
+\tag{105.6}
+\]
+If \(c=s\), both singleton \(H\) records are unbiased and RT III §102 excludes the case. If \(q=0\), the cross-ratio phase is real, since \(v^4=1\); thus \(H_S\) admits a real diagonal phase gauge, excluded by RT III §101. If \(p=0\), the entry \(H_{34}\) vanishes and again gives matrix-unit error \(1/2\). It remains to consider
+\[
+c,s>0,\qquad c^2-s^2\ne0,\qquad pq\ne0.
+\tag{105.7}
+\]
+
+### 105.3. Symmetry of the same principal norming pair
+
+Let \(\Pi\) swap 1 with 2 and 3 with 4. Formula (105.5) gives \(\Pi H_S\Pi=H_S\), since interchanging \(e_1,e_2\) implements that permutation on the records. Also \(\Pi T_S\Pi=T_S\). The principal density domain, consisting of one unrestricted \(F\) block and two scalar singleton blocks, is invariant under \(\Pi\).
+
+The reflected principal Gram \(\Pi G_S\Pi\) and its midpoint with \(G_S\) are feasible. The fixed-\(H_S\) principal objective is convex and invariant under \(\Pi\). The full-domain compression and completion result makes \(G_S\) a global principal one-party best response, so all three Grams have minimum value \(t\). Any norming pair at the midpoint norms both endpoints: its endpoint objectives are at most \(t\), while their average is \(t\). Uniqueness of every principal norming pair at the original coefficient forces the midpoint pair to be the same original \((\rho,W)\). Reflecting it gives another midpoint normer. Therefore
+\[
+\Pi\rho\Pi=\rho,\qquad \Pi W\Pi=W.
+\tag{105.8}
+\]
+This argument neither assumes symmetry of the full physical \(H\) nor replaces the physical pair by an average of the same rank. The permutation extends to the eight original coordinates by also exchanging the singleton partners and leaving the fourth fibre fixed. That extension preserves the target and original fibre partition; invariance of outside data is not required.
+
+Since \(H_{13}=H_{24}\) and \(H_{14}=H_{23}\), (105.4) and (105.8) imply
+\[
+a_1\overline a_3=a_2\overline a_4,
+\qquad a_1\overline a_4=a_2\overline a_3.
+\]
+All factors are nonzero. Dividing the two equations gives \(a_4=\sigma a_3\) for some \(\sigma\in\{1,-1\}\), and either equation gives \(a_2=\sigma a_1\). Thus
+\[
+a_S=(a,\sigma a,b,\sigma b),\qquad
+\sigma\in\{1,-1\},\qquad a,b\ne0.
+\tag{105.9}
+\]
+Both parity branches are retained. The ratio \(r=a/b\) may be genuinely complex.
+
+### 105.4. Original unit diagonals force quotient symmetry
+
+Use the orthonormal parity basis \(F_+,F_-,J_+,J_-\), where each pair is the sum and difference of its original coordinates divided by \(\sqrt2\). Put
+\[
+h_+=cv+s\overline v,
+\qquad h_-=cv-s\overline v.
+\tag{105.10}
+\]
+In parity sector \(\tau\in\{1,-1\}\), the \(H_S\) block has rank one and range vector \((1,\overline{h_\tau})\). From (105.3) and the two rank equalities,
+\[
+\ker\mathsf R
+=\operatorname{range}\bigl(\operatorname{diag}(\overline a)H_S\bigr).
+\tag{105.11}
+\]
+Multiplication by \(\operatorname{diag}(\overline a)\) sends parity \(\tau\) to \(\sigma\tau\). Taking the orthogonal complement in (105.11) shows that \(\operatorname{range}\mathsf R\) has basis
+\[
+w_+=(-h_\sigma/r,0,1,0)^T,
+\qquad
+w_-=(0,-h_{-\sigma}/r,0,1)^T.
+\tag{105.12}
+\]
+Consequently
+\[
+\mathsf R=(w_+,w_-)M(w_+,w_-)^*,\qquad M\succ0,
+\]
+for a two-by-two Hermitian matrix \(M\). The two original \(J\) diagonal entries equal one, so \(\operatorname{Tr}M=2\) and \(\operatorname{Re}M_{12}=0\). Equality of the original \(F\) diagonal entries similarly gives
+\[
+\operatorname{Re}\bigl(M_{12}h_\sigma\overline{h_{-\sigma}}\bigr)=0.
+\tag{105.13}
+\]
+But \(\operatorname{Im}(h_+\overline{h_-})=-2csq\ne0\). Since \(M_{12}\) is purely imaginary, (105.13) forces \(M_{12}=0\). Hence
+\[
+M=\operatorname{diag}(1+z,1-z),\qquad -1<z<1,
+\qquad |r|^2=1+\sigma hz>0.
+\tag{105.14}
+\]
+The last identity is the original \(F\) diagonal normalization. It follows that \(\mathsf R\), and therefore the actual \(G_S=H_S\odot\overline{\mathsf R}\), commute with \(\Pi\). This is derived from the original unit diagonals and nonreal phase, rather than imposed on an averaged Gram.
+
+In the original four supported coordinates the same formulas give
+\[
+\mathsf R_{13}=-\frac{cv+\sigma s\overline v z}{r},\qquad
+\mathsf R_{14}=-\frac{\sigma s\overline v+cvz}{r},\qquad
+\mathsf R_{34}=z,
+\tag{105.15}
+\]
+and hence
+\[
+G_{13}=-\frac{c^2+\sigma cs v^2z}{\overline r},\qquad
+G_{14}=-\frac{\sigma s^2+cs\overline v^2z}{\overline r}.
+\tag{105.16}
+\]
+The other two cross entries follow by \(\Pi\) symmetry. Reality of \(z\) is a consequence of the preceding diagonal constraints.
+
+### 105.5. Antisymmetric-mode contradiction
+
+Let \(L=(T-G\odot H)_S\), \(E=L_{FJ}\) and \(C=W_{FJ}\). Both \(E\) and \(C\) commute with the two-coordinate swap. The complete-norm complementary equations for the same original \((\rho,W)\) imply
+\[
+EC^*=\tfrac t2\rho_F,
+\tag{105.17}
+\]
+so \(EC^*\) is Hermitian. For clarity, the principal dual is
+\[
+\min\{u:Z\succeq0,\ Z-2L\succeq0,
+\ Z_{FF}\preceq uI_2,\ Z_{33},Z_{44}\le u\}.
+\]
+Strict feasibility gives attained primal and dual optima. Positive definiteness of \(\rho_F\) gives \(Z_{FF}=tI_2\). The products \((Z-2L)W=0\) and \(Z(\rho-W)=0\) imply \(2LW=Z\rho\); its \(F\) block is (105.17), since \(L_{FF}=0\) and \(\rho_{FJ}=0\). This is the finite-dimensional semidefinite norm framework of J. Watrous, [Semidefinite Programs for Completely Bounded Norms](https://theoryofcomputing.org/articles/v005a011/), Theory of Computing 5 (2009), 217–238, applied to the original principal density domain.
+
+The antisymmetric eigenvalues are \(e_-=E_{13}-E_{14}\) and \(c_-=C_{13}-C_{14}\). The target cross block is \(J_2/2\), whose antisymmetric eigenvalue is zero. Equations (105.4) and (105.16) give
+\[
+\begin{aligned}
+e_-&=\frac{c^3v-\sigma s^3\overline v
++z(\sigma c^2s v^3-cs^2\overline v^3)}{\overline r},\\
+c_-&=-\frac{\alpha r|b|^2}{2}
+\left(\frac vc-\frac{\sigma\overline v}s\right).
+\end{aligned}
+\tag{105.18}
+\]
+Using \(c^2+s^2=1\) and \(v^2=p+iq\), direct multiplication yields
+\[
+\begin{aligned}
+\operatorname{Im}(e_-\overline{c_-})
+&=\frac{\alpha|b|^2}{2}(c^2-s^2)q
+\left(\frac\sigma{cs}+2pz\right)\\
+&=\frac{\alpha\sigma|a|^2}{2cs}(c^2-s^2)q\ne0.
+\end{aligned}
+\tag{105.19}
+\]
+For the first equality, multiply the numerator of \(e_-\) by \(\overline v/c-\sigma v/s\). Its imaginary part is
+\[
+-(c^2-s^2)q\left(\frac\sigma{cs}+2pz\right).
+\]
+The negative common-stress factor in \(c_-\) gives the first line of (105.19). The second line is precisely \(\sigma+hz=\sigma|r|^2\), from (105.14). Every final factor is nonzero by (105.4), (105.7) and (105.9), for both values of \(\sigma\) and both signs of \(q\). Yet (105.17), diagonalized in the parity basis, requires \(e_-\overline{c_-}\) to be real. This contradiction proves Theorem 105.1. \(\square\)
+
+The conclusion is restricted to the stated full-domain local-minimum rank and support class. It gives neither a uniform gap nor a quarter bound for every nonstationary complementary-polar pair. Together with Theorem 104.1 it excludes equal and complementary polar angles in that class; general unequal, noncomplementary polar angles and the other remaining rank/support classes are unresolved. The calibration reduction in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md) does not preserve the ranks or local-minimum property used here, so it does not extend this exclusion to arbitrary leaking channels. The unrestricted global optimum remains between \(\sqrt3-3/2\) and \(1/4\).
