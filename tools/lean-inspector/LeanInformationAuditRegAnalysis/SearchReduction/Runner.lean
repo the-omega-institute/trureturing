@@ -86,6 +86,7 @@ rebuilt from the isolated environment, not a process-global search cache. -/
 abbrev Fact := Name × List Name
 structure FactIndex where
   statements : Std.HashMap UInt64 (Array Name) := {}
+  statementHeads : Std.HashMap (Nat × Name) (Array Name) := {}
   projections : LazyDiscrTree Fact := {}
 
 private partial def indexType (index : LazyDiscrTree.PreDiscrTree Fact)
@@ -115,6 +116,16 @@ private partial def telescopeBody : Expr → Expr
   | .mdata _ body => telescopeBody body
   | e => e
 
+/-- A coarse retrieval key keeps definitionally equal full statements in reach
+when their nested compiler-generated matchers have different constant names.
+The key is never evidence of equality: each hit still requires `isDefEq`. -/
+private partial def statementHead : Expr → Nat × Name
+  | .forallE _ _ body _ =>
+    let (arity, head) := statementHead body
+    (arity + 1, head)
+  | .mdata _ body => statementHead body
+  | e => (0, e.getAppFn.constName?.getD .anonymous)
+
 /-- A cheap syntactic prefilter avoids normalizing arbitrary mathematical
 predicates merely to discover that they contain no logical pair. -/
 private partial def pairHead (env : Environment) (expression : Expr)
@@ -135,6 +146,7 @@ private partial def pairHead (env : Environment) (expression : Expr)
 def factIndex : MetaM FactIndex := do
   let mut index : LazyDiscrTree.PreDiscrTree Fact := {}
   let mut statements : Std.HashMap UInt64 (Array Name) := {}
+  let mut statementHeads : Std.HashMap (Nat × Name) (Array Name) := {}
   let env ← getEnv
   let names := env.constants.toList.toArray.qsort (fun a b => Name.quickLt a.1 b.1)
   for (name, info) in names do
@@ -142,6 +154,10 @@ def factIndex : MetaM FactIndex := do
     if name.isInternalDetail && !isPrivateName name then continue
     let key := info.type.hash
     statements := statements.insert key ((statements[key]?.getD #[]).push name)
+    let head := statementHead info.type
+    unless head.2.isAnonymous do
+      statementHeads := statementHeads.insert head
+        ((statementHeads[head]?.getD #[]).push name)
     unless pairHead env (telescopeBody info.type) do continue
     let initial ← get
     index ← forallTelescopeReducing info.type fun _ body => do
@@ -150,7 +166,7 @@ def factIndex : MetaM FactIndex := do
         indexType index name [] body
       else pure index
     set initial
-  return {statements, projections := index.toLazy}
+  return {statements, statementHeads, projections := index.toLazy}
 
 private def factExpr (fact : Fact) : MetaM Expr := do
   let mut e ← mkConstWithFreshMVarLevels fact.1
@@ -167,6 +183,18 @@ partial def structural (goal : MVarId) (extra : Array Name) :
   let type ← withTransparency .reducible <| whnf original
   for key in #[original.hash, type.hash] do
     for name in (← get).statements[key]?.getD #[] do
+      let before ← (saveState : MetaM Meta.SavedState)
+      let value ← mkConstWithFreshMVarLevels name
+      if ← isDefEq (← inferType value) original then
+        goal.assign value
+        return #[]
+      (before.restore : MetaM Unit)
+  let originalHead := statementHead original
+  let reducedHead := statementHead type
+  let heads := if originalHead == reducedHead then #[originalHead]
+    else #[originalHead, reducedHead]
+  for key in heads do
+    for name in (← get).statementHeads[key]?.getD #[] do
       let before ← (saveState : MetaM Meta.SavedState)
       let value ← mkConstWithFreshMVarLevels name
       if ← isDefEq (← inferType value) original then
