@@ -33,8 +33,18 @@ internal sealed class SingleEntrySecularRootDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
-    private static Formula Call(string name, params Formula[] args) =>
-        Seq(Operatorname(name), Open, Join(Seq(Comma, Sp), args), Close);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var items = new System.Collections.Generic.List<Formula>
+            { Operatorname, Grp(F.Id(name)), Open };
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (i > 0) { items.Add(Comma); items.Add(Sp); }
+            items.Add(args[i]);
+        }
+        items.Add(Close);
+        return Seq(items.ToArray());
+    }
     private static Formula Rel(Formula a, FormulaRelationOperator op, Formula b) => new Formula.Relation(a, op, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);

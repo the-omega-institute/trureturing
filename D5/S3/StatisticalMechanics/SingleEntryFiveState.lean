@@ -1,0 +1,420 @@
+/- GID: D5/S3/StatisticalMechanics/SingleEntryFiveState
+   generality: G
+   mirror-B: D5/B/S3/StatisticalMechanics/SingleEntryFiveState
+   mirror-E: none(waiver:five-state-forward-equations)
+   anchors: []
+   utility: none
+   digest: The repressed initial condition yields strict positive two-site association. -/
+
+import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Tactic
+
+/-! # The two-site single-entry network
+
+States are ordered as R, 00, 10, 01, 11. The forward equations are the
+independent anchor for the trajectory; association is not a trajectory premise.
+-/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
+
+noncomputable section
+open scoped BigOperators ComplexOrder
+open Set Matrix
+namespace D5.S3.StatisticalMechanics.SingleEntryFiveState
+
+private theorem constant_on_nonneg (f : ℝ → ℝ)
+    (hf : ∀ t, 0 ≤ t → HasDerivAt f 0 t) (t : ℝ) (ht : 0 ≤ t) : f t = f 0 := by
+  have hn := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
+    (f := f) (f' := fun _ => 0) (C := 0)
+    (fun x hx => (hf x hx.1).hasDerivWithinAt) (by simp)
+    (convex_Icc (0 : ℝ) t) (left_mem_Icc.mpr ht) (right_mem_Icc.mpr ht)
+  have he : f t - f 0 = 0 := norm_le_zero_iff.mp (by simpa using hn)
+  exact sub_eq_zero.mp he
+
+private theorem scalar_decay (f : ℝ → ℝ) (c : ℝ)
+    (hf : ∀ t, 0 ≤ t → HasDerivAt f (-c * f t) t)
+    (t : ℝ) (ht : 0 ≤ t) : f t = f 0 * Real.exp (-c * t) := by
+  have hfac (x : ℝ) (hx : 0 ≤ x) :
+      HasDerivAt (fun u => Real.exp (c * u) * f u) 0 x := by
+    convert (((hasDerivAt_id x).const_mul c).exp.mul (hf x hx)) using 1 <;>
+      first | rfl | (dsimp; ring)
+  have hc := constant_on_nonneg _ hfac t ht
+  simp only [mul_zero, Real.exp_zero, one_mul] at hc
+  have he := Real.exp_ne_zero (c * t)
+  rw [neg_mul, Real.exp_neg]
+  field_simp
+  nlinarith
+
+private theorem positive_forcing (f g : ℝ → ℝ) (c : ℝ)
+    (hf0 : f 0 = 0)
+    (hf : ∀ t, 0 ≤ t → HasDerivAt f (-c * f t + g t) t)
+    (hg : ∀ t, 0 < t → 0 < g t) (t : ℝ) (ht : 0 < t) : 0 < f t := by
+  let H := fun u => Real.exp (c * u) * f u
+  have hH (x : ℝ) (hx : 0 ≤ x) :
+      HasDerivAt H (Real.exp (c * x) * g x) x := by
+    convert (((hasDerivAt_id x).const_mul c).exp.mul (hf x hx)) using 1 <;>
+      first | rfl | (dsimp [H]; ring)
+  have hmono : StrictMonoOn H (Icc 0 t) := by
+    apply strictMonoOn_of_deriv_pos (convex_Icc _ _)
+    · intro x hx
+      exact (hH x hx.1).continuousAt.continuousWithinAt
+    · intro x hx
+      rw [interior_Icc] at hx
+      rw [(hH x hx.1.le).deriv]
+      exact mul_pos (Real.exp_pos _) (hg x hx.1)
+  have h := hmono (left_mem_Icc.mpr ht.le) (right_mem_Icc.mpr ht.le) ht
+  dsimp [H] at h
+  rw [hf0, mul_zero] at h
+  exact (mul_pos_iff_of_pos_left (Real.exp_pos _)).mp h
+
+private theorem symmetric_return_derivative {V : Type*} [Fintype V] [DecidableEq V]
+    (A : Matrix V V ℝ) (hA : A.PosSemidef) (o : V) (ho : 0 < A o o)
+    (y : ℝ → V → ℝ) (y0 : y 0 = Pi.single o 1)
+    (hy : ∀ t, 0 ≤ t → ∀ i,
+      HasDerivAt (fun u => y u i) (-(A *ᵥ y t) i) t) :
+    ∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0 := by
+  let U : Matrix V V ℝ := hA.1.eigenvectorUnitary
+  let lam := hA.1.eigenvalues
+  let c := fun t j => ∑ i, U i j * y t i
+  have hsym (i k : V) : A i k = A k i := by
+    have hh := congrFun (congrFun hA.1.eq k) i
+    simpa using hh
+  have heig (j i : V) : (∑ k, A i k * U k j) = lam j * U i j := by
+    simpa [U, lam, mulVec, dotProduct] using congrFun (hA.1.mulVec_eigenvectorBasis j) i
+  have hc (t : ℝ) (ht : 0 ≤ t) (j : V) :
+      HasDerivAt (fun u => c u j) (-lam j * c t j) t := by
+    have hd := HasDerivAt.fun_sum (u := Finset.univ)
+      (fun i _ => (hy t ht i).const_mul (U i j))
+    convert hd using 1
+    dsimp [c]
+    simp only [mulVec, dotProduct, mul_neg, Finset.sum_neg_distrib, neg_mul]
+    congr 1
+    simp only [Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro k _
+    symm
+    calc
+      (∑ i, U i j * (A i k * y t k)) = (∑ i, A k i * U i j) * y t k := by
+        rw [Finset.sum_mul]
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [hsym i k]
+        ring
+      _ = (lam j * U k j) * y t k := by rw [heig]
+      _ = lam j * (U k j * y t k) := by ring
+  have hc0 (j : V) : c 0 j = U o j := by simp [c, y0, Pi.single_apply, eq_comm]
+  have hct (t : ℝ) (ht : 0 ≤ t) (j : V) :
+      c t j = U o j * Real.exp (-lam j * t) := by
+    simpa only [hc0] using scalar_decay (fun u => c u j) (lam j)
+      (fun u hu => hc u hu j) t ht
+  have hU : U * U.transpose = 1 := by
+    simpa only [U, Unitary.coe_star, star_eq_conjTranspose,
+      conjTranspose_eq_transpose_of_trivial] using
+      Unitary.coe_mul_star_self hA.1.eigenvectorUnitary
+  have reconstruct (t : ℝ) : y t o = ∑ j, U o j * c t j := by
+    have hh := congrFun (mulVec_mulVec (y t) U U.transpose) o
+    rw [hU, one_mulVec] at hh
+    exact hh.symm
+  have hreturn : ∀ t, 0 ≤ t →
+      y t o = ∑ j, U o j ^ 2 * Real.exp (-lam j * t) := by
+    intro t ht
+    rw [reconstruct t]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [hct t ht j]
+    ring
+  have hdiag : A o o = ∑ j, lam j * U o j ^ 2 := by
+    have hm : A = U * diagonal lam * U.transpose := by
+      simpa only [U, lam, Unitary.conjStarAlgAut_apply, Unitary.coe_star,
+        star_eq_conjTranspose, conjTranspose_eq_transpose_of_trivial,
+        Function.comp_def, RCLike.ofReal_real_eq_id, id_eq] using hA.1.spectral_theorem
+    rw [hm, Matrix.mul_apply]
+    simp only [Matrix.mul_diagonal, Matrix.transpose_apply]
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hnonneg (j : V) : 0 ≤ lam j * U o j ^ 2 :=
+    mul_nonneg (hA.eigenvalues_nonneg j) (sq_nonneg _)
+  have hex : ∃ j, 0 < lam j * U o j ^ 2 := by
+    have hs : 0 < ∑ j, lam j * U o j ^ 2 := by rwa [← hdiag]
+    simpa using (Finset.sum_pos_iff_of_nonneg (fun j _ => hnonneg j)).mp hs
+  intro t ht
+  have hder : HasDerivAt (fun u => ∑ j, U o j ^ 2 * Real.exp (-lam j * u))
+      (∑ j, -(lam j * U o j ^ 2 * Real.exp (-lam j * t))) t := by
+    apply HasDerivAt.fun_sum
+    intro j _
+    convert (((hasDerivAt_id t).const_mul (-lam j)).exp.const_mul (U o j ^ 2)) using 1
+    all_goals (first | rfl | (dsimp; ring))
+  have hpos : 0 < ∑ j, lam j * U o j ^ 2 * Real.exp (-lam j * t) := by
+    apply (Finset.sum_pos_iff_of_nonneg
+      (fun j _ => mul_nonneg (hnonneg j) (Real.exp_pos _).le)).mpr
+    obtain ⟨j, hj⟩ := hex
+    exact ⟨j, Finset.mem_univ _, mul_pos hj (Real.exp_pos _)⟩
+  by_cases hzero : t = 0
+  · subst t
+    rw [(hy 0 le_rfl o).deriv, y0]
+    simpa using neg_neg_of_pos ho
+  · have htpos : 0 < t := lt_of_le_of_ne ht (Ne.symm hzero)
+    have heq : (fun u => y u o) =ᶠ[nhds t]
+        (fun u => ∑ j, U o j ^ 2 * Real.exp (-lam j * u)) :=
+      Filter.eventually_of_mem (Ioi_mem_nhds htpos) (fun u hu => hreturn u hu.le)
+    rw [heq.deriv_eq, hder.deriv, Finset.sum_neg_distrib]
+    exact neg_neg_of_pos hpos
+
+/-- Six independent positive transition rates. The letters `a,b` refer to site 1
+and `c,d` to site 2; `eta,theta` refer to 00 to R and R to 00. -/
+structure Rates where
+  a : ℝ
+  b : ℝ
+  c : ℝ
+  d : ℝ
+  eta : ℝ
+  theta : ℝ
+  a_pos : 0 < a
+  b_pos : 0 < b
+  c_pos : 0 < c
+  d_pos : 0 < d
+  eta_pos : 0 < eta
+  theta_pos : 0 < theta
+
+/-- Column generator in the state order R, 00, 10, 01, 11. -/
+def generator (k : Rates) : Matrix (Fin 5) (Fin 5) ℝ :=
+  !![-k.theta, k.eta, 0, 0, 0;
+      k.theta, -(k.a + k.c + k.eta), k.b, k.d, 0;
+      0, k.a, -(k.b + k.c), 0, k.d;
+      0, k.c, 0, -(k.a + k.d), k.b;
+      0, 0, k.c, k.a, -(k.b + k.d)]
+
+/-- A trajectory is anchored by the generator and the repressed initial state. -/
+def ForwardSolution (k : Rates) (p : ℝ → Fin 5 → ℝ) : Prop :=
+  p 0 = Pi.single 0 1 ∧ ∀ t, 0 ≤ t → ∀ i,
+    HasDerivAt (fun u => p u i) ((generator k *ᵥ p t) i) t
+
+private def edgeMatrix (k : Rates) : Matrix (Fin 5) (Fin 5) ℝ :=
+  !![Real.sqrt k.theta, -Real.sqrt k.eta, 0, 0, 0;
+      0, Real.sqrt k.a, -Real.sqrt k.b, 0, 0;
+      0, Real.sqrt k.c, 0, -Real.sqrt k.d, 0;
+      0, 0, Real.sqrt k.c, 0, -Real.sqrt k.d;
+      0, 0, 0, Real.sqrt k.a, -Real.sqrt k.b]
+
+private def gram (k : Rates) : Matrix (Fin 5) (Fin 5) ℝ :=
+  (edgeMatrix k).transpose * edgeMatrix k
+
+private def scale (k : Rates) : Fin 5 → ℝ :=
+  ![Real.sqrt k.eta * Real.sqrt k.b * Real.sqrt k.d,
+    Real.sqrt k.theta * Real.sqrt k.b * Real.sqrt k.d,
+    Real.sqrt k.theta * Real.sqrt k.a * Real.sqrt k.d,
+    Real.sqrt k.theta * Real.sqrt k.b * Real.sqrt k.c,
+    Real.sqrt k.theta * Real.sqrt k.a * Real.sqrt k.c]
+
+private theorem scale_pos (k : Rates) (i : Fin 5) : 0 < scale k i := by
+  have ha := Real.sqrt_pos.mpr k.a_pos
+  have hb := Real.sqrt_pos.mpr k.b_pos
+  have hc := Real.sqrt_pos.mpr k.c_pos
+  have hd := Real.sqrt_pos.mpr k.d_pos
+  have he := Real.sqrt_pos.mpr k.eta_pos
+  have ht := Real.sqrt_pos.mpr k.theta_pos
+  fin_cases i
+  · exact mul_pos (mul_pos he hb) hd
+  · exact mul_pos (mul_pos ht hb) hd
+  · exact mul_pos (mul_pos ht ha) hd
+  · exact mul_pos (mul_pos ht hb) hc
+  · exact mul_pos (mul_pos ht ha) hc
+
+private theorem gram_entries (k : Rates) : gram k =
+    !![k.theta, -(Real.sqrt k.theta * Real.sqrt k.eta), 0, 0, 0;
+      -(Real.sqrt k.theta * Real.sqrt k.eta), k.a + k.c + k.eta,
+        -(Real.sqrt k.a * Real.sqrt k.b), -(Real.sqrt k.c * Real.sqrt k.d), 0;
+      0, -(Real.sqrt k.a * Real.sqrt k.b), k.b + k.c, 0,
+        -(Real.sqrt k.c * Real.sqrt k.d);
+      0, -(Real.sqrt k.c * Real.sqrt k.d), 0, k.a + k.d,
+        -(Real.sqrt k.a * Real.sqrt k.b);
+      0, 0, -(Real.sqrt k.c * Real.sqrt k.d),
+        -(Real.sqrt k.a * Real.sqrt k.b), k.b + k.d] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [gram, edgeMatrix, Matrix.mul_apply, Fin.sum_univ_five, ← pow_two,
+      Real.sq_sqrt k.a_pos.le, Real.sq_sqrt k.b_pos.le,
+      Real.sq_sqrt k.c_pos.le, Real.sq_sqrt k.d_pos.le,
+      Real.sq_sqrt k.eta_pos.le, Real.sq_sqrt k.theta_pos.le] <;> ring
+
+private theorem similarity (k : Rates) (i j : Fin 5) :
+    generator k i j * scale k j = -(scale k i * gram k i j) := by
+  rw [gram_entries]
+  fin_cases i <;> fin_cases j <;>
+    simp [generator, scale] <;> ring_nf <;>
+    simp [Real.sq_sqrt k.a_pos.le, Real.sq_sqrt k.b_pos.le,
+      Real.sq_sqrt k.c_pos.le, Real.sq_sqrt k.d_pos.le,
+      Real.sq_sqrt k.eta_pos.le, Real.sq_sqrt k.theta_pos.le] <;> ring
+
+private theorem net_input_pos (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) (t : ℝ) (ht : 0 ≤ t) :
+    0 < k.theta * p t 0 - k.eta * p t 1 := by
+  let y := fun u i => scale k 0 / scale k i * p u i
+  have hscale (i : Fin 5) : scale k i ≠ 0 := ne_of_gt (scale_pos k i)
+  have hA : (gram k).PosSemidef := by
+    simpa [gram, star_eq_conjTranspose] using posSemidef_conjTranspose_mul_self (edgeMatrix k)
+  have hy0 : y 0 = Pi.single 0 1 := by
+    funext i
+    dsimp [y]
+    rw [hp.1]
+    by_cases hi : i = 0
+    · subst i
+      simp [hscale]
+    · simp [Pi.single_apply, hi, Ne.symm hi]
+  have hy (u : ℝ) (hu : 0 ≤ u) (i : Fin 5) :
+      HasDerivAt (fun x => y x i) (-(gram k *ᵥ y u) i) u := by
+    have hd := (hp.2 u hu i).const_mul (scale k 0 / scale k i)
+    convert hd using 1
+    dsimp [y, mulVec, dotProduct]
+    rw [Finset.mul_sum, ← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro j _
+    have hs := similarity k i j
+    field_simp [hscale]
+    nlinarith [congrArg (fun z : ℝ => z * p u j) hs]
+  have hdiag : 0 < gram k 0 0 := by simpa [gram_entries] using k.theta_pos
+  have hneg := symmetric_return_derivative (gram k) hA 0 hdiag y hy0 hy t ht
+  have hreturn : (fun u => y u 0) = (fun u => p u 0) := by
+    funext u
+    simp [y, hscale]
+  rw [hreturn, (hp.2 t ht 0).deriv] at hneg
+  simp [generator, mulVec, dotProduct, Fin.sum_univ_five] at hneg
+  linarith
+
+/-- Total mass outside R. -/
+def activeMass (p : ℝ → Fin 5 → ℝ) (t : ℝ) : ℝ := 1 - p t 0
+
+/-- Occupancy of the first actual site. -/
+def firstOccupancy (p : ℝ → Fin 5 → ℝ) (t : ℝ) : ℝ := p t 2 + p t 4
+
+/-- Occupancy of the second actual site. -/
+def secondOccupancy (p : ℝ → Fin 5 → ℝ) (t : ℝ) : ℝ := p t 3 + p t 4
+
+/-- Unnormalized conditional association residual. -/
+def association (p : ℝ → Fin 5 → ℝ) (t : ℝ) : ℝ :=
+  activeMass p t * p t 4 - firstOccupancy p t * secondOccupancy p t
+
+/-- Width of the five-mode probability fiber at the two actual site margins. -/
+def fiberWidth (p : ℝ → Fin 5 → ℝ) (t : ℝ) : ℝ :=
+  min (min (firstOccupancy p t) (secondOccupancy p t))
+    (min (activeMass p t - firstOccupancy p t) (activeMass p t - secondOccupancy p t))
+
+private theorem mass_conservation (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) (t : ℝ) (ht : 0 ≤ t) : ∑ i, p t i = 1 := by
+  have hd (u : ℝ) (hu : 0 ≤ u) : HasDerivAt (fun v => ∑ i, p v i) 0 u := by
+    convert HasDerivAt.fun_sum (u := Finset.univ) (fun i _ => hp.2 u hu i) using 1
+    simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+    ring
+  have hh := constant_on_nonneg _ hd t ht
+  simpa [hp.1, Pi.single_apply] using hh
+
+/-- Every trajectory of the specified five-state forward system, starting at R,
+has strictly positive fiber width and association at every positive time. The
+only incomparable Boolean configurations are 10 and 01, giving strict MTP2. -/
+theorem five_state_strict_association (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) (t : ℝ) (ht : 0 < t) :
+    0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < association p t ∧
+      p t 2 * p t 3 < p t 1 * p t 4 ∧
+      0 < k.theta * p t 0 - k.eta * p t 1 := by
+  let f := fun u => k.theta * p u 0 - k.eta * p u 1
+  let r := activeMass p
+  let X := firstOccupancy p
+  let Y := secondOccupancy p
+  let K := fun u => p u 4
+  let D := association p
+  let s := k.a + k.b + k.c + k.d
+  have fpos (u : ℝ) (hu : 0 ≤ u) : 0 < f u := net_input_pos k p hp u hu
+  have mass (u : ℝ) (hu : 0 ≤ u) :
+      p u 0 + p u 1 + p u 2 + p u 3 + p u 4 = 1 := by
+    simpa [Fin.sum_univ_five, add_assoc] using mass_conservation k p hp u hu
+  have r0 : r 0 = 0 := by simp [r, activeMass, hp.1, Pi.single_apply]
+  have X0 : X 0 = 0 := by simp [X, firstOccupancy, hp.1, Pi.single_apply]
+  have Y0 : Y 0 = 0 := by simp [Y, secondOccupancy, hp.1, Pi.single_apply]
+  have K0 : K 0 = 0 := by simp [K, hp.1, Pi.single_apply]
+  have D0 : D 0 = 0 := by
+    change r 0 * K 0 - X 0 * Y 0 = 0
+    rw [r0, X0]
+    ring
+  have dr (u : ℝ) (hu : 0 ≤ u) : HasDerivAt r (f u) u := by
+    convert (hasDerivAt_const u (1 : ℝ)).sub (hp.2 u hu 0) using 1
+    all_goals first | rfl |
+      (simp [f, generator, mulVec, dotProduct, Fin.sum_univ_five] <;> ring)
+  have dX (u : ℝ) (hu : 0 ≤ u) :
+      HasDerivAt X (-(k.a + k.b) * X u + k.a * r u) u := by
+    convert (hp.2 u hu 2).add (hp.2 u hu 4) using 1
+    all_goals
+      first
+      | rfl
+      | dsimp [X, r, firstOccupancy, activeMass]
+        simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+        linear_combination -k.a * mass u hu
+  have dY (u : ℝ) (hu : 0 ≤ u) :
+      HasDerivAt Y (-(k.c + k.d) * Y u + k.c * r u) u := by
+    convert (hp.2 u hu 3).add (hp.2 u hu 4) using 1
+    all_goals
+      first
+      | rfl
+      | dsimp [Y, r, secondOccupancy, activeMass]
+        simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+        linear_combination -k.c * mass u hu
+  have dK (u : ℝ) (hu : 0 ≤ u) :
+      HasDerivAt K (-s * K u + (k.c * X u + k.a * Y u)) u := by
+    convert hp.2 u hu 4 using 1
+    dsimp [K, X, Y, firstOccupancy, secondOccupancy, s]
+    simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+    ring
+  have rpos (u : ℝ) (hu : 0 < u) : 0 < r u := by
+    apply positive_forcing r f 0 r0 _ (fun x hx => fpos x hx.le) u hu
+    intro x hx
+    simpa using dr x hx
+  have Xpos (u : ℝ) (hu : 0 < u) : 0 < X u :=
+    positive_forcing X (fun x => k.a * r x) (k.a + k.b) X0 dX
+      (fun x hx => mul_pos k.a_pos (rpos x hx)) u hu
+  have Ypos (u : ℝ) (hu : 0 < u) : 0 < Y u :=
+    positive_forcing Y (fun x => k.c * r x) (k.c + k.d) Y0 dY
+      (fun x hx => mul_pos k.c_pos (rpos x hx)) u hu
+  have rXpos (u : ℝ) (hu : 0 < u) : 0 < r u - X u := by
+    apply positive_forcing (fun x => r x - X x)
+      (fun x => k.b * r x + f x) (k.a + k.b) (by rw [r0, X0]; ring) _
+      (fun x hx => add_pos (mul_pos k.b_pos (rpos x hx)) (fpos x hx.le)) u hu
+    intro x hx
+    convert (dr x hx).sub (dX x hx) using 1 <;> ring
+  have rYpos (u : ℝ) (hu : 0 < u) : 0 < r u - Y u := by
+    apply positive_forcing (fun x => r x - Y x)
+      (fun x => k.d * r x + f x) (k.c + k.d) (by rw [r0, Y0]; ring) _
+      (fun x hx => add_pos (mul_pos k.d_pos (rpos x hx)) (fpos x hx.le)) u hu
+    intro x hx
+    convert (dr x hx).sub (dY x hx) using 1 <;> ring
+  have Kpos (u : ℝ) (hu : 0 < u) : 0 < K u :=
+    positive_forcing K (fun x => k.c * X x + k.a * Y x) s K0 dK
+      (fun x hx => add_pos (mul_pos k.c_pos (Xpos x hx))
+        (mul_pos k.a_pos (Ypos x hx))) u hu
+  have dD (u : ℝ) (hu : 0 ≤ u) : HasDerivAt D (-s * D u + f u * K u) u := by
+    convert ((dr u hu).mul (dK u hu)).sub ((dX u hu).mul (dY u hu)) using 1
+    all_goals
+      first
+      | rfl
+      | dsimp [D, association, r, X, Y, K, activeMass, firstOccupancy, secondOccupancy, s]
+        ring
+  have Dpos : 0 < D t := positive_forcing D (fun u => f u * K u) s D0 dD
+    (fun u hu => mul_pos (fpos u hu.le) (Kpos u hu)) t ht
+  have hwidth : 0 < fiberWidth p t := by
+    simp only [fiberWidth, lt_min_iff]
+    exact ⟨⟨Xpos t ht, Ypos t ht⟩, ⟨rXpos t ht, rYpos t ht⟩⟩
+  have hdet : association p t = p t 1 * p t 4 - p t 2 * p t 3 := by
+    dsimp [association, activeMass, firstOccupancy, secondOccupancy]
+    linear_combination -(p t 4) * mass t ht.le
+  refine ⟨rpos t ht, hwidth, Dpos, ?_, fpos t ht.le⟩
+  change 0 < association p t at Dpos
+  rw [hdet] at Dpos
+  linarith
+
+#print axioms five_state_strict_association
+
+end D5.S3.StatisticalMechanics.SingleEntryFiveState

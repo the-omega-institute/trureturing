@@ -1,0 +1,74 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics;
+
+internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/StatisticalMechanics/SingleEntryFiveState.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Strict transient association from the five-state single-entry forward equations.",
+        H("A repressed initial state creates strict two-site association"),
+        Blocks(
+            Node("Rates", "Positive rates",
+                "The rate tuple k contains six arbitrary strictly positive real rates. The first site's binding and unbinding rates are a,b; the second site's are c,d. Entry from 00 to R has rate eta, and return from R to 00 has rate theta.", DescribeRole.Definition),
+            Node("generator", "The actual five-state generator",
+                "States are R,00,10,01,11, in that order. Within the Boolean square, only one bit flips at a time, with its site's stated binding or unbinding rate. The only extra edge is 00 to R at eta and R to 00 at theta. Columns sum to zero and diagonal entries are minus total outgoing rates.", DescribeRole.Definition),
+            Node("ForwardSolution", "The independent dynamical contract",
+                "A trajectory p starts at unit mass in R and solves p'=Q p at every nonnegative real time, with Q equal to the stated generator. This contract contains no association or monotonicity hypothesis.", DescribeRole.Definition),
+            Node("activeMass", "Active mass",
+                "r(p,t)=1-p(t,R).", DescribeRole.Definition),
+            Node("firstOccupancy", "First occupancy",
+                "X(p,t)=p(t,10)+p(t,11). The inhibited state R does not belong to this event.", DescribeRole.Definition),
+            Node("secondOccupancy", "Second occupancy",
+                "Y(p,t)=p(t,01)+p(t,11). The inhibited state R does not belong to this event.", DescribeRole.Definition),
+            Node("association", "Conditional association residual",
+                "D(p,t)=r(p,t) p(t,11)-X(p,t)Y(p,t). Conservation of total mass identifies this with p(t,00)p(t,11)-p(t,10)p(t,01).", DescribeRole.Definition),
+            Node("fiberWidth", "Probability fiber width",
+                "w(p,t)=min{X(p,t),Y(p,t),r(p,t)-X(p,t),r(p,t)-Y(p,t)}. The three occupancy means are coordinates of one five-mode source.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("single-entry-five-state-strict-association"),
+                DeclarationHandle.Create(Prefix + "five_state_strict_association"),
+                H("Strict association at every positive time"),
+                StatementSource.FromAuthor(TheoremFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every forward solution starting at R has r>0, w>0 and D>0 at every positive time. Since 10 and 01 are the only incomparable configurations of the two-dimensional Boolean square, its conditional law is strictly MTP2. In addition theta p(R)-eta p(00)>0, so the active mass increases strictly. No positive-association premise is imposed. The generator is similar to minus a symmetric Gram matrix built from its five actual edges. Projection of the same trajectory onto an orthogonal eigenbasis gives a positive spectral representation of its return probability. The positive R diagonal ensures that at least one positive eigenvalue carries nonzero return weight, hence strictly positive net return at every finite time. Scalar integrating factors propagate that strict input through r, both occupied and vacant margins, the double occupancy, and finally D' = -(a+b+c+d)D + r' p(11). The theorem is conditional on the forward-equation contract; a separate construction of a probability-valued solution is not included. It does not assert the general-dimensional result or the common-tail coefficient."))), DescribeRole.Theorem))));
+
+    private static DocumentBlock Node(string declaration, string title, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("single-entry-five-" + declaration.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var items = new System.Collections.Generic.List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (i > 0) { items.Add(Comma); items.Add(Sp); }
+            items.Add(args[i]);
+        }
+        items.Add(Close);
+        return Seq(items.ToArray());
+    }
+    private static Formula Rel(Formula a, FormulaRelationOperator op, Formula b) => new Formula.Relation(a, op, b);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula All(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
+    private static Formula R() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Pos(Formula x) => Rel(D(0), FormulaRelationOperator.LessThan, x);
+    private static Formula TheoremFormula()
+    {
+        Formula k = F.Id("k"), p = F.Id("p"), t = F.Id("t");
+        Formula result = And(Pos(Call("activeMass", p, t)),
+            And(Pos(Call("fiberWidth", p, t)), And(Pos(Call("association", p, t)),
+                And(Rel(Mul(Call("p", t, D(2)), Call("p", t, D(3))),
+                    FormulaRelationOperator.LessThan, Mul(Call("p", t, D(1)), Call("p", t, D(4)))),
+                    Pos(Sub(Mul(Call("theta", k), Call("p", t, D(0))),
+                        Mul(Call("eta", k), Call("p", t, D(1)))))))));
+        Formula curve = Seq(R(), Sp, To, Sp, Call("Fin", D(5)), Sp, To, Sp, R());
+        return Disp(All("k", F.Id("Rates"), All("p", curve,
+            Imp(Call("ForwardSolution", k, p), All("t", R(), Imp(Pos(t), result))))));
+    }
+}
