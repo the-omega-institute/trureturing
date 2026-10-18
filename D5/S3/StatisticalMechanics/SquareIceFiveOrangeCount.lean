@@ -19,6 +19,7 @@ import Mathlib.Data.Fintype.Powerset
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.FinCases
 
 /-! Height functions of volume five reduce to five-point downsets of the ground height. -/
 
@@ -452,10 +453,11 @@ private theorem rectangle_bound (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ 
       Int.card_Icc_of_le (a := min i v.1) (b := max i v.1) (by omega),
       Int.card_Icc_of_le (a := min (-i) v.2) (b := max (-i) v.2) (by omega)]
     have hx : max i v.1 + 1 - min i v.1 = |v.1 - i| + 1 := by
-      simp only [abs_eq_max_neg]
+      have hm := max_sub_min_eq_abs i v.1
       omega
     have hy : max (-i) v.2 + 1 - min (-i) v.2 = |v.2 + i| + 1 := by
-      simp only [abs_eq_max_neg]
+      have hm := max_sub_min_eq_abs (-i) v.2
+      rw [sub_neg_eq_add] at hm
       omega
     rw [hx, hy]
   omega
@@ -682,7 +684,7 @@ private noncomputable def finiteEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
   right_inv J := by apply Subtype.ext; apply Subtype.ext; rfl
 
 private abbrev Choices (n k : ℕ) := ↥((Finset.univ : Finset (Fin n)).powersetCard k)
-private abbrev OtherPatterns (ℓ : ℕ) :=
+private abbrev RemainingPatterns (ℓ : ℕ) :=
   (Fin (ℓ - 1) × Fin 2 × Choices (ℓ - 2) 2) ⊕
   (Fin 4 × Choices (ℓ - 1) 3) ⊕
   (Fin 2 × Choices (ℓ - 1) 2) ⊕
@@ -691,9 +693,10 @@ private abbrev OtherPatterns (ℓ : ℕ) :=
   (Fin 2 × Fin (ℓ - 2) × Fin 4) ⊕
   (Fin 2 × Fin (ℓ - 2) × Fin 4) ⊕
   (Fin (ℓ - 2) × Fin 4) ⊕
-  Fin 12 ⊕ Fin 4 ⊕ (Fin 2 × Fin (ℓ + 1)) ⊕ Fin 4 ⊕
+  Fin 12 ⊕ Fin 4 ⊕ (Fin 2 × Fin (ℓ + 1)) ⊕
   (Fin 4 × Fin ℓ) ⊕ Fin 2 ⊕ (Fin 4 × Choices (ℓ - 1) 2) ⊕
   (Fin 4 × Fin (ℓ + 3))
+private abbrev OtherPatterns (ℓ : ℕ) := Fin 4 ⊕ RemainingPatterns ℓ
 private abbrev Patterns (ℓ : ℕ) := Choices ℓ 5 ⊕ OtherPatterns ℓ
 private theorem patterns_card (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card (Patterns ℓ) : ℤ) =
@@ -721,7 +724,7 @@ private theorem patterns_card (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     exact_mod_cast hd
   have hs1 : ((ℓ - 1 : ℕ) : ℤ) = (ℓ : ℤ) - 1 := by omega
   have hs2 : ((ℓ - 2 : ℕ) : ℤ) = (ℓ : ℤ) - 2 := by omega
-  unfold Patterns OtherPatterns Choices
+  unfold Patterns OtherPatterns RemainingPatterns Choices
   simp only [Nat.card_eq_fintype_card, Fintype.card_sum, Fintype.card_prod,
     Fintype.card_fin, Fintype.card_coe, Finset.card_powersetCard, Finset.card_univ,
     Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one]
@@ -789,9 +792,88 @@ private noncomputable def lowEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     change zeroFinsetsEquiv ℓ ((zeroFinsetsEquiv ℓ).symm S.val) = S.val
     exact Equiv.apply_symm_apply _ _
 
+private def rayPoint (ℓ : ℕ) (d : Fin 4) (k : ℕ) : ℤ × ℤ :=
+  if d.val = 0 then (-(k : ℤ), 0)
+  else if d.val = 1 then (0, (k : ℤ))
+  else if d.val = 2 then ((ℓ : ℤ) - 1 + k, 1 - (ℓ : ℤ))
+  else ((ℓ : ℤ) - 1, 1 - (ℓ : ℤ) - k)
+private def ray4 (ℓ : ℕ) (d : Fin 4) : Finset (ℤ × ℤ) :=
+  (Finset.range 5).image (rayPoint ℓ d)
+private theorem ray4_card (ℓ : ℕ) (d : Fin 4) : (ray4 ℓ d).card = 5 := by
+  unfold ray4
+  rw [Finset.card_image_of_injective _ ?_, Finset.card_range]
+  intro a b he
+  unfold rayPoint at he
+  have hx := congrArg Prod.fst he
+  have hy := congrArg Prod.snd he
+  fin_cases d <;> norm_num at hx hy <;> omega
+private theorem ray4_downset (ℓ : ℕ) (hℓ : 3 ≤ ℓ) (d : Fin 4) : IsDownset ℓ (ray4 ℓ d) := by
+  intro u v hadj he hv
+  unfold ray4 at hv ⊢
+  obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hv
+  have hklt : k < 5 := Finset.mem_range.mp hk
+  have hgu : 0 ≤ ground ℓ u := by unfold ground; split_ifs <;> positivity
+  let p := k - 1
+  unfold rayPoint at hadj he ⊢
+  fin_cases d
+  all_goals
+    norm_num at hadj he
+    unfold ground at he
+    split_ifs at he <;> simp only [abs_eq_max_neg] at he
+    all_goals first
+      | omega
+      | refine Finset.mem_image.mpr ⟨p, Finset.mem_range.mpr (by dsimp only [p]; omega), ?_⟩
+        apply Prod.ext <;> norm_num <;> (try dsimp only [p])
+        all_goals
+          unfold Adjacent at hadj
+          simp only [abs_eq_max_neg] at hadj
+          omega
+private theorem ray4_tip (ℓ : ℕ) (hℓ : 3 ≤ ℓ) (d : Fin 4) :
+    rayPoint ℓ d 4 ∈ ray4 ℓ d ∧ ground ℓ (rayPoint ℓ d 4) = 4 := by
+  constructor
+  · unfold ray4
+    exact Finset.mem_image.mpr ⟨4, by decide, rfl⟩
+  · unfold rayPoint ground
+    fin_cases d <;> norm_num <;> (try split_ifs) <;> simp only [abs_eq_max_neg] <;> omega
+private theorem ray4_injective (ℓ : ℕ) (hℓ : 3 ≤ ℓ) : Function.Injective (ray4 ℓ) := by
+  intro d e he
+  have hm := (ray4_tip ℓ hℓ d).1
+  rw [he] at hm
+  unfold ray4 at hm
+  obtain ⟨k, hk, hp⟩ := Finset.mem_image.mp hm
+  have hklt : k < 5 := Finset.mem_range.mp hk
+  have hx := congrArg Prod.fst hp
+  have hy := congrArg Prod.snd hp
+  unfold rayPoint at hx hy
+  fin_cases d <;> fin_cases e <;> try rfl
+  all_goals norm_num at hx
+  all_goals norm_num at hy
+  all_goals omega
+
+private noncomputable def ray4Downset (ℓ : ℕ) (hℓ : 3 ≤ ℓ) (d : Fin 4) :
+    {J : FiniteDownsets ℓ // ¬zeroOnly ℓ J} :=
+  ⟨finiteEquiv ℓ hℓ ⟨ray4 ℓ d, ray4_card ℓ d, ray4_downset ℓ hℓ d⟩, by
+    intro hz
+    have he := hz (rayPoint ℓ d 4) (ray4_tip ℓ hℓ d).1
+    have ht := (ray4_tip ℓ hℓ d).2
+    omega⟩
+private theorem ray4Downset_injective (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    Function.Injective (ray4Downset ℓ hℓ) := by
+  intro d e he
+  apply ray4_injective ℓ hℓ
+  exact congrArg (fun J => J.val.val.val) he
+
+private noncomputable def remainingPatternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    {J : {J : FiniteDownsets ℓ // ¬zeroOnly ℓ J} //
+      J ∉ Set.range (ray4Downset ℓ hℓ)} ≃ RemainingPatterns ℓ := by
+  sorry
+
 private noncomputable def nonzeroPatternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     {J : FiniteDownsets ℓ // ¬zeroOnly ℓ J} ≃ OtherPatterns ℓ := by
-  sorry
+  classical
+  exact (Equiv.sumCompl (fun J => J ∈ Set.range (ray4Downset ℓ hℓ))).symm.trans
+    (Equiv.sumCongr (Equiv.ofInjective _ (ray4Downset_injective ℓ hℓ)).symm
+      (remainingPatternEquiv ℓ hℓ))
 
 private noncomputable def patternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     FiniteDownsets ℓ ≃ Patterns ℓ := by
