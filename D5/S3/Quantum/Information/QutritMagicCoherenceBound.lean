@@ -140,8 +140,105 @@ private theorem constant_bound (s v D α u : ℝ) (hs : 0 ≤ s) (hv : 0 ≤ v)
   have hmul := mul_le_mul_of_nonneg_left hlt.le hv
   nlinarith only [hsmall, hquad, hsq, hmul]
 
+private theorem phase_column_bound (A R ell μ α : ℝ) (hA : 0 ≤ A) (hR : 0 ≤ R)
+    (hα : 0 ≤ α) (hαsq : α ^ 2 = 3) (hphase : ell ^ 2 + μ ^ 2 = R ^ 2) :
+    α * max (R - A) 0 ≤ negMass (A + 2 * ell) (A - ell - α * μ)
+      (A - ell + α * μ) := by
+  apply column_bound A R α _ _ _ hA hR hα hαsq (by ring)
+  calc
+    _ = 3 * A ^ 2 + 6 * ell ^ 2 + 2 * α ^ 2 * μ ^ 2 := by ring
+    _ = 3 * A ^ 2 + 6 * R ^ 2 := by rw [hαsq]; nlinarith only [hphase]
+
+private theorem pure_state_reduction (x : Fin 3 → ℂ)
+    (hr : ‖x 0‖ ^ 2 + ‖x 1‖ ^ 2 + ‖x 2‖ ^ 2 = 1) :
+    let s := ‖x 0‖ * ‖x 1‖ + ‖x 0‖ * ‖x 2‖ + ‖x 1‖ * ‖x 2‖
+    let D := negMass (‖x 0‖ ^ 2 - ‖x 1‖ * ‖x 2‖)
+      (‖x 1‖ ^ 2 - ‖x 0‖ * ‖x 2‖) (‖x 2‖ ^ 2 - ‖x 0‖ * ‖x 1‖)
+    l1Coherence (rankOneDensity x) = 2 * s ∧
+      (2 * Real.sqrt 3 / 3) * D ≤ sumNegativity (rankOneDensity x) := by
+  let ρ := rankOneDensity x
+  have hdiag (i : Fin 3) : (ρ i i).re = ‖x i‖ ^ 2 := by
+    change (x i * star (x i)).re = ‖x i‖ ^ 2
+    simp only [Complex.star_def, Complex.mul_conj, Complex.ofReal_re,
+      Complex.normSq_eq_norm_sq]
+  have hentry (j k : Fin 3) : (ρ j k).re ^ 2 + (ρ j k).im ^ 2 =
+      (‖x j‖ * ‖x k‖) ^ 2 := by
+    calc
+      _ = Complex.normSq (ρ j k) := by rw [Complex.normSq_apply]; ring
+      _ = (‖x j‖ * ‖x k‖) ^ 2 := by
+        rw [Complex.normSq_eq_norm_sq]
+        change ‖x j * star (x k)‖ ^ 2 = _
+        rw [norm_mul, norm_star]
+  have hcoherence : l1Coherence (rankOneDensity x) =
+      2 * (‖x 0‖ * ‖x 1‖ + ‖x 0‖ * ‖x 2‖ + ‖x 1‖ * ‖x 2‖) := by
+    norm_num [l1Coherence.eq_1, Fin.sum_univ_three, rankOneDensity.eq_1,
+      Matrix.vecMulVec_apply, Pi.star_apply, norm_mul, norm_star]
+    ring
+  refine ⟨hcoherence, ?_⟩
+  let N0 := negMass (‖x 0‖ ^ 2 + 2 * (ρ 1 2).re)
+    (‖x 0‖ ^ 2 - (ρ 1 2).re - Real.sqrt 3 * (ρ 1 2).im)
+    (‖x 0‖ ^ 2 - (ρ 1 2).re + Real.sqrt 3 * (ρ 1 2).im)
+  let N1 := negMass (‖x 1‖ ^ 2 + 2 * (ρ 0 2).re)
+    (‖x 1‖ ^ 2 - (ρ 0 2).re + Real.sqrt 3 * (ρ 0 2).im)
+    (‖x 1‖ ^ 2 - (ρ 0 2).re - Real.sqrt 3 * (ρ 0 2).im)
+  let N2 := negMass (‖x 2‖ ^ 2 + 2 * (ρ 0 1).re)
+    (‖x 2‖ ^ 2 - (ρ 0 1).re - Real.sqrt 3 * (ρ 0 1).im)
+    (‖x 2‖ ^ 2 - (ρ 0 1).re + Real.sqrt 3 * (ρ 0 1).im)
+  have hN0 : Real.sqrt 3 * max (‖x 1‖ * ‖x 2‖ - ‖x 0‖ ^ 2) 0 ≤ N0 :=
+    phase_column_bound _ _ _ _ _ (sq_nonneg _) (by positivity)
+      (Real.sqrt_nonneg _) (Real.sq_sqrt (by norm_num)) (hentry 1 2)
+  have hN1 : Real.sqrt 3 * max (‖x 0‖ * ‖x 2‖ - ‖x 1‖ ^ 2) 0 ≤ N1 := by
+    have h := phase_column_bound (‖x 1‖ ^ 2) (‖x 0‖ * ‖x 2‖)
+      (ρ 0 2).re (ρ 0 2).im (Real.sqrt 3) (sq_nonneg _) (by positivity)
+      (Real.sqrt_nonneg _) (Real.sq_sqrt (by norm_num)) (hentry 0 2)
+    simpa only [N1, negMass.eq_1, add_right_comm] using h
+  have hN2 : Real.sqrt 3 * max (‖x 0‖ * ‖x 1‖ - ‖x 2‖ ^ 2) 0 ≤ N2 :=
+    phase_column_bound _ _ _ _ _ (sq_nonneg _) (by positivity)
+      (Real.sqrt_nonneg _) (Real.sq_sqrt (by norm_num)) (hentry 0 1)
+  have habs (z : ℝ) : |z| = z + 2 * max (-z) 0 := by
+    simpa only [nsmul_eq_mul, Nat.cast_ofNat, negPart_def, add_comm] using
+      (sub_eq_iff_eq_add.mp (abs_sub_eq_two_nsmul_negPart z))
+  have hmass : sumNegativity ρ = (2 / 3 : ℝ) * (N0 + N1 + N2) := by
+    simp only [sumNegativity.eq_1, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero,
+      wigner.eq_1, Matrix.cons_val_zero, Matrix.cons_val_succ, hdiag]
+    simp only [abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 3)]
+    simp only [habs, N0, N1, N2, negMass.eq_1]
+    nlinarith only [hr]
+  change (2 * Real.sqrt 3 / 3) *
+    negMass (‖x 0‖ ^ 2 - ‖x 1‖ * ‖x 2‖) (‖x 1‖ ^ 2 - ‖x 0‖ * ‖x 2‖)
+      (‖x 2‖ ^ 2 - ‖x 0‖ * ‖x 1‖) ≤ sumNegativity ρ
+  rw [hmass, negMass.eq_1]
+  simp only [neg_sub]
+  linarith only [hN0, hN1, hN2]
+
 /-- The pure-qutrit magic–coherence lower bound. -/
 theorem result : claim := by
-  sorry
+  intro x hnorm
+  let s := ‖x 0‖ * ‖x 1‖ + ‖x 0‖ * ‖x 2‖ + ‖x 1‖ * ‖x 2‖
+  let v := 1 - s
+  let D := negMass (‖x 0‖ ^ 2 - ‖x 1‖ * ‖x 2‖)
+    (‖x 1‖ ^ 2 - ‖x 0‖ * ‖x 2‖) (‖x 2‖ ^ 2 - ‖x 0‖ * ‖x 1‖)
+  have hr : ‖x 0‖ ^ 2 + ‖x 1‖ ^ 2 + ‖x 2‖ ^ 2 = 1 := by
+    simpa only [Fin.sum_univ_three, Complex.normSq_eq_norm_sq] using hnorm
+  obtain ⟨hs, hv, hD, hquad⟩ := amplitude_bound _ _ _
+    (norm_nonneg (x 0)) (norm_nonneg (x 1)) (norm_nonneg (x 2)) hr
+  have hconstant : Real.sqrt 3 / 2 * s * Real.sqrt v ≤ D :=
+    constant_bound s v D (Real.sqrt 3) (Real.sqrt v) hs hv hD (by dsimp [v]; ring)
+      hquad (Real.sqrt_nonneg _) (Real.sq_sqrt (by norm_num))
+      (Real.sqrt_nonneg _) (Real.sq_sqrt hv)
+  obtain ⟨hcoherence, hmagic⟩ := pure_state_reduction x hr
+  have hscaled := mul_le_mul_of_nonneg_left hconstant
+    (by positivity : 0 ≤ 2 * Real.sqrt 3 / 3)
+  have hcancel : (2 * Real.sqrt 3 / 3) *
+      (Real.sqrt 3 / 2 * s * Real.sqrt v) = s * Real.sqrt v := by
+    ring_nf
+    rw [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
+    ring
+  rw [hcancel] at hscaled
+  rw [hcoherence]
+  change (2 * s) / 2 * Real.sqrt (1 - (2 * s) / 2) ≤ _
+  have hhalf : (2 * s) / 2 = s := by ring
+  rw [hhalf]
+  exact hscaled.trans hmagic
 
 end D5.S3.Quantum.Information.QutritMagicCoherenceBound
