@@ -58,6 +58,10 @@ $$\forall (n : \mathbb{N}), (1 \le n) \Rightarrow (\operatorname{gamma2}\left(3,
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lee-liu-2025-integer-two-domination-three-row` (proved) by `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lee-liu-2025-integer-two-domination-three-row","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jia-Ying Lee; Chia-An Liu (2025). *The integer {2}-domination number of grids*. DOI: [10.48550/arXiv.2502.00134](https://doi.org/10.48550/arXiv.2502.00134). URL: <https://arxiv.org/abs/2502.00134>.
