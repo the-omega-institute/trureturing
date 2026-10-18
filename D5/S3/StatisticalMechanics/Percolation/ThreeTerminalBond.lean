@@ -64,7 +64,7 @@ theorem weight_sum {E : Type*} [Fintype E] [DecidableEq E] (θ : E → ℝ) :
   rw [← Fintype.prod_sum (fun (e : E) (x : Bool) => if x then θ e else 1-θ e)]
   simp [Fintype.sum_bool]
 
-private lemma law_probability {V E : Type*} [Fintype V] [DecidableEq V]
+lemma law_probability {V E : Type*} [Fintype V] [DecidableEq V]
     [Fintype E] [DecidableEq E] (ends : E → V × V) (a b c : V)
     (θ : E → ℝ) (hθ : ∀ e, θ e ∈ Set.Icc 0 1) :
     (∀ s, 0 ≤ law ends a b c θ s) ∧ ∑ s, law ends a b c θ s = 1 := by
@@ -89,13 +89,13 @@ theorem sum_cube_succ (n : ℕ) (f : (Fin (n + 1) → Bool) → ℝ) :
   rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp]
   exact Fintype.sum_prod_type _
 
-private lemma cons_three_last (x : Bool) (ω : Fin 2 → Bool) :
+lemma cons_three_last (x : Bool) (ω : Fin 2 → Bool) :
     (Fin.cons x ω : Fin 3 → Bool) 2 = ω 1 := rfl
 
-private lemma cons_three_mid (x : Bool) (ω : Fin 2 → Bool) :
+lemma cons_three_mid (x : Bool) (ω : Fin 2 → Bool) :
     (Fin.cons x ω : Fin 3 → Bool) 1 = ω 0 := rfl
 
-private lemma cons_two_last (x : Bool) (ω : Fin 1 → Bool) :
+lemma cons_two_last (x : Bool) (ω : Fin 1 → Bool) :
     (Fin.cons x ω : Fin 2 → Bool) 1 = ω 0 := rfl
 
 /-- The center is vertex 3; edges 0,1,2 lead to terminals 0,1,2. -/
@@ -216,5 +216,17 @@ theorem star_sharpness (ε : ℝ) (hε : 0 < ε) :
 /-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_sharpness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms star_sharpness
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.cons_three_last' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms cons_three_last
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.cons_three_mid' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms cons_three_mid
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.cons_two_last' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms cons_two_last
 
 end D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond

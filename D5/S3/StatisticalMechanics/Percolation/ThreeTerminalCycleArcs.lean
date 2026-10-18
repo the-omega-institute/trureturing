@@ -217,33 +217,6 @@ theorem cycle_partition {n : ℕ} (ω : Fin (n + 3) → Bool)
   rw [core_partition]
   simp only [graphMode,hab,hbc,hac,Bool.or_eq_true,Bool.and_eq_true]
 
-/-- The three ordered arc coordinate pools form a disjoint partition of all
-actual cycle edges; in particular the wraparound edge lies in the third pool. -/
-theorem arcSupport_partition {n : ℕ} (i j : Fin (n + 3))
-    (hij : i.val ≤ j.val) :
-    Disjoint (arcSupport n 0 i.val) (arcSupport n i.val j.val) ∧
-    Disjoint (arcSupport n 0 i.val) (arcSupport n j.val (n + 3)) ∧
-    Disjoint (arcSupport n i.val j.val) (arcSupport n j.val (n + 3)) ∧
-    arcSupport n 0 i.val ∪ arcSupport n i.val j.val ∪ arcSupport n j.val (n + 3) =
-      Finset.univ := by
-  constructor
-  · apply Finset.disjoint_left.mpr
-    simp only [arcSupport,Finset.mem_filter,Finset.mem_univ,true_and]
-    omega
-  constructor
-  · apply Finset.disjoint_left.mpr
-    simp only [arcSupport,Finset.mem_filter,Finset.mem_univ,true_and]
-    omega
-  constructor
-  · apply Finset.disjoint_left.mpr
-    simp only [arcSupport,Finset.mem_filter,Finset.mem_univ,true_and]
-    omega
-  · ext e
-    simp only [arcSupport,Finset.mem_union,Finset.mem_filter,Finset.mem_univ,true_and,
-      iff_true]
-    have := e.isLt
-    omega
-
 private lemma map_reachable {U V : Type*} [Nonempty U] (H : SimpleGraph U)
     (f : U ↪ V) (x y : U) :
     (H.map f).Reachable (f x) (f y) ↔ H.Reachable x y := by
@@ -471,9 +444,6 @@ theorem cycle_ordered_coordinates {V : Type*} {G : SimpleGraph V} {v : V}
 #guard_msgs (whitespace := lax) in
 #print axioms cycle_partition
 
-/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCycleArcs.arcSupport_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms arcSupport_partition
 
 /-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCycleArcs.walk_cycle_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

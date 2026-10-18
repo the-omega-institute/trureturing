@@ -60,6 +60,24 @@ private theorem transfer_values (p : Mode → ℝ) (q : ℝ) :
   all_goals funext s
   all_goals cases s <;> simp [transfer,detach,henum,Fintype.sum_bool] <;> ring
 
+private theorem transfer_defects (p : Mode → ℝ) (q : ℝ) :
+    delta (transfer .a p q) = q*delta p+q*(1-q)*p .all*p .ac ∧
+    delta (transfer .b p q) = q^2*delta p+
+      q*(1-q)*p .all*(p .separate+p .ab+p .bc) ∧
+    delta (transfer .c p q) = q*delta p+q*(1-q)*p .all*p .ac := by
+  obtain ⟨ha,hb,hc⟩ := transfer_values p q
+  constructor
+  · rw [ha]
+    simp only [delta]
+    ring
+  constructor
+  · rw [hb]
+    simp only [delta]
+    ring
+  · rw [hc]
+    simp only [delta]
+    ring
+
 /-- A normalized nonnegative five-mode source with the strengthened defect
 bound retains it after independent attachment at any one of its three labels.
 All boundary rates, zero ac mass and every constant at least one are included. -/
@@ -77,19 +95,7 @@ theorem attachment_invariant (p : Mode → ℝ) (hp : ∀ s, 0 ≤ p s)
   have hT := hp .all
   have hZ := hp .ac
   have hC0 : 0 ≤ C := le_trans (by norm_num) hC
-  have hda : delta (transfer .a p q) = q*delta p+q*(1-q)*p .all*p .ac := by
-    rw [ha]
-    simp only [delta]
-    ring
-  have hdc : delta (transfer .c p q) = q*delta p+q*(1-q)*p .all*p .ac := by
-    rw [hc]
-    simp only [delta]
-    ring
-  have hdb : delta (transfer .b p q) = q^2*delta p+
-      q*(1-q)*p .all*(p .separate+p .ab+p .bc) := by
-    rw [hb]
-    simp only [delta]
-    ring
+  obtain ⟨hda,hdb,hdc⟩ := transfer_defects p q
   have hsa : delta (transfer .a p q)+transfer .a p q .all*transfer .a p q .ac =
       q*(delta p+p .all*p .ac) := by
     rw [hda,ha]
@@ -148,6 +154,92 @@ theorem attachment_invariant (p : Mode → ℝ) (hp : ∀ s, 0 ≤ p s)
         _ = q*(delta p+p .all*p .ac) := hsc
         _ ≤ q*(C*p .ac) := mul_le_mul_of_nonneg_left hbound hqa
         _ = C*transfer .c p q .ac := by rw [hc]; dsimp only; ring
+
+/-- The absolute strengthened determinant bound is preserved by independent
+attachment, without assuming a sign for the original determinant. -/
+theorem attachment_signed_invariant (p : Mode → ℝ) (hp : ∀ s, 0 ≤ p s)
+    (hn : ∑ s, p s = 1) (C : ℝ) (hC : 1 ≤ C) (q : ℝ)
+    (hq : q ∈ Set.Icc 0 1)
+    (hbound : |delta p|+p .all*p .ac ≤ C*p .ac) :
+    ∀ port, |delta (transfer port p q)|+
+      transfer port p q .all*transfer port p q .ac ≤
+        C*transfer port p q .ac := by
+  obtain ⟨ha,hb,hc⟩ := transfer_values p q
+  obtain ⟨hda,hdb,hdc⟩ := transfer_defects p q
+  have hqa := hq.1
+  have hqb := hq.2
+  have hqc : 0 ≤ 1-q := sub_nonneg.mpr hqb
+  have hT := hp .all
+  have hZ := hp .ac
+  have hC0 : 0 ≤ C := le_trans (by norm_num) hC
+  have hrem : 0 ≤ q*(1-q)*p .all*p .ac := by positivity
+  have habsa : |delta (transfer .a p q)| ≤
+      q*|delta p|+q*(1-q)*p .all*p .ac := by
+    rw [hda]
+    calc
+      _ ≤ |q*delta p|+|q*(1-q)*p .all*p .ac| := abs_add_le _ _
+      _ = _ := by rw [abs_mul,abs_of_nonneg hqa,abs_of_nonneg hrem]
+  have habsc : |delta (transfer .c p q)| ≤
+      q*|delta p|+q*(1-q)*p .all*p .ac := by
+    rw [hdc]
+    calc
+      _ ≤ |q*delta p|+|q*(1-q)*p .all*p .ac| := abs_add_le _ _
+      _ = _ := by rw [abs_mul,abs_of_nonneg hqa,abs_of_nonneg hrem]
+  have hremb : 0 ≤ q*(1-q)*p .all*(p .separate+p .ab+p .bc) := by
+    have hN := hp .separate
+    have hA := hp .ab
+    have hB := hp .bc
+    positivity
+  have habsb : |delta (transfer .b p q)| ≤ q^2*|delta p|+
+      q*(1-q)*p .all*(p .separate+p .ab+p .bc) := by
+    rw [hdb]
+    calc
+      _ ≤ |q^2*delta p|+|q*(1-q)*p .all*(p .separate+p .ab+p .bc)| :=
+        abs_add_le _ _
+      _ = _ := by rw [abs_mul,abs_of_nonneg (sq_nonneg q),abs_of_nonneg hremb]
+  intro port
+  cases port with
+  | a =>
+    calc
+      _ ≤ (q*|delta p|+q*(1-q)*p .all*p .ac)+
+          transfer .a p q .all*transfer .a p q .ac := add_le_add habsa le_rfl
+      _ = q*(|delta p|+p .all*p .ac) := by rw [ha]; dsimp only; ring
+      _ ≤ q*(C*p .ac) := mul_le_mul_of_nonneg_left hbound hqa
+      _ = C*transfer .a p q .ac := by rw [ha]; dsimp only; ring
+  | b =>
+    have henum : (Finset.univ : Finset Mode) = {.separate,.ab,.bc,.all,.ac} := by decide
+    have hn' : p .separate+p .ab+p .bc+p .all+p .ac = 1 := by
+      simpa [henum,add_assoc] using hn
+    have hq2 : q^2 ≤ 1 := by
+      have hh := mul_nonneg hqc (show 0 ≤ 1+q by linarith)
+      nlinarith only [hh]
+    have hzbound : q^2*(C*p .ac) ≤ C*p .ac := by
+      simpa using mul_le_mul_of_nonneg_right hq2 (mul_nonneg hC0 hZ)
+    have htbound : q*(1-q)*p .all ≤ C*(1-q)*p .all := by
+      have hh := mul_le_mul_of_nonneg_right (le_trans hqb hC) (mul_nonneg hqc hT)
+      simpa only [mul_assoc] using hh
+    calc
+      _ ≤ (q^2*|delta p|+q*(1-q)*p .all*(p .separate+p .ab+p .bc))+
+          transfer .b p q .all*transfer .b p q .ac := add_le_add habsb le_rfl
+      _ = q^2*(|delta p|+p .all*p .ac)+q*(1-q)*p .all := by
+        rw [hb]
+        dsimp only
+        linear_combination q*(1-q)*p .all*hn'
+      _ ≤ q^2*(C*p .ac)+q*(1-q)*p .all :=
+        add_le_add (mul_le_mul_of_nonneg_left hbound (sq_nonneg q)) le_rfl
+      _ ≤ C*p .ac+C*(1-q)*p .all := add_le_add hzbound htbound
+      _ = C*transfer .b p q .ac := by rw [hb]; dsimp only; ring
+  | c =>
+    calc
+      _ ≤ (q*|delta p|+q*(1-q)*p .all*p .ac)+
+          transfer .c p q .all*transfer .c p q .ac := add_le_add habsc le_rfl
+      _ = q*(|delta p|+p .all*p .ac) := by rw [hc]; dsimp only; ring
+      _ ≤ q*(C*p .ac) := mul_le_mul_of_nonneg_left hbound hqa
+      _ = C*transfer .c p q .ac := by rw [hc]; dsimp only; ring
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalAttachment.attachment_signed_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms attachment_signed_invariant
 
 /-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalAttachment.attachment_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

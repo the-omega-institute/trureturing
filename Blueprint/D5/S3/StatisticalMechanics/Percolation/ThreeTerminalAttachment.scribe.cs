@@ -40,7 +40,18 @@ internal sealed class ThreeTerminalAttachmentDocument : IScribeDocumentDefinitio
                     + "the strengthened left side q^2*(delta(p)+T*Z)+q*(1-q)*T. "
                     + "Use q^2<=1 and q<=C to bound it by C*(Z+(1-q)*T). These "
                     + "are identities of the same product pushforward; no division "
-                    + "by a mode mass or by q occurs, and all boundary rates are included.")),
+                    + "by a mode mass or by q occurs, and all boundary rates are included."),
+            Node("attachment_signed_invariant", "Closure for an absolute determinant bound", DescribeRole.Theorem,
+                "For every nonnegative normalized five-mode source p, real C>=1, q in [0,1], "
+                    + "and |delta(p)|+p(all)*p(ac)<=C*p(ac), every port's actual transfer r "
+                    + "satisfies |delta(r)|+r(all)*r(ac)<=C*r(ac), without a sign assumption "
+                    + "on delta(p). The same exact determinant identities as in attachment_invariant "
+                    + "have nonnegative remainder terms. The triangle inequality bounds the "
+                    + "outer-port strengthened quantity by q*(|delta(p)|+p(all)*p(ac)); "
+                    + "normalization bounds the middle-port quantity by "
+                    + "q^2*(|delta(p)|+p(all)*p(ac))+q*(1-q)*p(all). Boundary rates and "
+                    + "zero mode masses are included. joined_network_signed_invariant consumes "
+                    + "this result for an actual independent network substituted at one gate.")),
         []));
 
     private static DocumentBlock Node(string name, string title, DescribeRole role, string text) =>

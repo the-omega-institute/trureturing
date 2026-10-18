@@ -179,69 +179,6 @@ def register_cycle_partition : Contract.Registration (@cycle_partition)
   options := #[]
 end Partition
 
-namespace Support
-abbrev signature : Signature where
-  Params := ℕ
-  State _ := ℕ × ℕ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ n := Finset (Fin (n + 3))
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature := realize _
-  (fun _ n s => arcSupport n s.1 s.2) (fun e => nomatch e)
-def bad : Realization signature := realize _ (fun _ _ _ => Finset.univ) (fun e => nomatch e)
-abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ {n : ℕ} (i j : Fin (n + 3)) (_hij : i.val ≤ j.val),
-    Disjoint (R.readout () n (0,i.val)) (R.readout () n (i.val,j.val)) ∧
-    Disjoint (R.readout () n (0,i.val)) (R.readout () n (j.val,n + 3)) ∧
-    Disjoint (R.readout () n (i.val,j.val)) (R.readout () n (j.val,n + 3)) ∧
-    R.readout () n (0,i.val) ∪ R.readout () n (i.val,j.val) ∪
-      R.readout () n (j.val,n + 3) = Finset.univ
-private theorem rejected : ¬ arena.Law bad := by
-  intro h
-  have hh := (h (n:=0) 1 2 (by decide)).1
-  exact Finset.disjoint_left.mp hh (Finset.mem_univ (0 : Fin 3)) (Finset.mem_univ 0)
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨0,(0,0),(0,1),?_⟩
-  change arcSupport 0 0 0 ≠ arcSupport 0 0 1
-  decide +kernel
-
-def registration : Registration arena (type_of% @arcSupport_partition) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨arcSupport_partition,bad,rejected⟩
-  sensitivity := single_sensitivity actual bad _ rejected
-  dependence := dependence
-
-def register_arcSupport_partition : Contract.Registration (@arcSupport_partition)
-    (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCycleArcs.Support.register_arcSupport_partition
-  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCycleArcs.Support.registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena ⟨registration⟩
-  correspondence := {stage := .evidence,objectStage := .evidence}
-  bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ n s => arcSupport n s.1 s.2) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end Support
 
 namespace WalkPartition
 universe u
@@ -351,9 +288,6 @@ end WalkPartition
 #guard_msgs (whitespace := lax) in
 #print axioms Partition.register_cycle_partition
 
-/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCycleArcs.Support.register_arcSupport_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Support.register_arcSupport_partition
 
 /-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalCycleArcs.WalkPartition.register_walk_cycle_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

@@ -246,7 +246,16 @@ def registration : Registration arena (type_of% @star_sharpness) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨star_sharpness,bad,rejected⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ actual bad rejected
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad,?_,?_,rejected⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := dependence
 def register_star_sharpness : Contract.Registration (@star_sharpness)
     (Realization signature) Unit Unit where
@@ -450,3 +459,285 @@ in
 /-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube.register_sum_cube_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms register_sum_cube_succ
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Probability
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+open scoped BigOperators
+universe u v
+noncomputable section
+structure Parameters where
+  Vertices : Type u
+  Edges : Type v
+  finiteVertices : Fintype Vertices
+  decidableVertices : DecidableEq Vertices
+  finiteEdges : Fintype Edges
+  decidableEdges : DecidableEq Edges
+  ends : Edges → Vertices × Vertices
+  a : Vertices
+  b : Vertices
+  c : Vertices
+  rate : Edges → ℝ
+abbrev signature : Signature where
+  Params := Parameters.{u,v}
+  State _ := Mode
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature.{u,v} := realize _
+  (fun _ p => by
+    letI := p.finiteVertices
+    letI := p.decidableVertices
+    letI := p.finiteEdges
+    letI := p.decidableEdges
+    exact law p.ends p.a p.b p.c p.rate) (fun e => nomatch e)
+def bad : Realization signature.{u,v} := realize _ (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature.{u,v}
+  Law R := ∀ {V : Type u} {E : Type v} [hV : Fintype V] [dV : DecidableEq V]
+    [hE : Fintype E] [dE : DecidableEq E] (ends : E → V × V) (a b c : V)
+    (θ : E → ℝ) (_hθ : ∀ e, θ e ∈ Set.Icc 0 1),
+    (∀ s, 0 ≤ R.readout () ⟨V,E,hV,dV,hE,dE,ends,a,b,c,θ⟩ s) ∧
+      ∑ s, R.readout () ⟨V,E,hV,dV,hE,dE,ends,a,b,c,θ⟩ s = 1
+private theorem rejected : ¬ arena.{u,v}.Law bad := by
+  intro h
+  have hh := (h (fun x : PEmpty.{v+1} => (nomatch x : PUnit.{u+1} × PUnit.{u+1}))
+    PUnit.unit PUnit.unit PUnit.unit (fun _ => 0) (by intro x; exact nomatch x)).2
+  norm_num [bad,realize] at hh
+private theorem dependence : ObservationalDependence signature.{u,v} actual := by
+  classical
+  intro i
+  let e : PEmpty.{v+1} → PUnit.{u+1} × PUnit.{u+1} := fun x => nomatch x
+  refine ⟨⟨PUnit,PEmpty,inferInstance,inferInstance,inferInstance,inferInstance,
+    e,PUnit.unit,PUnit.unit,PUnit.unit,fun _ => 0⟩,.all,.separate,?_⟩
+  have hp (ω : PEmpty.{v+1} → Bool) :
+      partition e PUnit.unit PUnit.unit PUnit.unit ω = .all := by
+    simp [partition,connected]
+  change law e PUnit.unit PUnit.unit PUnit.unit (fun _ => 0) .all ≠
+    law e PUnit.unit PUnit.unit PUnit.unit (fun _ => 0) .separate
+  simp [law,hp,weight]
+def registration : Registration arena.{u,v} (type_of% @law_probability.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨law_probability,bad,rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad,?_,?_,rejected⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+def register_law_probability : Contract.Registration (@law_probability.{u,v})
+    (Realization signature.{u,v}) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Probability.register_law_probability
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Probability.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p => by
+    letI := p.finiteVertices
+    letI := p.decidableVertices
+    letI := p.finiteEdges
+    letI := p.decidableEdges
+    exact law p.ends p.a p.b p.c p.rate) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Probability.register_law_probability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_law_probability
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Probability
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeLast
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  (Bool × (Fin 2 → Bool)) (fun _ => Fin 3) (fun _ => Bool)
+def actual : Realization signature := realize _
+  (fun _ p s => (Fin.cons p.1 p.2 : Fin 3 → Bool) s) (fun e => nomatch e)
+def bad : Realization signature := realize _ (fun _ _ _ => false) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (x : Bool) (ω : Fin 2 → Bool), R.readout () (x,ω) 2 = ω 1
+private theorem rejected : ¬ arena.Law bad := by
+  intro h
+  have hh := h false (fun _ => true)
+  cases hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(false,fun _ => true),0,2,?_⟩
+  change (Fin.cons false (fun _ : Fin 2 => true) : Fin 3 → Bool) 0 ≠
+    (Fin.cons false (fun _ : Fin 2 => true) : Fin 3 → Bool) 2
+  decide +kernel
+def registration : Registration arena (type_of% @cons_three_last) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨cons_three_last,bad,rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejected
+  dependence := dependence
+def register_cons_three_last : Contract.Registration (@cons_three_last)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeLast.register_cons_three_last
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeLast.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p s => (Fin.cons p.1 p.2 : Fin 3 → Bool) s)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeLast.register_cons_three_last' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_cons_three_last
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeLast
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeMid
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  (Bool × (Fin 2 → Bool)) (fun _ => Fin 3) (fun _ => Bool)
+def actual : Realization signature := realize _
+  (fun _ p s => (Fin.cons p.1 p.2 : Fin 3 → Bool) s) (fun e => nomatch e)
+def bad : Realization signature := realize _ (fun _ _ _ => false) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (x : Bool) (ω : Fin 2 → Bool), R.readout () (x,ω) 1 = ω 0
+private theorem rejected : ¬ arena.Law bad := by
+  intro h
+  have hh := h false (fun _ => true)
+  cases hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(false,fun _ => true),0,1,?_⟩
+  change (Fin.cons false (fun _ : Fin 2 => true) : Fin 3 → Bool) 0 ≠
+    (Fin.cons false (fun _ : Fin 2 => true) : Fin 3 → Bool) 1
+  decide +kernel
+def registration : Registration arena (type_of% @cons_three_mid) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨cons_three_mid,bad,rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejected
+  dependence := dependence
+def register_cons_three_mid : Contract.Registration (@cons_three_mid)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeMid.register_cons_three_mid
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeMid.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p s => (Fin.cons p.1 p.2 : Fin 3 → Bool) s)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeMid.register_cons_three_mid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_cons_three_mid
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsThreeMid
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsTwoLast
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  (Bool × (Fin 1 → Bool)) (fun _ => Fin 2) (fun _ => Bool)
+def actual : Realization signature := realize _
+  (fun _ p s => (Fin.cons p.1 p.2 : Fin 2 → Bool) s) (fun e => nomatch e)
+def bad : Realization signature := realize _ (fun _ _ _ => false) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (x : Bool) (ω : Fin 1 → Bool), R.readout () (x,ω) 1 = ω 0
+private theorem rejected : ¬ arena.Law bad := by
+  intro h
+  have hh := h false (fun _ => true)
+  cases hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(false,fun _ => true),0,1,?_⟩
+  change (Fin.cons false (fun _ : Fin 1 => true) : Fin 2 → Bool) 0 ≠
+    (Fin.cons false (fun _ : Fin 1 => true) : Fin 2 → Bool) 1
+  decide +kernel
+def registration : Registration arena (type_of% @cons_two_last) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨cons_two_last,bad,rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejected
+  dependence := dependence
+def register_cons_two_last : Contract.Registration (@cons_two_last)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsTwoLast.register_cons_two_last
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsTwoLast.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p s => (Fin.cons p.1 p.2 : Fin 2 → Bool) s)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsTwoLast.register_cons_two_last' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_cons_two_last
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.ConsTwoLast

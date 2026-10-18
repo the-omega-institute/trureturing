@@ -49,6 +49,18 @@ internal sealed class ThreeTerminalBondDocument : IScribeDocumentDefinition
                     + "the sum of f over that configuration cube equals the sum over "
                     + "x:Bool and omega:Fin(n)->Bool of f(Fin.cons x omega). "
                     + "The bijection splits the first edge state from the remaining edges."),
+            Node("cons_three_last", "The last coordinate of three bonds", DescribeRole.Theorem,
+                "For all Boolean x and omega:Fin(2)->Bool, (Fin.cons x omega)(2)=omega(1)."),
+            Node("cons_three_mid", "The middle coordinate of three bonds", DescribeRole.Theorem,
+                "For all Boolean x and omega:Fin(2)->Bool, (Fin.cons x omega)(1)=omega(0)."),
+            Node("cons_two_last", "The last coordinate of two bonds", DescribeRole.Theorem,
+                "For all Boolean x and omega:Fin(1)->Bool, (Fin.cons x omega)(1)=omega(0)."),
+            Node("law_probability", "Probability on the complete partition source", DescribeRole.Theorem,
+                "For all finite decidable vertex and edge types, endpoints, three terminal labels "
+                    + "and edge rates in the closed interval [0,1], every one of the five actual "
+                    + "partition masses is nonnegative and their sum is one. Repeated labels "
+                    + "and deterministic rates are included. The sum is the pushforward of the "
+                    + "complete independent-edge cube, rather than an assumed partition law."),
             Node("law", "Connectivity pushforward", DescribeRole.Definition,
                 "For finite decidable vertex and edge types, endpoints ends, terminals a,b,c, "
                     + "rates theta and mode s, law ends a b c theta s is the sum of "

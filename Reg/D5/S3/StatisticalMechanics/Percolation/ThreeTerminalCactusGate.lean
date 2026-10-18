@@ -314,7 +314,17 @@ private def leafTriangle : leafGraph.{u}.Walk (ULift.up 1) (ULift.up 1) :=
       (.cons (by norm_num [leafGraph,SimpleGraph.fromRel]) .nil))
 
 private theorem leaf_cycle : leafTriangle.{u}.IsCycle := by
-  norm_num [Walk.isCycle_def,Walk.isTrail_def,leafTriangle,Sym2.eq_iff]
+  rw [Walk.isCycle_def,Walk.isTrail_def]
+  refine ⟨?_,?_,?_⟩
+  · change ([s(ULift.up 1,ULift.up 2),s(ULift.up 2,ULift.up 3),
+      s(ULift.up 3,ULift.up 1)] : List (Sym2 (ULift.{u} (Fin 4)))).Nodup
+    decide
+  · intro he
+    have hh := congrArg Walk.length he
+    change (3 : ℕ) = 0 at hh
+    omega
+  · change ([ULift.up 2,ULift.up 3,ULift.up 1] : List (ULift.{u} (Fin 4))).Nodup
+    decide
 
 private theorem leaf_connected : leafGraph.{u}.Connected := by
   have hg : ∀ v : ULift.{u} (Fin 4), leafGraph.Reachable v (ULift.up 3) := by
@@ -361,7 +371,7 @@ private theorem leaf_cactus : IsCactus leafGraph.{u} := by
 
 abbrev strictArena : Arena where
   signature := signature.{u}
-  Law R := ∀ {V : Type u} [DecidableEq V] [Finite V] {G : SimpleGraph V}
+  Law R := ∀ {V : Type u} [DecidableEq V] {G : SimpleGraph V} [Finite V]
     (_hG : G.Connected) (_hcactus : IsCactus G) {o : V}
     (C : G.Walk o o) (_hC : C.IsCycle) (x : V) (_hx : x ∉ C.support),
     let A := {v | (G.deleteEdges C.edgeSet).Reachable x v}
@@ -380,7 +390,10 @@ abbrev strictArena : Arena where
 
 private theorem strict_rejected : ¬ strictArena.{u}.Law bad := by
   intro h
-  have hout : ULift.up (0 : Fin 4) ∉ leafTriangle.{u}.support := by simp [leafTriangle]
+  have hout : ULift.up (0 : Fin 4) ∉ leafTriangle.{u}.support := by
+    change ULift.up (0 : Fin 4) ∉
+      ([ULift.up 1,ULift.up 2,ULift.up 3,ULift.up 1] : List (ULift.{u} (Fin 4)))
+    norm_num
   obtain ⟨g,hg,_⟩ := h leaf_connected leaf_cactus leafTriangle leaf_cycle (ULift.up 0) hout
   simp [bad,realize] at hg
 

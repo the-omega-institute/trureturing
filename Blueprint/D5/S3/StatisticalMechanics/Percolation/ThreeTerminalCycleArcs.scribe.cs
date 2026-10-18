@@ -50,12 +50,6 @@ internal sealed class ThreeTerminalCycleArcsDocument : IScribeDocumentDefinition
                     + "uses the second arc or the conjunction of the other two; the remaining "
                     + "pair uses the third arc or the conjunction of the first two. "
                     + "No probabilistic marginal fitting or conditioning is used."),
-            Node("arcSupport_partition", "Disjoint source coordinates", DescribeRole.Theorem,
-                "For every natural n and gates i,j with i.val <= j.val, the supports "
-                    + "arcSupport n 0 i.val, arcSupport n i.val j.val and arcSupport n j.val (n+3) "
-                    + "are pairwise disjoint and their union is all cycle edge coordinates. "
-                    + "Adjacent gates yield a one-edge support; the wraparound edge belongs "
-                    + "to the third support."),
             Node("cycleVertex", "Coordinates of an actual simple cycle", DescribeRole.Definition,
                 "For every graph G, vertex a, simple closed walk p:a->a and equality "
                     + "p.length=n+3, cycleVertex p hp hlen embeds Fin(n+3) into the ambient "
