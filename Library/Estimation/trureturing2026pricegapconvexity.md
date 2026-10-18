@@ -10148,3 +10148,204 @@ set. No sufficient signed upper estimate for their aggregate,
 favorable cofinal window, all-integer Robin bound or RH proof is
 supplied. The remaining task is the signed common-head estimate,
 not another high-frequency or lower-real-part payment.
+
+
+## The complete response has a source-relative change from core to total clock
+
+Keep JM1--JM7's original conditional RH-failure source and all its
+full windows, maximizing ties and positive outgoing weights. Add only
+the restriction on the originally supplied exponent
+
+$$
+\boxed{1-\Theta<\eta<13/30,\qquad \Theta\le1.}
+\tag{WRC1}
+$$
+
+No supplied parameter is reselected. Keep $0<a<5\kappa/8$,
+$M=M_X=X^{1/2-\eta}\log X$, $L=L_X$ and the complete response
+
+$$
+G_a(x)=s_x\int_x^\infty E(v)k(v)dv-\frac{aE(x)}{\sqrt x},
+\quad s_x=\sqrt x\log x,\quad E=x-\psi.
+$$
+
+Both the full future integral and the original compensation remain.
+For each original label write $A=B+t$, $t=\log p$ and
+$u=N_A^{\rm str}$, so $K(A)=B$. Define
+$\Delta=K(A)-K(B)=B-K(B)\ge0$ and $Q=K-\psi$ as before.
+The same symbols $\Delta$ and $L$ here do not denote the
+zero-supremum defect or the local $\log B$.
+
+The following is a `repo-derived` paper application of AO1's exact
+account, JM1's coercivity, the existing Guth--Maynard short-interval
+input consumed in SI2 and JM6, and the already used quadrature.
+There is no new prime-counting theorem, literature-priority claim
+or Lean verification. In particular SI1's global clock ceiling is
+not extended: the count is used only on bounded $B/X$, and the
+remaining original cores are paid by their own positive height.
+
+### Keep the full response in the exact recentering identity
+
+Fix once $C>8/5$ with $aC<1$. CR43--CR44, JM1, JM7 and the
+uniform $\chi_{p,u}\to1$ give fixed $c_1,c_2,c_3>0$ and $C_1$
+with, at one common source start,
+
+$$
+\begin{aligned}
+\Delta&\le Ct+C_1\sqrt B,\qquad |Q(v)|\le H_Q\sqrt v,\\
+G_a(B)&\ge c_1h_X(B)+c_2\frac t{\sqrt B}-C_1,
+\quad h_X(B)=\frac d2X^{-\eta}\sqrt B\log B,\\
+G_a(B)&\ge c_3M.
+\end{aligned}
+\tag{WRC2}
+$$
+
+Thus $G_a(B)>0$ and
+$h_X(B)+t/\sqrt B+1\ll G_a(B)$ uniformly. This consumes the
+same complete response, not a second copy of its height or lag.
+All original core clocks escape uniformly, and CR17 supplies
+$\rho_X:=\sup t/B\to0$.
+
+Put $q=s_B/s_A$ and $c=B\log B/(A\log A)$. AO1 gives exactly
+
+$$
+qG_a(A)-G_a(B)
+=\frac a{\sqrt B}[\Delta-t+(1-c)t+Q(B)-cQ(A)]
+ -I_{\rm past},
+\qquad
+I_{\rm past}=s_B\int_B^A E(v)k(v)dv.
+\tag{WRC3}
+$$
+
+No sign or smallness has been assigned to the full recentering
+error in obtaining this identity. In particular the local $E(B)$
+term is not dropped before the subtraction.
+
+For $B\le v\le A$, monotonicity of the strict inventory gives
+$0\le v-K(v)\le t+\Delta$. WRC2 and $A\le2B$ therefore give
+$|E(v)|\le C_2(t+\sqrt B)$. Since $s_Bk(B)\le2B^{-3/2}$,
+
+$$
+|I_{\rm past}|\le C_3\frac tB
+ \left(\frac t{\sqrt B}+1\right)=o(G_a(B))
+$$
+
+uniformly over the original labels and ties. Also $q\to1$,
+$0\le1-c\le2t/B$ and
+$|Q(B)-cQ(A)|/\sqrt B=O(1)$. By WRC2, every term on WRC3's
+right except $(\Delta-t)/\sqrt B$ is thus $o(G_a(B))$.
+This controls the whole improper future account through an exact
+identity; its absolute magnitude is not separately assumed small.
+
+### Pay the remaining increment error on both parts of the original source
+
+Fix a finite $R>1$. WRC1 permits a single fixed exponent
+$17/30<r<\min\{1-\eta,99/100\}$. On all original cores
+$B\le RX$, the unchanged floor
+$t\ge\ell_X=(d/8)X^{1-\eta}\log X$ gives
+
+$$
+\frac{t}{B^r}\ge\frac{d}{8R^r}
+ X^{1-\eta-r}\log X\longrightarrow\infty.
+$$
+
+Together with CR17's uniform $t/B\to0$, this is precisely the
+length condition needed by SI2's already proved fixed-block
+application of the published uniform prime-count asymptotic.
+The complete endpoint correction $K-\theta_1=O(\sqrt x)$ remains.
+Consequently, for this fixed $R$,
+
+$$
+\sup_{\substack{\text{original labels and ties}\\B\le RX}}
+\frac{|\Delta-t|}{t}\longrightarrow0.
+\tag{WRC4}
+$$
+
+The $O(\sqrt B)$ endpoint allowance is negligible because
+$t/B^r\to\infty$ and $r>1/2$. Constants may depend on the fixed
+$R$ and $r$; no count uniform in a growing $R$ is asserted.
+Using WRC2 now pays $|\Delta-t|/\sqrt B=o(G_a(B))$ on this
+bounded-ratio part.
+
+For the retained part $B>RX$, use only WRC2's capacity and height.
+Since $t\le2\ell_X$, $B>X$ and $\log B\ge\log X$,
+
+$$
+\begin{aligned}
+\frac{|\Delta-t|}{\sqrt B\,G_a(B)}
+&\ll\frac{t/\sqrt B+1}{G_a(B)}\\
+&\ll\frac{t/\sqrt B}{h_X(B)}+\frac1M\\
+&\ll\frac{X\log X}{B\log B}+\frac1M
+\le\frac{C_4}{R}+\frac{C_5}{M}.
+\end{aligned}
+\tag{WRC5}
+$$
+
+To obtain a requested positive precision, first fix $R$ large
+enough and then take the common start for WRC4 and WRC5. No
+source configuration is removed or made comparable to $X$.
+This proves $|\Delta-t|/\sqrt B=o(G_a(B))$ uniformly over
+all original cores. WRC3, WRC2 and $q\to1$ therefore yield
+
+$$
+\boxed{\sup_{\text{original labels and ties}}
+ \frac{|G_a(A)-G_a(B)|}{G_a(B)}\longrightarrow0.}
+\tag{WRC6}
+$$
+
+There is no absolute $o(M)$ claim for the pointwise recentering
+error, nor an assumption that $G_a(B)=O(M)$.
+
+### The original weighted response equals its visited total-clock integral relatively
+
+Define the original core sum and the total-clock sum with the same
+tags and outgoing weights:
+
+$$
+\mathcal G_X=\sum_{i<m}\delta_iG_a(B_i),\qquad
+\mathcal G_X^{A}=\sum_{i<m}\delta_iG_a(A_i).
+$$
+
+Positivity in WRC2 permits summing the pointwise absolute allowances
+before using any sign. Thus
+$|\mathcal G_X^A-\mathcal G_X|=o(\mathcal G_X)$ uniformly in all
+tie assignments on each original full window.
+
+Use AO5's existing bounded variation of the complete response,
+AO6's same total-clock selector and the already used Dragomir
+quadrature, now for $G_a$ itself rather than its clipped readout.
+The mesh-times-variation error is at most
+
+$$
+C_a\varepsilon_X^{\rm lab}\sqrt{R_X}\log(eR_X)=o(1).
+$$
+
+All original endpoint tie tags are retained. PT10/PG9's exact
+pushforward is supported on the actual visited set $D_X$, with
+$|D_X|=L_X$; no skipped interval or independent sampling law is
+inserted. It follows that
+
+$$
+\boxed{
+\mathcal I_X^A:=\int_{D_X}G_a(v)dv,
+\qquad
+\frac{\mathcal G_X^A}{\mathcal G_X}\longrightarrow1,
+\qquad
+\frac{\mathcal I_X^A}{\mathcal G_X}\longrightarrow1.}
+\tag{WRC7}
+$$
+
+These statements retain the original full windows and every
+maximizing tie, and include $\Theta=1$ under WRC1. They pay the
+full core-to-total-clock change that AO4--AO6 did not assert small;
+CQ5 continues to describe the separate atomic core occupation.
+The comparison is source-relative. It does not strengthen DH4's
+absolute comparison or identify $D_X$ with its whole enclosing
+interval.
+
+WRC1 implies FHA1, so the existing raw common head also satisfies
+$\mathcal P_X/\mathcal I_X^A\to1$ by CPH4 and WRC7. Neither this ratio nor WRC7 gives a signed upper bound for
+$\mathcal I_X^A$. The remaining comparison is on the same selected
+set, including its original omissions and full future response.
+No favorable cofinal sequence, all-integer Robin bound or RH proof
+is supplied. No uniformity as $\eta\uparrow13/30$ is asserted.
