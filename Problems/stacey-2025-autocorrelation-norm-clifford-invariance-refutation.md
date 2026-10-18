@@ -35,7 +35,7 @@ The literature check before any Lean is recorded in #18928:
 
 ## Route
 
-The witness is ψ = (|0⟩ + |1⟩)/√2 with the Fourier unitary F, where F X F† = Z and F Z F† = X⁻¹. The preregistration proposed ψ ∝ (5, 5, 1, 1, 1); the delivered witness is simpler and the reading is unchanged.
+The witness is ψ = (|0⟩ + |1⟩)/√2 with the Fourier unitary F, where F X F† = Z and F Z F† = X⁻¹.
 1. **Clifford.** F is unitary and conjugates the shift and the clock to displacement operators.
 2. **Probabilities.** The tables p(ψ, m, j) and p(Fψ, m, j) are exact values in ℚ(cos(π/5)).
 3. **Separation.** The operator norm of A(ψ) is bounded above through ‖M‖ ≤ ‖M‖_F applied to M = AᵀA. The operator norm of A(Fψ) is bounded below by an explicit test vector, and the two bounds separate.
@@ -88,9 +88,9 @@ The bind-only form is admitted under the open-problem-resolution basis of CLAUDE
 
 **Argued, not formalized.**
 - *Where the argument fails.* A Clifford unitary maps each MUB to an MUB and relabels outcomes within it, but the relabelling of the difference index k need not be the same column permutation in every row. The rows are permuted, and each row's entries are permuted separately. Such a transformation preserves every entrywise norm, including the Frobenius norm, but not norms that depend on the matrix as a whole, such as the operator and trace norms.
-- *What survives.* The Frobenius norm, and any function of the multiset of entries of each row, remain Clifford-invariant.
+- *What survives.* The Frobenius norm, and any function of the matrix that is symmetric under row permutations and under permutations within each row (a function of the multiset of row multisets), remain Clifford-invariant.
 
-**Effect on the paper.** The proposed family of candidate monotones is not Clifford-invariant beyond the Frobenius case.
+**Effect on the paper.** The proposed family is not Clifford-invariant in general: the operator norm fails. The result does not classify the other unitarily invariant norms.
 
 ## ASSUMED-UNVERIFIED
 
