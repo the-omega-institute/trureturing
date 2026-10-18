@@ -383,7 +383,12 @@ private theorem column_power_of_vanishing (c : ℕ) (S : Finset ℤ)
       (m : ℂ) ^ k * couplingColumn c S v m := by
   revert hzero
   induction k with
-  | zero => intro _; simp only [powerHead, pow_zero, one_mul]
+  | zero =>
+      intro _
+      have hfun : powerHead v 0 = v := by
+        funext n
+        simp only [powerHead, pow_zero, one_mul]
+      simp only [hfun, pow_zero, one_mul]
   | succ k ih =>
       intro hzero
       have hsmall : ∀ j < k,
@@ -413,10 +418,20 @@ private theorem paired_power_energy (c : ℕ) (S : Finset ℤ)
     (m : ℝ) ^ (2 * k) *
       (‖couplingColumn c S v (m : ℤ)‖ ^ 2 +
         ‖couplingColumn c S v (-(m : ℤ))‖ ^ 2) := by
+  have hposcast : ((m : ℤ) : ℂ) = (m : ℂ) := Int.cast_natCast m
+  have hnegcast : ((-(m : ℤ) : ℤ) : ℂ) = -((m : ℤ) : ℂ) :=
+    Int.cast_neg (m : ℤ)
   have hp : ‖((m : ℤ) : ℂ)‖ = (m : ℝ) := by
-    simpa only [Int.cast_natCast] using Complex.norm_natCast m
-  have hn : ‖((-(m : ℤ)) : ℂ)‖ = (m : ℝ) := by
-    rw [Int.cast_neg, norm_neg, hp]
+    calc
+      ‖((m : ℤ) : ℂ)‖ = ‖(m : ℂ)‖ :=
+        congrArg (fun z : ℂ => ‖z‖) hposcast
+      _ = (m : ℝ) := Complex.norm_natCast m
+  have hn : ‖((-(m : ℤ) : ℤ) : ℂ)‖ = (m : ℝ) := by
+    calc
+      ‖((-(m : ℤ) : ℤ) : ℂ)‖ = ‖-((m : ℤ) : ℂ)‖ :=
+        congrArg (fun z : ℂ => ‖z‖) hnegcast
+      _ = ‖((m : ℤ) : ℂ)‖ := norm_neg _
+      _ = (m : ℝ) := hp
   rw [column_power_of_vanishing c S v k hzero (m : ℤ),
     column_power_of_vanishing c S v k hzero (-(m : ℤ))]
   simp only [norm_mul, norm_pow, hp, hn, mul_pow, ← pow_mul]
@@ -496,21 +511,32 @@ private theorem paired_tail_coarse_upper {c N : ℕ} (hc : 2 ≤ c)
     let t : ℝ := ((N + j + 1 : ℕ) : ℝ)
     have ht : 0 < t := by dsimp [t]; positivity
     have hNt : (N : ℝ) ≤ t := by dsimp [t]; push_cast; linarith
+    have hposcast : (((N + j + 1 : ℕ) : ℤ) : ℝ) = t := by
+      change (((N + j + 1 : ℕ) : ℤ) : ℝ) = ((N + j + 1 : ℕ) : ℝ)
+      exact Int.cast_natCast (N + j + 1)
+    have hnegcast : ((-((N + j + 1 : ℕ) : ℤ) : ℤ) : ℝ) = -t := by
+      calc
+        ((-((N + j + 1 : ℕ) : ℤ) : ℤ) : ℝ) =
+            -(((N + j + 1 : ℕ) : ℤ) : ℝ) := Int.cast_neg _
+        _ = -t := congrArg (fun x : ℝ => -x) hposcast
+    have hposabs : |(((N + j + 1 : ℕ) : ℤ) : ℝ)| = t := by
+      rw [hposcast, abs_of_pos ht]
+    have hnegabs : |((-((N + j + 1 : ℕ) : ℤ) : ℤ) : ℝ)| = t := by
+      rw [hnegcast, abs_neg, abs_of_pos ht]
     have hp := column_norm_envelope hc S v hS ((N + j + 1 : ℕ) : ℤ)
-      (by simpa only [Int.cast_natCast, abs_of_nonneg ht.le] using ht)
-      (by simpa only [Int.cast_natCast, abs_of_nonneg ht.le] using hhalf.trans hNt)
+      (by rw [hposabs]; exact ht)
+      (by rw [hposabs]; exact hhalf.trans hNt)
     have hn := column_norm_envelope hc S v hS (-((N + j + 1 : ℕ) : ℤ))
-      (by simpa only [Int.cast_neg, abs_neg, Int.cast_natCast,
-        abs_of_nonneg ht.le] using ht)
-      (by simpa only [Int.cast_neg, abs_neg, Int.cast_natCast,
-        abs_of_nonneg ht.le] using hhalf.trans hNt)
+      (by rw [hnegabs]; exact ht)
+      (by rw [hnegabs]; exact hhalf.trans hNt)
     have hp' : ‖couplingColumn c S v ((N + j + 1 : ℕ) : ℤ)‖ ≤
         4 * arithmeticBoundaryBudget c * (∑ n ∈ S, ‖v n‖) / (Real.pi * t) := by
-      simpa only [Int.cast_natCast, abs_of_nonneg ht.le] using hp
+      rw [hposabs] at hp
+      exact hp
     have hn' : ‖couplingColumn c S v (-((N + j + 1 : ℕ) : ℤ))‖ ≤
         4 * arithmeticBoundaryBudget c * (∑ n ∈ S, ‖v n‖) / (Real.pi * t) := by
-      simpa only [Int.cast_neg, abs_neg, Int.cast_natCast,
-        abs_of_nonneg ht.le] using hn
+      rw [hnegabs] at hn
+      exact hn
     calc
       E j ≤ 2 * (4 * arithmeticBoundaryBudget c * (∑ n ∈ S, ‖v n‖) /
           (Real.pi * t)) ^ 2 := by
