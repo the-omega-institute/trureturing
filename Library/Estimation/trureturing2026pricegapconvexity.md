@@ -8578,3 +8578,287 @@ original budget on the same compensated operator. The positive-minus-negative
 bulk remains uncontrolled; this paper application supplies neither
 its signed estimate nor the Robin upper or RH. It introduces no new
 operator theorem or Lean verification.
+
+
+## Half-isolated zeros pay an additional part of the original compensated head
+
+Keep the original source windows, every maximizing tie, the fixed compensation $a$,
+all outgoing weights $\delta_i>0$ with sum $L_X$, and all original legal heights
+$\tau_i\asymp\sqrt{B_i}$. Assume the originally supplied $1/2<\Theta<1$ and
+$1-\Theta<\eta<1/2$; neither parameter is reselected. Put
+$M=M_X=X^{1/2-\eta}\log X$ and retain the complete original coefficient
+$c_{B,a}(\rho)=s_BF_B(\rho)-aB^{\rho-1/2}/\rho$.
+This `repo-derived` paper application uses the
+[Maynard--Pratt half-isolated zero count](../Zeros/maynardpratt2023halfisolated.md),
+not their finite-vertical-line Hypothesis $\mathcal F$. It adds no general density
+theorem, literature-priority claim or Lean certification.
+
+### The actual submultiset and its budget-dependent lower cut
+
+Let $\mathcal H$ be the actual upper-half-plane zeros that are half-isolated in
+Definitions 8--9 of [Maynard--Pratt, author v2](https://arxiv.org/pdf/2206.11729v2).
+Every occurrence has its actual multiplicity $m_\rho$. For the same original core,
+define only a cut inside its existing head:
+
+$$
+H_{B,X}=\max\{51,\sqrt B/M^{19/10}\},
+\qquad
+\mathcal R_X^{\rm hi}
+=2\sum_{i<m}\delta_i
+\sum_{\substack{\rho\in\mathcal H,\ H_{B_i,X}<\gamma\le\tau_i\\
+                 3/5\le\beta\le3/4}}
+m_\rho|c_{B_i,a}(\rho)|.
+\tag{SIH1}
+$$
+
+Then there is a constant depending only on the fixed original suppliers and
+parameters such that, at one common source start,
+
+$$
+\boxed{\mathcal R_X^{\rm hi}\ll M_X^{39/40}L_X=o(M_XL_X).}
+\tag{SIH2}
+$$
+
+This is an absolute estimate for the specified submultiset of the original complete
+coefficients. It is not a count of all zeros, and its complement is retained.
+
+### Apply the existing count at finitely many fixed real parts
+
+Write $\mu=1/2-\eta>0$ and choose a fixed
+$D>\eta/[(1-\Theta)\mu]$. SC2 supplies $B_i\le M^D$ for all original cores
+beyond one common start. Corollary 5 of the cited author version gives, for each
+fixed $\sigma>1/2$ and every fixed $\epsilon>0$, a dyadic half-isolated count
+$O_{\sigma,\epsilon}(T^{2(1-\sigma)+\epsilon})$.
+If the count is read without multiplicities, the existing local zero count bounds
+each multiplicity by $O(\log T)$; start with $\epsilon/2$ and absorb this factor
+into the other $\epsilon/2$. No simplicity hypothesis is used.
+
+Partition $[3/5,3/4]$ into finitely many disjoint half-open bins, closing the final
+right endpoint. Let their endpoints be $\sigma_j,\sigma_{j+1}$ and their maximum
+width be $\omega$. Fix $\epsilon<1/10$ and $\omega>0$ small enough that
+$D(\omega+\epsilon/2)<1/40$. All these choices are independent of $X$, the core,
+the tie and the height assignment. The density exponent is less than one at every
+left endpoint. The existing dyadic reciprocal-height argument therefore gives,
+for every $H\ge51$,
+
+$$
+\sum_{\substack{\rho\in\mathcal H,\ \gamma>H\\\beta\ge\sigma_j}}
+\frac{m_\rho}{\gamma}
+\ll_{\sigma_j,\epsilon}H^{1-2\sigma_j+\epsilon}.
+\tag{SIH3}
+$$
+
+The constants cover the bounded initial range as well. No estimate uniform over a
+moving real-part parameter, or over $\Theta\uparrow1$, is asserted.
+
+DH3's existing full-coefficient bound
+$|c_{B,a}(\rho)|\le(a+2)B^{\beta-1/2}/\gamma$ now bounds a bin by
+$C B^{\sigma_{j+1}-1/2}H_{B,X}^{1-2\sigma_j+\epsilon}$.
+If $H_{B,X}=\sqrt B/M^{19/10}\ge51$, this is at most
+
+$$
+C M^{(19/10)(2\sigma_j-1-\epsilon)}
+ B^{\sigma_{j+1}-\sigma_j+\epsilon/2}
+\le C M^{19/20+D(\omega+\epsilon/2)}
+\le C M^{39/40}.
+$$
+
+If instead $H_{B,X}=51$, then $B\le51^2M^{19/5}$ and the same bin is at most
+$C B^{1/4}\le C M^{19/20}$. Summing the fixed bins and the original positive
+weights proves SIH2. Extending the positive sum beyond $\tau_i$ was only an upper
+bound; the original individual upper masks and full subtraction remain unchanged.
+
+### Relation to the previously paid upper slice
+
+The lower endpoint of BH1's auxiliary interval is
+$T^0_{B,X}=\sqrt B\,\mathsf Y_X^2/M$, with $\mathsf Y_X\to\infty$.
+The original source gives $\sqrt{b_X}/M\to\infty$, where $b_X=\min_i B_i$.
+Consequently
+
+$$
+\sup_i\frac{H_{B_i,X}}{T^0_{B_i,X}}
+\le\frac{51M}{\sqrt{b_X}\,\mathsf Y_X^2}
+   +\frac{M^{-9/10}}{\mathsf Y_X^2}\longrightarrow0.
+\tag{SIH4}
+$$
+
+Thus SIH2 pays the specified half-isolated contribution also between this lower cut
+and the already paid auxiliary cuts. $H_{B,X}$ is not declared a CHJ-admissible
+height, and no explicit formula is reapplied there.
+
+For comparison of certified power ranges, the allowed fixed parameters
+$(\Theta,\eta)=(3/4,7/20)$ have $M=X^{3/20+o(1)}$ and SC2 permits the power
+envelope $B=X^{7/5+o(1)}$. At that envelope the SIH1 cut is $X^{83/200+o(1)}$.
+At $\beta=3/4$, the Guth--Maynard exponent $g(3/4)=5/9$ would give the existing
+all-zero reciprocal-height majorant the power
+$7/20-(4/9)(83/200)=149/900>3/20$; that majorant would need a lower cut with
+power greater than $9/20$. The half-isolated count has exponent $1/2$ and gives
+$7/20-(1/2)(83/200)=57/400<3/20$ before the fixed-bin losses paid above.
+This comparison exhibits an additional certified parameter range; it asserts
+neither attainment of the clock envelope nor existence of zeros in that cell,
+and an unsuccessful upper majorant is not a lower bound on the actual sum.
+
+Deleting exactly SIH1's submultiset changes the original weighted real head by at
+most SIH2. All non-half-isolated zeros, real parts outside $[3/5,3/4]$, and the
+remaining low frequencies stay in the exact complementary head, with their own
+original masks. No reflection closure of $\mathcal H$ is required for this direct
+absolute comparison. The full signed head, original joint Robin estimate and RH
+remain unproved.
+
+At $\Theta=1$, CP1 gives only $\log B=O((\log X)^2)$ for this argument; the
+unspecified $T^{o(1)}$ loss in Corollary 5 cannot be replaced by $M^{o(1)}$ on that
+range. SIH2 is not asserted there. Nor does the result supply a sign or a budget
+for the complete half-isolated head below $H_{B,X}$.
+
+
+## An all-scale half-isolated sector is paid also at supremum one
+
+Keep CP1, BH1--BH3 and the original complete coefficients, windows, all ties,
+weights and legal upper masks. This application permits the original
+$1/2<\Theta\le1$, with its unchanged $1-\Theta<\eta<1/2$.
+Write $M=M_X=X^{1/2-\eta}\log X$ and retain
+$\log B_i\le\mathsf Y_X=O((\log X)^2)$.
+The argument localizes a hypothesis in
+[Maynard--Pratt's flexible detector proof](../Zeros/maynardpratt2023halfisolated.md).
+It assumes no finite-vertical-line hypothesis for the full zero set and gives no
+estimate for its unselected complement. This is a `repo-derived` paper application,
+with no new general zero-density theorem, priority or Lean-certification claim.
+
+### The stronger local property is imposed on each selected zero
+
+For a dyadic $T$ and an upper-half-plane zero $\rho_0$ with $T\le\gamma_0<2T$,
+let $\mathcal H_\ast(T)$ consist of those actual zeros that are
+$Y$-half-isolated in the cited Definition 8 for **every**
+$\exp((\log\log T)^3)\le Y\le T$.
+The definition is used above a fixed sufficiently large absolute $T_\ast$.
+Dyadic bins below $T_\ast$ are left outside this selected submultiset.
+This all-scale property is stronger than Definition 9's existential property;
+it is not asserted for every half-isolated zero or for every zero.
+Every selected zero has its original multiplicity.
+
+Use the same source cut $H_{B,X}=\max\{51,\sqrt B/M^{19/10}\}$.
+For each zero, let $T_\rho=2^{\lfloor\log_2\gamma\rfloor}$ and define
+
+$$
+\mathcal R_X^\ast
+=2\sum_{i<m}\delta_i
+\sum_{\substack{H_{B_i,X}<\gamma\le\tau_i,\ 3/5\le\beta\le3/4\\
+T_\rho\ge T_\ast,\ \rho\in\mathcal H_\ast(T_\rho)}}
+m_\rho|c_{B_i,a}(\rho)|.
+\tag{SAH1}
+$$
+
+Then, uniformly in all original windows, ties and legal height assignments,
+
+$$
+\boxed{\mathcal R_X^\ast\ll M_X^{39/40}L_X=o(M_XL_X).}
+\tag{SAH2}
+$$
+
+The constant and common source start depend only on the fixed original suppliers
+and parameters. In particular this assertion includes $\Theta=1$.
+
+### Localize the published flexible-detector argument
+
+The first step of the proof of Lemma 35 uses Hypothesis $\mathcal F$ to infer that
+its zero is $Y$-half-isolated at every scale in the preceding range.
+For $\mathcal H_\ast(T)$ this conclusion is the explicit local membership condition.
+The rest of that proof uses Proposition 16 at residual scales only.
+At target length $A=T$, set $A_1=A$, choose
+$U_j\in[\sqrt{A_j},A_j]$ by Proposition 16, replace $A_{j+1}=A_j/U_j$,
+and stop when $A_{j+1}\le\exp((\log\log T)^4)$.
+Every required isolation parameter $\sqrt{A_j}$ is inside the declared range
+for sufficiently large $T$. The published construction therefore uses
+$O(\log\log T)$ factors and yields a common family of detectors $P$ with
+
+$$
+\#\mathscr D_T\le\exp(C(\log\log T)^3),\qquad
+|P(\rho_0)|\ge\exp(-C(\log\log T)^3),
+$$
+
+$$
+P(s)=\sum_n b_P(n)n^{-s},\quad
+|b_P(n)|\le\exp(C(\log\log T)^3),\quad
+n\in[T\exp(-C(\log\log T)^4),\ T\exp(C(\log\log T)^2)].
+\tag{SAH3}
+$$
+
+The family is independent of $\rho_0$; the point selects a detector from it.
+These bounds are the existing product construction and its coefficient/family
+counts, with the use of $\mathcal F$ replaced by its precise local consequence.
+No use is made of Proposition 21's additional global cluster assumptions.
+
+Apply the discrete-to-continuous inequality of the cited Lemma 27 and the classical
+mean-square theorem for Dirichlet polynomials. The existing local zero count
+bounds the total multiplicity in each smoothing interval of length $O((\log T)^2)$
+by $O((\log T)^3)$. Real-part transport is elementary: for $\sigma\le\beta\le1$,
+
+$$
+|P(\beta+i\gamma)|^2
+\le2|P(\sigma+i\gamma)|^2
+ +2\int_\sigma^1|P'(u+i\gamma)|^2du.
+$$
+
+The derivative adds at most $O((\log T)^2)$ to the coefficient-square norm.
+Consequently the same mean-square bound, uniformly for $3/5\le\sigma\le3/4$,
+is at most a fixed logarithmic factor times
+$(T+N_T)\sum_n|b_P(n)|^2n^{-2\sigma}$, where
+$N_T=T\exp(C(\log\log T)^2)$.
+The support and coefficient bounds in SAH3 make this
+$T^{2(1-\sigma)}\exp(C'(\log\log T)^4)$.
+Summing over the common detector family and paying its lower detection threshold
+gives the quantitative bound
+
+$$
+\sum_{\substack{\rho\in\mathcal H_\ast(T)\\\beta\ge\sigma}}m_\rho
+\ll T^{2(1-\sigma)}\exp(C_\ast(\log\log T)^4),
+\qquad 3/5\le\sigma\le3/4.
+\tag{SAH4}
+$$
+
+All constants are uniform on this compact real-part interval. This derivation
+retains the quantitative loss; Corollary 5's unspecified $T^{o(1)}$ has not been
+substituted for it.
+
+### Spend the quantitative loss at the actual source clocks
+
+For one actual core, split only SAH1's finite masked ordinates into dyadic bins.
+Every participating $T$ satisfies $T\ge H_{B,X}/2$ and $T\ll\sqrt B$.
+Thus $\sqrt B/T\le2M^{19/10}$.
+For the real-part weight use the exact positive representation
+
+$$
+B^{\beta-1/2}
+=B^{1/10}+(\log B)\int_{3/5}^{\beta}B^{\sigma-1/2}d\sigma.
+$$
+
+On each dyadic bin, SAH4 and DH3's complete coefficient bound therefore bound
+its contribution by
+
+$$
+C_a\exp(C_\ast(\log\log T)^4)
+(1+\log B)M^{19/20}.
+$$
+
+Indeed $B^{\sigma-1/2}T^{1-2\sigma}=(\sqrt B/T)^{2\sigma-1}$ and
+$1/5\le2\sigma-1\le1/2$; its maximum is at most a constant times $M^{19/20}$,
+including the case $\sqrt B/T<1$.
+There are $O(1+\log B)$ bins. CP1 gives, uniformly in the original cores,
+
+$$
+\exp(C_\ast(\log\log T)^4)(1+\log B)^2
+\le\exp(O((\log\log X)^4))=M^{o(1)}.
+$$
+
+Since the original $\eta<1/2$ is fixed, this factor is at most $M^{1/40}$
+at one common source start. Sum the original weights to prove SAH2.
+No polynomial core-clock ceiling or restriction $\Theta<1$ is used.
+
+As in SIH4, this lower cut lies uniformly below BH1's auxiliary cuts.
+SAH2 therefore pays an actual submultiset also below the previously paid upper
+slice. The full subtraction, all original masks and all multiplicities are retained.
+Low dyadic bins below $T_\ast$, low frequencies below $H_{B,X}$, real parts outside
+the chosen band, and zeros failing the all-scale condition remain in the exact
+complement. No assertion of membership, nonempty occupancy or favorable phase is
+inferred from the existence of this estimate. The full signed Robin joint comparison,
+all-integer Robin and RH remain unproved.
