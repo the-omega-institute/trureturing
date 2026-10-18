@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics;
 internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/AnnealedPottsMomentBoundRefutation.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/StatisticalMechanics/janssen2025annealedpotts");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A mixture of two uniform densities has a unique positive Potts criticality zero below the proposed general moment lower bound.",
@@ -20,78 +22,108 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
                     + "the general moment lower inequality in equation (84), with the standing curvature assumption "
                     + "and unique-positive-zero condition explicit.")),
             Node("moment", "Moments of a density", MomentFormula(),
-                "The argument f is a real-valued function on the real line, and n is a natural number. "
-                    + "The displayed definition is total; the claim supplies integrability conditions.",
+                "These are the standard moments μₙ of a real-valued density f, with n a natural number. "
+                    + "The definition uses the Lebesgue integral on the whole real line; for densities "
+                    + "supported on positive weights it agrees with the integral over positive weights. "
+                    + "The definition is total, and the proposed inequality supplies integrability conditions.",
                 DescribeRole.Definition),
             Node("F0", "The size-biased order parameter", F0Formula(),
-                "The first moment normalizes the size-biased expectation. The definition takes arbitrary real q and t; "
-                    + "the claim uses q > 2 and positive zeros t.", DescribeRole.Definition),
+                "Equation (1) defines 𝓕₀ by the size-biased expectation, normalized by the first moment. "
+                    + "The definition takes arbitrary real q and t; the proposed inequality uses q > 2 "
+                    + "and positive zeros t.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("K", "The criticality function", KFormula(),
-                "The logarithmic expectation and the two correction terms are exactly the criticality function "
-                    + "after eliminating the stationarity parameter.", DescribeRole.Definition),
+                "Equation (6) defines 𝒦 as the logarithmic expectation divided by the first moment, "
+                    + "minus the two displayed correction terms, after eliminating the stationarity parameter.",
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The proposed universal lower inequality", ClaimFormula(),
-                "The hypotheses require an integrable nonnegative density, zero for w <= 0, of total mass one, "
+                "The lower inequality proposed in equation (84) asserts 2(μ₃/μ₄) ln(q − 1) < t "
+                    + "at every positive zero t of 𝒦, for every real q > 2. "
+                    + "The hypotheses require an integrable nonnegative density, zero for w ≤ 0, of total mass one, "
                     + "and with integrable fourth-moment integrand. The standing assumption requires a positive s "
-                    + "such that F0''(t) > 0 for 0 < t < s and F0''(t) < 0 for t > s. "
-                    + "They also require exactly one positive zero of K. "
-                    + "The conclusion demands the strict moment lower inequality at every positive zero. "
+                    + "such that 𝓕₀''(t) > 0 for 0 < t < s and 𝓕₀''(t) < 0 for t > s. "
+                    + "They also require exactly one positive zero of 𝒦. "
                     + "The existential clause below includes the universal equality condition expressing uniqueness.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("density", "Two narrow uniform blocks", DensityFormula(),
                 "Each indicator is one on the displayed closed interval and zero elsewhere. Multiplication by 500 "
                     + "makes each block have mass one. The mixture weights are 1331/1340 and 9/1340, "
-                    + "and the block centers are 1 and 11. Its first, third, and fourth moments are respectively "
-                    + "143/134, 1331000143/134000000, and 33275001210000067/335000000000000.",
-                DescribeRole.Definition),
-            Node("result", "The universal inequality fails", new Formula.Not(P(Named("claim"))),
-                "Use this density with q = 3. For g(x) = (exp(x) - 1)/(exp(x) + 2), the second derivative "
-                    + "of F0 is the size-normalized expectation of W^3 g''(tW). This expectation strictly decreases "
-                    + "on [0, 9/50], is positive at zero, and is negative for t >= 9/50. On [9/50, 7/10] "
-                    + "the negative sign follows from 26 rational interval bounds for the exponential; beyond 7/10 "
-                    + "both blocks have tW > log(2). Continuity and strict decrease give a positive crossing s, "
-                    + "with F0'' positive on (0, s) and negative on (s, infinity), as the standing assumption requires. "
-                    + "The identities K'(t) = (F0(t) - t F0'(t))/3 and "
-                    + "K''(t) = -t F0''(t)/3, together with Rolle's theorem, give at most one positive zero of K. "
-                    + "Near zero K is negative. Rational exponential and logarithm bounds, with a symmetric integral "
-                    + "error estimate for the blocks, give K(6931/50000) > 0. The intermediate value theorem "
-                    + "therefore gives a positive zero at or below 6931/50000 = 0.13862. The exact moments and "
-                    + "a lower bound on log(2) place 0.13862 strictly below 2(mu3/mu4) log(2). Thus existence, "
-                    + "uniqueness, and all density hypotheses hold while the asserted inequality fails.",
+                    + "and the block centers are 1 and 11. This density is nonnegative, has mass one, "
+                    + "vanishes on nonpositive weights, and has finite moments of every natural order.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Describe.Lean(
+                DescribeId.Create("potts-moment-result"), DeclarationHandle.Create(Prefix + "result"),
+                H("The universal inequality fails"),
+                StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Named("claim"))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "Take q = 3 and the displayed two-block density f. Its first, third, and fourth moments "
+                            + "are μ₁ = 143/134, μ₃ = 1331000143/134000000, and "
+                            + "μ₄ = 33275001210000067/335000000000000. Set T = 6931/50000 = 0.13862. "
+                            + "These exact moments and a lower bound for ln 2 give T < 2(μ₃/μ₄) ln 2.")),
+                    Paragraph(Text(
+                        "The second derivative of x ↦ (eˣ − 1)/(eˣ + 2) is "
+                            + "3eˣ(2 − eˣ)/(eˣ + 2)³, positive for x < ln 2 and negative for x > ln 2. "
+                            + "The second derivative 𝓕₀''(t) is its expectation at tW, weighted by W³/μ₁. "
+                            + "This weighted expectation strictly decreases on [0, 9/50] and is positive at zero. "
+                            + "On [9/50, 7/10], certified rational exponential enclosures on 26 subintervals "
+                            + "make it negative; for t ≥ 7/10 both density intervals have tW > ln 2. "
+                            + "Continuity therefore gives a positive s with 𝓕₀'' positive on (0, s) "
+                            + "and negative on (s, ∞), as the standing assumption requires.")),
+                    Paragraph(Text(
+                        "Differentiating the criticality function gives "
+                            + "𝒦'(t) = ((q − 1)/(2q))(𝓕₀(t) − t𝓕₀'(t)); at q = 3 this yields "
+                            + "𝒦''(t) = −t𝓕₀''(t)/3. Since 𝒦(0) = 𝒦'(0) = 0 and 𝓕₀'' "
+                            + "has exactly one positive zero, Rolle's theorem gives at most one positive zero of 𝒦. "
+                            + "Near zero 𝒦 is negative. Rational exponential and logarithm bounds, with a symmetric "
+                            + "integral error estimate for the two density intervals, give 𝒦(T) > 0. "
+                            + "The intermediate value theorem supplies a positive zero at or below T, so the zero "
+                            + "is unique and lies strictly below 2(μ₃/μ₄) ln 2. All the hypotheses hold "
+                            + "while the proposed strict lower inequality fails."))),
                 DescribeRole.Theorem)), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
-        DescribeRole role) =>
+        DescribeRole role, AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("potts-moment-" + declaration.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula V(string name) => F.Id(name);
-    private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
+    private static Formula Named(string name) => name switch
+    {
+        "F0" => new Formula.Subscript(Seq(Mathcal, Grp(V("F"))), D(0)),
+        "K" => Seq(Mathcal, Grp(V("K"))),
+        _ => Seq(Operatorname, Grp(V(name))),
+    };
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Named(name), args);
-    private static Formula P(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Real() => Seq(Mathbb, Grp(V("R")));
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula Arr(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula All(string x, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), type, body);
+        Seq(Forall, Sp, Parenthesized(Seq(V(x), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
     private static Formula Some(string x, Formula type, Formula body) =>
-        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(x), type, body);
+        Seq(Exists, Sp, Parenthesized(Seq(V(x), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
     private static Formula Equal(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Less(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.And, P(b));
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Implies, P(b));
-    private static Formula IffOf(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, P(b));
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula IffOf(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(P(a), b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula Integral(string variable, Formula body) =>
-        Seq(Int, Underscore, Grp(Real()), Sp, P(body), Sp, Mathrm, Grp(V("d")), V(variable));
+        Seq(Int, Underscore, Grp(Real()), Sp, Parenthesized(body), Sp, Mathrm, Grp(V("d")), V(variable));
     private static Formula Lam(string x, Formula body) =>
-        Seq(LambdaLower, Sp, V(x), Colon, Real(), Sp, Mapsto, Sp, body);
+        Seq(LambdaLower, Sp, Parenthesized(Seq(V(x), Colon, Sp, Real())), Sp, Mapsto, Sp,
+            Parenthesized(body));
     private static Formula Moment(int n) => Call("moment", V("f"), D((byte)n));
     private static Formula ExpTW() => App(Exp, Mul(V("t"), V("w")));
     private static Formula FunctionBind(Formula body) => All("f", Arr(Real(), Real()), body);
@@ -144,12 +176,14 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
 
     private static Formula DensityFormula()
     {
-        Formula block1 = Call("indicator", Call("Icc", Div(D(9, 9, 9), D(1, 0, 0, 0)),
-            Div(D(1, 0, 0, 1), D(1, 0, 0, 0))), Lam("x", D(5, 0, 0)), V("w"));
-        Formula block11 = Call("indicator", Call("Icc", Div(D(1, 0, 9, 9, 9), D(1, 0, 0, 0)),
-            Div(D(1, 1, 0, 0, 1), D(1, 0, 0, 0))), Lam("x", D(5, 0, 0)), V("w"));
+        Formula Indicator(Formula left, Formula right) => App(new Formula.Subscript(
+            Seq(Mathbf, Grp(D(1))), Seq(OpenBracket, left, Comma, Sp, right, CloseBracket)), V("w"));
+        Formula first = Mul(D(5, 0, 0), Indicator(Div(D(9, 9, 9), D(1, 0, 0, 0)),
+            Div(D(1, 0, 0, 1), D(1, 0, 0, 0))));
+        Formula second = Mul(D(5, 0, 0), Indicator(Div(D(1, 0, 9, 9, 9), D(1, 0, 0, 0)),
+            Div(D(1, 1, 0, 0, 1), D(1, 0, 0, 0))));
         return All("w", Real(), Equal(Call("density", V("w")),
-            Add(Mul(Div(D(1, 3, 3, 1), D(1, 3, 4, 0)), block1),
-                Mul(Div(D(9), D(1, 3, 4, 0)), block11))));
+            Add(Mul(Div(D(1, 3, 3, 1), D(1, 3, 4, 0)), Parenthesized(first)),
+                Mul(Div(D(9), D(1, 3, 4, 0)), Parenthesized(second)))));
     }
 }
