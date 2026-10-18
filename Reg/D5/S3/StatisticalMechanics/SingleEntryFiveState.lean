@@ -15,12 +15,19 @@ open _root_.D5.S3.StatisticalMechanics.SingleEntryFiveState
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
+open Matrix
 
 abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
   (Σ _ : Rates, ℝ → Fin 5 → ℝ) (fun _ => ℝ) (fun _ => ℝ)
 
+def actualReadout : ∀ role p, (signature).State p → (signature).Output role p :=
+  fun _ p x => association p.2 x
+
+def actualAnchor : ∀ (_ : (signature).Anchor) p, (signature).State p :=
+  fun e => nomatch e
+
 def actual : Realization signature :=
-  realize signature (fun _ p t => association p.2 t) (fun e => nomatch e)
+  realize signature actualReadout actualAnchor
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -30,12 +37,19 @@ clause remain. Only its actual time-dependent association is observed. -/
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ k : Rates,
-    (∃ p : ℝ → Fin 5 → ℝ, ForwardSolution k p ∧
+    ((∃ p : ℝ → Fin 5 → ℝ, ForwardSolution k p ∧
       (∀ t, 0 ≤ t → (∀ i, 0 ≤ p t i) ∧ ∑ i, p t i = 1) ∧
       ∀ t, 0 < t →
         pyramidLaw p t ∈ D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openSimplex ∧
         D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.visible (pyramidLaw p t) ∈
           D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openPyramid) ∧
+      (∀ i, 0 < equilibriumLaw k i) ∧ (∑ i, equilibriumLaw k i) = 1 ∧
+      generator k *ᵥ equilibriumLaw k = 0 ∧
+      association (fun _ => equilibriumLaw k) 0 = 0 ∧
+      0 < fiberWidth (fun _ => equilibriumLaw k) 0 ∧
+      activeMass (fun _ => equilibriumLaw k) 0 =
+        k.theta / (k.theta + k.eta *
+          (k.b / (k.a + k.b) * (k.d / (k.c + k.d))))) ∧
     (∀ (p : ℝ → Fin 5 → ℝ), ForwardSolution k p → ∀ t, 0 < t →
       0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < R.readout () ⟨k, p⟩ t ∧
         p t 2 * p t 3 < p t 1 * p t 4 ∧
@@ -59,13 +73,13 @@ private def unitRates : Rates where
   theta_pos := by norm_num
 
 private theorem rejected_law : ¬ arena.Law rejected := by
-  obtain ⟨p, hp, _⟩ := (five_state_strict_association unitRates).1
+  obtain ⟨p, hp, _⟩ := (five_state_strict_association unitRates).1.1
   intro h
   have hh := ((h unitRates).2 p hp 1 (by norm_num)).2.2.1
   norm_num [rejected, realize] at hh
 
 private theorem dependence : ObservationalDependence signature actual := by
-  obtain ⟨p, hp, _⟩ := (five_state_strict_association unitRates).1
+  obtain ⟨p, hp, _⟩ := (five_state_strict_association unitRates).1.1
   have hpos := ((five_state_strict_association unitRates).2 p hp 1 (by norm_num)).2.2.1
   have hzero : association p 0 = 0 := by
     simp [association, activeMass, firstOccupancy, secondOccupancy, hp.1]
@@ -108,7 +122,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actualReadout actualAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

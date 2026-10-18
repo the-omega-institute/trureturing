@@ -611,16 +611,89 @@ private theorem task_error_identity (k : Rates) (p : ℝ → Fin 5 → ℝ)
   field_simp [hne]
   ring
 
+/-- The independent detailed-balance weights, normalized on the actual five
+states. This defines a candidate stationary law without any stationarity premise. -/
+def equilibriumLaw (k : Rates) : Fin 5 → ℝ :=
+  let C := k.theta * (k.a + k.b) * (k.c + k.d) + k.eta * k.b * k.d
+  ![k.eta * k.b * k.d / C, k.theta * k.b * k.d / C,
+    k.theta * k.a * k.d / C, k.theta * k.b * k.c / C, k.theta * k.a * k.c / C]
+
+private theorem equilibrium_properties (k : Rates) :
+    (∀ i, 0 < equilibriumLaw k i) ∧ (∑ i, equilibriumLaw k i) = 1 ∧
+      generator k *ᵥ equilibriumLaw k = 0 ∧
+      association (fun _ => equilibriumLaw k) 0 = 0 ∧
+      0 < fiberWidth (fun _ => equilibriumLaw k) 0 ∧
+      activeMass (fun _ => equilibriumLaw k) 0 =
+        k.theta / (k.theta + k.eta *
+          (k.b / (k.a + k.b) * (k.d / (k.c + k.d)))) := by
+  let C := k.theta * (k.a + k.b) * (k.c + k.d) + k.eta * k.b * k.d
+  have ha := k.a_pos
+  have hb := k.b_pos
+  have hc := k.c_pos
+  have hd := k.d_pos
+  have he := k.eta_pos
+  have ht := k.theta_pos
+  have hs : 0 < k.a + k.b := add_pos k.a_pos k.b_pos
+  have hu : 0 < k.c + k.d := add_pos k.c_pos k.d_pos
+  have hC : 0 < C := add_pos (mul_pos (mul_pos k.theta_pos hs) hu)
+    (mul_pos (mul_pos k.eta_pos k.b_pos) k.d_pos)
+  have hp (i : Fin 5) : 0 < equilibriumLaw k i := by
+    fin_cases i <;> simp only [equilibriumLaw] <;> change 0 < _ / C <;>
+      apply div_pos _ hC <;> positivity
+  have hm : (∑ i, equilibriumLaw k i) = 1 := by
+    simp [equilibriumLaw, Fin.sum_univ_five]
+    change _ / C + _ / C + _ / C + _ / C + _ / C = 1
+    field_simp [ne_of_gt hC]
+    dsimp [C]
+    ring
+  refine ⟨hp, hm, ?_, ?_, ?_, ?_⟩
+  · ext i
+    fin_cases i <;> simp [generator, equilibriumLaw, mulVec, dotProduct,
+      Fin.sum_univ_five] <;> field_simp <;> ring
+  · dsimp [association, activeMass, firstOccupancy, secondOccupancy]
+    simp [equilibriumLaw]
+    change (1 - _ / C) * (_ / C) - (_ / C + _ / C) * (_ / C + _ / C) = 0
+    field_simp [ne_of_gt hC]
+    dsimp [C]
+    ring
+  · simp only [fiberWidth, lt_min_iff]
+    have h0 := hp 0
+    have h1 := hp 1
+    have h2 := hp 2
+    have h3 := hp 3
+    have h4 := hp 4
+    simp only [Fin.sum_univ_five] at hm
+    dsimp [firstOccupancy, secondOccupancy, activeMass]
+    exact ⟨⟨by linarith, by linarith⟩, ⟨by linarith, by linarith⟩⟩
+  · have hden : k.theta + k.eta *
+        (k.b / (k.a + k.b) * (k.d / (k.c + k.d))) =
+        C / ((k.a + k.b) * (k.c + k.d)) := by
+      dsimp [C]
+      field_simp [ne_of_gt hs, ne_of_gt hu]
+    simp only [activeMass, equilibriumLaw, Matrix.cons_val_zero]
+    change 1 - _ / C = _
+    rw [hden]
+    field_simp [ne_of_gt hC, ne_of_gt hs, ne_of_gt hu]
+    dsimp [C]
+    ring
+
 /-- A probability-valued solution exists in the interior of the actual five-mode
 pyramid at every positive time. Every solution from R has strict association;
 the independent-completion task error is exact and has the interaction's sign. -/
 theorem five_state_strict_association (k : Rates) :
-    (∃ p : ℝ → Fin 5 → ℝ, ForwardSolution k p ∧
+    ((∃ p : ℝ → Fin 5 → ℝ, ForwardSolution k p ∧
       (∀ t, 0 ≤ t → (∀ i, 0 ≤ p t i) ∧ ∑ i, p t i = 1) ∧
       ∀ t, 0 < t →
         pyramidLaw p t ∈ D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openSimplex ∧
         D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.visible (pyramidLaw p t) ∈
           D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openPyramid) ∧
+      (∀ i, 0 < equilibriumLaw k i) ∧ (∑ i, equilibriumLaw k i) = 1 ∧
+      generator k *ᵥ equilibriumLaw k = 0 ∧
+      association (fun _ => equilibriumLaw k) 0 = 0 ∧
+      0 < fiberWidth (fun _ => equilibriumLaw k) 0 ∧
+      activeMass (fun _ => equilibriumLaw k) 0 =
+        k.theta / (k.theta + k.eta *
+          (k.b / (k.a + k.b) * (k.d / (k.c + k.d))))) ∧
     (∀ (p : ℝ → Fin 5 → ℝ), ForwardSolution k p → ∀ t, 0 < t →
       0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < association p t ∧
         p t 2 * p t 3 < p t 1 * p t 4 ∧
@@ -629,22 +702,24 @@ theorem five_state_strict_association (k : Rates) :
           taskError p f t = taskContrast f * association p t / activeMass p t ∧
           (taskContrast f ≠ 0 → 0 < taskContrast f * taskError p f t)) := by
   constructor
-  · refine ⟨canonicalTrajectory k, canonical_forward k, ?_, ?_⟩
-    · intro t ht
-      exact ⟨canonical_nonneg k t ht, mass_conservation k _ (canonical_forward k) t ht⟩
-    · intro t ht
-      have hs : pyramidLaw (canonicalTrajectory k) t ∈
-          D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openSimplex := by
-        constructor
-        · intro i
-          fin_cases i <;> simp only [pyramidLaw, Matrix.cons_val_zero,
-            Matrix.cons_val_succ, Matrix.cons_val_fin_one] <;> exact canonical_positive k t ht _
-        · have hm := mass_conservation k _ (canonical_forward k) t ht.le
-          simp [pyramidLaw, Fin.sum_univ_five] at *
-          linarith
-      exact ⟨hs,
-        D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.mixed_coordinates_global_chart.1
-          _ hs⟩
+  · constructor
+    · refine ⟨canonicalTrajectory k, canonical_forward k, ?_, ?_⟩
+      · intro t ht
+        exact ⟨canonical_nonneg k t ht, mass_conservation k _ (canonical_forward k) t ht⟩
+      · intro t ht
+        have hs : pyramidLaw (canonicalTrajectory k) t ∈
+            D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openSimplex := by
+          constructor
+          · intro i
+            fin_cases i <;> simp only [pyramidLaw, Matrix.cons_val_zero,
+              Matrix.cons_val_succ, Matrix.cons_val_fin_one] <;> exact canonical_positive k t ht _
+          · have hm := mass_conservation k _ (canonical_forward k) t ht.le
+            simp [pyramidLaw, Fin.sum_univ_five] at *
+            linarith
+        exact ⟨hs,
+          D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.mixed_coordinates_global_chart.1
+            _ hs⟩
+    · exact equilibrium_properties k
   · intro p hp t ht
     obtain ⟨hr, hw, hD, hdet, hf⟩ := strict_for_every_forward_solution k p hp t ht
     refine ⟨hr, hw, hD, hdet, hf, ?_⟩

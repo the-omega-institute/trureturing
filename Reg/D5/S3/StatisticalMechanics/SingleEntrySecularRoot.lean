@@ -30,8 +30,14 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+def actualReadout : ∀ role p, (signature.{u}).State p → (signature.{u}).Output role p :=
+  fun _ p x => siteRate p.2.1 p.2.2 x
+
+def actualAnchor : ∀ (_ : (signature.{u}).Anchor) p, (signature.{u}).State p :=
+  fun e => nomatch e
+
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p i => siteRate p.2.1 p.2.2 i) (fun e => nomatch e)
+  realize signature actualReadout actualAnchor
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -58,7 +64,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro role
   let a : ULift.{u} (Fin 2) → ℝ := fun i => if i.down = 0 then 1 else 2
   refine ⟨⟨ULift.{u} (Fin 2), a, fun _ => 1⟩, ULift.up 0, ULift.up 1, ?_⟩
-  norm_num [actual, realize, siteRate, a]
+  norm_num [actual, actualReadout, realize, siteRate, a]
 
 def family : Registration arena.{u} (arena.Law actual) where
   actual := actual
@@ -102,7 +108,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actualReadout actualAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

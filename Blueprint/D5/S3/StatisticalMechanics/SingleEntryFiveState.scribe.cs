@@ -37,12 +37,14 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
                 "For a task f on the actual five states, J=f(11)-f(10)-f(01)+f(00).", DescribeRole.Definition),
             Node("taskError", "Actual expectation error",
                 "Subtract the task expectation under the conditionally independent completion from the expectation under the actual law at the same time.", DescribeRole.Definition),
+            Node("equilibriumLaw", "The stationary five-mode law",
+                "Let C=theta(a+b)(c+d)+eta b d. In state order R,00,10,01,11 the candidate masses are eta b d/C, theta b d/C, theta a d/C, theta b c/C, theta a c/C. They are strictly positive, sum to one and solve Q pi=0. For this stationary law D=0 and w>0, and r=theta/(theta+eta(b/(a+b))(d/(c+d))). In the formula constant(v) denotes the time-constant curve with value v. These stationary identities do not claim convergence of the trajectory.", DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("single-entry-five-state-strict-association"),
                 DeclarationHandle.Create(Prefix + "five_state_strict_association"),
                 H("Strict association at every positive time"),
                 StatementSource.FromAuthor(TheoremFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "A probability-valued forward solution exists and has all five masses strictly positive at every positive time. Its actual occupancy law lies in the established open five-mode simplex and projects to the open pyramid. Every forward solution starting at R has r>0, w>0 and D>0 at every positive time. Since 10 and 01 are the only incomparable configurations of the two-dimensional Boolean square, its conditional law is strictly MTP2. In addition theta p(R)-eta p(00)>0, so the active mass increases strictly. No positive-association premise is imposed. The generator is similar to minus a symmetric Gram matrix built from its five actual edges. Projection of the same trajectory onto an orthogonal eigenbasis gives a positive spectral representation of its return probability. The positive R diagonal ensures that at least one positive eigenvalue carries nonzero return weight, hence strictly positive net return at every finite time. Scalar integrating factors propagate that strict input through r, both occupied and vacant margins, the double occupancy, and finally D' = -(a+b+c+d)D + r' p(11). Existence uses exp(t Q); entrywise nonnegativity follows by a scalar diagonal shift to an entrywise nonnegative matrix and its exponential series, and conservation follows from the column sums. For every real task on these same five physical states, actual minus independently completed expectation is exactly J D/r. Multiplication by a nonzero J gives a strictly positive result, proving nonzero error with the sign of J. The task identity uses the actual conserved mass and four-corner table; it does not posit a residual as a premise. The theorem does not assert the general-dimensional result, equilibrium limit or common-tail coefficient. The chart is reused directly from FiveModeMixedCoordinates.mixed_coordinates_global_chart. No original Fibonacci reader, guard or continuation law is inferred from this occupancy correspondence."))), DescribeRole.Theorem))));
+                    "A probability-valued forward solution exists and has all five masses strictly positive at every positive time. Its actual occupancy law lies in the established open five-mode simplex and projects to the open pyramid. Every forward solution starting at R has r>0, w>0 and D>0 at every positive time. Since 10 and 01 are the only incomparable configurations of the two-dimensional Boolean square, its conditional law is strictly MTP2. In addition theta p(R)-eta p(00)>0, so the active mass increases strictly. No positive-association premise is imposed. The generator is similar to minus a symmetric Gram matrix built from its five actual edges. Projection of the same trajectory onto an orthogonal eigenbasis gives a positive spectral representation of its return probability. The positive R diagonal ensures that at least one positive eigenvalue carries nonzero return weight, hence strictly positive net return at every finite time. Scalar integrating factors propagate that strict input through r, both occupied and vacant margins, the double occupancy, and finally D' = -(a+b+c+d)D + r' p(11). Existence uses exp(t Q); entrywise nonnegativity follows by a scalar diagonal shift to an entrywise nonnegative matrix and its exponential series, and conservation follows from the column sums. For every real task on these same five physical states, actual minus independently completed expectation is exactly J D/r. Multiplication by a nonzero J gives a strictly positive result, proving nonzero error with the sign of J. The task identity uses the actual conserved mass and four-corner table; it does not posit a residual as a premise. The theorem does not assert the general-dimensional result, convergence to equilibrium or common-tail coefficient. The chart is reused directly from FiveModeMixedCoordinates.mixed_coordinates_global_chart. No original Fibonacci reader, guard or continuation law is inferred from this occupancy correspondence."))), DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string declaration, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("single-entry-five-" + declaration.ToLowerInvariant()),
@@ -70,6 +72,24 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
     private static Formula R() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Pos(Formula x) => Rel(D(0), FormulaRelationOperator.LessThan, x);
+    private static Formula StationaryFormula(Formula k)
+    {
+        Formula eq = Call("equilibriumLaw", k), i = F.Id("i");
+        Formula v = Call("constant", eq);
+        Formula a = Call("a", k), b = Call("b", k), c = Call("c", k), d = Call("d", k);
+        Formula theta = Call("theta", k), eta = Call("eta", k);
+        Formula mass = new Formula.Fraction(theta, new Formula.Binary(theta,
+            FormulaBinaryOperator.Add, Mul(eta, Mul(new Formula.Fraction(b,
+                new Formula.Binary(a, FormulaBinaryOperator.Add, b)),
+                new Formula.Fraction(d, new Formula.Binary(c, FormulaBinaryOperator.Add, d))))));
+        return And(All("i", Call("Fin", D(5)), Pos(Call("equilibriumLaw", k, i))),
+            And(Rel(Seq(new Formula.Subscript(Sum, Seq(i, Colon, Call("Fin", D(5)))),
+                Sp, Call("equilibriumLaw", k, i)), FormulaRelationOperator.Equal, D(1)),
+            And(Rel(Call("mulVec", Call("generator", k), eq), FormulaRelationOperator.Equal, D(0)),
+            And(Rel(Call("association", v, D(0)), FormulaRelationOperator.Equal, D(0)),
+            And(Pos(Call("fiberWidth", v, D(0))),
+                Rel(Call("activeMass", v, D(0)), FormulaRelationOperator.Equal, mass))))));
+    }
     private static Formula TheoremFormula()
     {
         Formula k = F.Id("k"), p = F.Id("p"), t = F.Id("t");
@@ -100,7 +120,7 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
             Rel(Call("visible", law), FormulaRelationOperator.MemberOf, F.Id("openPyramid")))));
         Formula existence = Exists("p", curve,
             And(Call("ForwardSolution", k, p), And(nonnegative, interior)));
-        return Disp(All("k", F.Id("Rates"), And(existence, All("p", curve,
+        return Disp(All("k", F.Id("Rates"), And(And(existence, StationaryFormula(k)), All("p", curve,
             Imp(Call("ForwardSolution", k, p), All("t", R(), Imp(Pos(t), result)))))));
     }
 }
