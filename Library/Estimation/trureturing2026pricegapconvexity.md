@@ -10569,3 +10569,167 @@ No strict signed upper on that head or $\mathcal I_X^H$, favorable
 cofinal sequence, all-integer Robin bound or RH proof is supplied.
 FCT3--FCT5 do not assert equality with the compensated sums, an
 absolute $o(M_XL_X)$ transport error, or uniformity as $\eta\uparrow1/2$.
+
+
+## The actual contact set excludes primes and pays both energy bulk terms
+
+Reuse PG1, CQ1, AO5--AO6 and FCT1--FCT5 on their original conditional
+RH-failure source, every original full window and maximizing tie, and
+every originally fixed $1-\Theta<\eta<1/2$, including $\Theta=1$.
+Keep the complete future account $\mathsf H=sJ$,
+$J(x)=\int_x^\infty E(v)k(v)dv$, and the original positive compensation
+parameter unchanged. This is a `repo-derived` paper application of the
+existing integer-competitor interface, finite Stieltjes integration by
+parts and the already used bounded-variation quadrature. It asserts no
+new generic theorem, literature priority or Lean/kernel verification.
+
+### Every active real clock avoids the first-prime measure
+
+Suppose an original active core $u$ at a real parameter $t$ has total
+clock $A=t+\log u=q$ prime. PG1 gives $q>11$, $q\le R_X$ and
+$u=N_q^{\rm str}$. Its first $q$-layer reward per logarithmic mass is
+strictly below $\lambda(q)$, since
+$\log(1+1/q)<1/q$. Thus $q\nmid u$. PG1's existing headroom makes
+$uq$ a literal legal competitor in the same finite core domain.
+But its objective cost satisfies exactly
+
+$$
+f(q+\log q)-f(q)
+=\log\left(1+\frac{\log(1+\log q/q)}{\log q}\right)
+<\log(1+1/q)=W(uq)-W(u),
+$$
+
+by $\log(1+y)<y$ for $y>0$. Hence $\Phi_t(uq)>\Phi_t(u)$,
+a contradiction. This argument treats every original real parameter
+and every active tie, including all trace endpoints. Consequently,
+with $\vartheta$ the first-power Chebyshev function,
+
+$$
+\boxed{D_X\cap\mathbb P=\varnothing,\qquad
+\int_{D_X}g\,d\vartheta=0.}
+\tag{CE1}
+$$
+
+The second equality holds for every real-valued test $g$ on this finite
+range. It is an exact source selection constraint, not a statement
+that $D_X$ has zero Lebesgue measure or that proper prime powers are
+excluded. Real $t$ remains an interpolation parameter; $e^t$ is not
+reclassified as an original prime label.
+
+### Keep the exact boundary and proper-prime-power pairing
+
+CQ1 makes $D_X$ a finite union of intervals, possibly with isolated
+trace points. For Stieltjes integrals choose the half-open representative
+$D_X^*=\bigcup_j(r_j,z_j]$ of its positive-length components. This
+leaves $\int_{D_X}\mathsf H(x)dx$ unchanged. Keep this representative
+explicitly at every proper-prime-power endpoint; no equality between
+atom sums for different endpoint conventions is assumed.
+
+The complete $\mathsf H$ is continuous and locally absolutely
+continuous, whereas $E=x-\psi$ is right-continuous and locally of
+bounded variation. Since $J'=-Ek$ almost everywhere, finite integration
+by parts on each $(r_j,z_j]$ gives
+
+$$
+\int_{(r_j,z_j]}\mathsf H\,dE
+=[E\mathsf H]_{r_j}^{z_j}
+-\int_{r_j}^{z_j}\frac{s'}sE\mathsf H\,dx
++\int_{r_j}^{z_j}skE^2\,dx.
+$$
+
+Define the actual signed component boundary sum, proper-power pairing
+and two bulk terms by
+
+$$
+\begin{aligned}
+B_D&=\sum_j[E\mathsf H]_{r_j}^{z_j},&
+C_D^{\rm pp}&=\sum_{\substack{p^k\in D_X^*\\k\ge2}}
+ (\log p)\mathsf H(p^k),\\
+M_D&=\int_{D_X}\frac{s'}sE\mathsf H\,dx,&
+Q_D&=\int_{D_X}skE^2\,dx\ge0.
+\end{aligned}
+$$
+
+Using $dE=dx-d\psi$ and CE1, with every proper power retained, yields
+
+$$
+\boxed{\mathcal I_X^H=B_D+C_D^{\rm pp}-M_D+Q_D.}
+\tag{CE2}
+$$
+
+All occurrences of $\mathsf H$, including those at atoms and component
+endpoints, retain their original infinite future integral.
+
+### The same source pays both bulk terms relatively
+
+Put $S_H=\mathcal H_X^B$, $b_X=\min_tB(t)$ and
+$\epsilon_X^{\rm en}=\rho_X+b_X^{-1/2}\to0$, where
+$\rho_X=\sup_t t/B(t)\to0$ on the whole real window as in PE2.
+The original uniform floor and all-choice ordering supply $b_X\to\infty$;
+no clock-ratio ceiling or bounded $S_H/(M_XL_X)$ is imposed.
+
+Absolute value does not increase variation. Apply FCT4's existing
+quadrature to $|\mathsf H|$ composed with the same tagged monotone
+selector. FCT2--FCT3 give positivity only at the original labels,
+which is sufficient for
+
+$$
+\int_{D_X}|\mathsf H|dx
+=\sum_{i<m}\delta_i\mathsf H(A_i)+o(1)\sim S_H.
+$$
+
+For $h(t)=t/\sqrt{B(t)}$, monotonicity of the finite step function $B$
+gives tagged variation at most $(2t_m+L_X)/\sqrt{b_X}$.
+The original mesh $\varepsilon_X^{\rm lab}\le e^{-5\ell_X/12}$ and
+$t_m\le2\ell_X$ therefore pay its quadrature as well. FCT2's same
+coercivity gives
+
+$$
+\int_{t_0}^{t_m}\frac{t}{\sqrt{B(t)}}dt
+=\sum_{i<m}\delta_i\frac{t_i}{\sqrt{B_i}}+o(1)\ll S_H,
+\qquad L_X\ll S_H/M_X=o(S_H).
+\tag{CE3}
+$$
+
+No sign at every real point or proper-power atom has been inferred.
+For almost every $x=A(t)\in D_X$, reuse exactly
+$E(x)=t+Q(x)$, $|Q(x)|\le H_Q\sqrt x$ and $A/B\to1$.
+Since $s'/s=1/(2x)+1/(x\log x)$ and $s_xk(x)\le2x^{-3/2}$,
+
+$$
+\left|\frac{s'}sE\right|\ll\epsilon_X^{\rm en},
+\qquad
+0\le s_xk(x)E(x)^2
+\ll\frac{t^2}{B^{3/2}}+\frac1{\sqrt B}
+\ll\epsilon_X^{\rm en}\left(\frac t{\sqrt B}+1\right).
+\tag{CE4}
+$$
+
+The exact visited-set pushforward, CE3 and absolute-value quadrature
+now pay both complete bulk terms:
+
+$$
+\boxed{|M_D|+Q_D\ll\epsilon_X^{\rm en}S_H=o(S_H).}
+\tag{CE5}
+$$
+
+In particular the positive square term was estimated, rather than
+dropped from an upper comparison. CE2 and FCT4 give
+
+$$
+\boxed{\frac{|\mathcal I_X^H-B_D-C_D^{\rm pp}|}{S_H}\longrightarrow0,
+\qquad
+\frac{B_D+C_D^{\rm pp}}{\mathcal I_X^H}\longrightarrow1.}
+\tag{CE6}
+$$
+
+CE1 supplies actual arithmetic information about the selected set;
+CE5 pays both bulk components on that same source. Neither asserts
+absolute $o(M_XL_X)$ error. Every component boundary and the proper-power
+pairing in CE6 still need their joint signed upper estimate, with no
+separate sign assigned to either term. The original FH weighted
+first-prime test uses its different nonlocal weight and remains unpaid;
+CE1 must not be substituted for a bound on that test. The original
+compensated $G_a$, DR baseline/exterior account and its strict upper
+obligation retain their stated scopes. No favorable cofinal sequence,
+all-integer Robin inequality or RH proof is supplied.
