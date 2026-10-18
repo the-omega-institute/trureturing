@@ -10,7 +10,6 @@ import D5.S3.Quantum.Entanglement.TwoQubitBinegativityUpperBoundRefutation
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 import D5.S3.Quantum.Entanglement.SeparableNumericalRangeRatio
 import D5.S3.Quantum.PureState.PureStateHandshake
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 /-! The fixed-negativity boundary for the spectral binegativity of two-qubit states. -/
 
