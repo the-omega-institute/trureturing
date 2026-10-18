@@ -74,7 +74,10 @@ internal sealed class QutritMagicCoherenceBoundDocument : IScribeDocumentDefinit
                             + "of 3W sum to 3, M = sumNegativity(rho) = (2/3)N "
                             + "≥ (2/√3)D ≥ s√v. Substituting s = C/2 and v = 1 − s "
                             + "gives the asserted bound."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mukhopadhyay-sazim-pati-2018-qutrit-magic-coherence-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
