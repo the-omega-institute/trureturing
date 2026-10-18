@@ -268,24 +268,10 @@ private theorem lift_edge (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ
   have hsym : Adjacent v u := by
     unfold Adjacent at huv ⊢
     simpa only [abs_sub_comm] using huv
-  by_cases hu : u ∈ I
-  · by_cases hv : v ∈ I
-    · unfold lift
-      rw [ite_eq_left hu, ite_eq_left hv]
-      simpa only [add_sub_add_right_eq_sub] using hg
-    · have hn : ground ℓ v + 1 ≠ ground ℓ u := fun he => hv (hI v u hsym he hu)
-      unfold lift
-      rw [ite_eq_left hu, ite_eq_right hv]
-      simp only [abs_eq_max_neg] at hg ⊢
-      omega
-  · by_cases hv : v ∈ I
-    · have hn : ground ℓ u + 1 ≠ ground ℓ v := fun he => hu (hI u v huv he hv)
-      unfold lift
-      rw [ite_eq_right hu, ite_eq_left hv]
-      simp only [abs_eq_max_neg] at hg ⊢
-      omega
-    · unfold lift
-      simpa only [ite_eq_right hu, ite_eq_right hv, add_zero] using hg
+  have hdown := hI u v huv
+  have hup := hI v u hsym
+  by_cases hu : u ∈ I <;> by_cases hv : v ∈ I <;>
+    simp_all [lift, abs_eq_max_neg] <;> omega
 
 private theorem lift_height (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
     (hI : IsDownset ℓ I) : IsHeight ℓ (lift ℓ I) := by
@@ -332,29 +318,15 @@ private noncomputable def heightEquiv (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
     apply Subtype.ext
     funext v
     change lift ℓ h.property.1.1.toFinset v = h.val v
-    unfold lift
-    by_cases hv : h.val v = ground ℓ v
-    · have hn : v ∉ h.property.1.1.toFinset := by
-        intro hm
-        exact (h.property.1.1.mem_toFinset.mp hm) hv
-      rw [ite_eq_right hn]
-      omega
-    · rw [ite_eq_left (h.property.1.1.mem_toFinset.mpr hv)]
-      rcases height_binary ℓ hℓ h h.property.1 h.property.2 v with he | he
-      · exact (hv he).elim
-      · omega
+    simp only [lift, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
+    split_ifs with hv <;>
+      rcases height_binary ℓ hℓ h h.property.1 h.property.2 v with hb | hb <;> omega
   right_inv I := by
     apply Subtype.ext
     ext v
-    change v ∈ (lift_height ℓ hℓ I.val I.property.2).1.toFinset ↔ v ∈ I.val
     rw [Set.Finite.mem_toFinset]
-    change lift ℓ I.val v ≠ ground ℓ v ↔ v ∈ I.val
-    unfold lift
-    by_cases hv : v ∈ I.val
-    · rw [ite_eq_left hv]
-      exact ⟨fun _ => hv, fun _ => by omega⟩
-    · rw [ite_eq_right hv]
-      exact ⟨fun hn => (hn (by omega)).elim, fun hm => (hv hm).elim⟩
+    change ground ℓ v + (if v ∈ I.val then 2 else 0) ≠ ground ℓ v ↔ v ∈ I.val
+    by_cases hv : v ∈ I.val <;> simp [hv]
 
 private theorem geodesic_mem (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
     (hI : IsDownset ℓ I) (u v : ℤ × ℤ)
@@ -524,23 +496,6 @@ private theorem vertex_classification (ℓ : ℕ) (hℓ : 3 ≤ ℓ)
   have hdy_range : -4 ≤ dy ∧ dy ≤ 4 := by
     simp only [abs_eq_max_neg] at hvi
     omega
-  have hshape : dx = 0 ∨ dy = 0 ∨ (dx = 1 ∨ dx = -1) ∧ (dy = 1 ∨ dy = -1) := by
-    have ha := abs_nonneg dx
-    have hb := abs_nonneg dy
-    by_cases hxa : |dx| = 0
-    · left
-      exact abs_eq_zero.mp hxa
-    · by_cases hya : |dy| = 0
-      · right; left
-        exact abs_eq_zero.mp hya
-      · have hax : 1 ≤ |dx| := by omega
-        have hby : 1 ≤ |dy| := by omega
-        have hp := mul_nonneg (by omega : 0 ≤ |dx| - 1) (by omega : 0 ≤ |dy| - 1)
-        have hs : 2 * (|dx| + |dy|) ≤ 5 := by nlinarith
-        have heq : |dx| = 1 ∧ |dy| = 1 := by omega
-        right; right
-        simp only [abs_eq_max_neg] at heq
-        omega
   have lmin : 0 < i → |dx| + |dy| ≤ |dx + 1| + |dy - 1| := by
     intro hl
     have hm := hmin (i - 1) (by omega) (by omega)
@@ -599,19 +554,11 @@ private theorem vertex_classification (ℓ : ℕ) (hℓ : 3 ≤ ℓ)
   simp only [Prod.ext_iff]
   obtain ⟨dxlo, dxhi⟩ := hdx_range
   obtain ⟨dylo, dyhi⟩ := hdy_range
-  clear hmin no_pos no_neg hwidth hrank hbound
-  rcases hshape with hzero | hzero | ⟨hxx, hyy⟩
-  · cases hzero
-    interval_cases dy <;> norm_num at lmin <;> norm_num at rmin <;>
-      norm_num at lrect <;> norm_num at rrect <;> norm_num at hvi <;>
-      norm_num at p0 p1 p2 n0 n1 n2 <;> omega
-  · cases hzero
-    interval_cases dx <;> norm_num at lmin <;> norm_num at rmin <;>
-      norm_num at lrect <;> norm_num at rrect <;> norm_num at hvi <;>
-      norm_num at p0 p1 p2 n0 n1 n2 <;> omega
-  · rcases hxx with rfl | rfl <;> rcases hyy with rfl | rfl <;>
-      norm_num at lmin <;> norm_num at rmin <;> norm_num at lrect <;>
-      norm_num at rrect <;> norm_num at hvi <;> norm_num at p0 p1 p2 n0 n1 n2 <;> omega
+  clear hmin no_pos no_neg hwidth hrank
+  interval_cases dx <;> interval_cases dy <;>
+    norm_num at hbound <;> norm_num at lmin <;> norm_num at rmin <;>
+    norm_num at lrect <;> norm_num at rrect <;> norm_num at hvi <;>
+    norm_num at p0 p1 p2 n0 n1 n2 <;> omega
 
 private noncomputable def vertices (ℓ : ℕ) : Finset (ℤ × ℤ) := by
   classical
