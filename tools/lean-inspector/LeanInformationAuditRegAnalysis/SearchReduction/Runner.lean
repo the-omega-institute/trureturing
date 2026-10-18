@@ -173,16 +173,6 @@ partial def structural (goal : MVarId) (extra : Array Name) :
         goal.assign value
         return #[]
       (before.restore : MetaM Unit)
-  let mut facts := #[]
-  for decl in ← getLCtx do
-    unless decl.isImplementationDetail do
-      if ← isProp decl.type then facts := facts ++ (← components decl.toExpr)
-  for n in extra do
-    facts := facts ++ (← components (← mkConstWithFreshMVarLevels n))
-  let (hits, index) ← (← get).projections.getMatch type
-  modify fun state => {state with projections := index}
-  for f in hits.appendResults #[] do facts := facts.push (← factExpr f)
-  if ← presentation goal facts then return #[]
   if type.isForall then
     let (_, next) ← goal.intro1
     return ← structural next extra
@@ -190,6 +180,17 @@ partial def structural (goal : MVarId) (extra : Array Name) :
     let ctor := if type.isAppOfArity ``And 2 then ``And.intro else ``Iff.intro
     let gs ← goal.apply (← mkConstWithFreshMVarLevels ctor)
     return (← gs.mapM (fun g => structural g extra)).toArray.flatten
+  let mut facts := #[]
+  for decl in ← getLCtx do
+    unless decl.isImplementationDetail do
+      if ← isProp decl.type then facts := facts ++ (← components decl.toExpr)
+  for n in extra do
+    facts := facts ++ (← components (← mkConstWithFreshMVarLevels n))
+  if ← presentation goal facts then return #[]
+  let (hits, index) ← (← get).projections.getMatch type
+  modify fun state => {state with projections := index}
+  for f in hits.appendResults #[] do facts := facts.push (← factExpr f)
+  if ← presentation goal facts then return #[]
   let mut next := goal
   for n in extra do
     let fact ← mkConstWithFreshMVarLevels n
@@ -221,7 +222,7 @@ def attempt (env : Environment) (levels : List Name) (type : Expr)
         unless env.contains name do
           let info ← getConstInfo name
           if info.isUnsafe then throwError "search.unsafe_generated_dependency: {name}"
-          let some value := info.value?
+          let some value := info.value? (allowOpaque := true)
             | throwError "search.generated_dependency_without_value: {name}"
           return .visit (value.instantiateLevelParams info.levelParams levels)
       return .continue)
