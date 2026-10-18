@@ -6,6 +6,9 @@
    utility: none
    digest: The identity plus twice any normalized bipartite rank-one matrix is separable. -/
 
+/- Escape audit unfinished for dot_star_self:
+https://github.com/the-omega-institute/trureturing/issues/17765. -/
+
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRaysAverages
 import D5.S3.Resource.SeparableConeResidualWitness
 
@@ -273,7 +276,7 @@ private theorem rankOne_residual_properties {m n : ℕ}
     nlinarith
 
 
-private lemma dot_star_self {J : Type*} [Fintype J] (x : J → ℂ) :
+lemma dot_star_self {J : Type*} [Fintype J] (x : J → ℂ) :
     star x ⬝ᵥ x = ((∑ j, ‖x j‖ ^ 2 : ℝ) : ℂ) := by
   simp only [dotProduct, Pi.star_apply, Complex.star_def, Complex.conj_mul']
   push_cast
@@ -552,6 +555,5 @@ theorem separableCone_one_add_two_rankOne {m n : ℕ} (ψ : Fin m × Fin n → �
     push_cast
     ring
 
-#print axioms separableCone_one_add_two_rankOne
 
 end D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays
