@@ -24,7 +24,10 @@ internal sealed class TwoQubitBinegativityLowerBoundDocument : IScribeDocumentDe
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The lower bound holds for every two-qubit state", Disp(ClaimBody()),
                 Blocks(Paragraph(Text("The partial transpose sigma^Gamma has at most one negative eigenvalue: every two-dimensional subspace of the two-qubit space contains a nonzero product vector, and the quadratic form of sigma^Gamma is nonnegative on product vectors. Thus a two-dimensional negative eigenspace is impossible. If there is a negative eigenvalue -lambda, local unitaries put its unit eigenvector in Schmidt form alpha |00> + beta |11>, with alpha and beta positive and alpha^2 + beta^2 = 1. These unitaries preserve both the negativity N and the binegativity N_2. In these coordinates write a = sigma_(00,00), d = sigma_(11,11), x = a + d, and u = -Re sigma_(01,10). The eigenvalue equations give u^2 = (a + lambda)(d + lambda), nu = 2 lambda, and (2 alpha beta)(x + nu) = 2u. Positivity on |01> + |10> gives 2u <= 1 - x; equivalently, one may use |01> - |10> after a local phase change. Consequently nu (2x + nu) <= (1 - x)^2, so x <= 1 - c. The same eigenvalue equations imply (2 alpha beta)^2 (x + nu)^2 >= nu (2x + nu), which forces 2 alpha beta >= c/sqrt((1 - c)^2 + c^2). Since (sigma^Gamma)_- = lambda |psi><psi|, its partial transpose has the single negative eigenvalue -lambda alpha beta. Therefore N_2(sigma) = (nu/2)(1 + 2 alpha beta), and the lower bound follows. When sigma^Gamma has no negative eigenvalue, its negative component is zero, so nu = c = N_2(sigma) = 0 and both sides vanish."))),
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("girard-2017-binegativity-lower-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
