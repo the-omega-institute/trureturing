@@ -58,3 +58,10 @@ Inputs are TBN.2--TBN.3, the elementary Fermat-quotient calculation recorded
 as RP.1 in PERIODIC_TREE.md, and the classical Fibonacci valuation baseline
 recorded in Medina--Rowland, Fibonacci Quarterly 53 (2015), Theorem 1.4,
 arXiv:0910.2907.
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [PERIODIC_TREE_registry.jsonl](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/periodic-tree/PERIODIC_TREE_registry.jsonl)

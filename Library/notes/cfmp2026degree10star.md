@@ -18,8 +18,8 @@ result: six degree-eight global classes remain a three-star in every
 
 The global cosh box is [11/8,2] on degree-eight edges, [11/10,71/50] on the
 degree-ten edge, and [1009/1000,21/20] on degree-38 edges. Exact endpoint
-squares are checked by `verify_degree10_star.py` and
-`audit_degree10_bounds.py`. Degree-eight cosine bounds are 143/200 below and
+squares are checked by [verify_degree10_star.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_degree10_star.py) and
+[audit_degree10_bounds.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/audit_degree10_bounds.py). Degree-eight cosine bounds are 143/200 below and
 35941/50941 above. Degree-ten upper endpoint is
 19195*sqrt(880915135)/704732108, whose square is
 1842240125/2818928432 < cos(pi/5)^2. For degree 38, the two actual high/low coordinate patterns have the same

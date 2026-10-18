@@ -147,40 +147,98 @@ internal sealed class QuadraticPrimeRadicalKernelDocument : IScribeDocumentDefin
                     + "linear equivalence gives residue degree one; the same Frobenius-order identity then gives F(q) "
                     + "= 1. Upper-prime independence transfers this conclusion to every upper prime. Faithfulness of "
                     + "signs also identifies F(q) = 1 with (p/q) = 1 for every p in S.")))),
-            new DocumentBlock.Section(H("The original weighted Lucas-block Frobenius application"), Blocks(
+            new DocumentBlock.Section(H("Actual blocks, initial depths and odd-depth kernels"), Blocks(
                 Paragraph(Text(
-                    "Fix j >= 2. Set B_i = abs(L_(3^i)^2 + 3), with L the same goldenLucas sequence, and let S be "
-                    + "the union of the prime supports of B_i over every 1 <= i < j. This is the full earlier support "
-                    + "used above, including primes at even depths. Let T be the finite subtype of prime factors of "
-                    + "B_j, and take F(q) in the same Galois group Gal(E(S)/Q) to be the actual "
-                    + "upper-prime-independent Frobenius just constructed, for each q in T. The later support T is "
-                    + "nonempty. The existing block prime-data proof at GoldenCubicBlockNativePowerPeriods gives q > 5 "
-                    + "and the exact equality e(q) = v_q(Fib(fibonacciRank(q))) = v_q(B_j) > 0. The pairwise block "
-                    + "coprimality in cubic_block_native_power_periods gives q outside S. These are the genuine "
-                    + "positive Fibonacci depths, with no depth-one substitution.")),
+                    "For every j >= 1 put r_j = 3^(j+1), B_j = L_(3^j)^2 + 3 and T_j = {q prime : q divides B_j}, with L = "
+                    + "goldenLucas. The integer B_j is positive, so its natural absolute value is the same block. For every q "
+                    + "in T_j use the original signed-index Fibonacci depth h_q = v_q(F_(q-(5/q))), where (5/q) is the Legendre "
+                    + "symbol, equivalently jacobiSym 5 q. The existing block prime data identify h_q = v_q(B_j) = "
+                    + "v_q(F_(rho(q))) > 0. They also give q > 5, (5/q) = 1, rho(q) = pi(q) = 2r_j and q = 1 modulo 2r_j. Thus "
+                    + "q is WSS precisely when q^2 divides F_(q-(5/q)), equivalently h_q >= 2. No index-multiplier depth is "
+                    + "substituted.")),
                 Paragraph(Text(
-                    "Keep the primewise condition D as an external hypothesis: for every p in S, product(q in "
-                    + "T,(p/q)^e(q)) = 1 in the integers. For these identical S, T, F and e, the Frobenius calculation "
-                    + "gives sign_p(F(q)) = (p/q). Substitute this integer equality separately under each power and "
-                    + "use product congruence. Since signs form a homomorphism, D makes every sign coordinate of "
-                    + "product(q in T,F(q)^e(q)) equal to one. Faithfulness then gives the weighted Galois equality "
-                    + "product(q in T,F(q)^e(q)) = 1.")),
+                    "Define s_j = product(q in T_j with h_q odd, q) and a_j = product(q in T_j, q^floor(h_q/2)). The actual "
+                    + "factorization gives B_j = s_j*a_j^2. The product defining s_j has distinct prime factors, so s_j is "
+                    + "squarefree. It is greater than one: B_j = 19 modulo 80 gives B_j = 3 modulo 8, whereas s_j = 1 would "
+                    + "make B_j a square. Pairwise coprimality of the blocks, supplied by "
+                    + "GoldenCubicBlockNativePowerPeriods.cubic_block_native_power_periods, implies pairwise coprimality of the "
+                    + "s_j.")),
                 Paragraph(Text(
-                    "If Q in T has odd depth e(Q) and every other q in T has even depth, exponent two makes "
-                    + "F(q)^e(q) = 1 for q different from Q and F(Q)^e(Q) = F(Q). The identical weighted product "
-                    + "therefore reduces to F(Q), so D implies F(Q) = 1. The full splitting equivalence above applies "
-                    + "to Q in this same field E(S): it gives the exhaustive set of 2^|S| distinct actual upper "
-                    + "ideals, quotient cardinality Q at every member, and all three ideal product equalities. This "
-                    + "implication retains its external D and its unique-odd-depth hypotheses.")))),
+                    "Every prime factor of a_j is odd, so a_j^2 = 1 modulo 8. Each actual block prime has square 1 modulo 5, "
+                    + "by its golden splitting condition. Consequently a_j^2 = 1 modulo 5, s_j = 3 modulo 8 and s_j = 4 modulo "
+                    + "5. Every factor of s_j is 1 modulo 2r_j, hence s_j = 1 modulo 2r_j and in particular modulo 3. These "
+                    + "three congruences yield s_j = 19 modulo 120. For 1 <= i < j, removing the square factors in either slot "
+                    + "of the coprime Jacobi symbols gives (s_j/s_i) = (B_j/B_i) = -1 and (s_i/s_j) = (B_i/B_j) = 1. Removing "
+                    + "only the later square factor also gives (s_j/B_i) = -1.")))),
+            new DocumentBlock.Section(H("Unconditional weighted Frobenius on the full earlier support"), Blocks(
+                Paragraph(Text(
+                    "Fix j >= 2. Form A_j = product(1 <= i < j, rad(B_i)), where rad uses every distinct prime factor, and "
+                    + "put S_j = {p prime : p divides A_j} = union(1 <= i < j,T_i), t_j = |S_j| and E_j = E(S_j). This support "
+                    + "includes earlier primes whose initial depths are even; it is not the union of the odd-depth kernels "
+                    + "alone. The generic arithmetic application above gives the same actual totally real Galois field E_j "
+                    + "inside C, degree 2^t_j and faithful surjective independent signs. Every actual q in T_j is odd and "
+                    + "outside S_j, by disjoint block supports. Its arithmetic Frobenius F(q) is therefore unramified, "
+                    + "independent of the upper prime, and acts on sqrt(p) by (p/q) for every p in S_j.")),
+                Paragraph(Text(
+                    "The primewise condition D is unconditional for these actual objects: for every p in S_j, product(q in "
+                    + "T_j,(p/q)^h_q) = 1. To see the parameter correspondence, choose an earlier block B_i containing p. The "
+                    + "existing cubic block congruence gives B_j = 3 modulo p, so (B_j/p) = (3/p). Since p = 1 modulo 3, "
+                    + "quadratic reciprocity gives (3/p) = (-1)^((p-1)/2). Expanding the actual later factorization and "
+                    + "reversing each symbol introduces the sign (-1)^(((p-1)/2)*sum(q in T_j,h_q*(q-1)/2)). The inner sum is "
+                    + "odd because B_j = 3 modulo 4, so this reciprocity sign cancels (3/p). This proves D for every earlier p, "
+                    + "including even-depth ones, with no squarefree, depth-one or extra D hypothesis.")),
+                Paragraph(Text(
+                    "Apply the existing weighted Frobenius consumer to these identical S_j, T_j, F and h. Its rank-depth "
+                    + "exponent agrees with the original signed-index h_q by the exact block valuation equality. The sign "
+                    + "homomorphism takes product(q in T_j,F(q)^h_q) to product(q in T_j,(p/q)^h_q) = 1 in each p-coordinate. "
+                    + "Faithfulness gives the unconditional identity product(q in T_j,F(q)^h_q) = 1 in Gal(E_j/Q). This is the "
+                    + "original GPC9 application; the field construction and arithmetic Frobenius proof are the existing ones.")))),
+            new DocumentBlock.Section(H("Exactly one odd depth: literal splitting and directed tests"), Blocks(
+                Paragraph(Text(
+                    "Assume Q belongs to the actual later support T_j, h_Q is odd and every other q in T_j has even h_q. The "
+                    + "Galois group has exponent two, so all other factors of the weighted identity are one and its remaining "
+                    + "factor is F(Q). Thus F(Q) = 1. The complete-splitting equivalence above applies to Q in this same E_j. "
+                    + "It yields an exhaustive finite set of 2^t_j distinct prime ideals of O(E_j), with membership exactly "
+                    + "prime ideals lying over Q, every residue quotient of cardinality Q, and all three displayed "
+                    + "ideal-extension and principal-ideal products. The conclusion retains the exactly-one-odd-depth "
+                    + "hypothesis.")),
+                Paragraph(Text(
+                    "On every earlier coordinate this also gives (p/Q) = 1 for every p in S_j. Since s_j = Q under the "
+                    + "hypothesis, the reduced directed law gives (Q/B_i) = -1 for every 1 <= i < j. The kernel congruences "
+                    + "give Q = 19 modulo 40 and Q = 1 modulo 2r_j. In particular, if j >= 3, the exact first blocks B_1 = 19 "
+                    + "and B_2 = 5779 give (Q/19) = (Q/5779) = -1. These are tests on the same actual Q; they do not select a "
+                    + "comparison prime from another set.")))),
+            new DocumentBlock.Section(H("All-WSS multiplicity five: the full two-prime specialization"), Blocks(
+                Paragraph(Text(
+                    "For every j >= 1, suppose every actual q in T_j is WSS and the actual total multiplicity sum(q in "
+                    + "T_j,h_q) is five. Then there are distinct actual primes P and Q with T_j = {P,Q}, h_P = 2, h_Q = 3 and "
+                    + "B_j = P^2*Q^3. Indeed each depth is at least two, so there are at most two factors. A single factor "
+                    + "would make B_j a fifth power, excluded by "
+                    + "GoldenCubicBlockNonFifthPower.golden_cubic_block_not_fifth_power. There are therefore two factors, and "
+                    + "their depths must be two and three. This is the multiplicity-five case of the DCE4 pattern; it does not "
+                    + "assume the factorization as an extra premise.")),
+                Paragraph(Text(
+                    "The same Q satisfies Q = 19 modulo 40 and Q = 1 modulo 2r_j. Both P and Q split in the golden quadratic "
+                    + "field and have exact Fibonacci rank and Pisano period 2r_j. Write P = 1 + 2r_j*u and Q = 1 + 2r_j*v. "
+                    + "Expanding P^2*Q^3 gives (B_j-1)/r_j = 4u + 6v + r_j*c for an integer c. The existing normalized ternary "
+                    + "block unit gives (B_j-1)/r_j = (-1)^j modulo 3, so u = (-1)^j modulo 3 and 3 does not divide u. Hence P "
+                    + "= 1 + 2(-1)^j*r_j modulo 6r_j and v_3(P-1) = j+1. Finally, B_j = 3 modulo 16: if Q = 19 modulo 80 then "
+                    + "Q^3 = 11 modulo 16 and P^2 = 9 modulo 16; if Q = 59 modulo 80 then Q^3 = 3 modulo 16 and P^2 = 1 modulo "
+                    + "16. These are the full DCE5 congruence and valuation conditions.")),
+                Paragraph(Text(
+                    "For j >= 2 this actual Q is the unique odd-depth prime in T_j. It therefore has F(Q) = 1, the literal "
+                    + "complete splitting in E_j, (p/Q) = 1 for every p dividing A_j and (Q/B_i) = -1 for every earlier block. "
+                    + "For j >= 3 it also satisfies both tests at 19 and 5779. All hypotheses concern the actual initial "
+                    + "Fibonacci depths and the actual factor support.")))),
             new DocumentBlock.Section(H("Scope and applicability limits"), Blocks(
                 Paragraph(Text(
-                    "The derivation does not obtain D from Jacobi symbols or block coprimality, replace the depths "
-                    + "by ones, assert existence of a Wall-Sun-Sun prime, or prove unconditional GPC9. The original "
-                    + "GPC7 comparison set, exact density, DCE and scalar conclusions are outside this application. No "
-                    + "full parent-problem completion is asserted. These are applications of existing multiquadratic, "
-                    + "residue and ideal interfaces, with no mathematical novelty claimed; the linked library note "
-                    + "records the classical source for the displayed kernel and degree results. Their displayed "
-                    + "formulas remain author-written descriptions of the linked Lean declarations.")))))));
+                    "These consequences complete the original GPC5 and GPC6 application of the existing block, "
+                    + "multiquadratic, residue and ideal interfaces. They assert neither existence nor impossibility of an "
+                    + "all-WSS block or of the two-prime pattern, and do not decide whether an odd depth is one or at least "
+                    + "three. The later GPC7 density theorem, its comparison primes and the remaining parent problem are "
+                    + "separate work. No full parent-problem completion or new general field-arithmetic result is claimed. The "
+                    + "four displayed formulas remain author-written descriptions of their linked Lean declarations; the linked "
+                    + "library note records their classical source.")))))));
 
     private static Formula Call(string name, params Formula[] args)
     {
