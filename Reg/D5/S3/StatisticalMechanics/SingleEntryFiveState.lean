@@ -17,7 +17,7 @@ open LeanInformationAudit
 open scoped BigOperators
 
 abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
-  (Rates × (ℝ → Fin 5 → ℝ)) (fun _ => ℝ) (fun _ => ℝ)
+  (Σ _ : Rates, ℝ → Fin 5 → ℝ) (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
   realize signature (fun _ p t => association p.2 t) (fun e => nomatch e)
@@ -29,13 +29,20 @@ def rejected : Realization signature :=
 clause remain. Only its actual time-dependent association is observed. -/
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (k : Rates),
+  Law R := ∀ k : Rates,
     (∃ p : ℝ → Fin 5 → ℝ, ForwardSolution k p ∧
-      ∀ t, 0 ≤ t → (∀ i, 0 ≤ p t i) ∧ ∑ i, p t i = 1) ∧
+      (∀ t, 0 ≤ t → (∀ i, 0 ≤ p t i) ∧ ∑ i, p t i = 1) ∧
+      ∀ t, 0 < t →
+        pyramidLaw p t ∈ D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openSimplex ∧
+        D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.visible (pyramidLaw p t) ∈
+          D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openPyramid) ∧
     (∀ (p : ℝ → Fin 5 → ℝ), ForwardSolution k p → ∀ t, 0 < t →
-      0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < R.readout () (k, p) t ∧
+      0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < R.readout () ⟨k, p⟩ t ∧
         p t 2 * p t 3 < p t 1 * p t 4 ∧
-        0 < k.theta * p t 0 - k.eta * p t 1)
+        0 < k.theta * p t 0 - k.eta * p t 1 ∧
+        ∀ f : Fin 5 → ℝ,
+          taskError p f t = taskContrast f * association p t / activeMass p t ∧
+          (taskContrast f ≠ 0 → 0 < taskContrast f * taskError p f t))
 
 private def unitRates : Rates where
   a := 1
@@ -63,7 +70,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hzero : association p 0 = 0 := by
     simp [association, activeMass, firstOccupancy, secondOccupancy, hp.1]
   intro role
-  refine ⟨(unitRates, p), 0, 1, ?_⟩
+  refine ⟨⟨unitRates, p⟩, 0, 1, ?_⟩
   change association p 0 ≠ association p 1
   rw [hzero]
   exact ne_of_lt hpos
@@ -85,7 +92,7 @@ def selection : Contract.SourceSelection where
       "arg", "arg", "fn", "arg", "arg"]
     stateBinder := 3
     functionOperand := false
-    stateOperand := some #["arg"]
+    stateOperand := none
     booleanPredicate := false }]
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -101,8 +108,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p t => association p.2 t)
-    (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

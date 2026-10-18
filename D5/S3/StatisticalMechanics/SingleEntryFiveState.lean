@@ -6,6 +6,7 @@
    utility: none
    digest: The repressed initial condition yields strict positive two-site association. -/
 
+import D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
@@ -487,20 +488,175 @@ private theorem canonical_nonneg (k : Rates) (t : ℝ) (ht : 0 ≤ t) (i : Fin 5
   exact mul_nonneg (Real.exp_pos _).le
     (exp_entry_nonneg (t • B) (fun j l => mul_nonneg ht (hB j l)) i 0)
 
-/-- A probability-valued solution exists, and every solution of the same
-generator with the repressed initial state has the asserted strict association. -/
+private theorem positive_initial_forcing (f g : ℝ → ℝ) (c : ℝ)
+    (hf0 : 0 < f 0)
+    (hf : ∀ t, 0 ≤ t → HasDerivAt f (-c * f t + g t) t)
+    (hg : ∀ t, 0 ≤ t → 0 ≤ g t) (t : ℝ) (ht : 0 ≤ t) : 0 < f t := by
+  let H := fun u => Real.exp (c * u) * f u
+  have hd (u : ℝ) (hu : 0 ≤ u) :
+      HasDerivAt H (Real.exp (c * u) * g u) u := by
+    convert (((hasDerivAt_id u).const_mul c).exp.mul (hf u hu)) using 1 <;>
+      first | rfl | (dsimp [H]; ring)
+  have hm : MonotoneOn H (Icc 0 t) := by
+    apply monotoneOn_of_deriv_nonneg (convex_Icc _ _)
+    · intro u hu
+      exact (hd u hu.1).continuousAt.continuousWithinAt
+    · intro u hu
+      rw [interior_Icc] at hu
+      exact (hd u hu.1.le).differentiableAt.differentiableWithinAt
+    · intro u hu
+      rw [interior_Icc] at hu
+      rw [(hd u hu.1.le).deriv]
+      exact mul_nonneg (Real.exp_pos _).le (hg u hu.1.le)
+  have hh := hm (left_mem_Icc.mpr ht) (right_mem_Icc.mpr ht) ht
+  have h0 : H 0 = f 0 := by simp [H]
+  rw [h0] at hh
+  exact (mul_pos_iff_of_pos_left (Real.exp_pos _)).mp (lt_of_lt_of_le hf0 hh)
+
+private theorem canonical_positive (k : Rates) (t : ℝ) (ht : 0 < t) :
+    ∀ i, 0 < canonicalTrajectory k t i := by
+  let p := canonicalTrajectory k
+  have hp : ForwardSolution k p := canonical_forward k
+  have hn (u : ℝ) (hu : 0 ≤ u) (i : Fin 5) : 0 ≤ p u i :=
+    canonical_nonneg k u hu i
+  have hR (u : ℝ) (hu : 0 ≤ u) : 0 < p u 0 := by
+    apply positive_initial_forcing (fun x => p x 0) (fun x => k.eta * p x 1)
+      k.theta (by simp [hp.1]) _
+      (fun x hx => mul_nonneg k.eta_pos.le (hn x hx 1)) u hu
+    intro x hx
+    convert hp.2 x hx 0 using 1
+    simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+  have hE (u : ℝ) (hu : 0 < u) : 0 < p u 1 := by
+    apply positive_forcing (fun x => p x 1)
+      (fun x => k.theta * p x 0 + k.b * p x 2 + k.d * p x 3)
+      (k.a + k.c + k.eta) (by simp [hp.1]) _ _ u hu
+    · intro x hx
+      convert hp.2 x hx 1 using 1
+      simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+      ring
+    · intro x hx
+      exact add_pos_of_pos_of_nonneg
+        (add_pos_of_pos_of_nonneg (mul_pos k.theta_pos (hR x hx.le))
+          (mul_nonneg k.b_pos.le (hn x hx.le 2)))
+        (mul_nonneg k.d_pos.le (hn x hx.le 3))
+  have hX (u : ℝ) (hu : 0 < u) : 0 < p u 2 := by
+    apply positive_forcing (fun x => p x 2) (fun x => k.a * p x 1 + k.d * p x 4)
+      (k.b + k.c) (by simp [hp.1]) _ _ u hu
+    · intro x hx
+      convert hp.2 x hx 2 using 1
+      simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+      ring
+    · intro x hx
+      exact add_pos_of_pos_of_nonneg (mul_pos k.a_pos (hE x hx))
+        (mul_nonneg k.d_pos.le (hn x hx.le 4))
+  have hY (u : ℝ) (hu : 0 < u) : 0 < p u 3 := by
+    apply positive_forcing (fun x => p x 3) (fun x => k.c * p x 1 + k.b * p x 4)
+      (k.a + k.d) (by simp [hp.1]) _ _ u hu
+    · intro x hx
+      convert hp.2 x hx 3 using 1
+      simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+      ring
+    · intro x hx
+      exact add_pos_of_pos_of_nonneg (mul_pos k.c_pos (hE x hx))
+        (mul_nonneg k.b_pos.le (hn x hx.le 4))
+  have hK (u : ℝ) (hu : 0 < u) : 0 < p u 4 := by
+    apply positive_forcing (fun x => p x 4) (fun x => k.c * p x 2 + k.a * p x 3)
+      (k.b + k.d) (by simp [hp.1]) _ _ u hu
+    · intro x hx
+      convert hp.2 x hx 4 using 1
+      simp [generator, mulVec, dotProduct, Fin.sum_univ_five]
+      ring
+    · intro x hx
+      exact add_pos (mul_pos k.c_pos (hX x hx)) (mul_pos k.a_pos (hY x hx))
+  intro i
+  fin_cases i
+  · exact hR t ht.le
+  · exact hE t ht
+  · exact hX t ht
+  · exact hY t ht
+  · exact hK t ht
+
+/-- The same law in the established admissible-word order 000,100,010,001,101.
+The inhibited state is 010, and the joint occupancy is 101. -/
+def pyramidLaw (p : ℝ → Fin 5 → ℝ) (t : ℝ) : Fin 5 → ℝ :=
+  ![p t 1, p t 2, p t 0, p t 3, p t 4]
+
+/-- Keep inhibited mass and conditionally multiply the two actual site margins. -/
+def independentCompletion (p : ℝ → Fin 5 → ℝ) (t : ℝ) : Fin 5 → ℝ :=
+  ![p t 0,
+    (activeMass p t - firstOccupancy p t) *
+      (activeMass p t - secondOccupancy p t) / activeMass p t,
+    firstOccupancy p t * (activeMass p t - secondOccupancy p t) / activeMass p t,
+    (activeMass p t - firstOccupancy p t) * secondOccupancy p t / activeMass p t,
+    firstOccupancy p t * secondOccupancy p t / activeMass p t]
+
+/-- Interaction of a task across the four actual Boolean configurations. -/
+def taskContrast (f : Fin 5 → ℝ) : ℝ := f 4 - f 2 - f 3 + f 1
+
+/-- Actual task expectation minus its expectation under independent completion. -/
+def taskError (p : ℝ → Fin 5 → ℝ) (f : Fin 5 → ℝ) (t : ℝ) : ℝ :=
+  (∑ i, f i * p t i) - ∑ i, f i * independentCompletion p t i
+
+private theorem task_error_identity (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) (t : ℝ) (ht : 0 < t) (f : Fin 5 → ℝ) :
+    taskError p f t = taskContrast f * association p t / activeMass p t := by
+  have hr := (strict_for_every_forward_solution k p hp t ht).1
+  have he := mass_conservation k p hp t ht.le
+  simp only [Fin.sum_univ_five] at he
+  have h1 : p t 1 = 1 - p t 0 - p t 2 - p t 3 - p t 4 := by linarith
+  have hne : 1 - p t 0 ≠ 0 := ne_of_gt hr
+  simp [taskError, taskContrast, independentCompletion, association, activeMass,
+    firstOccupancy, secondOccupancy, Fin.sum_univ_five]
+  rw [h1]
+  field_simp [hne]
+  ring
+
+/-- A probability-valued solution exists in the interior of the actual five-mode
+pyramid at every positive time. Every solution from R has strict association;
+the independent-completion task error is exact and has the interaction's sign. -/
 theorem five_state_strict_association (k : Rates) :
     (∃ p : ℝ → Fin 5 → ℝ, ForwardSolution k p ∧
-      ∀ t, 0 ≤ t → (∀ i, 0 ≤ p t i) ∧ ∑ i, p t i = 1) ∧
+      (∀ t, 0 ≤ t → (∀ i, 0 ≤ p t i) ∧ ∑ i, p t i = 1) ∧
+      ∀ t, 0 < t →
+        pyramidLaw p t ∈ D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openSimplex ∧
+        D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.visible (pyramidLaw p t) ∈
+          D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openPyramid) ∧
     (∀ (p : ℝ → Fin 5 → ℝ), ForwardSolution k p → ∀ t, 0 < t →
       0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < association p t ∧
         p t 2 * p t 3 < p t 1 * p t 4 ∧
-        0 < k.theta * p t 0 - k.eta * p t 1) := by
+        0 < k.theta * p t 0 - k.eta * p t 1 ∧
+        ∀ f : Fin 5 → ℝ,
+          taskError p f t = taskContrast f * association p t / activeMass p t ∧
+          (taskContrast f ≠ 0 → 0 < taskContrast f * taskError p f t)) := by
   constructor
-  · refine ⟨canonicalTrajectory k, canonical_forward k, ?_⟩
-    intro t ht
-    exact ⟨canonical_nonneg k t ht, mass_conservation k _ (canonical_forward k) t ht⟩
-  · exact strict_for_every_forward_solution k
+  · refine ⟨canonicalTrajectory k, canonical_forward k, ?_, ?_⟩
+    · intro t ht
+      exact ⟨canonical_nonneg k t ht, mass_conservation k _ (canonical_forward k) t ht⟩
+    · intro t ht
+      have hs : pyramidLaw (canonicalTrajectory k) t ∈
+          D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.openSimplex := by
+        constructor
+        · intro i
+          fin_cases i <;> simp only [pyramidLaw, Matrix.cons_val_zero,
+            Matrix.cons_val_succ, Matrix.cons_val_fin_one] <;> exact canonical_positive k t ht _
+        · have hm := mass_conservation k _ (canonical_forward k) t ht.le
+          simp [pyramidLaw, Fin.sum_univ_five] at *
+          linarith
+      exact ⟨hs,
+        D5.S1.Words.AdmissibleWords.FiveModeMixedCoordinates.mixed_coordinates_global_chart.1
+          _ hs⟩
+  · intro p hp t ht
+    obtain ⟨hr, hw, hD, hdet, hf⟩ := strict_for_every_forward_solution k p hp t ht
+    refine ⟨hr, hw, hD, hdet, hf, ?_⟩
+    intro f
+    have he := task_error_identity k p hp t ht f
+    refine ⟨he, ?_⟩
+    intro hJ
+    rw [he]
+    have hh : taskContrast f * (taskContrast f * association p t / activeMass p t) =
+        (taskContrast f) ^ 2 * association p t / activeMass p t := by ring
+    rw [hh]
+    exact div_pos (mul_pos (sq_pos_of_ne_zero hJ) hD) hr
 
 #print axioms five_state_strict_association
 

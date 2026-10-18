@@ -16,20 +16,13 @@ open _root_.D5.S3.StatisticalMechanics.SingleEntrySecularRoot
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-/-- The complete parameter family of the original secular equation. -/
-structure Parameters where
-  Sites : Type u
-  finiteSites : Fintype Sites
-  decidableSites : DecidableEq Sites
-  nonemptySites : Nonempty Sites
-  a : Sites → ℝ
-  b : Sites → ℝ
-  eta : ℝ
-  theta : ℝ
+/-- The original site type and two actual rate functions. Dictionaries and
+positivity premises remain in the full law without becoming coordinates. -/
+abbrev Parameters := Σ Sites : Type u, Σ _ : Sites → ℝ, Sites → ℝ
 
 abbrev signature : Signature where
   Params := Parameters.{u}
-  State _ := ℝ
+  State p := p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -38,53 +31,34 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p x =>
-    @secular p.Sites p.finiteSites p.decidableSites p.a p.b p.eta p.theta x)
-    (fun e => nomatch e)
+  realize signature (fun _ p i => siteRate p.2.1 p.2.2 i) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
+/-- The selected observation is the actual free-site rate in the upper bound.
+The secular function and every original dictionary and premise stay in scope. -/
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {ι : Type u} [fi : Fintype ι] [de : DecidableEq ι] [ne : Nonempty ι]
     (a b : ι → ℝ) (η θ : ℝ),
     (∀ i, 0 < a i) → (∀ i, 0 < b i) → 0 < η → 0 < θ →
-    ∃! x : ℝ, 0 < x ∧ (∀ i, x < siteRate a b i) ∧
-      R.readout () ⟨ι, fi, de, ne, a, b, η, θ⟩ x = 0
-
-private def unitParameters : Parameters.{u} where
-  Sites := ULift.{u} Unit
-  finiteSites := inferInstance
-  decidableSites := inferInstance
-  nonemptySites := inferInstance
-  a _ := 1
-  b _ := 1
-  eta := 1
-  theta := 1
+    ∃! x : ℝ, 0 < x ∧ (∀ i, x < R.readout () ⟨ι, a, b⟩ i) ∧
+      secular a b η θ x = 0
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   obtain ⟨x, hx, _⟩ := h (ι := ULift.{u} Unit) (fun _ => 1) (fun _ => 1) 1 1
     (by intro i; norm_num) (by intro i; norm_num) (by norm_num) (by norm_num)
-  norm_num [rejected, realize] at hx
+  have hh := hx.2.1 (ULift.up ())
+  norm_num [rejected, realize] at hh
+  linarith [hx.1]
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro role
-  obtain ⟨x, hx, _⟩ := secular_unique_root (ι := ULift.{u} Unit)
-    (fun _ => 1) (fun _ => 1) 1 1
-    (by intro i; norm_num) (by intro i; norm_num) (by norm_num) (by norm_num)
-  refine ⟨unitParameters, 0, x, ?_⟩
-  change secular (fun _ : ULift.{u} Unit => 1) (fun _ => 1) 1 1 0 ≠
-    secular (fun _ : ULift.{u} Unit => 1) (fun _ => 1) 1 1 x
-  rw [hx.2.2]
-  have hw : 0 < modeWeight (fun _ : ULift.{u} Unit => 1) (fun _ => 1) ∅ := by
-    unfold modeWeight
-    apply Finset.prod_pos
-    intro i _
-    norm_num [occupancy, siteRate]
-  simp only [secular, one_mul, sub_zero, mul_zero, zero_mul]
-  linarith
+  let a : ULift.{u} (Fin 2) → ℝ := fun i => if i.down = 0 then 1 else 2
+  refine ⟨⟨ULift.{u} (Fin 2), a, fun _ => 1⟩, ULift.up 0, ULift.up 1, ?_⟩
+  norm_num [actual, realize, siteRate, a]
 
 def family : Registration arena.{u} (arena.Law actual) where
   actual := actual
@@ -105,14 +79,14 @@ def family : Registration arena.{u} (arena.Law actual) where
 def selection : Contract.SourceSelection where
   owner := `D5.S3.StatisticalMechanics.SingleEntrySecularRoot
   definition := none
-  coordinates := #[0, 1, 2, 3, 4, 5, 6, 7]
+  coordinates := #[0, 4, 5]
   readouts := #[{
     path := #["body", "body", "body", "body", "body", "body",
       "body", "body", "body", "body", "body", "body",
-      "arg", "body", "arg", "arg", "fn", "arg"]
-    stateBinder := 12
+      "arg", "body", "arg", "fn", "arg", "body", "arg"]
+    stateBinder := 13
     functionOperand := false
-    stateOperand := some #["arg"]
+    stateOperand := none
     booleanPredicate := false }]
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -128,9 +102,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p x =>
-    @secular p.Sites p.finiteSites p.decidableSites p.a p.b p.eta p.theta x)
-    (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
