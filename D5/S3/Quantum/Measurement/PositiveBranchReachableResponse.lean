@@ -10,6 +10,7 @@ import D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
 import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.Positive
+import Mathlib.Analysis.InnerProductSpace.Trace
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.RingTheory.Noetherian.Defs
@@ -325,6 +326,44 @@ private theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian)
   rw [matrixSupport, LinearMap.orthogonal_ker,
     ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, hA.eq]
 
+private theorem trace_le_of_support_quadratic
+    (S : Submodule ℂ (EuclideanSpace ℂ n)) (A σ : Matrix n n ℂ)
+    (hσ : σ.PosSemidef) (hsupp : matrixSupport σ ≤ S) (b : ℝ)
+    (hbound : ∀ v ∈ S, (inner ℂ v (A.toEuclideanLin v)).re ≤ b * ‖v‖ ^ 2) :
+    (σ * A).trace.re ≤ b * σ.trace.re := by
+  classical
+  let e := hσ.isHermitian.eigenvectorBasis
+  let ev := hσ.isHermitian.eigenvalues
+  have hev (i : n) : σ.toEuclideanLin (e i) = (ev i : ℂ) • e i := by
+    apply WithLp.ofLp_injective 2
+    exact hσ.isHermitian.mulVec_eigenvectorBasis i
+  have htr : (A * σ).trace = ∑ i, inner ℂ (e i) ((A * σ).toEuclideanLin (e i)) := by
+    simpa only [Matrix.toEuclideanLin_eq_toLin_orthonormal, Matrix.trace_toLin_eq] using
+      LinearMap.trace_eq_sum_inner (A * σ).toEuclideanLin e
+  have hvals : σ.trace.re = ∑ i, ev i := by
+    rw [hσ.isHermitian.trace_eq_sum_eigenvalues]
+    rw [Complex.re_sum]
+    rfl
+  rw [Matrix.trace_mul_comm, htr, Complex.re_sum, hvals, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro i _
+  have heq : ((A * σ).toEuclideanLin (e i)) =
+      (ev i : ℂ) • A.toEuclideanLin (e i) := by
+    change (Matrix.toLpLin 2 2 (A * σ)) (e i) = _
+    rw [Matrix.toLpLin_mul_same, LinearMap.comp_apply, hev, map_smul]
+  rw [heq, inner_smul_right]
+  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+  by_cases hz : ev i = 0
+  · simp [hz]
+  · have hi : e i ∈ S := hsupp (by
+      rw [matrixSupport_eq_range hσ.isHermitian]
+      refine ⟨((ev i : ℂ)⁻¹) • e i, ?_⟩
+      rw [map_smul, hev, smul_smul,
+        inv_mul_cancel₀ (Complex.ofReal_ne_zero.mpr hz), one_smul])
+    have hb := hbound (e i) hi
+    rw [e.orthonormal.norm_eq_one, one_pow, mul_one] at hb
+    nlinarith [hσ.eigenvalues_nonneg i]
+
 omit [DecidableEq n] in
 private theorem weightedCP_trace_pairing (K : α → Matrix n n ℂ) (c : α → ℝ)
     (X Y : Matrix n n ℂ) :
@@ -405,7 +444,7 @@ private theorem weighted_survival_limit {d : ℕ}
 /-- Termination from the single original state gives a common finite return
 gap for every direction in its original Kraus reachable space. The inequality
 is exactly `I_S - (T*)^N(I_S) ≥ I_S / 2`, written as quadratic forms. -/
-theorem initial_termination_uniform_reachable_gap {d : ℕ}
+private theorem initial_gap_quadratic {d : ℕ}
     (K : α → Matrix (Fin d) (Fin d) ℂ) (c : α → ℝ) (hc : ∀ a, 0 < c a)
     (hcomp : weightedDual K c 1 ≤ 1) (ρ : Matrix (Fin d) (Fin d) ℂ)
     (hρ : ρ.PosSemidef)
@@ -463,6 +502,29 @@ theorem initial_termination_uniform_reachable_gap {d : ℕ}
     _ ≤ ‖v‖ * (‖e (survivalEffect K c (max N 1)) - e F‖ * ‖v‖) :=
       mul_le_mul_of_nonneg_left (ContinuousLinearMap.le_opNorm _ _) (norm_nonneg _)
     _ ≤ ‖v‖ ^ 2 / 2 := by nlinarith [norm_nonneg v]
+
+/-- The same finite block controls both pure directions and every positive
+state supported on the original reachable space, without renormalizing the state. -/
+theorem initial_termination_uniform_reachable_gap {d : ℕ}
+    (K : α → Matrix (Fin d) (Fin d) ℂ) (c : α → ℝ) (hc : ∀ a, 0 < c a)
+    (hcomp : weightedDual K c 1 ≤ 1) (ρ : Matrix (Fin d) (Fin d) ℂ)
+    (hρ : ρ.PosSemidef)
+    (hterm : Tendsto (fun N => ((weightedCP K c)^[N] ρ).trace) atTop (𝓝 0)) :
+    ∃ N : ℕ, 1 ≤ N ∧
+      (∀ v ∈ reachableSpace K ρ,
+        (inner ℂ v ((survivalEffect K c N).toEuclideanLin v)).re ≤ ‖v‖ ^ 2 / 2) ∧
+      ∀ σ : Matrix (Fin d) (Fin d) ℂ, σ.PosSemidef →
+        matrixSupport σ ≤ reachableSpace K ρ →
+        ((weightedCP K c)^[N] σ).trace.re ≤ σ.trace.re / 2 := by
+  obtain ⟨N, hN, hgap⟩ := initial_gap_quadratic K c hc hcomp ρ hρ hterm
+  refine ⟨N, hN, hgap, ?_⟩
+  intro σ hσ hsupp
+  have h := trace_le_of_support_quadratic (reachableSpace K ρ)
+    (survivalEffect K c N) σ hσ hsupp (1 / 2) (by
+      intro v hv
+      simpa only [one_div, div_eq_mul_inv, mul_comm, one_mul] using hgap v hv)
+  rw [← Matrix.mul_one ((weightedCP K c)^[N] σ), weightedCP_iterate_trace]
+  simpa only [survivalEffect, div_eq_mul_inv, mul_comm, one_mul] using h
 
 #print axioms finite_orbit_support_eq_word_span
 #print axioms finite_reachable_faithful_sum
