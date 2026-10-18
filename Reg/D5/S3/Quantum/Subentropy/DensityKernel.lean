@@ -277,7 +277,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
 
 def source_registration : Registration arena.{u}
     (type_of% @continuousOn_matrixSubentropy.{u}) where
-  actual := realize signature.{u} observation.{u} emptyAnchor.{u}
+  actual := realize signature.{u} (fun _ _ f => ContinuousOn f) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@continuousOn_matrixSubentropy, rejected, rejected_law⟩
   sensitivity := by
@@ -301,7 +301,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} observation.{u} emptyAnchor.{u})
+  readout := some (realize signature.{u} (fun _ _ f => ContinuousOn f) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

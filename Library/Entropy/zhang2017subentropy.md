@@ -32,14 +32,14 @@ question concerns subentropy, not von Neumann entropy.
 
 The quotation, arXiv identifier, version, section, author attribution and DOI
 are supplied source information. The expanded author names and bibliographic
-title are **ASSUMED-UNVERIFIED**. No original paper text or abstract-page text
-was found by searching the repository's Markdown, text and bibliographic
-files for the arXiv identifier, subentropy and the author attribution. Network
-access is excluded from this task, so independent source verification and a
-search for subsequent settlements have not been performed. The source's
+title are **ASSUMED-UNVERIFIED**. The source's
 question label establishes neither present-day openness nor priority.
 
 The determinant-integral construction and the Bell-state counterexample
 in the associated problem dossier are repository derivations; they are not
 attributed to this paper. This citation-only note incorporates no source
 software.
+
+Literature-check result: searches of the arXiv identifiers, “subentropy
+subadditive”, “strong subadditivity” with subentropy, and the titles found
+no answer; citation indexes were not exhaustively checked.

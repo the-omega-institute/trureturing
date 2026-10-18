@@ -15,7 +15,7 @@ internal sealed class UniformIntegralsDocument : IScribeDocumentDefinition
             GeneralNode("reciprocal-difference", "A convergent reciprocal difference", "reciprocal_difference",
                 ReciprocalStatement(), "For positive a and b with a≤b, log(t+a)−log(t+b) has nonnegative derivative 1/(t+a)−1/(t+b), tends to zero at infinity, and has endpoint value log a−log b. The fundamental theorem of calculus gives both integrability and the stated integral."),
             GeneralNode("inverse-power", "Shifted inverse powers", "inverse_power",
-                PowerStatement(), "For a>0 and a natural n, the function −1/((n+1)(t+a)^(n+1)) has derivative (t+a)^(−n−2), which is nonnegative and has integral 1/((n+1)a^(n+1))."),
+                PowerStatement(), "For a>0 and a natural n, Mathlib integrableOn_add_rpow_Ioi_of_lt supplies integrability at exponent −n−2. Translation of Lebesgue measure and integral_Ioi_rpow_of_lt give the integral 1/((n+1)a^(n+1))."),
             Node("two", "The two-level integral", "integral_uniformTwo_kernel", TwoKernel(),
                 Sub(Call("log", D(2)), Rat(D(1), D(2))),
                 "The antiderivative is log(t+1/2)−log(t+1)+(1/4)/(t+1/2). Its limit at infinity is zero and its value at zero is −log 2+1/2."),

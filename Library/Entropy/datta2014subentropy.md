@@ -34,8 +34,8 @@ $$
 
 Repeated and zero eigenvalues require the continuous extension, rather than
 evaluation of the quotient with a zero-denominator convention. The original
-subentropy attribution is Jozsa–Robb–Wootters (1994), as supplied in the task;
-no independently verified original-paper locator is asserted here.
+subentropy attribution is Jozsa–Robb–Wootters (1994); no independently
+verified original-paper locator is asserted here.
 
 Conjecture 1 is $Q(\rho_{AB})\le Q(\rho_A)+Q(\rho_B)$ for bipartite density
 operators. It is a different assertion from strong subadditivity. The latter's
@@ -46,13 +46,15 @@ Bell-state counterexample does not refute Conjecture 1.
 The arXiv identifier, DOI, spectral formula and conjecture attribution are
 supplied source information. The expanded author names, title and exact
 formula/conjecture locations are **ASSUMED-UNVERIFIED** until checked against
-the original source. No original paper text or abstract-page text was found
-by searching the repository's Markdown, text and bibliographic files for the
-identifier, subentropy and the author attribution. Network access is excluded
-from this task. No independent check of subsequent settlements or historical
-priority is claimed.
+the original source.
 
-The determinant-integral representation, its proposed domination estimate
+The determinant-integral representation, its domination estimate
 and its rectangular-Gram invariance are repository derivations in this
 delivery, rather than results attributed to this note. This citation-only
 note incorporates no source software.
+
+Literature-check result: searches of the arXiv identifiers, “subentropy
+subadditive”, “strong subadditivity” with subentropy, and the titles found
+no answer; citation indexes were not exhaustively checked.
+
+Datta Conjecture 1 status: **OPEN (not addressed in this delivery)**.

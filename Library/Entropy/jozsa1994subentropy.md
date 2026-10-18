@@ -22,10 +22,8 @@ triage: anchor
 
 ## Attribution and verification boundary
 
-The task supplies the original subentropy attribution to Jozsa–Robb–Wootters
-(1994). The expanded author names, title and DOI are
-**ASSUMED-UNVERIFIED**. No original paper or bibliographic record was found in
-the local repository search, and network access is excluded from this task.
+The original subentropy attribution is to Jozsa–Robb–Wootters (1994).
+The expanded author names, title and DOI are **ASSUMED-UNVERIFIED**.
 No equation, page or theorem locator is asserted without the original source.
 
 The finite simple-spectrum formula and continuous-extension convention are
@@ -34,3 +32,7 @@ also associated with the later source
 representation and Gram-invariance arguments are repository derivations,
 not results attributed to this note. This citation-only note incorporates
 no source software.
+
+Literature-check result: searches of the arXiv identifiers, “subentropy
+subadditive”, “strong subadditivity” with subentropy, and the titles found
+no answer; citation indexes were not exhaustively checked.

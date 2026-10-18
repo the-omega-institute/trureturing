@@ -28,7 +28,7 @@ $$\forall a \in \mathbb{R},\; 0 < a \Rightarrow \left(\forall n \in \mathbb{N},\
 
 *Commentary.*
 
-For a>0 and a natural n, the function −1/((n+1)(t+a)^(n+1)) has derivative (t+a)^(−n−2), which is nonnegative and has integral 1/((n+1)a^(n+1)).
+For a>0 and a natural n, Mathlib integrableOn_add_rpow_Ioi_of_lt supplies integrability at exponent −n−2. Translation of Lebesgue measure and integral_Ioi_rpow_of_lt give the integral 1/((n+1)a^(n+1)).
 
 **Theorem 1.3 (The two-level integral).**
 

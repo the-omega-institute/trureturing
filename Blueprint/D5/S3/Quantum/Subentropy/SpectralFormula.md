@@ -22,7 +22,9 @@ Lean statement: `D5/S3/Quantum/Subentropy/SpectralFormula.matrixSubentropy_diago
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Subentropy/SpectralFormula.matrixSubentropy_diagonal_eq_distinct_formula` (`✓ std3`). ∎
 
-*Citation.* Nilanjana Datta, Tony Dorlas, Richard Jozsa, Fabio Benatti (2014). *Properties of subentropy*. DOI: [10.1063/1.4882935](https://doi.org/10.1063/1.4882935). URL: <https://arxiv.org/abs/1310.1312>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Nilanjana Datta, Tony Dorlas, Richard Jozsa, Fabio Benatti (2014). *Properties of subentropy*. DOI: [10.1063/1.4882935](https://doi.org/10.1063/1.4882935). URL: <https://arxiv.org/abs/1310.1312>.
 
 *Commentary.*
 
@@ -32,7 +34,7 @@ The finite spectral formula is attributed to the original subentropy literature 
 
 Dividing the interpolated identity by the nonzero product of t+p_i gives the kernel as a finite weighted sum of reciprocal differences 1/(t+p_i)−1/(t+1). Each difference is integrated as a single integrable function; its two reciprocal terms are not separated. Strict positivity and total mass one give 0<p_i≤1, so the existing reciprocal-difference integral applies to each coefficient. Negative residue coefficients are allowed, and the finite integral interchange uses integrability rather than a positivity assumption on those coefficients.
 
-This theorem covers positive simple spectra and does not evaluate the quotient at repeated or zero entries. DensityKernel proves continuity of the determinant integral on positive trace-one matrices, including the boundary. Positive simple probability vectors are dense: mix an arbitrary probability vector p with a strictly positive distinct vector q, and choose positive mixing parameters tending to zero while avoiding the finitely many values at which a pair of coordinates coincides. Every coordinate is positive, and each pair can coincide at at most one parameter because q has distinct coordinates. Thus the simple-spectrum identity and continuity determine the continuous extension. The elementary density and uniqueness argument here is explanatory; this module states no separate density or uniqueness theorem. Source metadata and offline verification limits remain in the cited library notes.
+This theorem covers positive simple spectra and does not evaluate the quotient at repeated or zero entries. DensityKernel proves continuity of the determinant integral on positive trace-one matrices, including the boundary. Positive simple probability vectors are dense: mix an arbitrary probability vector p with a strictly positive distinct vector q, and choose positive mixing parameters tending to zero while avoiding the finitely many values at which a pair of coordinates coincides. Every coordinate is positive, and each pair can coincide at at most one parameter because q has distinct coordinates. Thus the simple-spectrum identity and continuity determine the continuous extension. StrongSubadditivityRefutation proves the density and uniqueness bridge as a consumed private theorem: ordered positive perturbations converge in a fixed eigenbasis, and continuity identifies every invariant spectral family with the determinant integral. Source metadata boundaries remain in the cited library notes.
 
 ## References
 

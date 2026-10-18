@@ -50,30 +50,30 @@ theorem inverse_power (a : ℝ) (ha : 0 < a) (n : ℕ) :
     IntegrableOn (fun t : ℝ => 1 / (t + a) ^ (n + 2)) (Ioi 0) ∧
       (∫ t in Ioi (0 : ℝ), 1 / (t + a) ^ (n + 2)) =
         1 / (((n : ℝ) + 1) * a ^ (n + 1)) := by
-  have hd : ∀ t ∈ Ici (0 : ℝ), HasDerivAt
-      (fun t : ℝ => -(1 / ((n : ℝ) + 1)) * (t + a)⁻¹ ^ (n + 1))
-      (1 / (t + a) ^ (n + 2)) t := by
-    intro t ht
-    have hta : t + a ≠ 0 := by linarith [ht.out]
-    have hn' : (n : ℝ) + 1 ≠ 0 := by positivity
-    convert (((hasDerivAt_id t).add_const a).inv hta).pow (n + 1) |>.const_mul
-      (-(1 / ((n : ℝ) + 1))) using 1
-    · rfl
-    · dsimp only [id_eq, Pi.inv_apply]
-      simp only [Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, pow_add, inv_pow]
-      field_simp [hta, hn']
-  have hp : ∀ t ∈ Ioi (0 : ℝ), 0 ≤ 1 / (t + a) ^ (n + 2) := by
-    intro t ht
-    have hta : 0 < t + a := by linarith [ht.out]
-    positivity
-  have ht : Tendsto (fun t : ℝ => -(1 / ((n : ℝ) + 1)) * (t + a)⁻¹ ^ (n + 1))
-      atTop (𝓝 0) := by
-    have h := (tendsto_inv_atTop_zero.comp
-      (tendsto_atTop_add_const_right atTop a tendsto_id)).pow (n + 1)
-    simpa using h.const_mul (-(1 / ((n : ℝ) + 1)))
-  refine ⟨integrableOn_Ioi_deriv_of_nonneg' hd hp ht, ?_⟩
-  simpa [div_eq_mul_inv, inv_pow, mul_comm] using
-    integral_Ioi_of_hasDerivAt_of_nonneg' hd hp ht
+  have hexp : -((n + 2 : ℕ) : ℝ) < -1 := by
+    push_cast
+    linarith [Nat.cast_nonneg (α := ℝ) n]
+  have heq : (fun t : ℝ => (t + a) ^ (-((n + 2 : ℕ) : ℝ))) =
+      (fun t : ℝ => 1 / (t + a) ^ (n + 2)) := by
+    funext t
+    rw [Real.rpow_neg_natCast, zpow_neg, zpow_natCast, one_div]
+  refine ⟨?_, ?_⟩
+  · rw [← heq]
+    exact integrableOn_add_rpow_Ioi_of_lt hexp (by linarith)
+  · have hshift := (measurePreserving_add_right volume a).setIntegral_preimage_emb
+      (MeasurableEquiv.addRight a).measurableEmbedding
+      (fun t : ℝ => t ^ (-((n + 2 : ℕ) : ℝ))) (Ioi a)
+    have hpre : (fun t : ℝ => t + a) ⁻¹' Ioi a = Ioi 0 := by
+      ext t
+      simp
+    rw [hpre, heq, integral_Ioi_rpow_of_lt hexp ha] at hshift
+    rw [hshift]
+    have hpower : -((n + 2 : ℕ) : ℝ) + 1 = -((n + 1 : ℕ) : ℝ) := by
+      push_cast
+      ring
+    rw [hpower, Real.rpow_neg_natCast, zpow_neg, zpow_natCast]
+    push_cast
+    field_simp
 
 /-- The exact integral of the two-level uniform subentropy kernel. -/
 theorem integral_uniformTwo_kernel :

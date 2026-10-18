@@ -311,7 +311,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   linarith
 
 def family : Registration arena.{u,v} (type_of% @matrixSubentropy_rectangular_gram.{u,v}) where
-  actual := realize signature observation emptyAnchor
+  actual := realize signature.{u,v} (fun _ _ V => V.conjTranspose) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@matrixSubentropy_rectangular_gram, rejected, rejected_law⟩
   sensitivity := by
@@ -335,7 +335,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature observation emptyAnchor)
+  readout := some (realize signature.{u,v} (fun _ _ V => V.conjTranspose) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -386,7 +386,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   linarith
 
 def family : Registration arena.{u,v} (type_of% @matrixSubentropy_isometric_embedding.{u,v}) where
-  actual := realize signature observation emptyAnchor
+  actual := realize signature.{u,v} (fun _ _ V => V.conjTranspose) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@matrixSubentropy_isometric_embedding, rejected, rejected_law⟩
   sensitivity := by
@@ -410,7 +410,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature observation emptyAnchor)
+  readout := some (realize signature.{u,v} (fun _ _ V => V.conjTranspose) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -480,7 +480,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   norm_num [actual, realize, observation]
 
 def family : Registration arena.{u} (type_of% @matrixSubentropy_pure.{u}) where
-  actual := realize signature observation emptyAnchor
+  actual := realize signature.{u} (fun _ p f => f (vecMulVec p.2 (star p.2))) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@matrixSubentropy_pure, rejected, rejected_law⟩
   sensitivity := by
@@ -504,7 +504,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature observation emptyAnchor)
+  readout := some (realize signature.{u} (fun _ p f => f (vecMulVec p.2 (star p.2))) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

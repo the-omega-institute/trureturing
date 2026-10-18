@@ -114,8 +114,8 @@ refutes the universal assertion. The Bell-pair product state above is the
 specified witness. Failure of any claimed marginal identity, spectral
 invariance, exact integral value or identification with the paper's
 subentropy would invalidate the refutation. Lean establishes the witness
-identities and exact integral values; the identification with the paper's
-continuous extension additionally uses the elementary prose argument below.
+identities and exact integral values; the compiled identification theorem
+connects these evaluations to the paper's continuous-extension convention.
 
 ## Evidence
 
@@ -139,22 +139,18 @@ positive pairwise distinct probabilities.
 [`DensityKernel`](../D5/S3/Quantum/Subentropy/DensityKernel.lean) proves the
 uniform kernel domination, absolute integrability on density matrices and
 `continuousOn_matrixSubentropy` on the full positive trace-one domain.
-The remaining density and uniqueness bridge is an elementary prose proof,
-not a separate compiled theorem. For a probability vector $p$ on a nonempty
-finite index set, choose a strictly positive probability vector $r$ with
-pairwise distinct entries, and put $p^{\varepsilon}=(1-\varepsilon)p+
-\varepsilon r$ for $0<\varepsilon<1$. These vectors have positive entries
-and total mass one. For each pair of distinct indices, the difference
-$p_i^{\varepsilon}-p_j^{\varepsilon}$ is an affine function of
-$\varepsilon$ that is nonzero at $\varepsilon=1$, so it has at most one
-zero. Avoiding the finitely many collision parameters while taking
-$\varepsilon\to0^+$ proves density of positive simple spectra, including
-at repeated and zero entries. Continuity therefore identifies the
-determinant integral with the unique continuous extension of the finite
-formula. For matrices, conjugating these diagonal approximations by the
-same eigenbasis supplies the corresponding density-matrix approximations.
-This prose bridge identifies the compiled integral-defined refutation with
-the paper's subentropy convention.
+The consumed private theorem `subentropyLike_eq` proves uniqueness for the
+family `SubentropyLike`: continuity on density states, unitary invariance and
+the positive distinct-spectrum formula identify every such family with
+`subentropy`. After diagonalization, mix the ordered eigenvalue vector with
+a positive strictly decreasing probability vector in the same ordering.
+Every positive mixture has distinct positive entries and sum one. Conjugate
+these diagonal approximations by the fixed eigenbasis and pass to the limit.
+The theorem consumes both the spectral formula and continuity. The closed
+`conjecture` quantifies over these families and every finite tripartite density
+state. `canonicalSubentropy` proves this family domain is inhabited, and
+`result` consumes it through the identification theorem before applying the
+exact witness gap.
 
 ## Triage
 
@@ -178,8 +174,8 @@ Isometric invariance across dimensions is a needed hypothesis; dependence
 on a dimension-specific full spectrum alone does not supply it.
 
 **OPEN — Datta et al. Conjecture 1, bipartite subadditivity**,
-$Q(\rho_{AB})\le Q(\rho_A)+Q(\rho_B)$, pending stage 2 of the present
-formalization. The counterexample's product spectra satisfy strict
+$Q(\rho_{AB})\le Q(\rho_A)+Q(\rho_B)$, not addressed in this delivery.
+The counterexample's product spectra satisfy strict
 subadditivity, so this refutation gives no counterexample to Conjecture 1.
 No assertion about its present literature-wide status follows from this
 local open proof obligation.
@@ -189,6 +185,17 @@ local open proof obligation.
 The source quotation, version and section are supplied locators without an
 independently available original source. The journal DOI, expanded author
 names and bibliographic title have not been independently verified; see the
-library note. No network search for subsequent settlements or worldwide
-priority has been made. These bibliographic and literature-status boundaries
-are independent of the formal mathematical statements listed above.
+library note. Searches of the arXiv identifiers, “subentropy subadditive”, “strong
+subadditivity” with subentropy, and the titles found no answer; citation
+indexes were not exhaustively checked. These bibliographic and
+literature-status boundaries are independent of the formal mathematical statements listed above.
+
+Escape registrations for `Basic.matrixSubentropy_rectangular_gram`,
+`Basic.matrixSubentropy_isometric_embedding`, `Basic.matrixSubentropy_pure`
+and `DensityKernel.continuousOn_matrixSubentropy` have the verdict
+`unclassified_form:source.descriptor_actual`. Their Lean proofs compile, but
+the compiled registration descriptor has not been accepted as matching the
+actual source-family realization. The missing evidence is an accepted
+four-slot binding for each of these source theorems; the attempted
+registration is not `declared_validated`. See
+[issue #18958](https://github.com/the-omega-institute/trureturing/issues/18958).

@@ -6,7 +6,9 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.conjecture; result=D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.result; claim=D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.conjecture
    digest: Canonical density states and partial traces for a Bell pair with an independent qubit. -/
 
-import D5.S3.Quantum.Subentropy.Basic
+import D5.S3.Quantum.Subentropy.SpectralFormula
+import D5.S3.Quantum.Subentropy.DensityKernel
+import D5.S3.Quantum.Information.InputInformationBalance
 import D5.S3.Quantum.Subentropy.UniformValues
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -23,7 +25,7 @@ noncomputable section
 
 namespace D5.S3.Quantum.Subentropy.StrongSubadditivityRefutation
 
-open scoped BigOperators ComplexOrder MatrixOrder Kronecker
+open scoped BigOperators ComplexOrder MatrixOrder Kronecker Topology
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.QuantumBounds.CHSHWitness
@@ -31,22 +33,12 @@ open D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
 open D5.S3.Quantum.Subentropy.Basic
 open D5.S3.Quantum.Subentropy.UniformValues
 
-/-- Relabel a density matrix by a bijection, without changing its entries. -/
-def reindexState {A B : Type*} [Fintype A] [DecidableEq A]
-    [Fintype B] [DecidableEq B] (e : A ≃ B) (rho : DensityState A) : DensityState B := by
-  refine ⟨CStarMatrix.ofMatrix
-    ((CStarMatrix.ofMatrix.symm rho.1).submatrix e.symm e.symm), ?_, ?_⟩
-  · exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
-      ((density_posSemidef rho).submatrix e.symm).nonneg
-  · change (∑ b : B, rho.1 (e.symm b) (e.symm b)) = 1
-    exact (e.symm.sum_comp (fun a : A =>
-      (CStarMatrix.ofMatrix.symm rho.1) a a)).trans rho.2.2
-
 /-- The associativity bijection only changes the grouping of subsystem labels. -/
 def reassocState {A B C : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
     (rho : DensityState ((A × B) × C)) : DensityState (A × (B × C)) :=
-  reindexState (Equiv.prodAssoc A B C) rho
+  D5.S3.Quantum.Information.InputInformationBalance.relabel
+    (Equiv.prodAssoc A B C).symm rho
 
 /-- The maximally mixed qubit density. -/
 def uniformTwo : DensityState (Fin 2) := by
@@ -144,13 +136,184 @@ private theorem witness_isometric :
       Fin.sum_univ_two, bellDensity, Matrix.vecMulVec_apply,
       Matrix.kroneckerMap_apply, CStarMatrix.ofMatrix_apply] <;> ring
 
-/-- Strong subadditivity for the determinant-integral subentropy and the canonical marginals. -/
+local instance {ι : Type} [Fintype ι] [DecidableEq ι] :
+    TopologicalSpace (DensityState ι) := by
+  unfold DensityState
+  infer_instance
+
+/-- A spectral functional family with the paper's continuous-extension convention.
+The coordinate types are in `Type`, so the settlement proposition is closed. -/
+structure SubentropyLike where
+  value : {ι : Type} → [Fintype ι] → [DecidableEq ι] → DensityState ι → ℝ
+  continuous : ∀ {ι : Type} [Fintype ι] [DecidableEq ι], Continuous (@value ι _ _)
+  invariant : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+    (rho sigma : DensityState ι) (U : Matrix.unitaryGroup ι ℂ),
+    CStarMatrix.ofMatrix.symm rho.1 =
+      (U : Matrix ι ι ℂ) * CStarMatrix.ofMatrix.symm sigma.1 * star (U : Matrix ι ι ℂ) →
+    value rho = value sigma
+  formula : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+    (rho : DensityState ι) (p : ι → ℝ),
+    CStarMatrix.ofMatrix.symm rho.1 = Matrix.diagonal (fun i => (p i : ℂ)) →
+    (∀ i, 0 < p i) → (∑ i, p i = 1) → Function.Injective p →
+    value rho = -(∑ i, p i ^ Fintype.card ι * Real.log (p i) /
+      (∏ j ∈ Finset.univ.erase i, (p i - p j)))
+
+private theorem continuous_subentropy {ι : Type} [Fintype ι] [DecidableEq ι] :
+    Continuous (@subentropy ι _ _) := by
+  exact DensityKernel.continuousOn_matrixSubentropy.comp_continuous
+    (CStarMatrix.ofMatrixL.symm.continuous.comp continuous_subtype_val)
+    (fun sigma => ⟨density_posSemidef sigma, sigma.2.2⟩)
+
+private def canonicalSubentropy : SubentropyLike where
+  value := subentropy
+  continuous := @continuous_subentropy
+  invariant := by
+    intro ι _ _ rho sigma U h
+    unfold subentropy
+    rw [h]
+    exact matrixSubentropy_isometric_embedding _ _ (Unitary.coe_star_mul_self U)
+  formula := by
+    intro ι _ _ rho p h hp hs hi
+    unfold subentropy
+    rw [h]
+    exact SpectralFormula.matrixSubentropy_diagonal_eq_distinct_formula p hp hs hi
+
+private def diagonalState {ι : Type} [Fintype ι] [DecidableEq ι]
+    (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) : DensityState ι := by
+  refine ⟨CStarMatrix.ofMatrix (Matrix.diagonal fun i => (p i : ℂ)), ?_, ?_⟩
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    exact (Matrix.PosSemidef.diagonal (fun i => by simpa [Complex.le_def] using hp i)).nonneg
+  · change Matrix.trace (Matrix.diagonal fun i => (p i : ℂ)) = 1
+    rw [Matrix.trace_diagonal]
+    rw [← Complex.ofReal_sum, hs, Complex.ofReal_one]
+
+private def unitaryState {ι : Type} [Fintype ι] [DecidableEq ι]
+    (U : Matrix.unitaryGroup ι ℂ) (rho : DensityState ι) : DensityState ι := by
+  refine ⟨CStarMatrix.ofMatrix
+    ((U : Matrix ι ι ℂ) * CStarMatrix.ofMatrix.symm rho.1 * star (U : Matrix ι ι ℂ)), ?_, ?_⟩
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    exact ((density_posSemidef rho).mul_mul_conjTranspose_same _).nonneg
+  · change Matrix.trace ((U : Matrix ι ι ℂ) * _ * star (U : Matrix ι ι ℂ)) = 1
+    rw [Matrix.trace_mul_cycle, Unitary.coe_star_mul_self, Matrix.one_mul]
+    exact rho.2.2
+
+/-- Ordered positive perturbations identify every continuous invariant spectral
+functional, including at repeated and zero eigenvalues. -/
+private theorem subentropyLike_eq (Q : SubentropyLike) {ι : Type}
+    [Fintype ι] [DecidableEq ι] (rho : DensityState ι) : Q.value rho = subentropy rho := by
+  classical
+  let A := CStarMatrix.ofMatrix.symm rho.1
+  have hA := density_posSemidef rho
+  haveI : Nonempty ι := by
+    by_contra h
+    haveI : IsEmpty ι := not_nonempty_iff.mp h
+    have ht := rho.2.2
+    simp [Matrix.trace] at ht
+  let e : ι ≃ Fin (Fintype.card ι) :=
+    (Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card ι))).symm
+  let p := hA.isHermitian.eigenvalues
+  have hp : ∀ i, 0 ≤ p i := hA.eigenvalues_nonneg
+  have hs : ∑ i, p i = 1 := by
+    have ht := hA.isHermitian.trace_eq_sum_eigenvalues
+    rw [show A.trace = 1 from rho.2.2] at ht
+    simpa using (congrArg Complex.re ht).symm
+  let w : ι → ℝ := fun i => (Fintype.card ι : ℝ) - (e i).val
+  have hw : ∀ i, 0 < w i := by
+    intro i
+    exact sub_pos.mpr (by exact_mod_cast (e i).isLt)
+  let S : ℝ := ∑ i, w i
+  have hS : 0 < S := Finset.sum_pos (fun i _ => hw i) Finset.univ_nonempty
+  let q : ι → ℝ := fun i => w i / S
+  have hq : ∀ i, 0 < q i := fun i => div_pos (hw i) hS
+  have hqs : ∑ i, q i = 1 := by
+    simp only [q, ← Finset.sum_div]
+    exact div_self hS.ne'
+  let eps : ℕ → ℝ := fun k => 1 / ((k : ℝ) + 1)
+  have heps : ∀ k, 0 < eps k ∧ eps k ≤ 1 := by
+    intro k
+    dsimp [eps]
+    constructor
+    · positivity
+    · exact (div_le_one (by positivity)).mpr (by linarith [Nat.cast_nonneg (α := ℝ) k])
+  let r : ℕ → ι → ℝ := fun k i => (1 - eps k) * p i + eps k * q i
+  have hr : ∀ k i, 0 < r k i := by
+    intro k i
+    exact add_pos_of_nonneg_of_pos (mul_nonneg (sub_nonneg.mpr (heps k).2) (hp i))
+      (mul_pos (heps k).1 (hq i))
+  have hrs : ∀ k, ∑ i, r k i = 1 := by
+    intro k
+    simp only [r, Finset.sum_add_distrib, ← Finset.mul_sum, hs, hqs]
+    ring
+  have hri : ∀ k, Function.Injective (r k) := by
+    intro k i j hij
+    have horder (a b : ι) (hab : (e a).val < (e b).val) : r k b < r k a := by
+      have hpp : p b ≤ p a := hA.isHermitian.eigenvalues₀_antitone (le_of_lt hab)
+      have hqq : q b < q a := by
+        apply (div_lt_div_iff_of_pos_right hS).mpr
+        dsimp [w]
+        exact sub_lt_sub_left (by exact_mod_cast hab) _
+      have hmul := mul_pos (heps k).1 (sub_pos.mpr hqq)
+      have hmul' := mul_nonneg (sub_nonneg.mpr (heps k).2) (sub_nonneg.mpr hpp)
+      dsimp [r]
+      nlinarith
+    apply e.injective
+    apply Fin.ext
+    rcases lt_trichotomy (e i).val (e j).val with h | h | h
+    · exact False.elim ((ne_of_gt (horder i j h)) hij)
+    · exact h
+    · exact False.elim ((ne_of_lt (horder j i h)) hij)
+  let U := hA.isHermitian.eigenvectorUnitary
+  let states : ℕ → DensityState ι := fun k =>
+    unitaryState U (diagonalState (r k) (fun i => (hr k i).le) (hrs k))
+  have hlim : Filter.Tendsto states Filter.atTop (𝓝 rho) := by
+    apply tendsto_subtype_rng.mpr
+    change Filter.Tendsto
+      (fun k => CStarMatrix.ofMatrix
+        ((U : Matrix ι ι ℂ) * Matrix.diagonal (fun i => (r k i : ℂ)) *
+          star (U : Matrix ι ι ℂ))) _ (𝓝 rho.1)
+    have he : Filter.Tendsto eps Filter.atTop (𝓝 0) :=
+      tendsto_one_div_add_atTop_nhds_zero_nat
+    have hm : Filter.Tendsto (fun k => Matrix.diagonal (fun i => (r k i : ℂ)))
+        Filter.atTop (𝓝 (Matrix.diagonal (fun i => (p i : ℂ)))) := by
+      apply tendsto_pi_nhds.mpr
+      intro i
+      apply tendsto_pi_nhds.mpr
+      intro j
+      by_cases hij : i = j
+      · subst j
+        simp only [Matrix.diagonal_apply_eq]
+        apply Complex.continuous_ofReal.continuousAt.tendsto.comp
+        simpa [r] using (((tendsto_const_nhds (x := (1 : ℝ))).sub he).mul_const (p i)).add
+          (he.mul_const (q i))
+      · simp [Matrix.diagonal_apply_ne _ hij]
+    have hconj := ((tendsto_const_nhds (x := (U : Matrix ι ι ℂ))).mul hm).mul
+      (tendsto_const_nhds (x := star (U : Matrix ι ι ℂ)))
+    have hspec : (U : Matrix ι ι ℂ) * Matrix.diagonal (fun i => (p i : ℂ)) *
+        star (U : Matrix ι ι ℂ) = A := hA.isHermitian.spectral_theorem.symm
+    rw [hspec] at hconj
+    exact CStarMatrix.ofMatrixL.continuous.continuousAt.tendsto.comp hconj
+  have heq : ∀ k, Q.value (states k) = subentropy (states k) := by
+    intro k
+    have hmat : CStarMatrix.ofMatrix.symm (states k).1 =
+        (U : Matrix ι ι ℂ) *
+          CStarMatrix.ofMatrix.symm (diagonalState (r k) (fun i => (hr k i).le) (hrs k)).1 *
+          star (U : Matrix ι ι ℂ) := rfl
+    change Q.value (states k) = canonicalSubentropy.value (states k)
+    rw [Q.invariant _ _ U hmat, canonicalSubentropy.invariant _ _ U hmat]
+    exact (Q.formula _ (r k) rfl (hr k) (hrs k) (hri k)).trans
+      (canonicalSubentropy.formula _ (r k) rfl (hr k) (hrs k) (hri k)).symm
+  exact tendsto_nhds_unique ((Q.continuous.tendsto rho).comp hlim)
+    (((continuous_subentropy.tendsto rho).comp hlim).congr (fun k => (heq k).symm))
+
+/-- Strong subadditivity for every family with the paper's spectral formula,
+unitary invariance and continuous extension to all density states. -/
 def conjecture : Prop :=
+  ∀ Q : SubentropyLike,
   ∀ (A B C : Type) [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
     (rho : DensityState ((A × B) × C)),
-    subentropy rho + subentropy (marginalLeft (marginalRight rho)) ≤
-      subentropy (marginalRight rho) + subentropy (marginalLeft (reassocState rho))
+    Q.value rho + Q.value (marginalLeft (marginalRight rho)) ≤
+      Q.value (marginalRight rho) + Q.value (marginalLeft (reassocState rho))
 
 private theorem witness_gap :
     subentropy witness + subentropy (marginalLeft (marginalRight witness)) -
@@ -183,7 +346,8 @@ private theorem witness_gap :
 /-- The Bell-pair witness violates strong subadditivity by exactly one twelfth. -/
 theorem result : ¬ conjecture := by
   intro h
-  have hssa := h (Fin 2) (Fin 2) (Fin 2) witness
+  have hssa := h canonicalSubentropy (Fin 2) (Fin 2) (Fin 2) witness
+  simp only [subentropyLike_eq] at hssa
   have hgap := witness_gap
   linarith
 
