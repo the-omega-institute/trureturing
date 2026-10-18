@@ -179,7 +179,8 @@ private lemma cylinder_mass {E : Type*} [Fintype E] [DecidableEq E]
   simp_rw [hpoint]
   exact Finset.prod_ite_mem_eq S θ
 
-private lemma bondLaw_sum [Fintype G.edgeSet] (a b c : V) (θ : G.edgeSet → ℝ) :
+/-- Total probability of the actual finite-edge partition law. -/
+theorem bondLaw_sum [Fintype G.edgeSet] (a b c : V) (θ : G.edgeSet → ℝ) :
     ∑ s, bondLaw G a b c θ s = 1 := by
   classical
   unfold bondLaw
@@ -329,6 +330,10 @@ theorem tree_bound [Fintype G.edgeSet] (hG : G.IsTree) (a b c : V)
 
 
 end
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.bondLaw_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms bondLaw_sum
 
 /-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.path_edge_symmDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

@@ -36,6 +36,11 @@ internal sealed class ThreeTerminalTreeDocument : IScribeDocumentDefinition
                     + "product weight over all actual edge configurations omega whose "
                     + "open graph has mode s. With rates in [0,1], this is the actual "
                     + "five-partition probability law."),
+            Node("bondLaw_sum", "Normalization of the partition law", DescribeRole.Theorem,
+                "For every simple graph with finite edge type, terminals a,b,c and "
+                    + "real rates theta, the sum of the five bondLaw masses is one. "
+                    + "The five disjoint partition events exhaust all configurations. "
+                    + "Rates in [0,1] are additionally needed for nonnegative masses."),
             Node("pathSupport", "Path edges as source indices", DescribeRole.Definition,
                 "For every finite-edge graph G and path p, pathSupport p is the finite "
                     + "set of indices e:G.edgeSet whose underlying undirected edge occurs in p."),
