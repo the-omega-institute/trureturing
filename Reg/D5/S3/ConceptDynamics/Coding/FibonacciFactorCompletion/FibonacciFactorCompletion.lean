@@ -80,7 +80,7 @@ def prefix_path_endpoint_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[5]
     readouts := #[{
@@ -185,7 +185,7 @@ def actual_capped_strict_supply_of_high_costs_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -278,7 +278,7 @@ def actual_automatic_cost_envelope_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -381,7 +381,7 @@ def actual_uniform_margin_gap_lower_bound_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[0, 2, 3]
     readouts := #[{
@@ -486,7 +486,7 @@ def actual_uniform_family_margin_iff_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[0, 2, 3]
     readouts := #[{
@@ -597,7 +597,7 @@ def canonical_high_fixed_finite_tail_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[9]
     readouts := #[{
@@ -700,7 +700,7 @@ def canonical_periodic_endpoints_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[2]
     readouts := #[{
@@ -750,7 +750,7 @@ def canonical_synchronous_common_stem_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[14]
     readouts := #[{
@@ -867,7 +867,7 @@ def actual_exact_uniform_family_margin_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -917,7 +917,7 @@ def original_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
     definition := none
     coordinates := #[]
     readouts := #[{
