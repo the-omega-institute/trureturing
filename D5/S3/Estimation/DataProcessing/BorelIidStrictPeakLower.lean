@@ -7,6 +7,7 @@
    digest: Finite rational-cut sources converge to the actual Borel iid strict-peak law. -/
 
 import D5.S3.Estimation.DataProcessing.FiniteIidStrictPeakLower
+import Mathlib.Topology.Sequences
 import Mathlib.Data.Rat.Encodable
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
@@ -207,6 +208,52 @@ private theorem quantized_facts (μ : Measure ℝ) [IsProbabilityMeasure μ] (n 
   have hb := finite_iid_lower_surface p hp hs
   exact ⟨hn,hm,hy.trans hx.symm,hz.trans hx.symm,hb.1,hb.2.1.le,hb.2.2.2.2.1⟩
 
+private theorem quantized_correction (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
+    ∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*(quantizedMass μ n 1+quantizedMass μ n 3) ∧
+      s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤
+        quantizedMass μ n 0*quantizedMass μ n 3-quantizedMass μ n 1*quantizedMass μ n 2+
+          (quantizedMass μ n 1+quantizedMass μ n 3)/15 ∧
+      0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) := by
+  obtain ⟨p,hp,hs,he⟩ := quantized_is_finite μ n
+  simp_rw [he]
+  exact (finite_iid_lower_surface p hp hs).2.2.2.1
+
+private theorem borel_correction (μ : Measure ℝ) [IsProbabilityMeasure μ] :
+    ∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*(modeMass μ 1+modeMass μ 3) ∧
+      s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤
+        modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2+
+          (modeMass μ 1+modeMass μ 3)/15 ∧
+      0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) := by
+  let sn := fun n => Classical.choose (quantized_correction μ n)
+  have hsn (n : ℕ) := Classical.choose_spec (quantized_correction μ n)
+  change ∀ n, sn n ∈ Icc (0 : ℝ) 1 ∧ _ at hsn
+  obtain ⟨s,hs,φ,hφ,hst⟩ := isCompact_Icc.tendsto_subseq (fun n => (hsn n).1)
+  have hφt : Tendsto φ atTop atTop := hφ.tendsto_atTop
+  have hx : Tendsto (fun n => quantizedMass μ (φ n) 1+quantizedMass μ (φ n) 3) atTop
+      (𝓝 (modeMass μ 1+modeMass μ 3)) := by
+    simpa only [Function.comp_def] using
+      ((quantized_tendsto μ 1).add (quantized_tendsto μ 3)).comp hφt
+  have hd : Tendsto (fun n => quantizedMass μ (φ n) 0*quantizedMass μ (φ n) 3-
+      quantizedMass μ (φ n) 1*quantizedMass μ (φ n) 2) atTop
+      (𝓝 (modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2)) := by
+    simpa only [Function.comp_def] using
+      (((quantized_tendsto μ 0).mul (quantized_tendsto μ 3)).sub
+        ((quantized_tendsto μ 1).mul (quantized_tendsto μ 2))).comp hφt
+  have hcube : s^3 = 1-3*(modeMass μ 1+modeMass μ 3) := by
+    have ht : Tendsto (fun n => (sn (φ n))^3) atTop
+        (𝓝 (1-3*(modeMass μ 1+modeMass μ 3))) :=
+      (tendsto_const_nhds.sub (hx.const_mul 3)).congr'
+        (Eventually.of_forall fun n => (hsn (φ n)).2.1.symm)
+    exact tendsto_nhds_unique (by simpa only [Function.comp_def] using hst.pow 3) ht
+  let C := fun t : ℝ => t^3/45*(1-t)*(1+t+7*t^2-3*t^3-3*t^4)
+  have hc : Continuous C := by dsimp [C]; fun_prop
+  have hct : Tendsto (fun n => C (sn (φ n))) atTop (𝓝 (C s)) := by
+    simpa only [Function.comp_def] using hc.continuousAt.tendsto.comp hst
+  refine ⟨s,hs,hcube,?_,?_⟩
+  · exact le_of_tendsto_of_tendsto hct (hd.add (hx.div_const 15))
+      (Eventually.of_forall fun n => (hsn (φ n)).2.2.1)
+  · exact ge_of_tendsto hct (Eventually.of_forall fun n => (hsn (φ n)).2.2.2)
+
 /-- Actual Borel product laws are limits of finite iid sources, so the universal
 linear determinant lower surface persists without assumptions on atoms. -/
 theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
@@ -215,7 +262,11 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     (∀ s, Tendsto (fun n => quantizedMass μ n s) atTop (𝓝 (modeMass μ s))) ∧
     (∀ s, 0 ≤ modeMass μ s) ∧ (∑ s, modeMass μ s) = 1 ∧
     modeMass μ 2+modeMass μ 3 = X ∧ modeMass μ 4 = X ∧
-    0 ≤ X ∧ X ≤ 1/3 ∧ -X/15 ≤ D ∧ -1/45 ≤ D := by
+    0 ≤ X ∧ X ≤ 1/3 ∧ -X/15 ≤ D ∧ -1/45 ≤ D ∧
+    (∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*X ∧
+      s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤ D+X/15 ∧
+      0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4)) ∧
+    (0 < X → X < 1/3 → -X/15 < D) := by
   dsimp only
   have ht := quantized_tendsto μ
   have hx := (ht 1).add (ht 3)
@@ -248,7 +299,29 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
       modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2 := by
     exact le_of_tendsto_of_tendsto (hx.neg.div_const 15) hd
       (Eventually.of_forall fun n => (quantized_facts μ n).2.2.2.2.2.2)
-  exact ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith⟩
+  have hcor := borel_correction μ
+  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_⟩
+  intro hXpos hXlt
+  obtain ⟨s,hs,hs3,hcorr,_⟩ := hcor
+  have hs0 : 0 < s := by
+    by_contra h
+    have he : s = 0 := le_antisymm (not_lt.mp h) hs.1
+    rw [he] at hs3
+    norm_num at hs3
+    linarith
+  have hs1 : s < 1 := by
+    by_contra h
+    have he : s = 1 := le_antisymm hs.2 (not_lt.mp h)
+    rw [he] at hs3
+    norm_num at hs3
+    linarith
+  have hs2 : s^2 ≤ 1 := by nlinarith [sq_nonneg (1-s)]
+  have h3 : s^3 ≤ s^2 := by nlinarith [mul_nonneg (sq_nonneg s) (sub_nonneg.mpr hs.2)]
+  have h4 : s^4 ≤ s^2 := by nlinarith [mul_nonneg (sq_nonneg s) (sub_nonneg.mpr hs2)]
+  have hpoly : 0 < 1+s+7*s^2-3*s^3-3*s^4 := by nlinarith [sq_nonneg s,hs.1]
+  have hpos := mul_pos (mul_pos (div_pos (pow_pos hs0 3) (by norm_num : (0 : ℝ) < 45))
+    (sub_pos.mpr hs1)) hpoly
+  linarith
 
 #print axioms borel_iid_lower_surface
 

@@ -31,7 +31,11 @@ def fullLaw (r : Realization signature) : Prop :=
     (∀ s, Tendsto (fun n => quantizedMass μ n s) atTop (𝓝 (r.readout () μ s))) ∧
     (∀ s, 0 ≤ r.readout () μ s) ∧ (∑ s, r.readout () μ s) = 1 ∧
     r.readout () μ 2+r.readout () μ 3 = X ∧ r.readout () μ 4 = X ∧
-    0 ≤ X ∧ X ≤ 1/3 ∧ -X/15 ≤ D ∧ -1/45 ≤ D
+    0 ≤ X ∧ X ≤ 1/3 ∧ -X/15 ≤ D ∧ -1/45 ≤ D ∧
+    (∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*X ∧
+      s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤ D+X/15 ∧
+      0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4)) ∧
+    (0 < X → X < 1/3 → -X/15 < D)
 
 abbrev arena : Arena where
   signature := signature
