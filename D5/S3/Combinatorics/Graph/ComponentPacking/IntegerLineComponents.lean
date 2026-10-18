@@ -12,6 +12,7 @@ public import Mathlib.Data.Int.Interval
 public import Mathlib.Data.Finset.Max
 public import Mathlib.Data.Finset.Sort
 public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 public import Mathlib.Tactic
 
 /-! Maximal intervals for the graph containing precisely the specified unit edges. -/
@@ -34,6 +35,13 @@ def EdgeConnected (E : Finset ℤ) (x y : ℤ) : Prop :=
 def occupiedVertices (E : Finset ℤ) (q : ℤ) : Finset ℤ :=
   insert q (E ∪ E.image (fun e => e + 1))
 
+/-- The graph has exactly the specified edges, including when two occupied
+vertices are adjacent across an edge absent from `E`. -/
+def specifiedEdgeGraph (E : Finset ℤ) : SimpleGraph ℤ where
+  Adj x y := (x ∈ E ∧ y = x + 1) ∨ (y ∈ E ∧ x = y + 1)
+  symm := ⟨fun _ _ h => h.elim Or.inr Or.inl⟩
+  loopless := ⟨by intro x h; rcases h with h | h <;> omega⟩
+
 /-- A maximal interval partition, indexed in the original order by its least vertices.
 The half-open intervals partition exactly the specified edges. -/
 structure IntegerLineIntervals (E : Finset ℤ) (q : ℤ) where
@@ -43,7 +51,8 @@ structure IntegerLineIntervals (E : Finset ℤ) (q : ℤ) where
   separated : ∀ a ∈ roots, ∀ b ∈ roots, a < b → right a < b
   vertices : ∀ v : ℤ, v ∈ occupiedVertices E q ↔ ∃ a ∈ roots, a ≤ v ∧ v ≤ right a
   edges : ∀ e : ℤ, e ∈ E ↔ ∃ a ∈ roots, a ≤ e ∧ e < right a
-  component : ∀ a ∈ roots, ∀ v : ℤ, EdgeConnected E a v ↔ a ≤ v ∧ v ≤ right a
+  component : ∀ a ∈ roots, ∀ v : ℤ,
+    (specifiedEdgeGraph E).Reachable a v ↔ a ≤ v ∧ v ≤ right a
   target : ℤ
   target_mem : target ∈ roots
   target_bounds : target ≤ q ∧ q ≤ right target
@@ -65,6 +74,47 @@ private theorem edge_trans {E : Finset ℤ} {x y z : ℤ}
   by_cases h : min x y ≤ e ∧ e < max x y
   · exact hxy e h.1 h.2
   · exact hyz e (by omega) (by omega)
+
+private theorem graph_reachable_iff (E : Finset ℤ) (x y : ℤ) :
+    (specifiedEdgeGraph E).Reachable x y ↔ EdgeConnected E x y := by
+  constructor
+  · rintro ⟨w⟩
+    induction w with
+    | nil => exact edge_refl E _
+    | @cons u v w hadj p ih =>
+      have hedge : EdgeConnected E u v := by
+        rcases hadj with h | h
+        · intro e h₁ h₂
+          have : e = u := by omega
+          simpa only [this] using h.1
+        · intro e h₁ h₂
+          have : e = v := by omega
+          simpa only [this] using h.1
+      exact edge_trans hedge ih
+  · have forward (a : ℤ) (n : ℕ) : EdgeConnected E a (a + n) →
+        (specifiedEdgeGraph E).Reachable a (a + n) := by
+      induction n with
+      | zero => intro _; simpa using SimpleGraph.Reachable.refl (G := specifiedEdgeGraph E) a
+      | succ n ih =>
+        intro h
+        have he : a + n ∈ E := h (a + n) (by omega) (by omega)
+        have hp : EdgeConnected E a (a + n) := by
+          intro e he₁ he₂
+          exact h e (by omega) (by omega)
+        have hadj : (specifiedEdgeGraph E).Adj (a + n) (a + (n + 1 : ℕ)) :=
+          Or.inl ⟨he, by omega⟩
+        exact (ih hp).trans hadj.reachable
+    intro h
+    by_cases hxy : x ≤ y
+    · have hy : x + ((y - x).toNat : ℤ) = y := by
+        have := Int.toNat_of_nonneg (sub_nonneg.mpr hxy)
+        omega
+      simpa only [hy] using forward x (y - x).toNat (by simpa only [hy] using h)
+    · have hx : y + ((x - y).toNat : ℤ) = x := by
+        have := Int.toNat_of_nonneg (show 0 ≤ x - y by omega)
+        omega
+      have hr := forward y (x - y).toNat (by simpa only [hx] using edge_symm h)
+      exact (by simpa only [hx] using hr : (specifiedEdgeGraph E).Reachable y x).symm
 
 private theorem connected_endpoint {E : Finset ℤ} {q x y : ℤ}
     (hx : x ∈ occupiedVertices E q) (h : EdgeConnected E x y) :
@@ -254,7 +304,8 @@ theorem integer_line_component_intervals (E : Finset ℤ) (q : ℤ) :
   have count := Finset.card_biUnion disjoint
   rw [union_edges] at count
   simp only [Int.card_Ico] at count
-  exact ⟨⟨A, b, nonempty, separated, vertices, edges, comp, t, ht, htq, positive,
+  exact ⟨⟨A, b, nonempty, separated, vertices, edges,
+    fun a ha v => (graph_reachable_iff E a v).trans (comp a ha v), t, ht, htq, positive,
     count.symm⟩⟩
 
 #print axioms integer_line_component_intervals
