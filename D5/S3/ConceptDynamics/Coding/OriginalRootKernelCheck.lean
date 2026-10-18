@@ -19,6 +19,10 @@ import D5.S3.ConceptDynamics.Coding.OriginalPositiveWordAssembly
 import D5.S3.ConceptDynamics.Coding.OriginalResponseTableIntake
 import D5.S3.ConceptDynamics.Coding.PositiveWordFullAction
 import D5.S3.ConceptDynamics.Coding.ResetQ4LocalizedGyrationCharacter
+import D5.S3.ConceptDynamics.Coding.OriginalRootPeriod6Base
+import D5.S3.ConceptDynamics.Coding.OriginalRootPeriod6Rows
+import D5.S3.ConceptDynamics.Coding.OriginalRootPeriod6Time
+import D5.S3.ConceptDynamics.Coding.OriginalRootPeriod6Calibration
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -34,10 +38,12 @@ open ResetStandardBeamGeometry ResetFullStandardBeamRepresentation
 open OriginalResponseTableIntake ResponseTwoSidedConsumer OriginalPositiveWordAssembly
 open ResetNativeIntegralDefect
 open ActualPositiveWordPeriodicCochain ActualWordLocalizedComparison
-open CountedOrderTypeGyration (dyadicGyration integerGyrationValue)
+open CountedOrderTypeGyration (dyadicGyration integerGyrationValue rotate)
 open CountedOrderTypeGyration.SignedSupport
   (prunedShard integerGyrationValue_eq_supportedEvaluator
-    supportedEvaluator_eq_pruned prunedEvaluator_eq_shards)
+    supportedEvaluator_eq_pruned prunedEvaluator_eq_shards keyWeight sourceKeys targetKeys
+    middleWords rankVectors vectorTerm SkeletonMinimal rankWidth coefficient
+    vectorTerm_zero_of_nonminimal sSlots KeyLT skeleton Key KeyWordLT KeyLeast)
 open ResetQ4OriginalLocalizedCubes (T VertexIndex DyadicMatrix)
 open ResetQ4LocalizedGyrationCharacter
   (originalRows vertexEquiv originalRows_mul originalRows_one columnGyration
@@ -52,12 +58,12 @@ open SourceOnly.KernelRSSquareGyration (rows value)
 open SourceOnly.FiniteKernelLadder (Mat rowUnit)
 open scoped BigOperators Matrix
 
-local instance nativeIntModule (q : ℕ) :
+local instance nativeIntModuleRoot (q : ℕ) :
     Module ℤ (InertGroupBlockConjugacy.DimensionGroup (resetMatrix q)) :=
   AddCommGroup.toIntModule _
 
 set_option maxHeartbeats 12000000 in
-set_option maxRecDepth 100000 in
+set_option maxRecDepth 1000000 in
 example :
     let G := ResetGraph 4
     let P := original G (Alternating.reset_expanded_essential 4 (by omega))
@@ -614,88 +620,16 @@ example :
       exact ((Fin.consEquiv (fun _ : Fin (k+1) => Fin 8)).sum_comp f).symm.trans
         (Fintype.sum_prod_type _)
     have hGammaTime :
-        Multiplicative.toAdd (Gamma ResetQ4OriginalLocalizedCubes.time) = (0 : ZMod 3) := by
-      clear * - sumCons
-      have hR : ∀ i j : Fin 8,
-          originalAdjacency i j = 0 ∨ originalAdjacency i j = 1 := by decide
-      have hS : ∀ i j : Fin 8,
-          (1 : Matrix (Fin 8) (Fin 8) ℤ) i j = -1 ∨
-          (1 : Matrix (Fin 8) (Fin 8) ℤ) i j = 0 ∨
-          (1 : Matrix (Fin 8) (Fin 8) ℤ) i j = 1 := by decide
-      have h3Shard (i : Fin 8) :
-          prunedShard 2 originalAdjacency (1 : Matrix (Fin 8) (Fin 8) ℤ) i =
-            (![-4,0,0,0,0,0,0,0] : Fin 8 → ℤ) i := by
-        fin_cases i <;> decide +kernel
-      have h6Shard (i : Fin 8) :
-          prunedShard 5 originalAdjacency (1 : Matrix (Fin 8) (Fin 8) ℤ) i =
-            (![-35,0,0,0,0,0,0,0] : Fin 8 → ℤ) i := by
-        fin_cases i <;> simp only [prunedShard, sumCons] <;> decide +kernel
-      have h3 :
-          integerGyrationValue 3 originalAdjacency 1 = -4 := by
-        rw [integerGyrationValue_eq_supportedEvaluator 3 _ _ hR hS,
-          supportedEvaluator_eq_pruned, prunedEvaluator_eq_shards 2]
-        simp_rw [h3Shard]
-        norm_num [Fin.sum_univ_succ]
-      have h6 :
-          integerGyrationValue 6 originalAdjacency 1 = -35 := by
-        rw [integerGyrationValue_eq_supportedEvaluator 6 _ _ hR hS,
-          supportedEvaluator_eq_pruned, prunedEvaluator_eq_shards 5]
-        simp_rw [h6Shard]
-        norm_num [Fin.sum_univ_succ]
-      change Multiplicative.toAdd (gamma 3 (by decide) ResetQ4OriginalLocalizedCubes.time) +
-          Multiplicative.toAdd (gamma 6 (by decide) ResetQ4OriginalLocalizedCubes.time) = 0
-      rw [gamma_time_signed_evaluation, gamma_time_signed_evaluation,
-        h3, h6]
-      norm_num
-
+        Multiplicative.toAdd (Gamma ResetQ4OriginalLocalizedCubes.time) = (0 : ZMod 3) :=
+      gamma_time_value
     have hGammaOnePlus :
         Multiplicative.toAdd
-            (Gamma ResetQ4OriginalLocalizedCubes.onePlusTime) = (2 : ZMod 3) := by
-      clear * - sumCons
-      have hR : ∀ i j : Fin 8,
-          (1 + originalAdjacency) i j = 0 ∨ (1 + originalAdjacency) i j = 1 := by
-        decide
-      have hS : ∀ i j : Fin 8,
-          onePlusSignedFactor i j = -1 ∨ onePlusSignedFactor i j = 0 ∨
-            onePlusSignedFactor i j = 1 := by
-        decide
-      have h3Shard : ∀ i : Fin 8,
-          prunedShard 2 (1 + originalAdjacency) onePlusSignedFactor i =
-            (![(-1 : ℤ), -1, -1, -2, -1, -2, 0, 0] : Fin 8 → ℤ) i := by
-        intro i
-        fin_cases i <;> decide +kernel
-      have h6Shard : ∀ i : Fin 8,
-          prunedShard 5 (1 + originalAdjacency) onePlusSignedFactor i =
-            (![(-31 : ℤ), -10, -8, 2, -5, 3, -4, 0] : Fin 8 → ℤ) i := by
-        intro i
-        fin_cases i <;> simp only [prunedShard, sumCons] <;> decide +kernel
-      have h3 :
-          integerGyrationValue 3 (1 + originalAdjacency) onePlusSignedFactor = -8 := by
-        rw [integerGyrationValue_eq_supportedEvaluator 3 _ _ hR hS,
-          supportedEvaluator_eq_pruned, prunedEvaluator_eq_shards 2]
-        simp_rw [h3Shard]
-        norm_num [Fin.sum_univ_succ]
-      have h6 :
-          integerGyrationValue 6 (1 + originalAdjacency) onePlusSignedFactor = -53 := by
-        rw [integerGyrationValue_eq_supportedEvaluator 6 _ _ hR hS,
-          supportedEvaluator_eq_pruned, prunedEvaluator_eq_shards 5]
-        simp_rw [h6Shard]
-        norm_num [Fin.sum_univ_succ]
-      change Multiplicative.toAdd
-          (gamma 3 (by decide) ResetQ4OriginalLocalizedCubes.onePlusTime) +
-          Multiplicative.toAdd
-            (gamma 6 (by decide) ResetQ4OriginalLocalizedCubes.onePlusTime) = 2
-      rw [gamma_onePlus_signed_evaluation, gamma_onePlus_signed_evaluation, h3, h6]
-      norm_num
-
+            (Gamma ResetQ4OriginalLocalizedCubes.onePlusTime) = (2 : ZMod 3) :=
+      gamma_onePlus_value
     have hGamma : Multiplicative.toAdd
         (Gamma (ResetQ4OriginalLocalizedCubes.originalImage h)) = (j.val : ZMod 3)*2 := by
-      rw [hfactor, map_mul, map_mul, map_pow, map_pow, map_pow]
-      change i.val • Multiplicative.toAdd (Gamma ResetQ4OriginalLocalizedCubes.time) +
-        j.val • Multiplicative.toAdd (Gamma ResetQ4OriginalLocalizedCubes.onePlusTime) +
-        3 • Multiplicative.toAdd (Gamma v) = (j.val : ZMod 3)*2
-      rw [hGammaTime, hGammaOnePlus]
-      simp [nsmul_eq_mul]
+      rw [hfactor]
+      exact gamma_factor_value i j v
     have hcharacter : chi_add h = 2*Multiplicative.toAdd
         (Gamma (ResetQ4OriginalLocalizedCubes.originalImage h)) := by
       rw [hnativeValue, hGamma]
