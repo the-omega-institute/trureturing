@@ -48,9 +48,6 @@ theorem extend_right (L : ℤ) (n : ℕ) :
   simp only [Finset.mem_insert, pathEdges, Finset.mem_Icc, Nat.cast_add, Nat.cast_one]
   omega
 
-theorem path_card (L : ℤ) (n : ℕ) : (pathEdges L n).card = n := by
-  simp [pathEdges, Int.card_Icc]
-
 theorem vertices_card (L : ℤ) (n : ℕ) : (pathVertices L n).card = n + 1 := by
   simp only [pathVertices, Int.card_Icc]
   omega
