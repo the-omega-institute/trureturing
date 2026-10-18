@@ -1833,3 +1833,150 @@ $\widetilde p_{\ell_X}(G)-\widetilde n_{\ell_X}(G)$;
 separate smallness of these two terms is not required by the target.
 That actual joint estimate, the strict all-integer Robin inequality
 and RH remain unproved.
+
+## The enlarged remote trace exceeds the actual complete source response
+
+Keep (38)--(43), WT11--WT14 and their same original qualifying
+cofinal source family, including its full-window and maximizing-tie
+contracts. Use the identical remote completion $e_X$, pole deficit
+$N_X$, enlarged place set $S_X^+$ and radius $R_X$.
+Here $R_X$ is WT13's remote radius, not the coarse core-clock ceiling.
+Write
+
+$$
+\mathcal T_X=T_{S_X^+}(e_X),\qquad
+\mathcal S_X=\int_{t_0}^{t_m}s_{B(t)}dt,
+\quad s_B=\sqrt B\log B,\quad b_X=\min_tB(t).
+$$
+
+The prefactor $\mathcal S_X$ is the same positive $S$ used in
+(43)'s whole-horizon reference comparison. It is distinct from the
+place set $S_X^+$. Keep the actual original compensated response
+
+$$
+G_a(B)=s_B\int_B^\infty E(v)k(v)dv-\frac{aE(B)}{\sqrt B},
+\qquad
+\mathcal G_X=\sum_{i<m}\delta_iG_a(B_i),\qquad E(v)=v-\psi(v).
+$$
+
+Every original coefficient, prime power, infinite endpoint,
+outgoing weight and tie remains. JM3--JM7 give
+$\mathcal G_X\ge cM_XL_X>0$ eventually on this source; no upper
+bound $\mathcal G_X=O(M_XL_X)$ is assumed.
+
+This is a `repo-derived` paper application of the existing PNT
+majorant and the retained actual trace bound (38). It does not
+reprove the Sonin-vector construction, Euler-peak analysis or a
+prime-number theorem, and makes no literature-priority or Lean
+verification claim.
+
+### The full response is smaller than its positive prefactor by every logarithmic power
+
+Reuse [Trudgian's all-prime-power error bound](trudgian2014pnt.md),
+Theorem 1 of arXiv:1401.2689v2, already consumed by CQ4--CQ5.
+Its exponential decay implies, for each fixed real $m>0$, a fixed
+$C_m$ and a common real start with
+
+$$
+|E(v)|\le C_m\frac{v}{(\log v)^m}.
+$$
+
+No uniformity in an increasing $m$ is asserted. Apply this bound
+to the whole original improper integral. For $L_B=\log B$,
+CQ4's same change of variables gives
+
+$$
+\begin{aligned}
+\int_B^\infty |E(v)|k(v)dv
+&\le C_m\int_{L_B}^\infty
+ \frac{1+y}{y^{m+2}}dy\\
+&=C_m\left[\frac{L_B^{-m}}m+
+           \frac{L_B^{-m-1}}{m+1}\right],\\
+\frac{a|E(B)|}{\sqrt B\,s_B}
+&\le aC_m L_B^{-m-1}.
+\end{aligned}
+$$
+
+Consequently, at every sufficiently large actual core,
+$|G_a(B)|\le C_{a,m}s_B(\log B)^{-m}$.
+Reuse CQ5's unchanged complete-response quadrature, rather than
+altering its atomic core occupation. It gives
+
+$$
+\mathcal G_X\le
+ C_{a,m}(\log b_X)^{-m}\mathcal S_X+o(1).
+$$
+
+The $o(1)$ is absorbed in the first term since
+$\mathcal S_X\ge L_X\sqrt{b_X}\log b_X$ and
+$b_X\to\infty$, with $L_X\asymp\ell_X\to\infty$.
+The original $b_X/\ell_X\to\infty$ and
+$\ell_X=(d/8)X^{1-\eta}\log X$ give
+$\log b_X\ge c_\eta\log X$ beyond one common start. Thus
+
+$$
+\boxed{0<\mathcal G_X\le
+ C_{a,m,\eta}(\log X)^{-m}\mathcal S_X
+ \quad\text{for every fixed }m>0\text{ eventually}.}
+\tag{54}
+$$
+
+This bounds the actual growing complete response, not only its
+original target scale. It uses an upper estimate for
+$\mathcal G_X$; its lower margin alone could not justify the
+comparison below.
+
+### Compare the unchanged trace to that same response
+
+Reuse (38), (43)'s $N_X/\mathcal S_X\to\infty$ and WT13's
+$R_X=O((\log X)^8)$. They refer to the same actual completion,
+source weights and original horizon. For every fixed $m>0$,
+
+$$
+\frac{\mathcal T_X}{\mathcal G_X}
+\ge c_m\frac{N_X}{\mathcal S_X}
+ (\log X)^{m-56}.
+$$
+
+For a requested fixed $q\ge0$, take the fixed exponent
+$m=q+57$ before taking the source start. Hence
+
+$$
+\boxed{\forall q\ge0\quad
+\frac{\mathcal T_X}{\mathcal G_X(\log X)^q}
+\longrightarrow+\infty.}
+\tag{55}
+$$
+
+WT12--WT13 retain $\mathscr W(e_X)=o(L_X)$ and
+$\mathcal G_X\ge cM_XL_X$, where $M_X\to\infty$.
+For the same defect as after (43),
+$\mathcal D_S(G)=\mathscr W(G)-T_S(G)$, linearity therefore gives
+
+$$
+\boxed{\forall q\ge0\quad
+\frac{\mathcal D_{S_X^+}(H_X+e_X)
+      -\mathcal D_{S_X^+}(H_X)}
+     {\mathcal G_X(\log X)^q}
+\longrightarrow-\infty.}
+\tag{56}
+$$
+
+These statements retain the original parameter range of (38)--(43),
+including $\Theta=1$ where supplied, without WRC1's additional
+$\eta<13/30$ restriction. Constants and common starts may depend
+on the fixed requested $m$ or $q$ and the original parameters.
+
+Thus the added unmodified positive Sonin trace cannot be discarded
+as a vanishing fraction of the actual source response, even when
+that response is unbounded relative to $M_XL_X$. This strengthens
+(43)'s obstruction for the specified enlarged place family and
+completion. The original-support trace estimate (37), the paid
+signed arithmetic change and the pole-compensated negative-overlap
+and boundary allowances retain their own scopes. No conclusion
+about all completions or all projections is inferred.
+
+A joint signed comparison may still retain and cancel this large
+term with its matching contributions. No such comparison, signed
+upper bound on the actual visited response, all-integer Robin
+inequality or RH proof is supplied.
