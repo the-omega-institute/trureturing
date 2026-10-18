@@ -4850,3 +4850,7 @@ For the remaining rank-$`(7,4)`$ class, its four positive stress eigenvalues in 
 This conclusion concerns the actual common stress, rather than a freely chosen stress with the same support. Nonisotropic rank-four stresses satisfying (119.24), opposite rank three, and the global representative class with both ranks at most six remain outside these exclusions. Theorem 119.3 imposes its quotient on the full actual leaking Grams; it does not transfer calibrated local-minimum conditions to arbitrary leaking optimizers. The unrestricted global quarter optimum remains open.
 
 ## 追加锚（本行以下为增补区）
+
+The full actual-quotient effective-rank extension, including its quantitative leakage bound, is proved in [RT V §120](ARITHMETIC_HOLOGRAPHIC_RT_V.md#120-effective-rank-bounds-for-full-actual-quotient-stresses).
+
+## 追加锚（本行以下为增补区）
