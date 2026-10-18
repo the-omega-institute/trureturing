@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualRelabelParallelPhaseDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelParallelPhase", "Parallel-edge discrepancy on the original primitive path basis."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Parallel-edge discrepancy on the original primitive path basis.",
         H("Parallel-edge discrepancy on the original primitive path basis"),
         Blocks(
             Paragraph(Text("timed packages the actual history homeomorphism and integer-time equivariance. For r and s with the same vertex equivalence, discrepancy acts on the target graph by r.edge after s.edge.symm and fixes vertices. discrepancy_factor verifies that timed s followed by this discrepancy equals timed r on actual paths.")),

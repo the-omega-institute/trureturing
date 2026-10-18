@@ -6,8 +6,8 @@ internal sealed class ConstructedTowerProfilesDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/ConstructedTowerProfiles.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/ResponseRealization/ConstructedTowerProfiles", "The existing two-sided reduction has paired split kinds and exact incoming and outgoing counts on both constructed towers."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The existing two-sided reduction has paired split kinds and exact incoming and outgoing counts on both constructed towers.",
         H("Profiles of the towers actually constructed by reduction"),
         Blocks(
             Paragraph(Text("TwoSidedFiniteInduction.Presentation bundles actual finite essential graphs, decidable equality and a discrete edge topology; empty carriers are permitted. Given F,H, a graph Code c, a history homeomorphism P with its one-block equation hP, and a total inverse table Q with radii M,N and exact all-history recovery hQ, reduce k F H c P hP M N Q hQ hk constructs the two towers, where hk states M+N=k. The radii need not be minimal.")),

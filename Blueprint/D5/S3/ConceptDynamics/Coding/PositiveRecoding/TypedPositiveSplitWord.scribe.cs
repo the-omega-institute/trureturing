@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class TypedPositiveSplitWordDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/TypedPositiveSplitWord", "Endpoint-typed finite positive words with explicit corrections."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Endpoint-typed finite positive words with explicit corrections.",
         H("Endpoint-typed finite positive words with explicit corrections"),
         Blocks(
             Paragraph(Text("Word F H has exactly relabel, positive and comp constructors. A positive letter carries R,S together with actual finite graph relabelings from counted RS and SR to the endpoint presentations. Composition is indexed by its actual intermediate Presentation. Word.eval composes the resulting homeomorphisms, and Word.letters counts positive letters while relabels count zero.")),

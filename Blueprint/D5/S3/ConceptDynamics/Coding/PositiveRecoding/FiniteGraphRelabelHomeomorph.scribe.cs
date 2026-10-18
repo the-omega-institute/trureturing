@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class FiniteGraphRelabelHomeomorphDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/FiniteGraphRelabelHomeomorph", "Relabel actual graph histories by vertex and edge equivalences."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Relabel actual graph histories by vertex and edge equivalences.",
         H("Relabel actual graph histories by vertex and edge equivalences"),
         Blocks(
             Paragraph(Text("Relabel.symm reverses the given finite graph relabeling and proves its two endpoint laws. Relabel.homeomorph applies the edge equivalence coordinatewise to every legal integer-indexed history, uses the inverse equivalence for its inverse, and proves continuity in the product/subtype topology.")),

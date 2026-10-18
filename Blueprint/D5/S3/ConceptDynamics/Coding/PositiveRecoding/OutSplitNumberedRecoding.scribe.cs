@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class OutSplitNumberedRecodingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/OutSplitNumberedRecoding", "Number rectangular edge fibers for the actual outgoing split."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Number rectangular edge fibers for the actual outgoing split.",
         H("Number rectangular edge fibers for the actual outgoing split"),
         Blocks(
             Paragraph(Text("Rect.matrix counts fibers of the endpoint maps and Rect.decode bijects numbered matrix edges with the actual fibers. decode_endpoints and encode_endpoints preserve both endpoints, including empty fibers. For the outgoing split, R records retained partition classes and S records original parallel-edge identities. oldEdgeEquiv and newEdgeEquiv retain both inverse equations.")),

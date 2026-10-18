@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualWordMatrixPathDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordMatrixPath", "Actual finite graph words give chronological rectangular RS paths and exact scalar-extended endpoint maps."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual finite graph words give chronological rectangular RS paths and exact scalar-extended endpoint maps.",
         H("Actual finite graph words give chronological rectangular RS paths and exact scalar-extended endpoint maps"),
         Blocks(
             Paragraph(Text("This dictionary changes representations while preserving the full endpoint map. It works over GyrationDyadic using rectangular ROW factors; the full integer history and the independently constructed beam action remain the objects to be compared downstream.")),

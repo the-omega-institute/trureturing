@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.OriginalRoot;
 
 internal sealed class ResetQ4LocalizedGyrationCharacterDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/OriginalRoot/ResetQ4LocalizedGyrationCharacter", "The original reset column action carries the fixed localized gyration character and symbolic signed evaluations."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The original reset column action carries the fixed localized gyration character and symbolic signed evaluations.",
         H("The fixed localized character on the original reset action"),
         Blocks(
             Paragraph(Text("The character is constructed on the actual centralizer of the original forward column transition. Its symbolic evaluations identify the exact signed factors; the original-action application also uses the numerical calibrations and the periodic-action comparison described below.")),

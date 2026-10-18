@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualWordLocalizedComparisonDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordLocalizedComparison", "The rectangular localized cochain equals the same actual positive-word gyration modulo three."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The rectangular localized cochain equals the same actual positive-word gyration modulo three.",
         H("The rectangular localized cochain equals the same actual positive-word gyration modulo three"),
         Blocks(
             Paragraph(Text("The passage to the arithmetic cochain is coefficientwise localization of the actual positive factors with their chart corrections. The same d, word, old/next edge bijections and forward-time convention occur on both sides of the comparison.")),

@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualRelabelChartsDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelCharts", "Transport both relabel factors through the actual charts."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Transport both relabel factors through the actual charts.",
         H("Transport both relabel factors through the actual charts"),
         Blocks(
             Paragraph(Text("countedInCharts composes cG, r and cH.symm on both vertices and numbered edges. charted_weight transports the two row matrices together through these charts. It does not infer invariance of an individual edge value under an arbitrary basis change. The literal forward factor uses reindex r.vertex, and the backward factor uses timeMap G after the inverse reindexing.")),

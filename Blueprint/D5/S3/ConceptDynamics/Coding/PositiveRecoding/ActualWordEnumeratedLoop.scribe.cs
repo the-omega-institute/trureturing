@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualWordEnumeratedLoopDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordEnumeratedLoop", "Actual positive-word loop transport to literal vertex coordinates with both endpoint corrections."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual positive-word loop transport to literal vertex coordinates with both endpoint corrections.",
         H("Actual positive-word loop transport to literal vertex coordinates with both endpoint corrections"),
         Blocks(
             Paragraph(Text("The purpose of rebasing is to connect the actual outOld history chart to the literal vertex coordinates used by the native arithmetic action. The finite kernel ladder and the independent relabel-residue supplier are both consumed; no cochain equality is inserted as a premise.")),

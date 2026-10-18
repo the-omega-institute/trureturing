@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.BeamColimits;
 
 internal sealed class FiniteRelabelBeamTransportDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/BeamColimits/FiniteRelabelBeamTransport", "Actual finite graph relabels transport edge fibers, beam endpoints and row colimits."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual finite graph relabels transport edge fibers, beam endpoints and row colimits.",
         H("Finite graph relabels preserve actual beam coordinates"),
         Blocks(
             Paragraph(Text("Let r : Relabel G H carry an actual vertex equivalence and an actual edge equivalence satisfying both endpoint equations. essential transports incoming and outgoing witnesses. For the finite row and beam APIs use the source-declared Fintype and DecidableEq instances; for history homeomorphisms use the declared discrete edge topologies. The original universes of vertices and edges are independent. No essentiality is required for the row-transition square itself.")),

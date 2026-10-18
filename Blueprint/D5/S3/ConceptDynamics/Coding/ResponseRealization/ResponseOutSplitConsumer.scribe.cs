@@ -6,8 +6,8 @@ internal sealed class ResponseOutSplitConsumerDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponseOutSplitConsumer.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponseOutSplitConsumer", "The actual numbered response output admits its first strict outgoing split and a shortened total inverse table."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The actual numbered response output admits its first strict outgoing split and a shortened total inverse table.",
         H("Consume the response output in the first strict split"),
         Blocks(
             Paragraph(Text("G has finite vertex and edge types, decidable equality on both, and a discrete edge topology. pair has arbitrary natural radii a,b,c,d. The numberedEdgeFintype instance transports finiteness through the existing edgeEquiv, retaining every response edge and all existing parallel numbers. responseCode requires the actual forward seam; its vertex map decodes vertexNumber and its edge map is edgeOutput after existing counted-edge decoding. Endpoint equations are derived from that same numbering.")),

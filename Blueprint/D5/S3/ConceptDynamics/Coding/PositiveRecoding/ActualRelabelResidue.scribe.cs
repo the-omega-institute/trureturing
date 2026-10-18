@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualRelabelResidueDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelResidue", "Actual relabel row matrices equal the reduced forward gyration."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual relabel row matrices equal the reduced forward gyration.",
         H("Actual relabel row matrices equal the reduced forward gyration"),
         Blocks(
             Paragraph(Text("actual_Q_mul_P derives the target matrix B from the actual vertex and edge equivalences of r. rows_standard states that the source row index precedes the target column index. reindex_rows identifies the forward row matrix with counts (P e); backward_map and backward_rows identify the other factor with counts (Q e A). Both factors belong to the literal row convention.")),

@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class OriginalPositiveWordAssemblyDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/OriginalPositiveWordAssembly", "Construct the positive word on the original finite presentation."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Construct the positive word on the original finite presentation.",
         H("Construct the positive word on the original finite presentation"),
         Blocks(
             Paragraph(Text("positive_word constructs a Word from the actual (a+b+1)-fold full outgoing tower, the actual numbered full-out/response relabeling and the constructed response positive word. The internal induction proves that the input full-out tower has no incoming stages. Every letter and intermediate endpoint lies in TypedPositiveSplitWord.Word, whose constructors contain neither arbitrary history homeomorphisms nor inverse letters.")),

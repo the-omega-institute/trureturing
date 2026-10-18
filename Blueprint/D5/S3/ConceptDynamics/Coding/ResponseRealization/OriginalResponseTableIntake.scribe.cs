@@ -6,8 +6,8 @@ internal sealed class OriginalResponseTableIntakeDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/OriginalResponseTableIntake.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/ResponseRealization/OriginalResponseTableIntake", "Original automorphism windows yield total finite tables and the same actual forward and inverse history maps."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Original automorphism windows yield total finite tables and the same actual forward and inverse history maps.",
         H("Intake of the original automorphism into the response construction"),
         Blocks(
             Paragraph(Text("V,E are arbitrary finite types with decidable vertex equality and discrete topologies on both V and E. G is essential and h is the original FullAut G. Natural radii a,b,c,d come with hab:Controls G h.val a b and hcd:Controls G h.val.symm c d. The module does not prove the existence of those controls; the preserved original application obtains them from fullAut_has_two_windows.")),

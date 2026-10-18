@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.BeamColimits;
 
 internal sealed class PositiveWordFullActionDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordFullAction", "Literal positive-word decompositions determine the full native beam-group action."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Literal positive-word decompositions determine the full native beam-group action.",
         H("The full native beam action of a literal word and time"),
         Blocks(
             Paragraph(Text("Fix a finite essential Presentation P with the explicit discrete topology on P.V, h : FullAut P.graph, w : Word P P and s : Int. The only comparison assumption is the literal ALL-history equation h.val x = translate P.graph s (w.eval x). It does not assume a beam, matrix, colimit or representation comparison. In the preserved original application the actual finite-window tables and OriginalPositiveWordAssembly.positive_word construct that equality for every arbitrary h : ResetFullAut 4.")),

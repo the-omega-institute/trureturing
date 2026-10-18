@@ -6,8 +6,8 @@ internal sealed class CentredResponseCorrectionDocument : IScribeDocumentDefinit
 {
     private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/CentredResponseCorrection.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/ResponseRealization/CentredResponseCorrection", "The numbered response lift is uncentred by a forward translation and recovered by the literal negative centring correction."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The numbered response lift is uncentred by a forward translation and recovered by the literal negative centring correction.",
         H("Centring the actual numbered response history"),
         Blocks(
             Paragraph(Text("Let V and E be arbitrary finite types, with decidable vertex equality and a discrete topology on E. G is a directed multigraph and pair is a TablePair G G a b c d, with arbitrary natural radii, including zero. No Essential G or SameTableConjugacy is needed for these input-lift identities. Histories are indexed by all integers. The existing translate G s reads the old history at t+s; this sign convention is used literally throughout.")),

@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.BeamColimits;
 
 internal sealed class CountedMatrixBeamDiagramDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamDiagram", "Literal counted-edge images and intrinsic endpoint multiplicities at every integer cut."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Literal counted-edge images and intrinsic endpoint multiplicities at every integer cut.",
         H("Counted-edge ray images and intrinsic endpoint multiplicities"),
         Blocks(
             Paragraph(Text("Let R : CountMat n m and S : CountMat m n. An Edge M contains its source, target and a number in Fin (M source target). countedGraph is exactly the DirectedMultigraph adapter on these edges, so its histories are the existing Path M. integerCounts only casts Nat coefficients to Int. adjacency_counted counts each edge number once; repeated targets do not collapse parallel edges. All endpoint vectors are ROW vectors, and rectangular transport is z vecMul integerCounts R.")),

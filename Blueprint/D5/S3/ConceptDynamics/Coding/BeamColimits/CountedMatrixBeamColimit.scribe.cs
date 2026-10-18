@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.BeamColimits;
 
 internal sealed class CountedMatrixBeamColimitDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamColimit", "Actual counted beam images and right-row colimit transport with the exact inverse cut."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual counted beam images and right-row colimit transport with the exact inverse cut.",
         H("Actual beam images in the native right-row colimit"),
         Blocks(
             Paragraph(Text("Use the same natural matrices R : CountMat n m and S : CountMat m n and the existing RowLimit of the corresponding counted graphs. rowMap is the Module.DirectLimit.map induced by z -> z vecMul integerCounts R. Associativity gives (RS)R=R(SR) in the right-row orientation; neither a transpose nor injectivity of an original transition map is assumed.")),

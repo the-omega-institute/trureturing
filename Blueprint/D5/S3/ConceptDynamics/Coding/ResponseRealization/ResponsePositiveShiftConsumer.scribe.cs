@@ -6,8 +6,8 @@ internal sealed class ResponsePositiveShiftConsumerDocument : IScribeDocumentDef
 {
     private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponsePositiveShiftConsumer.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponsePositiveShiftConsumer", "The constructed response-output positive word has its exact letter count and literal negative time correction on all histories."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The constructed response-output positive word has its exact letter count and literal negative time correction on all histories.",
         H("The actual output word and its literal time correction"),
         Blocks(
             Paragraph(Text("Assume the finite discrete graph data, Essential G, TablePair G G a b c d and its actual SameTableConjugacy S as in ResponseTwoSidedConsumer. Set k=(a+c)+(b+d+1). word is terminalWord of the actual response terminal: forward source lifts, the terminal finite vertex-and-edge relabeling, and positive reverse target lifts. Its endpoints are exactly response G hG pair S and original G hG. No inverse-homeomorphism leaf is added to the positive word syntax.")),

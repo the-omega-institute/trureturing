@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class RankedTimeRecodingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/RankedTimeRecoding", "Unit-factor recodings retain the original parallel-edge rank."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Unit-factor recodings retain the original parallel-edge rank.",
         H("Unit-factor recodings retain the original parallel-edge rank"),
         Blocks(
             Paragraph(Text("edgeCast transports literal numbered edges through a matrix equality and preserves source, target and number. rank_identity reuses Finset.orderEmbOfFin_unique and is consumed by both unit-factor ranking proofs. join_right_identity and join_left_identity prove that collapsing the unique identity half-edge leaves the original A-edge number unchanged; they use the existing fiber_number_lt_iff, including empty fibers.")),

@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualPositiveWordPeriodicCochainDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualPositiveWordPeriodicCochain", "Actual-history charts, endpoint-corrected positive-word gyration and signed time translation."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Actual-history charts, endpoint-corrected positive-word gyration and signed time translation.",
         H("Actual-history charts, endpoint-corrected positive-word gyration and signed time translation"),
         Blocks(
             Paragraph(Text("These source-bound statements use the forward shift on original signed histories. The finite chart is a coordinate system for those histories and their primitive orbits, not a replacement native action. All integer times remain quantified in ht. All nonzero natural periods are retained here, and localization later restricts only to periods divisible by three.")),

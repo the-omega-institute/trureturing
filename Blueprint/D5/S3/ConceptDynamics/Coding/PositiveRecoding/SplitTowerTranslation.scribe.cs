@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class SplitTowerTranslationDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/SplitTowerTranslation", "Derive integer-time laws inside the actual recoding constructions."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Derive integer-time laws inside the actual recoding constructions.",
         H("Derive integer-time laws inside the actual recoding constructions"),
         Blocks(
             Paragraph(Text("time is StandardBeamHomeomorphisms.translate with coordinate t+a. On counted histories this has the same defining coordinates as NumberedPositiveInverseLaws.translate. The retained relabel and split forget laws commute with every signed time. The coordinate definitions give the corresponding lift laws, retaining t+1 for outgoing labels and t-1 for incoming labels.")),

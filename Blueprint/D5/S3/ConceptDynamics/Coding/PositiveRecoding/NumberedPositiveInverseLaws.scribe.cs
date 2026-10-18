@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class NumberedPositiveInverseLawsDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/NumberedPositiveInverseLaws", "Exact numbered positive recoding and inverse time signs."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Exact numbered positive recoding and inverse time signs.",
         H("Exact numbered positive recoding and inverse time signs"),
         Blocks(
             Paragraph(Text("For arbitrary rectangular nonnegative matrices R and S, positive_coordinate sends the two half-edges at t to the S half-edge at t joined with the R half-edge at t+1. inverse_coordinate recovers the R half-edge from time t-1 and the S half-edge from time t. translate B a x has coordinate x at t+a for every signed integer a.")),

@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class SplitTowerPositiveAccountingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/SplitTowerPositiveAccounting", "Count the signed corrections of every actual split tower."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Count the signed corrections of every actual split tower.",
         H("Count the signed corrections of every actual split tower"),
         Blocks(
             Paragraph(Text("TowerWord.forward traverses the bottom lift and then the remaining tower. TowerWord.backward reverses the traversal using opposite positive letters in reverse order. inCount and outCount count actual incoming and outgoing stages; their sum is Tower.length. Both constructed words have that same positive-letter count.")),

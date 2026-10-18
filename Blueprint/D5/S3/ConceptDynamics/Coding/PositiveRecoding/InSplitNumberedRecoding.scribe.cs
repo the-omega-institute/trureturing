@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class InSplitNumberedRecodingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/InSplitNumberedRecoding", "Number the actual incoming split and retain its time correction."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Number the actual incoming split and retain its time correction.",
         H("Number the actual incoming split and retain its time correction"),
         Blocks(
             Paragraph(Text("The incoming R half-edges are original edges ending at their retained incoming class; S half-edges are the retained classes returning to their old vertex. Rect.decode from the outgoing supplier enumerates those rectangular fibers. oldEdgeEquiv and newEdgeEquiv identify the original and split edge carriers with the existing counted RS and SR numbering. Endpoint equations package these as oldRelabel and newRelabel.")),

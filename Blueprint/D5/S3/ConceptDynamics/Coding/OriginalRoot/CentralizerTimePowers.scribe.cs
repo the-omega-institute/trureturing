@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.OriginalRoot;
 
 internal sealed class CentralizerTimePowersDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/OriginalRoot/CentralizerTimePowers", "A triangle cocycle measures every signed power of the actual time unit."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A triangle cocycle measures every signed power of the actual time unit.",
         H("Signed time powers of a triangle cocycle"),
         Blocks(
             Describe.Lean(DescribeId.Create("centralizer-time-powers-translated-value"),

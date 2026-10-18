@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.BeamColimits;
 
 internal sealed class PositiveWordBeamTransportDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordBeamTransport", "Dependent positive words transport actual beams and integer endpoint rows functorially."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Dependent positive words transport actual beams and integer endpoint rows functorially.",
         H("Dependent positive words transport actual beam coordinates"),
         Blocks(
             Paragraph(Text("Word F H is the existing endpoint-indexed finite syntax: a graph relabel, a positive counted RS/SR letter bracketed by old/next relabels, or composition. F and H are full finite essential presentations with their own edge topologies. There is no arbitrary-history-map, inverse or time leaf. In a composition first then second, evaluation and transport apply first before second.")),

@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualWordRelabelAssemblyDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordRelabelAssembly", "Assemble actual dictionary weights over typed words."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Assemble actual dictionary weights over typed words.",
         H("Assemble actual dictionary weights over typed words"),
         Blocks(
             Paragraph(Text("path_append_weight proves additivity for dependent finite kernel-ladder paths, including the equality transports in append. dictionary_residue proceeds through the relabel, positive and composition constructors of the original endpoint-typed Word. It uses the actual relabel comparison, both positive-leaf chart corrections and additive concatenation.")),

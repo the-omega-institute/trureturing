@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.BeamColimits;
 
 internal sealed class SignedBeamCutTranslationDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/BeamColimits/SignedBeamCutTranslation", "Signed time transports actual beam cuts by subtraction on the existing row colimit."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Signed time transports actual beam cuts by subtraction on the existing row colimit.",
         H("Signed time subtracts from actual beam cuts"),
         Blocks(
             Paragraph(Text("For an arbitrary Int-module M and any endomorphism T, cutShift T s is a map on the EXISTING stationary direct limit. It sends intStage T N z to intStage T (N-s) z for all integers N and s. No injectivity or invertibility of T on M is required. cutShift T (-s) is its inverse on the colimit, so cutEquiv is derived rather than assumed.")),

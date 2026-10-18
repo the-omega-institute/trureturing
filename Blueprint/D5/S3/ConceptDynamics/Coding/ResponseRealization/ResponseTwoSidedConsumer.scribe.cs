@@ -6,8 +6,8 @@ internal sealed class ResponseTwoSidedConsumerDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponseTwoSidedConsumer.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponseTwoSidedConsumer", "The actual response output is reduced to two concrete finite split towers and a terminal finite graph relabeling."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The actual response output is reduced to two concrete finite split towers and a terminal finite graph relabeling.",
         H("The concrete two-sided response terminal"),
         Blocks(
             Paragraph(Text("G has finite vertex and edge types, decidable equality on both, a discrete edge topology and Essential G. pair and S carry the four arbitrary natural radii and the exact original two-table conjugacy. original bundles precisely G and hG as a Presentation. response bundles the existing countedGraph and obtains its essentiality from numbered_response_reduction; the original matrix and all counted edge numbers are unchanged.")),

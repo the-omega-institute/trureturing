@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class PresentationTimeCochainDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/PresentationTimeCochain", "The same time/id edge in every finite presentation basis measures actual primitive-orbit count."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The same time/id edge in every finite presentation basis measures actual primitive-orbit count.",
         H("The same time/id edge in every finite presentation basis measures actual primitive-orbit count"),
         Blocks(
             Paragraph(Text("In the outOld basis, vertex_matrix identifies graph time with the literal nonnegative counted matrix A. dyadicGyration_nonnegative applied to A and the identity, followed by RankedTimeRecoding.relative_time and orbitChart, gives the actual primitive-orbit cardinality. closed_square is then applied to r=time and s=id; both composites equal time even if it is singular. The common K is retained and canceled. rows_id identifies the new backward matrix as the identity. This proves the same time calibration in c without assigning zero to an open chart edge.")),

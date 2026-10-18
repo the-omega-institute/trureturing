@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class ActualRankedPermutationRelabelDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRankedPermutationRelabel", "Ranked permutation factors as actual graph relabelings."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Ranked permutation factors as actual graph relabelings.",
         H("Ranked permutation factors as actual graph relabelings"),
         Blocks(
             Paragraph(Text("Construct the permutation factor P from e : Fin n ≃ Fin m and take arbitrary nonnegative q : CountMat m n. The distinguished P half-edge has number zero and is unique. rankedForward joins the old Q half-edge to the P edge at the old target; rankedInverse recovers the preceding P half-edge. The inverse equations use the existing ranked split/join operations, rather than just cardinalities. Their endpoint laws produce rankedRelabel, and ranked_coordinate identifies its action with elementaryHomeomorph on every integer coordinate.")),

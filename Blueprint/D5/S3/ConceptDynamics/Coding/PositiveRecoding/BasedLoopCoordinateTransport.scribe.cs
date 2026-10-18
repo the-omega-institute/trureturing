@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class BasedLoopCoordinateTransportDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/BasedLoopCoordinateTransport", "Closed RS loops change coefficient basis through two triangles before endpoint cancellation."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Closed RS loops change coefficient basis through two triangles before endpoint cancellation.",
         H("Closed RS loops change coefficient basis through two triangles before endpoint cancellation"),
         Blocks(
             Paragraph(Text("The reusable operation is transport of a closed loop through a complete two-triangle square. Subtracting equal endpoint terms is justified only after the same actual time map occurs at both ends. Rectangular change matrices and zero-dimensional bases remain admissible.")),

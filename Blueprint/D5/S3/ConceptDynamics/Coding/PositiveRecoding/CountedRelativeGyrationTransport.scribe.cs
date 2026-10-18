@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PositiveRecod
 
 internal sealed class CountedRelativeGyrationTransportDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/PositiveRecoding/CountedRelativeGyrationTransport", "Transport forward orbit phases under timed history equivalences."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Transport forward orbit phases under timed history equivalences.",
         H("Transport forward orbit phases under timed history equivalences"),
         Blocks(
             Paragraph(Text("TimedEquiv A B consists of an equivalence of actual legal two-sided paths and its law for every signed integer translation. It induces the retained primitive-path and orbit-quotient equivalences. basisEquiv expresses the orbit bijection in the existing least-word PathBasis. offsetFin is the canonical target forward offset, offset its ZMod d value, and phaseInteger its nonnegative Fin representative in the integers.")),

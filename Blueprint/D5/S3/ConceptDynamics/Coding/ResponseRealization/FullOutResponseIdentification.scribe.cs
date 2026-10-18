@@ -6,8 +6,8 @@ internal sealed class FullOutResponseIdentificationDocument : IScribeDocumentDef
 {
     private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResponseRealization/FullOutResponseIdentification.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header("D5/S3/ConceptDynamics/Coding/ResponseRealization/FullOutResponseIdentification", "Repeated full outgoing splits identify with the original response graph and its unchanged finite edge numbering on every history."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Repeated full outgoing splits identify with the original response graph and its unchanged finite edge numbering on every history.",
         H("Identify the full outgoing input with the numbered response"),
         Blocks(
             Paragraph(Text("F is any TwoSidedFiniteInduction.Presentation, with its actual graph, finite carriers, essentiality and discrete edge topology. pair is a TablePair F.graph F.graph a b c d for arbitrary natural a,b,c,d. Write q=a+b+1. RepeatedFullOutSplit.stage F q is the actual q-fold full outgoing split with partition id. Its previously constructed identification has vertices the legal q-words and edges the legal (q+1)-words. No graph equivalence or desired history equality is an input.")),
