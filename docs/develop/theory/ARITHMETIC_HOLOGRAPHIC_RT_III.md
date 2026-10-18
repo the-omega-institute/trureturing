@@ -3636,3 +3636,171 @@ There is no omitted zero denominator: \(q\ne0\), \(P\succ0\), and independence p
 Both partner expressions in (28) depend only on supported principal data and their unique normer. Every hypothetical subquarter minimum must make both strictly less than \(1/16\). The inequalities retain necessary outside feasibility and full-dual costs, but are not sufficient for a physical extension or full dual completion. They do not replace §98's coupled curvature costs by independently minimized principal costs.
 
 No argument here proves that one of these expressions is always at least \(1/16\). The occupancy \((2,1,1,0)\), all seven rank-\((7,6)\) patterns listed in §98, other lower-rank cases and the unrestricted global quarter problem remain open. The global interval stays \([\sqrt3-\tfrac32,\tfrac14]\). The results concern local minima on the full calibrated domain; global calibration may enlarge ranks and does not transfer local minimality from arbitrary leaking channels.
+
+## 100. Separate dual-face costs for missing partners
+
+The positive dual metric in §99 averages two PSD faces. Keeping their separate Schur costs gives a stronger attained algebraic bound for each actual missing partner. Its comparison with \(1/16\), all seven remaining support patterns and the global quarter optimum remain open.
+
+### 100.1. Original hypotheses and supported data
+
+Retain the original four two-coordinate fibres, local channels
+\(\mathbb C^8\to\mathbb C^4\), fixed correlated encoding, arbitrary reference and
+unhalved diamond error. Let \((G,H)\) be a local minimum on the full calibrated
+domain \(\{G\succeq0:G_{ff}=I_2\}^2\), of ranks \((7,6)\), with
+\(0<t=F(G,H)<1/4\). Let \(a\) span \(\ker G\), with support \(S\) of occupancy
+\((2,1,1,0)\), labeled \(\{1,2,3,4\}\), where \(F=\{1,2\}\) is a whole original
+fibre and 3,4 lie in two other original fibres.
+
+Choose the common pair furnished by §99 and extend it by zero outside \(S\). Its supported density is positive definite, \(L_S=T_S-G_S\odot H_S\)
+has inertia \((2,2)\), and the unique principal witness and its density complement
+have ranks two and two. Fix this same pair and any full optimal dual
+\(Z\succeq0,\ Z-2L\succeq0,\ Z_{ff}\preceq tI_2\), with \(Z\rho=2LW\).
+Write \(p_j=(\rho_S)_{jj}>0\), and let \(\alpha>0\) be its common-stress scale, so that \(W_{ij}=-\alpha a_i\overline{a_j}/(2\overline{H_{ij}})\) across original fibres. Put \(N=Z-L\) and
+\[
+K=N_S/t\succ0,\qquad D=L_S/t,\qquad J=K^{-1}D.
+\]
+Then
+\[
+DK^{-1}D=K,\quad J^2=I,\quad
+K_{FF}=I_2,\quad K_{33}=K_{44}=1,\quad D_{ff}=0. \tag{1}
+\]
+For the actual original missing partner \(o\) of singleton \(j\), write
+\(\ell=L_{oS}\). Full complementarity gives
+\[
+N_{oS}=\ell J,\quad N_{oo}\le t,\quad \ell e_j=\ell Je_j=0. \tag{2}
+\]
+The second zero is equivalent to \((\ell W_S)_j=0\), since
+\(Je_j=2W_Se_j/p_j-e_j\), with \(p_j>0\).
+
+For \(j=3\), express the singleton \(H\)-records in the whole-fibre orthonormal
+basis as \(\psi=(x,y)^T,\phi=(z,w)^T\), and put \(\Delta=xw-yz\ne0\).
+As in §99, the actual partner row and full \(G\)-kernel imply
+\[
+r=(-a_1/y,\ a_2/x,\ a_4/\Delta)^T,\quad
+b=\tfrac12\sum_i r_i,\quad
+\widetilde r=(r_1,r_2,0,r_3)^T,\quad
+\ell\widetilde r=b. \tag{3}
+\]
+Original nonzero cross entries and singleton independence justify every division.
+All of \(K,D,r,b\) are fixed principal data. No replacement outside row is
+presumed physically realizable.
+
+### 100.2. The two dual costs
+
+Define the Hermitian involution and its projections
+\[
+Q=K^{-1/2}DK^{-1/2},\quad Q^2=I,\quad P_\pm=(I\pm Q)/2. \tag{4}
+\]
+Both eigenspaces have dimension two. Write \(\eta=\ell K^{-1/2}\).
+The full PSD matrices \(Z_\pm=N\pm L\) have
+\[
+(Z_\pm)_S=tK^{1/2}(I\pm Q)K^{1/2},\qquad
+(Z_\pm)_{oS}=\ell(J\pm I)=\eta(Q\pm I)K^{1/2}. \tag{5}
+\]
+After congruence by \(K^{-1/2}\) on the supported coordinates, their principal
+blocks are \(2tP_\pm\), with rows \(\pm2\eta P_\pm\). The range conditions hold
+and their exact generalized Schur costs are
+\[
+c_\pm=(2/t)\|\eta P_\pm\|^2. \tag{6}
+\]
+Both outside diagonals are \(N_{oo}\), since \(L_{oo}=0\). Therefore
+\[
+\|\eta P_+\|^2\le t^2/2,\qquad \|\eta P_-\|^2\le t^2/2. \tag{7}
+\]
+Their average recovers §99's inverse-metric bound. Keeping both can strengthen it.
+
+### 100.3. Exact two-face constrained minimum
+
+Put \(e=e_j,\ d=K^{1/2}e,\ h=K^{1/2}\widetilde r\).
+Here \(d^*d=1\) and \(d^*Qd=D_{jj}=0\). Thus
+\[
+v_\pm=\sqrt2P_\pm d \tag{8}
+\]
+are unit vectors in orthogonal eigenspaces. The two zeros in (2) say
+\(\eta d=\eta Qd=0\), equivalently \(\eta v_+=\eta v_-=0\). Define
+\[
+h_\pm=(P_\pm-v_\pm v_\pm^*)h,\qquad \gamma_\pm=\|h_\pm\|^2\ge0. \tag{9}
+\]
+Each residual lies in a one-dimensional space. Every feasible row satisfies
+\[
+|b|=|\eta h|
+ \le\|\eta P_+\|\sqrt{\gamma_+}+\|\eta P_-\|\sqrt{\gamma_-}. \tag{10}
+\]
+**Theorem 100.1.** If \(\gamma_++\gamma_->0\), the exact algebraic minimum is
+\[
+\min_{\substack{\eta d=\eta Qd=0\\\eta h=b}}
+ 2\max\{\|\eta P_+\|^2,\|\eta P_-\|^2\}
+=\frac{2|b|^2}{(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2}. \tag{11}
+\]
+**Proof.** Equation (10) gives the lower bound. Set \(s=\sqrt{\gamma_+}+\sqrt{\gamma_-}>0\). A minimizing original row is
+\[
+\ell_0=\frac b s
+ \sum_{\sigma:\gamma_\sigma>0}
+ \frac{h_\sigma^*K^{1/2}}{\sqrt{\gamma_\sigma}}. \tag{12}
+\]
+It has both zeros, \(\ell_0\widetilde r=b\), and every nonzero spectral component
+of \(\ell_0K^{-1/2}\) has norm \(|b|/s\). This proves equality in (11).
+If one residual vanishes, omit that term. If both vanish, the constraints are
+infeasible for \(b\ne0\), and have minimum zero for \(b=0\).
+For \(b=0\) in every case the zero row attains the zero value.
+
+Combining (7) and (11), the physical principal data obey
+\[
+\boxed{t^2\ge \frac{2|b|^2}{(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2}.} \tag{13}
+\]
+The same result holds for singleton 4 by original-fibre relabeling. The minimizer
+certifies only this algebraic relaxation, not a physical outside extension. \(\square\)
+
+### 100.4. Explicit coefficients and the earlier denominator
+
+**Proposition 100.2.** The residuals have the scalar formulas
+\[
+\gamma_\pm=\frac12\left[
+\widetilde r^*(K\pm D)\widetilde r
+-\left|e^*(K\pm D)\widetilde r\right|^2\right]. \tag{14}
+\]
+Their sum is §99's strictly positive denominator, and the bound (13) is at least the bound in §99, with the equality and endpoint cases below.
+
+**Proof.** Expanding (9) gives (14); nonnegativity follows from its projection expression before taking scalar square roots. In particular,
+\[
+\gamma_++\gamma_-=
+\widetilde r^*K\widetilde r-|e^*K\widetilde r|^2-|e^*D\widetilde r|^2. \tag{15}
+\]
+This sum equals §99's \(\gamma\). To verify the identification, put
+\(I=S\setminus\{j\}\), \(P=K_{II}-K_{Ij}K_{jI}\succ0\), and \(v=(Je)_I\).
+The same common cross formula gives
+\[
+q_i=\frac{a_i}{\overline{H_{ij}}}
+=-\frac{p_j}{\alpha\overline{a_j}}(Je)_i\quad(i\ne j). \tag{16}
+\]
+Thus \(q\) is a nonzero scalar multiple of \(v\). Moreover
+\[
+v^*Pv=1,\qquad r^*Pv=\widetilde r^*De. \tag{17}
+\]
+For the first identity, use \(e^*KJe=e^*De=0\) to eliminate the \(j\)-coordinate
+and then \((Je)^*K(Je)=e^*DK^{-1}De=K_{jj}=1\).
+For the second, its \(I\)-coordinates read
+\(Pv=(KJe)_I=D_{Ij}\). Therefore
+\[
+r^*Pr-\frac{|r^*Pq|^2}{q^*Pq}
+=\widetilde r^*K\widetilde r-|e^*K\widetilde r|^2-|e^*D\widetilde r|^2. \tag{18}
+\]
+The physical independence of \(r,q\), proved in §99, makes the sum strictly
+positive. This justifies the denominator of (13) in the original problem.
+
+Finally,
+\[
+(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2\le2(\gamma_++\gamma_-), \tag{19}
+\]
+so (13) is never smaller than §99's \(|b|^2/\gamma\).
+For \(b\ne0\), equality holds exactly when \(\gamma_+=\gamma_-\); if \(b=0\),
+both values vanish. The strengthening factor is between one and two, attaining
+two when exactly one residual vanishes. \(\square\)
+
+No universal comparison with \(1/16\), exclusion of any support or rank class,
+or global quarter bound is asserted. This result uses the two full dual faces
+and the same original partner constraints. It makes no rank-preservation,
+real-gauge, independent physical-completion or second-derivative assumption.
+
+
+The unrestricted global interval remains \([\sqrt3-\tfrac32,\tfrac14]\). These are full-calibrated-domain local-minimum constraints; global calibration may enlarge ranks and does not transfer local minimality from leaking channels.
