@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.TwoQubitBinegativityUpperBoundRefutation
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 /-! The fixed-negativity boundary for the spectral binegativity of two-qubit states. -/
 
@@ -332,7 +333,9 @@ private theorem negPart_conjugate
   have horth : (U * A⁺ * Uᴴ) * (U * A⁻ * Uᴴ) = 0 := by
     calc
       _ = U * A⁺ * (Uᴴ * U) * A⁻ * Uᴴ := by simp only [Matrix.mul_assoc]
-      _ = U * (A⁺ * A⁻) * Uᴴ := by rw [hU]; simp only [Matrix.mul_one, Matrix.mul_assoc]
+      _ = U * (A⁺ * A⁻) * Uᴴ := by
+        rw [hU]
+        simp only [Matrix.mul_one, Matrix.mul_assoc]
       _ = 0 := by rw [CFC.posPart_mul_negPart]; simp
   exact (CFC.posPart_negPart_unique hsplit horth
     ((Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg A)).mul_mul_conjTranspose_same U).nonneg
@@ -385,7 +388,8 @@ private theorem local_invariance
   have hdouble : (partialTransposeB (L * (partialTransposeB σ)⁻ * Lᴴ))⁻ =
       K * (partialTransposeB (partialTransposeB σ)⁻)⁻ * Kᴴ := by
     rw [hptneg, negPart_conjugate _ K
-      (partial_transpose_hermitian _ (Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg _)).isHermitian) hK]
+      (partial_transpose_hermitian _
+        (Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg _)).isHermitian) hK]
   change ((partialTransposeB (K * σ * Kᴴ))⁻).trace.re = _ ∧
     binegativity (K * σ * Kᴴ) = _
   constructor
@@ -412,7 +416,7 @@ private theorem negative_component
   let v : Fin 2 × Fin 2 → ℂ := hA.eigenvectorBasis i
   have hv : star v ⬝ᵥ v = 1 := by
     rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
-    simp [v]
+    simp
   have hparts (j : Fin 2 × Fin 2) : (hA.eigenvalues j)⁻ =
       if j = i then -hA.eigenvalues i else 0 := by
     by_cases hji : j = i
@@ -426,7 +430,7 @@ private theorem negative_component
     rw [CFC.negPart_def, cfcₙ_eq_cfc, hA.cfc_eq]
     ext a b
     simp [Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply, Matrix.mul_apply,
-      Matrix.diagonal, Function.comp_def, hparts, apply_ite, ite_mul, mul_ite,
+      Matrix.diagonal, Function.comp_def, hparts, apply_ite, ite_mul,
       rankOneDensity, Matrix.vecMulVec_apply, v, mul_assoc]
     ring
   refine ⟨-hA.eigenvalues i, v, by linarith, hv, ?_, ?_, ?_⟩
@@ -446,7 +450,113 @@ private theorem schmidt_reduction
       partialTransposeB τ *ᵥ vec4 α 0 0 β = (-l : ℂ) • vec4 α 0 0 β ∧
       (partialTransposeB τ)⁻ = (l : ℂ) • rankOneDensity (vec4 α 0 0 β) ∧
       ((partialTransposeB σ)⁻).trace.re = l ∧ binegativity σ = binegativity τ := by
-  sorry
+  obtain ⟨l, v, hl, hv, heig, hneg, htrace⟩ := negative_component σ hσ hν
+  let A : Matrix (Fin 2) (Fin 2) ℂ := fun i j => v (i, j)
+  let H : (Aᴴ * A).IsHermitian := by
+    simpa using Matrix.isHermitian_mul_conjTranspose_self A.conjTranspose
+  obtain ⟨U, W, hsvd⟩ :=
+    D5.S3.Quantum.Foundation.FiniteTraceDistance.exists_svd_sqrt_eigenvalues A
+  let α := Real.sqrt (H.eigenvalues 0)
+  let β := Real.sqrt (H.eigenvalues 1)
+  let ψ := vec4 (α : ℂ) 0 0 β
+  let K : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+    Matrix.kronecker (U : Matrix (Fin 2) (Fin 2) ℂ) (W : Matrix (Fin 2) (Fin 2) ℂ)
+  let L : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+    Matrix.kronecker (U : Matrix (Fin 2) (Fin 2) ℂ)
+      ((W : Matrix (Fin 2) (Fin 2) ℂ).map star)
+  have hKmem : K ∈ Matrix.unitaryGroup (Fin 2 × Fin 2) ℂ :=
+    Matrix.kronecker_mem_unitary U.property W.property
+  have hLmem : L ∈ Matrix.unitaryGroup (Fin 2 × Fin 2) ℂ :=
+    Matrix.kronecker_mem_unitary U.property
+      (Matrix.map_star_mem_unitaryGroup_iff.mpr W.property)
+  have hKright : K * Kᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp hKmem
+  have hLleft : Lᴴ * L = 1 := Matrix.mem_unitaryGroup_iff'.mp hLmem
+  have hLright : L * Lᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp hLmem
+  have hdiag : (fun i => (Real.sqrt (H.eigenvalues i) : ℂ)) = ![(α : ℂ), (β : ℂ)] := by
+    funext i
+    fin_cases i <;> rfl
+  change A = (U : Matrix (Fin 2) (Fin 2) ℂ) *
+    diagonal (fun i => (Real.sqrt (H.eigenvalues i) : ℂ)) *
+    (W : Matrix (Fin 2) (Fin 2) ℂ)ᴴ at hsvd
+  rw [hdiag] at hsvd
+  have hvsch : v = L *ᵥ ψ := by
+    funext ⟨i, j⟩
+    have ht := congrFun (congrFun hsvd i) j
+    simp [Matrix.mul_apply, Matrix.diagonal, Fin.sum_univ_two,
+      Matrix.conjTranspose_apply] at ht
+    change v (i, j) = _ at ht
+    simp [L, ψ, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+      Fin.sum_univ_two, vec4]
+    linear_combination ht
+  have hLv : Lᴴ *ᵥ v = ψ := by
+    rw [hvsch, Matrix.mulVec_mulVec, hLleft, Matrix.one_mulVec]
+  have hψnorm : star ψ ⬝ᵥ ψ = 1 := by
+    calc
+      _ = star (L *ᵥ ψ) ⬝ᵥ (L *ᵥ ψ) := by
+        rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
+          hLleft, Matrix.one_mulVec]
+      _ = 1 := by rw [← hvsch]; exact hv
+  have hn : α ^ 2 + β ^ 2 = 1 := by
+    have ht := congrArg Complex.re hψnorm
+    simp [ψ, vec4, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two] at ht
+    nlinarith only [ht]
+  let τ := Kᴴ * σ * K
+  have hτ : IsDensity τ := by
+    constructor
+    · simpa only [τ, Matrix.conjTranspose_conjTranspose] using
+        hσ.1.mul_mul_conjTranspose_same Kᴴ
+    · simpa only [τ, Matrix.conjTranspose_conjTranspose, hσ.2] using
+        trace_conjugate σ Kᴴ (by simpa using hKright)
+  have hbar : ((W : Matrix (Fin 2) (Fin 2) ℂ)ᴴ).map star =
+      (((W : Matrix (Fin 2) (Fin 2) ℂ).map star)ᴴ) := by
+    ext i j
+    simp [Matrix.conjTranspose_apply]
+  have hpt : partialTransposeB τ = Lᴴ * partialTransposeB σ * L := by
+    have ht := partial_transpose_local σ
+      ((U : Matrix (Fin 2) (Fin 2) ℂ)ᴴ) ((W : Matrix (Fin 2) (Fin 2) ℂ)ᴴ)
+    simpa only [τ, K, L, Matrix.kronecker, Matrix.conjTranspose_kronecker,
+      Matrix.conjTranspose_conjTranspose, hbar] using ht
+  have hψeig : partialTransposeB τ *ᵥ ψ = (-l : ℂ) • ψ := by
+    rw [hpt, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, ← hvsch,
+      heig, Matrix.mulVec_smul, hLv]
+  have hrow : star v ᵥ* L = star ψ := by
+    have ht := Matrix.vecMul_conjTranspose Lᴴ (star v)
+    simpa only [Matrix.conjTranspose_conjTranspose, star_star, hLv] using ht
+  have houter : Lᴴ * rankOneDensity v * L = rankOneDensity ψ := by
+    rw [rankOneDensity, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, hLv, hrow,
+      rankOneDensity]
+  have hτneg : (partialTransposeB τ)⁻ = (l : ℂ) • rankOneDensity ψ := by
+    have ht := negPart_conjugate (partialTransposeB σ) Lᴴ
+      (partial_transpose_hermitian σ hσ.1.isHermitian) (by simpa using hLright)
+    simp only [Matrix.conjTranspose_conjTranspose] at ht
+    rw [hpt, ht, hneg, Matrix.mul_smul, Matrix.smul_mul, houter]
+  have hbineg : binegativity σ = binegativity τ := by
+    have ht := (local_invariance σ hσ.1.isHermitian (star U) (star W)).2
+    simpa only [τ, K, Unitary.coe_star, Matrix.star_eq_conjTranspose, Matrix.kronecker,
+      Matrix.conjTranspose_kronecker, Matrix.conjTranspose_conjTranspose] using ht.symm
+  have hα : 0 ≤ α := Real.sqrt_nonneg _
+  have hβ : 0 ≤ β := Real.sqrt_nonneg _
+  have hαpos : 0 < α := by
+    by_contra h
+    have hz : α = 0 := le_antisymm (le_of_not_gt h) hα
+    have hb : 0 < β := by nlinarith only [hn, hβ, hz]
+    have ht := congrArg Complex.re (congrFun hψeig (1, 1))
+    simp [ψ, vec4, partialTransposeB.eq_1, Matrix.mulVec, dotProduct,
+      Fintype.sum_prod_type, Fin.sum_univ_two, hz, Complex.mul_re] at ht
+    have hd : 0 ≤ (τ (1, 1) (1, 1)).re :=
+      (Complex.nonneg_iff.mp hτ.1.diag_nonneg).1
+    nlinarith [mul_pos (by linarith : 0 < (τ (1, 1) (1, 1)).re + l) hb]
+  have hβpos : 0 < β := by
+    by_contra h
+    have hz : β = 0 := le_antisymm (le_of_not_gt h) hβ
+    have ha : 0 < α := by nlinarith only [hn, hα, hz]
+    have ht := congrArg Complex.re (congrFun hψeig (0, 0))
+    simp [ψ, vec4, partialTransposeB.eq_1, Matrix.mulVec, dotProduct,
+      Fintype.sum_prod_type, Fin.sum_univ_two, hz, Complex.mul_re] at ht
+    have hd : 0 ≤ (τ (0, 0) (0, 0)).re :=
+      (Complex.nonneg_iff.mp hτ.1.diag_nonneg).1
+    nlinarith [mul_pos (by linarith : 0 < (τ (0, 0) (0, 0)).re + l) ha]
+  exact ⟨τ, l, α, β, hτ, hl, hαpos, hβpos, hn, hψeig, hτneg, htrace, hbineg⟩
 
 private theorem positive_case
     (σ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (hσ : IsDensity σ)
