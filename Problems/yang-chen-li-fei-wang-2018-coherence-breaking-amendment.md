@@ -31,7 +31,7 @@ Coherence-breaking channels destroy all coherence; amendment asks whether interl
 Issue #18385 records the literature check before any Lean:
 - arXiv v1, the only version, states the d-dimensional case as a conjecture.
 - MiS Preprint 7/2019 asserts it without proof.
-- The two works citing the paper do not prove it; the full text of one of them was not reachable.
+- Semantic Scholar lists two citing works. arXiv:1909.00926, read in full, cites the paper only in its references. The other, Xie–Chu–Cui 2026 (Phys. Lett. A, DOI 10.1016/j.physleta.2026.131573, on imaginarity-breaking channels), has no arXiv version or abstract on record and was not reachable, so whether it addresses the conjecture is `ASSUMED-UNVERIFIED`.
 - The repository had no record of the paper.
 
 `not-found-in-searched-scope`.
