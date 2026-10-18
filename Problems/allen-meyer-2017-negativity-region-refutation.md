@@ -102,7 +102,7 @@ Every declaration is bind-only. The bind-only form is admitted under the open-pr
   - The refutation is at D = 3. Whether an analogous witness refutes the conjecture for every D > 3 is not determined.
   - The weaker squared-negativity monogamy inequality N²_A|BC ≥ N²_A|B + N²_A|C is not addressed.
 
-**Effect on the paper.** The family (13) gives a subset of the achievable region for D = 3, not the whole region. Its boundary polynomial bounds the family, not all three-qutrit states.
+**Effect on the paper.** For D = 3 the family (13) gives a subset of the achievable region, not the whole region. So the source's argument no longer justifies its family-derived boundary as a characterization of all three-qutrit triples. The module does not identify a particular polynomial inequality that the witness violates.
 
 ## ASSUMED-UNVERIFIED
 
