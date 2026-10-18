@@ -330,21 +330,21 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e)
+  realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
     {A : Matrix ι ι ℂ} (hA : A.PosSemidef) (htr : A.trace = 1),
-    (∀ i, R.readout () () (hA.isHermitian.eigenvalues i)) ∧
+    (∀ i, R.readout () () 0 (hA.isHermitian.eigenvalues i)) ∧
       ∑ i, hA.isHermitian.eigenvalues i = 1
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
@@ -355,8 +355,10 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, -1, ?_⟩
-  norm_num [actual, realize]
+  refine ⟨(), 0, 1, ?_⟩
+  intro he
+  have ht := congrFun he 0
+  norm_num [actual, realize] at ht
 
 def source_registration : Registration arena.{u} (type_of% @spectral_prob.{u}) where
   actual := actual
@@ -383,7 +385,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -393,10 +395,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

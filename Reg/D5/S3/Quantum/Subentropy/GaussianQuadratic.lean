@@ -12,16 +12,16 @@ open LeanInformationAudit
 namespace Reg.D5.S3.Quantum.Subentropy.GaussianQuadratic
 universe u
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => Prop)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ q => 0 ≤ q) (fun e => nomatch e)
+  realize signature (fun _ _ q r => q ≤ r) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
     {A : Matrix ι ι ℂ} (hA : A.PosSemidef) (z : EuclideanSpace ℂ ι),
-    R.readout () () (gaussianQuadratic A z)
+    R.readout () () 0 (gaussianQuadratic A z)
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hb := @h (ULift.{u} Unit) inferInstance inferInstance 0
@@ -29,8 +29,10 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact hb
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, -1, ?_⟩
-  norm_num [actual, realize]
+  refine ⟨(), 0, 1, ?_⟩
+  intro he
+  have ht := congrFun he 0
+  norm_num [actual, realize] at ht
 def family : Registration arena.{u} (type_of% @quadratic_nonnegative.{u}) where
   actual := actual
   bridge := Iff.rfl
@@ -50,7 +52,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ q => 0 ≤ q) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ q r => q ≤ r) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -60,10 +62,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -72,19 +74,19 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 namespace Coordinates
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ q => q) (fun e => nomatch e)
+  realize signature (fun _ _ q r => q = r) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ q => q + 1) (fun e => nomatch e)
+  realize signature (fun _ _ q r => q + 1 = r) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι],
     (MeasureTheory.Measure.pi (fun _ : ι × Fin 2 => ProbabilityTheory.gaussianReal 0 1)).map
       complexGaussianCoordinates = ProbabilityTheory.stdGaussian (EuclideanSpace ℂ ι) ∧
     ∀ (z : (ι × Fin 2) → ℝ) (i : ι),
-      R.readout () () (Complex.normSq (complexGaussianCoordinates z i)) =
-        z (i, 0)^2 + z (i, 1)^2
+      R.readout () () (Complex.normSq (complexGaussianCoordinates z i))
+        (z (i, 0)^2 + z (i, 1)^2)
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have he := @h (ULift.{u} Unit) inferInstance inferInstance
@@ -93,7 +95,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  intro he
+  have ht := congrFun he 0
+  norm_num [actual, realize] at ht
 def family : Registration arena.{u} (type_of% @complex_coordinate_transport.{u}) where
   actual := actual
   bridge := Iff.rfl
@@ -113,7 +117,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ q => q) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ q r => q = r) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -123,10 +127,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "body"]
+      path := #["body", "body", "body", "arg", "body", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -135,18 +139,18 @@ end Coordinates
 
 namespace Spectral
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ q => q) (fun e => nomatch e)
+  realize signature (fun _ _ q r => q = r) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ q => q + 1) (fun e => nomatch e)
+  realize signature (fun _ _ q r => q + 1 = r) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
     {A : Matrix ι ι ℂ} (hA : A.IsHermitian),
     (∀ w : EuclideanSpace ℂ ι,
-      R.readout () () (gaussianQuadratic A (hA.eigenvectorBasis.repr.symm w)) =
-        (∑ i, hA.eigenvalues i * Complex.normSq (w i)) / 2) ∧
+      R.readout () () (gaussianQuadratic A (hA.eigenvectorBasis.repr.symm w))
+        ((∑ i, hA.eigenvalues i * Complex.normSq (w i)) / 2)) ∧
     (ProbabilityTheory.stdGaussian (EuclideanSpace ℂ ι)).map hA.eigenvectorBasis.repr.symm =
       ProbabilityTheory.stdGaussian (EuclideanSpace ℂ ι)
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
@@ -157,7 +161,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  intro he
+  have ht := congrFun he 0
+  norm_num [actual, realize] at ht
 def family : Registration arena.{u} (type_of% @spectral_transport.{u}) where
   actual := actual
   bridge := Iff.rfl
@@ -177,7 +183,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ q => q) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ q r => q = r) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -187,10 +193,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "body"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

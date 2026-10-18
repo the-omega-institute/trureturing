@@ -7,6 +7,7 @@
    digest: Rectangular square-root Gram realization of classical-quantum conditional subentropy. -/
 
 import D5.S3.Quantum.Subentropy.Basic
+import D5.S3.Quantum.Subentropy.DensityKernel
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 
@@ -24,6 +25,9 @@ open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
 open _root_.D5.S3.Quantum.Information.PartialTraceMutualInformation
 open _root_.D5.S3.Quantum.Information.OrthogonalRecordEntropy
 open _root_.D5.S3.Quantum.Subentropy.Basic
+open _root_.D5.S3.Quantum.Subentropy.DensityKernel
+open _root_.D5.S3.Quantum.Subentropy.KernelBounds
+open _root_.D5.S3.Quantum.Subentropy.UniformIntegrals
 
 variable {X B : Type*} [Fintype X] [DecidableEq X] [Fintype B] [DecidableEq B]
 
@@ -86,7 +90,7 @@ def conditionalSubentropy (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
   subentropy (recordState p hp hs ρ) - subentropy (mixtureState p hp hs ρ)
 
 /-- Conditional subentropy is the block-pinching gap of the rectangular Gram matrix. -/
-private theorem cq_conditional_eq_pinchingGap (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
+theorem cq_conditional_eq_pinchingGap (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
     (hs : ∑ x, p x = 1) (ρ : X → DensityState B) :
     conditionalSubentropy p hp hs ρ =
       matrixSubentropy (blockPinch ((cqRowSqrt p ρ).conjTranspose * cqRowSqrt p ρ)) -
@@ -106,12 +110,39 @@ private theorem cq_conditional_eq_pinchingGap (p : X → ℝ) (hp : ∀ x, 0 ≤
   rw [hpinch, matrixSubentropy_rectangular_gram, hmix]
   rfl
 
-private theorem pure_block_pinching (v : (X × B) → ℂ)
+private theorem classical_upper (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
+    (hs : ∑ x, p x = 1) (x : X) :
+    matrixSubentropy (Matrix.diagonal (fun x => (p x : ℂ))) ≤ 1 - p x := by
+  let D := Matrix.diagonal (fun x => (p x : ℂ))
+  have hD : D.PosSemidef := Matrix.PosSemidef.diagonal
+    (fun x => by simpa [Complex.le_def] using hp x)
+  have ht : D.trace = 1 := by
+    rw [Matrix.trace_diagonal, ← Complex.ofReal_sum, hs, Complex.ofReal_one]
+  have hi := integrable_subentropy_kernel hD ht
+  have hw := inverse_power 1 (by norm_num) 0
+  have hupper := MeasureTheory.integral_mono_ae hi (hw.1.const_mul (1 - p x))
+    (by
+      filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioi]
+        with t ht'
+      simpa [D, div_eq_mul_inv, add_comm] using
+        (classical_kernel_bounds p hp hs x t ht').2)
+  change matrixSubentropy D ≤ _
+  calc
+    matrixSubentropy D ≤
+        ∫ t in Set.Ioi (0 : ℝ), (1 - p x) * (1 / (t + 1)^(0 + 2)) := hupper
+    _ = 1 - p x := by
+      rw [MeasureTheory.integral_const_mul, hw.2]
+      norm_num
+
+theorem pure_block_pinching (v : (X × B) → ℂ)
     (hv : ∑ i, star (v i) * v i = 1) :
     matrixSubentropy (blockPinch (Matrix.vecMulVec v (star v))) -
       matrixSubentropy (Matrix.vecMulVec v (star v)) =
       matrixSubentropy (Matrix.diagonal
-        (fun x => ((∑ b, Complex.normSq (v (x,b)) : ℝ) : ℂ))) := by
+        (fun x => ((∑ b, Complex.normSq (v (x,b)) : ℝ) : ℂ))) ∧
+    ∀ x : X, matrixSubentropy (blockPinch (Matrix.vecMulVec v (star v))) -
+      matrixSubentropy (Matrix.vecMulVec v (star v)) ≤
+        1 - ∑ b, Complex.normSq (v (x,b)) := by
   classical
   let W : Matrix (X × B) X ℂ := fun i x => if i.1 = x then v i else 0
   have hleft : W.conjTranspose * W = Matrix.diagonal
@@ -130,7 +161,18 @@ private theorem pure_block_pinching (v : (X × B) → ℂ)
     · simp [W, Matrix.mul_apply, Matrix.conjTranspose_apply, blockPinch, hij,
         Matrix.vecMulVec, Pi.star_apply]
     · simp [W, Matrix.mul_apply, Matrix.conjTranspose_apply, blockPinch, hij, eq_comm]
-  rw [matrixSubentropy_pure v hv, sub_zero, ← hright,
-    ← matrixSubentropy_rectangular_gram W, hleft]
+  have heq : matrixSubentropy (blockPinch (Matrix.vecMulVec v (star v))) -
+      matrixSubentropy (Matrix.vecMulVec v (star v)) =
+      matrixSubentropy (Matrix.diagonal
+        (fun x => ((∑ b, Complex.normSq (v (x,b)) : ℝ) : ℂ))) := by
+    rw [matrixSubentropy_pure v hv, sub_zero, ← hright,
+      ← matrixSubentropy_rectangular_gram W, hleft]
+  refine ⟨heq, ?_⟩
+  intro x
+  rw [heq]
+  have hsC : ((∑ x, ∑ b, Complex.normSq (v (x,b)) : ℝ) : ℂ) = 1 := by
+    simpa [Fintype.sum_prod_type, Complex.normSq_eq_conj_mul_self] using hv
+  apply classical_upper _ (fun x => Finset.sum_nonneg fun b _ => Complex.normSq_nonneg _) _ x
+  exact_mod_cast hsC
 
 end D5.S3.Quantum.Subentropy.ClassicalQuantumGram

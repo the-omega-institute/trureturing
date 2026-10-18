@@ -81,7 +81,7 @@ private theorem point_guess_mem (p : X → ℝ) (rho : X → DensityState B) (x 
 
 /-- The success set is nonempty and bounded, and its supremum is a probability strictly above zero.
 The ensemble normalization itself supplies a positive-probability label. -/
-private theorem pGuess_bounds (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
+theorem pGuess_bounds (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
     (hs : ∑ x, p x = 1) (rho : X → DensityState B) :
     (successProbabilitySet p rho).Nonempty ∧ BddAbove (successProbabilitySet p rho) ∧
       0 < pGuess p rho ∧ pGuess p rho ≤ 1 ∧
