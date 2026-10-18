@@ -1918,3 +1918,174 @@ difference is inferred. The joint omitted-theta and reflected estimate,
 local all-order odd positivity, the signed Robin upper and RH remain
 unproved. These are paper-level source applications, without Lean
 verification or a literature-priority claim.
+
+## An all-order remainder allowance in an independent moment metric
+
+Retain the complete physical $L_0$ and the positive congruence
+$\mathcal P_A$ of (W27). A fixed complex neighborhood supplies a
+quantitative allowance for every real signed profile at once. The
+allowance uses an independently specified positive metric; it does not
+establish positivity in the original form. This is a source-specific
+paper derivation using classical Cauchy estimates, without a
+literature-priority or Lean-verification claim.
+
+Put $M_A=\mathcal P_A/A$ and $S(u,v)=\operatorname{sech}(u-v)$.
+There exist fixed $r,C,A_0>0$ such that $M_A$ is holomorphic on a
+neighborhood of $\{|u|,|v|\le r\}$ and
+
+$$
+\boxed{\sup_{|u|,|v|\le r}|M_A(u,v)-S(u,v)|\le C/A
+\qquad(A\ge A_0).}
+\tag{W46}
+$$
+
+Here $A$ is real; the offsets in this bound are complex. For real
+$u,v$, $M_A=D_A L_0 D_A$ with
+$D_A(u)=\sqrt{8\pi/A}\,e^{A+u}/\Phi(A+u)>0$.
+The constants and the neighborhood are independent of sampling order.
+
+To pay the complex estimate, first reuse the actual series in (W23)
+and its normal convergence in (W37). On a smaller closed strip its
+right tail is
+
+$$
+\Phi(z)=4\pi^2e^{9z/2-\pi e^{2z}}
+ \bigl(1+O(e^{-2\Re z})\bigr).
+$$
+
+The leading factor is nonzero. Evenness pays the left tail, and
+positivity on the real axis plus compactness pays the remaining middle.
+Thus $\Phi$, rather than $\xi$, is zero-free on a narrow global strip.
+It has an even holomorphic logarithm $g$, real on the real axis. Cauchy
+differentiation on a smaller strip gives
+
+$$
+\begin{aligned}
+g(z)&=\log(4\pi^2)+\tfrac92z-\pi e^{2z}+v(z),&
+ |v^{(j)}(z)|&\le C e^{-2\Re z}\quad(j\le2),\\
+\Re g''(z)&\le-c e^{2|\Re z|}\quad(|\Re z|\ge T),&
+ \Re g''(z)&\le C_b\quad\text{throughout the strip}.
+\end{aligned}
+\tag{W47}
+$$
+
+The expansion is on the right tail; the second line uses evenness on
+the left and a compact maximum in the middle. Choose $r$ with ample
+strip clearance, for example $4r<\delta<\pi/4$ if (W47) holds on a
+neighborhood of $|\Im z|\le\delta$.
+
+Keep $\epsilon=e^{-2A}>0$ real even for complex offsets. Write
+$a=A+u$, $b=A+v$, $x=(a+b)/2$ and $d=(a-b)/2$. In the direct
+forward integral put $t=\epsilon s$ and
+
+$$
+F_A=g(a+\epsilon s)+g(b+\epsilon s)-g(a)-g(b),\qquad
+F_0=-2\pi(e^{2u}+e^{2v})s.
+$$
+
+The right-tail expansion and its first derivative give, uniformly for
+$s\ge0$ and offsets in the closed polydisc,
+
+$$
+\Re F_A,\Re F_0\le-c_1s,\qquad
+|F_A-F_0|\le C_1\epsilon(s+s^2e^{2\epsilon s}).
+$$
+
+Use $e^{F_A}-e^{F_0}=(F_A-F_0)
+\int_0^1e^{(1-t)F_0+tF_A}\,dt$ and $2\epsilon<c_1/2$.
+The whole-half-line integrable error is $O(\epsilon)$, hence
+
+$$
+\mathcal P_A^{\rm direct}
+ =4\pi e^{u+v}\int_0^\infty(x+\epsilon s)e^{F_A}\,ds
+ =xS(u,v)+O(A\epsilon).
+$$
+
+The reflected exterior requires a separate bound on the same complex
+neighborhood. For $z=d^2+\epsilon s$ choose $y=\sqrt z$ with
+$\Re y\ge0$. Since $|d^2+t|\le|d|^2+t$ for real $t\ge0$,
+$|\Im y|\le|\Im d|$. All $x+qy$, $-1\le q\le1$, remain in
+the source strip. The symmetric expression
+$\mathscr H(x,z)=g(x+\sqrt z)+g(x-\sqrt z)$ has a removable
+square root at zero and satisfies
+
+$$
+\mathscr H_z(x,z)=\tfrac12\int_{-1}^1g''(x+q\sqrt z)\,dq.
+$$
+
+On $0\le q\le1$ use the strong right-tail upper bound in (W47);
+on $-1\le q\le0$ use its global upper bound. For all sufficiently
+large $A$, uniformly for the entire half-line,
+
+$$
+\Re\mathscr H_z(x,d^2+\epsilon s)\le-c_2e^{2\Re x},\qquad
+\Re[\mathscr H(x,d^2+\epsilon s)-\mathscr H(x,d^2)]\le-c_3s.
+$$
+
+In particular the region $\Re(x-\sqrt z)<0$ has not been omitted.
+Define the reflected continuation by
+
+$$
+K^{\rm ref}(a,b)=\frac\epsilon4\int_0^\infty
+ \Phi(x+\sqrt{d^2+\epsilon s})
+ \Phi(x-\sqrt{d^2+\epsilon s})\,ds.
+$$
+
+The symmetric integrand is holomorphic in the offsets, including the
+removable square root; the preceding bound gives locally uniform
+integrable domination after division by $\Phi(a)\Phi(b)$.
+For real offsets the substitution $y^2=d^2+\epsilon s$ identifies
+it with $K_0(a,-b)$. Iterated identity theorems identify it with the
+continuation already owned in (W38). No contour rotation is needed.
+Its contribution to $\mathcal P_A$ is
+
+$$
+\mathcal P_A^{\rm ref}=2\pi e^{u+v}\int_0^\infty
+ e^{\mathscr H(x,d^2+\epsilon s)-\mathscr H(x,d^2)}\,ds=O(1).
+$$
+
+Thus $\mathcal P_A=xS+O(1)+O(Ae^{-2A})$ on the same fixed complex
+polydisc. Since $x=A+(u+v)/2$, this proves (W46).
+
+For its signed-form consumer set $h=r/4$ and independently define
+
+$$
+G_h(u,v)=\frac1{1-uv/(4h^2)},\qquad
+m_n=\int_{-h}^h(u/h)^n\,d\mu(u),\qquad
+Q_G(\mu)=\sum_{n\ge0}4^{-n}m_n^2,
+$$
+
+where $\mu$ is any real finite signed Borel measure on $[-h,h]$. The geometric
+series is uniformly convergent on $[-h,h]^2$, so this is exactly
+$\iint G_h\,d\mu\,d\mu$. Classical bivariate Cauchy estimates
+applied to (W46) give Taylor coefficients
+$|e_{mn}|\le C/(Ar^{m+n})$ for $M_A-S$. Absolute convergence and
+Cauchy--Schwarz then give
+
+$$
+\boxed{\begin{aligned}
+|Q_{M_A-S}(\mu)|
+&\le\frac CA\left(\sum_{n\ge0}4^{-n}|m_n|\right)^2\\
+&\le\frac{4C}{3A}Q_G(\mu).
+\end{aligned}}
+\tag{W48}
+$$
+
+One $A_0$ works for every node count, density, sign count and coefficient
+size. This is a joint allowance for the complete actual kernel. If
+$m_0,\ldots,m_{k-1}=0$, it additionally gives
+$Q_G(\mu)\le\frac43\,4^{-k}\|\mu\|_{\rm TV}^2$;
+unlike a bound only by total variation, it detects moment cancellation.
+For all real finite samples, (W48) equivalently says
+
+$$
+S-\frac{4C}{3A}G_h\preceq M_A
+ \preceq S+\frac{4C}{3A}G_h.
+$$
+
+The two reference forms remain distinct. No comparison
+$G_h\preceq cS$ or all-order positive margin for $M_A$ is asserted.
+In particular (W29) cannot be bypassed by silently replacing $G_h$ by
+$S$. The local all-order premise of (W40), original signed Robin upper
+bound and RH remain unproved. The new consumer is the order-uniform
+error estimate (W48), not a new positivity criterion.
