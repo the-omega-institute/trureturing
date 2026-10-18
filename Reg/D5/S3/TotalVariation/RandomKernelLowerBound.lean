@@ -43,12 +43,12 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have ht := _root_.D5.S3.TotalVariation.RandomKernelLowerBound.stochastic_kernel_minimax
     (d := 2) (by decide)
   have heq := hh.unique ht
-  norm_num [rejected, realize, rho_values.1] at heq
+  norm_num [rejected, realize, rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton] at heq
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 2, 4, ?_⟩
-  norm_num [actual, realize, rho_values.1, rho_values.2.2.1]
+  norm_num [actual, realize, rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton]
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelLowerBound.stochastic_kernel_minimax)) where
   actual := actual
@@ -133,7 +133,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
       Finset.sup'_insert, Finset.sup'_singleton]
   have hh := h (d := 2) (by decide) Finset.univ (by decide) (by simpa using hm)
   norm_num [rejected, realize, kernelOutput, completion, matchingLaw, totalVariation,
-    Fintype.sum_option, Fintype.sum_prod_type, Fin.sum_univ_two, rho_values.1] at hh
+    Fintype.sum_option, Fintype.sum_prod_type, Fin.sum_univ_two, rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton] at hh
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i

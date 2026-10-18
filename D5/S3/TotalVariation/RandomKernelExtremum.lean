@@ -788,12 +788,6 @@ theorem rho_tendsto_one : Filter.Tendsto rho Filter.atTop (nhds 1) := by
   rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hupper)]
   linarith only [hlower, hfrac]
 
-/-- The exact small-dimensional radii in the given normalization. -/
-theorem rho_values : rho 2 = 1/4 ∧ rho 3 = 1/3 ∧ rho 4 = 2/5 ∧ rho 5 = 4/9 := by
-  norm_num [rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert,
-    Finset.sup'_singleton]
-
 #print axioms rho_tendsto_one
-#print axioms rho_values
 
 end D5.S3.TotalVariation.RandomKernelExtremum

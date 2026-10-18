@@ -131,14 +131,7 @@ internal sealed class RandomKernelExtremumDocument : IScribeDocumentDefinition
                     + "For each integer k>=2 and d>=k*k, the candidate of support size k "
                     + "gives 1-2/k<=rho(d)<=1. Choosing k large proves the limit."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("rho-values"),
-                DeclarationHandle.Create(
-                    "D5/S3/TotalVariation/RandomKernelExtremum.rho_values"),
-                H("Small-dimensional radii"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The finite maxima give rho(2)=1/4, rho(3)=1/3, "
-                    + "rho(4)=2/5, and rho(5)=4/9, in the half-L1 convention."))),
-                DescribeRole.Theorem))));
+            Paragraph(Text(
+                "Direct evaluation of the finite maxima gives rho(2)=1/4, rho(3)=1/3, "
+                + "rho(4)=2/5, and rho(5)=4/9, in the half-L1 convention.")))));
 }

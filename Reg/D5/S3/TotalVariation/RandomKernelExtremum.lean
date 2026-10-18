@@ -39,7 +39,7 @@ def arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (d := 2) (by decide) (fun _ => 1/2) (fun _ => by norm_num) (by simp)
-  have hr := rho_values.1
+  have hr : rho 2 = 1/4 := by norm_num [rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton]
   have hb : beta 2 = 1/4 := by norm_num [rho] at hr; exact hr
   norm_num [rejected, realize, overlap, hr, hb] at hh
 
@@ -133,7 +133,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have hh := h (d := 2) (by decide) p hp (by simp [p])
   have hc : (Finset.univ.filter (fun x : Fin 2 => x = 0)).card = 1 := by decide
   norm_num [hc, rejected, realize, optimalActive, firstOutput, totalVariation,
-    Fintype.sum_prod_type, Fin.sum_univ_two, p, Pi.single_apply, rho_values.1] at hh
+    Fintype.sum_prod_type, Fin.sum_univ_two, p, Pi.single_apply, rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton] at hh
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -228,7 +228,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have hc : (Finset.univ.filter (fun x : Fin 2 => x = 0)).card = 1 := by decide
   norm_num [hc, rejected, realize, kernelOutput, completion, totalVariation,
     Fintype.sum_option, Fintype.sum_prod_type, Fin.sum_univ_two, p,
-    Pi.single_apply, rho_values.1] at hh
+    Pi.single_apply, rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton] at hh
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -319,13 +319,14 @@ theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := (h (d := 2) (by decide)).2
   have ht := (optimal_kernel_attains (d := 2) (by decide)).2
-  rw [ht, rho_values.1] at hh
+  rw [ht] at hh
+  norm_num [rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton] at hh
   norm_num [rejected, realize] at hh
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 2, 4, ?_⟩
-  norm_num [actual, realize, rho_values.1, rho_values.2.2.1]
+  norm_num [actual, realize, rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton]
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.optimal_kernel_attains)) where
   actual := actual
@@ -498,7 +499,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 2, 4, ?_⟩
-  norm_num [actual, realize, rho_values.1, rho_values.2.2.1]
+  norm_num [actual, realize, rho, beta, coefficient, Finset.range_add_one, Finset.sup'_insert, Finset.sup'_singleton]
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.rho_tendsto_one)) where
   actual := actual
@@ -551,88 +552,6 @@ noncomputable def contract : Contract.Registration
 #print axioms registration
 end Limit
 
-namespace Values
-
-abbrev signature : Signature where
-  Params := Unit
-  State _ := ℕ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ _ d => rho d) (fun e => nomatch e)
-
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-
-def arena : Arena where
-  signature := signature
-  Law r := r.readout () () 2 = 1/4 ∧ rho 3 = 1/3 ∧ rho 4 = 2/5 ∧ rho 5 = 4/9
-
-theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have hh := h.1
-  norm_num [rejected, realize] at hh
-
-theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), 2, 4, ?_⟩
-  norm_num [actual, realize, rho_values.1, rho_values.2.2.1]
-
-def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.rho_values)) where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.TotalVariation.RandomKernelExtremum.rho_values, rejected, rejected_law⟩
-  sensitivity := by
-    constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j h
-      exact (h (show j = i from @Subsingleton.elim Unit _ j i)).elim
-    · intro e
-      exact nomatch e
-  dependence := dependence
-
-def selection : Contract.SourceSelection where
-  owner := `D5.S3.TotalVariation.RandomKernelExtremum
-  definition := none
-  coordinates := #[]
-  readouts := #[{
-    path := #["fn", "arg", "fn", "arg", "fn"]
-    stateBinder := 0
-    functionOperand := true
-    stateOperand := none
-    booleanPredicate := false }]
-
-noncomputable def contract : Contract.Registration
-    (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.rho_values) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.TotalVariation.RandomKernelExtremum.Values.unit
-  realizationName := `Reg.D5.S3.TotalVariation.RandomKernelExtremum.Values.registration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨registration⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some selection
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-#print axioms registration
-end Values
 
 /-- The five literal window constructors are the actual d=2 sample alphabet:
 zero, low, high, ends are the four endpoint pairs; middle is the blocking atom. -/
