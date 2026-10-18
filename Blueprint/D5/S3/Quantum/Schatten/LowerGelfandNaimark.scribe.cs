@@ -4,8 +4,19 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Schatten;
 
 internal sealed class LowerGelfandNaimarkDocument : IScribeDocumentDefinition
 {
+    private const string Module = "D5/S3/Quantum/Schatten/LowerGelfandNaimark";
+    private static LibraryNoteRef Background => LibraryNoteRef.Create("D5/L/Eigenstructure/bhatia1997matrixanalysis");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Lower multiplicative singular-value bounds.", H("LowerGelfandNaimark"), Blocks(
-            Paragraph(Text("For invertible square matrices C and D, the product of the ratios of singular values of CD to those of D over an arbitrary k-element index set is bounded by the product of the k largest singular values of C.")),
-            Paragraph(Text("Write C in singular-value coordinates and divide its diagonal by its kth singular value r. Replace each resulting diagonal entry by its maximum with one. Both the original scaled Gram matrix and the identity are below the clipped Gram matrix. Sorted eigenvalue monotonicity compares each singular value. Every clipped ratio is at least one, so a subset product is bounded by the full product, which is the absolute determinant. Its value is the initial product divided by the kth power of r; cancellation gives the bound.")))));
+        "The lower Gelfand–Naimark ratio inequality.",
+        H("The lower Gelfand–Naimark ratio inequality"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("zhangli-lowergelfandnaimark-lower-gelfand-naimark-ratio"),
+                DeclarationHandle.Create(Module + ".lower_gelfand_naimark_ratio"),
+                H("Arbitrary-subset singular-value ratios"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Background),
+                Blocks(Paragraph(Text("For invertible complex n by n matrices C and D and any subset I of the decreasing singular-value indices, the product over i in I of sᵢ(CD)/sᵢ(D) is at most the product of the |I| largest singular values of C. Invertibility makes every denominator positive; the empty subset gives the empty product one. The proof clips the scaled singular values of C below at one, compares Gram matrices, and bounds the subset product by the full determinant product."))),
+                DescribeRole.Theorem))));
 }

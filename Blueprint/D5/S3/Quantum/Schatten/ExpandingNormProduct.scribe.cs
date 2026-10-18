@@ -4,8 +4,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Schatten;
 
 internal sealed class ExpandingNormProductDocument : IScribeDocumentDefinition
 {
+    private const string Module = "D5/S3/Quantum/Schatten/ExpandingNormProduct";
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Norm products from expanding middle factors.", H("ExpandingNormProduct"), Blocks(
-            Paragraph(Text("Fix complex square matrices A and B and a nonnegative m. Suppose N(ATB) is at least m whenever T has T* T at least the identity in positive semidefinite order. For invertible W, the balanced matrix (tW + t⁻¹W⁻*)/2 is expanding for every positive t. The norm triangle inequality and real homogeneity yield 2m ≤ t N(AWB) + t⁻¹ N(AW⁻*B). Scalar optimization gives m² ≤ N(AWB) N(AW⁻*B), including zero factors.")),
-            Paragraph(Text("The statement isolates the balance argument from the separate expanding-factor minimization theorem. No positivity or diagonal assumption on A or B is needed for this implication. No mathematical originality is claimed.")))));
+        "Norm products from an expanding-factor lower bound.",
+        H("Norm products from an expanding-factor lower bound"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("zhangli-expandingnormproduct-sq-le-product-of-expanding-lower-bound"),
+                DeclarationHandle.Create(Module + ".sq_le_product_of_expanding_lower_bound"),
+                H("Balancing a common lower bound"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Fix complex square matrices A and B, a unitarily invariant norm N, and a nonnegative real m. If m≤N(ATB) for every expanding T, then for every invertible W, m²≤N(AWB)N(A(W⁻¹)*B). Apply the lower bound to Tₜ=(tW+t⁻¹(W⁻¹)*)/2. The triangle inequality gives 2m≤tN(AWB)+t⁻¹N(A(W⁻¹)*B) for every positive t, and scalar optimization gives the result, including zero factors. A and B need not be diagonal or positive."))),
+                DescribeRole.Theorem))));
 }
