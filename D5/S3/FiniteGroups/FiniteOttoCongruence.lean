@@ -123,7 +123,7 @@ private theorem otto_stable_power (a : S) (k : ℕ) (he : IsIdempotentElem (posi
   change a * positivePower a k = positivePower a k * a at hc
   have hl : positivePower a k * positivePower a (k+1) = positivePower a k * a := by
     change positivePower a k * (positivePower a k * a) = positivePower a k * a
-    rw [← mul_assoc, he.eq]
+    exact he.mul_self_mul a
   have hr : positivePower a (k+1) * positivePower a k = positivePower a k * a := by
     rw [p_comm a (k+1) k, hl]
   exact ⟨positivePower a k, positivePower a k, hc.trans hl.symm, hr⟩
