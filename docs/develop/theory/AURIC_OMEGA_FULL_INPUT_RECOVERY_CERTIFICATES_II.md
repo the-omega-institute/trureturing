@@ -878,7 +878,7 @@ Drop only the nonnegative term $q^2$. The resulting inequality is $\psi^\dagger 
 Let $K=B_0^{1/2}L$. The equality $\|K\|_{\rm op}=\|K^\dagger\|_{\rm op}$ gives $KK^\dagger\prec\Delta I_2$ from $K^\dagger K\prec\Delta I_2$. Congruence by $B_0^{-1/2}$ now proves $G\prec\Delta B_0^{-1}$, without requiring $L$ to be invertible. Here
 
 $$
-B_0=\operatorname{diag}\bigl(t(4s+2h),s(4t+2h)\bigr),\qquad
+B_0=\operatorname{diag}\bigl(s(4t+2h),t(4s+2h)\bigr),\qquad
 \operatorname{Tr}G<\Delta\left[\frac1{t(4s+2h)}+\frac1{s(4t+2h)}\right].
 $$
 
