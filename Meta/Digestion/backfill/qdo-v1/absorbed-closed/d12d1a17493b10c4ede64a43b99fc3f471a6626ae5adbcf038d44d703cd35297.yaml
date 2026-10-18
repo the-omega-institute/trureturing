@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d12d1a17493b10c4ede64a43b99fc3f471a6626ae5adbcf038d44d703cd35297
-  normalized_sha256: sha256:d12d1a17493b10c4ede64a43b99fc3f471a6626ae5adbcf038d44d703cd35297
-cas_ref: sha256:d12d1a17493b10c4ede64a43b99fc3f471a6626ae5adbcf038d44d703cd35297
-coverage_gids:
-  - gid: D5/S3/Quantum/Fibers/PhysicalFiber.finite_dimensional_physical_fiber
-    target_statement_id: sha256:20c3cc4b8eb976ba90fe5823cc1a6fb4ef0812d411aa5a82926a53aa578aa013
-receipts:
-  unresolved_subitems: []

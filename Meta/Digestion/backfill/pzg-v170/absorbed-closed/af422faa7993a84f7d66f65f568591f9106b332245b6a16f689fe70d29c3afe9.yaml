@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:af422faa7993a84f7d66f65f568591f9106b332245b6a16f689fe70d29c3afe9
-  normalized_sha256: sha256:af422faa7993a84f7d66f65f568591f9106b332245b6a16f689fe70d29c3afe9
-cas_ref: sha256:af422faa7993a84f7d66f65f568591f9106b332245b6a16f689fe70d29c3afe9
-coverage_gids:
-  - gid: D5/S3/ArithUnits/FermatLittle.fermat_little_theorem
-    target_statement_id: sha256:221f26edc5da67f207e28d9a03450eab0b60666b2abeabcaf88aca6ecb197fba
-receipts:
-  unresolved_subitems: []

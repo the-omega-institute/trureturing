@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0562cdaf0672e120cbb1785b9c75bdece902e97b4bdd34cdd131d715bb6728f5
+  normalized_sha256: sha256:0562cdaf0672e120cbb1785b9c75bdece902e97b4bdd34cdd131d715bb6728f5
+cas_ref: sha256:0562cdaf0672e120cbb1785b9c75bdece902e97b4bdd34cdd131d715bb6728f5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的既有声明闭合本项。有限潜在来源及其目标函数在任意带读取噪声的概率空间上给出 L2；measurable_of_finite、MeasureTheory.MemLp.of_bound 与 Finset.single_le_sum 提供有界性。MeasureTheory.martingale_condExp、MeasureTheory.Martingale.condExp_ae_eq、MeasureTheory.condExp_sub 给出零条件增量；MeasureTheory.condExp_mul_of_stronglyMeasurable_left、MeasureTheory.integral_condExp、MeasureTheory.MemLp.integrable_mul 与积分可加性消去交叉项，Finset.sum_range_succ 得到每个有限 T 的任意坐标外积等式。条件期望按几乎处处相等解释。 本完整子句仓内无可用冻结 GID；仅使用纯上游结算路线，零新增 Lean 声明。
+    previous_atom_id: 56f22a685b8ee023352621df1c70e163379260368ed68f394832e9ad385512ec
+    next_atom_id: 065ba55a909a965958aa730398566cc9d09d409a9d095bdd747c944ba612780e

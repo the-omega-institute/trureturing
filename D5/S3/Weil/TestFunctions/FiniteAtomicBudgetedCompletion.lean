@@ -251,7 +251,7 @@ theorem finite_atomic_budgeted_completion
           Measure.map (fun xi : Real => -xi)
             (∑ xi : I, residual {xi.1} • Measure.dirac xi.1) := by
         rw [Measure.map_finset_sum' measurable_neg.aemeasurable]
-        simp
+        simp only [Measure.map_smul _ measurable_neg.aemeasurable, Measure.map_dirac]
       _ = Measure.map (fun xi : Real => -xi) residual := by rw [residualExpansion]
       _ = residual := residualEven
   have pairedExpansion : residual =

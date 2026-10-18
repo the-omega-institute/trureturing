@@ -210,32 +210,32 @@ private theorem unit_shift (U : (PowerSeries ℤ)ˣ) (i : ℤ) :
 
 -- Unit cancellation extends the derivative rule to negative integer exponents.
 private theorem unit_derivative (U : (PowerSeries ℤ)ˣ) (N : ℤ) :
-    derivative ℤ (↑(U ^ N) : PowerSeries ℤ) =
-      C N * ((↑(U ^ (N - 1)) : PowerSeries ℤ) * derivative ℤ (U : PowerSeries ℤ)) := by
+    PowerSeries.derivative (R := ℤ) (↑(U ^ N) : PowerSeries ℤ) =
+      C N * ((↑(U ^ (N - 1)) : PowerSeries ℤ) * PowerSeries.derivative (R := ℤ) (U : PowerSeries ℤ)) := by
   induction N using Int.induction_on with
   | zero => simp
   | succ N ih =>
     have he : (↑(U ^ ((N : ℤ) + 1)) : PowerSeries ℤ) =
         ↑(U ^ (N : ℤ)) * (U : PowerSeries ℤ) := by
       simpa using (unit_shift U ((N : ℤ) + 1)).symm
-    rw [he, (derivative ℤ).leibniz, ih]
+    rw [he, (PowerSeries.derivative (R := ℤ)).leibniz, ih]
     simp only [smul_eq_mul, Int.add_sub_cancel, map_add, map_one]
-    linear_combination C (N : ℤ) * derivative ℤ (U : PowerSeries ℤ) * unit_shift U N
+    linear_combination C (N : ℤ) * PowerSeries.derivative (R := ℤ) (U : PowerSeries ℤ) * unit_shift U N
   | pred N ih =>
-    have he := congrArg (derivative ℤ) (unit_shift U (-(N : ℤ)))
-    rw [(derivative ℤ).leibniz, ih] at he
+    have he := congrArg (PowerSeries.derivative (R := ℤ)) (unit_shift U (-(N : ℤ)))
+    rw [(PowerSeries.derivative (R := ℤ)).leibniz, ih] at he
     simp only [smul_eq_mul] at he
     apply U.isUnit.mul_right_cancel
     simp only [map_sub, map_one]
     linear_combination he -
-      (C (-(N : ℤ)) - 1) * derivative ℤ (U : PowerSeries ℤ) *
+      (C (-(N : ℤ)) - 1) * PowerSeries.derivative (R := ℤ) (U : PowerSeries ℤ) *
         unit_shift U (-(N : ℤ) - 1)
 
 theorem power_coefficient_identity (U : (PowerSeries ℤ)ˣ) (N : ℤ)
     (j : ℕ) (hj : 0 < j) :
     (j : ℤ) * coeff j (↑(U ^ N) : PowerSeries ℤ) =
       N * coeff (j - 1) ((↑(U ^ (N - 1)) : PowerSeries ℤ) *
-        derivative ℤ (U : PowerSeries ℤ)) := by
+        PowerSeries.derivative (R := ℤ) (U : PowerSeries ℤ)) := by
   have h := congrArg (coeff (j - 1)) (unit_derivative U N)
   rw [coeff_derivative, Nat.sub_add_cancel hj, coeff_C_mul] at h
   have hjcast : ((j - 1 : ℕ) : ℤ) + 1 = j := by omega

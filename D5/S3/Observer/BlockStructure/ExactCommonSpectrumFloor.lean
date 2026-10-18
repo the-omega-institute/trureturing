@@ -166,7 +166,7 @@ private theorem weighted_floor_iff_residual
       ((c : NNReal) : ENNReal) •
         Measure.map Inv.inv ((mu : Measure Circle).withDensity density)
     rw [withDensity_smul_measure]
-    rw [Measure.map_smul]
+    rw [Measure.map_smul _ measurable_inv.aemeasurable]
   constructor
   · rintro ⟨mu, sameMoment, domination⟩
     let floorMeasure : FiniteMeasure Circle := alpha • normalizedCircleHaar

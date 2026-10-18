@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Actual half-cut restoration earns both native B2 component tables. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
 
 /- Restore precisely the opposite three actual cuts. The barred B2^1 endpoint

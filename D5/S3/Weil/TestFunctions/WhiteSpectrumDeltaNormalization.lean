@@ -49,8 +49,11 @@ theorem normalized_white_frequency_pushforward :
     funext xi
     rw [mathlibFrequency]
     ring
-  rw [angularFrequencyPushforward, normalizedLebesgueSpectrum, Measure.map_smul,
-    frequencyFormula]
+  have hf : Measurable mathlibFrequency := by
+    rw [frequencyFormula]
+    fun_prop
+  rw [angularFrequencyPushforward, normalizedLebesgueSpectrum,
+    Measure.map_smul _ hf.aemeasurable, frequencyFormula]
   simpa only [one_div, abs_of_pos scalePositive] using
     (Real.smul_map_volume_mul_left scaleNonzero)
 

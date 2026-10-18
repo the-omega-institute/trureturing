@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Actual reflected and positive short-row chains avoid all selected cuts. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingCircles
 set_option autoImplicit false
 

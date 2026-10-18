@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4c8650faaa159ca3bdab0965c00b7efa4f59db517fbd1e6eef1d4bc992af83e5
-  normalized_sha256: sha256:4c8650faaa159ca3bdab0965c00b7efa4f59db517fbd1e6eef1d4bc992af83e5
-cas_ref: sha256:4c8650faaa159ca3bdab0965c00b7efa4f59db517fbd1e6eef1d4bc992af83e5
-coverage_gids:
-  - gid: D5/S3/Arith/Congruence/CyclicTorsionFreeHomRigidity.zmod_hom_to_torsion_free_eq_zero
-    target_statement_id: sha256:633690c1e4a6418d04cff6166369a447d811ba2cbdff80620fc444c48bff919b
-receipts:
-  unresolved_subitems: []

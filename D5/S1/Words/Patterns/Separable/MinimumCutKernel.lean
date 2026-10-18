@@ -7,8 +7,11 @@
    digest: Actual minimum cuts give Cartesian conditional shape laws and literal labels. -/
 
 import D5.S1.Words.Patterns.Separable.CutFactorization
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.SetTheory.Cardinal.Finite
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
 
 /-!
 The carrier is the actual avoiding-permutation subtype, not a recursive sampler.
@@ -56,7 +59,7 @@ def identityAvoider (length : ℕ) : Avoider length :=
 noncomputable def actualMass (length : ℕ) (event : Avoider length → Prop) : ℝ := by
   classical
   let : Nonempty (Avoider length) := ⟨identityAvoider length⟩
-  exact ((PMF.uniformOfFintype (Avoider length)).toOuterMeasure {π | event π}).toReal
+  exact ((uniformPmf (Avoider length)).toOuterMeasure {π | event π}).toReal
 
 open Classical in
 theorem minimum_cut_cartesian_kernel (sign : Bool) (left right : ℕ)
@@ -201,9 +204,9 @@ theorem minimum_cut_cartesian_kernel (sign : Bool) (left right : ℕ)
         (Nat.card {π : Avoider (left + right) // event π} : ℝ) /
           Nat.card (Avoider (left + right)) := by
     let : Nonempty (Avoider (left + right)) := ⟨identityAvoider _⟩
-    change ((PMF.uniformOfFintype (Avoider (left + right))).toOuterMeasure
+    change ((uniformPmf (Avoider (left + right))).toOuterMeasure
       {π | event π}).toReal = _
-    rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+    rw [uniformPmf_toOuterMeasure_apply]
     simp only [ENNReal.toReal_div, ENNReal.toReal_natCast,
       Nat.card_eq_fintype_card]
     have cardEvent := Fintype.card_congr (Equiv.subtypeEquivRight

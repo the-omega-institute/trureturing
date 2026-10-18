@@ -17,6 +17,14 @@ internal sealed class TwoLengthAngleSumDocument : IScribeDocumentDefinition
             Paragraph(Text("A and B are cosine-length coordinates, with A>1 and B>4A+5. The six local positions have the original order (12,13,14,34,24,23). S is any subset of these six positions with at least two elements; position j reads B exactly when j is in S and otherwise reads A. Cardinality counts positions, so repeated global labels do not collapse local occurrences.")),
             Paragraph(Text("For a six-vector x and target position q, use the existing FourCycleCurvature.frame to read the target, four neighbors and opposite coordinate in the original FourCycleEnvelopes.cosine. Thus the raw cosine is the original numerator divided by the two positive square roots. extendedAngle(x,q) is arccos(max(-1,min(rawCos(x,q),1))). AngleSum(A,B,S) abbreviates the sum of these extended angles over every q in S, with x(j)=B for j in S and A otherwise. card(S) denotes its finite cardinality.")),
             Describe.Lean(
+                DescribeId.Create("positive-native-radicand"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/TwoLengthAngleSum.rad_positive"),
+                H("Positive radicands on the full positive coordinate domain"),
+                StatementSource.FromAuthor(F.Disp(RadicandStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For three independent real coordinates greater than one, the original rad(x,y,z)=2xyz+x^2+y^2+z^2-1 is strictly positive. This is the denominator-positivity supplier used by the native six-coordinate classification and local budget."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("two-length-continuous-angle-sum"),
                 DeclarationHandle.Create(Declaration),
                 H("The complete selected-edge sum exceeds one quarter pi per occurrence"),
@@ -81,6 +89,13 @@ internal sealed class TwoLengthAngleSumDocument : IScribeDocumentDefinition
         return All([("A", F.Id("Real")), ("B", F.Id("Real")),
             ("S", Call("Finset", Call("Fin", F.D(6))))],
             Imp(premises, Lt(bound, Call("AngleSum", A, B, S))));
+    }
+
+    private static Formula RadicandStatement()
+    {
+        var x=F.Id("x");var y=F.Id("y");var z=F.Id("z");
+        return All([("x",F.Id("Real")),("y",F.Id("Real")),("z",F.Id("Real"))],
+            Imp(And(Lt(F.D(1),x),Lt(F.D(1),y),Lt(F.D(1),z)),Lt(F.D(0),Call("rad",x,y,z))));
     }
 
     private static Formula All((string Name, Formula Type)[] variables, Formula body) =>

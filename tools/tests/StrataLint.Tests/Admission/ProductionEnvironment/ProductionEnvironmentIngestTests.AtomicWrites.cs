@@ -11,11 +11,10 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestReplacementRejectsLegacySingleFileLedger()
     {
         var ledger = IngestLedger(
-            SyntheticNumberedAtomizer.Id,
+            AtomizerRegistry.GenericId,
             Assert.Single(AtomizerRegistry.Atomize(
-                SyntheticNumberedAtomizer.Id,
-                Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。claim。\n"),
-                DigestionTestSupport.Rules).Claims));
+                AtomizerRegistry.GenericId,
+                Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。claim。\n")).Claims));
         var raw = RawRepositorySnapshot.Create([
             new RawRepositoryEntry(
                 BackfillInventoryLoader.RelativePath,
@@ -153,11 +152,11 @@ public sealed partial class ProductionEnvironmentTests
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 18.7(写序)**。first clause。\n\n"
             + "**推论:第二子句**;the full plan has two clauses。\n");
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+        var atomized = GenericAtomizer.Atomize(sourceBytes);
         var parentAtom = Assert.Single(atomized.Claims);
         var children = Assert.Single(atomized.ClausePlans).Children;
         var currentDocument = MapOnlyEntry(
-            IngestLedger(AtomizerRegistry.PzgId, parentAtom),
+            IngestLedger(AtomizerRegistry.GenericId, parentAtom),
             entry => entry with { AtomId = "parent" });
         var source = Assert.Single(currentDocument.RequireDigestionSources());
         var parent = Assert.Single(source.Entries);

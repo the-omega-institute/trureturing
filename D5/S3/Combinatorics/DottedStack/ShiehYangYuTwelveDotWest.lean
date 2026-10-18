@@ -6,6 +6,7 @@
    utility: none
    digest: West's stack algorithm sorts precisely the distinct words avoiding 231. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Patterns.ShiehYangYuTwelveDotDefs
 import D5.S3.Combinatorics.Fishburn.FishburnTenNineClassicalSplit
 

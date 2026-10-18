@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b561c5babea4bb7c86f2db39613d9f6d625ac0756cca834d753d28c26754f02f
-  normalized_sha256: sha256:b561c5babea4bb7c86f2db39613d9f6d625ac0756cca834d753d28c26754f02f
-cas_ref: sha256:b561c5babea4bb7c86f2db39613d9f6d625ac0756cca834d753d28c26754f02f
-coverage_gids:
-  - gid: D5/S3/Zeros/SimpleZeroLogResidue.simple_zero_has_unit_logarithmic_residue
-    target_statement_id: sha256:1612019f165f91b62fde521f320a205f6adadb090898e7fca364d713fd73b122
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
-  normalized_sha256: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
-cas_ref: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
-coverage_gids:
-  - gid: D5/S0/Naming/CoordinateDependence.dependencySet
-    target_statement_id: sha256:da1f2f0856de0c7e3f620d4ed7b214867d9daafc3b424a43216aec99982bb471
-receipts:
-  unresolved_subitems: []

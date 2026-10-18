@@ -527,7 +527,7 @@ private def modulate (x : ℝ) (m : ℝ → ℂ) : ℝ → ℂ := fun ξ => phas
 
 private theorem modulate_memLp (x : ℝ) {m : ℝ → ℂ}
     (hm : MemLp m 2 volume) : MemLp (modulate x m) 2 volume := by
-  apply hm.mono ((phase_continuous x).aestronglyMeasurable.mul hm.1)
+  apply hm.mono ((phase_continuous x).aestronglyMeasurable.mul hm.aestronglyMeasurable)
   filter_upwards with ξ
   simp [modulate, norm_mul, phase_norm]
 

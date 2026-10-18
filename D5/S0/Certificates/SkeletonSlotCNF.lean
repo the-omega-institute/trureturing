@@ -6,7 +6,7 @@
    utility: none
    digest: Concrete finite slot clauses admit every total first-return skeleton fitting the trace and signature budget; unused capacity is permitted. -/
 
-import Std.Sat.CNF.Basic
+import Std.Sat.CNF.Sat
 import D5.S0.Automata.FiniteSampleSkeletonTotalization
 
 /- Library-first audit:
@@ -63,11 +63,11 @@ def Holds (v : Var → Bool) : Requirement Var → Prop
 
 /-- Compile templates to the upstream literal convention `(variable, polarity)`. -/
 def toClause : Requirement Var → Std.Sat.CNF.Clause Var
-  | .oneOf xs => xs.map fun x => (x, true)
-  | .apart x y => [(x, false), (y, false)]
-  | .unit x => [(x, true)]
-  | .implies x y => [(x, false), (y, true)]
-  | .triangle x y z => [(x, false), (y, false), (z, true)]
+  | .oneOf xs => .ofLiterals (xs.map fun x => (x, true))
+  | .apart x y => .ofLiterals [(x, false), (y, false)]
+  | .unit x => .ofLiterals [(x, true)]
+  | .implies x y => .ofLiterals [(x, false), (y, true)]
+  | .triangle x y z => .ofLiterals [(x, false), (y, false), (z, true)]
 
 /-- Every satisfied template compiles to a satisfied native CNF clause. -/
 theorem toClause_sound (v : Var → Bool) (req : Requirement Var)
@@ -75,7 +75,8 @@ theorem toClause_sound (v : Var → Bool) (req : Requirement Var)
   cases req with
   | oneOf xs =>
       obtain ⟨x, hx, hv⟩ := h
-      simp only [toClause, Std.Sat.CNF.Clause.eval, List.any_eq_true]
+      simp only [toClause, Std.Sat.CNF.Clause.eval,
+        Std.Sat.CNF.Clause.literals_ofLiterals, List.any_eq_true]
       exact ⟨(x, true), List.mem_map.mpr ⟨x, hx, rfl⟩, by simp [hv]⟩
   | apart x y =>
       cases hx : v x <;> cases hy : v y <;>

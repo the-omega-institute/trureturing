@@ -6,6 +6,7 @@
    utility: none
    digest: Complete closed endpoint graphs and actual legal common tails. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 import D5.S1.Digit.Infinite.WindowCylinderPartition
 import D5.S1.Scale.Embedding

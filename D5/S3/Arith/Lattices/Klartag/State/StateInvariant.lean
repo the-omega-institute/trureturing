@@ -155,7 +155,7 @@ def scaled (c : ℝ) (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E
 
 instance (c : ℝ) : IsProbabilityMeasure (scaled c E) := by
   unfold scaled
-  exact Measure.isProbabilityMeasure_map (by fun_prop)
+  exact inferInstance
 
 theorem charFun_scaled (c : ℝ) (t : E) :
     charFun (scaled c E) t = Complex.exp (-(c ^ 2 * ‖t‖ ^ 2) / 2) := by

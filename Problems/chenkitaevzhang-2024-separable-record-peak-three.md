@@ -120,7 +120,7 @@ the actual permutation conjecture.
 
 The source v1 and the author and institutional manuscript bodies retain
 Conjecture 2. The bounded literature screen, detailed in the
-[Library entry](../Library/Words/chenkitaevzhang2024separable.md), reports
+[Library entry](../Library/PermutationPatterns/chenkitaevzhang2024separable.md), reports
 no equivalent proof or refutation in the source manuscripts, five known
 citing bodies and the related papers inspected. The journal version of
 record body remains unverified. This is a non-discovery in the searched

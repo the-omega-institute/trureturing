@@ -36,6 +36,7 @@ theorem post_error_cleanup (st : PostControl)
       apply congrArg some
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, readSymbol,
         clearSymbol, haltList]
+      simp only [cond_true, cond_false]
       congr 1
       funext k
       cases k <;> rfl
@@ -45,7 +46,7 @@ theorem post_error_cleanup (st : PostControl)
           some (postCfg .badShifts (clearSymbol st) [] [] shifts []) := by
         cases a <;> apply congrArg some <;>
           dsimp [postMachine, TM2.stepAux, postCfg, postStacks, readSymbol,
-            clearSymbol] <;> congr 1 <;> funext k <;> cases k <;> rfl
+            clearSymbol] <;> simp only [cond_true, cond_false] <;> congr 1 <;> funext k <;> cases k <;> rfl
       simpa [List.length_cons, Nat.add_assoc] using
         EvalsToInTime.trans _ 1 (shifts.length + 1) _ _ _ (single _ _ hs) (ih _)
   have clearQuotient : ∀ quotient shifts st, EvalsToInTime postMachine.step
@@ -59,6 +60,7 @@ theorem post_error_cleanup (st : PostControl)
           some (postCfg .badShifts (clearSymbol st) [] [] shifts []) := by
         apply congrArg some
         dsimp [postMachine, TM2.stepAux, postCfg, postStacks, readSymbol, clearSymbol]
+        simp only [cond_true, cond_false]
         congr 1
         funext k
         cases k <;> rfl
@@ -70,7 +72,7 @@ theorem post_error_cleanup (st : PostControl)
           some (postCfg .badQuotient (clearSymbol st) [] quotient shifts []) := by
         cases a <;> apply congrArg some <;>
           dsimp [postMachine, TM2.stepAux, postCfg, postStacks, readSymbol,
-            clearSymbol] <;> congr 1 <;> funext k <;> cases k <;> rfl
+            clearSymbol] <;> simp only [cond_true, cond_false] <;> congr 1 <;> funext k <;> cases k <;> rfl
       simpa [List.length_cons, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
         EvalsToInTime.trans _ 1 (quotient.length + shifts.length + 2)
           _ _ _ (single _ _ hs) (ih _ _)
@@ -80,6 +82,7 @@ theorem post_error_cleanup (st : PostControl)
         some (postCfg .badQuotient (clearSymbol st) [] quotient shifts []) := by
       apply congrArg some
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, readSymbol, clearSymbol]
+      simp only [cond_true, cond_false]
       congr 1
       funext k
       cases k <;> rfl
@@ -91,7 +94,7 @@ theorem post_error_cleanup (st : PostControl)
         some (postCfg .badInput (clearSymbol st) input quotient shifts []) := by
       cases a <;> apply congrArg some <;>
         dsimp [postMachine, TM2.stepAux, postCfg, postStacks, readSymbol,
-          clearSymbol] <;> congr 1 <;> funext k <;> cases k <;> rfl
+          clearSymbol] <;> simp only [cond_true, cond_false] <;> congr 1 <;> funext k <;> cases k <;> rfl
     simpa [List.length_cons, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
       EvalsToInTime.trans _ 1 (input.length + quotient.length + shifts.length + 3)
         _ _ _ (single _ _ hs) (ih _)

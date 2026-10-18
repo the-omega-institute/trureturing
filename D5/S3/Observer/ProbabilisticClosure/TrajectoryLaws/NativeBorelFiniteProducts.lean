@@ -688,7 +688,7 @@ theorem common_flow_finite_product (F : CommonFlow) :
   letI := cemetery_markov (doob F G) hsub
   haveI : IsFiniteKernel (doob F G) := ⟨⟨1, by simp, hsub⟩⟩
   haveI : IsProbabilityMeasure (F.nuP.map (Sum.inl : PDescriptor → Cemetery)) :=
-    Measure.isProbabilityMeasure_map measurable_inl.aemeasurable
+    inferInstance
   refine ⟨G, hsub, hmG, haG, doob_row_rn_bound F G hmG haG hsub hc hdist,
     fun n => ⟨?_, ?_, ?_⟩⟩
   · change ((homogeneousLaw (F.nuP.map Sum.inl) (cemetery (doob F G))).map _).restrict _ = _

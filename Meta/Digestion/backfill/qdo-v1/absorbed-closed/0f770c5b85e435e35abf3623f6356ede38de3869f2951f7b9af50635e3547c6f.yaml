@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0f770c5b85e435e35abf3623f6356ede38de3869f2951f7b9af50635e3547c6f
-  normalized_sha256: sha256:0f770c5b85e435e35abf3623f6356ede38de3869f2951f7b9af50635e3547c6f
-cas_ref: sha256:0f770c5b85e435e35abf3623f6356ede38de3869f2951f7b9af50635e3547c6f
-coverage_gids:
-  - gid: D5/S3/ContinuousObservables/AsymmetricPermutationDistances.asymmetric_permutation_observer_distances
-    target_statement_id: sha256:3c61dc59188de76346fd875e5b277b51fb6557e298d1b3c83446470161648d64
-receipts:
-  unresolved_subitems: []
