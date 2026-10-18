@@ -13,24 +13,27 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace Invertibility
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => Prop)
+  Reg.Support.SingleDependentReadout.signature ℕ
+    (fun n => Matrix (Fin n) (Fin n) ℂ) (fun n => Matrix (Fin n) (Fin n) ℂ)
 def actual : Realization signature :=
-  realize signature (fun _ _ z => IsUnit z) (fun e => nomatch e)
+  realize signature (fun _ _ T => T) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ)
-    (_h : (Tᴴ * T - 1).PosSemidef), R.readout () () T.det
+    (_h : (Tᴴ * T - 1).PosSemidef), IsUnit (R.readout () n T).det
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact @h 1 1 (by simpa using (PosSemidef.zero : (0 : Matrix (Fin 1) (Fin 1) ℂ).PosSemidef))
+  have hh := @h 1 1
+    (by simpa using (PosSemidef.zero : (0 : Matrix (Fin 1) (Fin 1) ℂ).PosSemidef))
+  norm_num [rejected, realize, Matrix.det_zero] at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (0 : ℂ), (1 : ℂ), ?_⟩
+  refine ⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ), 1, ?_⟩
   intro he
-  have hh : IsUnit (0 : ℂ) := Eq.mpr he (by simp [actual, realize])
-  norm_num at hh
+  change (0 : Matrix (Fin 1) (Fin 1) ℂ) = 1 at he
+  exact zero_ne_one he
 def source_registration : Registration arena (type_of% @expanding_isUnit_det) where
   actual := actual
   bridge := Iff.rfl
@@ -52,7 +55,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ z => IsUnit z) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ T => T) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -60,11 +63,11 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Schatten.ExpandingGram
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "fn"]
-      stateBinder := 0
-      functionOperand := true
+      path := #["body", "body", "body", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
@@ -75,27 +78,32 @@ end Invertibility
 namespace Adjoint
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Matrix (Fin n) (Fin n) ℂ) (fun _ => Prop)
+    (fun n => Matrix (Fin n) (Fin n) ℂ) (fun n => Matrix (Fin n) (Fin n) ℂ)
 def actual : Realization signature :=
-  realize signature (fun _ _ M => M.PosSemidef) (fun e => nomatch e)
+  realize signature (fun _ _ T => T * Tᴴ) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ)
-    (_h : (Tᴴ * T - 1).PosSemidef), R.readout () n (T * Tᴴ - 1)
+    (_h : (Tᴴ * T - 1).PosSemidef), (R.readout () n T - 1).PosSemidef
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact @h 1 1 (by simpa using (PosSemidef.zero : (0 : Matrix (Fin 1) (Fin 1) ℂ).PosSemidef))
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ), -1, ?_⟩
-  intro he
-  have hh : (- (1 : Matrix (Fin 1) (Fin 1) ℂ)).PosSemidef :=
-    Eq.mp he PosSemidef.zero
+  have hh := @h 1 1
+    (by simpa using (PosSemidef.zero : (0 : Matrix (Fin 1) (Fin 1) ℂ).PosSemidef))
+  change (0 - (1 : Matrix (Fin 1) (Fin 1) ℂ)).PosSemidef at hh
+  rw [zero_sub] at hh
   have hd := hh.diag_nonneg (i := (0 : Fin 1))
   change (0 : ℂ) ≤ -1 at hd
   norm_num [Complex.le_def] at hd
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ), 1, ?_⟩
+  intro he
+  change (0 : Matrix (Fin 1) (Fin 1) ℂ) * (0 : Matrix (Fin 1) (Fin 1) ℂ)ᴴ =
+    (1 : Matrix (Fin 1) (Fin 1) ℂ) * (1 : Matrix (Fin 1) (Fin 1) ℂ)ᴴ at he
+  simp only [conjTranspose_zero, Matrix.zero_mul, conjTranspose_one, Matrix.one_mul] at he
+  exact zero_ne_one he
 def source_registration : Registration arena (type_of% @expanding_adjoint) where
   actual := actual
   bridge := Iff.rfl
@@ -117,7 +125,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ M => M.PosSemidef) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ T => T * Tᴴ) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -125,11 +133,11 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Schatten.ExpandingGram
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "fn"]
-      stateBinder := 0
-      functionOperand := true
+      path := #["body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
