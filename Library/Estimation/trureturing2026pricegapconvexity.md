@@ -10691,7 +10691,8 @@ $$
 \tag{CE3}
 $$
 
-No sign at every real point or proper-power atom has been inferred.
+The absolute-value quadrature in this argument does not infer a sign
+at every real point or proper-power atom.
 For almost every $x=A(t)\in D_X$, reuse exactly
 $E(x)=t+Q(x)$, $|Q(x)|\le H_Q\sqrt x$ and $A/B\to1$.
 Since $s'/s=1/(2x)+1/(x\log x)$ and $s_xk(x)\le2x^{-3/2}$,
@@ -10812,8 +10813,9 @@ $$
 \tag{SB2}
 $$
 
-This is a bound on the previously retained proper-power and stock-boundary
-combination. Neither term is separately bounded or assigned a sign.
+This bounds the proper-power and stock-boundary combination. This joint
+estimate alone neither bounds the terms separately in absolute value nor
+assigns either sign.
 Every proper-power endpoint atom and the infinite future of every
 $\mathsf H$ remain. No bound on $S_H/(M_XL_X)$ is imposed.
 
@@ -10977,3 +10979,145 @@ identify $G_a$ with $\mathsf H$, or pay the nonlocal FH first-prime test.
 The same-source signed boundary-minus-credit still needs its strict
 upper against the original lower margin. No favorable cofinal sequence,
 strict all-integer Robin inequality or RH proof is supplied.
+
+
+## All real active contacts control the proper-power atom signs
+
+Keep the original conditional RH-failure source, every full window and
+active tie, and every originally fixed $1-\Theta<\eta<1/2$, including
+$\Theta=1$. Reuse N1--N2, PG1/PG9, FCT1 and CE2's actual half-open
+representative. The complete future $\mathsf H$, all proper powers and
+trace endpoints remain. This `repo-derived` paper application uses the
+existing unrestricted pressure and reserve identities; it asserts no
+new generic theorem, literature priority or Lean verification.
+
+### The endpoint envelope supplies height at every real parameter
+
+Use the same finite integer-core envelope $V_X(t)$ from PG1, and put
+$c_m=\log(1+1/p_m)\le e^{-\ell_X}$. N1--N2's exact correspondence
+at the original right boundary gives
+
+$$
+V_X(t_m)=F(N_{p_m}^{\rm mult})-c_m
+\ge\gamma+\frac d2X^{-\eta}-c_m.
+$$
+
+Every $\Phi_t(u)=W(u)-f(t+\log u)$ decreases in $t$, so its finite
+maximum decreases as well. Consequently every real parameter in the
+same window and every active tie satisfy
+
+$$
+\boxed{V_X(t)-\gamma\ge h_X^{\rm env}:=
+\frac d2X^{-\eta}-c_m>0,
+\qquad h_X^{\rm env}X^\eta\longrightarrow d/2.}
+\tag{APC1}
+$$
+
+Real $t$ is still an interpolation parameter; $e^t$ is not asserted to
+be a prime label or an additional integer source.
+
+### Apply the existing pressure formula at the actual total clock
+
+Write $R_{\rm pp}(x)$ for the unrestricted reserve $R(x)$ in
+[GAK29/GAK38 and AVB32--AVB34](../ArithSums/nicolas2025comparison.md),
+distinct from the source-window ceiling. Reuse its full-real positivity
+and zero-at-infinity normalization. In particular, AVB33 and the existing
+full-real $Q(x)=(\sqrt2-1)\sqrt x+o(\sqrt x)$ give
+$R_{\rm pp}(x)=\int_x^\infty Q(v)w(v)dv>0$ eventually.
+Uniform source escape pays this real start; no numeric witness start
+is asserted.
+
+For any real active core put $B=\log u$ and $A=B+t$ as before.
+PG1 gives $u=N_A^{\rm str}$, so the unrestricted pressure at
+$\lambda(A)$ is $W(u)-\lambda(A)B$. The existing pressure and tail
+identities, with every reference atom retained, therefore give inside
+this application
+
+$$
+\begin{aligned}
+\frac{\mathsf H(A)}{s_A}=-I_\psi(A)
+&=V_X(t)-\gamma+R_{\rm pp}(A)+t\lambda(A),\\
+\mathsf H(A)
+&=s_A[V_X(t)-\gamma+R_{\rm pp}(A)]+\frac t{\sqrt A}.
+\end{aligned}
+$$
+
+The zero pressure defect is at $A$; the different own-price defect
+at $B$ has not been set to zero. This uses the existing pressure-margin
+identity, without extending CR43 or the compensated WRC transport.
+APC1 now yields, uniformly over every real active tie and trace endpoint,
+
+$$
+\boxed{\mathsf H(A)\ge
+h_X^{\rm env}\sqrt A\log A+\frac t{\sqrt A}>0.}
+\tag{APC2}
+$$
+
+FCT2's existing scalar coercivity applies directly at $A$. Indeed
+$t\ge\ell_X=(d/8)X^{1-\eta}\log X$. If $A/X\to0$, the lag term
+in APC2 divided by $M_X$ diverges; if $A/X\to\infty$, its height term
+diverges. On a compact positive range of $z=A/X$,
+$\log A/\log X\to1$, and
+
+$$
+\frac d2\sqrt z+\frac d8\frac1{\sqrt z}\ge\frac d2.
+$$
+
+Thus for every fixed $\epsilon>0$, beyond one common original source
+start,
+
+$$
+\boxed{\mathsf H(A)\ge(d/2-\epsilon)M_X,
+\qquad \frac d2X^{-\eta}s_A+\frac t{\sqrt A}+1
+\ll\mathsf H(A).}
+\tag{APC3}
+$$
+
+These bounds hold at all real active clocks, including unsampled
+contacts and all active cores at a multiple tie. They give no sign on
+skipped open gaps or inactive clocks, and no uniformity as
+$\eta\uparrow1/2$ is asserted.
+
+### Keep the actual proper-power atoms in the signed boundary account
+
+Use exactly $D_X^*=\bigcup_j(r_j,z_j]$ from CE2/SB1. Every point in
+these components, including its retained trace endpoints, has its
+actual active core by PG1/PG9. APC3 therefore applies at every retained
+proper power. Define its complete unweighted mass only for this account:
+
+$$
+Z_X^{\rm pp}=\sum_{\substack{q^k\in D_X^*\\k\ge2}}\log q\ge0.
+$$
+
+For every fixed $0<\epsilon<d/2$, the existing pairing satisfies
+
+$$
+\boxed{C_D^{\rm pp}\ge(d/2-\epsilon)M_XZ_X^{\rm pp}\ge0.}
+\tag{APC4}
+$$
+
+All powers, multiplicities and the actual half-open endpoint atoms
+remain. No positive occupancy or lower count of these atoms is asserted;
+the sum can be empty. SB1--SB2 then supply the separate one-sided
+stock-boundary constraint, for a fixed existing SB2 constant $C_{\rm SB}$,
+
+$$
+\boxed{B_Q\le C_{\rm SB}
+\left(b_X^{-1/2}+\frac{\epsilon_X^{\rm en}}{M_X}\right)S_H
+ -(d/2-\epsilon)M_XZ_X^{\rm pp}.}
+\tag{APC5}
+$$
+
+This does not assign a sign to $B_Q$, or bound either term in absolute
+value. The allowance remains relative to $S_H$; it is not an absolute
+$o(M_XL_X)$ bound. On the same actual contacts $\mathsf H_-=0$, so
+SB4's integrated allowance can also be replaced by zero there. That
+simplification supplies no additional credit or improvement of SB8's
+already paid target scale.
+
+APC1--APC5 supply pointwise contact coercivity and an actual proper-power
+atom sign, using the endpoint envelope and exact pressure correspondence.
+They do not pay the complete $B_D+C_D^{\rm pp}$ or boundary-minus-credit
+strict upper, the original nonlocal FH first-prime test, all-integer
+Robin or RH. Every original source condition and the single-use
+compensation remain.
