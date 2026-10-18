@@ -26,7 +26,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
             Item("kernel_diagonal", "Classical product kernel", "For a real vector p and t nonzero, the kernel of diagonal p is t/(1+t) minus the product of t/(t+p_i). No positivity assumptions enter this algebraic identity."))));
 
     private static DocumentBlock.Describe Item(string name, string title, string text, bool theorem = true) =>
-        Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Owner + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Owner + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Later),
             Blocks(Paragraph(Text(text))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 }

@@ -14,7 +14,7 @@ internal sealed class DensityKernelDocument : IScribeDocumentDefinition
             Item("integrable_subentropy_kernel", "Absolute integrability", "The continuous kernel on the positive half-line is dominated in absolute value by the common integrable inverse-square function. Hence its defining subentropy integral is absolutely convergent."),
             Item("continuousOn_matrixSubentropy", "Continuity at all density matrices", "The determinant is continuous in the entries, and its real part remains positive on the density domain at each positive t. Dominated convergence with the common function 1/(1+t)^2 gives continuity of Q on the full set of positive trace-one matrices, including its boundary."))));
     private static DocumentBlock.Describe Item(string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Owner + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Owner + name),
             H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/datta2014subentropy")),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
