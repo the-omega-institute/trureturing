@@ -38,13 +38,6 @@ def targetIndex (j φ : Bool) : ℤ := if φ then 0 else j.toInt
 def targetClass (j φ : Bool) (s : Bool) : Hidden :=
   if j = φ then .a s else .b s
 
-theorem actual_endpoint (j φ : Bool) (S : Spins) :
-    hidden φ S j.toInt = targetClass j φ (S (targetIndex j φ)) := by
-  cases j <;> cases φ <;> simp [hidden, targetClass, targetIndex, Bool.toInt]
-
-theorem negative_seam (S : Spins) : hidden true S 0 = .b (S 0) := by
-  simpa [targetClass, targetIndex] using actual_endpoint false true S
-
 theorem active_visible (φ : Bool) (S : Spins) (e : ℤ) :
     visible φ S (2 * e + φ.toInt) = Bool.xor (S e) (S (e + 1)) := by
   have hd : (2 * e + φ.toInt - φ.toInt) / 2 = e := by omega
@@ -68,23 +61,25 @@ theorem separator_hidden (φ : Bool) (S : Spins) (e : ℤ) :
   have hm : (2 * e + φ.toInt + 1 - φ.toInt) % 2 ≠ 0 := by omega
   simp [hidden, hm, hd]
 
+theorem negative_seam (S : Spins) : hidden true S 0 = .b (S 0) := by
+  simpa using separator_hidden true S (-1)
+
+theorem actual_endpoint (j φ : Bool) (S : Spins) :
+    hidden φ S j.toInt = targetClass j φ (S (targetIndex j φ)) := by
+  cases j <;> cases φ
+  · simpa [targetClass, targetIndex] using active_hidden false S 0
+  · simpa [targetClass, targetIndex] using negative_seam S
+  · simpa [targetClass, targetIndex] using separator_hidden false S 0
+  · simpa [targetClass, targetIndex] using active_hidden true S 0
+
 theorem opposite_phase_visible (φ : Bool) (S : Spins) (t : ℤ)
     (h : (t - φ.toInt) % 2 = 0) : visible (!φ) S t = false := by
-  have hm : (t - (!φ).toInt) % 2 ≠ 0 := by
+  have ht : 2 * ((t - (!φ).toInt - 1) / 2) + (!φ).toInt + 1 = t := by
     cases φ <;> simp only [Bool.not_false, Bool.not_true, Bool.toInt_false,
       Bool.toInt_true] at * <;> omega
-  simp [visible, hm]
+  simpa only [ht] using separator_visible (!φ) S ((t - (!φ).toInt - 1) / 2)
 
 theorem constant_visible (φ s : Bool) (t : ℤ) : visible φ (fun _ => s) t = false := by
   simp [visible]
-
-theorem active_endpoint (j : Bool) (S : Spins) :
-    hidden (!j) S j.toInt = .b (S j.toInt) := by
-  cases j <;> simp [hidden, Bool.toInt]
-
-theorem target_clock (j φ : Bool) :
-    2 * targetIndex j φ + φ.toInt = j.toInt ∨
-      2 * targetIndex j φ + φ.toInt = j.toInt + 1 := by
-  cases j <;> cases φ <;> simp [targetIndex, Bool.toInt]
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
