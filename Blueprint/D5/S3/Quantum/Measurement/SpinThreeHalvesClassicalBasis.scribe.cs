@@ -57,14 +57,14 @@ internal sealed class SpinThreeHalvesClassicalBasisDocument : IScribeDocumentDef
             StatementSource.FromAuthor(Disp(Named("claim"))), AssessedProvenance.FromRepo(Source),
             Blocks(
                 Paragraph(Text(
-                    "For a unit vector psi, let p(psi) be its spin polarization, the real expectations of the spin-3/2 operators J_x, J_y and J_z. "
+                    "For a unit vector psi, let p(psi) be its spin expectation vector, with components the real expectations of the spin-3/2 operators J_x, J_y and J_z. "
                         + "The Dicke reduction gives A_1(psi) = 1 - 4|p(psi)|^2/9. Consequently, for a unitary U, "
                         + "B_1(U) = 1 - S(U)/9, where S(U) is the sum of the squared lengths of the four column polarizations. "
                         + "Multiplying the first column by the inverse determinant changes neither its reduced state nor its spin expectations, "
                         + "and reduces the bound to matrices of determinant one.")),
                 Paragraph(Text(
                     "The six-by-six matrix of two-by-two minors acts on the second exterior power of C^4. "
-                        + "Its unitarity and its preservation of the signed complementary-pair form make it real orthogonal in a fixed exterior basis. "
+                        + "Its unitarity and its preservation of the signed form coupling complementary two-element subsets make it real orthogonal in a fixed exterior basis. "
                         + "Its columns therefore give a real orthonormal six-frame, grouped into three pairs x_k,y_k. "
                         + "An isometry identifies this real space with R plus the traceless real symmetric three-by-three matrices; "
                         + "write x_k = (s_k,X_k) and y_k = (t_k,Y_k) in these coordinates. "
