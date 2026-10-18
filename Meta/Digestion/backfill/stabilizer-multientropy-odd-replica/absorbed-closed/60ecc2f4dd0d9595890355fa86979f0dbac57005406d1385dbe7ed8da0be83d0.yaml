@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:60ecc2f4dd0d9595890355fa86979f0dbac57005406d1385dbe7ed8da0be83d0
   normalized_sha256: sha256:60ecc2f4dd0d9595890355fa86979f0dbac57005406d1385dbe7ed8da0be83d0
 cas_ref: sha256:60ecc2f4dd0d9595890355fa86979f0dbac57005406d1385dbe7ed8da0be83d0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/TensorNetworks/BridgeGraph/QuantumMaxFlowBound.rank_map_algebraMap
+    target_statement_id: sha256:9cd16083e970ea0ae2ad061cdd76e364bfcf0efb209dbd6745e258091a0192d4
 receipts:
   unresolved_subitems: []
   chain_atoms:
