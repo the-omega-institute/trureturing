@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6b7ddb1947b96cc0733864f636b69d7cd1c85c685c72ac5c7bdd86b3a9474e4
+  normalized_sha256: sha256:d6b7ddb1947b96cc0733864f636b69d7cd1c85c685c72ac5c7bdd86b3a9474e4
+cas_ref: sha256:d6b7ddb1947b96cc0733864f636b69d7cd1c85c685c72ac5c7bdd86b3a9474e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '本项命题全部子句仅由钉版上游闭合，仓内无可用覆盖GID；不新增Lean或冻结。 mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; upstream: LinearMap.isPositive_iff, LinearMap.ker_eq_bot, LinearMap.isPositive_linearIsometryEquiv_conj_iff, LinearMap.range_adjoint_comp_self, LinearMap.finrank_range_adjoint, sq_nonneg, LinearMap.adjoint_inner_right, LinearMap.adjoint_inner_left, LinearMap.IsSymmetric.pow, Submodule.span_induction. 非作者完整子句绑定证书 flight 6ad4ee3f6d73719093472122，最终 make lean exit 0。子句复核：example_values给字面(1,2,5,14)；example_rank、minimal_realization_unique_binding给二维最小与唯一交织；three_prefix/three_bounded给源t=0,1的两真实严格正模型且4I-C_t也严格正；下一矩由显式幂归一化为41+t^2，boundedFutureUnique在Lambda=3给全竞争类唯一。证明内固定2x2/3x3矩阵恒等式按有限坐标与标量归一化，不增加假设。'
+    previous_atom_id: aaab818bdde5cd5d34138756fa70c6c4cace7fd9579c549a1d8433d70c77bee7
+    next_atom_id: 4d38e1243fe036ba14c91fa54bbde1aa063a100fde14ca097bc9bc66c52501ca

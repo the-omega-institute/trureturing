@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:552dc4acbe4ddbdf232ee19a7e4819877dd6b63f9fdfd350633d148d06d45dd5
+  normalized_sha256: sha256:552dc4acbe4ddbdf232ee19a7e4819877dd6b63f9fdfd350633d148d06d45dd5
+cas_ref: sha256:552dc4acbe4ddbdf232ee19a7e4819877dd6b63f9fdfd350633d148d06d45dd5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '本项命题全部子句仅由钉版上游闭合，仓内无可用覆盖GID；不新增Lean或冻结。 mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; upstream: CStarAlgebra.nonneg_iff_eq_star_mul_self, LinearMap.toMatrixOrthonormal, LinearMap.posSemidef_toMatrix_iff, LinearMap.exists_rightInverse_of_surjective, LinearMap.liftOfSurjective, LinearMap.equivOfSurjective_apply, LinearMap.IsPositive.adjoint_conj, LinearMap.ker_adjoint_comp_self, LinearMap.range_adjoint_comp_self, LinearMap.finrank_range_adjoint, LinearMap.quotKerEquivRange, LinearMap.isPositive_linearIsometryEquiv_conj_iff, Submodule.finrank_le, stdOrthonormalBasis, LinearMap.adjoint_inner_right, LinearMap.adjoint_inner_left, LinearMap.IsSymmetric.pow, Submodule.span_induction. 非作者完整子句绑定证书 flight 6ad4ee3f6d73719093472122，最终 make lean exit 0。子句复核：定义137.1给有限维实内积空间、r>=0及全部自伴数据；positive_realization_iff_statement 两向、minimal_dimension_statement 所有竞争者下界及 quotient_attainment_binding 的实际 Gram 商/内积/正演化/全部指定矩共同对应(137.3)-(137.7)，含零维与零数据。'
+    previous_atom_id: cef7b9e6ba13ebe1819b95e86b09fa64de232a7eda74498c787f0599624f0ee7
+    next_atom_id: e59d903e05106ca856e52dc904c8e6056c0d2a307144f2b5e35f3f3a02bbdfac

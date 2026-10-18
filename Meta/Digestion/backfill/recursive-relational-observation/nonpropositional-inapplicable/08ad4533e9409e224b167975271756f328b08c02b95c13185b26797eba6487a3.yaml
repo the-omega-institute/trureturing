@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:08ad4533e9409e224b167975271756f328b08c02b95c13185b26797eba6487a3
+  normalized_sha256: sha256:08ad4533e9409e224b167975271756f328b08c02b95c13185b26797eba6487a3
+cas_ref: sha256:08ad4533e9409e224b167975271756f328b08c02b95c13185b26797eba6487a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '本项命题全部子句仅由钉版上游闭合，仓内无可用覆盖GID；不新增Lean或冻结。 mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; upstream: LinearMap.isometryOfInner, LinearIsometry.equivRange, Submodule.orthogonalDecomposition, LinearIsometryEquiv.withLpProdCongr, stdOrthonormalBasis, CStarAlgebra.nonneg_iff_eq_star_mul_self, inner_self_eq_zero, pow_add, LinearMap.adjoint_inner_right, LinearMap.adjoint_inner_left, LinearMap.IsSymmetric.pow, Submodule.span_induction. 非作者完整子句绑定证书 flight 6ad4ee3f6d73719093472122，最终 make lean exit 0。子句复核：canonical_raw_binding 给源规范实现的正性、匹配及 cyclicPrefix；forward 对每个有限正竞争者给正交直和形与低阶湮灭；reverse 在源正块假设下给完整前缀、ker C湮灭及next_defect_operator_binding的2r+2阶算子恒等式。'
+    previous_atom_id: f6e39d6b72212c3361d3a65852d3f4ecccf7646993ef6bacb8447d7163f5518f
+    next_atom_id: d16d189dc6216d5f4fd4734b36926c239cb9afd688c6c7f200e055b619e8877b
+  chain_atoms:
+    - 9d509a86f92f68a47df7ad5b7b90d90027c4131a11acf4ad62f8431b21f0d9dd
+    - c75d4007884b7064ec2f3eb2f404838ecb1c26527baa1295ba5ab3f1363c70e7
