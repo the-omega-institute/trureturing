@@ -240,7 +240,6 @@ private lemma cross_sum_zero (n : ℕ) (hn : 3 ≤ n) (t : ℝ) :
       have he : angle n (n - j) = 2 * Real.pi - angle n j := by
         simp only [angle, Nat.cast_sub (by omega : j ≤ n)]
         field_simp
-        ring
       simp only [r, ite_eq_right hz, f, he, Real.cos_two_pi_sub, Real.sin_two_pi_sub,
         mul_neg]
   have hs : (∑ j ∈ range n, f (r j)) = ∑ j ∈ range n, f j := by
@@ -260,7 +259,8 @@ private lemma sin_mul_lower (t c : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (hc : |c
     t / 4 * c ^ 2 ≤ Real.sin (t / 2 * c) * c := by
   have hs (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x ≤ 1 / 2) : x / 2 ≤ Real.sin x := by
     have hx2 : x ^ 2 ≤ 1 / 4 := by nlinarith
-    have hx3 : x ^ 3 ≤ x / 4 := by nlinarith [mul_nonneg x (1 / 4 - x ^ 2)]
+    have hx3 : x ^ 3 ≤ x / 4 := by
+      nlinarith [mul_nonneg hx0 (sub_nonneg.mpr hx2)]
     nlinarith [Real.sin_ge_sub_cube hx0]
   have hc1 := (abs_le.mp hc).2
   have hc0 := (abs_le.mp hc).1
@@ -296,7 +296,9 @@ private lemma amp_normSq_upper (n : ℕ) (t : ℝ) :
   have hb : ‖amp n t‖ ≤ (n : ℝ) := by
     calc
       ‖amp n t‖ ≤ ∑ j ∈ range n, ‖mode n j t‖ := norm_sum_le _ _
-      _ = n := by simp [mode, phase, norm_mul, Complex.norm_exp_ofReal_mul_I]
+      _ = n := by
+        simp only [mode, norm_mul, phase, Complex.norm_exp_ofReal_mul_I, mul_one,
+          sum_const, card_range, nsmul_eq_mul]
   rw [Complex.normSq_eq_norm_sq]
   exact pow_le_pow_left₀ (norm_nonneg _) hb 2
 
