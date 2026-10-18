@@ -6,7 +6,11 @@ The polynomial z−z⁴ is injective on the closed disk of radius 5/8, although 
 
 D. Khavinson, R. Pereira, M. Putinar, E. B. Saff and S. Shimorin, Borcea's variance conjectures on the critical points of polynomials. arXiv:1010.5167v2, §5, Theorem 5.1 and Conjecture 4.
 
+Theorem 5.1 (Alexander-Kakeya). If a polynomial F of degree n has no critical points in a closed disk of radius R, then it is univalent in the concentric disk of radius R sin(π/n).
+
 Conjecture 4. If F is an nth degree polynomial with F(0) = 0, then F is not univalent in any closed disk of radius larger than σ_p(F) sin(π/n), p ≥ 1, centered at zero.
+
+Of course, if the conjecture is true for p = 1, then it follows for all p ≥ 1. By the Alexander-Kakeya Theorem, the truth of this conjecture implies the truth of Conjecture 1 for the same value of p. It can be easily seen that the strongest case p = 1 of this conjecture is true for n = 2.
 
 **Definition 1.1 (The root moment about a center).**
 

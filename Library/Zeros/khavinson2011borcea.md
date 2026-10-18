@@ -17,12 +17,16 @@ triage: anchor
 ## Locator
 
 - arXiv: https://arxiv.org/abs/1010.5167 ; specified version arXiv:1010.5167v2.
-- DOI: https://doi.org/10.1007/978-3-0348-0142-3_16
+- DOI: 10.1007/978-3-0348-0142-3_16
 - Location: arXiv:1010.5167v2, §5, Theorem 5.1 and Conjecture 4.
 
 ## Source and scope
 
+> Theorem 5.1 (Alexander-Kakeya). If a polynomial F of degree n has no critical points in a closed disk of radius R, then it is univalent in the concentric disk of radius R sin(π/n).
+
 > If F is an nth degree polynomial with F(0) = 0, then F is not univalent in any closed disk of radius larger than σ_p(F) sin(π/n), p ≥ 1, centered at zero.
+
+> Of course, if the conjecture is true for p = 1, then it follows for all p ≥ 1. By the Alexander-Kakeya Theorem, the truth of this conjecture implies the truth of Conjecture 1 for the same value of p. It can be easily seen that the strongest case p = 1 of this conjecture is true for n = 2.
 
 Here the zeros $z_j$ include algebraic multiplicity and
 

@@ -14,7 +14,11 @@ motivation_gids:
 
 D. Khavinson, R. Pereira, M. Putinar, E. B. Saff and S. Shimorin, *Borcea's variance conjectures on the critical points of polynomials*, arXiv:1010.5167v2, §5, Theorem 5.1 and Conjecture 4. See [khavinson2011borcea](../Library/Zeros/khavinson2011borcea.md).
 
+> Theorem 5.1 (Alexander-Kakeya). If a polynomial F of degree n has no critical points in a closed disk of radius R, then it is univalent in the concentric disk of radius R sin(π/n).
+
 > If F is an nth degree polynomial with F(0) = 0, then F is not univalent in any closed disk of radius larger than σ_p(F) sin(π/n), p ≥ 1, centered at zero.
+
+> Of course, if the conjecture is true for p = 1, then it follows for all p ≥ 1. By the Alexander-Kakeya Theorem, the truth of this conjecture implies the truth of Conjecture 1 for the same value of p. It can be easily seen that the strongest case p = 1 of this conjecture is true for n = 2.
 
 For every $n\ge1$, every complex polynomial $F$ of degree $n$ vanishing at zero, every real $p\ge1$ and every real $r>\sigma_p(F)\sin(\pi/n)$, the assertion forbids injectivity on the closed disk centered at zero with radius $r$. Zeros are counted with algebraic multiplicity, and $\sigma_p$ is the infimum over all complex centers of the normalized root moment. The formal definition includes every stated quantifier and imposes no simple-root or geometric restrictions.
 
