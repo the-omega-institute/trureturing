@@ -16,11 +16,19 @@ M. M. Czerwińska, J. A. Franco and A. Merino, *Towards a Characterization of Ma
 
 > Let f : (0, ∞) → R. Then f is radially convex of order n (with respect to the Frobenius norm) if and only if f is matrix monotone of degree n.
 
+arXiv:2610.17393v1, §4, directly after Conjecture 4.10, verbatim:
+
+> By Proposition 3.9, matrix monotonicity of degree n implies radial convexity of order n. Thus, it remains to prove the converse implication. The next theorem establishes the conjecture for n = 2.
+
 The matrices are complex Hermitian positive definite, and the order is Loewner order. Radial convexity requires both endpoint distance inequalities for every ordered triple $A\preceq C\preceq B$. Matrix monotonicity allows either of the two uniform order directions. The universal assertion quantifies over every $n\ge1$ and every real function on the positive half-line.
 
 ## Motivation
 
 The conjecture proposes that metric growth along ordered intervals characterizes preservation of the matrix order. The external problem and explicit degree-three candidate are preregistered in [issue #19013](https://github.com/the-omega-institute/trureturing/issues/19013).
+
+arXiv:2610.17393v1, §1, verbatim:
+
+> In degree 3, we show that radial convexity already provides the principal minor conditions required for matrix monotonicity, leaving the sign of the determinant of the Loewner matrix as the remaining obstruction.
 
 ## Gap
 
@@ -63,6 +71,17 @@ The first sign excludes the increasing direction and the second excludes the dec
 ## Triage
 
 **REFUTED — Conjecture 4.10 at $n=3$.** The displayed function satisfies the full radial property on the positive cone and neither monotonicity direction.
+
+**COMPUTED — the remaining Loewner-determinant obstruction named in §1 is real at $n=3$.** For the displayed function and nodes $x=(1/3,1,3)$, the Loewner matrix has entries
+
+$$
+L_{ij}=\frac{2}{(x_i+3)(x_j+3)}
++\frac{2}{(2x_i+4)(2x_j+4)}
+-\frac{2\varepsilon}{(3x_i+5)(3x_j+5)},
+\qquad \det L=-\frac{1}{175032900000000}<0.
+$$
+
+This formula includes $L_{ii}=f'(x_i)$. Exact rational arithmetic gives positive diagonal entries and positive principal minors of size two. Thus the Loewner-determinant sign can fail while radial convexity holds. The determinant and minor calculations are not Lean theorems here; the Lean result proves the full degree-three radial property together with failure of both matrix-monotonicity directions.
 
 **LITERATURE — the differentiable $n=2$ case is true by the paper's Theorem 4.11.** Its regularity hypotheses are retained; this counterexample does not affect that result.
 

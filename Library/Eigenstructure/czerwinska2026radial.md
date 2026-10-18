@@ -27,6 +27,14 @@ Conjecture 4.10 reads:
 
 > Let f : (0, ∞) → R. Then f is radially convex of order n (with respect to the Frobenius norm) if and only if f is matrix monotone of degree n.
 
+arXiv:2610.17393v1, §4, directly after Conjecture 4.10, verbatim:
+
+> By Proposition 3.9, matrix monotonicity of degree n implies radial convexity of order n. Thus, it remains to prove the converse implication. The next theorem establishes the conjecture for n = 2.
+
+arXiv:2610.17393v1, §1, verbatim:
+
+> In degree 3, we show that radial convexity already provides the principal minor conditions required for matrix monotonicity, leaving the sign of the determinant of the Loewner matrix as the remaining obstruction.
+
 For positive definite complex Hermitian matrices, $A\preceq B$ means that $B-A$ is positive semidefinite. Radial convexity requires, for every $A\preceq C\preceq B$ in that cone,
 
 $$

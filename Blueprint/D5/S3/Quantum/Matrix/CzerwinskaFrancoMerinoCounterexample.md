@@ -8,6 +8,10 @@ M. M. Czerwińska, J. A. Franco and A. Merino, Towards a Characterization of Mat
 
 Conjecture 4.10. Let f : (0, ∞) → R. Then f is radially convex of order n (with respect to the Frobenius norm) if and only if f is matrix monotone of degree n.
 
+arXiv:2610.17393v1, §4, directly after Conjecture 4.10, verbatim: “By Proposition 3.9, matrix monotonicity of degree n implies radial convexity of order n. Thus, it remains to prove the converse implication. The next theorem establishes the conjecture for n = 2.”
+
+arXiv:2610.17393v1, §1, verbatim: “In degree 3, we show that radial convexity already provides the principal minor conditions required for matrix monotonicity, leaving the sign of the determinant of the Loewner matrix as the remaining obstruction.”
+
 **Definition 1.1 (Conjecture 4.10 with its universal quantifiers).**
 
 Lean statement: `D5/S3/Quantum/Matrix/CzerwinskaFrancoMerinoCounterexample.conjecture`

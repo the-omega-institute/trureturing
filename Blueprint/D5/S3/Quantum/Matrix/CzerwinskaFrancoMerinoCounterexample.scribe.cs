@@ -18,6 +18,12 @@ internal sealed class CzerwinskaFrancoMerinoCounterexampleDocument : IScribeDocu
                 + "of Matrix Monotonicity via Radial Convexity. " + Locator + ".")),
             Paragraph(Text("Conjecture 4.10. Let f : (0, ∞) → R. Then f is radially convex of order n "
                 + "(with respect to the Frobenius norm) if and only if f is matrix monotone of degree n.")),
+            Paragraph(Text("arXiv:2610.17393v1, §4, directly after Conjecture 4.10, verbatim: “By Proposition 3.9, "
+                + "matrix monotonicity of degree n implies radial convexity of order n. Thus, it remains to prove "
+                + "the converse implication. The next theorem establishes the conjecture for n = 2.”")),
+            Paragraph(Text("arXiv:2610.17393v1, §1, verbatim: “In degree 3, we show that radial convexity already "
+                + "provides the principal minor conditions required for matrix monotonicity, leaving the sign of "
+                + "the determinant of the Loewner matrix as the remaining obstruction.”")),
             Describe.Lean(
                 DescribeId.Create("cfm-radial-convexity-conjecture"),
                 DeclarationHandle.Create(Module + ".conjecture"),
