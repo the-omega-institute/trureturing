@@ -2667,3 +2667,18 @@ A strict trace gap permits adding a sufficiently small positive multiple of $I_5
 **Definition 83.6 (scope and remaining gap).** Proposition 83.2 and Corollary 83.3 are a conditional reuse composition, not a new generic minimax, SDP, or real-symmetry theorem. They do not construct an explicit closed formula for $(\rho_N,Y_N)$, prove S.154, justify code/third pinching, provide a relaxed-data-to-actual converse, or establish a fidelity–diamond equality. The original all-class target remains conditional on Definition 80.1, and the fixed-$\rho_\star$ and $\sqrt a<\lambda<1$ witness programmes remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 84. Reading the retained S.155 boundary with the conditional composition
+
+**Definition 84.1 (scope reconciliation).** The sentence in Section 82 that leaves S.155 unproved is retained as the status of an unconditional, premise-free all-class proof and of any proof that does not establish the scalar premise. Sections 83.2–83.3 add a different statement: after Definition 80.1 is assumed and Theorem 80.2 supplies $g_N^2\leq T_\beta$, the already established attained minimax and fixed-input SDP yield the encoder-dependent pair $(\rho_N,Y_N)$. Thus the current boundary is
+
+$$
+\text{unconditional S.155 over the raw actual class: open},
+\qquad
+\text{S.155 under Definition 80.1 and Theorem 80.2: conditional consequence}.
+\tag{S.201}
+$$
+
+This reconciliation does not promote the conditional statement to S.154, does not remove any inherited premise, and does not turn the direction-dependent projection witness into a common input. $\square$
+
+## 追加锚（本行以下为增补区）
