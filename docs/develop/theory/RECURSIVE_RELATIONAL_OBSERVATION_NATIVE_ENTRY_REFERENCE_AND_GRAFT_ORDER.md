@@ -1428,3 +1428,796 @@ no new formal certificate or claim of worldwide priority.
 [ERPVC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Marked partial substitution and an exact unfinished-source inverse
+
+**Definition 10.1 (prefix substitution at an original leaf).** Retain
+$\mathcal T,\rho,I,\delta,j,F_w$ from §§1, 3 and 9. Write
+$E=\rho^2$, $A=E(\alpha)=\langle\beta,\alpha\rangle$ and
+$B=E(\beta)=\langle A,\beta\rangle$; here $A,B$ are labelled trees,
+whereas their shapes are the two codes of ABT Theorem 12.1. For a leaf
+address $p$ of $x$, let $P_p(x)$ substitute exactly the original leaves
+strictly before $p$ in left-first order. Newly created leaves are not
+substituted again. Adjoin the end marker $\top$ and put
+$P_\top(x)=\rho(x)$. Equivalently,
+
+$$
+\begin{aligned}
+P_\varepsilon(\ell)&=\ell &&(\ell\in\{\alpha,\beta\}),\\
+P_{Lq}(\langle s,t\rangle)&=\langle P_q(s),t\rangle,\\
+P_{Rq}(\langle s,t\rangle)&=\langle\rho(s),P_q(t)\rangle.
+\end{aligned}
+\tag{ER.41}
+$$
+
+The mark is the next *original logical leaf*. In $E(P_p(x))$ its address
+$p$ designates a whole code tile, not a terminal of the encoded tree.
+It is not an elapsed epoch, a complete list of old leaf labels or an old
+source snapshot.
+
+Define a partial parser $D_p$ on finite labelled trees by
+
+$$
+\begin{aligned}
+D_\top(z)&=\delta(z) &&(z\in I),\\
+D_\varepsilon(z)&=z &&(z\text{ a leaf}),\\
+D_{Lq}(\langle s,t\rangle)&=\langle D_q(s),t\rangle,\\
+D_{Rq}(\langle s,t\rangle)&=\langle\delta(s),D_q(t)\rangle
+                         &&(s\in I).
+\end{aligned}
+\tag{ER.42}
+$$
+
+An omitted case, or an undefined recursive call, rejects. In particular a
+nonempty address requires a branch at each of its proper prefixes.
+
+**Theorem 10.2 (exact partial-substitution image and geometric inverse).**
+For every finite $x$ and every $p\in\operatorname{LeafPos}(x)\cup\{\top\}$,
+
+$$
+D_p(P_p(x))=x.
+\tag{ER.43}
+$$
+
+For $p\ne\top$, $D_p(z)$ is defined exactly when $p$ is a leaf of $z$
+and, at every right turn on the root-to-$p$ path, the entire left sibling
+subtree belongs to $I$. When defined, $p$ is a leaf of $D_p(z)$ and
+$P_p(D_p(z))=z$. For $p=\top$ its exact domain is $I$ and
+$P_\top(D_\top(z))=z$. Thus
+
+$$
+(x,p)\longmapsto
+ \bigl(\operatorname{Pos}(E(P_p(x))),p\bigr)
+\tag{ER.44}
+$$
+
+is injective on the displayed marked domain, with a finite effective
+inverse on its actual image. Replacing support by terminal boundary
+preserves this assertion and the exact image test. No old table or
+chronological record is an argument to either geometric inverse.
+
+Proof. The inverse $\delta$ and its effective image grammar are the
+suppliers of (ER.8). At $p=\top$ their two inverse identities give the
+claim. At $p=\varepsilon$ the original and recovered objects must both be
+leaves, and the claim is the identity. For $p=Lq$ both constructions
+preserve the right child and recurse into the left. For $p=Rq$ the left
+child has been wholly substituted, so apply $\delta\rho=\mathrm{id}$
+there and the induction hypothesis on the right. This proves (ER.43).
+Induction on the address proves the converse at the same time: each
+right turn requires precisely the indicated $I$ test; no test is imposed
+on an untouched right sibling. The induction also shows that the
+recovered focus remains a leaf and that reapplying (ER.41) returns
+exactly $z$. These are proved domain conditions, not an assumed inverse.
+
+From the support in (ER.44), reconstruct the unlabelled finite shape and
+apply the existing ABT two-step shape decoder to recover $P_p(x)$.
+Apply (ER.42). Conversely, to recognize the marked image, first test the
+ABT image grammar, then the stated path and $I$ conditions. Every
+accepted pair is the encoding of its reconstructed $(x,p)$, by the two
+inverse identities. A terminal antichain gives the same support by
+prefix closure, proving its direction separately. All recursions are on
+finite trees or proper address suffixes. $\square$
+
+**Proposition 10.3 (phase and command do not replace the frontier).**
+Even with the same pending command $\mathsf U$, the same update phase
+and no previously completed command, the unmarked current encoded source
+need not determine the acquired seed. Put
+
+$$
+ u=\langle\alpha,\alpha\rangle,\qquad
+ v=\langle\beta,\alpha\rangle.
+$$
+
+Then $u\ne v$ but
+
+$$
+P_{RR}(j(u))
+ =\langle\rho(a_0),\langle\beta,\alpha\rangle\rangle
+ =P_{RL}(j(v)).
+\tag{ER.45}
+$$
+
+Both marks occur before completion of a genuine left-first update of
+that seed's $j$ entrance. Consequently even the *labelled* present
+source, and hence its support and terminal boundary, collide at these
+two unfinished cuts. Supplying the actual next-leaf mark restores the
+inverse of Theorem 10.2 on the entire marked domain, not just this pair.
+
+Proof. Both updates first substitute the two leaves of $a_0$. For $u$
+the next substitution changes its left $\alpha$ to $\beta$ and leaves
+frontier $RR$. For $v$ that substitution has not occurred, leaving
+frontier $RL$ at its old $\beta$. Their right subtrees are therefore
+identical as displayed. Encoding by the same $E$ preserves equality.
+The old acquired tables differ at $RL$, so a task retaining those actual
+tables distinguishes these cuts. The positive assertion is (ER.43).
+This is a partial-source collision, distinct from the supplied AIF
+pending-input-alphabet obstruction. $\square$
+
+## 11. A finite controller with every declared unfinished primitive cut
+
+**Assumption 11.1 (marked-cell controller model).** Fix one owner, source
+occurrence, root port, ordered address system and finite program before
+choosing the unknown finite seed $u$. The source initially contains $u$,
+not a source-dependent program or supplied syntax table. Retain the paid
+initial literal acquisition and the actual initializer $E(j(u))$ of
+Construction 9.10. In particular its initial unknown-source traversal is
+the stationary producer already cited there. Initial supply, known
+$a_0$ preparation, attachment and two warm-up substitutions are actual
+charged operations before the domain considered below.
+
+Declare the following different continuing primitive basis. Data are
+finite occurrence trees, backed finite address words, linked lists of
+immutable addressed rows and finite latches. The control graph is finite;
+these data carriers have no uniform finite size bound.
+
+1. A literal source Read submits an actually backed original-root word
+   and returns its truthful four-valued reply, preserving the current
+   source. The continuing program has two fixed suffix variants: from
+   its backed base address $q$, the instruction constructs the two word
+   links for $LL$ or $RL$ before its query, as part of that same atomic
+   occurrence, and retains their backing with its event. There are no
+   separately observable suffix-construction substeps in this basis.
+   These links, submitted letters and actual address traversal are charged.
+2. A code-cell step at an acquired logical leaf address $p$, with its
+   acquired old label $\ell$, tests the actual tile there and replaces
+   $A$ by $B$ if $\ell=\alpha$, or $B$ by $\langle B,A\rangle$ if
+   $\ell=\beta$. This is one atomic bounded source patch: at most five
+   old tile nodes and nine new tile nodes. It reaches the tile along the
+   actual supplied address and inspects each of its three or five old
+   nodes to check the specified finite pattern. These positioning and
+   pattern probes are charged source work, distinct from the literal
+   Read opcode. Every incidence outside that tile is unchanged, except
+   its attachment slot, which is retargeted to the new tile. Old tile
+   material is retired and retained. No whole unknown subtree is copied.
+   A guard mismatch is disabled; the
+   construction must prove that it never occurs.
+3. A known preparation constructs one fresh $A$ with its three known
+   nodes. A graft attaches that prepared occurrence and the actual
+   current source under one fresh root, on the specified left or right.
+   These are separate primitives. There are no observable subassignments
+   inside either declared atomic operation.
+4. Local primitives inspect a row or a finite latch, take a fixed finite
+   control edge, follow a backed list link, or allocate a fixed finite
+   number of list/row/reference cells. Appending a row shares its already
+   backed address word. Extending an address by $L$ or $R$ constructs one
+   word link. A Read's receiver may append one row and at most two work
+   addresses as its declared local coeffect. A row-transfer primitive
+   constructs one new row/list cell referring to an already acquired
+   address and label. It transfers no unbounded table in one occurrence.
+   The fixed finite combinations printed as one row of Definition 11.3
+   are the declared atomic instructions, with those local coeffects.
+   No local coeffect scans a whole table or decodes an unknown subtree;
+   root addressing retains its separately declared atomic convention.
+5. A prescribed ingress receives one actual bit into a finite latch. A
+   prescribed output sends one token from a fixed finite alphabet. Each
+   primitive also updates the finite control and appends one actual
+   event record, with references to its retained address/row backing.
+   These references are not freely supplied contents. Their storage,
+   traversal and any serialization are charged; one record does not
+   mean one fixed-width physical bit.
+
+The owner has exclusive authority to Read, patch, prepare and graft at
+this port; to inspect and retain its local rows and latches; and to use
+these input/output ports. Read traversals are source-stationary. No
+other actor writes, reallocates, interrupts, supplies another request or
+changes rights during a busy transaction. Allocation and retirement
+follow fixed fresh sequential naming and append-only retention rules.
+Thus retained old tiles, old tables, input records, event records and
+emitted output all remain part of the actual joint state. None is an
+independent source of choices. The fixed root/owner binding does not
+encode $u$, a command word or a version count.
+
+This is a declared mathematical primitive model, not a lowering to
+NativeSerialMachine or PR57 tapes. Literal addressing and reference/list
+operations have their stated word/reference operands. No unit physical
+cost, bounded word width, hidden tape-level execution or free geometric
+observation is inferred. Atomicity ends at the listed primitive cuts;
+the finite protocol below exposes every such cut, including each
+individual code-cell update, acquisition Read, row transfer and output
+token.
+
+**Definition 11.2 (actual table acquisition and retained data).** For a
+logical tree $x$ write $\mathsf A(x)$ for its complete addressed literal
+table in left-first preorder. It stores one row $(q,\ell)$ per actual
+node; a lookup below a leaf returns $\mathsf{absent}$ by missing address.
+Acquiring $\mathsf A(x)$ from an actual stationary $E(x)$ does not take
+$x$ as a runtime argument. Start a work list $W=[\varepsilon]$ and an
+empty row list $D$. At its head $q$, issue the two actual literal Reads
+
+$$
+qLL,\qquad qRL.
+\tag{ER.46}
+$$
+
+Record both full replies; retain the first reply in a finite latch until
+the second Read. Let a reply contribute 0 exactly when it is
+$\mathsf{absent}$ and 1 otherwise. By ABT (ABT.34)/(ABT.37), the pairs
+$00,10,11$ mean respectively logical $\alpha,\beta,\mathsf{branch}$.
+Append the resulting row. Pop $q$ from $W$; in the branch case prepend
+$qL,qR$, and otherwise append the acquired leaf-row reference to a
+separate leaf list. Both operations use only the newly acquired replies
+and already backed addresses. There is no independent source-size,
+leaf-address or next-node selector.
+The unused pair $01$ takes a fixed finite fault edge; that control has
+no executing successor. The source-code invariant proved in Theorem
+11.5 makes it unreachable, including during every refresh.
+
+Denote the retained complete anchor table by $A_*$. Its role is
+$\mathsf{live}$ or $\mathsf{held}$. A live anchor is bound to the present
+source by $r=E(x)$ and $A_*=\mathsf A(x)$; a held anchor is authorized
+retained data whose present-source binding is intentionally suspended.
+The owner may inspect either role, but a held table is not advertised
+as a fresh current-source result. Also retain the actual leaf-row list,
+the new acquisition list $D$, its work list, a replacement list $C$,
+row cursors and a local lookup-result latch. Scratch absent in a phase
+is empty; when replaced, its old backing is retired canonically.
+
+At startup acquire $\mathsf A(j(u))$ from the actual $E(j(u))$, make it
+live, execute the local lookup and output recipe below, and reach the
+first $\mathsf{Ready}$. The earlier initial traversal of $u$ remains in
+the actual event record. No current table is inserted as advice.
+
+**Definition 11.3 (complete continuing transition table).** Commands use
+the prefix code
+
+$$
+\mathsf U=0,\qquad\mathsf L=10,\qquad\mathsf R=11.
+\tag{ER.47}
+$$
+
+The following are all reached control families and all continuing
+transitions; the unused decoder fault control has no successor.
+An ingress row consumes exactly its stated bit. Every other row is one
+$\mathsf{Advance}$ occurrence in the basis of Assumption 11.1. Addresses,
+list heads and acquired replies are data fields, not infinitely many
+program states. The command latch $a$ is retained through the transaction.
+
+| Reached control | Enabled operation and actual successor |
+| --- | --- |
+| $\mathsf{Ready}$ | Supply 0 latches $\mathsf U$ and enters $\mathsf{Select}(\mathsf U)$; Supply 1 enters $\mathsf{Tail}$ with that acquired leading 1. |
+| $\mathsf{Tail}$ | Supply 0 latches $\mathsf L$; Supply 1 latches $\mathsf R$; either enters $\mathsf{Select}(a)$. |
+| $\mathsf{Select}(\mathsf U)$ | Mark $A_*$ held; point to the head $p$ of its retained leaf list and enter $\mathsf{Edit}(p)$. |
+| $\mathsf{Select}(a)$, $a=\mathsf L,\mathsf R$ | Mark $A_*$ held; prepare a fresh $A$ and enter $\mathsf{Graft}(a)$. |
+| $\mathsf{Edit}(p)$, $p\ne\top$ | Execute the guarded code-cell step using that leaf row's acquired old label. Advance to the next original leaf-row reference, or $\top$ if none; enter $\mathsf{Edit}$ at that mark. |
+| $\mathsf{Edit}(\top)$ | Append the update-completion event, clear the refresh lists, set $W=[\varepsilon]$, and enter $\mathsf{Read0}(\mathsf U,\varepsilon)$. |
+| $\mathsf{Graft}(a)$ | Consume the prepared $A$ in the corresponding whole graft. Clear the refresh lists, set $W=[\varepsilon]$, and enter $\mathsf{Read0}(a,\varepsilon)$. |
+| $\mathsf{Read0}(a,q)$ | Read $qLL$, save its full reply $v$, and enter $\mathsf{Read1}(a,q,v)$. |
+| $\mathsf{Read1}(a,q,v)$ | Read $qRL$ and perform exactly Definition 11.2's row/work/leaf-list update. If $W$ is now empty enter $\mathsf{Replace0}(a)$; otherwise enter $\mathsf{Read0}(a,\operatorname{head}W)$. |
+| $\mathsf{Replace0}(a)$ | Allocate empty $C$, preserve the held anchor and complete $D$, and enter $\mathsf{Copy}(a,\varepsilon)$ at the first row of $D$. |
+| $\mathsf{Copy}(a,q)$ | Transfer just that row of $D$ into $C$, including its leaf-list link when it is a leaf. Advance to the next row; after the last row enter $\mathsf{Bind}(a)$. |
+| $\mathsf{Bind}(a)$ | Retire the old anchor and its leaf list. Make $C$ and its leaf list the new live anchor; retain $D$ in retired backing; enter $\mathsf{Lookup}(a,\varepsilon)$. |
+| $\mathsf{Lookup}(a,q)$, $q\ne\top$ | Inspect just that acquired anchor row. If $q=LL$, save its literal reply and enter $\mathsf{OutStart}(a)$; otherwise move to the next row, or $\top$, in $\mathsf{Lookup}$. |
+| $\mathsf{Lookup}(a,\top)$ | Save $\mathsf{absent}$ and enter $\mathsf{OutStart}(a)$. |
+| $\mathsf{OutStart}(a)$ | Send $\mathsf{start}$ and enter $\mathsf{OutRow}(a,\varepsilon)$. |
+| $\mathsf{OutRow}(a,q)$ | Send that anchor row's one reply token and advance its actual row cursor; after the last row enter $\mathsf{OutSep}(a)$. |
+| $\mathsf{OutSep}(a)$ | Send $\mathsf{sep}$ and enter $\mathsf{OutResult}(a)$. |
+| $\mathsf{OutResult}(a)$ | Send the retained local lookup result and enter $\mathsf{OutEnd}(a)$. |
+| $\mathsf{OutEnd}(a)$ | Send $\mathsf{end}$ and enter $\mathsf{Finish}(a)$. |
+| $\mathsf{Finish}(a)$ | Retire remaining active scratch, clear the command/reply/result latches and return to $\mathsf{Ready}$. |
+
+An $\mathsf{Edit}$ control has implicit command $\mathsf U$.
+$\mathsf{Read1}$ carries its actual first reply; all other stale reply
+latches are cleared. The result latch is empty until lookup finishes,
+and is cleared by Finish. Traversal work-list tails, copied prefixes
+and output prefixes are actual retained objects; they are not additional
+inputs. Startup uses the same lookup/output rows with a fixed startup
+tag in place of $a$, before the first Ready.
+
+Every event records its opcode, actually supplied/emitted token or
+actual literal reply, and references to operands used. Control edges
+and row transfers also have distinct event tags. These records form
+$\Gamma$; the emitted tokens form $\mathsf{Out}$. A complete frame has
+$\mathsf{start}$, the preorder word of logical node replies,
+$\mathsf{sep}$, the local $LL$ reply and $\mathsf{end}$. The preorder
+word reconstructs the entire logical tree and its addressed table by the
+ordinary full-binary-tree parser. Partial frames remain partial; no end
+marker or completed response is assumed before its actual emission.
+
+**Definition 11.4 (receipt, full domain and primitive task).** The
+current receipt $f$ consists precisely of the control family and the data
+printed in its control notation in Definition 11.3. Thus it has a finite
+phase tag, at most one command, one addressed frontier/row cursor, and
+one finite first-reply latch. Ready and Tail have only their respective
+finite tags. Addresses denote actual backed references at the indicated
+roles; $\top$ is the fixed end token. No epoch, global primitive ordinal,
+seed, completed command word, archive index, table or event transcript
+is an additional field of $f$. Its finite tags/latches and reference
+binding are actual controller material updated by the same transitions.
+The selected address observation is its backed $L/R$ word, not an
+allocation number or the name of a cell containing that word. Equality
+of an observed table likewise compares its addressed contents and fixed
+owner/port binding, not row-allocation names. Actual reference identities
+remain in $J$ and are reconstructed by canonical replay; they are not
+hidden clock fields of the selected receipt. Reading or transmitting
+the word through its backing is additional charged work.
+The role of $A_*$ is determined by the phase: live before Select executes
+and from Lookup onward; held from Edit/Graft through Bind.
+
+Let $\mathcal H_\partial$ be *all* finite lawful executed primitive
+prefixes beginning at a seed's first Ready, for every finite
+$u\in\mathcal T$ and every finite supplied bit word extendible under
+(ER.47). It includes the empty prefix, the unfinished leading 1, selected
+but unapplied commands, every Edit frontier including $\top$, prepared
+but unattached constants, both Reads at every refresh node, every
+partially copied replacement list, before and after binding, each local
+lookup position, each partial output and Finish. There are no other
+continuing primitives in this declared model. An unfinished prefix need
+not have received all of its eventual command. An extension beyond its
+next input is not fixed in advance.
+
+Before defining any view, specify the task $Q_\partial$. Its present
+readout is the authorized retained anchor table, its live/held role and
+the current controller receipt. This is already acquired finite
+material, not an oracle for an unread current table. Its experimental
+actions are Supply(0), Supply(1) and Advance, enabled exactly by the
+transition table. At an input phase both bits are admitted; elsewhere
+only Advance is enabled. A disabled trial returns the fixed $\mathsf{none}$
+and makes no executing successor or record append. A legal action's
+complete response consists of its action identity, legal/success type,
+actual Read reply or emitted token when present, actual
+$\Delta\Gamma,\Delta\mathsf{Out}$, and its complete original joint
+successor $J'$. That successor includes the source occurrences, all
+retired material and records, actual tables, buffers, latches, reference
+backing, control, bindings and rights. It is a mathematical coordinate
+of the response, not a transmitted snapshot or an added read port.
+Finite legal continuations compose these responses. Task equivalence
+requires equal present readouts and equal partial response maps,
+including domains and the fixed disabled-trial behavior.
+
+**Theorem 11.5 (actual acquisition, partial updates and unique cut form).**
+Assumptions 11.1 and Definitions 11.2–11.4 give one finite program,
+independent of seed and future input, with the following properties on
+all of $\mathcal H_\partial$.
+
+At a Ready cut after completed transactions $w$, put $x=F_w(j(u))$.
+The actual source is $E(x)$ and its live anchor is $\mathsf A(x)$,
+acquired from that source by (ER.46). During a transaction $a$:
+
+- Tail, Select and Graft retain source $E(x)$ and anchor $\mathsf A(x)$;
+- at Edit($p$) the source is exactly $E(P_p(x))$ and the held anchor
+  remains $\mathsf A(x)$;
+- from Read0 through Bind the source is $E(y)$, $y=F_a(x)$, and the
+  held anchor remains $\mathsf A(x)$;
+- from Lookup through Finish the source is $E(y)$ and the live anchor
+  is precisely the newly acquired $\mathsf A(y)$.
+
+Every code-cell guard succeeds and no decoder fault is reached. The
+refresh queries address the actual
+same source occurrence and acquire each logical node exactly once with
+two Reads. Replacement and lookup terminate, and the lookup uses only
+the retained acquired anchor, making no source Read. Every finite
+command transaction terminates when its finitely many prescribed
+Advances are supplied. No uniform bound over seeds or words is implied.
+
+Every reached cut has a unique form $(u,w,f)$, with $w$ counting
+*finished transactions*, and that form determines the entire actual
+primitive prefix and complete $J$. Each of the following separately
+recovers that form effectively on its actual image:
+
+$$
+\bigl(\operatorname{Pos}(r),f\bigr),\quad
+\bigl(\operatorname{LeafPos}(r),f\bigr),\quad
+\bigl(A_*,\operatorname{role}(A_*),f\bigr),\quad
+\Gamma.
+\tag{ER.48}
+$$
+
+Proof. At a stationary $E(x)$, the two existence bits in (ER.46)
+classify a reached logical node by ABT.34. If it is a branch, both
+children are actual logical nodes; otherwise there are no logical
+children to schedule. The work-list induction says that $D$ is exactly
+the logical preorder prefix already visited and $W$ the pending
+preorder frontier. Thus each logical node is visited exactly once and
+the final $D$ and leaf list are $\mathsf A(x)$ and its true leaf rows.
+Finiteness of $x$ proves termination. This proves startup acquisition
+without supplying the runtime with the unknown $x$.
+
+Suppose the Ready invariant holds. The actual input code selects just
+one $a$. For $\mathsf U$, the retained old leaf list supplies precisely
+the original leaves of $x$, their actual addresses and acquired labels.
+Different original leaves are incomparable by prefix. Rewriting one
+tile therefore leaves every remaining original leaf tile at its old
+address and preserves all old logical branch positions. Its guard is
+exactly the acquired $A/B$
+pattern, so it succeeds. Pairing preservation gives, after each step,
+$E(P_p(x))$ at the next listed frontier. At $\top$ this is
+$E(\rho x)$. In particular a new logical leaf created below a rewritten
+old leaf never enters the old leaf list. A graft uses its actual prepared
+$A=E(\alpha)$ and preserves the actual old source as its other child,
+so its result is $E(F_a(x))$. All constants and new patch nodes are
+known material; the old source is neither guessed nor freely copied.
+
+The stationary acquisition induction applies again to $y=F_a(x)$.
+During replacement $C$ is exactly the prefix of the acquired $D$ already
+transferred, while the held anchor remains readable. After the last
+transfer, Bind makes that same complete acquired value live at the
+same source port; no unacquired candidate is activated. Lookup examines
+successive actual rows until $LL$ is found or the list ends. Its saved
+reply is therefore the exact logical literal at $LL$, including
+absence, using no fresh source access. Output consumes exactly those
+rows and that saved reply. All lists are finite. Finish restores the
+Ready invariant with $wa$ in place of $w$. Induction proves all stated
+source/table invariants, actual acquisition, rights preservation and
+progress. Source-stationarity holds because no update is enabled during
+Read0 through Finish.
+
+For the cut form, first $u,w,f$ determines a cut as follows. Run the
+canonical startup on the *description* $u$, the complete transactions
+of $w$, and the indicated current transaction. Its input prefix is
+fixed by f: none at Ready, the single 1 at Tail, and the unique complete
+code of $a$ at other busy phases. Each local phase position is unique
+within that transaction: Edit consumes different old leaf-row
+references, the two refresh subphases visit each different node once,
+Copy and output each advance a row cursor once, and Lookup never
+returns to a row. All other phases occur once. The first-reply latch is
+fixed by its actual query. Hence the specified phase and cursor are
+reached exactly once, reconstructing buffers, retired objects, canonical
+allocation names, rights, $\Gamma$ and $\mathsf{Out}$ as well as source
+and anchor. This is descriptive replay of recovered data; no replay
+port or resetting of the actual source is used.
+
+It remains to prove that the four data in (ER.48) recover this form,
+rather than assume its inverse. For support, ABT decodes the current
+logical tree $z$. At Ready, Tail, Select or Graft it is $x$; apply
+Theorems 9.3 and 9.5 to recover exactly $u,w$. At Edit($p$), first apply
+Theorem 10.2 to obtain $x=D_p(z)$, then the same ancestry parser. At all
+later phases $z=y=F_{wa}(j(u))$; the ancestry parser gives $u,wa$, and
+the pending command in $f$ identifies its last letter. Removing that
+one letter gives $w$. These are necessary checks on the actual image,
+not an assumed predecessor relation. The receipt supplies the attained
+local phase. Terminal boundary first gives support by prefix closure,
+so its decoder has the same conclusion.
+
+For the memory datum, the actual complete anchor reconstructs its
+logical labelled tree directly. Before Bind executes it is $x$, so the
+ancestry parser gives $u,w$. After Bind executes it is $y$, so it gives
+$u,wa$ and the pending final letter is removed. Ready and Tail use $x$.
+With these data, the forward construction computes every partial source
+and workspace field; it need not Read or invert an unknown physical
+source. The role and phase determine the correct case even while $C$
+is only a prefix or while a newly acquired $D$ already exists.
+
+Finally, $\Gamma$ contains the actual initial producer replies and
+addresses, which reconstruct $u$, as well as every subsequently
+supplied bit and every executed transition tag. Replay from the common
+initialized program through precisely this finite occurrence word gives
+the reached phase, the finished commands and the full state. No
+endpoint snapshot is appended to this temporal datum. Each decoder
+therefore gives the same actual $(u,w,f)$, and equality of that form
+implies equality of the primitive prefix by uniqueness just proved.
+$\square$
+
+## 12. Four individual task kernels, lawful transport and same-run costs
+
+**Definition 12.1 (four expressions of this actual protocol).** All four
+expressions are projections of the single reached joint process above:
+
+$$
+\begin{aligned}
+S_\partial(h)&=(\operatorname{Pos}(r(h)),f(h)),\\
+B_\partial(h)&=(\operatorname{LeafPos}(r(h)),f(h)),\\
+T_\partial(h)&=\Gamma(h),\\
+M_\partial(h)&=(A_*(h),\operatorname{role}(A_*(h)),f(h)).
+\end{aligned}
+\tag{ER.49}
+$$
+
+$S_\partial$ observes the actual current source's ordered incidence
+support and its actual controller receipt. $B_\partial$ observes where
+that current source terminates, together with the same receipt and its
+marked address binding. Neither observes workspace geometry, old table
+payloads, retired tiles or the event archive. Their extra control
+observation is explicit: these are not §9's bare source views during
+busy phases. A mark need not be an encoded terminal address.
+$T_\partial$ is actual occurrence order, including ingress, queries,
+updates, local work and outputs; it is not elapsed physical duration or
+a freely chosen clock coordinate. $M_\partial$ is the one actual
+acquired anchor and its local authority/role/control record, including
+when the anchor is held during refresh. It contains neither a past-table
+archive nor $\Gamma$ as an extra payload. Its use in lookup/output is
+part of the actual controller, rather than only a symbolic decoder.
+
+All fixed owner/port/permission fields are implicit equal comparison
+fields. Giving a mathematical view value does not transfer those rights
+to another owner. The owner can obtain spatial/boundary descriptions
+from an acquired table at stationary refresh completion by forward
+encoding and label erasure. During Edit it can compute the same finite
+descriptions from its held acquired table and actual frontier using
+(ER.41). Such computation and delivery consume local work, address
+backing and output storage; no instantaneous free view-acquisition
+service is added to the primitive task.
+
+**Theorem 12.2 (four exact kernels at every declared primitive cut).**
+For every $h,k\in\mathcal H_\partial$ and for each individual
+$V\in\{S_\partial,B_\partial,T_\partial,M_\partial\}$,
+
+$$
+ V(h)=V(k)
+ \quad\Longleftrightarrow\quad h=k
+ \quad\Longleftrightarrow\quad h\sim_{Q_\partial}k.
+\tag{ER.50}
+$$
+
+All twelve effective same-cut recoveries on the actual view images are
+mutual inverses and agree along every route. They preserve the entire
+lawful partial response map and the complete original successor of
+this controller at *each* primitive, including ingress and every
+unfinished update, refresh, replacement, lookup and output position.
+They also preserve every finite lawful adaptive continuation.
+
+Proof. Here equality of histories includes the seed and executed prefix
+from its first Ready. Theorem 11.5 proves separately that equality of
+each of the four view data recovers exactly that history; each view is
+also a function of that history. Thus every individual view has the
+diagonal kernel, without taking an intersection of kernels.
+
+Check both task-kernel directions for each view. Equal $S_\partial$
+gives the same seed, finished word and local receipt by its partial-source
+parser, hence the same complete state and every future response.
+Conversely task equivalence includes equal actually acquired anchor,
+role and receipt; its memory decoder gives the same history and
+therefore the same present source support and receipt. Equal
+$B_\partial$ gives the same history via prefix closure and that parser,
+hence the same responses; task equivalence gives the same recovered
+history and consequently the same terminal antichain and marked
+receipt. Equal $T_\partial$ gives the same actual seed acquisition and
+primitive prefix through replay, hence the same responses; task
+equivalence gives the same anchor/receipt, whose decoder fixes the
+unique actual chronology including startup. Equal $M_\partial$ gives
+the same history by the acquired-table decoder and hence the same
+responses; task equivalence directly includes equality of this actual
+retained readout. This proves both inclusions separately for all four.
+The reverse directions do not use a hidden successor coordinate to
+separate cuts: the task's already acquired present readout suffices.
+
+Write $d_V(V(h))=h$ for these actual-image decoders. Set
+$R_{VW}=W\circ d_V$. Then, on the attained images,
+
+$$
+R_{WV}R_{VW}=\operatorname{id},\qquad
+R_{WZ}R_{VW}=R_{VZ}.
+\tag{ER.51}
+$$
+
+Both compositions decode and re-encode the same actual cut. For an
+action $b\in\{\operatorname{Supply}(0),\operatorname{Supply}(1),
+\mathsf{Advance}\}$, let $A_b^V$ be its induced partial view successor.
+Its domain is exactly the view of the enabled controls in Definition
+11.3, not all mathematical view values or all physical operations.
+The common decoded receipt determines that domain. For each enabled
+case the transition table and Theorem 11.5 give the same actually
+executed operation, literal reply, output token, record append and full
+original $J'$; the resulting cut is again in $\mathcal H_\partial$.
+Therefore, including equality of domains,
+
+$$
+ R_{VW}A_b^V=A_b^W R_{VW},\qquad
+ \operatorname{Resp}_b^W R_{VW}=\operatorname{Resp}_b^V.
+\tag{ER.52}
+$$
+
+For disabled trials both sides return the same $\mathsf{none}$ without
+execution. Thus (ER.52) includes lawful full-response/successor
+compatibility, rather than merely tree conjugacy. Induction proves it
+for finite continuations. For finite adaptive experiments, equal acquired
+responses select the same next branch at every stage, so the same
+induction applies. These are algorithms on finite acquired descriptions;
+the theorem does not install arbitrary-owner or historical-cut conversion.
+$\square$
+
+**Proposition 12.3 (same-run operation and material account).** Put
+$x_i=F_{a_1\cdots a_i}(j(u))$, $0\le i\le k$, and
+$N(x)=2\lambda(x)-1$. For the actual run from installed $u$ through
+$k$ finished commands, including initial acquisition, the exact literal
+Read count and submitted-letter count are
+
+$$
+\begin{aligned}
+N_{\rm Read}
+ &=N(u)+2\sum_{i=0}^k N(x_i),\\
+L_{\rm addr}
+ &=\sum_{q\in\operatorname{Pos}(u)}|q|
+   +\sum_{i=0}^k\left(
+        2\sum_{q\in\operatorname{Pos}(x_i)}|q|+4N(x_i)\right).
+\end{aligned}
+\tag{ER.53}
+$$
+
+Let $\ell(y)$ be the one-based preorder row rank of $LL$ in
+$\mathsf A(y)$ when present, and $N(y)+1$ when absent. It counts exactly
+the local lookup occurrences. For one continuing transaction $a$ from
+$x$ to $y=F_a(x)$, its exact number of declared primitives is
+
+$$
+ |\operatorname{code}(a)|+9+4N(y)+\ell(y)
+       +\boldsymbol 1_{a=\mathsf U}\lambda(x).
+\tag{ER.54}
+$$
+
+It transfers $N(y)$ replacement rows and sends $N(y)+4$ output tokens.
+A U transaction performs precisely $\lambda(x)$ bounded source patches,
+allocating $5A(x)+9B(x)$ new active-tile nodes over the transaction and
+retiring $3A(x)+5B(x)$ old tile nodes. A graft prepares three known
+nodes and allocates one attachment root. Here $A(x),B(x)$ denote alpha
+and beta leaf counts, not the constant tiles $A,B$. Each logical refresh
+constructs $4N(y)$ query-suffix word links and $N(y)-1$ child-address
+links. The selected extensional receipt has at most $h(r)+c$ symbols
+for one fixed constant $c$ independent of seed and command word.
+These subtotals are not a physical fee or peak-storage optimum.
+
+Proof. Startup's raw source producer visits each node of $u$ once.
+Every logical refresh, including $x_0$, visits every logical node twice
+by (ER.46), with addresses of length $|q|+2$. No patch, retained lookup,
+row copy or output issues an additional source Read. This gives both
+identities in (ER.53) on the same run, counting repeated queries on
+different versions as different calls.
+
+A continuing transaction receives one bit for U or two for a graft.
+It has one Select step, either its $\lambda(x)$ cell steps followed by
+one Edit($\top$) step or one Graft step, $2N(y)$ refresh steps, one
+Replace0, $N(y)$ Copy steps, one Bind, $\ell(y)$ Lookup steps,
+$N(y)+4$ output steps, and one Finish. Collecting these terms gives
+(ER.54). A logical alpha tile has three nodes and its new B has five;
+a logical beta tile has five and its new pair of B and A has nine.
+Every original logical leaf is used once, proving the material counts.
+The tile guards additionally inspect exactly $3A(x)+5B(x)$ old tile
+nodes, with submitted tile-address length
+$\sum_{p\in\operatorname{LeafPos}(x)}|p|$; these probes are not counted
+as literal Read opcodes in (ER.53). Each of the $2N(y)$ queries makes
+two fresh suffix links. Each logical branch makes two child-address
+links, and a full binary tree has $N(y)-1$ child incidences. Finally the
+receipt has fixed-width finite tags and at most one word for an actual
+logical source position; that position is also a position of $r$.
+Its word length is at most $h(r)$. This bounds its selected extensional
+description, not the physical width of reference names or their backing.
+No unknown source-node copy is hidden in those replacements. $\square$
+
+**Definition 12.4 (additional resources and scope of parsimony).** The
+operation counts also require the actual source/owner/program
+installation, initial $a_0$ carrier, warm-up substitutions, finite input
+latches, reference backing, work/leaf lists, old and new addressed rows,
+the simultaneous held anchor, complete refresh list and replacement
+prefix, retired source tiles/tables/scratch, $\Gamma$, output retention
+and its serialization. Every occurrence's record and all referenced
+material remain charged. A code-cell step with a long address is not a
+constant-time root-to-cell seek. Table sharing saves a specified copy
+of an address value; it does not erase the address's backing, its
+reference representation or later traversal cost. Decoding shape,
+parsing (ER.42), ancestry inversion and descriptive replay are finite
+additional local computations whenever requested, not free runtime
+oracles used by the controller.
+
+The chosen task justifies the resources as follows. The inherited
+$E$ code makes erased geometry literal-informative; its fixed-depth
+minimality is ABT's supplied result, not a new minimum. The inherited
+$j$ entrance identifies the actual entry among ternary ancestors; the
+precise zero/one-graft comparison remains only Corollary 9.5's scope.
+The U and two oriented graft commands are the stipulated three-way
+continuation menu. No reduction to a globally indispensable alphabet is
+asserted. Acquired input/control distinctions are necessary on the
+unchanged-source ingress fiber by AIF; (ER.45) additionally shows that
+pending command and update phase alone fail on actual partial sources.
+Read subphase and row/output position distinguish actual unfinished
+work while source geometry is stationary. The displayed receipt is a
+sufficient implemented record of those positions; no least receipt
+alphabet or least pointer representation is claimed.
+
+The anchor is acquired by actual queries, supplies each cell operand,
+and is actually called by lookup/output; acquisition and retained use
+are different proved parts of Theorem 11.5. Source binding and write/read
+rights come from the fixed owner's declared exclusive capabilities,
+not from a view isomorphism. The chronological record is actual charged
+backing for occurrence order and the full successor; geometric recovery
+does not make that retained material free. Descriptive replay recovers
+it without including it as a second payload in S, B or M. By Theorem
+9.8, even completed sources for a fixed seed separate $3^k$ command
+words, so neither a finite control graph nor the bounded size of an
+individual tile step implies bounded total memory.
+
+**Convention 12.5 (supplier and novelty boundary).**
+References to the repository in §§10–12 use their text at
+$\texttt{52dbcd87147da56ebc64a90fb2801651f39d1be4}$.
+The source-specific addition is the exact contextual image and inverse
+(ER.41)–(ER.44), the collision (ER.45) within actual one-graft entrances,
+and their integration with the complete declared protocol. The protocol
+retains an old acquired anchor across every cell update, refresh and
+partial replacement and replaces it only after genuine acquisition.
+Consequently every declared continuing primitive cut, rather than only
+an active-source contour or completed cut, has the four *individual*
+task kernels of (ER.50). This is repo-derived mathematical synthesis,
+without a new Lean certificate or a claim of worldwide priority.
+
+ER Theorems 9.3/9.5/9.8 supply ternary ancestry and stable source shape
+recovery. ABT Theorem 12.1 and its two-query decoder supply $E$'s grammar
+and stationary acquisition bits. IntrinsicSubstitutionCoordinates's
+`no_alpha`, `pair_image`, private `substitution_injective` and owning
+exposition supply the substitution-image facts; the private proof is not
+being presented as a new accessible API. NativeFullSourceProducer's
+`native_source_producer` and its private traversal/Read/stationarity
+proofs supply the initial stationary producer, under its unbounded
+finite-workspace contract. None of those results states the marked
+partial-source image criterion or supplies this continuing controller.
+
+AIF Theorem 4.4 supplies all-cut deterministic replay with its acquired
+seed, consumed input and primitive ordinal. SSA/CSA/PVC supply exact
+four-view/returned-use results under their respective whole-storage,
+atomic patch, install and authority hypotheses. Their route algebra and
+both task-kernel inclusions are reused here. S and B here exclude
+workspace, old tables and the event archive; they include the explicitly
+constructed local receipt instead of observing whole storage. The
+source-specific partial inverse, not replay alone, closes their busy
+source-to-anchor direction. SSA §13's restricted relocation data paths
+do not construct these cell rules or this global controller. PR57 keeps
+its candidate-array source unavailable during writeback and its own
+restricted busy observation menu. Here the encoded source remains an
+actual full tree at every bounded tile cut, and the controller receipt
+and logical acquisition interface are different declared observations.
+No native/PR57 source-byte or fine-relocation implementation is inferred.
+
+Huet, *The Zipper*, JFP 7(5), 549–554, [author manuscript, §§1.1–1.3](https://pauillac.inria.fr/~huet/PUBLIC/zip.pdf),
+is a literature-attested supplier for focus/context decomposition and
+local editing. Its focus contains a subtree and retained sibling
+context; it does not supply (ER.42)'s reconstruction of the substituted
+siblings from this current erased source and a next-leaf address.
+Bennett's [history/copy/reverse construction][Bennett] is the
+literature-attested replay/reversibility comparison: record storage and
+copy/reverse work are additional resources. Neither supplier proves
+(ER.45) or this common-source acquisition/busy-cut correspondence.
+The exact tree-image deductions and protocol proofs above do not rely
+on absence of a search hit as evidence of novelty.
+
+**Definition 12.6 (unchanged claims and remaining domains).** This
+controller changes ER §9's continuing primitive and observation/task
+interfaces: whole U is refined into the specified acquired-leaf code
+patches; the known three-node graft constant has its own bounded
+constructor; ingress has two actual bit sites; refresh acquires a *logical*
+table by two literal queries per logical node; replacement transfers
+one acquired row at a time; output is the specified logical preorder
+frame; and space/boundary additionally expose the current controller
+receipt. At completed cuts the physical source is the same
+$E(F_w(j(u)))$, and logical disclosure determines its complete literal
+source table by forward encoding. The full joint successors, output
+frames and busy readouts nevertheless belong to this newly defined
+$Q_\partial$, not ER.35 or the original prediction task ER.3.
+
+Theorem 12.2 covers the entire post-first-Ready primitive domain of this
+explicit model; it does not cover finer cuts inside its atomic source
+Read, bounded patch, list/reference coeffect or Bind, arbitrary busy
+interrupts, independent requests or other owners. Initial acquisition
+is actually performed, but no four-kernel theorem for pre-first-Ready
+startup is asserted. Callable use is the owner's current retained
+lookup/output routine. Arbitrary historical-cut selection, authenticated
+cross-owner acquisition, installed conversion/delivery and physical
+lowering remain separate obligations. None is obtained by merely
+running a mathematical decoder on a view description.
+
+Every prior fixed-$G_{gc}$, original-$Q$, unchanged-initialization,
+parked-consumer and original-authority obligation keeps its precise
+scope, including Open problem 8.1 and NCR 11.3(2). The original
+$M_1(D)$, sharp $\lambda$, effective all-size certificates, coherent
+infinite-source realization, general resource minima and the sustained
+space/time/boundary/memory programme remain unresolved. These bounded
+finite-source recovery results supply no physical spacetime identity,
+universal alpha/beta reduction or completion of that programme.
+
+## 追加锚（本行以下为增补区）
