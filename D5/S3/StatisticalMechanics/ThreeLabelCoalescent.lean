@@ -55,6 +55,72 @@ def H (h t : ℝ) : ℝ :=
   1 - ((13 / 4 + 3 * t) / K h) * u t -
     ((h + 3 / 4 + (1 + h) * t) / K h) * v h t
 
+/-- Literal merge events on N,A,B,T,C, all from the same partition state. -/
+def merge12 : Fin 5 → Bool := ![false, true, false, true, false]
+def merge23 : Fin 5 → Bool := ![false, false, true, true, false]
+def separate13 : Fin 5 → Bool := ![false, false, false, false, true]
+def eventMean (q : Fin 5 → ℝ) (event : Fin 5 → Bool) : ℝ :=
+  ∑ i, if event i then q i else 0
+def X (q : Fin 5 → ℝ) : ℝ := eventMean q merge12
+def Y (q : Fin 5 → ℝ) : ℝ := eventMean q merge23
+def Z (q : Fin 5 → ℝ) : ℝ := eventMean q separate13
+
+def pyramidWidth (q : Fin 5 → ℝ) : ℝ :=
+  min (min (X q) (Y q)) (min (1 - Z q - X q) (1 - Z q - Y q))
+
+def productJoint (q : Fin 5 → ℝ) : ℝ := X q * Y q / (1 - Z q)
+
+def productCompletion (q : Fin 5 → ℝ) : Fin 5 → ℝ :=
+  ![1 - Z q - X q - Y q + productJoint q, X q - productJoint q,
+    Y q - productJoint q, productJoint q, Z q]
+def expectation (q f : Fin 5 → ℝ) : ℝ := ∑ i, q i * f i
+def contrast (f : Fin 5 → ℝ) : ℝ := f 3 - f 1 - f 2 + f 0
+def taskError (q f : Fin 5 → ℝ) : ℝ := expectation q f - expectation (productCompletion q) f
+
+private lemma task_error_identity (q : Fin 5 → ℝ) (hs : ∑ i, q i = 1)
+    (hr : 0 < 1 - Z q) (f : Fin 5 → ℝ) :
+    taskError q f = contrast f * delta q / (1 - Z q) := by
+  have hq0 : q 0 = 1 - q 1 - q 2 - q 3 - q 4 := by
+    rw [Fin.sum_univ_five] at hs; linarith
+  have hden : 1 - q 4 ≠ 0 := by
+    simpa [Z, eventMean, separate13, Fin.sum_univ_five] using ne_of_gt hr
+  simp [taskError, expectation, productCompletion, contrast, productJoint, delta,
+    X, Y, Z, eventMean, merge12, merge23, separate13, Fin.sum_univ_five]
+  rw [hq0]
+  field_simp [hden]
+  ring
+
+private lemma pyramid_bridge (q : Fin 5 → ℝ) (hs : ∑ i, q i = 1) (hp : ∀ i, 0 < q i) :
+    0 < pyramidWidth q ∧ 0 < 1 - Z q ∧ (delta q = 0 ↔ q 3 = productJoint q) := by
+  have hx : X q = q 1 + q 3 := by simp [X, eventMean, merge12, Fin.sum_univ_five]
+  have hy : Y q = q 2 + q 3 := by simp [Y, eventMean, merge23, Fin.sum_univ_five]
+  have hz : Z q = q 4 := by simp [Z, eventMean, separate13, Fin.sum_univ_five]
+  have hsum : q 0 + q 1 + q 2 + q 3 + q 4 = 1 := by simpa [Fin.sum_univ_five] using hs
+  have h0 := hp 0; have h1 := hp 1; have h2 := hp 2; have h3 := hp 3; have h4 := hp 4
+  have hr : 0 < 1 - Z q := by rw [hz]; linarith
+  refine ⟨?_, hr, ?_⟩
+  · dsimp [pyramidWidth]
+    rw [hx, hy, hz]
+    exact lt_min (lt_min (by linarith) (by linarith)) (lt_min (by linarith) (by linarith))
+  · unfold productJoint
+    rw [eq_div_iff (ne_of_gt hr), hx, hy, hz]
+    have hsum3 := congrArg (fun z : ℝ => z * q 3) hsum
+    dsimp [delta]
+    constructor <;> intro he <;> nlinarith [hsum3]
+
+private lemma completion_eq (q : Fin 5 → ℝ) (hs : ∑ i, q i = 1)
+    (hci : delta q = 0 ↔ q 3 = productJoint q) :
+    delta q = 0 ↔ q = productCompletion q := by
+  rw [hci]
+  constructor
+  · intro he
+    rw [Fin.sum_univ_five] at hs
+    funext i
+    fin_cases i <;> simp [productCompletion, ← he, X, Y, Z, eventMean,
+      merge12, merge23, separate13, Fin.sum_univ_five] <;> linarith
+  · intro he
+    simpa [productCompletion] using congrFun he 3
+
 private lemma du (t : ℝ) : HasDerivAt u (-u t / 4) t := by
   convert (((hasDerivAt_id t).neg.div_const 4).exp) using 1
   · ext s; simp [u]
@@ -216,18 +282,20 @@ theorem positive_probability_solution (h : ℝ) (hh : 0 < h) :
     ForwardLaw h (explicit h) ∧
     ∀ (p : ℝ → Fin 5 → ℝ), ForwardLaw h p → ∀ t, 0 < t →
       p t = explicit h t ∧ (∑ i, p t i) = 1 ∧ (∀ i, 0 < p t i) ∧
-      delta (p t) = v h t * H h t := by
+      delta (p t) = v h t * H h t ∧ 0 < pyramidWidth (p t) ∧ 0 < 1 - Z (p t) ∧
+      (delta (p t) = 0 ↔ p t 3 = productJoint (p t)) ∧
+      (delta (p t) = 0 ↔ p t = productCompletion (p t)) ∧
+      (∀ f, taskError (p t) f = contrast f * delta (p t) / (1 - Z (p t))) := by
   have hk : K h ≠ 0 := ne_of_gt (by dsimp [K]; linarith)
   refine ⟨explicit_forward h hk, ?_⟩
   intro p hp t ht
   obtain ⟨he, hd⟩ := forward_solution h hh p hp t ht.le
-  refine ⟨he, ?_, ?_, hd⟩
-  · rw [he]
-    simp [explicit, Fin.sum_univ_succ]
-  · rw [he]
-    exact explicit_positive h hh t ht
+  have hs : ∑ i, p t i = 1 := by rw [he]; simp [explicit, Fin.sum_univ_succ]
+  have hp' : ∀ i, 0 < p t i := by rw [he]; exact explicit_positive h hh t ht
+  obtain ⟨hw, hr, hci⟩ := pyramid_bridge (p t) hs hp'
+  exact ⟨he, hs, hp', hd, hw, hr, hci, completion_eq (p t) hs hci,
+    task_error_identity (p t) hs hr⟩
 
-/-- Coefficients of the exponentially damped part of the derivative certificate. -/
 def V (h : ℝ) : ℝ := 35 / 16 + K h * h
 def W (h : ℝ) : ℝ := ell h * (1 + h)
 def G (h t : ℝ) : ℝ :=

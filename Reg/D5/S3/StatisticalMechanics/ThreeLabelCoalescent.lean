@@ -56,7 +56,16 @@ def probabilityArena : Arena where
     ForwardLaw h (explicit h) ∧ ∀ (p : ℝ → Fin 5 → ℝ), ForwardLaw h p → ∀ t, 0 < t →
       (fun i => R.readout () (p, t) i) = explicit h t ∧
       (∑ i, R.readout () (p, t) i) = 1 ∧ (∀ i, 0 < R.readout () (p, t) i) ∧
-      delta (fun i => R.readout () (p, t) i) = v h t * H h t
+      delta (fun i => R.readout () (p, t) i) = v h t * H h t ∧
+      0 < pyramidWidth (fun i => R.readout () (p, t) i) ∧
+      0 < 1 - Z (fun i => R.readout () (p, t) i) ∧
+      (delta (fun i => R.readout () (p, t) i) = 0 ↔
+        R.readout () (p, t) 3 = productJoint (fun i => R.readout () (p, t) i)) ∧
+      (delta (fun i => R.readout () (p, t) i) = 0 ↔
+        (fun i => R.readout () (p, t) i) = productCompletion (fun i => R.readout () (p, t) i)) ∧
+      (∀ f, taskError (fun i => R.readout () (p, t) i) f =
+        contrast f * delta (fun i => R.readout () (p, t) i) /
+          (1 - Z (fun i => R.readout () (p, t) i)))
 
 private theorem probabilityRejected : ¬ probabilityArena.Law massRejected := by
   intro hl
@@ -398,7 +407,7 @@ def probabilityAnalysis : AuricFib.Contract.Application (@positive_probability_s
     source := probabilitySource
     plan := { task := (), initial := [], additions := [[()], []] }
     acquisition := .unavailable
-      "Five actual partition states; real exponential masses have no supplied finite value decoder or FIB event adapter" }
+      "Five actual partition states with proved real law and event means; no certified finite equality table for symbolic exponential masses or native continuation adapter" }
 
 #print axioms forwardRegistration
 #print axioms probabilityRegistration

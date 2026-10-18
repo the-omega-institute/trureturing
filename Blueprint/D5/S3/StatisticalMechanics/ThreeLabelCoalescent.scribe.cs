@@ -65,7 +65,15 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The explicit vector solves the initial-value problem. At positive time, "
                     + "u exceeds v, so the masses at N, A, B and C are positive. The derivative of the T mass "
                     + "is a sum of nonnegative incoming flows, with strictly positive direct flow h times "
-                    + "the N mass. Thus T grows strictly from zero. The five masses sum to one."))),
+                    + "the N mass. Thus T grows strictly from zero. The five masses sum to one. The event maps merge12, merge23 and separate13 "
+                    + "on N,A,B,T,C have truth tables (0,1,0,1,0), (0,0,1,1,0), and (0,0,0,0,1). "
+                    + "Their means are X=pA+pT, Y=pB+pT and Z=pC. The pyramid width is "
+                    + "min(X,Y,1-Z-X,1-Z-Y)>0. The conditional product joint mass is XY/(1-Z), "
+                    + "and delta vanishes exactly when pT equals this mass. The productCompletion law "
+                    + "is (1-Z-X-Y+kstar,X-kstar,Y-kstar,kstar,Z), with kstar=XY/(1-Z). "
+                    + "The actual taskError is the expectation of f under p minus its expectation "
+                    + "under productCompletion(p). It equals (fT-fA-fB+fN)*delta/(1-Z). "
+                    + "Nonzero contrast preserves the zero set; negative contrast reverses all signs."))),
                 DescribeRole.Theorem),
             Paragraph(Text("For V = 35/16+Kh and W = ell(1+h), set "
                 + "G(h,t) = 3t/4-35/16+(V+Wt)exp(-Kt). Differentiation gives H' = uG/K and "
@@ -144,8 +152,18 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
         Formula normalization = Eq(Seq(new Formula.Subscript(Sum, Seq(i, InMacro, Sp, Call("Fin", D(5)))),
             Seq(p, Open, t, Comma, i, Close)), D(1));
         Formula positive = All("i", Call("Fin", D(5)), Lt(D(0), Seq(p, Open, t, Comma, i, Close)));
+        Formula residual = new Formula.Binary(D(1), FormulaBinaryOperator.Subtract, Call("Z", q));
+        Formula independent = new Formula.Logic(Eq(Call("delta", q), D(0)), FormulaLogicOperator.Iff,
+            Eq(Seq(p, Open, t, Comma, D(3), Close), Call("productJoint", q)));
+        Formula f = F.Id("f");
+        Formula response = All("f", Mass, Eq(Call("taskError", q, f),
+            new Formula.Fraction(Mul(Call("contrast", f), Call("delta", q)), residual)));
+        Formula fixedPoint = new Formula.Logic(Eq(Call("delta", q), D(0)), FormulaLogicOperator.Iff,
+            Eq(q, Call("productCompletion", q)));
+        Formula geometry = And(Lt(D(0), Call("pyramidWidth", q)),
+            And(Lt(D(0), residual), And(independent, And(fixedPoint, response))));
         Formula conclusion = And(Eq(q, Call("explicit", h, t)), And(normalization,
-            And(positive, Eq(Call("delta", q), Mul(Call("v", h, t), Call("H", h, t))))));
+            And(positive, And(Eq(Call("delta", q), Mul(Call("v", h, t), Call("H", h, t))), geometry))));
         return All("h", R, Imp(Lt(D(0), h),
             And(Call("ForwardLaw", h, Call("explicit", h)),
                 All("p", Trajectory, Imp(Call("ForwardLaw", h, p),
@@ -188,7 +206,7 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
         Formula h = F.Id("h"), q = F.Id("q");
         Formula Rate(byte j) => Seq(r, Open, D(j), Close);
         Formula MassAt(byte j) => Seq(p, Open, t, Comma, D(j), Close);
-        Formula neg(Formula a) => Seq(Minus, a);
+        Formula neg(Formula a) => new Formula.Negate(a);
         Formula sum(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
         Formula sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
         Formula l = Call("outgoing", r);
