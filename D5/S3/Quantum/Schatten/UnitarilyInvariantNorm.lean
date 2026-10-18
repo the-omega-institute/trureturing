@@ -171,7 +171,8 @@ theorem N_diagonal_mono (x y : Fin n → ℝ) (hxy : ∀ i, |x i| ≤ |y i|) :
     · simp [c, hi]
   simpa only [heq] using ν.N_diagonal_contract y c hc
 
-private theorem N_diagonal_perm (x : Fin n → ℝ) (σ : Equiv.Perm (Fin n)) :
+/-- Permuting real diagonal entries preserves every unitarily invariant norm. -/
+theorem N_diagonal_perm (x : Fin n → ℝ) (σ : Equiv.Perm (Fin n)) :
     ν.N (diagonal (fun i => (x (σ i) : ℂ))) =
       ν.N (diagonal (fun i => (x i : ℂ))) := by
   have hP : σ.permMatrix ℂ ∈ Matrix.unitaryGroup (Fin n) ℂ := by
@@ -188,6 +189,35 @@ private theorem N_diagonal_perm (x : Fin n → ℝ) (σ : Equiv.Perm (Fin n)) :
   rw [← heq]
   exact ν.unitary_invariant _ _ _ hP (show _ from (star ⟨_, hP⟩ :
     Matrix.unitaryGroup (Fin n) ℂ).property)
+
+/-- A diagonally weighted permutation has the diagonal gauge of its matched weights. -/
+theorem N_diagonal_permMatrix (a b : Fin n → ℝ) (σ : Equiv.Perm (Fin n)) :
+    ν.N (diagonal (fun i => (a i : ℂ)) * σ.permMatrix ℂ *
+      diagonal (fun i => (b i : ℂ))) =
+      ν.N (diagonal (fun i => ((a i * b (σ i) : ℝ) : ℂ))) := by
+  have hP : σ.permMatrix ℂ ∈ Matrix.unitaryGroup (Fin n) ℂ := by
+    rw [mem_unitaryGroup_iff]
+    change σ.permMatrix ℂ * (σ.permMatrix ℂ)ᴴ = 1
+    rw [conjTranspose_permMatrix, ← permMatrix_mul]
+    simp
+  have hconj : σ.permMatrix ℂ * diagonal (fun i => (b i : ℂ)) *
+      (σ.permMatrix ℂ)ᴴ = diagonal (fun i => (b (σ i) : ℂ)) := by
+    rw [conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
+      PEquiv.mul_toMatrix_toPEquiv]
+    ext i j
+    simp [submatrix_apply, diagonal, Equiv.Perm.inv_def]
+  have heq : (diagonal (fun i => (a i : ℂ)) * σ.permMatrix ℂ *
+      diagonal (fun i => (b i : ℂ))) * (σ.permMatrix ℂ)ᴴ =
+      diagonal (fun i => ((a i * b (σ i) : ℝ) : ℂ)) := by
+    calc
+      _ = diagonal (fun i => (a i : ℂ)) * (σ.permMatrix ℂ *
+          diagonal (fun i => (b i : ℂ)) * (σ.permMatrix ℂ)ᴴ) := by
+        simp only [Matrix.mul_assoc]
+      _ = _ := by rw [hconj, diagonal_mul_diagonal]; simp
+  rw [← heq]
+  simpa only [one_mul] using (ν.unitary_invariant 1 (σ.permMatrix ℂ)ᴴ
+    (diagonal (fun i => (a i : ℂ)) * σ.permMatrix ℂ * diagonal (fun i => (b i : ℂ)))
+    (by simp) (show _ from (star ⟨_, hP⟩ : Matrix.unitaryGroup (Fin n) ℂ).property)).symm
 
 private theorem N_diagonal_convex (x y : Fin n → ℝ) (c : ℝ)
     (hc0 : 0 ≤ c) (hc1 : c ≤ 1) :

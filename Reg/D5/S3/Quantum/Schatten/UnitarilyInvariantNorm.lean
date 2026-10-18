@@ -387,5 +387,119 @@ def registration :
 
 end DiagonalWeakMajorization
 
+
+namespace DiagonalPerm
+
+abbrev arena : Arena where
+  signature := relationSignature
+  Law R := ∀ {n : ℕ} (ν : UINorm n) (x : Fin n → ℝ) (σ : Equiv.Perm (Fin n)),
+    R.readout () () (ν.N (diagonal (fun i => (x (σ i) : ℂ))))
+      (ν.N (diagonal (fun i => (x i : ℂ))))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact @h 0 zeroDimNorm (fun _ => 0) 1
+
+def source_registration : Registration arena (type_of% @N_diagonal_perm) where
+  actual := equalityActual
+  bridge := Iff.rfl
+  variation := ⟨@N_diagonal_perm, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law equalityActual rejected
+    rejected_law
+  dependence := equality_dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@N_diagonal_perm) (Realization relationSignature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Schatten.UINorm.N_diagonal_perm.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm.DiagonalPerm.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize relationSignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end DiagonalPerm
+
+namespace DiagonalPermMatrix
+
+abbrev arena : Arena where
+  signature := relationSignature
+  Law R := ∀ {n : ℕ} (ν : UINorm n) (a b : Fin n → ℝ) (σ : Equiv.Perm (Fin n)),
+    R.readout () () (ν.N (diagonal (fun i => (a i : ℂ)) * σ.permMatrix ℂ *
+      diagonal (fun i => (b i : ℂ))))
+      (ν.N (diagonal (fun i => ((a i * b (σ i) : ℝ) : ℂ))))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact @h 0 zeroDimNorm (fun _ => 0) (fun _ => 0) 1
+
+def source_registration : Registration arena (type_of% @N_diagonal_permMatrix) where
+  actual := equalityActual
+  bridge := Iff.rfl
+  variation := ⟨@N_diagonal_permMatrix, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law equalityActual rejected
+    rejected_law
+  dependence := equality_dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@N_diagonal_permMatrix) (Realization relationSignature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Schatten.UINorm.N_diagonal_permMatrix.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm.DiagonalPermMatrix.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize relationSignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end DiagonalPermMatrix
+
 end
 end Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
