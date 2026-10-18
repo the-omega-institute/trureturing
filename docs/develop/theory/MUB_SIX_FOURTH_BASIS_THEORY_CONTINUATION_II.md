@@ -4208,3 +4208,386 @@ orthogonal-triple obstruction or whole-branch basis classification is
 a consequence asserted by this section. Those questions require joint
 constraints across the reconstructed rays, beyond the single-ray
 necessity and sufficiency proved here.
+
+## 76. Complete root-free systems for the noncanonical pair problem
+
+### 76.1. Relative antiunitary parity and the remaining implication
+
+Retain the unit-entry input convention of §75 and fix \(0<|b|<1\).
+For \(w=(x,y)\), put \(\mu(w)=(\sum x_j,\sum y_j)\in\mathbb C^2\).
+Theorem 75.2 makes both entries nonzero for every noncanonical ray.
+The following implication remains a separate mathematical question:
+\[
+ w\perp v\quad\Longrightarrow\quad\mu(w)\perp\mu(v)
+ \qquad(w,v\text{ noncanonical common-flat}).                 \tag{76.1}
+\]
+This section gives exact finite systems equivalent to its failure; it
+proves no emptiness assertion for those systems.
+
+The choice of a three-distinct upper channel in Theorem 75.1 records a
+\(\Theta\) flag. Simultaneous application of \(\Theta\) preserves
+orthogonality, so only the relative flag matters. For selected inputs
+\(w=(x,y)\), \(v=(x',y')\), the applicable cross equations and targets are
+\[
+\begin{array}{c|c}
+ \mathcal O=\sum_j(\bar x_jx'_j+\bar y_jy'_j)=0
+   &\bar X X'+\bar Y Y'=0\\
+ \mathcal S=\sum_j(x_jy'_j-y_jx'_j)=0
+   &X Y'-Y X'=0.
+\end{array}                                                   \tag{76.2}
+\]
+Indeed \(w^*\Theta v=-\overline{\mathcal S}\). These are two alternative
+systems selected by relative parity, not simultaneous requirements.
+
+### 76.2. Two three-distinct-channel representatives
+
+For one solution of (75.13)–(75.15), use \(q,e,g,c,d\), set
+\(t=\sqrt q\), \(E=\bar e\), and define
+\[
+\begin{aligned}
+ f(Z)&=Z^3-3Z^2+3EZ-E/q,\\
+ B(Z)&=(Z^2-3Z+3E)/E,\\
+ L(Z)&=g+c(Z-1)+d(B(Z)-1),\\
+ L^c(Z)&=\bar g+\bar c(B(Z)-1)+\bar d(Z-1).
+\end{aligned}                                                   \tag{76.3}
+\]
+The original upper entries are \(tZ_j\), where the \(Z_j\) are the
+three roots of \(f\); the lower entries are \(tL(Z_j)\).
+On the strict single-ray domain, \(B(Z_j)=\bar Z_j\) and
+\(L^c(Z_j)=\overline{L(Z_j)}\). In particular \(qZ_jB(Z_j)=1\).
+
+Here is an explicit algebra containing every root order. Let
+\[
+ C=\begin{pmatrix}0&0&E/q\\1&0&-3E\\0&1&3\end{pmatrix},\quad
+ X_1=\operatorname{diag}(C,C),\quad
+ X_2=\begin{pmatrix}0&-C^2+3C-3EI_3\\I_3&3I_3-C\end{pmatrix},\quad
+ X_3=3I_6-X_1-X_2.                                             \tag{76.4}
+\]
+The matrices commute and each satisfies \(f(X_j)=0\). The quadratic
+for the second root is
+\[
+ X_2^2+(X_1-3I_6)X_2+X_1^2-3X_1+3EI_6=0.
+\]
+Its two roots are exactly the two roots of \(f\) different from the
+selected first root. Since the strict discriminant condition makes all
+three roots distinct, this algebra is a product of six copies of
+\(\mathbb C\), one for each ordered triple. Equivalently, evaluation in
+the basis \(1,Z_1,Z_1^2,Z_2,Z_1Z_2,Z_1^2Z_2\) gives the six distinct
+characters. No cyclic-order restriction has been imposed.
+
+For a second quotient point use \(Y_j,B',L'\), with mean ratio \(k\).
+Define the \(36\times36\) matrices
+\[
+\begin{aligned}
+ \mathsf O_{gg}&=\sum_{j=1}^3
+     [B(X_j)\otimes Y_j+L^c(X_j)\otimes L'(Y_j)],\\
+ \mathsf S_{gg}&=\sum_{j=1}^3
+     [X_j\otimes L'(Y_j)-L(X_j)\otimes Y_j].
+\end{aligned}                                                   \tag{76.5}
+\]
+Their evaluations are precisely the original cross expressions divided
+by \(tt'\), for all 36 pairs of root orders. Thus each determinant
+vanishes if and only if some relative order satisfies its cross equation.
+Simultaneous permutation invariance also shows that each determinant is
+the sixth power of the product over the six relative orders.
+The corresponding mean targets, after removing the nonzero factor
+\(9tt'\), are
+\[
+ 1+\bar gk=0,\qquad k-g=0.                                    \tag{76.6}
+\]
+Consequently failure of (76.1) in this case is exactly the union of two
+systems: both complete strict single-ray quotients, the applicable
+complex determinant equation in (76.5), and a strictly positive squared
+modulus of the corresponding expression in (76.6).
+
+### 76.3. A three-distinct-channel representative and an aligned one
+
+Write the aligned input as \((1,1,z;h_a,h_a,h_ar)\), using either its
+finite quotient or its explicit pole stratum from Theorem 75.5.
+The symbol \(h_a\) is its unit phase. The three possible positions of its
+unique coordinate lead to the companion-matrix norms
+\[
+\begin{aligned}
+ \mathsf O_{ga}&=3(1+\bar gh_a)I_3
+                +(z-1)B(C)+h_a(r-1)L^c(C),\\
+ \mathsf S_{ga}&=3(h_a-g)I_3
+                +h_a(r-1)C-(z-1)L(C).
+\end{aligned}                                                   \tag{76.7}
+\]
+Their determinants are products of all three relative-position cross
+expressions divided by \(t\). Permuting the two repeated positions only
+duplicates values. The exact mean targets are
+\[
+ (2+z)+\bar gh_a(2+r)=0,\qquad
+ h_a(2+r)-g(2+z)=0.                                           \tag{76.8}
+\]
+The mixed failure systems consist of the two single-ray descriptions,
+the relevant determinant equation, and nonzero squared modulus of its
+target. Reversing the order of the rays conjugates \(\mathcal O\) or
+negates \(\mathcal S\), so introduces no further zero-condition case.
+
+### 76.4. Two aligned representatives and completeness
+
+Write \(w=(1,1,z;g,g,gr)\), \(v=(1,1,Z;k,k,kR)\), where \(R\) here
+is a unit phase ratio. The two relative positions are matched or different.
+Their cross expressions are
+\[
+\begin{aligned}
+ O_m&=2+\bar zZ+\bar gk(2+\bar rR),\\
+ O_d&=1+\bar z+Z+\bar gk(1+\bar r+R),\\
+ S_m&=k(2+zR)-g(2+rZ),\\
+ S_d&=k(1+R+z)-g(1+Z+r).
+\end{aligned}                                                   \tag{76.9}
+\]
+The respective mean targets are
+\[
+\begin{aligned}
+ (2+\bar z)(2+Z)+\bar gk(2+\bar r)(2+R)&=O_m+2O_d,\\
+ (2+z)k(2+R)-g(2+r)(2+Z)&=S_m+2S_d.
+\end{aligned}                                                   \tag{76.10}
+\]
+For each parity and relative position, impose one cross expression to
+vanish and the corresponding mean target to have nonzero squared modulus.
+Retain both complete aligned quotients, every finite/pole combination,
+and every recorded \(\Theta\) choice.
+
+**Theorem 76.1 (complete pair reduction).** At fixed \(0<|b|<1\), failure
+of (76.1) is equivalent to nonemptiness of the finite list of systems
+(76.5)–(76.10), with the full single-ray conditions of §75. The respective
+numbers of free real quotient coordinates are at most eight, six, and
+four. Polynomial auxiliary variables retain every square-root identity
+and its strict sign, including \(s^2=K,s>0\) in the aligned chart;
+the pole parameter retains its defining polynomial and isolating interval.
+These auxiliary variables are not additional free coordinates. Every
+nonzero denominator and discriminant condition from §75 remains required.
+
+**Proof.** Theorem 75.1 covers every noncanonical ray. The three pair types
+exhaust the possible chart pairings. The evaluation-algebra arguments
+prove necessity and sufficiency of each determinant zero condition for
+some allowed relative order. Equations (76.2), (76.6), (76.8), and (76.10)
+compute the actual mean targets. Taking their finite union therefore
+preserves both directions, including the exceptional pole strata. ∎
+
+If all these systems were empty, three mutually orthogonal noncanonical
+rays would give three nonzero mutually orthogonal vectors in
+\(\mathbb C^2\), which is impossible. This remains a conditional consumer;
+the reduction itself neither proves (76.1) nor excludes arbitrary triples.
+
+## 77. Exact aligned-pair rigidity at the half parameter
+
+### 77.1. The induced eighteen-ray graph
+
+**Theorem 77.1 (aligned graph at \(b=1/2\)).** There are exactly eighteen
+noncanonical common-flat rays that, after a common phase and synchronous
+permutation, have the aligned form \((1,1,z;g,g,gr)\). Their induced
+orthogonality graph is \(K_{3,3}\sqcup K_{3,3}\sqcup K_{3,3}\).
+Every orthogonal pair among them has orthogonal nonzero channel-mean
+spinors. In particular they contain no orthogonal triple.
+
+This theorem controls the entire aligned set, including edges between
+its different symmetry orbits. It does not control edges involving a
+three-distinct-channel ray, or establish a complete ray census at this
+parameter. The following model-specific certificate uses the exact
+original-equation equivalence in Theorem 75.5.
+
+### 77.2. A complete quintic quotient, including the omitted chart
+
+Set \(b=1/2\) in (75.26), and retain its variables \(D,T,a,c\). Write
+\[
+ K=D^2+4T=s^2,\quad J=D-2T+6,\quad F_0=D^2+(T+1)^2,\quad
+ \kappa=(1/2-i)\sqrt{11/5}.
+\]
+The input reconstruction is
+\[
+ u=(s+D)/2,\quad v=(s-D)/2,\quad
+ z=\frac{1+iu}{1-iu},\quad r=\frac{1+iv}{1-iv},\quad
+ g=\frac{s(a+ic)}{\kappa}.                                   \tag{77.1}
+\]
+Every nonconstant finite ray has \(K>0\). The pole polynomial (75.36)
+does not vanish at \(b^2=1/4\), and the finite \(s=0\) cases are the two
+constant canonical rays. Thus these exclusions lose no noncanonical
+aligned input at the specified parameter.
+
+The first two rows of the linear system (75.26) have determinant a
+nonzero scalar times \(KJF_0\). At \(J=0\), their two augmented minors,
+with the right-hand side moved to its own column, are
+\[
+ 33(T-3)(5T^2-22T+37),\qquad
+ -\frac{33}{2}(T+1)(5T^2-22T+37).                             \tag{77.2}
+\]
+The quadratic has discriminant \(-256\), so the two minors cannot both
+vanish for real \(T\). Since \(K,F_0>0\), every solution therefore admits
+the unique Cramer solutions \(a=A(D,T),c=C_a(D,T)\) from those two rows.
+These definitions refer to the printed original polynomials in (75.26),
+not to an auxiliary numerical fit.
+
+The primitive numerators of the remaining consistency and norm equations
+are the following integer polynomials:
+\[
+\begin{aligned}
+ F={}&-91D^4+228D^3T+286D^3-99D^2T^2-414D^2T-299D^2\\
+     &+98DT^3+1284DT^2+674DT-168T^4-104T^3-728T^2-792T,\\
+ N={}&109D^6-404D^5T-704D^5+433D^4T^2+2012D^4T+963D^4\\
+     &-352D^3T^3-3540D^3T^2-4400D^3T-572D^3\\
+     &+460D^2T^4+4786D^2T^3+11710D^2T^2+5206D^2T-130D^2\\
+     &-80DT^5-1288DT^4-7096DT^3-7576DT^2-1688DT\\
+     &+160T^6+2088T^5+12704T^4+18992T^3+7424T^2-792T.
+\end{aligned}                                                   \tag{77.3}
+\]
+In the allowed chart, \(F=N=0\) is equivalent to the three linear
+original equations and \(K(a^2+c^2)=11/4\). Exact elimination gives
+\[
+\begin{aligned}
+ \operatorname{Res}_T(F,N)
+   &=4857532416D^4(D-1)(D^2+4)^2(5D^2+16D+64)^2Q(D)f(D),\\
+ Q(D)&=4401D^4-26064D^3-6144D^2+139776D+173056,\\
+ f(D)&=375110171D^5-8916868590D^4+40906895520D^3\\
+     &\hspace{12mm}-77786080640D^2+72033832960D-29539434496.
+\end{aligned}                                                   \tag{77.4}
+\]
+At \(D=0\), the common equations imply \(T(T+1)=0\), so \(K\leq0\).
+At \(D=1\), they imply \(4T+1=0\), so \(K=0\). Both quadratic factors
+have no real zero. For \(Q\), the signed Euclidean Sturm chain starting
+with \(Q,Q'\) has signs \((+,-,+,+,+)\) at \(-\infty\) and
+\((+,+,+,-,+)\) at \(+\infty\), hence no real zero.
+
+Define
+\[
+\begin{aligned}
+ p(D)={}&114047721647124035355853D^4
+          -2505469425841722936728842D^3\\
+        &+7945256094215455341030448D^2
+          -9563607328530302248289792D\\
+        &+4919733805467906194268928,\\
+ c_0={}&673563651603438045093120,\qquad \tau(D)=p(D)/c_0.
+\end{aligned}                                                   \tag{77.5}
+\]
+The exact ideal identity in \(\mathbb Q[D,T]\) is
+\[
+ \langle F,N,f\rangle=\langle f,c_0T-p(D)\rangle.              \tag{77.6}
+\]
+It can be reconstructed by rational polynomial division from
+(77.3)–(77.5). Consequently \(T=\tau(D)\) at every remaining solution.
+The Sturm chain for \(f\) has signs \((-,+,-,-,+,-)\) at \(-\infty\)
+and \((+,+,+,-,-,-)\) at \(+\infty\), giving exactly three real roots.
+Each of the following rational intervals contains one of them:
+\[
+ \frac{(172239608,172239609)}{10^8},\qquad
+ \frac{(199204026,199204028)}{10^8},\qquad
+ \frac{(1843634963,1843634964)}{10^8}.                         \tag{77.7}
+\]
+Ordinary rational Horner evaluation of \(D^2+4\tau(D)\) and
+\(D-2\tau(D)+6\) on these intervals gives, respectively,
+\[
+ (K,J)\in(4,5)\times(7,8),\quad
+ (3/10,2/5)\times(9,10),\quad
+ (368,369)\times(10,11).                                     \tag{77.8}
+\]
+Substitution of \(T=\tau(D)\) and the Cramer solutions into all three
+polynomials (75.26) and \(K(a^2+c^2)-11/4\) gives zero modulo \(f\).
+Thus all three real roots are admissible and each yields both signs
+\(s=\pm\sqrt K\). Sign change is precisely dephased \(\Theta\), while
+synchronous permutation supplies three distinct unique-coordinate
+positions. Distinct roots remain distinct because \(D=u-v\) is recovered
+from the finite Cayley coordinates. This proves the count eighteen.
+
+### 77.3. A characteristic-zero rank certificate for all pairs
+
+The pair exclusion does not rely on a modular point count. Work over
+\(\mathbb K=\mathbb Q(i)\). Reduce \(\tau,A(D,\tau),C_a(D,\tau)\) and
+\(K(D)=D^2+4\tau(D)\) modulo the monic normalization of \(f\), writing
+the reduced Cramer solutions as \(a(D),c(D)\). Define
+\[
+ \mathcal A=\mathbb K[D,E,s,t]/
+  (f(D),f(E),s^2-K(D),t^2-K(E)).                              \tag{77.9}
+\]
+This algebra has dimension 100. Its ordered basis is
+\(s^\epsilon t^\eta D^jE^k\), with \(\epsilon,\eta\in\{0,1\}\),
+\(0\leq j,k<5\), indexed by \(50\epsilon+25\eta+5j+k\).
+The monic triangular relations prove freeness; simplicity or reality of
+roots is not needed for this dimension statement.
+
+In this algebra put
+\[
+\begin{gathered}
+ z(D,s)=\frac{2+i(s+D)}{2-i(s+D)},\qquad
+ r(D,s)=\frac{2+i(s-D)}{2-i(s-D)},\\
+ G=\frac{st(a(D)-ic(D))(a(E)+ic(E))}{11/4},\\
+ O_m=2+\bar z(D,s)z(E,t)+G[2+\bar r(D,s)r(E,t)],\\
+ O_d=1+\bar z(D,s)+z(E,t)+G[1+\bar r(D,s)+r(E,t)].             \tag{77.10}
+\end{gathered}
+\]
+Bars here replace \(i\) by \(-i\) while fixing the four algebra variables.
+At real reconstructed points these are ordinary conjugates, and
+\(O_m,O_d\) are exactly the original overlaps for matched and different
+unique-coordinate positions. The denominator \(11/4=|\kappa|^2\)
+accounts for the actual input normalization of the lower phase.
+
+All inverses in (77.9)–(77.10) exist and are integral at the split prime
+\(73\), with \(i\mapsto27\). The rational constants in \(f,\tau,11/4\)
+are units there. With \(f\) monic, the resultants modulo 73 for the
+remaining one-variable denominators are
+\[
+\begin{array}{c|ccccc}
+ d&K&J&F_0&(2-iD)^2+K&(2+iD)^2+K\\ \hline
+ \operatorname{Res}_D(f,d)&20&34&16&55&37.
+\end{array}                                                   \tag{77.11}
+\]
+Here \(J=D-2\tau+6\), \(F_0=D^2+(\tau+1)^2\). Nonzero resultants give
+inverses in the characteristic-zero algebra over the local coefficient
+ring, so reduction of the multiplication matrices is legitimate.
+
+Let \(M_m,M_d\) be multiplication by \(O_m,O_d\) in the ordered basis
+of (77.9), and use the same principal index set
+\[
+ I=\{0,\ldots,69\}\cup\{75,\ldots,94\}.
+\]
+The complete finite certificate is
+\[
+ \det M_m[I,I]\equiv16,\qquad
+ \det M_d[I,I]\equiv64\pmod{73}.                             \tag{77.12}
+\]
+To reconstruct these matrices, multiply each basis monomial by (77.10),
+reduce powers of \(s,t\) with their quadratic relations, and reduce
+powers of \(D,E\) with the monic quintic. Inverses use the one-variable
+Euclidean algorithm justified by (77.11). Thus (77.3)–(77.12), together
+with the two printed original rows (75.26), determine every matrix entry
+and every denominator; the certificate has no numerical-search or
+unpublished-data premise. Each characteristic-zero rank is at least 90.
+
+### 77.4. Identifying the entire overlap ideal
+
+Let \(\mathcal B=\mathbb K[D,s]/(f(D),s^2-K(D))\), of dimension ten.
+The substitution
+\[
+ \varphi:\mathcal A\longrightarrow\mathcal B,\qquad
+ E\longmapsto D,\quad t\longmapsto-s                         \tag{77.13}
+\]
+is surjective. The exact norm identity from §77.2 implies
+\(\varphi(G)=-1\), and the phase formulas give
+\[
+ z(D,-s)=\bar r(D,s),\qquad r(D,-s)=\bar z(D,s).
+\]
+Hence \(\varphi(O_m)=\varphi(O_d)=0\). The image of multiplication by
+either overlap lies in the 90-dimensional space \(\ker\varphi\).
+The lower rank bounds (77.12) therefore prove equality of ideals:
+\[
+ (O_m)=\ker\varphi=(O_d).                                    \tag{77.14}
+\]
+In particular \(E-D\) and \(t+s\) belong to either overlap ideal.
+Any complex evaluation with \(O_m=0\) or \(O_d=0\) must consequently
+have \(E=D,t=-s\). This is a characteristic-zero conclusion obtained
+from a modular lower rank bound and an exact matching upper rank bound.
+
+For every real quintic root, the opposite signs give zero overlap at all
+three-by-three pairs of positions, by the same identities. Equal signs
+cannot give an edge because \(s\ne0\). Distinct roots cannot give an edge
+by (77.14). The induced graph is therefore exactly three copies of
+\(K_{3,3}\). Finally, synchronous permutations preserve channel sums and
+\(\Theta\) sends a spinor \((X,Y)\) to \((-\bar Y,\bar X)\), orthogonal
+to it. Division of the input vectors by \(\sqrt6\) multiplies overlaps
+by \(1/6\), preserving their zeros. This proves Theorem 77.1. ∎
+
+The generic–generic and generic–aligned failure systems of §76 remain
+unresolved. Neither this induced graph nor the pair reduction supplies
+an arbitrary-triple or whole-branch no-quartet conclusion.
