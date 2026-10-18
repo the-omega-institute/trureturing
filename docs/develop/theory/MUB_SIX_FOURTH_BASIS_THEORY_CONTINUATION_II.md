@@ -4591,3 +4591,5 @@ by \(1/6\), preserving their zeros. This proves Theorem 77.1. ∎
 The generic–generic and generic–aligned failure systems of §76 remain
 unresolved. Neither this induced graph nor the pair reduction supplies
 an arbitrary-triple or whole-branch no-quartet conclusion.
+
+[Continue with the exact half-parameter census and all-pair rigidity in §§78–80](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_III.md).
