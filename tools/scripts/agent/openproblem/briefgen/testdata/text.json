@@ -2,7 +2,7 @@
   "rehead": {
     "head": "At 1111111111111111111111111111111111111111. The independent pre-freeze mirror checked that head and approved it.\n",
     "rest": "Synthetic remaining procedure.\n",
-    "expected": "At 2222222222222222222222222222222222222222. A mirror-fix commit followed; the independent pre-freeze mirror (fixture) checked head `2222222222222222222222222222222222222222` and approved it.\nSynthetic remaining procedure.\n"
+    "expected": "At 2222222222222222222222222222222222222222. The independent pre-freeze mirror (fixture) approves head `2222222222222222222222222222222222222222`.\nSynthetic remaining procedure.\n"
   },
   "exclusions": {
     "source": "- Synthetic enumeration question — open\n- arXiv:2601.01234 and 2601.01234\n- A123456\n",

@@ -134,15 +134,15 @@ def collect(root, before):
 
 
 def case(tool, variant=None):
-    with tempfile.TemporaryDirectory(prefix='brief fixtures ') as tmp:
-        root=Path(tmp)/'workspace __name__ __BRANCH__ with spaces' if tool.stem in ('gen_stage_briefs','stages') else Path(tmp)
+    with tempfile.TemporaryDirectory(prefix='brief fixtures __tokens__ ') as tmp:
+        root=Path(tmp)/'workspace __name__ __BRANCH__ with spaces'
         env=prepare(root)
         assert not any((root/'scratch/briefs'/name).exists()
                        for name in json.loads((DATA/'input.json').read_text())['blocks'])
         if variant == 'defaults':
             env.pop('REGEN')
             env.pop('OP_PROVENANCE_MD')
-        if tool.stem in ('gen_stage_briefs','stages') and variant != 'defaults':
+        if tool.stem == 'gen_stage_briefs' and variant != 'defaults':
             result=subprocess.run([sys.executable,str(HERE/'lane_brief.py'),str(root/'scratch'),str(root/'scratch/lanes/sample.json')],env=env,capture_output=True,text=True)
             assert result.returncode==0,result.stderr
         before={str(p):p.read_text() for p in root.rglob('*.md')}
@@ -172,7 +172,7 @@ def run(tool):
             assert (str(error).strip() or ' in invalid:') in message,message
         saved=dict(os.environ)
         try:
-            with tempfile.TemporaryDirectory(prefix='context fixture ') as tmp:
+            with tempfile.TemporaryDirectory(prefix='context fixture __tokens__ ') as tmp:
                 root=Path(tmp);os.environ.update(prepare(root))
                 for number in (2,10):
                     path=root/'sshx'/('b'*24)/f'attempt-{number}'
@@ -203,7 +203,7 @@ def run(tool):
         return 0
     if tool.stem == 'purge_stale_fib':
         import zipfile
-        with tempfile.TemporaryDirectory(prefix='cache fixture ') as tmp:
+        with tempfile.TemporaryDirectory(prefix='cache fixture __tokens__ ') as tmp:
             directory=Path(tmp)/'.lake/build/lean-inspector/modules'
             directory.mkdir(parents=True)
             fixture=json.loads((DATA/'cache.json').read_text())
@@ -216,21 +216,32 @@ def run(tool):
             assert sorted(p.name for p in directory.iterdir())==['current.zip']
         print('BRIEF_SELFTEST tool='+tool.name+' failed=0')
         return 0
-    if tool.stem == 'gen_stage_briefs':
+    if tool.stem in ('gen_stage_briefs', 'gen_review'):
         import importlib.util
         from common import BriefError
-        spec=importlib.util.spec_from_file_location('stage_fixture',tool)
+        spec=importlib.util.spec_from_file_location('render_fixture',tool)
         module=importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        assert module.render_mirror('__LANE__ __WORKTREE__ __BRANCH__ __MODULE__ __init__',
-                                    'sample', 'tree __BRANCH__ with __name__', 'lane/test', 'D5/Fixture') == \
-            'sample tree __BRANCH__ with __name__ lane/test D5/Fixture __init__'
-        try:
-            module.render_mirror('__UNKNOWN__', 'sample', 'tree', 'lane/test', 'D5/Fixture')
-        except BriefError as exc:
-            assert exc.code==13 and '__UNKNOWN__' in exc.message,(exc.code,exc.message)
+        if tool.stem == 'gen_stage_briefs':
+            def render(template):
+                return module.render_mirror(template, 'sample', 'tree __BRANCH__ with __name__',
+                                            'lane/test', 'D5/Fixture')
+            assert render('__LANE__ __WORKTREE__ __BRANCH__ __MODULE__ __init__') == \
+                'sample tree __BRANCH__ with __name__ lane/test D5/Fixture __init__'
         else:
-            raise AssertionError('unknown mirror template token accepted')
+            values={'__ROLE__': 'architecture __TITLE__',
+                    '__TITLE__': r'literal __UNKNOWN__ __ROLE__ __init__ \1',
+                    '__WORKTREE__': 'tree __BRANCH__ with __name__'}
+            def render(template):
+                return module.render_review(template, values)
+            assert render('__ROLE__|__TITLE__|__WORKTREE__|__init__') == \
+                values['__ROLE__']+'|'+values['__TITLE__']+'|'+values['__WORKTREE__']+'|__init__'
+        try:
+            render('__UNKNOWN_2__')
+        except BriefError as exc:
+            assert exc.code==13 and '__UNKNOWN_2__' in exc.message,(exc.code,exc.message)
+        else:
+            raise AssertionError('unknown template token accepted')
     expected=json.loads((DATA/'golden.json').read_text())
     variants = (('codex3', None) if tool.stem == 'gen_review' else
                 ('deep', 'quick') if tool.stem == 'codex_search' else
@@ -240,7 +251,7 @@ def run(tool):
         key=tool.name+(':'+variant if variant else '')
         got=case(tool,variant)
         assert got==expected[key],(key,got,expected[key])
-    with tempfile.TemporaryDirectory(prefix='brief failures ') as tmp:
+    with tempfile.TemporaryDirectory(prefix='brief failures __tokens__ ') as tmp:
         root=Path(tmp);env=prepare(root)
         result=subprocess.run(['/bin/bash' if tool.suffix=='.sh' else sys.executable,str(tool),'--invalid-option'],cwd=root,env=env,capture_output=True,text=True)
         assert result.returncode in (10,11,13),(tool,result.returncode,result.stderr)

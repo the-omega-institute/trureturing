@@ -13,7 +13,7 @@ def main(argv):
     t = t.replace(old, new)
     a = 'The independent pre-freeze mirror checked that head and approved it.'
     assert t.count(a) == 1
-    t = t.replace(a, f'A mirror-fix commit followed; the independent pre-freeze mirror ({note}) checked head `{new}` and approved it.')
+    t = t.replace(a, f'The independent pre-freeze mirror ({note}) approves head `{new}`.')
     open(hf, 'w').write(t)
     open(of, 'w').write(t + rest)
     print('REHEAD_OK', n, new)

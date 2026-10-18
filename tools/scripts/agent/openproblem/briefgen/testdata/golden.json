@@ -28,78 +28,78 @@
     "review.md": "4ec69af323441cd4f655c2581ffba29e8d0a047a190a314a8dd49775bbb205a7"
   },
   "gen_review.py": {
-    "scratch/briefs/review-sample-quality.md": "6ac3130e8205495ff0d137cab9c7676d4d78bedefd62d84cecfa98b40d96b46b",
+    "scratch/briefs/review-sample-quality.md": "481698e3e3d389a79ac5ccfc54b45e7b05a58aaaeb4788665ed0a695b24a4ff9",
     "scratch/briefs/review-sample-architecture.md": "67751ed0019f07611b375b2eacf055d7c499dad541e69a369c1ec9ecaefae0ec",
     "scratch/briefs/review-sample-tests.md": "af9465a967a0bf0be05f37f0b3c6ac75ebe71e5de4b684b977c515c8dda8bb57"
   },
   "gen_review.py:codex3": {
-    "scratch/briefs/review-sample-quality.md": "234d397f2c35566a2a6bfdaf31b2bea8bbb225f48a719ddc8658fae0471fcbd3",
-    "scratch/briefs/review-sample-quality-r1.md": "b7bcdcc89e3d2de63f4d546c3adb7937ba9e7bf4a7c6cd49de8bb396c2e0399c",
+    "scratch/briefs/review-sample-quality.md": "2c5eca6c61752b8ab505c82b1b12737bb4400b1ae3346eba1d089afbdb9d0e37",
+    "scratch/briefs/review-sample-quality-r1.md": "a2313a28867a91c2a7abf62e771ebb076a9dc14017227601d92f5c040cd22cfb",
     "scratch/briefs/review-sample-architecture.md": "f201a9e998f1978c36f27a07d3eca681d71200c27845d6c5848563937efc968d",
     "scratch/briefs/review-sample-tests-r1.md": "68abea5689e19106a3d0a88225700ab79415014e6cedd8b3947c56b7c868bd6a",
     "scratch/briefs/review-sample-architecture-r1.md": "62c534d00ce3b62d5edf7cbcec68d6d482850f4f63ec043c944d366211564eb7",
     "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
   },
   "gen_stage_briefs.py": {
-    "scratch/briefs/mirror-check-sample.md": "b9feec3d9005af3c1b181ce3f5ec5eedd854e4de7cd5c843b5c139f36df987eb",
+    "scratch/briefs/mirror-check-sample.md": "79b13c12c24e75cdea877a86630dd9165e4c85ae9b7cce8df785b1f965e6f71f",
     "scratch/briefs/impl-op-w1-sample.stageB.md": "7866700a267a2ffd6fe10146070bdf0fe3a0cac01ccc8122ba1ede516aaeab96",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "d50d860b6c6ba7e01182fb4341732cc730b51514a59a70688d6d288aff540721"
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "75049fe3b2a6cacbf6985a9a957857c5b7ac048cd2bacc0ae17247b501e017dc"
   },
   "implb_head.py": {
-    "scratch/briefs/implb-sample-r1.head.md": "2c8a0b651ed9d0fe4c8766d8932764ffe3f1c6860c41bcaf78ad42f1598bf8b6"
+    "scratch/briefs/implb-sample-r1.head.md": "4f59afbbfdfa1edea58865e907038d735e9903c067305cb55149884c328d63c9"
   },
   "lane_brief.py": {
-    "scratch/briefs/impl-op-w1-sample.md": "b35e0572cd498eedfcb489b650ac1aeb73250b0b5be083035e88c1ca1635396b"
+    "scratch/briefs/impl-op-w1-sample.md": "3b03969187aa34d8b65b4dbfb3bc0aeb8852391768ece6048996c33029ffe9a5"
   },
   "postb3.sh": {
-    "scratch/briefs/review-sample-quality.md": "eae8eb54a534fb06779f3d88b5763466cc39debd6cc57015782c271c179b9e83",
-    "scratch/briefs/review-sample-quality-r1.md": "e3cbe834ddf90dbb8a48ae8f3516edba671c68ccf0cb96228b572cb9b941db57",
+    "scratch/briefs/review-sample-quality.md": "c796fba1f88936bd7539c2939651949db8d82f674691be2b5666240d2929a012",
+    "scratch/briefs/review-sample-quality-r1.md": "56939f592db17f595f47c5874c51b8d739c530bf4fe25a585f8d7225c369efd9",
     "scratch/briefs/review-sample-architecture.md": "bed5e111085d7ff6c563e00026da8b267d95b38c5ef1a723b088f05132a79d72",
     "scratch/briefs/review-sample-tests-r1.md": "1604925a26791b03b53aa63e5e357ef9a0749ce2cf529cfa2ea37f83f409963f",
     "scratch/briefs/review-sample-architecture-r1.md": "d909f2fd0fbba22b8dd37ab159ce594346068e9af60c8f20622475ac2eb76b90",
     "scratch/briefs/review-sample-tests.md": "734f2afc0d1fff42243bc40364f0c7f312cb3f94bbf5b54b377a3b27157258d5"
   },
   "rehead.py": {
-    "head.md": "d4b83a51d34936ffde4aa72d89c53a2db8de1ada9573b413ffc6f02ae092a8f4",
-    "out.md": "a7b3ba2c4d486fdf34abf3e777c4ed0af7242fc27e0d75b9910a945d21e30351"
+    "head.md": "d0772a68a087c8eb6320551e59210074ef58b5f11e5266d920608bb76fbd9c27",
+    "out.md": "cf7fad04fcbcff7eaabf117062b1cd3909bdb792123235ad99e537cf0339bd47"
   },
   "render-search-brief.sh": {
     "out.md": "899a13b578e688a26efb472fa18690da9ec85d134d3f7ef7648965832441d014"
   },
   "review.sh": {
-    "scratch/briefs/review-sample-quality.md": "1d10de2f4ab5db3e249ceff0469726fad46a5b57c803113b0e8598704ce75be7",
+    "scratch/briefs/review-sample-quality.md": "27e734129688220a8277c4b33b6361dc8556caeb3161be459b211196529bb547",
     "scratch/briefs/review-sample-architecture.md": "7b69da2a357bc00a762d7790d96bc2ce42ca0a6aaa2683b88f07e0ab09ed381f",
     "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
   },
   "rework_brief.py": {
-    "scratch/briefs/rework-sample.md": "0d61d5c45c52ec55021109230845f8815d51e466fcadde2651cd466e90825401"
+    "scratch/briefs/rework-sample.md": "ff5f07ce3b9f50dd8c32485aabc11c39d97da52fbd52e460efb676f0733c1afb"
   },
   "stageb_prep.sh": {
     "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "022d8254b75d7bc1628f15bbe31d7e9ee16368ad385a1ccb37f360c0705801ca"
   },
   "stages.sh": {
-    "scratch/briefs/mirror-check-sample.md": "cbbae0e3209c717954af0b55141b5442fece4e69efe30d53be20e9a75a3a0eb8",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "0ad018037627b7140387a74b12d63427fae1cc722af7a332c1dabceacd11a8d5",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "80b62027a24df962c058e6bf73933cabd157d715d37b78e7fc66a09cc777502f",
-    "scratch/briefs/impl-op-w1-sample.md": "b35e0572cd498eedfcb489b650ac1aeb73250b0b5be083035e88c1ca1635396b"
+    "scratch/briefs/mirror-check-sample.md": "e224976e48c8d7f48dbd305b6ea73d6ceb3f52308e71e089dda30ca72886131f",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "f1224759512101f29988fe1fed2c77f97f1dd712f4561f130e3053cc7b817191",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "c6c0c9782a802ba74f4514b476d0ee4ec4956dc007d5845fac708bd3a4c0e7b0",
+    "scratch/briefs/impl-op-w1-sample.md": "3b03969187aa34d8b65b4dbfb3bc0aeb8852391768ece6048996c33029ffe9a5"
   },
   "standing_append.py": {
     "capture.md": "e032d4e10774a54af596dd9562af2ac8d8be6c3da007f7744899a749a907f67a"
   },
   "gen_stage_briefs.py:defaults": {
-    "scratch/briefs/mirror-check-sample.md": "cbbae0e3209c717954af0b55141b5442fece4e69efe30d53be20e9a75a3a0eb8",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "0b6cc7778b4afbc0aef0443e5418578200f3dc09bd56d1aa10f4052fc81dc03d",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "d601d8fba089e9ef2bb548606bf0bea103e26782590062ecc426a66f6f1643d3",
-    "scratch/briefs/impl-op-w1-sample.md": "4d138398ad215acac420b0352b442aeab1b006ec9d681e8979c47b2a4aee810e"
+    "scratch/briefs/mirror-check-sample.md": "e224976e48c8d7f48dbd305b6ea73d6ceb3f52308e71e089dda30ca72886131f",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "6eb10049ff582faef5270f6e38677cc3035a4f59c5e47178d19bcb7592390da8",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "dfca632457a3acc2ce15f5041ce1443931f965adaa0e3e8766af463dc1a8bb0b",
+    "scratch/briefs/impl-op-w1-sample.md": "a059723ab038115344cb060fb4e49948680eca5a15ce90a468cb12a84bd3ee04"
   },
   "fill_mirror_fixes.py:defaults": {
-    "scratch/briefs/mirror-check-sample.md": "cbbae0e3209c717954af0b55141b5442fece4e69efe30d53be20e9a75a3a0eb8",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "0b6cc7778b4afbc0aef0443e5418578200f3dc09bd56d1aa10f4052fc81dc03d",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "d601d8fba089e9ef2bb548606bf0bea103e26782590062ecc426a66f6f1643d3",
-    "scratch/briefs/impl-op-w1-sample.md": "4d138398ad215acac420b0352b442aeab1b006ec9d681e8979c47b2a4aee810e",
-    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "3c353afac88ec5fb4d178a9dc7b72443070679d9ccb7283fd978bb6139661afc"
+    "scratch/briefs/mirror-check-sample.md": "e224976e48c8d7f48dbd305b6ea73d6ceb3f52308e71e089dda30ca72886131f",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "6eb10049ff582faef5270f6e38677cc3035a4f59c5e47178d19bcb7592390da8",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "dfca632457a3acc2ce15f5041ce1443931f965adaa0e3e8766af463dc1a8bb0b",
+    "scratch/briefs/impl-op-w1-sample.md": "a059723ab038115344cb060fb4e49948680eca5a15ce90a468cb12a84bd3ee04",
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "11e106d9827ae9b4ef0f2fdbb3e62a01873d99e4debab42006d0053a578a37e9"
   },
   "rework_brief.py:defaults": {
-    "scratch/briefs/rework-sample.md": "0d61d5c45c52ec55021109230845f8815d51e466fcadde2651cd466e90825401"
+    "scratch/briefs/rework-sample.md": "ff5f07ce3b9f50dd8c32485aabc11c39d97da52fbd52e460efb676f0733c1afb"
   }
 }

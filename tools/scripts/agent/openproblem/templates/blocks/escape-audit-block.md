@@ -22,7 +22,7 @@ Each newly authored public D5 `theorem`/`lemma` in the delivery is an audit targ
 - weaken a theorem or add bind-only wrappers;
 - claim `declared_validated` without the compiled evidence.
 
-No sentence anywhere may say that registration is "paused"; that clause no longer exists.
+Report registration as complete or unfinished with its linked issue; never write "paused".
 
 **Reg imports.** Import only what the registration uses:
 - `Reg.Support.*` modules whose `TemplateEnrollment` the readout selects;
