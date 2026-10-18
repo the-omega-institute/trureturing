@@ -61,7 +61,7 @@ The exact degree-four polynomial, order one and radius five eighths refute the u
 
 **REFUTED — Conjecture 4, by $z-z^4$ at $p=1$.** The conjectured radius is at most $3\sqrt2/8$, while the polynomial is injective on the closed disk of radius $5/8$.
 
-**COMPUTED (analytic calculation, not Lean-verified here) — failure at every finite real $p\ge1$.** For $G(z)=z-z^6$, the roots are zero and the five fifth roots of unity. Thus $\sigma_p(G)\le(5/6)^{1/p}\le1$, and $\sigma_p(G)\sin(\pi/6)\le1/2<3/5$. The divided-difference sum has five terms, each of modulus at most $(3/5)^5$, so its modulus is at most $5(3/5)^5=243/625<1$. Hence $G$ is injective on the closed disk $|z|\le3/5$ for every such order. The looser six-term upper bound $6(3/5)^5=1458/3125<1$ also suffices.
+**COMPUTED (analytic calculation, not Lean-verified here) — failure at every finite real $p\ge1$.** For $G(z)=z-z^6$, the roots are zero and the five fifth roots of unity. Thus $\sigma_p(G)\le(5/6)^{1/p}\le1$, and $\sigma_p(G)\sin(\pi/6)\le1/2<3/5$. The divided-difference sum is $z^5+z^4w+z^3w^2+z^2w^3+zw^4+w^5$. Its six terms each have modulus at most $(3/5)^5$, so its modulus is at most $6(3/5)^5=1458/3125<1$. Hence $G$ is injective on the closed disk $|z|\le3/5$ for every such order.
 
 **UNAFFECTED — Borcea's variance Conjecture 1.** Only the proposed nonunivalence route fails; no counterexample to the critical-point variance statement follows.
 

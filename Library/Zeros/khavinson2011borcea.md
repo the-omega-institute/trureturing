@@ -54,7 +54,7 @@ and the sum in parentheses has modulus at most $125/128<1$. Thus $F$ is injectiv
 
 ## Literature boundary
 
-The source version and statement are supplied with the problem. No online literature check is performed, and no claim of worldwide priority or absence of later settlements is made. The counterexample concerns Conjecture 4's univalence route, and does not refute Borcea's variance Conjecture 1.
+Searches for "1010.5167" with "Conjecture 4", "Borcea univalence counterexample", and the source title with "erratum" found no refutation. The two 2026 preprints proving Borcea's 2-variance conjecture, [arXiv:2610.02035](https://arxiv.org/abs/2610.02035) and [arXiv:2610.12499](https://arxiv.org/abs/2610.12499), do not mention univalence. Citation indexes have not been exhaustively checked; worldwide priority and absence of later settlements are not established. The counterexample concerns Conjecture 4's univalence route, and does not refute Borcea's variance Conjecture 1.
 
 ## License and formalization boundary
 

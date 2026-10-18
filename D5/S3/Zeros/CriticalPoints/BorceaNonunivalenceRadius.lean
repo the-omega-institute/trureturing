@@ -7,6 +7,7 @@
    digest: The root-moment nonunivalence radius conjecture is false. -/
 
 import Mathlib.Analysis.Complex.Polynomial.Basic
+import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
@@ -42,11 +43,10 @@ private theorem omega_mul : omega * omega' = 1 := by
   all_goals nlinarith
 
 private theorem omega_norm : ‖omega‖ = 1 := by
-  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 3 by norm_num)
-  have h : Complex.normSq omega = 1 := by
-    simp [Complex.normSq_apply, omega]
-    nlinarith
-  rw [Complex.norm_def, h, Real.sqrt_one]
+  have h : omega = (UpperHalfPlane.ρ : ℂ) := by
+    apply Complex.ext <;> rfl
+  rw [h]
+  exact UpperHalfPlane.norm_ρ
 
 private theorem omega'_norm : ‖omega'‖ = 1 := by
   have h : omega' = starRingEnd ℂ omega := by
