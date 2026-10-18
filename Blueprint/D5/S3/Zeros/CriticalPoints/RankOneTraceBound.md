@@ -1,8 +1,8 @@
-# Rank-one trace bounds and phase rigidity
+# Trace bounds, interpolation and phase rigidity
 
 ## Abstract
 
-A sharp unitary trace estimate for rank-one sums and its common-phase equality condition.
+Unitary rank-one trace and scalar analytic certificates for the spectral moment argument.
 
 **Theorem 1.1 (The unitary trace estimate).**
 
@@ -28,7 +28,33 @@ Lean statement: `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.phases_eq_of_norm_
 
 Assume the weights are strictly positive and every pairwise inner product of the r_j is nonzero. If the unitary trace estimate is an equality, then gamma_i=gamma_j for every i,j. Cauchy–Schwarz equality places each r_j in a unitary eigenspace; nonorthogonality identifies those eigenphases, and equality in the finite triangle inequality identifies the original phases.
 
+**Theorem 1.3 (The interpolation bound and equality boundary).**
+
+Lean statement: `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.strip_moment_bound_and_equality`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.strip_moment_bound_and_equality` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let M>0. A complex function continuous on the closed strip and differentiable in its interior, bounded there, with left boundary norm at most one and right boundary norm at most M, has norm at most M^(Re z) throughout the strip. If equality occurs at a real interior point theta with 0<theta<1, then the norm equals M at every right boundary point 1+iy. The equality argument applies the maximum modulus principle to exp(−z log M) times the function.
+
+**Theorem 1.4 (Rotating phases determine their frequencies).**
+
+Lean statement: `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.rotating_phase_injective`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.rotating_phase_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For complex u,v with u nonzero and real a,b, if u exp(iya)=v exp(iyb) for every real y, then u=v and a=b. Evaluation at zero determines the phase, and equality of derivatives at zero determines the frequency.
+
 ## References
 
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.norm_trace_rank_one_sum_le`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.phases_eq_of_norm_trace_rank_one_sum_eq`
+- Truth anchor: `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.rotating_phase_injective`
+- Truth anchor: `D5/S3/Zeros/CriticalPoints/RankOneTraceBound.strip_moment_bound_and_equality`

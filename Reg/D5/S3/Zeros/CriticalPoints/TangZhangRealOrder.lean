@@ -67,7 +67,7 @@ def source_registration : Registration arena (type_of% @result) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Zeros.CriticalPoints.TangZhangRealOrder.result)
-      (Realization signature) Type Unit := {
+      (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Zeros.CriticalPoints.TangZhangRealOrder.unit
   realizationName := `Reg.D5.S3.Zeros.CriticalPoints.TangZhangRealOrder.source_registration
   realizationSource := none
@@ -83,7 +83,7 @@ def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
     definition := some {

@@ -83,6 +83,8 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
+                    Paragraph(Text("For every n≥1, nonzero complex a and real p, the sum of norm(w)^(−p) over roots of the derivative of P(Z)=Z(Z−a)^n equals c(n,p) times the sum of norm(a)^(−p) over Fin n, where c(n,p)=((n+1)^p+n−1)/n. The derivative has the root a with multiplicity n−1 and the root a/(n+1), including the case n=1.")),
+                    Paragraph(Text("It is false that for every natural n and every nonzero complex family z, equality in the reciprocal-norm moment bound at p=1 is equivalent to all z_j being equal. For n=2 and z=(1,2), P′(Z)=3Z²−6Z+2 has roots 1−sqrt(3)/3 and 1+sqrt(3)/3. Both roots are positive, their reciprocal norm sum is 3, and c(2,1) times (1+1/2) is also 3, while 1 and 2 differ.")),
                     Paragraph(Text(
                         "Write b_j=1/z_j, D=diag(b_j), H=I+J, and R=H^(1/2). "
                         + "The characteristic roots of A=RDR are the reciprocal critical "

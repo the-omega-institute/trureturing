@@ -56,6 +56,10 @@ Lean statement: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.result`
 
 *Commentary.*
 
+For every n≥1, nonzero complex a and real p, the sum of norm(w)^(−p) over roots of the derivative of P(Z)=Z(Z−a)^n equals c(n,p) times the sum of norm(a)^(−p) over Fin n, where c(n,p)=((n+1)^p+n−1)/n. The derivative has the root a with multiplicity n−1 and the root a/(n+1), including the case n=1.
+
+It is false that for every natural n and every nonzero complex family z, equality in the reciprocal-norm moment bound at p=1 is equivalent to all z_j being equal. For n=2 and z=(1,2), P′(Z)=3Z²−6Z+2 has roots 1−sqrt(3)/3 and 1+sqrt(3)/3. Both roots are positive, their reciprocal norm sum is 3, and c(2,1) times (1+1/2) is also 3, while 1 and 2 differ.
+
 Write b_j=1/z_j, D=diag(b_j), H=I+J, and R=H^(1/2). The characteristic roots of A=RDR are the reciprocal critical points, including multiplicity. The existing order-minus-two module supplies this spectral reduction and unitary Schur triangularization supplies a basis for the actual matrix A.
 
 For p greater than one, an entire scalar trace function interpolates the weighted Schur moment. Its left strip boundary is bounded by one; the right boundary is bounded by c(n,p) times the sum of the p-th powers of the moduli of b_j. The explicit complex powers of H use the projection J/n. The three-lines theorem yields the asserted bound for all real p greater than one.
@@ -67,7 +71,4 @@ Equality at an interior strip point propagates to the right boundary by the maxi
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.c`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.claim`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.result`
-- Dependency: [D5/S3/Zeros/CriticalPoints/SchurMomentInequality](SchurMomentInequality.md)
-- Dependency: [D5/S3/Zeros/CriticalPoints/TangZhangConstantRoots](TangZhangConstantRoots.md)
-- Dependency: [D5/S3/Zeros/CriticalPoints/TangZhangOrderMinusTwo](TangZhangOrderMinusTwo.md)
-- Dependency: [D5/S3/Zeros/CriticalPoints/TangZhangRealOrderCounterexample](TangZhangRealOrderCounterexample.md)
+- Dependency: [D5/S3/Zeros/CriticalPoints/RankOneComplexPowers](RankOneComplexPowers.md)
