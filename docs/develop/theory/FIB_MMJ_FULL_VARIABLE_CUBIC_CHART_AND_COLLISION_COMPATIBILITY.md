@@ -1009,9 +1009,9 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 10. 任意第五动作的全局源图
+## 11. 任意第五动作的全局源图
 
-**定义 10.1（任意实数父历史与第五纤维）。** 本节不采用式 (1.3) 的小矩形。固定任意
+**定义 11.1（任意实数父历史与第五纤维）。** 本节不采用式 (1.3) 的小矩形。固定任意
 $z,Y,p\in\mathbb R$，并把前四个动作和五个响应写成
 
 $$
@@ -1056,12 +1056,12 @@ $$
 $$
 g_d(s)=-d\,\ell_0(s)+\frac{24-d}{j}\ell_1(s)
 +\frac{48-d}{t}\ell_2(s)+\frac{z-d}{n}\ell_3(s).
-\tag{10.1}
+\tag{11.1}
 $$
 
 这是四个节点值的唯一插值；其中任一采样值为零、实际次数下降或出现重根都不改变定义。
 
-**引理 10.2（时钟四、五的紧凑系数）。** 置
+**引理 11.2（时钟四、五的紧凑系数）。** 置
 
 $$
 \begin{aligned}
@@ -1070,59 +1070,59 @@ b_4&=\frac{96}j-\frac{288}t+\frac{4z}n,\\
 a_5&=4-\frac{15}j+\frac{20}t-\frac{10}n,&
 b_5&=\frac{360}j-\frac{960}t+\frac{10z}n.
 \end{aligned}
-\tag{10.2}
+\tag{11.2}
 $$
 
 则
 
 $$
 g_d(4)=a_4d+b_4,\qquad g_d(5)=a_5d+b_5.
-\tag{10.3}
+\tag{11.3}
 $$
 
-**证明。** 直接把 $s=4,5$ 代入式 (10.1)。在 $s=4$ 得到系数
+**证明。** 直接把 $s=4,5$ 代入式 (11.1)。在 $s=4$ 得到系数
 $1,-4/j,6/t,-4/n$，在 $s=5$ 得到系数
 $4,-15/j,20/t,-10/n$；将与 $d$ 无关的部分收集即得
-式 (10.2)。这一步没有除以任何增益值。∎
+式 (11.2)。这一步没有除以任何增益值。∎
 
-**命题 10.3（第五响应的两个仿射方程）。** 定义
+**命题 11.3（第五响应的两个仿射方程）。** 定义
 
 $$
 \begin{aligned}
 A_4&=1+u a_4,&B_4&=Y-u b_4,\\
 A_{5,E}&=1+s_Ea_5,&B_{5,E}&=p-s_Eb_5.
 \end{aligned}
-\tag{10.4}
+\tag{11.4}
 $$
 
-给定源和 $E$，式 (10.1) 实现时钟四、五的响应 $Y,p$ 当且仅当
+给定源和 $E$，式 (11.1) 实现时钟四、五的响应 $Y,p$ 当且仅当
 
 $$
 A_4d=B_4,\qquad A_{5,E}d=B_{5,E}.
-\tag{10.5}
+\tag{11.5}
 $$
 
 因此 $R_E=0$，其中
 
 $$
 R_E=B_4A_{5,E}-B_{5,E}A_4,
-\tag{10.6}
+\tag{11.6}
 $$
 
 是漂移相容性的必要条件。
 
 **证明。** 时钟四为 $d+u g_d(4)=A_4d+u b_4$，时钟五为
-$d+s_Eg_d(5)=A_{5,E}d+s_Eb_5$。移项得到式 (10.5)，再交叉相减得到
-式 (10.6)。∎
+$d+s_Eg_d(5)=A_{5,E}d+s_Eb_5$。移项得到式 (11.5)，再交叉相减得到
+式 (11.6)。∎
 
-## 11. 两个第五动作的全局非零分母
+## 12. 两个第五动作的全局非零分母
 
-**定理 11.1（全局漂移系数不同时消失）。** 对每个合法源和
+**定理 12.1（全局漂移系数不同时消失）。** 对每个合法源和
 $E\in\{J,M\}$，
 
 $$
 S_E=A_4^2+A_{5,E}^2>0.
-\tag{11.1}
+\tag{12.1}
 $$
 
 这个结论对任意实数 $z,Y,p$ 成立；不要求 $b\ne c$，不要求 $z,Y,p$ 落在窗口中，也不要求增益的实际次数或任何采样值非零。
@@ -1136,7 +1136,7 @@ A_4
 &>2t-4-\frac6t-\frac8b
 \ge\frac{14}{5}>0.
 \end{aligned}
-\tag{11.2}
+\tag{12.2}
 $$
 
 这里最后一个下界在 $b=4,t=5$ 取到，右端随 $b$ 增大而增加。因此同时为零只可能在
@@ -1146,35 +1146,35 @@ $0<b<4$。
 
 $$
 \kappa=2ut,\qquad K=t^2+3u,\qquad H=t^2-18t+5.
-\tag{11.3}
+\tag{12.3}
 $$
 
 若 $A_4=0$，则
 
 $$
 \frac1j+\frac1n=\frac K\kappa.
-\tag{11.4}
+\tag{12.4}
 $$
 
 令
 
 $$
 D=Kn-\kappa,\qquad N=\kappa n.
-\tag{11.5}
+\tag{12.5}
 $$
 
-由式 (11.4) 得
+由式 (12.4) 得
 
 $$
 D=\frac{\kappa n}{j}>0,\qquad j=\frac ND.
-\tag{11.6}
+\tag{12.6}
 $$
 
 源秩一方程 $r^2-tr+bn-b^2=0$，代入 $r=n-j$，等价于
 
 $$
 j^2+(t-2n)j+n^2-n-b^2=0.
-\tag{11.7}
+\tag{12.7}
 $$
 
 乘以 $D^2$ 后得到 $C(n,b)=0$，其中按 $n$ 的升幂排列
@@ -1186,27 +1186,27 @@ C(n,b)={}&-b^2\kappa^2
 &+\bigl(4\kappa^2+(t+2)\kappa K-b^2K^2\bigr)n^2\\
 &-\bigl(K^2+4\kappa K\bigr)n^3+K^2n^4.
 \end{aligned}
-\tag{11.8}
+\tag{12.8}
 $$
 
-若同时 $A_{5,M}=0$，将式 (11.4) 和式 (10.2) 代入并乘以
+若同时 $A_{5,M}=0$，将式 (12.4) 和式 (11.2) 代入并乘以
 $\kappa n$，得到
 
 $$
 Q_M(n,b)=5u\kappa+(Hu+6\kappa)n+Hn^2=0.
-\tag{11.9}
+\tag{12.9}
 $$
 
 若同时 $A_{5,J}=0$，同样消去 $j$，并乘以 $\kappa D$，得到
 
 $$
 Q_J(n,b)=-16\kappa^2+\kappa(11K-3H)n+2KHn^2=0.
-\tag{11.10}
+\tag{12.10}
 $$
 
 下面给出不依赖根选择的整系数证书。对两个多项式都按 $n$ 的降幂写入
 六阶 Sylvester 矩阵：前两行为 $C$ 的系数向右平移，后四行为 $Q_E$ 的系数向右平移，缺项补零。其行列式就是
-$\operatorname{Res}_n(C,Q_E)$。式 (11.8) 的升幂系数向量为
+$\operatorname{Res}_n(C,Q_E)$。式 (12.8) 的升幂系数向量为
 
 $$
 [-b^2\kappa^2,\,
@@ -1214,15 +1214,15 @@ $$
 4\kappa^2+(t+2)\kappa K-b^2K^2,\,
 -K^2-4\kappa K,\,
 K^2],
-\tag{11.11}
+\tag{12.11}
 $$
 
-式 (11.9) 和式 (11.10) 的升幂系数向量分别为
+式 (12.9) 和式 (12.10) 的升幂系数向量分别为
 
 $$
 [5u\kappa,\,Hu+6\kappa,\,H],\qquad
 [-16\kappa^2,\,\kappa(11K-3H),\,2KH].
-\tag{11.12}
+\tag{12.12}
 $$
 
 对这个显示的 $6\times6$ 行列式作整数行列式展开并按 $b$ 收集，得到
@@ -1230,13 +1230,13 @@ $$
 $$
 \operatorname{Res}_n(C,Q_M)
 =16(1+b)^2(1+2b)^4\mathcal R_M(b),
-\tag{11.13}
+\tag{12.13}
 $$
 
 $$
 \operatorname{Res}_n(C,Q_J)
 =256b^2(1+b)^4(1+2b)^4(b^2+8b+4)^2\mathcal R_J(b),
-\tag{11.14}
+\tag{12.14}
 $$
 
 其中所有系数均按 $b$ 的升幂排列：
@@ -1249,7 +1249,7 @@ $$
 &+56647044b^{10}+22502243b^{11}+5180250b^{12}\\
 &+576939b^{13}+24294b^{14}-198b^{15}-27b^{16},
 \end{aligned}
-\tag{11.15}
+\tag{12.15}
 $$
 
 $$
@@ -1260,10 +1260,10 @@ $$
 &+543416b^{10}-14256b^{11}-6960b^{12}\\
 &-216b^{13}+9b^{14}.
 \end{aligned}
-\tag{11.16}
+\tag{12.16}
 $$
 
-Equations (11.13)–(11.16), together with the displayed Sylvester coefficient
+Equations (12.13)–(12.16), together with the displayed Sylvester coefficient
 vectors, are a finite ordinary determinant certificate: expanding the six rows
 gives the left sides, and coefficient comparison with the two displayed
 right sides gives the identities. No numerical root assertion enters this
@@ -1275,7 +1275,7 @@ remaining part is
 $$
 b^{14}(24294-198b-27b^2)
 =b^{14}\bigl(23070+(4-b)(306+27b)\bigr)>0.
-\tag{11.17}
+\tag{12.17}
 $$
 
 For $\mathcal R_J$, the terms below degree $10$ are positive,
@@ -1285,69 +1285,69 @@ $$
 &b^{10}(543416-14256b-6960b^2-216b^3)\\
 &\qquad=b^{10}\bigl(361208+(4-b)(45552+7824b+216b^2)\bigr)>0,
 \end{aligned}
-\tag{11.18}
+\tag{12.18}
 $$
 
 and the last term is $9b^{14}>0$. Thus both resultants in
-(11.13)–(11.14) are strictly positive on $0<b<4$, so $C$ has no common
+(12.13)–(12.14) are strictly positive on $0<b<4$, so $C$ has no common
 root with either $Q_M$ or $Q_J$. A simultaneous zero of $A_4,A_{5,E}$
-would produce precisely such a common root through (11.6)–(11.10), a
-contradiction. Together with (11.2), this proves $S_E>0$. ∎
+would produce precisely such a common root through (12.6)–(12.10), a
+contradiction. Together with (12.2), this proves $S_E>0$. ∎
 
-**定理 11.2（全局源到纤维的精确逆）。** 对固定的任意 $z,Y,p$、固定
+**定理 12.2（全局源到纤维的精确逆）。** 对固定的任意 $z,Y,p$、固定
 $E\in\{J,M\}$ 和任意合法源，置
 
 $$
 d_E=\frac{A_4B_4+A_{5,E}B_{5,E}}{S_E}.
-\tag{11.19}
+\tag{12.19}
 $$
 
 则该源能扩成实现第五响应 $p$ 的完整世界，当且仅当 $R_E=0$。
-满足此条件时，漂移唯一为 $d_E$，整个增益唯一为式 (10.1)，第五纤维的源图
+满足此条件时，漂移唯一为 $d_E$，整个增益唯一为式 (11.1)，第五纤维的源图
 完全由 $(r,b)$ 参数化。
 
-**证明。** 由式 (11.1) 和式 (11.19) 直接计算
+**证明。** 由式 (12.1) 和式 (12.19) 直接计算
 
 $$
 A_4d_E-B_4=-\frac{A_{5,E}R_E}{S_E},\qquad
 A_{5,E}d_E-B_{5,E}=\frac{A_4R_E}{S_E}.
-\tag{11.20}
+\tag{12.20}
 $$
 
-所以 $R_E=0$ 时两式 (10.5) 同时成立；反之，任一共同漂移解交叉相减即给
-$R_E=0$，而式 (11.20) 给出同一唯一的 $d_E$。式 (10.1) 随后复现
-时钟 $0,1,2,3$，式 (10.3) 与式 (10.5) 复现时钟 $4,5$。增益不可能恒零：
+所以 $R_E=0$ 时两式 (11.5) 同时成立；反之，任一共同漂移解交叉相减即给
+$R_E=0$，而式 (12.20) 给出同一唯一的 $d_E$。式 (11.1) 随后复现
+时钟 $0,1,2,3$，式 (11.3) 与式 (11.5) 复现时钟 $4,5$。增益不可能恒零：
 若恒零，四个节点值迫使 $d_E=0$ 和 $24=0$，矛盾。故返回的是合法完整世界。
 全过程没有除以一个增益采样值、首末系数、判别式或最高次系数，所有零采样、次数下降和重根均保留。
 
 若两个完整世界属于同一固定 $z,Y,p,E$，则它们相同当且仅当其
 $(r,b)$ 相同。确实，相同的 $(r,b)$ 给出唯一 $c,j,t,n,u,s_E$，定理
-11.1 给出唯一 $d_E$，式 (10.1) 给出唯一整个 $g$；反向则显然。因此
+12.1 给出唯一 $d_E$，式 (11.1) 给出唯一整个 $g$；反向则显然。因此
 两世界不同可精确写成
 
 $$
 (r_1-r_2)^2+(b_1-b_2)^2>0.
-\tag{11.21}
+\tag{12.21}
 $$
 
 这也是完整世界的源到世界单射和逆向恢复，不是对增益次数或漂移符号的附加假设。∎
 
-## 12. 一个精确父点上的完整第五 M 消费者
+## 13. 一个精确父点上的完整第五 M 消费者
 
-**定义 12.1（E(z) 父曲线及其第五 J 支臂）。** 置
+**定义 13.1（E(z) 父曲线及其第五 J 支臂）。** 置
 
 $$
 b_z=6-\frac{336}{z},\qquad
 c_z=\frac{4536-61z}{16z},\qquad
 \alpha_\pm=\frac{11928\pm168\sqrt{46}}{185}.
-\tag{12.1}
+\tag{13.1}
 $$
 
 取严格合法区间
 
 $$
 z\in(56,\alpha_-)\ \cup\ (\alpha_+,4536/61).
-\tag{12.2}
+\tag{13.2}
 $$
 
 于是
@@ -1361,21 +1361,21 @@ $$
 $$
 r_\pm=\frac{1\pm\sqrt{1-4b_zc_z}}2,\qquad
 Y=\frac{48z-672}{35},\qquad p_J=z.
-\tag{12.3}
+\tag{13.3}
 $$
 
 两根严格不同。对第五动作 $J$，取漂移 $d=z$ 和整个增益
 
 $$
 g_J(s)=\frac{z(s-3)(s-5)(s-7)}{105}.
-\tag{12.4}
+\tag{13.4}
 $$
 
 其在原时钟 $0,\ldots,7$ 的增益样本为
 
 $$
 z\left(-1,-\frac{16}{35},-\frac17,0,\frac1{35},0,-\frac1{35},0\right).
-\tag{12.5}
+\tag{13.5}
 $$
 
 由 $j=35(z-24)/(16z)$ 和 $t=7(z-48)/z$，前缀响应恰为
@@ -1384,47 +1384,47 @@ $0,24,48,z,Y$，第五 J 响应为 $z$。第五 J 之后，第六 J 和第六 M 
 $$
 z-\frac{(1+2b_z)z}{35},\qquad
 z-\frac{(1+3b_z)z}{35},
-\tag{12.6}
+\tag{13.6}
 $$
 
 而两种最终动作的响应都为 $z$。因此两个根分支给出第五 J 后每个第六、最终动作所需的不同世界对；该支臂是既有 E(z) 构造的精确复用。
 
-**定义 12.2（十八变量第五 M 系统）。** 未知量为
+**定义 13.2（十八变量第五 M 系统）。** 未知量为
 
 $$
 z,\ p_M,\quad (r_{EGk},b_{EGk})\quad
 (E,G\in\{J,M\},\ k\in\{1,2\}),
-\tag{12.7}
+\tag{13.7}
 $$
 
-共十八个实变量。$z$ 受式 (12.2) 的严格区间约束，$p_M$ 任意实数，并令
+共十八个实变量。$z$ 受式 (13.2) 的严格区间约束，$p_M$ 任意实数，并令
 $Y=(48z-672)/35$。每个槽 $(E,G,k)$ 由
 
 $$
 0<r_{EGk}<1,\quad b_{EGk}>0,\quad
 c_{EGk}=\frac{r_{EGk}(1-r_{EGk})}{b_{EGk}}>0
-\tag{12.8}
+\tag{13.8}
 $$
 
 定义 $j,t,n,u,s_J,s_M$。基本系统允许 $b_{EGk}=c_{EGk}$；
 若研究者另加非对称筛选，则逐槽附加 $b_{EGk}\ne c_{EGk}$，这不是源图定理的前提。
 
-对每个槽应用定理 11.2 的 $E=M$ 情形，令
+对每个槽应用定理 12.2 的 $E=M$ 情形，令
 
 $$
 R_{M,EGk}=R_M\!\left(z,Y,p_M;r_{EGk},b_{EGk}\right),\qquad
 d_{EGk}=d_M\!\left(z,Y,p_M;r_{EGk},b_{EGk}\right),
-\tag{12.9}
+\tag{13.9}
 $$
 
-并以式 (10.1) 记其整个增益为 $g_{EGk}$。系统的前八个方程是
+并以式 (11.1) 记其整个增益为 $g_{EGk}$。系统的前八个方程是
 
 $$
 R_{M,EGk}=0\qquad(E,G\in\{J,M\},\ k=1,2).
-\tag{12.10}
+\tag{13.10}
 $$
 
-这里 $R_M$ 是式 (10.6) 中的相容性行列式，而不是 (11.15) 的一元因子多项式 $\mathcal R_M$。
+这里 $R_M$ 是式 (11.6) 中的相容性行列式，而不是 (12.15) 的一元因子多项式 $\mathcal R_M$。
 
 定义每个槽在第六动作后的两个实际响应
 
@@ -1435,7 +1435,7 @@ h_J(E,G,k)&=d_{EGk}+
 h_M(E,G,k)&=d_{EGk}+
 \bigl(n_{EGk}+2u_{EGk}\bigr)g_{EGk}(6).
 \end{aligned}
-\tag{12.11}
+\tag{13.11}
 $$
 
 对每个 $E$，四个槽共享同一个 $h_E$。用第一槽作参照，六个方程为
@@ -1447,7 +1447,7 @@ h_E(E,M,1)-h_E(E,J,1)&=0,\\
 h_E(E,M,2)-h_E(E,J,1)&=0,
 \end{aligned}
 \qquad E\in\{J,M\}.
-\tag{12.12}
+\tag{13.12}
 $$
 
 最后定义
@@ -1459,7 +1459,7 @@ f_{JM}(E,G,k)&=d_{EGk}+(n_{EGk}+4t_{EGk}-2-r_{EGk})g_{EGk}(7),\\
 f_{MJ}(E,G,k)&=d_{EGk}+(2n_{EGk}+t_{EGk}+2r_{EGk})g_{EGk}(7),\\
 f_{MM}(E,G,k)&=d_{EGk}+(2n_{EGk}+3u_{EGk})g_{EGk}(7).
 \end{aligned}
-\tag{12.13}
+\tag{13.13}
 $$
 
 For each $(E,G)$, impose one final equality
@@ -1467,29 +1467,29 @@ For each $(E,G)$, impose one final equality
 $$
 f_{EG}(E,G,2)-f_{EG}(E,G,1)=0,
 \qquad E,G\in\{J,M\},
-\tag{12.14}
+\tag{13.14}
 $$
 
-where $f_{EG}$ means the corresponding line of (12.13). Equations
-(12.10), (12.12), and (12.14) total $8+6+4=18$ equations. In addition, every final pair has the strict distinctness guard
+where $f_{EG}$ means the corresponding line of (13.13). Equations
+(13.10), (13.12), and (13.14) total $8+6+4=18$ equations. In addition, every final pair has the strict distinctness guard
 
 $$
 (r_{EG1}-r_{EG2})^2+(b_{EG1}-b_{EG2})^2>0.
-\tag{12.15}
+\tag{13.15}
 $$
 
-All guards in (12.2), (12.8), (12.15) are part of the system; no sign restriction is imposed on any $d_{EGk}$, $p_M$, gain sample, or leading coefficient.
+All guards in (13.2), (13.8), (13.15) are part of the system; no sign restriction is imposed on any $d_{EGk}$, $p_M$, gain sample, or leading coefficient.
 
-**定理 12.3（十八方程消费者的必要性与充分性）。** The guarded system of Definition 12.2 has a solution if and only if, on the exact parent
+**定理 13.3（十八方程消费者的必要性与充分性）。** The guarded system of Definition 13.2 has a solution if and only if, on the exact parent
 
 $$
 H_4(z)=\left(0,J,24,M,48,J,z,M,\frac{48z-672}{35}\right)
 $$
 
-with $z$ in (12.2), there is an unrestricted fifth M $L_2$ family whose terminal pairs are indexed by
+with $z$ in (13.2), there is an unrestricted fifth M $L_2$ family whose terminal pairs are indexed by
 $(E,G)\in\{J,M\}^2$, with a possibly different pair for every final action.
 
-**证明（必要性）。** Assume the stated fifth M $L_2$ family. For each sixth action $E$, choose its actual response $h_E$ witnessing the $L_1$ clause. For each final action $G$, choose two different complete worlds in the corresponding $L_0$ leaf and label them $k=1,2$. Their source coordinates satisfy (12.8), their common fifth response is one $p_M$, and Theorem 11.2 gives (12.9)–(12.10). The actual trace table after the fifth M is
+**证明（必要性）。** Assume the stated fifth M $L_2$ family. For each sixth action $E$, choose its actual response $h_E$ witnessing the $L_1$ clause. For each final action $G$, choose two different complete worlds in the corresponding $L_0$ leaf and label them $k=1,2$. Their source coordinates satisfy (13.8), their common fifth response is one $p_M$, and Theorem 12.2 gives (13.9)–(13.10). The actual trace table after the fifth M is
 
 $$
 \begin{array}{c|ccc}
@@ -1497,35 +1497,35 @@ E&\text{sixth trace}&\text{final }J\text{ trace}&\text{final }M\text{ trace}\\ \
 J&n+r+t&n+u&n+4t-2-r\\
 M&n+2u&2n+t+2r&2n+3u .
 \end{array}
-\tag{12.16}
+\tag{13.16}
 $$
 
-Thus equal sixth responses give (12.12), equal final responses give (12.14), and
-distinct complete worlds give (12.15) by (11.21). No pair is forced to equal a pair under another final action; reuse is allowed precisely when the complete world itself is reused.
+Thus equal sixth responses give (13.12), equal final responses give (13.14), and
+distinct complete worlds give (13.15) by (12.21). No pair is forced to equal a pair under another final action; reuse is allowed precisely when the complete world itself is reused.
 
-**证明（充分性）。** Given a solution, (12.9)–(12.10) and Theorem 11.2 construct eight legal complete worlds, all with the same $H_4(z)$ and fifth M response $p_M$. Equations (12.12) make the four worlds under each sixth action share one actual response, and (12.14) makes the two designated worlds for each final action share its actual terminal response. Guard (12.15) and (11.21) make every designated pair different. Hence the two final-action leaves under each sixth action contain an $L_0$ pair, each sixth action supplies an $L_1$ child, and the fifth M arm supplies $L_2$. Different final actions may use different pairs; the union is a set of at most eight worlds because repeated slots can be the same complete world.
+**证明（充分性）。** Given a solution, (13.9)–(13.10) and Theorem 12.2 construct eight legal complete worlds, all with the same $H_4(z)$ and fifth M response $p_M$. Equations (13.12) make the four worlds under each sixth action share one actual response, and (13.14) makes the two designated worlds for each final action share its actual terminal response. Guard (13.15) and (12.21) make every designated pair different. Hence the two final-action leaves under each sixth action contain an $L_0$ pair, each sixth action supplies an $L_1$ child, and the fifth M arm supplies $L_2$. Different final actions may use different pairs; the union is a set of at most eight worlds because repeated slots can be the same complete world.
 
-The two E(z) worlds from Definition 12.1 supply the fifth J arm's $L_2$ at the same exact $z,Y$. Their union with the eight M worlds therefore supplies an $L_3$ family after the common $H_4$, using at most ten complete worlds. This is a conditional local construction: existence of a solution of the eighteen equations is not asserted. ∎
+The two E(z) worlds from Definition 13.1 supply the fifth J arm's $L_2$ at the same exact $z,Y$. Their union with the eight M worlds therefore supplies an $L_3$ family after the common $H_4$, using at most ten complete worlds. This is a conditional local construction: existence of a solution of the eighteen equations is not asserted. ∎
 
-**命题 12.4（父点与祖先边界）。** The consumer of Theorem 12.3 requires the same exact $z,Y$ in both fifth arms. A fifth-M construction at a different parent cannot be substituted into this system, even when its source coordinates or responses are individually legal. A solution of the system proves only the local $H_4$ $L_3$ statement. It does not supply the earlier opposite-action fibers, their actual-response failure clauses, any original-root termination argument, the eight-versus-nine conclusion, or a nine-read upper bound. The distinctness guards and all shared literal prefixes stated in Theorem 12.3 remain necessary when those ancestor questions are later addressed.
+**命题 13.4（父点与祖先边界）。** The consumer of Theorem 13.3 requires the same exact $z,Y$ in both fifth arms. A fifth-M construction at a different parent cannot be substituted into this system, even when its source coordinates or responses are individually legal. A solution of the system proves only the local $H_4$ $L_3$ statement. It does not supply the earlier opposite-action fibers, their actual-response failure clauses, any original-root termination argument, the eight-versus-nine conclusion, or a nine-read upper bound. The distinctness guards and all shared literal prefixes stated in Theorem 13.3 remain necessary when those ancestor questions are later addressed.
 
-## 13. 来源对应、普通工具与未决存在性
+## 14. 来源对应、普通工具与未决存在性
 
-**命题 13.1（来源与范围对应）。** 本增补复用本卷 §§1–3 的完整世界、原时钟、迹表和四节点插值约定，复用 §§6、9 的通过坐标和失败递归语义；它把原来固定
-$36<z<361/10,\ 33<Y<34$ 的 MMJ 图扩展为任意实数 $z,Y,p$ 的第五 J、第五 M 两个源图。式 (12.1)–(12.6) 的 E(z) 父曲线和第五 J 支臂对应《FIB_JMJM_PROMISED_FIBERS_AND_JOINT_EXCEPTION_GEOMETRY》中的第五 J 构造，尤其对应其第 24 节的漂移系数接口及第 31–33 节的 E(z)、终端迹和联合例外几何；本卷 §§8、9 已给出的条件性同点特化只作为语义和递归接口，不被改判。Lagrange 插值、秩一源方程、仿射消元、Sylvester 行列式和多项式根计数是标准数学工具。这里没有外部文献的新颖性、优先权或穷尽检索主张。
+**命题 14.1（来源与范围对应）。** 本增补复用本卷 §§1–3 的完整世界、原时钟、迹表和四节点插值约定，复用 §§6、9 的通过坐标和失败递归语义；它把原来固定
+$36<z<361/10,\ 33<Y<34$ 的 MMJ 图扩展为任意实数 $z,Y,p$ 的第五 J、第五 M 两个源图。式 (13.1)–(13.6) 的 E(z) 父曲线和第五 J 支臂对应《FIB_JMJM_PROMISED_FIBERS_AND_JOINT_EXCEPTION_GEOMETRY》中的第五 J 构造，尤其对应其第 24 节的漂移系数接口及第 31–33 节的 E(z)、终端迹和联合例外几何；本卷 §§8、9 已给出的条件性同点特化只作为语义和递归接口，不被改判。Lagrange 插值、秩一源方程、仿射消元、Sylvester 行列式和多项式根计数是标准数学工具。这里没有外部文献的新颖性、优先权或穷尽检索主张。
 
-**证明。** 前四个量迹和增益节点直接由本卷命题 1.2、命题 2.1 的同一左乘和插值计算给出；式 (10.2) 只是把节点改为 $0,1,2,3$ 后对时钟四、五的重新收集。E(z) 的式 (12.1)–(12.6) 直接代入式 (1.2) 的迹公式，且其第五 J 两根仍由同一 $b_z,c_z$ 产生。递归接口则是本卷定义 9.1 和命题 9.2 的同一包含关系。故来源对应只说明所复用的数学对象和适用范围，不把来源文本当作本增补结论的证明。∎
+**证明。** 前四个量迹和增益节点直接由本卷命题 1.2、命题 2.1 的同一左乘和插值计算给出；式 (11.2) 只是把节点改为 $0,1,2,3$ 后对时钟四、五的重新收集。E(z) 的式 (13.1)–(13.6) 直接代入式 (1.2) 的迹公式，且其第五 J 两根仍由同一 $b_z,c_z$ 产生。递归接口则是本卷定义 9.1 和命题 9.2 的同一包含关系。故来源对应只说明所复用的数学对象和适用范围，不把来源文本当作本增补结论的证明。∎
 
-**定理 13.2（本增补的未决边界）。** 定理 11.2 是同时适用于两个第五动作的全局源-only 参数化，包含对称源、任意实漂移和所有增益退化。定理 12.3 是 E(z) 同父路线的精确充分必要十八方程消费者。这里没有断言十八方程有解，没有断言任何其他第五 M 构造位于这条父曲线上，也没有断言所得局部 $L_3$ 延伸为原根结论。
+**定理 14.2（本增补的未决边界）。** 定理 12.2 是同时适用于两个第五动作的全局源-only 参数化，包含对称源、任意实漂移和所有增益退化。定理 13.3 是 E(z) 同父路线的精确充分必要十八方程消费者。这里没有断言十八方程有解，没有断言任何其他第五 M 构造位于这条父曲线上，也没有断言所得局部 $L_3$ 延伸为原根结论。
 
-**证明。** 定理 11.1 的结果式正性只排除两个漂移系数同时为零；它不制造一个满足
-$R_E=0$ 的源。定理 11.2 的双向证明把存在性精确地留在行列式方程和全部源严格条件中。定理 12.3 只是把这些条件与同一父点的八个槽、六个第六响应相等式、四个最终相等式合并；方程的可解性仍是开放的。命题 12.4 列出的祖先和根层义务没有进入这十八个方程，因此也不能由它们推出。∎
+**证明。** 定理 12.1 的结果式正性只排除两个漂移系数同时为零；它不制造一个满足
+$R_E=0$ 的源。定理 12.2 的双向证明把存在性精确地留在行列式方程和全部源严格条件中。定理 13.3 只是把这些条件与同一父点的八个槽、六个第六响应相等式、四个最终相等式合并；方程的可解性仍是开放的。命题 13.4 列出的祖先和根层义务没有进入这十八个方程，因此也不能由它们推出。∎
 
 ## 追加锚（本行以下为增补区）
 
-## 14. 结果式证书的显式矩阵
+## 15. 结果式证书的显式矩阵
 
-**命题 14.1（六阶 Sylvester 展开）。** 若
+**命题 15.1（六阶 Sylvester 展开）。** 若
 
 $$
 C(n)=c_4n^4+c_3n^3+c_2n^2+c_1n+c_0,\qquad
@@ -1544,7 +1544,7 @@ q_2&q_1&q_0&0&0&0\\
 0&0&q_2&q_1&q_0&0\\
 0&0&0&q_2&q_1&q_0
 \end{pmatrix}.
-\tag{14.1}
+\tag{15.1}
 $$
 
 在 $C$ 上取
@@ -1569,8 +1569,8 @@ $$
 $$
 
 把 $t=1+b,u=1+2b,\kappa=2ut,K=t^2+3u,H=t^2-18t+5$
-逐项代入式 (14.1)，按 $b$ 的幂次收集，所得系数恰为式
-(11.13)–(11.16) 的两个因子分解。因而这些分解是显示矩阵的整系数行列式恒等式；
-它们的正性证明只使用式 (11.17)–(11.18)，不使用近似根或额外的可解性假设。∎
+逐项代入式 (15.1)，按 $b$ 的幂次收集，所得系数恰为式
+(12.13)–(12.16) 的两个因子分解。因而这些分解是显示矩阵的整系数行列式恒等式；
+它们的正性证明只使用式 (12.17)–(12.18)，不使用近似根或额外的可解性假设。∎
 
 ## 追加锚（本行以下为增补区）
