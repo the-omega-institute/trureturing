@@ -361,15 +361,14 @@ private theorem flat_interval_bound (z e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1)
         exact flat_kink e het (by linarith)
       · rw [← hR A (by linarith)]; exact hright
 
-private theorem flat_five_moment (a b e x y : ℝ)
-    (hab : b ≤ a) (hbe : e ≤ b) (hex : x ≤ e) (hxy : y ≤ x) (hy0 : 0 ≤ y)
-    (hmass : a + b + e + x + y ≤ 4) (hdet : a ^ 2 + b ^ 2 + e ^ 2 + a * b * e ≤ 4) :
-    a ^ 2 + b ^ 2 + e ^ 2 + x ^ 2 + y ^ 2 - (a + b + e + x + y) / 4 ≤ 7 / 2 := by
-  have hx0 : 0 ≤ x := by linarith
-  have he0 : 0 ≤ e := by linarith
-  have hb0 : 0 ≤ b := by linarith
-  have ha0 : 0 ≤ a := by linarith
-  have hae : e ≤ a := le_trans hbe hab
+-- Shared original scalar PSD consequences, extracted from flat_five_moment.
+-- Both the original zero-jump proof and the middle-energy proof consume them.
+private theorem flat_third_head_le_one (a b e : ℝ)
+    (hab : b ≤ a) (hbe : e ≤ b) (he0 : 0 ≤ e)
+    (hdet : a ^ 2 + b ^ 2 + e ^ 2 + a * b * e ≤ 4) : e ≤ 1 := by
+  have hb0 : 0 ≤ b := he0.trans hbe
+  have ha0 : 0 ≤ a := hb0.trans hab
+  have hae : e ≤ a := hbe.trans hab
   have habprod : e ^ 2 ≤ a * b := by
     nlinarith [mul_nonneg (sub_nonneg.mpr hae) hb0,
       mul_nonneg he0 (sub_nonneg.mpr hbe)]
@@ -377,12 +376,50 @@ private theorem flat_five_moment (a b e x y : ℝ)
     nlinarith [mul_le_mul_of_nonneg_right habprod he0,
       mul_nonneg (sub_nonneg.mpr hae) (add_nonneg ha0 he0),
       mul_nonneg (sub_nonneg.mpr hbe) (add_nonneg hb0 he0)]
-  have he1 : e ≤ 1 := by
-    by_contra h
-    have hesq : 1 < e ^ 2 := by
-      nlinarith [mul_pos (by linarith : 0 < e - 1) (by linarith : 0 < e + 1)]
-    have hp := mul_nonneg (sq_nonneg e) (by linarith : 0 ≤ e - 1)
-    nlinarith only [hecube, hesq, hp]
+  by_contra h
+  have hesq : 1 < e ^ 2 := by
+    nlinarith [mul_pos (by linarith : 0 < e - 1) (by linarith : 0 < e + 1)]
+  have hp := mul_nonneg (sq_nonneg e) (by linarith : 0 ≤ e - 1)
+  nlinarith only [hecube, hesq, hp]
+
+private theorem flat_endpoint_ge_third (e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
+    e ≤ 2 - e ^ 2 := by
+  have hp := mul_nonneg (sub_nonneg.mpr he1) (by linarith : 0 ≤ e + 2)
+  nlinarith only [hp]
+
+private theorem flat_pair_square_le_low (a b e : ℝ)
+    (hae : e ≤ a) (hbe : e ≤ b) :
+    a ^ 2 + b ^ 2 ≤ (a + b - e) ^ 2 + e ^ 2 := by
+  nlinarith [mul_nonneg (sub_nonneg.mpr hae) (sub_nonneg.mpr hbe)]
+
+private theorem flat_pair_square_le_high (a b e : ℝ)
+    (he0 : 0 ≤ e) (he1 : e ≤ 1)
+    (hdet : a ^ 2 + b ^ 2 + e ^ 2 + a * b * e ≤ 4)
+    (hs : (2 - e ^ 2) + e ≤ a + b) :
+    a ^ 2 + b ^ 2 ≤ (2 - e ^ 2) ^ 2 + e ^ 2 := by
+  let A := 2 - e ^ 2
+  change A + e ≤ a + b at hs
+  change a ^ 2 + b ^ 2 ≤ A ^ 2 + e ^ 2
+  have hAe : e ≤ A := flat_endpoint_ge_third e he0 he1
+  have hpoly : (2 - e) * (a ^ 2 + b ^ 2 - (A ^ 2 + e ^ 2)) ≤
+      -e * ((a + b) - (A + e)) * ((a + b) + (A + e)) := by
+    dsimp [A]
+    nlinarith only [hdet]
+  have hp := mul_nonneg (mul_nonneg he0 (sub_nonneg.mpr hs))
+    (by linarith [hAe] : 0 ≤ (a + b) + (A + e))
+  by_contra h
+  have hpos := mul_pos (by linarith : 0 < 2 - e)
+    (by linarith : 0 < a ^ 2 + b ^ 2 - (A ^ 2 + e ^ 2))
+  linarith only [hpoly, hp, hpos]
+
+private theorem flat_five_moment (a b e x y : ℝ)
+    (hab : b ≤ a) (hbe : e ≤ b) (hex : x ≤ e) (hxy : y ≤ x) (hy0 : 0 ≤ y)
+    (hmass : a + b + e + x + y ≤ 4) (hdet : a ^ 2 + b ^ 2 + e ^ 2 + a * b * e ≤ 4) :
+    a ^ 2 + b ^ 2 + e ^ 2 + x ^ 2 + y ^ 2 - (a + b + e + x + y) / 4 ≤ 7 / 2 := by
+  have hx0 : 0 ≤ x := by linarith
+  have he0 : 0 ≤ e := by linarith
+  have hae : e ≤ a := le_trans hbe hab
+  have he1 := flat_third_head_le_one a b e hab hbe he0 hdet
   let k := max (e - 1 / 4) 0
   have hk : 0 ≤ k := le_max_right _ _
   have hc : (x ^ 2 - x / 4) + (y ^ 2 - y / 4) ≤ k * min (2 * e) (4 - (a + b) - e) := by
@@ -398,32 +435,19 @@ private theorem flat_five_moment (a b e x y : ℝ)
       nlinarith [mul_nonneg hx0 (sub_nonneg.mpr hex),
         mul_nonneg hy0 (by linarith : 0 ≤ e - y)]
   let A := 2 - e ^ 2
-  have hAe : e ≤ A := by
-    have hp := mul_nonneg (sub_nonneg.mpr he1) (by linarith : 0 ≤ e + 2)
-    dsimp [A]; nlinarith only [hp]
+  have hAe : e ≤ A := flat_endpoint_ge_third e he0 he1
   by_cases hs : a + b ≤ A + e
   · have hz0 : e ≤ a + b - e := by linarith
     have hzA : a + b - e ≤ 2 - e ^ 2 := by dsimp [A] at hs; linarith
     have hF := flat_interval_bound (a + b - e) e he0 he1 hz0 hzA
-    have hq : a ^ 2 + b ^ 2 ≤ (a + b - e) ^ 2 + e ^ 2 := by
-      nlinarith [mul_nonneg (sub_nonneg.mpr hae) (sub_nonneg.mpr hbe)]
+    have hq := flat_pair_square_le_low a b e hae hbe
     have hmin : 4 - (a + b) - e = 4 - (a + b - e) - 2 * e := by ring
     rw [hmin] at hc
     dsimp [flatFormula] at hF
     dsimp [k] at hc
     nlinarith only [hF, hc, hq]
   · have hs' : A + e ≤ a + b := le_of_lt (lt_of_not_ge hs)
-    have hpoly : (2 - e) * (a ^ 2 + b ^ 2 - (A ^ 2 + e ^ 2)) ≤
-        -e * ((a + b) - (A + e)) * ((a + b) + (A + e)) := by
-      dsimp [A]
-      nlinarith only [hdet]
-    have hp := mul_nonneg (mul_nonneg he0 (sub_nonneg.mpr hs'))
-      (by linarith [hAe] : 0 ≤ (a + b) + (A + e))
-    have hq : a ^ 2 + b ^ 2 ≤ A ^ 2 + e ^ 2 := by
-      by_contra h
-      have hpos := mul_pos (by linarith : 0 < 2 - e)
-        (by linarith : 0 < a ^ 2 + b ^ 2 - (A ^ 2 + e ^ 2))
-      linarith
+    have hq := flat_pair_square_le_high a b e he0 he1 hdet hs'
     have hm : min (2 * e) (4 - (a + b) - e) ≤ min (2 * e) (4 - A - 2 * e) :=
       min_le_min le_rfl (by linarith)
     have hcmp := mul_le_mul_of_nonneg_left hm hk
@@ -431,14 +455,18 @@ private theorem flat_five_moment (a b e x y : ℝ)
     dsimp [flatFormula, A, k] at hF hc hcmp hq hs'
     nlinarith only [hF, hc, hcmp, hq, hs']
 
+private theorem flat_head_determinant (h : Fin 5 → ℝ)
+    (hK : (actualK h 0).PosSemidef) :
+    (h 0) ^ 2 + (h 1) ^ 2 + (h 2) ^ 2 + h 0 * h 1 * h 2 ≤ 4 := by
+  have hd := hK.det_nonneg
+  norm_num [actualK, Matrix.det_fin_three] at hd
+  nlinarith only [hd]
+
 private theorem flat_head_moment (h : Fin 5 → ℝ)
     (hn : ∀ i, 0 ≤ h i) (ho : Antitone h) (hH : (∑ i, h i) ≤ 4)
     (hK : (actualK h 0).PosSemidef) :
     (∑ i, (h i) ^ 2) - (∑ i, h i) / 4 ≤ 7 / 2 := by
-  have hd := hK.det_nonneg
-  norm_num [actualK, Matrix.det_fin_three] at hd
-  have hd' : (h 0) ^ 2 + (h 1) ^ 2 + (h 2) ^ 2 + h 0 * h 1 * h 2 ≤ 4 := by
-    nlinarith only [hd]
+  have hd' := flat_head_determinant h hK
   have hh := flat_five_moment (h 0) (h 1) (h 2) (h 3) (h 4)
     (ho (by decide)) (ho (by decide)) (ho (by decide)) (ho (by decide)) (hn 4)
     (by simpa [Fin.sum_univ_succ, add_assoc] using hH) hd'
@@ -531,6 +559,187 @@ theorem actual_psd_zero_jump_moment (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
       linarith only [hh, htail, hL4]
     linarith only [hsmall_bound]
   · exact large_head_moment h d hn ho dn dord hL4 hK (by linarith)
+
+-- The middle proof uses scalar comparison points, not replacement PSD spectra.
+-- In particular, the second minimum entry may be negative at such a point.
+private def middleFormula (w z e : ℝ) : ℝ :=
+  z ^ 2 + 2 * e ^ 2 - w * (z + 2 * e) +
+    e * min (2 * (e - w)) (4 - 3 * w - z - 2 * e)
+
+private def middleFull (w e : ℝ) : ℝ :=
+  4 - 2 * w - 4 * w * e + w * e ^ 2 + e ^ 4
+
+private def middleTrunc (w e : ℝ) : ℝ :=
+  4 - 2 * w + 2 * e - 5 * w * e + (w - 4) * e ^ 2 + e ^ 3 + e ^ 4
+
+private theorem middleFormula_eq_min (w z e : ℝ) (he0 : 0 ≤ e) :
+    middleFormula w z e =
+      min (z ^ 2 + 4 * e ^ 2 - w * z - 4 * w * e)
+        (z ^ 2 - (w + e) * z + (4 - 5 * w) * e) := by
+  unfold middleFormula
+  rw [mul_min_of_nonneg _ _ he0, ← min_add_add_left]
+  congr 1 <;> ring
+
+private theorem middleFormula_mono (w z A e : ℝ)
+    (hw0 : 0 ≤ w) (he0 : 0 ≤ e) (he1 : e ≤ 1)
+    (hz : 1 + w ≤ z) (hzA : z ≤ A) :
+    middleFormula w z e ≤ middleFormula w A e := by
+  rw [middleFormula_eq_min w z e he0, middleFormula_eq_min w A e he0]
+  apply min_le_min
+  · have hp := mul_nonneg (sub_nonneg.mpr hzA)
+      (by linarith : 0 ≤ A + z - w)
+    nlinarith only [hp]
+  · have hp := mul_nonneg (sub_nonneg.mpr hzA)
+      (by linarith : 0 ≤ A + z - w - e)
+    nlinarith only [hp]
+
+-- Exact nonnegative decomposition of the reversed full-polynomial secant.
+private theorem middleFull_le_at_w (w t : ℝ)
+    (hw : 1 / 4 ≤ w) (hwt : w ≤ t) (ht : t ≤ 1 / 2) :
+    middleFull w t ≤ middleFull w w := by
+  have hw0 : 0 ≤ w := by linarith
+  have ht0 : 0 ≤ t := hw0.trans hwt
+  have hw1 : w ≤ 1 / 2 := hwt.trans ht
+  have hbracket : 0 ≤ 4 * w - (t + w) * (t ^ 2 + w ^ 2 + w) := by
+    calc
+      _ = (1 - t - w) * (t ^ 2 + w ^ 2 + w) + (3 * w - 1 / 2) +
+          (1 / 2 - t) * (1 / 2 + t) + (1 / 2 - w) * (1 / 2 + w) := by ring
+      _ ≥ 0 := add_nonneg
+        (add_nonneg
+          (add_nonneg
+            (mul_nonneg (by linarith) (by nlinarith only [sq_nonneg t, sq_nonneg w, hw0]))
+            (by linarith))
+          (mul_nonneg (by linarith) (by linarith)))
+        (mul_nonneg (by linarith) (by linarith))
+  have hp := mul_nonneg (sub_nonneg.mpr hwt) hbracket
+  dsimp [middleFull]
+  nlinarith only [hp]
+
+private theorem middleTrunc_le_at_half (w e : ℝ)
+    (hw : 1 / 4 ≤ w) (he : 1 / 2 ≤ e) (he1 : e ≤ 1) :
+    middleTrunc w e ≤ middleTrunc w (1 / 2) := by
+  have he0 : 0 ≤ e := by linarith
+  have hp : 0 ≤ (e - 1 / 2) *
+      (3 / 4 + e / 2 + e * (1 - e) * (e + 5 / 2) +
+        (w - 1 / 4) * (9 / 2 - e)) := by
+    apply mul_nonneg (by linarith)
+    apply add_nonneg
+    · exact add_nonneg (by linarith)
+        (mul_nonneg (mul_nonneg he0 (by linarith)) (by linarith))
+    · exact mul_nonneg (by linarith) (by linarith)
+  dsimp [middleTrunc]
+  nlinarith only [hp]
+
+private theorem middle_upper_endpoint (w e : ℝ)
+    (hw : 1 / 4 ≤ w) (hw1 : w ≤ 1 / 2) (hwe : w ≤ e) (he1 : e ≤ 1) :
+    middleFormula w (2 - e ^ 2) e ≤ 4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4 := by
+  have he0 : 0 ≤ e := by linarith
+  have hpoly : middleFormula w (2 - e ^ 2) e =
+      min (middleFull w e) (middleTrunc w e) := by
+    rw [middleFormula_eq_min w (2 - e ^ 2) e he0]
+    congr 1 <;> dsimp [middleFull, middleTrunc] <;> ring
+  have htarget : middleFull w w = 4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4 := by
+    dsimp [middleFull]
+    ring
+  rw [hpoly, ← htarget]
+  by_cases he : e ≤ 1 / 2
+  · exact (min_le_left _ _).trans (middleFull_le_at_w w e hw hwe he)
+  · have he' : 1 / 2 ≤ e := le_of_lt (lt_of_not_ge he)
+    have hbridge : middleTrunc w (1 / 2) ≤ middleFull w (1 / 2) := by
+      dsimp [middleTrunc, middleFull]
+      nlinarith only [hw]
+    exact (min_le_right _ _).trans
+      ((middleTrunc_le_at_half w e hw he' he1).trans
+        (hbridge.trans (middleFull_le_at_w w (1 / 2) hw hw1 le_rfl)))
+
+-- The original tail chord is used only at (a,b,e,x,y).
+-- The shared fixed-e suppliers then permit the scalar comparison to A=2-e².
+private theorem flat_five_middle_energy (w a b e x y : ℝ)
+    (hw : 1 / 4 ≤ w) (hw1 : w ≤ 1 / 2) (ha : 1 + w ≤ a)
+    (hab : b ≤ a) (hbe : e ≤ b) (hex : x ≤ e) (hxy : y ≤ x) (hyw : w ≤ y)
+    (hmass : a + b + e + x + y ≤ 4 - w)
+    (hdet : a ^ 2 + b ^ 2 + e ^ 2 + a * b * e ≤ 4) :
+    a * (a - w) + b * (b - w) + e * (e - w) + x * (x - w) + y * (y - w) ≤
+      4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4 := by
+  have hw0 : 0 ≤ w := by linarith
+  have hwe : w ≤ e := hyw.trans (hxy.trans hex)
+  have he0 : 0 ≤ e := hw0.trans hwe
+  have hae : e ≤ a := hbe.trans hab
+  have he1 := flat_third_head_le_one a b e hab hbe he0 hdet
+  let A := 2 - e ^ 2
+  have hmin : x + y - 2 * w ≤ min (2 * (e - w)) (4 - 3 * w - (a + b) - e) :=
+    le_min (by linarith) (by linarith only [hmass])
+  have hc : x * (x - w) + y * (y - w) ≤
+      e * min (2 * (e - w)) (4 - 3 * w - (a + b) - e) := by
+    have hm := mul_le_mul_of_nonneg_left hmin he0
+    have hx := mul_nonneg (by linarith : 0 ≤ x - w) (sub_nonneg.mpr hex)
+    have hy := mul_nonneg (by linarith : 0 ≤ y - w) (by linarith : 0 ≤ e - y)
+    nlinarith only [hm, hx, hy]
+  have hG : a * (a - w) + b * (b - w) + e * (e - w) +
+      x * (x - w) + y * (y - w) ≤ middleFormula w A e := by
+    by_cases hs : a + b ≤ A + e
+    · have hz : 1 + w ≤ a + b - e := by linarith
+      have hzA : a + b - e ≤ A := by linarith
+      have hq := flat_pair_square_le_low a b e hae hbe
+      have hmono := middleFormula_mono w (a + b - e) A e hw0 he0 he1 hz hzA
+      have hmin_eq : 4 - 3 * w - (a + b) - e =
+          4 - 3 * w - (a + b - e) - 2 * e := by ring
+      rw [hmin_eq] at hc
+      dsimp [middleFormula] at hmono ⊢
+      nlinarith only [hq, hc, hmono]
+    · have hs' : A + e ≤ a + b := le_of_lt (lt_of_not_ge hs)
+      have hq := flat_pair_square_le_high a b e he0 he1 hdet hs'
+      have hm : min (2 * (e - w)) (4 - 3 * w - (a + b) - e) ≤
+          min (2 * (e - w)) (4 - 3 * w - A - 2 * e) :=
+        min_le_min le_rfl (by linarith)
+      have hcmp := mul_le_mul_of_nonneg_left hm he0
+      have hwcmp := mul_nonneg hw0 (sub_nonneg.mpr hs')
+      change a ^ 2 + b ^ 2 ≤ A ^ 2 + e ^ 2 at hq
+      dsimp [middleFormula]
+      nlinarith only [hq, hc, hcmp, hwcmp]
+  exact hG.trans (middle_upper_endpoint w e hw hw1 hwe he1)
+
+/-- Dimension-independent middle energy for all ordered nonnegative real heads.
+The sole matrix hypothesis is the literal flat-tail PSD matrix, including singular
+matrices. Determinant, reduced-head caps and the tail chord are derived in the proof. -/
+theorem actual_psd_flat_tail_middle_energy (w : ℝ) (h : Fin 5 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (hH : (∑ i, h i) ≤ 4 - 6 * w) (hlarge : 1 ≤ h 0)
+    (hw : 1 / 4 ≤ w) (hrho : w ≤ (5 - Real.sqrt 17) / 2)
+    (hK : (!![2, -(w + h 0), -(w + h 1);
+                -(w + h 0), 2, -(w + h 2);
+                -(w + h 1), -(w + h 2), 2] : Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    w * (∑ i, h i) + (∑ i, (h i) ^ 2) ≤
+      4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4 := by
+  have hsqrt : 4 ≤ Real.sqrt 17 := by
+    have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 17 by norm_num)
+    have hn := Real.sqrt_nonneg (17 : ℝ)
+    by_contra h
+    have hp := mul_pos (by linarith : 0 < 4 - Real.sqrt 17)
+      (by linarith : 0 < 4 + Real.sqrt 17)
+    nlinarith only [hs, hp]
+  have hw1 : w ≤ 1 / 2 := by linarith only [hrho, hsqrt]
+  let g : Fin 5 → ℝ := fun i => w + h i
+  have hgK : (actualK g 0).PosSemidef := by
+    simpa [actualK, g] using hK
+  have hd := flat_head_determinant g hgK
+  have hbudget : g 0 + g 1 + g 2 + g 3 + g 4 ≤ 4 - w := by
+    have hH' := hH
+    simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc,
+      Finset.univ_eq_empty, Finset.sum_empty, add_zero] at hH'
+    dsimp [g]
+    linarith only [hH']
+  have hb := flat_five_middle_energy w (g 0) (g 1) (g 2) (g 3) (g 4)
+    hw hw1 (by dsimp [g]; linarith only [hlarge])
+    (by dsimp [g]; linarith only [ho (show (0 : Fin 5) ≤ 1 by decide)])
+    (by dsimp [g]; linarith only [ho (show (1 : Fin 5) ≤ 2 by decide)])
+    (by dsimp [g]; linarith only [ho (show (2 : Fin 5) ≤ 3 by decide)])
+    (by dsimp [g]; linarith only [ho (show (3 : Fin 5) ≤ 4 by decide)])
+    (by dsimp [g]; linarith only [hn 4]) hbudget hd
+  dsimp [g] at hb
+  simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc,
+    Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+  nlinarith only [hb]
 
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound
