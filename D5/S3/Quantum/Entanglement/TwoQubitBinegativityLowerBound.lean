@@ -131,8 +131,7 @@ private theorem schmidt_negative_trace (l α β : ℝ) (hl : 0 ≤ l)
     ext ⟨i, j⟩ ⟨k, l⟩
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
       simp [P, Q, rankOneDensity, vec4, vecMulVec_apply, Matrix.mul_apply,
-        Fintype.sum_prod_type, Fin.sum_univ_two] <;>
-      ring
+        Fintype.sum_prod_type, Fin.sum_univ_two]
   rw [(CFC.posPart_negPart_unique hsplit horth hP hQ).2]
   simp [Q, rankOneDensity, vec4, vecMulVec_apply, Matrix.trace,
     Fintype.sum_prod_type, Fin.sum_univ_two, Complex.mul_re]
@@ -211,7 +210,7 @@ private theorem product_nonnegative
       star (fun p : Fin 2 × Fin 2 => a p.1 * star (b p.2)) ⬝ᵥ
         (σ *ᵥ (fun p => a p.1 * star (b p.2))) := by
     simp [partialTransposeB.eq_1, dotProduct, Matrix.mulVec, Fintype.sum_prod_type,
-      Fin.sum_univ_two, map_add, map_mul]
+      Fin.sum_univ_two]
     ring
   rw [heq]
   exact hσ.re_dotProduct_nonneg _
@@ -232,9 +231,8 @@ private theorem singular_product (v : Fin 2 × Fin 2 → ℂ)
       fin_cases i <;> fin_cases j <;> simp [h00, h10]
   · refine ⟨![v (0, 0), v (1, 0)], ![1, v (0, 1) / v (0, 0)], ?_⟩
     funext ⟨i, j⟩
-    fin_cases i <;> fin_cases j <;> simp [h00]
-    apply (eq_div_iff h00).mpr
-    linear_combination hv
+    fin_cases i <;> fin_cases j <;> simp <;> field_simp
+    all_goals first | (ring; done) | linear_combination hv
 
 /-- A complex determinant pencil supplies a product vector in any two-vector span. -/
 private theorem product_in_span (v w : Fin 2 × Fin 2 → ℂ) (hw : w ≠ 0)
@@ -276,12 +274,12 @@ private theorem negative_eigenvalue_unique
   have hinner (k l : Fin 2 × Fin 2) :
       star (hA.eigenvectorBasis k : Fin 2 × Fin 2 → ℂ) ⬝ᵥ
         (hA.eigenvectorBasis l : Fin 2 × Fin 2 → ℂ) = if k = l then 1 else 0 := by
-    rw [← EuclideanSpace.inner_eq_star_dotProduct]
+    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
     exact orthonormal_iff_ite.mp hA.eigenvectorBasis.orthonormal k l
   have hvv : star v ⬝ᵥ v = 1 := by simpa [v] using hinner i i
   have hww : star w ⬝ᵥ w = 1 := by simpa [w] using hinner j j
   have hvw : star v ⬝ᵥ w = 0 := by simpa [v, w, hij] using hinner i j
-  have hwv : star w ⬝ᵥ v = 0 := by simpa [v, w, hij.symm] using hinner j i
+  have hwv : star w ⬝ᵥ v = 0 := by simpa [v, w, Ne.symm hij] using hinner j i
   have hw : w ≠ 0 := by intro hz; simp [hz] at hww
   have hv (t : ℂ) : v + t • w ≠ 0 := by
     intro hz
@@ -292,23 +290,152 @@ private theorem negative_eigenvalue_unique
   rcases hspan with heq | ⟨t, heq⟩
   · rw [heq] at hnonneg
     have heig : partialTransposeB σ *ᵥ w = (hA.eigenvalues j : ℂ) • w := by
-      simpa only [w, RCLike.real_smul_eq_coe_smul] using hA.mulVec_eigenvectorBasis j
+      funext k
+      simpa [w, Pi.smul_apply, Complex.real_smul, smul_eq_mul] using
+        congrFun (hA.mulVec_eigenvectorBasis j) k
     rw [heig, dotProduct_smul, hww] at hnonneg
-    simpa using (not_le_of_gt hj) hnonneg
+    exact (not_le_of_gt hj) (by simpa [smul_eq_mul] using hnonneg)
   · rw [heq] at hnonneg
     have heigv : partialTransposeB σ *ᵥ v = (hA.eigenvalues i : ℂ) • v := by
-      simpa only [v, RCLike.real_smul_eq_coe_smul] using hA.mulVec_eigenvectorBasis i
+      funext k
+      simpa [v, Pi.smul_apply, Complex.real_smul, smul_eq_mul] using
+        congrFun (hA.mulVec_eigenvectorBasis i) k
     have heigw : partialTransposeB σ *ᵥ w = (hA.eigenvalues j : ℂ) • w := by
-      simpa only [w, RCLike.real_smul_eq_coe_smul] using hA.mulVec_eigenvectorBasis j
+      funext k
+      simpa [w, Pi.smul_apply, Complex.real_smul, smul_eq_mul] using
+        congrFun (hA.mulVec_eigenvectorBasis j) k
     have hform : star (v + t • w) ⬝ᵥ (partialTransposeB σ *ᵥ (v + t • w)) =
         (hA.eigenvalues i : ℂ) + (hA.eigenvalues j : ℂ) * (star t * t) := by
       rw [Matrix.mulVec_add, Matrix.mulVec_smul, heigv, heigw]
       simp [star_add, star_smul, dotProduct_add, add_dotProduct, dotProduct_smul,
         smul_dotProduct, hvv, hww, hvw, hwv, smul_eq_mul]
       ring
-    rw [hform, ← Complex.normSq_eq_conj_mul_self] at hnonneg
-    simp only [Complex.add_re, Complex.ofReal_mul, Complex.ofReal_re] at hnonneg
+    have hstar : star t * t = (Complex.normSq t : ℂ) := by
+      exact (Complex.normSq_eq_conj_mul_self (z := t)).symm
+    rw [hform, hstar] at hnonneg
+    simp [Complex.mul_re] at hnonneg
     nlinarith [mul_nonpos_of_nonpos_of_nonneg hj.le (Complex.normSq_nonneg t)]
+
+private theorem partial_transpose_hermitian
+    (σ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (hσ : σ.IsHermitian) :
+    (partialTransposeB σ).IsHermitian := by
+  ext ⟨i, j⟩ ⟨k, l⟩
+  exact hσ.apply (i, l) (k, j)
+
+/-- Spectral negative parts commute with unitary conjugation. -/
+private theorem negPart_conjugate
+    (A U : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (hA : A.IsHermitian) (hU : Uᴴ * U = 1) :
+    (U * A * Uᴴ)⁻ = U * A⁻ * Uᴴ := by
+  have hsplit : U * A * Uᴴ = U * A⁺ * Uᴴ - U * A⁻ * Uᴴ := by
+    rw [← sub_mul, ← mul_sub, CFC.posPart_sub_negPart A hA]
+  have horth : (U * A⁺ * Uᴴ) * (U * A⁻ * Uᴴ) = 0 := by
+    calc
+      _ = U * A⁺ * (Uᴴ * U) * A⁻ * Uᴴ := by simp only [Matrix.mul_assoc]
+      _ = U * (A⁺ * A⁻) * Uᴴ := by rw [hU]; simp only [Matrix.mul_one, Matrix.mul_assoc]
+      _ = 0 := by rw [CFC.posPart_mul_negPart]; simp
+  exact (CFC.posPart_negPart_unique hsplit horth
+    ((Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg A)).mul_mul_conjTranspose_same U).nonneg
+    ((Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg A)).mul_mul_conjTranspose_same U).nonneg).2
+
+private theorem trace_conjugate (A U : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (hU : Uᴴ * U = 1) : (U * A * Uᴴ).trace = A.trace := by
+  rw [Matrix.trace_mul_cycle, hU, Matrix.one_mul]
+
+/-- The second local factor is complex conjugated by partial transposition. -/
+private theorem partial_transpose_local
+    (σ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (U V : Matrix (Fin 2) (Fin 2) ℂ) :
+    partialTransposeB (Matrix.kronecker U V * σ * (Matrix.kronecker U V)ᴴ) =
+      Matrix.kronecker U (V.map star) * partialTransposeB σ *
+        (Matrix.kronecker U (V.map star))ᴴ := by
+  ext ⟨i, j⟩ ⟨k, l⟩
+  simp [partialTransposeB.eq_1, Matrix.mul_apply,
+    Matrix.conjTranspose_apply, Fintype.sum_prod_type, Fin.sum_univ_two]
+  ring
+
+/-- Both traces defining binegativity are invariant under local unitaries. -/
+private theorem local_invariance
+    (σ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (hσ : σ.IsHermitian)
+    (U V : Matrix.unitaryGroup (Fin 2) ℂ) :
+    let K := Matrix.kronecker (U : Matrix (Fin 2) (Fin 2) ℂ)
+      (V : Matrix (Fin 2) (Fin 2) ℂ)
+    ((partialTransposeB (K * σ * Kᴴ))⁻).trace.re = ((partialTransposeB σ)⁻).trace.re ∧
+      binegativity (K * σ * Kᴴ) = binegativity σ := by
+  let K : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+    Matrix.kronecker (U : Matrix (Fin 2) (Fin 2) ℂ) (V : Matrix (Fin 2) (Fin 2) ℂ)
+  let L : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+    Matrix.kronecker (U : Matrix (Fin 2) (Fin 2) ℂ)
+      ((V : Matrix (Fin 2) (Fin 2) ℂ).map star)
+  have hK : Kᴴ * K = 1 := by
+    exact Matrix.mem_unitaryGroup_iff'.mp (Matrix.kronecker_mem_unitary U.property V.property)
+  have hL : Lᴴ * L = 1 := by
+    exact Matrix.mem_unitaryGroup_iff'.mp (Matrix.kronecker_mem_unitary U.property
+      (Matrix.map_star_mem_unitaryGroup_iff.mpr V.property))
+  have hpt : partialTransposeB (K * σ * Kᴴ) = L * partialTransposeB σ * Lᴴ :=
+    partial_transpose_local σ U V
+  have hneg : (partialTransposeB (K * σ * Kᴴ))⁻ = L * (partialTransposeB σ)⁻ * Lᴴ := by
+    rw [hpt, negPart_conjugate _ L (partial_transpose_hermitian σ hσ) hL]
+  have hptneg : partialTransposeB (L * (partialTransposeB σ)⁻ * Lᴴ) =
+      K * partialTransposeB (partialTransposeB σ)⁻ * Kᴴ := by
+    have hbar : ((V : Matrix (Fin 2) (Fin 2) ℂ).map star).map star =
+        (V : Matrix (Fin 2) (Fin 2) ℂ) := by ext i j; simp
+    simpa only [L, K, hbar] using
+      partial_transpose_local (partialTransposeB σ)⁻ U ((V : Matrix (Fin 2) (Fin 2) ℂ).map star)
+  have hdouble : (partialTransposeB (L * (partialTransposeB σ)⁻ * Lᴴ))⁻ =
+      K * (partialTransposeB (partialTransposeB σ)⁻)⁻ * Kᴴ := by
+    rw [hptneg, negPart_conjugate _ K
+      (partial_transpose_hermitian _ (Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg _)).isHermitian) hK]
+  change ((partialTransposeB (K * σ * Kᴴ))⁻).trace.re = _ ∧
+    binegativity (K * σ * Kᴴ) = _
+  constructor
+  · rw [hneg, trace_conjugate _ L hL]
+  · unfold binegativity
+    rw [hneg, hdouble, trace_conjugate _ L hL, trace_conjugate _ K hK]
+
+/-- The negative component of an entangled two-qubit partial transpose has rank one. -/
+private theorem negative_component
+    (σ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) (hσ : IsDensity σ)
+    (hν : 0 < 2 * ((partialTransposeB σ)⁻).trace.re) :
+    ∃ (l : ℝ) (v : Fin 2 × Fin 2 → ℂ), 0 < l ∧ star v ⬝ᵥ v = 1 ∧
+      partialTransposeB σ *ᵥ v = (-l : ℂ) • v ∧
+      (partialTransposeB σ)⁻ = (l : ℂ) • rankOneDensity v ∧
+      ((partialTransposeB σ)⁻).trace.re = l := by
+  classical
+  let hA := partial_transpose_hermitian σ hσ.1.isHermitian
+  obtain ⟨i, hi⟩ : ∃ i, hA.eigenvalues i < 0 := by
+    by_contra hall
+    push Not at hall
+    have hpositive := hA.posSemidef_iff_eigenvalues_nonneg.mpr hall
+    have hz := (CFC.negPart_eq_zero_iff (partialTransposeB σ) hA).mpr hpositive.nonneg
+    simp [hz] at hν
+  let v : Fin 2 × Fin 2 → ℂ := hA.eigenvectorBasis i
+  have hv : star v ⬝ᵥ v = 1 := by
+    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
+    simp [v]
+  have hparts (j : Fin 2 × Fin 2) : (hA.eigenvalues j)⁻ =
+      if j = i then -hA.eigenvalues i else 0 := by
+    by_cases hji : j = i
+    · subst j
+      simp [negPart_eq_neg.mpr hi.le]
+    · have hj : 0 ≤ hA.eigenvalues j := by
+        by_contra hn
+        exact hji (negative_eigenvalue_unique σ hσ.1 hA j i (lt_of_not_ge hn) hi)
+      simp [hji, negPart_eq_zero.mpr hj]
+  have hneg : (partialTransposeB σ)⁻ = (-hA.eigenvalues i : ℂ) • rankOneDensity v := by
+    rw [CFC.negPart_def, cfcₙ_eq_cfc, hA.cfc_eq]
+    ext a b
+    simp [Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply, Matrix.mul_apply,
+      Matrix.diagonal, Function.comp_def, hparts, apply_ite, ite_mul, mul_ite,
+      rankOneDensity, Matrix.vecMulVec_apply, v, mul_assoc]
+    ring
+  refine ⟨-hA.eigenvalues i, v, by linarith, hv, ?_, ?_, ?_⟩
+  · funext k
+    simpa [v, Pi.smul_apply, Complex.real_smul, smul_eq_mul] using
+      congrFun (hA.mulVec_eigenvectorBasis i) k
+  · simpa only [Complex.ofReal_neg] using hneg
+  · rw [hneg, Matrix.trace_smul, rankOneDensity, Matrix.trace_vecMulVec, dotProduct_comm, hv]
+    simp [smul_eq_mul]
 
 /-- The negative component can be transported to a unit Schmidt vector. -/
 private theorem schmidt_reduction
