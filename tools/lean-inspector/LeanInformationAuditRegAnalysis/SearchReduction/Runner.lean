@@ -115,45 +115,40 @@ private partial def telescopeBody : Expr → Expr
   | .mdata _ body => telescopeBody body
   | e => e
 
-/-- The result universe of a compiled type constructor does not depend on its
-term arguments. Ambiguous universes retain the ordinary Meta check. -/
-private def propositionType (type : Expr) : MetaM Bool := do
-  let body := telescopeBody type
-  if body.isSort then return false
-  if let .const name levels := body.getAppFn then
-    let info ← getConstInfo name
-    let kind := telescopeBody (info.type.instantiateLevelParams info.levelParams levels)
-    if let .sort level := kind then
-      if level.isAlwaysZero then return true
-      if level.isNeverZero then return false
-  isProp type
+/-- A cheap syntactic prefilter avoids normalizing arbitrary mathematical
+predicates merely to discover that they contain no logical pair. -/
+private partial def pairHead (env : Environment) (expression : Expr)
+    (seen : NameSet := {}) : Bool :=
+  match expression with
+  | .lam _ _ body _ | .forallE _ _ body _ | .mdata _ body => pairHead env body seen
+  | .letE _ _ value body _ => pairHead env (body.instantiate1 value) seen
+  | expression =>
+    match expression.getAppFn with
+    | .const name _ =>
+      if name == ``And || name == ``Iff then true
+      else if seen.contains name then false
+      else match env.find? name with
+        | some (.defnInfo value) => pairHead env value.value (seen.insert name)
+        | _ => false
+    | _ => false
 
 def factIndex : MetaM FactIndex := do
   let mut index : LazyDiscrTree.PreDiscrTree Fact := {}
   let mut statements : Std.HashMap UInt64 (Array Name) := {}
-  let names := (← getEnv).constants.toList.toArray.qsort (fun a b => Name.quickLt a.1 b.1)
+  let env ← getEnv
+  let names := env.constants.toList.toArray.qsort (fun a b => Name.quickLt a.1 b.1)
   for (name, info) in names do
     if info.isUnsafe then continue
     if name.isInternalDetail && !isPrivateName name then continue
+    let key := info.type.hash
+    statements := statements.insert key ((statements[key]?.getD #[]).push name)
+    unless pairHead env (telescopeBody info.type) do continue
     let initial ← get
-    let isStatement ← if info matches .thmInfo _ then pure true else propositionType info.type
-    if isStatement then
-      let key := info.type.hash
-      statements := statements.insert key ((statements[key]?.getD #[]).push name)
-      let body := telescopeBody info.type
-      let potentialProjection ← match body.getAppFn with
-        | .const head _ =>
-          let headInfo ← getConstInfo head
-          pure <| head == ``And || head == ``Iff || !(headInfo matches .inductInfo _)
-        | _ => pure false
-      unless potentialProjection do
-        set initial
-        continue
-      index ← forallTelescopeReducing info.type fun _ body => do
-        let body ← whnf body
-        if body.isAppOfArity ``And 2 || body.isAppOfArity ``Iff 2 then
-          indexType index name [] body
-        else pure index
+    index ← forallTelescopeReducing info.type fun _ body => do
+      let body ← whnf body
+      if body.isAppOfArity ``And 2 || body.isAppOfArity ``Iff 2 then
+        indexType index name [] body
+      else pure index
     set initial
   return {statements, projections := index.toLazy}
 
@@ -278,6 +273,8 @@ def search (env : Environment) (levels : List Name) (type : Expr)
   let context : Core.Context := {fileName := "<R_v1 structure>", fileMap := default, options := options}
   let planResult ← ((MetaM.run' do
     let index ← factIndex
+    let used := ((← IO.getNumHeartbeats) - (← readThe Core.Context).initHeartbeats) / 1000
+    IO.eprintln s!"R_v1 structural index heartbeats: {used}"
     makePlan type index extra).run
     {context with initHeartbeats := ← IO.getNumHeartbeats} {env}).toIO'
   let plan ← match planResult with
