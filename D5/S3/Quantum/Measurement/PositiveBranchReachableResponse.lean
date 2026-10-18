@@ -89,7 +89,7 @@ def survivalEffect (K : α → Matrix n n ℂ) (c : α → ℝ) (N : ℕ) : Matr
   (weightedDual K c)^[N] 1
 
 omit [DecidableEq n] in
-theorem weightedCP_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
+private theorem weightedCP_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
     (hc : ∀ a, 0 ≤ c a) {X : Matrix n n ℂ} (hX : X.PosSemidef) :
     (weightedCP K c X).PosSemidef := by
   exact Matrix.posSemidef_sum _ fun a _ =>
@@ -151,14 +151,10 @@ omit [DecidableEq n] in
 private theorem orbitSum_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
     (hc : ∀ a, 0 ≤ c a) {ρ : Matrix n n ℂ} (hρ : ρ.PosSemidef) (l : ℕ) :
     (orbitSum K c ρ l).PosSemidef := by
-  apply Matrix.posSemidef_sum
-  intro k
-  induction k with
-  | zero => intro _; exact hρ
-  | succ k ih =>
-    intro hk
-    rw [Function.iterate_succ_apply']
-    exact weightedCP_psd K c hc (ih (by simp only [Finset.mem_range] at hk ⊢; omega))
+  have hmap : Set.MapsTo (weightedCP K c)
+      {A : Matrix n n ℂ | A.PosSemidef} {A : Matrix n n ℂ | A.PosSemidef} :=
+    fun A hA => weightedCP_psd K c hc hA
+  exact Matrix.posSemidef_sum _ fun k _ => hmap.iterate k hρ
 
 omit [DecidableEq n] in
 private theorem orbitSum_succ (K : α → Matrix n n ℂ) (c : α → ℝ)
@@ -326,7 +322,7 @@ theorem finite_reachable_faithful_sum (K : α → Matrix n n ℂ) (c : α → �
   obtain ⟨μ, hμ, hbound⟩ := psd_support_lower_bound (orbitSum K c ρ L)
     (orbitSum_psd K c (fun a => (hc a).le) hρ L)
   exact ⟨L, μ, hμ, hs, fun v hv => hbound v (hs.symm ▸ hv)⟩
-theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian) :
+private theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian) :
     matrixSupport A = LinearMap.range A.toEuclideanLin := by
   rw [matrixSupport, LinearMap.orthogonal_ker,
     ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, hA.eq]
@@ -542,7 +538,7 @@ private theorem reachable_kraus_invariant (K : α → Matrix n n ℂ)
     simp only [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_mul_same,
       LinearMap.comp_apply]
   exact fun v hv => hle hv
-theorem weightedCP_reachable_support (K : α → Matrix n n ℂ)
+private theorem weightedCP_reachable_support (K : α → Matrix n n ℂ)
     (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) (ρ σ : Matrix n n ℂ)
     (hσ : σ.PosSemidef) (hs : matrixSupport σ ≤ reachableSpace K ρ) :
     matrixSupport (weightedCP K c σ) ≤ reachableSpace K ρ := by
@@ -589,28 +585,21 @@ omit [DecidableEq n] in
 private theorem positive_iterate (K : α → Matrix n n ℂ)
     (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) (X : Matrix n n ℂ)
     (hX : 0 ≤ X) (k : ℕ) : 0 ≤ (weightedCP K c)^[k] X := by
-  induction k with
-  | zero => exact hX
-  | succ k ih =>
-    rw [Function.iterate_succ_apply']
-    exact Matrix.nonneg_iff_posSemidef.mpr
-      (weightedCP_psd K c hc (Matrix.nonneg_iff_posSemidef.mp ih))
+  have hmap : Set.MapsTo (weightedCP K c)
+      {A : Matrix n n ℂ | 0 ≤ A} {A : Matrix n n ℂ | 0 ≤ A} :=
+    fun A hA => Matrix.nonneg_iff_posSemidef.mpr
+      (weightedCP_psd K c hc (Matrix.nonneg_iff_posSemidef.mp hA))
+  exact hmap.iterate k hX
+
 private theorem return_telescoping (K : α → Matrix n n ℂ)
     (c : α → ℝ) (N : ℕ) :
     1 - survivalEffect K c N =
       ∑ k ∈ Finset.range N, (weightedDual K c)^[k] (1 - weightedDual K c 1) := by
-  induction N with
-  | zero => simp [survivalEffect]
-  | succ N ih =>
-    rw [Finset.sum_range_succ, ← ih]
-    change 1 - (weightedDual K c)^[N + 1] 1 =
-      1 - (weightedDual K c)^[N] 1 +
-        (weightedDual K c)^[N] (1 - weightedDual K c 1)
-    have hsub : (weightedDual K c)^[N] (1 - weightedDual K c 1) =
-        (weightedDual K c)^[N] 1 - (weightedDual K c)^[N + 1] 1 := by
-      simp only [← Module.End.pow_apply, map_sub, pow_succ, Module.End.mul_apply]
-    rw [hsub]
-    abel
+  have h := congrArg (fun T : Module.End ℂ (Matrix n n ℂ) => T 1)
+    (geom_sum_mul_neg (weightedDual K c) N)
+  simpa only [LinearMap.sum_apply, Module.End.mul_apply, LinearMap.sub_apply,
+    Module.End.one_apply, Module.End.pow_apply, survivalEffect] using h.symm
+
 private theorem return_comparison (K : α → Matrix n n ℂ)
     (c b : α → ℝ) (hc : ∀ a, 0 ≤ c a) (hb : ∀ a, 0 ≤ b a)
     (g : ℝ) (hg : 0 ≤ g) (hg1 : g ≤ 1)
