@@ -107,7 +107,7 @@ strict 与 collapsed 在同族同域互斥。逻辑上“不存在分离对”�
 
 §3.2 的活推导路径、有消费辅助声明、模块准入依据和 `open-problem-resolution` 例外，§3.3 用途准入，§3.9 的四槽、登记/issue 边界及既有四个 DTR Observe 判词均保持各自主责。搜索成功不补齐四槽，AURIC strict 不证明 P 侧逃逸，P 侧非 bind-only 不证明信息捕获或实用价值。
 
-本契约 §6 细化 `auric_fib_pyramid_escape_spec.md` 中律族适配器的 strict/collapsed/unknown 与身份读出边界，沿用其源绑定、取得、任务和数值规范；不改普通四槽入口、输出闭键结构或准入状态。报告器只消费探针证据；R 在构建/探针阶段运行，Inspector 不兼任搜索器。无实际分析合同，不追加 FIB 取得义务。
+本契约 §6 细化 [AURIC FIB ATOM 逃逸审计规范](auric_fib_atom_escape_audit_spec.md) 中律族适配器的 strict/collapsed/unknown 与身份读出边界，沿用其源绑定、取得、任务和数值规范；不改普通四槽入口、输出闭键结构或准入状态。报告器只消费探针证据；R 在构建/探针阶段运行，Inspector 不兼任搜索器。无实际分析合同，不追加 FIB 取得义务。
 
 ## 8. 与 owner 字面提问的关系
 
