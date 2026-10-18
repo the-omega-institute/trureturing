@@ -29,8 +29,7 @@ structure Model (X : Type u) [Fintype X] where
   temperature : 0 < τ
 abbrev Succ (M : Model X) (x : X) := {y : X // 0 < M.R x y}
 instance (M : Model X) (x : X) : Fintype (Succ M x) := Fintype.ofFinite _
-def Prob {A : Type*} [Fintype A] (p : A → ℝ) : Prop :=
-  (∀ a, 0 ≤ p a) ∧ ∑ a, p a = 1
+def Prob {A : Type*} [Fintype A] (p : A → ℝ) : Prop := (∀ a, 0 ≤ p a) ∧ ∑ a, p a = 1
 namespace Model
 variable (M : Model X)
 def Path : ℕ → X → Type u
@@ -46,8 +45,7 @@ instance (n : ℕ) (x : X) : Fintype (M.Path n x) := M.pathFintype n x
 lemma path_nonempty (n : ℕ) (x : X) : Nonempty (M.Path n x) := by
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -90,10 +88,8 @@ def law : (n : ℕ) → (x : X) → M.Policy n x → M.Path n x → ℝ
   | n+1, _, π, w => π.1.q w.1 * law n w.1.val (π.2 w.1) w.2
 def conditionalKL : (n : ℕ) → (x : X) → M.Policy n x → ℝ
   | 0, _, _ => 0
-  | n+1, x, π => klDivergence π.1.q (fun y => M.R x y.val) +
-      ∑ y, π.1.q y * conditionalKL n y.val (π.2 y)
-def J (n : ℕ) (x : X) (π : M.Policy n x) : ℝ :=
-  (∑ w, M.law n x π w * M.cost n x w) +
+  | n+1, x, π => klDivergence π.1.q (fun y => M.R x y.val) + ∑ y, π.1.q y * conditionalKL n y.val (π.2 y)
+def J (n : ℕ) (x : X) (π : M.Policy n x) : ℝ := (∑ w, M.law n x π w * M.cost n x w) +
     M.τ * klDivergence (M.law n x π) (M.reference n x)
 lemma reference_pos (n : ℕ) (x : X) (w : M.Path n x) : 0 < M.reference n x w := by
   induction n generalizing x with
@@ -104,8 +100,7 @@ lemma law_prob (n : ℕ) (x : X) (π : M.Policy n x) : Prob (M.law n x π) := by
       (∑ w, f w) = ∑ y : Succ M x, ∑ w : M.Path n y.val, f ⟨y,w⟩ := by
     change (∑ w : Σ y : Succ M x, M.Path n y.val, f w) = _
     exact Fintype.sum_sigma _
-  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) :
-      (∑ w, f w) = f PUnit.unit := by
+  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) : (∑ w, f w) = f PUnit.unit := by
     classical
     refine Finset.sum_eq_single (PUnit.unit : M.Path 0 x) ?_ ?_
     · intro w _ hw
@@ -128,8 +123,7 @@ lemma reference_prob (n : ℕ) (x : X) : Prob (M.reference n x) := by
       (∑ w, f w) = ∑ y : Succ M x, ∑ w : M.Path n y.val, f ⟨y,w⟩ := by
     change (∑ w : Σ y : Succ M x, M.Path n y.val, f w) = _
     exact Fintype.sum_sigma _
-  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) :
-      (∑ w, f w) = f PUnit.unit := by
+  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) : (∑ w, f w) = f PUnit.unit := by
     classical
     refine Finset.sum_eq_single (PUnit.unit : M.Path 0 x) ?_ ?_
     · intro w _ hw
@@ -138,8 +132,7 @@ lemma reference_prob (n : ℕ) (x : X) : Prob (M.reference n x) := by
       exact (h (Finset.mem_univ _)).elim
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -168,8 +161,7 @@ def referencePolicy : (n : ℕ) → (x : X) → M.Policy n x
   | n+1, x => by
     have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
       classical
-      have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-          ∑ y : Succ M x, M.R x y.val := by
+      have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
         rw [← Finset.sum_filter]
         exact Finset.sum_subtype _ (by simp) _
       rw [← hs]
@@ -183,8 +175,7 @@ def referencePolicy : (n : ℕ) → (x : X) → M.Policy n x
         _ = 1 := M.stochastic x
     exact (⟨(fun y => M.R x y.val),
           ⟨(fun y => y.property.le), support_sum x⟩⟩, fun y => referencePolicy n y.val)
-lemma referencePolicy_law (n : ℕ) (x : X) :
-    M.law n x (M.referencePolicy n x) = M.reference n x := by
+lemma referencePolicy_law (n : ℕ) (x : X) : M.law n x (M.referencePolicy n x) = M.reference n x := by
   induction n generalizing x with
   | zero => rfl
   | succ n ih =>
@@ -201,8 +192,7 @@ lemma law_factorization (n : ℕ) (x : X) (p : M.Path n x → ℝ) (hp : Prob p)
       (∑ w, f w) = ∑ y : Succ M x, ∑ w : M.Path n y.val, f ⟨y,w⟩ := by
     change (∑ w : Σ y : Succ M x, M.Path n y.val, f w) = _
     exact Fintype.sum_sigma _
-  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) :
-      (∑ w, f w) = f PUnit.unit := by
+  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) : (∑ w, f w) = f PUnit.unit := by
     classical
     refine Finset.sum_eq_single (PUnit.unit : M.Path 0 x) ?_ ?_
     · intro w _ hw
@@ -244,14 +234,11 @@ lemma law_factorization (n : ℕ) (x : X) (p : M.Path n x → ℝ) (hp : Prob p)
           simp only [if_neg h]
           rw [← Finset.sum_div]
           exact div_self h
-    have htail (y : Succ M x) (w : M.Path n y.val) :
-        q y * tail y w = p ⟨y,w⟩ := by
+    have htail (y : Succ M x) (w : M.Path n y.val) : q y * tail y w = p ⟨y,w⟩ := by
       by_cases h : q y = 0
-      · have hle : p ⟨y,w⟩ ≤ q y :=
-          Finset.single_le_sum (f := fun z : M.Path n y.val => p ⟨y,z⟩)
+      · have hle : p ⟨y,w⟩ ≤ q y := Finset.single_le_sum (f := fun z : M.Path n y.val => p ⟨y,z⟩)
             (fun z _ => hp.1 ⟨y,z⟩) (Finset.mem_univ w)
-        have hp0 : p ⟨y,w⟩ = 0 :=
-          le_antisymm (by simpa only [h] using hle) (hp.1 ⟨y,w⟩)
+        have hp0 : p ⟨y,w⟩ = 0 := le_antisymm (by simpa only [h] using hle) (hp.1 ⟨y,w⟩)
         simp only [h, zero_mul, hp0]
       · dsimp only [tail]
         rw [if_neg h]
@@ -281,8 +268,7 @@ lemma actual_conditional_KL_chain (n : ℕ) (x : X) (π : M.Policy n x) :
       (hq : Prob q) (hr : ∀ a, 0 < r a) (hrsum : ∑ a, r a = 1)
       (hp : ∀ a, Prob (p a)) (hs : ∀ a, Prob (s a)) (hspos : ∀ a b, 0 < s a b) :
       klDivergence (fun w : Σ a, B a => q w.1 * p w.1 w.2)
-        (fun w : Σ a, B a => r w.1 * s w.1 w.2) =
-        klDivergence q r + ∑ a, q a * klDivergence (p a) (s a) := by
+        (fun w : Σ a, B a => r w.1 * s w.1 w.2) = klDivergence q r + ∑ a, q a * klDivergence (p a) (s a) := by
     classical
     let W (w : Σ a, B a) (a : A) : ℝ := if w.1=a then 1 else 0
     let P (w : Σ a, B a) := q w.1*p w.1 w.2
@@ -323,8 +309,7 @@ lemma actual_conditional_KL_chain (n : ℕ) (x : X) (π : M.Policy n x) :
     have hOp : channelOutput W P = q := funext (out q p (fun a => (hp a).2))
     have hOq : channelOutput W Q = r := funext (out r s (fun a => (hs a).2))
     rw [hOp,hOq] at hchain
-    have hf (a : A) : q a * klDivergence (posterior W P a) (posterior W Q a) =
-        q a * klDivergence (p a) (s a) := by
+    have hf (a : A) : q a * klDivergence (posterior W P a) (posterior W Q a) = q a * klDivergence (p a) (s a) := by
       by_cases hq0 : q a=0
       · simp [hq0]
       congr 1
@@ -342,8 +327,7 @@ lemma actual_conditional_KL_chain (n : ℕ) (x : X) (π : M.Policy n x) :
     simpa only [hf] using hchain
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -356,8 +340,7 @@ lemma actual_conditional_KL_chain (n : ℕ) (x : X) (π : M.Policy n x) :
         · exact (le_antisymm (le_of_not_gt h) (M.nonneg x y)).symm
       _ = 1 := M.stochastic x
   have kl_chain_step (n : ℕ) (x : X) (π : M.Policy (n+1) x) :
-      klDivergence (M.law (n+1) x π) (M.reference (n+1) x) =
-        klDivergence π.1.q (fun y => M.R x y.val) +
+      klDivergence (M.law (n+1) x π) (M.reference (n+1) x) = klDivergence π.1.q (fun y => M.R x y.val) +
         ∑ y, π.1.q y * klDivergence (M.law n y.val (π.2 y)) (M.reference n y.val) := by
     exact split_kl (A := Succ M x) (B := fun y => M.Path n y.val)
       π.1.q (fun y => M.R x y.val)
@@ -368,8 +351,7 @@ lemma actual_conditional_KL_chain (n : ℕ) (x : X) (π : M.Policy n x) :
   induction n generalizing x with
   | zero => simp [law,reference,conditionalKL,klDivergence]
   | succ n ih => rw [kl_chain_step]; simp only [conditionalKL,ih]
-def partition (x : X) (v : X → ℝ) : ℝ :=
-  ∑ y : Succ M x, M.R x y.val * Real.exp (-(M.c x y.val + v y.val) / M.τ)
+def partition (x : X) (v : X → ℝ) : ℝ := ∑ y : Succ M x, M.R x y.val * Real.exp (-(M.c x y.val + v y.val) / M.τ)
 def soft (v : X → ℝ) (x : X) : ℝ := -M.τ * Real.log (M.partition x v)
 def star (v : X → ℝ) (x : X) (y : Succ M x) : ℝ :=
   M.R x y.val * Real.exp (-(M.c x y.val + v y.val - M.soft v x) / M.τ)
@@ -381,8 +363,7 @@ def optimal : (n : ℕ) → (x : X) → M.Policy n x
   | n+1, x => by
     have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
       classical
-      have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-          ∑ y : Succ M x, M.R x y.val := by
+      have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
         rw [← Finset.sum_filter]
         exact Finset.sum_subtype _ (by simp) _
       rw [← hs]
@@ -404,8 +385,7 @@ def optimal : (n : ℕ) → (x : X) → M.Policy n x
       classical
       letI := support_nonempty x
       exact Finset.sum_pos (fun y _ => mul_pos y.property (Real.exp_pos _)) Finset.univ_nonempty
-    have exponential_soft (x : X) (v : X → ℝ) :
-        Real.exp (-M.soft v x / M.τ) = M.partition x v := by
+    have exponential_soft (x : X) (v : X → ℝ) : Real.exp (-M.soft v x / M.τ) = M.partition x v := by
       unfold soft
       have h : -(-M.τ * Real.log (M.partition x v)) / M.τ = Real.log (M.partition x v) := by
         field_simp [ne_of_gt M.temperature]
@@ -430,8 +410,7 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
       (hq : Prob q) (hr : ∀ a, 0 < r a) (hrsum : ∑ a, r a = 1)
       (hp : ∀ a, Prob (p a)) (hs : ∀ a, Prob (s a)) (hspos : ∀ a b, 0 < s a b) :
       klDivergence (fun w : Σ a, B a => q w.1 * p w.1 w.2)
-        (fun w : Σ a, B a => r w.1 * s w.1 w.2) =
-        klDivergence q r + ∑ a, q a * klDivergence (p a) (s a) := by
+        (fun w : Σ a, B a => r w.1 * s w.1 w.2) = klDivergence q r + ∑ a, q a * klDivergence (p a) (s a) := by
     classical
     let W (w : Σ a, B a) (a : A) : ℝ := if w.1=a then 1 else 0
     let P (w : Σ a, B a) := q w.1*p w.1 w.2
@@ -472,8 +451,7 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
     have hOp : channelOutput W P = q := funext (out q p (fun a => (hp a).2))
     have hOq : channelOutput W Q = r := funext (out r s (fun a => (hs a).2))
     rw [hOp,hOq] at hchain
-    have hf (a : A) : q a * klDivergence (posterior W P a) (posterior W Q a) =
-        q a * klDivergence (p a) (s a) := by
+    have hf (a : A) : q a * klDivergence (posterior W P a) (posterior W Q a) = q a * klDivergence (p a) (s a) := by
       by_cases hq0 : q a=0
       · simp [hq0]
       congr 1
@@ -491,8 +469,7 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
     simpa only [hf] using hchain
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -505,8 +482,7 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
         · exact (le_antisymm (le_of_not_gt h) (M.nonneg x y)).symm
       _ = 1 := M.stochastic x
   have kl_chain_step (n : ℕ) (x : X) (π : M.Policy (n+1) x) :
-      klDivergence (M.law (n+1) x π) (M.reference (n+1) x) =
-        klDivergence π.1.q (fun y => M.R x y.val) +
+      klDivergence (M.law (n+1) x π) (M.reference (n+1) x) = klDivergence π.1.q (fun y => M.R x y.val) +
         ∑ y, π.1.q y * klDivergence (M.law n y.val (π.2 y)) (M.reference n y.val) := by
     exact split_kl (A := Succ M x) (B := fun y => M.Path n y.val)
       π.1.q (fun y => M.R x y.val)
@@ -518,18 +494,15 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
       (∑ w, f w) = ∑ y : Succ M x, ∑ w : M.Path n y.val, f ⟨y,w⟩ := by
     change (∑ w : Σ y : Succ M x, M.Path n y.val, f w) = _
     exact Fintype.sum_sigma _
-  have J_step (n : ℕ) (x : X) (π : M.Policy (n+1) x) :
-      M.J (n+1) x π =
-        (∑ y, π.1.q y * (M.c x y.val + M.J n y.val (π.2 y))) +
-          M.τ * klDivergence π.1.q (fun y => M.R x y.val) := by
+  have J_step (n : ℕ) (x : X) (π : M.Policy (n+1) x) : M.J (n+1) x π =
+        (∑ y, π.1.q y * (M.c x y.val + M.J n y.val (π.2 y))) + M.τ * klDivergence π.1.q (fun y => M.R x y.val) := by
     have hc : (∑ w, M.law (n+1) x π w * M.cost (n+1) x w) =
         ∑ y, π.1.q y * (M.c x y.val + ∑ w, M.law n y.val (π.2 y) w * M.cost n y.val w) := by
       simp only [path_sum_step,law,cost]
       apply Finset.sum_congr rfl
       intro y _
       simp_rw [mul_add,Finset.sum_add_distrib]
-      have h1 : (∑ w, π.1.q y * M.law n y.val (π.2 y) w * M.c x y.val) =
-          π.1.q y * M.c x y.val := by
+      have h1 : (∑ w, π.1.q y * M.law n y.val (π.2 y) w * M.c x y.val) = π.1.q y * M.c x y.val := by
         calc
           _ = π.1.q y * M.c x y.val * ∑ w, M.law n y.val (π.2 y) w := by
             rw [Finset.mul_sum];apply Finset.sum_congr rfl;intro w _;ring
@@ -541,8 +514,7 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
     simp_rw [mul_add,Finset.sum_add_distrib,Finset.mul_sum]
     simp only [mul_assoc,mul_left_comm,mul_comm]
     ring
-  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) :
-      (∑ w, f w) = f PUnit.unit := by
+  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) : (∑ w, f w) = f PUnit.unit := by
     classical
     refine Finset.sum_eq_single (PUnit.unit : M.Path 0 x) ?_ ?_
     · intro w _ hw
@@ -550,11 +522,9 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
     · intro h
       exact (h (Finset.mem_univ _)).elim
   have row_identity (x : X) (v : X → ℝ) (q : M.Row x) :
-      (∑ y, q.q y * (M.c x y.val + v y.val)) +
-        M.τ * klDivergence q.q (fun y => M.R x y.val) =
+      (∑ y, q.q y * (M.c x y.val + v y.val)) + M.τ * klDivergence q.q (fun y => M.R x y.val) =
           M.soft v x + M.τ * klDivergence q.q (M.star v x) := by
-    have ht (y : Succ M x) :
-        q.q y * (M.c x y.val + v y.val) +
+    have ht (y : Succ M x) : q.q y * (M.c x y.val + v y.val) +
           M.τ * (q.q y * Real.log (q.q y / M.R x y.val)) =
         q.q y * M.soft v x + M.τ * (q.q y * Real.log (q.q y / M.star v x y)) := by
       by_cases hq : q.q y = 0
@@ -580,16 +550,14 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
     classical
     letI := support_nonempty x
     exact Finset.sum_pos (fun y _ => mul_pos y.property (Real.exp_pos _)) Finset.univ_nonempty
-  have exponential_soft (x : X) (v : X → ℝ) :
-      Real.exp (-M.soft v x / M.τ) = M.partition x v := by
+  have exponential_soft (x : X) (v : X → ℝ) : Real.exp (-M.soft v x / M.τ) = M.partition x v := by
     unfold soft
     have h : -(-M.τ * Real.log (M.partition x v)) / M.τ = Real.log (M.partition x v) := by
       field_simp [ne_of_gt M.temperature]
     rw [h,Real.exp_log (partition_pos x v)]
   have star_div (x : X) (v : X → ℝ) (y : Succ M x) :
       M.star v x y = M.R x y.val * Real.exp (-(M.c x y.val + v y.val)/M.τ) / M.partition x v := by
-    have he : -(M.c x y.val + v y.val - M.soft v x)/M.τ =
-        -(M.c x y.val + v y.val)/M.τ - (-M.soft v x/M.τ) := by ring
+    have he : -(M.c x y.val + v y.val - M.soft v x)/M.τ = -(M.c x y.val + v y.val)/M.τ - (-M.soft v x/M.τ) := by ring
     simp only [star,he,Real.exp_sub,exponential_soft]
     ring
   have star_prob (x : X) (v : X → ℝ) : Prob (M.star v x) := by
@@ -598,8 +566,7 @@ lemma all_history_bound (n : ℕ) (x : X) (π : M.Policy n x) : M.value n x ≤ 
     · simp_rw [star_div]
       rw [← Finset.sum_div]
       exact div_self (ne_of_gt (partition_pos x v))
-  have row_minimum (x : X) (v : X → ℝ) (q : M.Row x) :
-      M.soft v x ≤ (∑ y, q.q y * (M.c x y.val + v y.val)) +
+  have row_minimum (x : X) (v : X → ℝ) (q : M.Row x) : M.soft v x ≤ (∑ y, q.q y * (M.c x y.val + v y.val)) +
         M.τ * klDivergence q.q (fun y => M.R x y.val) := by
     rw [row_identity]
     have hk := kl_divergence_nonneg q.q (M.star v x) q.prob (star_prob x v)
@@ -626,8 +593,7 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
       (hq : Prob q) (hr : ∀ a, 0 < r a) (hrsum : ∑ a, r a = 1)
       (hp : ∀ a, Prob (p a)) (hs : ∀ a, Prob (s a)) (hspos : ∀ a b, 0 < s a b) :
       klDivergence (fun w : Σ a, B a => q w.1 * p w.1 w.2)
-        (fun w : Σ a, B a => r w.1 * s w.1 w.2) =
-        klDivergence q r + ∑ a, q a * klDivergence (p a) (s a) := by
+        (fun w : Σ a, B a => r w.1 * s w.1 w.2) = klDivergence q r + ∑ a, q a * klDivergence (p a) (s a) := by
     classical
     let W (w : Σ a, B a) (a : A) : ℝ := if w.1=a then 1 else 0
     let P (w : Σ a, B a) := q w.1*p w.1 w.2
@@ -668,8 +634,7 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
     have hOp : channelOutput W P = q := funext (out q p (fun a => (hp a).2))
     have hOq : channelOutput W Q = r := funext (out r s (fun a => (hs a).2))
     rw [hOp,hOq] at hchain
-    have hf (a : A) : q a * klDivergence (posterior W P a) (posterior W Q a) =
-        q a * klDivergence (p a) (s a) := by
+    have hf (a : A) : q a * klDivergence (posterior W P a) (posterior W Q a) = q a * klDivergence (p a) (s a) := by
       by_cases hq0 : q a=0
       · simp [hq0]
       congr 1
@@ -687,8 +652,7 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
     simpa only [hf] using hchain
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -701,8 +665,7 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
         · exact (le_antisymm (le_of_not_gt h) (M.nonneg x y)).symm
       _ = 1 := M.stochastic x
   have kl_chain_step (n : ℕ) (x : X) (π : M.Policy (n+1) x) :
-      klDivergence (M.law (n+1) x π) (M.reference (n+1) x) =
-        klDivergence π.1.q (fun y => M.R x y.val) +
+      klDivergence (M.law (n+1) x π) (M.reference (n+1) x) = klDivergence π.1.q (fun y => M.R x y.val) +
         ∑ y, π.1.q y * klDivergence (M.law n y.val (π.2 y)) (M.reference n y.val) := by
     exact split_kl (A := Succ M x) (B := fun y => M.Path n y.val)
       π.1.q (fun y => M.R x y.val)
@@ -714,18 +677,15 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
       (∑ w, f w) = ∑ y : Succ M x, ∑ w : M.Path n y.val, f ⟨y,w⟩ := by
     change (∑ w : Σ y : Succ M x, M.Path n y.val, f w) = _
     exact Fintype.sum_sigma _
-  have J_step (n : ℕ) (x : X) (π : M.Policy (n+1) x) :
-      M.J (n+1) x π =
-        (∑ y, π.1.q y * (M.c x y.val + M.J n y.val (π.2 y))) +
-          M.τ * klDivergence π.1.q (fun y => M.R x y.val) := by
+  have J_step (n : ℕ) (x : X) (π : M.Policy (n+1) x) : M.J (n+1) x π =
+        (∑ y, π.1.q y * (M.c x y.val + M.J n y.val (π.2 y))) + M.τ * klDivergence π.1.q (fun y => M.R x y.val) := by
     have hc : (∑ w, M.law (n+1) x π w * M.cost (n+1) x w) =
         ∑ y, π.1.q y * (M.c x y.val + ∑ w, M.law n y.val (π.2 y) w * M.cost n y.val w) := by
       simp only [path_sum_step,law,cost]
       apply Finset.sum_congr rfl
       intro y _
       simp_rw [mul_add,Finset.sum_add_distrib]
-      have h1 : (∑ w, π.1.q y * M.law n y.val (π.2 y) w * M.c x y.val) =
-          π.1.q y * M.c x y.val := by
+      have h1 : (∑ w, π.1.q y * M.law n y.val (π.2 y) w * M.c x y.val) = π.1.q y * M.c x y.val := by
         calc
           _ = π.1.q y * M.c x y.val * ∑ w, M.law n y.val (π.2 y) w := by
             rw [Finset.mul_sum];apply Finset.sum_congr rfl;intro w _;ring
@@ -737,8 +697,7 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
     simp_rw [mul_add,Finset.sum_add_distrib,Finset.mul_sum]
     simp only [mul_assoc,mul_left_comm,mul_comm]
     ring
-  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) :
-      (∑ w, f w) = f PUnit.unit := by
+  have path_sum_zero (x : X) (f : M.Path 0 x → ℝ) : (∑ w, f w) = f PUnit.unit := by
     classical
     refine Finset.sum_eq_single (PUnit.unit : M.Path 0 x) ?_ ?_
     · intro w _ hw
@@ -746,11 +705,9 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
     · intro h
       exact (h (Finset.mem_univ _)).elim
   have row_identity (x : X) (v : X → ℝ) (q : M.Row x) :
-      (∑ y, q.q y * (M.c x y.val + v y.val)) +
-        M.τ * klDivergence q.q (fun y => M.R x y.val) =
+      (∑ y, q.q y * (M.c x y.val + v y.val)) + M.τ * klDivergence q.q (fun y => M.R x y.val) =
           M.soft v x + M.τ * klDivergence q.q (M.star v x) := by
-    have ht (y : Succ M x) :
-        q.q y * (M.c x y.val + v y.val) +
+    have ht (y : Succ M x) : q.q y * (M.c x y.val + v y.val) +
           M.τ * (q.q y * Real.log (q.q y / M.R x y.val)) =
         q.q y * M.soft v x + M.τ * (q.q y * Real.log (q.q y / M.star v x y)) := by
       by_cases hq : q.q y = 0
@@ -776,16 +733,14 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
     classical
     letI := support_nonempty x
     exact Finset.sum_pos (fun y _ => mul_pos y.property (Real.exp_pos _)) Finset.univ_nonempty
-  have exponential_soft (x : X) (v : X → ℝ) :
-      Real.exp (-M.soft v x / M.τ) = M.partition x v := by
+  have exponential_soft (x : X) (v : X → ℝ) : Real.exp (-M.soft v x / M.τ) = M.partition x v := by
     unfold soft
     have h : -(-M.τ * Real.log (M.partition x v)) / M.τ = Real.log (M.partition x v) := by
       field_simp [ne_of_gt M.temperature]
     rw [h,Real.exp_log (partition_pos x v)]
   have star_div (x : X) (v : X → ℝ) (y : Succ M x) :
       M.star v x y = M.R x y.val * Real.exp (-(M.c x y.val + v y.val)/M.τ) / M.partition x v := by
-    have he : -(M.c x y.val + v y.val - M.soft v x)/M.τ =
-        -(M.c x y.val + v y.val)/M.τ - (-M.soft v x/M.τ) := by ring
+    have he : -(M.c x y.val + v y.val - M.soft v x)/M.τ = -(M.c x y.val + v y.val)/M.τ - (-M.soft v x/M.τ) := by ring
     simp only [star,he,Real.exp_sub,exponential_soft]
     ring
   have star_prob (x : X) (v : X → ℝ) : Prob (M.star v x) := by
@@ -805,8 +760,7 @@ lemma optimal_attains (n : ℕ) (x : X) : M.J n x (M.optimal n x) = M.value n x 
 def hardRow (v : X → ℝ) (x : X) : ℝ := by
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -833,8 +787,7 @@ instance : Fintype M.PosEdge := Fintype.ofFinite _
 def rmin (x0 : X) : ℝ := by
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -857,13 +810,11 @@ def rmin (x0 : X) : ℝ := by
   letI : Nonempty M.PosEdge := ⟨⟨(x0,y.val),y.property⟩⟩
   exact (Finset.univ.image (fun e : M.PosEdge => M.R e.val.1 e.val.2)).min'
     (Finset.image_nonempty.mpr Finset.univ_nonempty)
-lemma soft_hard_row (v : X → ℝ) (x x0 : X) :
-    M.hardRow v x ≤ M.soft v x ∧
+lemma soft_hard_row (v : X → ℝ) (x x0 : X) : M.hardRow v x ≤ M.soft v x ∧
       M.soft v x ≤ M.hardRow v x + M.τ * Real.log (1/M.rmin x0) := by
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -881,15 +832,13 @@ lemma soft_hard_row (v : X → ℝ) (x x0 : X) :
     haveI : IsEmpty (Succ M x) := not_nonempty_iff.mp h
     have := support_sum x
     simp at this
-  have hardRow_attained (v : X → ℝ) (x : X) :
-      ∃ y : Succ M x, M.hardRow v x = M.c x y.val+v y.val := by
+  have hardRow_attained (v : X → ℝ) (x : X) : ∃ y : Succ M x, M.hardRow v x = M.c x y.val+v y.val := by
     classical
     obtain ⟨y,_,hy⟩ := Finset.mem_image.mp (Finset.min'_mem
       (Finset.univ.image (fun y : Succ M x => M.c x y.val+v y.val))
       (by letI := support_nonempty x;exact Finset.image_nonempty.mpr Finset.univ_nonempty))
     exact ⟨y,hy.symm⟩
-  have hardRow_le (v : X → ℝ) (x : X) (y : Succ M x) :
-      M.hardRow v x ≤ M.c x y.val+v y.val := by
+  have hardRow_le (v : X → ℝ) (x : X) (y : Succ M x) : M.hardRow v x ≤ M.c x y.val+v y.val := by
     classical
     exact Finset.min'_le _ _ (Finset.mem_image.mpr ⟨y,Finset.mem_univ y,rfl⟩)
   have partition_pos (x : X) (v : X → ℝ) : 0 < M.partition x v := by
@@ -957,13 +906,11 @@ lemma soft_hard_row (v : X → ℝ) (x x0 : X) :
 def hard : ℕ → X → ℝ
   | 0 => M.g
   | n+1 => M.hardRow (hard n)
-lemma accumulated_hard_min_error (n : ℕ) (x0 : X) :
-    ∀ x, 0 ≤ M.value n x-M.hard n x ∧
+lemma accumulated_hard_min_error (n : ℕ) (x0 : X) : ∀ x, 0 ≤ M.value n x-M.hard n x ∧
       M.value n x-M.hard n x ≤ (n : ℝ)*M.τ*Real.log (1/M.rmin x0) := by
   have support_sum (x : X) : ∑ y : Succ M x, M.R x y.val = 1 := by
     classical
-    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) =
-        ∑ y : Succ M x, M.R x y.val := by
+    have hs : (∑ y : X, if 0 < M.R x y then M.R x y else 0) = ∑ y : Succ M x, M.R x y.val := by
       rw [← Finset.sum_filter]
       exact Finset.sum_subtype _ (by simp) _
     rw [← hs]
@@ -985,8 +932,7 @@ lemma accumulated_hard_min_error (n : ℕ) (x0 : X) :
     classical
     letI := support_nonempty x
     exact Finset.sum_pos (fun y _ => mul_pos y.property (Real.exp_pos _)) Finset.univ_nonempty
-  have soft_monotone (v w : X → ℝ) (h : ∀ y, v y ≤ w y) (x : X) :
-      M.soft v x ≤ M.soft w x := by
+  have soft_monotone (v w : X → ℝ) (h : ∀ y, v y ≤ w y) (x : X) : M.soft v x ≤ M.soft w x := by
     have hz : M.partition x w ≤ M.partition x v := by
       apply Finset.sum_le_sum
       intro y _
@@ -996,8 +942,7 @@ lemma accumulated_hard_min_error (n : ℕ) (x0 : X) :
     have hl := Real.log_le_log (partition_pos x w) hz
     unfold soft
     nlinarith [M.temperature]
-  have soft_shift (v : X → ℝ) (a : ℝ) (x : X) :
-      M.soft (fun y => v y+a) x = M.soft v x+a := by
+  have soft_shift (v : X → ℝ) (a : ℝ) (x : X) : M.soft (fun y => v y+a) x = M.soft v x+a := by
     have hz : M.partition x (fun y => v y+a) = M.partition x v * Real.exp (-a/M.τ) := by
       unfold partition
       rw [Finset.sum_mul]
