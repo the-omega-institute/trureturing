@@ -102,6 +102,6 @@ At v=0 the transported function is constant, and at v=1 it is the identity. Thes
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star`
+- Dependency: [D5/S3/Entropy/RenyiCombining/BinaryRenyiCombining](BinaryRenyiCombining.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinConvexBranch](CachinConvexBranch.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinElasticityMonotone](CachinElasticityMonotone.md)
-- Dependency: [D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree](../../Quantum/Information/RenyiInformationCombiningOrderThree.md)
