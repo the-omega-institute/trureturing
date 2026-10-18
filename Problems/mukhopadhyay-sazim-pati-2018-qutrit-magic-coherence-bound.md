@@ -84,7 +84,7 @@ Every declaration is bind-only. The bind-only form is admitted under the open-pr
 
 **Argued, not formalized.**
 - *Equality and strictness.* Equality holds at the incoherent state (1, 0, 0) and at the maximally coherent stabilizer state (1, 1, 1)/√3. For 0 < C < 2 the inequality is strict (the proof seat's lemma L7).
-- *Mechanism.* Magic is forced by an imbalance of the amplitudes. The Wigner column of the i-th diagonal entry turns negative only when the product of the other two amplitudes exceeds r_i², and the quantity D measures that imbalance. The bound is the sharp consequence of two moment identities: one for each Wigner column, one for the defects δ_i.
+- *Mechanism.* Magic is forced by an imbalance of the amplitudes. If the product of two amplitudes exceeds the square of the third, r_j r_k > r_i², then the Wigner column of the i-th diagonal entry has a negative entry, whatever the phases; this is a sufficient condition, and phases can produce negativity without it. The quantity D measures that imbalance, and the bound is the sharp consequence of two moment identities: one for each Wigner column, one for the defects δ_i.
 - *Scope.* The proof uses purity through |ρ_jk| = r_j r_k, and the bound fails for mixed states: the mixture ½|+⟩⟨+| + ½|0⟩⟨0| of two stabilizer states, with |+⟩ = (1, 1, 1)/√3, has C = 1 and a nonnegative Wigner function, so M = 0 < (1/2)√(1/2).
 - *The second conjecture.* The paper's trade-off for qutrit–qubit states, 16E² + 9M² < 4 (Eq. (19)), is not addressed. With any standard normalization of the negativity E, the embedded Bell state (|00⟩ + |11⟩)/√2 has an incoherent reduced qutrit state (M = 0) and 16E² ≥ 4, so the strict inequality fails there; whether the non-strict form holds is not determined here.
 
