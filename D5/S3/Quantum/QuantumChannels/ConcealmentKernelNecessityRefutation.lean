@@ -91,7 +91,7 @@ theorem dual_kraus {din dout : ℕ} {κ : Type} [Fintype κ]
   simpa only [Matrix.mul_assoc] using Matrix.trace_mul_comm (K j) (X * ((K j)ᴴ * A))
 
 /-- All density matrices span the Hermitian operator space over the reals. -/
-private theorem all_density_tomographically_complete (d : ℕ) :
+theorem all_density_tomographically_complete (d : ℕ) :
     TomographicallyComplete {ρ : Matrix (Fin d) (Fin d) ℂ | IsDensity ρ} := by
   refine ⟨fun _ h => h, le_antisymm ?_ ?_⟩
   · apply Submodule.span_le.mpr

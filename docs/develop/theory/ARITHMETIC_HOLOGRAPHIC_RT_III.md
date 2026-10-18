@@ -3636,3 +3636,1147 @@ There is no omitted zero denominator: \(q\ne0\), \(P\succ0\), and independence p
 Both partner expressions in (28) depend only on supported principal data and their unique normer. Every hypothetical subquarter minimum must make both strictly less than \(1/16\). The inequalities retain necessary outside feasibility and full-dual costs, but are not sufficient for a physical extension or full dual completion. They do not replace §98's coupled curvature costs by independently minimized principal costs.
 
 No argument here proves that one of these expressions is always at least \(1/16\). The occupancy \((2,1,1,0)\), all seven rank-\((7,6)\) patterns listed in §98, other lower-rank cases and the unrestricted global quarter problem remain open. The global interval stays \([\sqrt3-\tfrac32,\tfrac14]\). The results concern local minima on the full calibrated domain; global calibration may enlarge ranks and does not transfer local minimality from arbitrary leaking channels.
+
+## 100. Separate dual-face costs for missing partners
+
+The positive dual metric in §99 averages two PSD faces. Keeping their separate Schur costs gives a stronger attained algebraic bound for each actual missing partner. Its comparison with \(1/16\), all seven remaining support patterns and the global quarter optimum remain open.
+
+### 100.1. Original hypotheses and supported data
+
+Retain the original four two-coordinate fibres, local channels
+\(\mathbb C^8\to\mathbb C^4\), fixed correlated encoding, arbitrary reference and
+unhalved diamond error. Let \((G,H)\) be a local minimum on the full calibrated
+domain \(\{G\succeq0:G_{ff}=I_2\}^2\), of ranks \((7,6)\), with
+\(0<t=F(G,H)<1/4\). Let \(a\) span \(\ker G\), with support \(S\) of occupancy
+\((2,1,1,0)\), labeled \(\{1,2,3,4\}\), where \(F=\{1,2\}\) is a whole original
+fibre and 3,4 lie in two other original fibres.
+
+Choose the common pair furnished by §99 and extend it by zero outside \(S\). Its supported density is positive definite, \(L_S=T_S-G_S\odot H_S\)
+has inertia \((2,2)\), and the unique principal witness and its density complement
+have ranks two and two. Fix this same pair and any full optimal dual
+\(Z\succeq0,\ Z-2L\succeq0,\ Z_{ff}\preceq tI_2\), with \(Z\rho=2LW\).
+Write \(p_j=(\rho_S)_{jj}>0\), and let \(\alpha>0\) be its common-stress scale, so that \(W_{ij}=-\alpha a_i\overline{a_j}/(2\overline{H_{ij}})\) across original fibres. Put \(N=Z-L\) and
+\[
+K=N_S/t\succ0,\qquad D=L_S/t,\qquad J=K^{-1}D.
+\]
+Then
+\[
+DK^{-1}D=K,\quad J^2=I,\quad
+K_{FF}=I_2,\quad K_{33}=K_{44}=1,\quad D_{ff}=0. \tag{1}
+\]
+For the actual original missing partner \(o\) of singleton \(j\), write
+\(\ell=L_{oS}\). Full complementarity gives
+\[
+N_{oS}=\ell J,\quad N_{oo}\le t,\quad \ell e_j=\ell Je_j=0. \tag{2}
+\]
+The second zero is equivalent to \((\ell W_S)_j=0\), since
+\(Je_j=2W_Se_j/p_j-e_j\), with \(p_j>0\).
+
+For \(j=3\), express the singleton \(H\)-records in the whole-fibre orthonormal
+basis as \(\psi=(x,y)^T,\phi=(z,w)^T\), and put \(\Delta=xw-yz\ne0\).
+As in §99, the actual partner row and full \(G\)-kernel imply
+\[
+r=(-a_1/y,\ a_2/x,\ a_4/\Delta)^T,\quad
+b=\tfrac12\sum_i r_i,\quad
+\widetilde r=(r_1,r_2,0,r_3)^T,\quad
+\ell\widetilde r=b. \tag{3}
+\]
+Original nonzero cross entries and singleton independence justify every division.
+All of \(K,D,r,b\) are fixed principal data. No replacement outside row is
+presumed physically realizable.
+
+### 100.2. The two dual costs
+
+Define the Hermitian involution and its projections
+\[
+Q=K^{-1/2}DK^{-1/2},\quad Q^2=I,\quad P_\pm=(I\pm Q)/2. \tag{4}
+\]
+Both eigenspaces have dimension two. Write \(\eta=\ell K^{-1/2}\).
+The full PSD matrices \(Z_\pm=N\pm L\) have
+\[
+(Z_\pm)_S=tK^{1/2}(I\pm Q)K^{1/2},\qquad
+(Z_\pm)_{oS}=\ell(J\pm I)=\eta(Q\pm I)K^{1/2}. \tag{5}
+\]
+After congruence by \(K^{-1/2}\) on the supported coordinates, their principal
+blocks are \(2tP_\pm\), with rows \(\pm2\eta P_\pm\). The range conditions hold
+and their exact generalized Schur costs are
+\[
+c_\pm=(2/t)\|\eta P_\pm\|^2. \tag{6}
+\]
+Both outside diagonals are \(N_{oo}\), since \(L_{oo}=0\). Therefore
+\[
+\|\eta P_+\|^2\le t^2/2,\qquad \|\eta P_-\|^2\le t^2/2. \tag{7}
+\]
+Their average recovers §99's inverse-metric bound. Keeping both can strengthen it.
+
+### 100.3. Exact two-face constrained minimum
+
+Put \(e=e_j,\ d=K^{1/2}e,\ h=K^{1/2}\widetilde r\).
+Here \(d^*d=1\) and \(d^*Qd=D_{jj}=0\). Thus
+\[
+v_\pm=\sqrt2P_\pm d \tag{8}
+\]
+are unit vectors in orthogonal eigenspaces. The two zeros in (2) say
+\(\eta d=\eta Qd=0\), equivalently \(\eta v_+=\eta v_-=0\). Define
+\[
+h_\pm=(P_\pm-v_\pm v_\pm^*)h,\qquad \gamma_\pm=\|h_\pm\|^2\ge0. \tag{9}
+\]
+Each residual lies in a one-dimensional space. Every feasible row satisfies
+\[
+|b|=|\eta h|
+ \le\|\eta P_+\|\sqrt{\gamma_+}+\|\eta P_-\|\sqrt{\gamma_-}. \tag{10}
+\]
+**Theorem 100.1.** If \(\gamma_++\gamma_->0\), the exact algebraic minimum is
+\[
+\min_{\substack{\eta d=\eta Qd=0\\\eta h=b}}
+ 2\max\{\|\eta P_+\|^2,\|\eta P_-\|^2\}
+=\frac{2|b|^2}{(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2}. \tag{11}
+\]
+**Proof.** Equation (10) gives the lower bound. Set \(s=\sqrt{\gamma_+}+\sqrt{\gamma_-}>0\). A minimizing original row is
+\[
+\ell_0=\frac b s
+ \sum_{\sigma:\gamma_\sigma>0}
+ \frac{h_\sigma^*K^{1/2}}{\sqrt{\gamma_\sigma}}. \tag{12}
+\]
+It has both zeros, \(\ell_0\widetilde r=b\), and every nonzero spectral component
+of \(\ell_0K^{-1/2}\) has norm \(|b|/s\). This proves equality in (11).
+If one residual vanishes, omit that term. If both vanish, the constraints are
+infeasible for \(b\ne0\), and have minimum zero for \(b=0\).
+For \(b=0\) in every case the zero row attains the zero value.
+
+Combining (7) and (11), the physical principal data obey
+\[
+\boxed{t^2\ge \frac{2|b|^2}{(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2}.} \tag{13}
+\]
+The same result holds for singleton 4 by original-fibre relabeling. The minimizer
+certifies only this algebraic relaxation, not a physical outside extension. \(\square\)
+
+### 100.4. Explicit coefficients and the earlier denominator
+
+**Proposition 100.2.** The residuals have the scalar formulas
+\[
+\gamma_\pm=\frac12\left[
+\widetilde r^*(K\pm D)\widetilde r
+-\left|e^*(K\pm D)\widetilde r\right|^2\right]. \tag{14}
+\]
+Their sum is §99's strictly positive denominator, and the bound (13) is at least the bound in §99, with the equality and endpoint cases below.
+
+**Proof.** Expanding (9) gives (14); nonnegativity follows from its projection expression before taking scalar square roots. In particular,
+\[
+\gamma_++\gamma_-=
+\widetilde r^*K\widetilde r-|e^*K\widetilde r|^2-|e^*D\widetilde r|^2. \tag{15}
+\]
+This sum equals §99's \(\gamma\). To verify the identification, put
+\(I=S\setminus\{j\}\), \(P=K_{II}-K_{Ij}K_{jI}\succ0\), and \(v=(Je)_I\).
+The same common cross formula gives
+\[
+q_i=\frac{a_i}{\overline{H_{ij}}}
+=-\frac{p_j}{\alpha\overline{a_j}}(Je)_i\quad(i\ne j). \tag{16}
+\]
+Thus \(q\) is a nonzero scalar multiple of \(v\). Moreover
+\[
+v^*Pv=1,\qquad r^*Pv=\widetilde r^*De. \tag{17}
+\]
+For the first identity, use \(e^*KJe=e^*De=0\) to eliminate the \(j\)-coordinate
+and then \((Je)^*K(Je)=e^*DK^{-1}De=K_{jj}=1\).
+For the second, its \(I\)-coordinates read
+\(Pv=(KJe)_I=D_{Ij}\). Therefore
+\[
+r^*Pr-\frac{|r^*Pq|^2}{q^*Pq}
+=\widetilde r^*K\widetilde r-|e^*K\widetilde r|^2-|e^*D\widetilde r|^2. \tag{18}
+\]
+The physical independence of \(r,q\), proved in §99, makes the sum strictly
+positive. This justifies the denominator of (13) in the original problem.
+
+Finally,
+\[
+(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2\le2(\gamma_++\gamma_-), \tag{19}
+\]
+so (13) is never smaller than §99's \(|b|^2/\gamma\).
+For \(b\ne0\), equality holds exactly when \(\gamma_+=\gamma_-\); if \(b=0\),
+both values vanish. The strengthening factor is between one and two, attaining
+two when exactly one residual vanishes. \(\square\)
+
+No universal comparison with \(1/16\), exclusion of any support or rank class,
+or global quarter bound is asserted. This result uses the two full dual faces
+and the same original partner constraints. It makes no rank-preservation,
+real-gauge, independent physical-completion or second-derivative assumption.
+
+
+The unrestricted global interval remains \([\sqrt3-\tfrac32,\tfrac14]\). These are full-calibrated-domain local-minimum constraints; global calibration may enlarge ranks and does not transfer local minimality from leaking channels.
+
+## 101. Quarter obstructions and necessary complex phases
+
+This section proves a quarter lower bound for an explicitly phase-aligned
+four-coordinate geometry, using the two actual missing partners and an exact
+quadratic comparison. It then combines the common witness, the actual quotient and principal
+normer uniqueness to exclude a rank-\((7,6)\) subquarter local minimum whenever
+either supported principal Gram has a real diagonal-unitary gauge.
+The existence of that gauge is substantive. General complex phases and
+all seven support patterns in full remain open.
+
+### 101.1. Original domain and the phase-aligned statement
+
+Retain the four original two-coordinate fibres, local channels
+\(\mathbb C^8\to\mathbb C^4\), fixed correlated encoding, arbitrary reference,
+and unhalved diamond error. For calibrated Grams
+\(G,H\succeq0\), \(G_{ff}=H_{ff}=I_2\), put
+\[
+L=T-G\odot H,\qquad T_{ff}=I_2,\qquad T_{fg}=\tfrac12J_2\ (f\ne g),
+\qquad \delta=F(G,H). \tag{1}
+\]
+The exact calibrated objective of §91 gives
+\(\delta\ge |L_{ij}|\) for coordinates in different original fibres.
+
+Label \(S=\{1,2,3,4\}\), with \(F=\{1,2\}\) a whole original fibre and
+3,4 singletons of two other original fibres. Suppose the supported \(H\) records,
+in the orthonormal basis supplied by \(F\), are
+\[
+e_1,\quad e_2,\quad \psi=(c,s),\quad\phi=(p,q),
+\qquad c,s,p,q\ge0,\qquad c^2+s^2=p^2+q^2=1. \tag{2}
+\]
+Suppose also that the full eight-coordinate \(G\) has the kernel vector
+\[
+a=(-A,-B,b,d)\ \text{on }S,\qquad a=0\ \text{off }S,
+\qquad A,B,b,d>0. \tag{3}
+\]
+No reality, exchange symmetry or rank assumption is made on \(G\).
+All outside records of both Grams may be arbitrary complex vectors and may
+leave the supported spans. Conditions (2)--(3) must hold in the same coordinates;
+they are not a general gauge reduction.
+
+**Theorem 101.1 (phase-aligned quarter bound).**
+Under (1)--(3), \(\delta\ge1/4\).
+If any of \(c,s,p,q\) vanishes, or if \(\psi=\phi\), then
+\(\delta\ge1/2\).
+
+**Proof.**
+A zero coordinate in (2) makes the corresponding cross-fibre product zero,
+so its matrix unit gives the stronger bound. If \(\psi=\phi\), the actual
+original partner of coordinate 3 is orthogonal to both singleton \(H\) records;
+its cross-fibre product with coordinate 4 is zero, with the same consequence.
+Henceforth all coordinates are positive and the two records are distinct.
+Exchange the singleton labels if necessary so that
+\[
+\Delta=cq-sp>0,\qquad h=cp+sq>0. \tag{4}
+\]
+This exchange just orders their positive angles.
+
+Assume \(\delta<1/4\). Let \(o_3\) be the actual original partner of coordinate 3.
+Its projection onto the supported \(H\) span has row
+\(H_{o_3S}=\beta(-s,c,0,\Delta)\); the component outside that span is unrestricted.
+Here \(\beta\ne0\), since otherwise a cross-fibre matrix unit gives
+\(\delta\ge1/2\).
+The original equality \(G_{o_3,3}=0\) and the full kernel equation give
+\[
+r=(A/s,-B/c,d/\Delta),\qquad
+L_{o_3,\{1,2,4\}}r=\tfrac12\sum r. \tag{5}
+\]
+Indeed the corresponding sum of products \(G_{o_3j}H_{o_3j}r_j\) is
+\(\beta(-AG_{o_3,1}-BG_{o_3,2}+dG_{o_3,4})=0\).
+For \(P=A/s+d/\Delta>0\) and \(N=B/c>0\), (5) implies
+\[
+|P-N|\le2\delta(P+N)<\tfrac12(P+N).
+\]
+Thus \(P<3N\). The actual partner \(o_4\) has \(H\) row a nonzero scalar
+multiple of \((-q,p,-\Delta,0)\), and its corresponding vector is
+\(r'=(A/q,-B/p,-b/\Delta)\). Applying the same argument to its positive and
+negative groups yields
+\[
+3sB-cA>dcs/\Delta,\qquad 3pA-qB>bpq/\Delta. \tag{6}
+\]
+Both inequalities concern the original rows; no completion is replaced.
+
+Put \(D_0=9sp-cq\). Multiplying the first inequality in (6) by \(3p\)
+and the second by \(c\), then adding, gives \(D_0B>0\).
+Consequently \(D_0>0\), and
+\[
+\begin{pmatrix}-c&3s\\3p&-q\end{pmatrix}^{-1}
+=\frac1{D_0}\begin{pmatrix}q&3s\\3p&c\end{pmatrix}. \tag{7}
+\]
+Every entry on the right is positive. Therefore, coordinatewise,
+\[
+A>A_0=\frac{sq(dc+3bp)}{\Delta D_0},\qquad
+B>B_0=\frac{cp(3ds+bq)}{\Delta D_0}. \tag{8}
+\]
+
+The \(F\) block of \(Ga=0\) says
+\(G_{F,\{3,4\}}(b,d)^{\mathsf T}=(A,B)^{\mathsf T}\).
+Using Hermiticity in the singleton block of the same equation gives
+\[
+A^2+B^2=b^2+d^2+2bd\,\operatorname{Re}G_{34}. \tag{9}
+\]
+This permits complex \(G_{34}\) and complex cross blocks.
+Since \(H_{34}=h\), the matrix-unit bound
+\(\operatorname{Re}L_{34}>-1/4\) now implies
+\[
+A^2+B^2<b^2+d^2+\frac{3bd}{2h}. \tag{10}
+\]
+
+Here is the exact comparison with (8). Set \(x=s/c>0\), \(y=q/p>x\).
+The inequality \(D_0>0\) is \(y<9x\). With \(P_0=(y-x)(9x-y)>0\),
+\[
+\begin{pmatrix}A_0\\B_0\end{pmatrix}
+=M\begin{pmatrix}b\\d\end{pmatrix},\qquad
+M=\frac1{P_0}
+\begin{pmatrix}
+3xy\sqrt{1+x^2}&xy\sqrt{1+y^2}\\
+y\sqrt{1+x^2}&3x\sqrt{1+y^2}
+\end{pmatrix},\qquad
+h=\frac{1+xy}{\sqrt{(1+x^2)(1+y^2)}}. \tag{11}
+\]
+Define
+\[
+K=M^{\mathsf T}M-
+\begin{pmatrix}1&3/(4h)\\3/(4h)&1\end{pmatrix}. \tag{12}
+\]
+We prove entrywise nonnegativity of \(K\), which suffices because \(b,d>0\);
+positive semidefiniteness of \(K\) is not asserted.
+Write \(z=y/x\in(1,9)\), \(X=x^2>0\), \(m=(z-1)(9-z)>0\), so \(P_0=Xm\), and put
+\[
+\mathcal R=16z^2-m^2=(z-3)^2(4z+m)\ge0. \tag{13}
+\]
+Expansion gives the three square certificates
+\[
+\begin{aligned}
+P_0^2K_{11}&=X\bigl[z^2(3X-1)^2+\mathcal RX\bigr],\\
+P_0^2K_{22}&=X\bigl[(z^2X-3)^2+\mathcal RX\bigr],\\
+\frac{4(1+xy)P_0^2K_{12}}{3\sqrt{(1+x^2)(1+y^2)}}
+&=X\bigl[4z(zX-1)^2+\mathcal RX\bigr].
+\end{aligned} \tag{14}
+\]
+All prefactors are positive, so \(K_{11},K_{22},K_{12}\ge0\). Hence
+\[
+A_0^2+B_0^2\ge b^2+d^2+\frac{3bd}{2h}. \tag{15}
+\]
+The strict lower bound from (8) contradicts (10). This proves the theorem
+with the original arbitrary-reference, unhalved normalization. \(\square\)
+
+### 101.2. Equality and an explicitly conditional rank conclusion
+
+Suppose \(\delta=1/4\) under the same hypotheses. The boundary cases already
+have the stronger bound, so all coordinates and \(\Delta\) are positive.
+The partner argument gives the non-strict versions of (6).
+Their positive right sides still force \(D_0>0\), and then
+\(A\ge A_0\), \(B\ge B_0\). Equation (9) gives the non-strict version of (10).
+Thus equality is necessary throughout (15).
+Since \(b,d>0\), each entry of \(K\) must vanish.
+The first certificate in (14), together with (13), forces \(z=3\), \(X=1/3\).
+Consequently
+\[
+(c,s)=(\sqrt3/2,1/2),\qquad(p,q)=(1/2,\sqrt3/2),\qquad
+A=cb+pd,\qquad B=sb+qd. \tag{16}
+\]
+
+For a further conclusion, assume explicitly a PSD correlation matrix \(R_0\)
+satisfying
+\[
+G_S=H_S\odot\overline{R_0},\qquad
+R_0\operatorname{diag}(\overline a)H_S=0. \tag{17}
+\]
+These are the quotient relations in the common-stress application,
+but they were not hypotheses of Theorem 101.1.
+Factor \(R_0\) as the Gram of unit records \(r_i\).
+The full-fibre basis in \(H_S\) and (17) give
+\[
+A r_1=cb r_3+pd r_4,\qquad B r_2=sb r_3+qd r_4. \tag{18}
+\]
+To see this without any invertibility assumption on \(R_0\), the two
+columns of \(\operatorname{diag}(\overline a)H_S\) indexed by \(F\)
+belong to \(\ker R_0\), hence to the kernel of a Gram factor of \(R_0\).
+At (16), equality in the unit-vector triangle inequality in (18)
+forces \(r_3=r_4\); all coefficients are positive.
+The same equations then give \(r_1=r_2=r_3=r_4\).
+Therefore
+\[
+R_0=J_4,\qquad G_S=H_S,\qquad \operatorname{rank}G_S=2. \tag{19}
+\]
+In particular, if (17) and \(\operatorname{rank}G_S=3\) are imposed,
+then \(\delta>1/4\) in this explicit phase-aligned class.
+No uniform positive gap or quantitative neighbourhood radius follows.
+
+### 101.3. All real kernel signs in the positive-record geometry
+
+Now impose the original full calibrated-domain local-minimum hypotheses:
+\(\operatorname{rank}(G,H)=(7,6)\), \(0<t=F(G,H)<1/4\), and a spanning
+kernel vector \(a\) of \(G\) supported exactly on \(S\), of occupancy
+\((2,1,1,0)\) as above.
+Assume that, in one simultaneous reciprocal diagonal unitary gauge preserving
+\(G_{ij}H_{ij}\), the supported \(H\) records satisfy (2) and the supported
+kernel vector \(a\) is real with every coordinate nonzero.
+This simultaneous reality is an additional assumption.
+
+**Theorem 101.2 (real-kernel exclusion).**
+No such local minimum exists. Reality of \(G\), of the quotient, or of
+any outside records is not required.
+
+**Proof.**
+The zero-coordinate and coincident-record cases already have \(t\ge1/2\).
+Otherwise order the positive angles as in (4).
+The common normer and quotient facts of §§95 and 99 give one and the same
+pair \((\rho,W)\), a scale \(\alpha>0\), and a PSD correlation matrix \(R\) with
+\[
+\begin{aligned}
+W_{ij}&=-\frac{\alpha a_i a_j}{2H_{ij}}
+&&\text{across original fibres on }S,\\
+2(LW)_{ff}&=t\rho_{ff},\qquad
+G_S=H_S\odot\overline R,\qquad
+R\operatorname{diag}(a)H_S=0.
+\end{aligned} \tag{20}
+\]
+The pair is supported on \(S\). In particular, all supported cross entries
+of \(W\) are real. Multiplying \((Ga)_i=0\) by \(\alpha a_i\),
+substituting \(G_{ij}H_{ij}=1/2-L_{ij}\), and using the diagonal entry
+of the same complementary relation in (20), gives
+\[
+\alpha a_i^2
+=\sum_{\substack{j\in S\\j\text{ in another original fibre}}}W_{ij}
+-t\rho_{ii}. \tag{21}
+\]
+The cross-fibre row sum is strictly positive. For \(i\in F\) this is
+\(W_{i3}+W_{i4}>0\); no independently chosen witness is used.
+Also, the matrix-unit bound and \(H_{ij}>0\) give
+\(\operatorname{Re}G_{ij}>0\) and \(\operatorname{Re}R_{ij}>0\)
+on all supported cross-fibre entries. In particular
+\(r=\operatorname{Re}R_{34}\in(0,1]\).
+
+Multiply \(a\) by \(-1\) if needed so that \(a_3=b>0\).
+If \(a_4=d>0\), the full \(F\)-block kernel equations give
+\(a_i=-bG_{i3}-dG_{i4}\).
+Taking real parts gives \(a_1,a_2<0\).
+Theorem 101.1 applies, contradicting \(t<1/4\).
+
+It remains to consider \(a_4=-d<0\), \(d>0\).
+Factoring \(R\) into unit records \(r_i\), the quotient relation in (20)
+gives, by the same singular-safe argument as for (18),
+\[
+a_1r_1=-cb r_3+pd r_4,\qquad
+a_2r_2=-sb r_3+qd r_4. \tag{22}
+\]
+There are four possible sign patterns of the nonzero \(F\) entries.
+
+If \(a_1>0\), \(a_2<0\), take real inner products of the first equation
+with \(r_3\) and of the second with \(r_4\).
+Since \(\operatorname{Re}R_{13},\operatorname{Re}R_{24}>0\), this gives
+\[
+pd r>cb,\qquad qd<sb r.
+\]
+Hence \(d/b>c/(pr)\) and \(d/b<sr/q\), which imply
+\(cq<sp r^2\le sp\), contrary to \(\Delta>0\).
+
+If \(a_1=-A<0\), \(a_2=B>0\), the two positive \(F\)-row sums in (21) give
+\[
+b/c>d/p,\qquad d/q>b/s.
+\]
+Thus \(d/b<p/c\) and \(d/b>q/s\), again contradicting \(cq>sp\).
+
+If \(a_1=-A<0\), \(a_2=-B<0\), the reverse triangle inequalities in (22) give
+\(A\ge cb-pd\), \(B\ge sb-qd\). Therefore
+\[
+\frac A p+\frac B q
+\ge b\left(\frac c p+\frac s q\right)-2d
+>\frac b h-2d,\qquad
+h\left(\frac c p+\frac s q\right)=1+\frac{cs}{pq}>1. \tag{23}
+\]
+But (21) at coordinate 4 is
+\[
+\alpha d^2=\frac{\alpha bd}{2h}
+-\frac{\alpha d}{2}\left(\frac A p+\frac B q\right)-t\rho_{44}, \tag{24}
+\]
+which, because \(t\rho_{44}\ge0\), implies the opposite non-strict inequality.
+
+Finally, if \(a_1=A>0\), \(a_2=B>0\), (22) similarly gives
+\[
+\frac A c+\frac B s
+\ge d\left(\frac p c+\frac q s\right)-2b
+>\frac d h-2b,\qquad
+h\left(\frac p c+\frac q s\right)=1+\frac{pq}{cs}>1. \tag{25}
+\]
+Identity (21) at coordinate 3 reads
+\(\alpha b^2=\alpha bd/(2h)-\alpha b(A/c+B/s)/2-t\rho_{33}\)
+and gives the opposite inequality. All cases are exhausted. \(\square\)
+
+### 101.4. The negative real cycle is excluded by the actual quotient
+
+**Lemma 101.3 (negative-cycle bound).**
+For any original calibrated pair, suppose \(H_S\) is real of rank two,
+\(G_S=H_S\odot\overline R\) for a PSD correlation matrix \(R\), and
+\[
+H_{13}H_{14}H_{23}H_{24}<0. \tag{26}
+\]
+Then \(\delta=F(G,H)\ge1/4\).
+No reality of \(G,R\), or any kernel vector is required.
+
+**Proof.**
+On each supported cross-fibre edge, quotient positivity gives
+\[
+\tfrac12-\delta
+\le\operatorname{Re}(G_{ij}H_{ij})
+\le|G_{ij}H_{ij}|
+=|H_{ij}|^2|R_{ij}|
+\le|H_{ij}|^2. \tag{27}
+\]
+If \(\delta<1/4\), all these squared moduli exceed \(1/4\).
+Choose a diagonal sign gauge to make \(H_{13},H_{23},H_{14}\) positive.
+The negative cycle then makes \(H_{24}<0\).
+Apply the same signs to both full eight-coordinate Grams.
+This preserves the original identity blocks, their Hadamard product,
+the objective, and the quotient relation with the same \(R\).
+Since \(H_S\) has rank two and \(H_{FF}=I_2\), its records are now
+\(e_1,e_2,(c,s),(p,-q)\), with all four coordinates positive and each
+singleton a unit vector. Equation (27) gives
+\[
+\tfrac14<c^2,s^2,p^2,q^2<\tfrac34,
+\qquad \tfrac14<cp,sq<\tfrac34.
+\]
+It follows that
+\[
+|H_{34}|=|cp-sq|<\tfrac12, \tag{28}
+\]
+contradicting (27) at edge \(34\).
+If the real four-cycle is zero, one cross entry of \(H\) vanishes and
+the original matrix-unit bound instead gives \(\delta\ge1/2\).
+\(\square\)
+
+### 101.5. Conjugation symmetry forces the common kernel to be real
+
+Return to the full-domain local-minimum hypotheses of Theorem 101.2,
+but assume only that \(H_S\) is real; the kernel is initially allowed
+to be complex.
+
+**Lemma 101.4.**
+The unique principal norming density and witness are real, and the full
+kernel vector \(a\) can be chosen real.
+
+**Proof.**
+Let \(\mathcal E_S\) be the principal PSD Gram domain with identity on each
+original fibre intersection, and let
+\[
+\begin{aligned}
+\mathcal C_S
+&=\{(\sigma,V):\sigma\succeq0,\ \sigma\text{ block diagonal on }(2,1,1),\
+\operatorname{Tr}\sigma=1,\ 0\preceq V\preceq\sigma\},\\
+f_H(Q)&=\max_{(\sigma,V)\in\mathcal C_S}
+2\operatorname{Tr}[(T_S-Q\odot H_S)V].
+\end{aligned} \tag{29}
+\]
+Both domains are conjugation invariant, and \(\mathcal C_S\) is compact.
+Because \(H_S,T_S\) are real,
+\(f_H(\overline Q)=f_H(Q)\).
+Lemma 96.1 gives the global principal one-party best response
+\[
+f_H(G_S)=t,\qquad f_H(Q)\ge t\quad(Q\in\mathcal E_S). \tag{30}
+\]
+That result uses the full-domain orthogonal completion and the same common
+witness; it does not assert a joint principal local minimum.
+
+The midpoint \(G_0=(G_S+\overline{G_S})/2\) is feasible.
+Convexity of \(f_H\), its conjugation symmetry, and (30) imply
+\[
+f_H(G_0)=f_H(G_S)=f_H(\overline{G_S})=t. \tag{31}
+\]
+No rank or kernel property of \(G_0\) is used.
+Take a normer at \(G_0\). Its conjugate is also a normer there, since the
+coefficient is real. Their average \((\sigma_0,V_0)\) is therefore feasible,
+real and norming. With \(L_S=T_S-G_S\odot H_S\),
+\[
+t=\frac{2\operatorname{Tr}(L_SV_0)
+       +2\operatorname{Tr}(\overline{L_S}V_0)}2. \tag{32}
+\]
+Each endpoint objective is at most its norm \(t\), so both equal \(t\).
+Thus \((\sigma_0,V_0)\) is a principal normer at the original \(G_S\).
+Theorem 99.3, including singular competing densities, identifies it with
+the same unique principal common pair. Hence \(\rho_S,W_S\) are real.
+Only principal uniqueness is used, not uniqueness of every full
+eight-coordinate normer.
+
+The common cross formula is
+\[
+W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}},
+\qquad \alpha>0. \tag{33}
+\]
+Every supported cross entry of \(H\) is nonzero, and every coordinate of
+\(a_S\) is nonzero. Reality of \(H_S,W_S\) makes
+\(a_i\overline{a_j}\) real and nonzero on these edges.
+Choose the scalar phase of \(a\) so that \(a_3>0\).
+Edges \(13,23\) make \(a_1,a_2\) real, and edge \(14\) then makes \(a_4\)
+real. The remaining coordinates are zero. \(\square\)
+
+**Theorem 101.5 (real-gauge opposite-principal exclusion).**
+At an original full calibrated-domain local minimum with ranks \((7,6)\),
+kernel support of occupancy \((2,1,1,0)\), and \(0<t<1/4\), the supported
+opposite Gram \(H_S\) cannot have a diagonal-unitary gauge in which it is real.
+The other Gram and all outside records may be complex.
+
+**Proof.**
+A reciprocal diagonal unitary gauge
+\[
+G'=EGE^*,\qquad H'=E^*HE,\qquad
+G'_{ij}H'_{ij}=G_{ij}H_{ij} \tag{34}
+\]
+extends to the full eight coordinates and is a homeomorphism of the
+original calibrated domain. It preserves the objective, ranks, support,
+all original fibre identities and local minimality.
+Under the asserted gauge, work with \(H_S\) real.
+The quotient and rank facts of §§95 and 97 give
+\(G_S=H_S\odot\overline R\) and \(\operatorname{rank}H_S=2\).
+The cycle is nonzero by the matrix-unit bound.
+Its negative sign is excluded by Lemma 101.3.
+
+For a positive cycle, a diagonal sign matrix makes all four
+\(F,\{3,4\}\) entries positive: choose the signs at 3 and 4 to make the
+two entries from coordinate 1 positive, then the sign at 2 to make
+entry \(23\) positive; the cycle condition makes entry \(24\) positive.
+Apply these signs to both full Grams as in (34).
+Lemma 101.4 gives a real full kernel in this gauge.
+Rank two and \(H_{FF}=I_2\) make the singleton \(H\) records precisely
+the positive real columns from \(F\).
+Theorem 101.2 excludes the resulting local minimum. \(\square\)
+
+Equivalently, every remaining minimum in this support class must satisfy
+\[
+\operatorname{Im}\chi\ne0,\qquad
+\chi=H_{13}H_{24}\overline{H_{14}H_{23}}. \tag{35}
+\]
+Indeed \(\chi\) is invariant under diagonal unitary conjugation.
+Its reality is necessary for a real gauge.
+Conversely, choose phases so that \(H_{13},H_{23},H_{14}>0\).
+If \(\chi\) is real, then \(H_{24}\) is real.
+Rank two and \(H_{FF}=I_2\) give
+\[
+H_{34}=\overline{H_{13}}H_{14}
+       +\overline{H_{23}}H_{24}, \tag{36}
+\]
+which is real in that gauge. Thus all of \(H_S\) is real, proving sufficiency.
+Condition (35) is a genuine phase obstruction, with no quantitative lower
+bound on \(|\operatorname{Im}\chi|\).
+
+### 101.6. The other principal Gram also requires genuinely complex phases
+
+**Theorem 101.6.**
+Under the hypotheses of Theorem 101.5, \(G_S\) cannot have a real
+diagonal-unitary gauge either.
+
+**Proof.**
+Apply a reciprocal full-domain gauge if needed and suppose \(G_S\) is real.
+Let \(f_G(Q)\) be the exact principal norm of \(T_S-G_S\odot Q\),
+on the full principal feasible domain \(\mathcal E_S\).
+The same supported common witness exposes \(H\)'s global one-party face
+in the full calibrated domain.
+For any \(Q\in\mathcal E_S\), assign every missing coordinate a new mutually
+orthogonal record, orthogonal to all principal records.
+This completes \(Q\) to an original Gram while preserving both missing
+singleton partners and the empty fourth fibre.
+The completion has no imposed fixed-rank constraint.
+Its value at the same common witness is at least \(t\), and support on \(S\)
+identifies that value with the principal witness value. Thus
+\[
+f_G(H_S)=t,\qquad f_G(Q)\ge t\quad(Q\in\mathcal E_S). \tag{37}
+\]
+This is the opposite-party version of Lemma 96.1's completion argument.
+
+Because \(G_S,T_S\) are real, conjugation preserves \(f_G\).
+Equation (37) and convexity make \(H_S,\overline{H_S}\) and their midpoint
+all attain \(t\). Averaging a midpoint normer with its conjugate gives
+a real pair. Its endpoint objectives are each at most \(t\) and average
+to \(t\), so it norms the original coefficient.
+Theorem 99.3 therefore identifies it with the original common pair:
+\(\rho_S,W_S\) are real. This invokes the same principal uniqueness theorem
+for the same original coefficient; fixing the other Gram changes neither
+its hypotheses nor its normers. No rank of the midpoint is used.
+
+Rearrange (33), using nonzero \(W_{ij}\), to obtain
+\[
+H_{ij}=-\frac{\alpha\overline{a_i}a_j}{2W_{ij}}. \tag{38}
+\]
+Choose \(E_{ii}=\overline{a_i}/|a_i|\) on \(S\), with arbitrary outside unit
+phases, and use (34). Then
+\[
+H'_{ij}=-\frac{\alpha|a_i||a_j|}{2W_{ij}}\in\mathbb R,\qquad
+a'_S=(|a_i|)_{i\in S}. \tag{39}
+\]
+The supported diagonal is one and the within-\(F\) off-diagonal entries
+are zero, so \(H'_S\) is real.
+The full reciprocal gauge preserves all original hypotheses.
+Theorem 101.5 gives the contradiction. \(\square\)
+
+### 101.7. Scope
+
+Theorem 101.1 allows arbitrary complex \(G\) and outside records, unequal
+positive singleton weights and unequal positive angles, so it includes
+the positive exchange geometry without a separate symmetry assumption.
+Its strict rank conclusion at quarter error requires the explicit quotient
+in (17); no uniform positive gap follows.
+
+Theorem 101.5 is stronger than a restriction to two real principal Grams:
+only a real gauge of \(H_S\) is required, and the reality of the same common
+kernel is proved using principal best-response and normer uniqueness.
+This does not establish that every complex \(H_S\) has such a gauge.
+Theorem 101.6 extends the obstruction to a real gauge of either principal Gram.
+No rank preservation under averaging and no joint principal local-minimum
+transfer has been used.
+
+General complex phases, the other support patterns and the unrestricted
+global quarter problem remain open. In particular, none of the seven
+rank-\((7,6)\) support patterns has been excluded in full.
+The unrestricted global interval is still \([\sqrt3-\tfrac32,\tfrac14]\).
+All local-minimum statements concern the full calibrated domain.
+Global calibration may enlarge ranks and does not transfer local minimality
+from physical channels with leakage.
+
+
+## 102. An antiunitary obstruction for two unbiased supported records
+
+### 102.1. Original hypotheses and conclusion
+
+Retain the original four two-coordinate fibres and the calibrated Gram domain
+\[
+\mathcal E=\{G\succeq0:G_{ff}=I_2\}.
+\]
+The local physical channels have dimensions \(\mathbb C^8\to\mathbb C^4\), the correlated encoding is fixed, and the arbitrary-reference error has the original unhalved diamond normalization. Write
+\[
+F(G,H)=\max_{\rho,W}2\operatorname{Tr}[(T-G\odot H)W],
+\quad T_{ff}=I_2,\quad T_{fg}=\tfrac12J_2\ (f\ne g),
+\]
+where \(\rho\) is PSD and fibre-block diagonal, \(\operatorname{Tr}\rho=1\), and \(0\preceq W\preceq\rho\).
+
+Assume \((G,H)\) is a local minimum on the full domain \(\mathcal E^2\), its ranks are \((7,6)\), and
+\[
+0<t=F(G,H)<\tfrac14.
+\]
+Let \(a\) span the full kernel of \(G\). Suppose its support \(S\) has occupancy \((2,1,1,0)\). Label its whole original fibre \(F=\{1,2\}\), and its two singleton coordinates \(3,4\). The extra hypothesis of the present theorem is
+\[
+|H_{13}|=|H_{23}|=|H_{14}|=|H_{24}|=\frac1{\sqrt2}.
+\tag{1}
+\]
+
+**Theorem.** No such local minimum exists.
+
+Condition (1) says that both supported singleton records of \(H\) are unbiased to the supported orthonormal pair. It does not require a real gauge. The proof explicitly treats nonreal cycle phases. It does not exclude the entire \((2,1,1,0)\) support, any other listed support pattern, or the full global quarter problem.
+
+### 102.2. Delivered inputs and the canonical gauge
+
+The proof uses precisely these delivered inputs:
+
+1. Sections 95 and 97 give \(\operatorname{rank}H_S=\operatorname{rank}R=2\), where
+   \[
+   R\succeq0,\quad R_{ii}=1,\quad
+   G_S=H_S\odot\overline R,\quad
+   R\operatorname{diag}(\overline a)H_S=0.
+   \tag{2}
+   \]
+2. Lemma 96.1 gives equality of the complete principal norm and the original full norm, and says that \(G_S\) is a global one-party principal minimizer for fixed \(H_S\). Any principal competitor is allowed, without a rank constraint; its full-domain comparison uses orthogonal completion of the missing original coordinates.
+3. Section 99 gives uniqueness of every principal norming pair, including competitors with singular densities. For its original common pair and the same \(\alpha>0\),
+   \[
+   W_{ij}=-\frac{\alpha a_i\overline{a_j}}
+                    {2\overline{H_{ij}}}
+   \quad(i,j\text{ in distinct original fibres}),
+   \tag{3}
+   \]
+   and, writing \(C=W_{F,\{3,4\}}\) and \(E=(T-G\odot H)_{F,\{3,4\}}\),
+   \[
+   EC^*=\frac t2\rho_F\succ0.
+   \tag{4}
+   \]
+4. The original matrix-unit test gives \(t\ge|1/2-G_{ij}H_{ij}|\) across distinct original fibres.
+
+No uniqueness of all unrestricted eight-coordinate normers is used. No joint principal local minimum is assumed.
+
+Reciprocal diagonal unitary changes of the original eight-coordinate Grams preserve their Hadamard product, fibre constraints, ranks, full objective and local minimality. By (1), such a change puts the supported \(H\)-records in the form
+\[
+h_1=e_1,\quad h_2=e_2,\quad
+h_3=\frac{(1,1)}{\sqrt2},\quad
+h_4=\frac{(\overline u,u)}{\sqrt2},
+\quad u=c+is,\quad c^2+s^2=1.
+\tag{5}
+\]
+The singleton record phase can be chosen so that \(c=H_{34}\ge0\). If \(c=0\), the matrix-unit test at 34 gives \(t\ge1/2\). If \(s=0\), the singleton records are collinear. The actual original partner of 3 is orthogonal to \(h_3\), hence also to \(h_4\); its cross-fibre matrix-unit test with 4 again gives \(t\ge1/2\). Therefore
+\[
+0<c<1,\qquad s\ne0.
+\tag{6}
+\]
+These cases exhaust the endpoints. The sign of \(s\) remains arbitrary throughout.
+
+### 102.3. A principal antiunitary fixes the same common kernel phases
+
+Let \(P\) exchange coordinates 1 and 2 and fix 3 and 4. In the gauge (5),
+\[
+H_S=P\overline{H_S}P,\qquad T_S=P\overline{T_S}P.
+\tag{7}
+\]
+Define the real-linear involution \(\Theta(Q)=P\overline QP\). It preserves the principal Gram domain with blocks \((2,1,1)\) and the principal density/witness feasible set. For fixed \(H_S\), the exact principal objective satisfies
+\[
+f_H(\Theta(Q))=f_H(Q).
+\tag{8}
+\]
+Both \(G_S\) and \(\Theta(G_S)\) attain the global principal minimum \(t\). Their midpoint is feasible, and convexity plus global minimality gives value \(t\) there. At that midpoint take any normer and average it with its \(\Theta\)-image. This gives a \(\Theta\)-fixed midpoint normer. Its two endpoint objective values are at most \(t\), and their average equals \(t\), so each equals \(t\). It is therefore also a normer at the original principal coefficient. Principal uniqueness from section 99 implies
+\[
+\rho=P\overline\rho P,\qquad W=P\overline WP.
+\tag{9}
+\]
+
+Only the normer has been fixed in this argument. Neither the midpoint Gram's rank nor equality \(G_S=\Theta(G_S)\) is asserted or needed. The original outside records need not have this symmetry.
+
+Rescale the full kernel vector by a phase so that \(a_3=b>0\). The equality \(W_{13}=\overline{W_{23}}\), together with (3) and \(H_{13}=H_{23}=1/\sqrt2\), gives \(a_2=\overline{a_1}\). Also \(W_{34}\) is real by (9). As \(H_{34}=c>0\), formula (3) forces \(a_4\) real. Thus the same full kernel vector has the form
+\[
+a_S=(z,\overline z,b,d),\qquad
+z\ne0,\quad b>0,\quad d\in\mathbb R\setminus\{0\}.
+\tag{10}
+\]
+
+### 102.4. Quotient records and an exact real parameter
+
+Factor \(R\) as a Gram of unit records \(v_1,v_2,v_3,v_4\). Equation (2) implies the corresponding record-level relation: if \(R=V^*V\) and \(RB=0\), then \(VB=0\), since \(\|VBx\|^2=x^*B^*RBx=0\). Applying this to the first two columns of \(H_S\) gives
+\[
+\overline z\,v_1=-\frac{b v_3+d u v_4}{\sqrt2},
+\qquad
+zv_2=-\frac{b v_3+d\overline u v_4}{\sqrt2}.
+\tag{11}
+\]
+The unit norm of both left-hand records implies
+\[
+\operatorname{Re}(uR_{34})
+=\operatorname{Re}(\overline uR_{34}).
+\]
+Because \(bds\ne0\), \(R_{34}\) is real. Put
+\[
+r=R_{34}\in[-1,1],\qquad
+2|z|^2=b^2+d^2+2bdcr.
+\tag{12}
+\]
+The actual supported entry satisfies
+\[
+G_{34}H_{34}=c^2r.
+\]
+The subquarter matrix-unit inequality therefore gives \(r>0\). Only this positivity, rather than its stronger quantitative lower bound, will be needed.
+
+Taking inner products in (11), and using \(G=H\odot\overline R\), gives the following exact cross blocks. Set \(K=(G\odot H)_{F,\{3,4\}}\). Then
+\[
+C=-\frac\alpha{\sqrt2}
+\begin{pmatrix}
+zb&zd\overline u\\
+\overline z b&\overline z d u
+\end{pmatrix},
+\tag{13}
+\]
+\[
+K=-\frac1{2\sqrt2}
+\begin{pmatrix}
+(b+dru)/\overline z&(br\overline u^{2}+d\overline u)/\overline z\\
+(b+dr\overline u)/z&(bru^2+du)/z
+\end{pmatrix},
+\qquad E=\tfrac12J_2-K.
+\tag{14}
+\]
+All complex conjugations here follow the convention \(H_{ij}=\langle h_i,h_j\rangle\), conjugate-linear in the first variable.
+
+### 102.5. Positivity fixes the remaining phase and sign
+
+Multiplying (13)--(14), using (12), yields
+\[
+(EC^*)_{11}
+=-\frac\alpha{2\sqrt2}\overline z(b+du)
+ -\frac\alpha2|z|^2.
+\tag{15}
+\]
+By (4), this is positive and real. The number \(B=b+du\) is nonzero, since its imaginary part is \(ds\ne0\). Reality in (15) implies \(z=\mu B\) for some real \(\mu\). Strict positivity implies
+\[
+-\frac1{\sqrt2}<\mu<0.
+\]
+Consequently there is one real \(k\) with
+\[
+0<k<1,\qquad z=-\frac{k}{\sqrt2}(b+du).
+\tag{16}
+\]
+Substituting into the unit-record identity (12), define
+\[
+q=\frac{b^2+d^2}{2bd},\qquad
+r=k^2-\frac{1-k^2}{c}q.
+\tag{17}
+\]
+If \(d<0\), then \(q\le-1\), and (6), (16) give
+\[
+r\ge k^2+\frac{1-k^2}{c}>1,
+\]
+contrary to \(R\succeq0\) with unit diagonal. Hence \(d>0\) and \(q\ge1\). As \(r>0\), (17) now gives
+\[
+0<r<k^2<1,\qquad
+0<r<2k^2-1,\qquad k>\frac1{\sqrt2}>\frac12.
+\tag{18}
+\]
+The second strict inequality uses \(c<1\). No sign choice or reality condition on the original \(G\)-records has been imposed.
+
+### 102.6. The same positive block has negative determinant
+
+The exact determinant of (13)--(14), after (16), is
+\[
+\det(EC^*)=\frac{\alpha^2b^2d^2s^2}{4}\,\Xi,
+\tag{19}
+\]
+where
+\[
+\Xi=4cr(1-k)q+(4c^2-1)r^2-2k(r+1)+1.
+\tag{20}
+\]
+For an explicit direct expansion, the bracket before division by \(bd\) is
+\[
+2cr(1-k)(b^2+d^2)
+ +bd\bigl((4c^2-1)r^2-2k(r+1)+1\bigr).
+\]
+Thus (19) can also be checked by multiplying \(\det E\) and \(\overline{\det C}\); it requires only \(u\overline u=1\), before the norm relation is substituted.
+
+From (17), \(q=c(k^2-r)/(1-k^2)\), with a strictly positive denominator. Therefore
+\[
+\Xi=\frac{4c^2kr(k+r)}{1+k}-r^2-2kr-2k+1.
+\tag{21}
+\]
+Since \(c<1\) and \(k,r>0\),
+\[
+\begin{aligned}
+\Xi
+&<\frac{4kr(k+r)}{1+k}-r^2-2kr-2k+1\\
+&=\frac{(r-1)\bigl((2k-1)(k+1)+(3k-1)r\bigr)}{k+1}
+<0.
+\end{aligned}
+\tag{22}
+\]
+The last inequality follows from (18). Every prefactor in (19) is strictly positive. Hence \(\det(EC^*)<0\), contradicting the positive definiteness of the very same block in (4). This proves the theorem.
+
+### 102.7. Scope and evidentiary boundary
+
+The contradiction uses one original common norming pair throughout. The symmetry step uses global one-party principal minimization and uniqueness of principal normers, not a choice of incompatible witnesses, a rank-preserving average, or symmetry of the outside records. The quotient record equations use PSD Gram factorizations, so they do not invert a singular quotient.
+
+The original missing partner is used to exclude the collinear endpoint, and the delivered section-99 block equation already retains the original-channel and complete-reference hypotheses. All original coordinates remain present in those dependencies. This does not transfer local minimality from a leaking channel through calibration. The global quarter optimum and the non-unbiased parts of the seven remaining support patterns stay open.
+
+
+## 103. A common-witness commutator and equal-polar kernel imbalance
+
+### 103.1. Original hypotheses and the balanced-kernel exclusion
+
+Retain the four original two-coordinate fibres and the calibrated Gram domain
+\[
+\mathcal E=\{G\succeq0:G_{ff}=I_2\}.
+\]
+The local physical channels have dimensions \(\mathbb C^8\to\mathbb C^4\), the correlated encoding is fixed, and the arbitrary-reference error uses the original unhalved diamond normalization. Put
+\[
+F(G,H)=\max_{\rho,W}2\operatorname{Tr}[(T-G\odot H)W],
+\quad T_{ff}=I_2,\quad T_{fg}=\tfrac12J_2\quad(f\ne g),
+\]
+where \(\rho\) is PSD and fibre-block diagonal, \(\operatorname{Tr}\rho=1\), and \(0\preceq W\preceq\rho\). Assume \((G,H)\) is a local minimum on the full domain \(\mathcal E^2\), its ranks are \((7,6)\), and \(0<t=F(G,H)<1/4\). Let \(a\) span the full kernel of \(G\), with support \(S\) of occupancy \((2,1,1,0)\). Label the supported whole original fibre \(F=\{1,2\}\) and the singleton coordinates \(J=\{3,4\}\).
+
+Assume the supported \(H\) records admit the following form under reciprocal diagonal phase changes of \(G,H\):
+\[
+h_1=e_1,\quad h_2=e_2,\quad
+h_3=(c,su),\quad h_4=(c,s\overline u),\qquad
+c,s>0,\quad c^2+s^2=1,\quad |u|=1.
+\tag{1}
+\]
+This is an additional equal-polar hypothesis, not a gauge reduction of general records. Assume also that a nonzero \(G\)-kernel vector \(a\) satisfies
+\[
+\frac{|a_1|}{c}=\frac{|a_2|}{s}.
+\tag{2}
+\]
+**Theorem 103.1.** No such local minimum exists.
+
+The proof uses delivered §§95 and 97 for the rank-two supported quotient, §96 for the unrestricted one-party principal best response and equality of full and principal norms, §99 for uniqueness of all principal normers, their strict density positivity, the common cross stress and invertible cross block, and §§101–102 for the already-excluded real-gauge and unbiased endpoints. It does not use a rank-preserving average, a principal joint local minimum, or any symmetry of outside records.
+
+### 103.2. The same normer and the actual supported symmetry
+
+Let \(\Theta\) conjugate and interchange \(3,4\) while fixing \(1,2\). It fixes \(H_S\) and the target \(T_S\). The fixed-\(H\) principal objective is convex in its other Gram, and \(G_S\) is a global best response. The reflected Gram and its midpoint with \(G_S\) have the same minimum \(t\). Every normer at the midpoint norms both endpoints: its endpoint objective values are at most \(t\) and average to \(t\). Uniqueness of all principal normers at the original coefficient therefore fixes that same norming pair \((\rho,W)\) under \(\Theta\). This argument does not replace the physical Gram by a rank-preserving average.
+
+The original common cross formula is
+\[
+W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}},\qquad \alpha>0,
+\tag{3}
+\]
+for supported coordinates in different original fibres. Nonzero supported cross entries are supplied by the subquarter hypotheses. Phase and rescale \(a\) so that
+\[
+a_S=(c,sm,z,\overline z),\qquad m\in\mathbb R\setminus\{0\},\quad z\ne0.
+\tag{4}
+\]
+Indeed the fixed-\(W\) identities first give \(a_4=\overline{a_3}\), and then make \(a_2\) real after \(a_1\) is positive. Rescaling changes \(\alpha\) by a positive factor. Hypothesis (2) is exactly \(m=1\) or \(m=-1\).
+
+Write \(u=p+iq\), with \(p^2+q^2=1\). Real-gauge endpoints are excluded by §101; in particular \(q\ne0\) and \(|p|<1\). If \(c^2=s^2=1/2\), both singleton records are unbiased and §102 excludes the point. Hence below put
+\[
+A=c^2,\quad B=s^2=1-A,\quad d=A-B\ne0,\qquad
+h=H_{34}=A+B\overline u^2\ne0.
+\tag{5}
+\]
+The last inequality follows from \(A\ne B\) and \(|u|=1\).
+
+The actual quotient correlation \(R\) is PSD, has diagonal one and rank two, and satisfies \(G_S=H_S\odot\overline R\) and \(R\operatorname{diag}(\overline a)H_S=0\). Factor \(R\) as the Gram of unit vectors \(v_i\). The weighted kernel relation gives, without inverting \(R\),
+\[
+v_3=\frac{-u v_1+m v_2}{2iq\overline z},\qquad
+v_4=\frac{\overline u v_1-m v_2}{2iqz}.
+\tag{6}
+\]
+Their equal unit norms imply that \(r=R_{12}\) is real, since \(mq\ne0\). Necessarily \(-1\le r\le1\). Formula (6) gives \(R_{14}=\overline{R_{13}}\) and \(R_{24}=\overline{R_{23}}\). Thus the actual \(R,G_S\) and \(L_S=T_S-G_S\odot H_S\) are \(\Theta\)-fixed. No averaged Gram is substituted for them.
+
+### 103.3. A complete-norm commutator from the same witness
+
+Set
+\[
+U_J=\frac1{\sqrt2}\begin{pmatrix}1&i\\1&-i\end{pmatrix},
+\qquad U=\operatorname{diag}(I_2,U_J).
+\]
+After conjugating by \(U\), use real coordinates and write
+\[
+L=\begin{pmatrix}0&E\\E^T&J_0\end{pmatrix},\quad
+\rho=\operatorname{diag}(P,\pi I_2),\quad
+W=\begin{pmatrix}W_{FF}&C\\C^T&W_J\end{pmatrix},
+\quad P\succ0,\ \pi>0.
+\tag{7}
+\]
+The matrices \(E,C\) are real and invertible. Section 99 gives \(EC^T=tP/2\succ0\). For the fixed positive density, the unique optimal split is the positive spectral projector of \(\rho^{1/2}L\rho^{1/2}\), conjugated by \(\rho^{1/2}\); \(L\) is nonsingular because \(E\) is invertible. Consequently \(W\rho^{-1}W=W\). Taking its \(J\) block and using \(P=2EC^T/t\) gives
+\[
+\frac t2 S+\frac1\pi W_J^2=W_J,
+\qquad S:=E^{-1}C=C^T(EC^T)^{-1}C\succ0.
+\tag{8}
+\]
+In particular \([S,W_J]=0\). This identity uses the same original common \(W\), without selecting a different norming witness.
+
+In the original coordinates \(W_{33}=W_{44}=w_d\) by \(\Theta\) symmetry, and
+\[
+w_0:=W_{34}=-\frac{\alpha z^2}{2\overline h},\qquad
+W_J=w_dI_2+\begin{pmatrix}\Re w_0&\Im w_0\\\Im w_0&-\Re w_0\end{pmatrix}.
+\tag{9}
+\]
+Thus (8) says that \(S\) commutes with the displayed traceless matrix.
+
+### 103.4. The quotient calculation and both balanced signs
+
+Put \(v=-\operatorname{Re}z\) and \(w=-\operatorname{Re}(z\overline u)\). Then
+\[
+z=-v+i\frac{pv-w}{q},\qquad
+C=\frac\alpha{\sqrt2}\operatorname{diag}(1,m)C_0,\qquad
+C_0=\begin{pmatrix}v&(w-pv)/q\\w&(pw-v)/q\end{pmatrix}.
+\tag{10}
+\]
+The actual quotient products, obtained directly from (6), are
+\[
+K_{13}=\frac{A(mr-\overline u)}{2(uv-w)},\qquad
+K_{23}=\frac{Bu(mu-r)}{2(uv-w)},\qquad K=G_S\odot H_S.
+\tag{11}
+\]
+Here \(uv-w=-iqz\ne0\). With \(E\) formed from the two conjugate error columns \(1/2-K_{ij}\), multiplication by \(C^T\) gives
+\[
+EC^T=\frac\alpha2
+\begin{pmatrix}
+v-A & mw-Am(2p-mr)\\
+v-B(2mp-r)&mw-Bm^2
+\end{pmatrix}.
+\tag{12}
+\]
+Hermiticity gives a real \(g\) such that
+\[
+v=mg+2Bmp-Br,\qquad w=g+2Ap-Amr.
+\tag{13}
+\]
+Consequently, with \(\eta=v-A\) and \(\zeta=w/m-B\),
+\[
+\begin{aligned}
+EC^T&=\frac\alpha2\operatorname{diag}(1,m)M\operatorname{diag}(1,m),\\
+M&=\begin{pmatrix}\eta&g\\g&\zeta\end{pmatrix}\succ0,
+\qquad S=\alpha C_0^TM^{-1}C_0.
+\end{aligned}
+\tag{14}
+\]
+The complex row combinations of \(C_0\) are \(-z\) and \(-z\overline u\). Therefore the traceless component of \(S\) obeys the exact identity
+\[
+S_{11}-S_{22}+2iS_{12}
+=\frac{\alpha z^2}{\det M}
+\left(\zeta-2g\overline u+\eta\overline u^2\right).
+\tag{15}
+\]
+For two real symmetric two-by-two matrices, commutation is equivalent to the product of their complex traceless coordinates being real after conjugating one factor. Equations (9) and (15), with \(z\ne0\), \(\det M>0\) and \(h\ne0\), thus imply
+\[
+0=\Im\left[(\zeta-2g\overline u+\eta\overline u^2)
+(A+Bu^2)\right]
+=2q\left[p(B\zeta-A\eta)+dg\right].
+\tag{16}
+\]
+The last equality uses only \(p^2+q^2=1\). Substitution of (13) gives the exact general necessary equation
+\[
+g[dm+p(B-Am^2)]+dmp-2ABp^2(m^2-1)=0.
+\tag{17}
+\]
+No division by its possibly vanishing \(g\) coefficient is made in the general case.
+
+For \(m=1\), since \(d\ne0\) and \(1-p>0\), (17) gives \(g=-p/(1-p)\). Equations (13)–(14) then give
+\[
+\operatorname{Tr}M=2g+2p-r-1
+=-\frac{2p^2}{1-p}-r-1\le0.
+\tag{18}
+\]
+For \(m=-1\), since \(d\ne0\) and \(1+p>0\), (17) instead gives \(g=-p/(1+p)\), and
+\[
+\operatorname{Tr}M=-2g-2p-r-1
+=-\frac{2p^2}{1+p}-r-1\le0.
+\tag{19}
+\]
+Both inequalities use \(r\ge-1\). Each contradicts \(M\succ0\), whose trace is strictly positive. This proves Theorem 103.1, including both scaled-kernel signs and either complex phase sign. Equality in the last scalar inequalities still contradicts strict positivity, so no unhandled limiting trace case remains.
+
+### 103.5. A strict parameter-dependent kernel-imbalance bound
+
+Retain the full-domain, rank, support, subquarter and equal-polar hypotheses of §103.1, but omit (2). The derivation through (17) did not use \(m^2=1\); it holds for every real nonzero \(m\). Sections 101–102 exclude the real-gauge and unbiased endpoints, so \(d\ne0\), \(pq\ne0\), and \(|p|<1\). Keep the positive definite matrix \(M\) of (14) and \(r=R_{12}\in[-1,1]\). We use (17) without dividing by its possibly vanishing coefficient.
+
+**Theorem 103.2.** Every such remaining candidate necessarily satisfies
+\[
+pd\left[d\left(m-\frac1m\right)+2p\right]
+\left[d-p\left(Am-\frac Bm\right)\right]<0.
+\tag{20}
+\]
+This is a strict exclusion of a region of scaled kernel ratios; it is not an exclusion of all equal-polar records.
+
+Put
+\[
+F=d\left(m-\frac1m\right)+2p,\quad
+\Xi=d-p\left(Am-\frac Bm\right),\quad \tau=\operatorname{Tr}M>0.
+\]
+The explicit entries of \(M\) give
+\[
+\tau+r+1=g\left(m+\frac1m\right)
++2p\left(Bm+\frac Am\right)>0.
+\tag{21}
+\]
+Dividing (17) only by nonzero \(m\) yields
+\[
+\Xi g=2ABp^2\left(m-\frac1m\right)-dp.
+\tag{22}
+\]
+Multiplying (21) by \(\Xi\), and substituting (22), gives the exact identity
+\[
+\Xi(\tau+r+1)=-pdF.
+\tag{23}
+\]
+If \(\Xi=0\) then \(F=0\), since \(p,d\) are nonzero. Substituting \(p=-d(m-1/m)/2\) from \(F=0\) into \(\Xi=0\) gives
+\[
+Am^2+\frac{B}{m^2}=-1,
+\]
+which is impossible because \(A,B>0\). Hence \(\Xi\ne0\). Multiplying (23) by \(\Xi\) proves
+\[
+pdF\Xi=-\Xi^2(\tau+r+1)<0,
+\]
+which is (20). No uncontrolled division by a vanishing coefficient occurs.
+
+For an explicit interval, suppose \(A>1/2\) and \(m>0\); this is an optional orientation for reading the bound, not an additional hypothesis for (20). Define
+\[
+m_F=\sqrt{1+(p/d)^2}-p/d,\qquad
+m_C=\frac{d/p+\sqrt{(d/p)^2+4AB}}{2A}.
+\tag{24}
+\]
+Both are positive. If \(p>0\), then \(m_F<1<m_C\); if \(p<0\), then \(m_C<1<m_F\). In either case (20) forces
+\[
+m<\min\{m_F,m_C\}\quad\hbox{or}\quad
+m>\max\{m_F,m_C\}.
+\tag{25}
+\]
+To check this, \(F\) is strictly increasing on \(m>0\) and has its unique zero at \(m_F\). The function \(\Xi\) has its unique positive zero at \(m_C\) and derivative \(-p(A+B/m^2)\). Reading the signs on the three intervals gives (25), with both endpoints excluded by (20). The strict placement around 1 follows from \(F(1)=2p\) and \(\Xi(1)=d(1-p)\), with \(|p|<1\). Thus Theorem 103.2 supplies an explicit open forbidden neighbourhood of the positive balanced ratio, depending on \(A,p\). The negative balanced ratio is already excluded by the universal inequality (20), whose value there is \(2p^2d^2(1+p)>0\); at \(m=1\) it is \(2p^2d^2(1-p)>0\).
+
+For example, substitution of \(A=3/4\) and \(p=1/2\) into (24)–(25) gives \(m<\sqrt2-1\) or \(m>(2+\sqrt7)/3\). This is a necessary bound and does not assert existence of a physical point with those parameter values.
+
+### 103.6. Applicability boundary
+
+The equal-polar record form is a substantive restriction. Theorem 103.1 excludes both balanced scaled-kernel signs, and Theorem 103.2 excludes an explicit parameter-dependent region of unequal ratios. Neither result derives balance or a parameter-independent gap for arbitrary equal-polar points. The general necessary equation (17), by itself, is not a sufficient normer condition or a whole-class exclusion.
+
+Both proofs retain the original common witness, the full eight-coordinate fibre constraints and arbitrary complex outside records. They concern local minima on the full calibrated domain, not a fixed-rank feasible set or a principal joint minimization. Calibration of leaking channels is not asserted to preserve this local-minimum class. The remaining unequal-weight equal-polar cases, the full \((2,1,1,0)\) pattern and the global quarter optimum remain open; the original global interval is still \([\sqrt3-3/2,1/4]\).
