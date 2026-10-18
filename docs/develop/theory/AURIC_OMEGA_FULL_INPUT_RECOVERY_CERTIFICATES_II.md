@@ -1127,3 +1127,283 @@ Even actual common-contraction threshold failure would not by itself be a counte
 Dimension intersection, positive compression and fidelity monotonicity, the $2\times2$ determinant identity, equality of the operator norms of a matrix and its adjoint, and the Bernstein representation are established intermediates used at the displayed steps. The coefficient and rational-margin calculations are part of the concrete center exclusions, not new generic dimension, spectral-norm or Bernstein theorems. The derivations are `repo-derived` analytic mathematics; no kernel verification, global novelty, priority or literature-completeness claim is made. Excluding these individual center regions does not prove all-center infeasibility, locate an actual optimizer or construct an encoder.
 
 ## 追加锚（本行以下为增补区）
+
+## 64. Overlapping certificates exclude every half-beta common projection
+
+**Definition 64.1 (the common system and its spectral consumer).** Use the supported center, $T_a,d_a,v_a$, and $H_a$ of (S.57)–(S.59) and (S.67). For $k\geq2$, stack the same normalized matrices as $Z=(Z_0;Z_1;Z_2)$, so that
+
+$$
+E_Z=ZZ^\dagger=\overline D,\qquad Z^\dagger Z=I_{3k-5},\qquad
+\widehat P=I-E_Z,\qquad\operatorname{rank}\widehat P=5.
+\tag{S.89}
+$$
+
+Here $E_Z$ is the conjugated defect projection. The input compression remains $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$, with the transpose row $\psi^T$, as in (S.71). Thus $C_\psi E_ZC_\psi^\dagger=Z_\psi Z_\psi^\dagger$ uses the same complex $\psi$ as (S.56). A strict solution means one center and one triple satisfying $H_a(M_\psi)>v_a$ for every complex unit phase direction simultaneously, together with $q_2<d_a$.
+
+For diagonal $X>0$ in this center basis and $c\geq0$, retain the spectral quantities of (S.13):
+
+$$
+A=\omega X^{-1},\qquad m_X=a\lambda_1(X)+\beta\lambda_2(X),\qquad
+K_c=\operatorname{diag}(A,A,c\omega),\qquad
+J_c(X)=S_5(K_c)+2m_X-cT_a.
+\tag{S.90}
+$$
+
+The two eigenvalues of $X$ in $m_X$ are decreasingly ordered. The variational and rank-five argument (S.16)–(S.24) applies directly to the relaxed maximum (S.58): for every feasible $Q$ there, $\operatorname{Tr}(QX)\leq m_X$, so $H_a(M)\leq[m_X+\operatorname{Tr}(MX^{-1})]/2$. Consequently a strict solution obeys
+
+$$
+\begin{aligned}
+\operatorname{Tr}[A((E_Z)_{00}+(E_Z)_{11})]
+&<2(m_X+\operatorname{Tr}A-2v_a),\\
+2\operatorname{Tr}A+c-S_5(K_c)
+&\leq\operatorname{Tr}(K_cE_Z)
+<2(m_X+\operatorname{Tr}A-2v_a)+cd_a,\\
+J_c(X)&>4v_a.
+\end{aligned}
+\tag{S.91}
+$$
+
+The lower bound uses this same $\widehat P$ in (S.22); the upper bound uses $q_2<d_a$. At $c=0$ the strict basis inequalities still supply strictness. Thus $J_c(X)\leq4v_a$ excludes the strict relaxation itself. This is an application of the existing spectral-budget argument, without an actual lifting or optimizer-location premise.
+
+**Theorem 64.2 (complete half-beta exclusion on positive supports of ranks three through nine).** At $\beta=1/2$, no ordered positive trace-one center of rank $3\leq k\leq9$ and no single common rank-$(3k-5)$ projection satisfy the strict system (S.59) for the whole complex unit phase sphere.
+
+Proof. Set $h=1/\sqrt2$, $T=(1+h)/2$, $d=(1-h)/2$, and reuse the scalar function of (S.75):
+
+$$
+\Delta=4s(1-s)-\frac12=4(T-s)(s-d),\qquad
+C(s,t)=\frac1{4s+2h}+\frac{t}{s(4t+2h)},\qquad
+f(s,t)=t-\Delta C(s,t).
+\tag{S.92}
+$$
+
+By Theorems 59.2, 60.1 and 61.1, a putative strict solution has
+
+$$
+\frac{31}{50}<s<T,\qquad
+t_*(s)=\frac32(T-s)<t\leq1-s,\qquad f(s,t)<d.
+\tag{S.93}
+$$
+
+In particular $s>1/2$, $\Delta>0$, and all denominators in (S.92) are positive. These necessities come from one fixed $\eta,L,G$ on the whole complex sphere: (S.73)–(S.75) include both cap branches and singular pencils, while (S.78) uses the exact rank-five trace allocation. Their proofs, including the quartic exclusion in (S.79)–(S.82), are reused without replacement.
+
+Choose
+
+$$
+\xi=2t+s-T,\qquad x=\sqrt{2s},\qquad y=\sqrt\xi,\qquad
+X=\operatorname{diag}(x,y,\ldots,y),\qquad c=\frac1y.
+\tag{S.94}
+$$
+
+The trace necessity gives $\xi>2(T-s)>0$. Also $\xi<2s$, because $t\leq s<T$, so $0<y<x$. To establish the other needed ordering, positive-side squaring shows
+
+$$
+\frac{s}{x}\geq\frac{t}{y}
+\quad\Longleftrightarrow\quad
+F_s(t):=s(2t+s-T)-2t^2\geq0.
+\tag{S.95}
+$$
+
+This polynomial is concave in $t$. Its endpoint values on $[t_*(s),1-s]$ are
+
+$$
+F_s(t_*)=\frac{(T-s)(13s-9T)}2,\qquad
+F_s(1-s)=-3s^2+(6-T)s-2.
+\tag{S.96}
+$$
+
+The bounds $7/10<h<71/100$ follow by squaring positive rational numbers; in particular $T<43/50$. Hence $13s-9T>13(31/50)-9(43/50)=8/25>0$. The second polynomial in (S.96) is concave in $s$ on $[31/50,T]$. At $s=31/50$ its value is greater than $21/625$, by $T<43/50$, and at $s=T$ it equals $2dh>0$. Both endpoint values in (S.96) are therefore positive throughout the required interval, proving (S.95).
+
+The eigenvalues of $K_c$ are $s/y$ once, $s/x$ twice, and $\lambda_j/y$ three times for each $j\geq2$. Since every $\lambda_j\leq t$, the five largest, with multiplicities and any ties, are
+
+$$
+\frac{s}{y},\quad\frac{s}{x},\quad\frac{s}{x},\quad
+\frac{t}{y},\quad\frac{t}{y}.
+\tag{S.97}
+$$
+
+Thus this entire ordering cone, including every ordered positive tail, gives
+
+$$
+\begin{aligned}
+J_c(X)&=\frac{2s}{x}+x+\frac{s+2t-T}{y}+y
+=2\sqrt{2s}+2\sqrt{2t+s-T},\\
+g(s)&=\frac{5T+s-4\sqrt{2sT}}2,\\
+J_c(X)\leq4\sqrt T&\quad\Longleftrightarrow\quad t\leq g(s).
+\end{aligned}
+\tag{S.98}
+$$
+
+Indeed $2\sqrt T-\sqrt{2s}>0$, so squaring that positive comparison with $\sqrt\xi$ proves the equivalence. Necessity (S.91) now forces $t>g(s)$.
+
+For the opposite consequence, $C(s,t)$ increases with $t$, its second summand having derivative $2h/[s(4t+2h)^2]>0$. Hence $C(s,t)\leq C(s,1-s)$. Put $Q=s(2s+h)(2-2s+h)>0$. Expansion using $h^2=1/2$ gives the exact identity
+
+$$
+\begin{aligned}
+\frac9{10}-4(s-d)C(s,1-s)&=\frac{P_h(s)}{10Q},\\
+P_h(s)&=44s^3+(-84+40h)s^2
++\left(\frac{89}{2}-42h\right)s+10h-5.
+\end{aligned}
+\tag{S.99}
+$$
+
+Here is a complete sign certificate. For $s=31/50+(6/25)u$, $0\leq u\leq1$, write
+
+$$
+P_b\!\left(\frac{31}{50}+\frac6{25}u\right)
+=\sum_{j=0}^3 p_j(b)\binom3j u^j(1-u)^{3-j}.
+\tag{S.100}
+$$
+
+All eight endpoint coefficients are
+
+| $j$ | $p_j(7/10)$ | $p_j(71/100)$ |
+| --- | --- | --- |
+| $0$ | $20127/62500$ | $4928/15625$ |
+| $1$ | $2131/62500$ | $524/15625$ |
+| $2$ | $15143/62500$ | $3992/15625$ |
+| $3$ | $97179/62500$ | $24836/15625$ |
+
+These are all strictly positive. The Bernstein weights are nonnegative and sum to one, so both endpoint polynomials are strictly positive on the full interval $[31/50,43/50]$, including its endpoints. Since $P_h$ is affine in $h$ and $7/10<h<71/100$, it is a convex combination of those two positive polynomials. In particular (S.99) proves $4(s-d)C(s,1-s)<9/10$ on $[31/50,T]$.
+
+For $s<T$, put $z=\sqrt{s/T}<1$. Direct factorization and $\sqrt2>7/5$ give
+
+$$
+\begin{aligned}
+g(s)-d&=(T-s)\left(\frac{2\sqrt2}{1+z}-\frac12\right)
+>(T-s)\left(\sqrt2-\frac12\right)
+>\frac9{10}(T-s),\\
+f(s,t)&>t-\frac9{10}(T-s).
+\end{aligned}
+\tag{S.101}
+$$
+
+The second line uses $\Delta=4(T-s)(s-d)>0$, $C(s,t)\leq C(s,1-s)$ and the strict bound just proved. Thus $t\geq g(s)$ would imply $f(s,t)>d$, contradicting (S.93). Strict feasibility requires $t<g(s)$ as well as $t>g(s)$, an impossibility; $t=g(s)$ is excluded too. Theorem 61.1 already excludes the complementary leading-eigenvalue bands, including $s=31/50$ and $s=T$. This proves the assertion for every stated support and every ordered positive tail. $\square$
+
+## 65. Fixed weights for an all-positive-beta region
+
+**Theorem 65.1 (a uniform spectral region).** For every $0<\beta\leq1/2$ and $3\leq k\leq9$, the strict system (S.59) is infeasible at every ordered positive trace-one center with
+
+$$
+s\geq2t,\qquad s+t\leq\frac{49}{50}.
+\tag{S.102}
+$$
+
+Proof. Take fixed weights
+
+$$
+X=\operatorname{diag}\left(\frac65,\frac35,\ldots,\frac35\right),\qquad c=\frac53.
+\tag{S.103}
+$$
+
+In this ordering cone the five largest eigenvalues of $K_c$ are
+
+$$
+\frac{5s}{3},\quad\frac{5s}{6},\quad\frac{5s}{6},\quad
+\frac{5t}{3},\quad\frac{5t}{3},\qquad
+S_5(K_c)=\frac{10}{3}(s+t).
+\tag{S.104}
+$$
+
+Indeed the leading center coordinate contributes $5s/3$ once and $5s/6$ twice; every other coordinate contributes $5\lambda_j/3$ three times. Ordering $\lambda_j\leq t$ and $s\geq2t$ proves the list, including $s=2t$, repeated center eigenvalues and all tail ties. Therefore
+
+$$
+\begin{aligned}
+J_c(X)&=\frac{10}{3}(s+t)+\frac{12}{5}-\frac65\beta-\frac53T_a\\
+&=\frac{10}{3}(s+t)+\frac{11}{30}+\frac65u^2-\frac56u,\qquad
+u:=\sqrt{1-\beta}\in\left[\frac1{\sqrt2},1\right).
+\end{aligned}
+\tag{S.105}
+$$
+
+Both sides in $v_a\geq(7+3u)/10$ are positive, and their squared difference is
+
+$$
+\frac{1+u}{2}-\left(\frac{7+3u}{10}\right)^2
+=\frac{(1-u)(9u+1)}{100}\geq0.
+\tag{S.106}
+$$
+
+Substitution into (S.105) gives the factorized lower margin
+
+$$
+4v_a-J_c(X)\geq
+\frac{10}{3}\left(\frac{49}{50}-s-t\right)
++\frac{(1-u)(36u-25)}{30}>0.
+\tag{S.107}
+$$
+
+The first term is nonnegative by (S.102). The second is strictly positive because $u<1$ and $u\geq1/\sqrt2>25/36$; the latter positive-root comparison follows from $1/2>625/1296$. This includes $\beta=1/2$ and both spectral boundaries in (S.102). Necessity (S.91) yields the contradiction for the entire allowed beta interval. $\square$
+
+**Corollary 65.2 (positive-tail consumers with a uniform margin).** For every $k=3,\ldots,9$, every ordered positive tail with total mass $1/20$ at $s=7/10,t=1/4$ is excluded for all $0<\beta\leq1/2$, with
+
+$$
+4v_a-J_c(X)\geq\frac1{10}.
+\tag{S.108}
+$$
+
+Within the space of ordered positive trace-one spectra in each rank, the region $s>2t$, $s+t<49/50$ is a relative open neighborhood of each of these centers and is excluded by Theorem 65.1.
+
+Proof. These leading eigenvalues have $s>2t$ and $s+t=19/20<49/50$. Every positive tail of total $1/20$ has each entry at most $1/20<t$. Such tails exist in every stated rank, for example by equal distribution among $k-2$ entries. The first term of (S.107) is exactly $(10/3)(49/50-19/20)=1/10$, while its second term is positive for each allowed beta. This proves the uniform margin independently of how that mass is distributed. The neighborhood assertion follows from the strict spectral inequalities and continuity. In particular the rank-three center $(7/10,1/4,1/20)$ of Proposition 63.1 is covered. The necessary scalar conditions in (S.87) alone remain insufficient; the additional spectral certificate (S.103) supplies its exclusion, while Theorem 64.2 closes the entire half-beta residual by overlap. $\square$
+
+## 66. The rank-two supported boundary and a conditional actual-channel consequence
+
+**Proposition 66.1 (rank-two centers at half beta).** For every positive trace-one center of support rank $k=2$, the strict system (S.59) at $\beta=1/2$ is infeasible, independently of the ambient actual Kraus rank.
+
+Proof. Here $E_Z$ has rank one in dimension six, so its unit range vector is already supported on $\mathbb C^3\otimes K_2$, with $K_2$ the whole center support. No dimension-intersection premise requiring $k\geq3$ is used. The construction (S.68)–(S.71) and the branch-complete proof (S.73)–(S.75) apply with $\epsilon=0$, $t=1-s>0$ and $s\geq1/2$. Thus strict feasibility requires $\Delta>0$ and $f(s,t)<d$. If $s\geq T$, then $\Delta\leq0$, a contradiction. Otherwise $1/2\leq s<T$ and $d<t\leq1/2$.
+
+Use precisely the boundary comparison (S.77), inherited from (R.228)–(R.229) of Theorem 44.2 of the first volume. Its full denominator and sign are
+
+$$
+\begin{aligned}
+\Delta&=4(t-d)(T-t),\\
+f(s,t)-d&=(t-d)\bigl[1-4(T-t)C(s,t)\bigr],\\
+1-4(T-t)C(s,t)&=\frac{4D_0}{s(4s+2h)(4t+2h)},\\
+D_0&=s(4st+2h+h^2)-2(T-t)(4st+h)\\
+&=h-h^2t-4st(h-t)\geq t(1-h^2)=\frac t2>0.
+\end{aligned}
+\tag{S.109}
+$$
+
+All denominator factors are positive. The lower bound uses $s+t=1$, $4st\leq1$ and $h>t$. Hence $f(s,t)>d$, contradicting necessity, including $s=t=1/2$. Singular $L$, directional marginals and $\kappa=1$ remain within the reused argument; only the positive definite matrix $B_0$ of (S.74) is inverted. Ambient zero eigenvalues are removed by taking the exact center support before this construction. Rank-one centers are treated by the actual overlap bound of Theorem 52.3, without rank-five padding. $\square$
+
+**Theorem 66.2 (actual half-beta lower bound through the inherited interfaces).** Assume the actual phase-marginal and supported common-projection interfaces (S.8)–(S.12), (S.55)–(S.60), the rectangular-contraction identity (S.6), compact affine minimax (S.26), unrestricted CPTP recovery/complement identity (S.7), and pure-target diamond lower bound (S.27), with their stated domains and conventions. Then every actual original-real CPTP $N:M_3(\mathbb C)\to M_5(\mathbb C)$ of Definition 52.1 with phase-difference spectrum $(1/2,1/2,0,-1/2,-1/2)$ and actual minimal Kraus rank $r\leq9$ satisfies
+
+$$
+g_N^2\leq T,\qquad
+\inf_{R:M_5\to M_3\ {\rm CPTP}}\|RN-\mathrm{id}_3\|_\diamond
+=\delta_N\geq1-\frac1{\sqrt2}.
+\tag{S.110}
+$$
+
+All admissible third columns, all complex CPTP recoveries on the whole output, and every finite complex reference are retained; the diamond norm is unhalved.
+
+Proof. Fix one actual $V$ and then any center $\omega$ on its environment and any single rectangular contraction $U$ of (S.5). The center has support rank $1\leq k\leq r$, which is not the actual Kraus rank. If $k=1$, (S.8) and Cauchy–Schwarz give $r_\psi\leq\sqrt a<v_a$, as proved in Theorem 52.3. In particular no projection of rank five is required on a three-dimensional space.
+
+For $k\geq2$, restrict the center and contracted vector to the exact center support as in Section 52, leaving the actual encoder and its environment intact. Complete the range of this supported $U$ to one five-dimensional subspace, and choose its projection $P$ before testing directions. This step is valid because $3k\geq6$ and $\operatorname{rank}U\leq5$; it does not compress an existing rank-five projection and presume its rank unchanged. By Theorem 57.2, if every phase-direction real overlap and the third-basis overlap exceeded $v=\sqrt T$, this one common $V,\omega,U,P$ would yield the strict system (S.59). Proposition 66.1 excludes $k=2$ and Theorem 64.2 excludes $3\leq k\leq9$. Therefore for each fixed $V,\omega,U$ the restricted minimum in (S.15) is at most $v$; its witnessing direction may depend on $\omega$ and $U$.
+
+The least eigenvalue of $\operatorname{Herm}A_{\omega,U}$ is at most that restricted minimum. The assumed compact-affine minimax identity (S.26) consequently gives, for every center,
+
+$$
+\min_\rho F_\rho(\Gamma,\mathcal C_\omega)
+=\max_{U^\dagger U\preceq I_5}\lambda_{\min}(\operatorname{Herm}A_{\omega,U})
+\leq v.
+\tag{S.111}
+$$
+
+Only now maximize over centers in (S.7), obtaining $g_N\leq v$. For every unrestricted recovery, (S.27) uses an input purification and the binary measurement onto the pure identity target to bound its full diamond norm. Taking the recovery infimum gives $\delta_N\geq2(1-g_N^2)\geq2(1-T)=1-1/\sqrt2$. Phase-plane and third-basis tests are a subset used to bound the least eigenvalue; they impose no restriction on recoveries or on the finite-reference supremum.
+
+The complete actual-rank-two theorem is already Theorems 44.2–45.1 of the first volume. Proposition 66.1 extends its supported boundary calculation to rank-two centers inside any allowed actual environment; it does not identify center rank with actual Kraus rank or claim that earlier theorem anew. The present consequence uses the inherited interfaces explicitly stated in the hypothesis. $\square$
+
+## 67. Actual-domain premises, attribution and the general-beta boundary
+
+**Definition 67.1 (scope of the projection exclusions and actual consequence).** Theorems 64.2 and 65.1 are analytic exclusions of the strict common-projection relaxation itself. They require one normalized projection and one center across every complex unit phase direction; they supply neither a strict relaxed feasible point nor an actual encoder or physical recovery. Theorem 66.2 additionally consumes the named actual-channel and fidelity interfaces. Their primary-source status is the inherited `literature-attested` attribution in Definition 58.3, not a new authentication of those papers or a newly verified physical realization. The projection exclusions do not depend on that external authentication; the actual-channel conclusion is conditional on the stated interfaces.
+
+The actual domain still requires one original-real $V$, one common $U$, actual domination (S.8), and the complete phase-Choi range, trace, reality, residual positivity and residual-rank premises (S.64)–(S.65), including every admissible $C$ and $\sigma$. The phase states are the mixtures (S.11), which need not have rank two. Diagonalizing a center transports the environmental antiunitary and all actual blocks together; it does not make the blocks jointly entrywise real or commuting. The normalized $Z_i$ equations reconstruct only projection geometry. They neither discharge those actual conditions nor provide a common family of attaining $Q_\psi$ or a converse lifting theorem.
+
+The source-specific overlap, fixed-weight region and supported-center application are `repo-derived`. Their intermediates are the existing common-vector/pencil and scalar results of Sections 59–63, variational fidelity and exact rank-five allocation in Section 53, concavity of quadratic polynomials, the Bernstein representation (S.81), and the inherited supported boundary (S.77). The scalar-method obstruction of Sections 55–56, including both weight-order cones in Theorem 55.1 and the pinching theorem, retains its exact scope: it does not preclude the nonlinear-plus-spectral overlap. These applications assert no new generic spectral, minimax or Bernstein theorem, kernel verification, global novelty or literature completeness.
+
+The necessary scalar conditions of Proposition 63.1 remain valid and insufficient by themselves. Their residual half-beta region is excluded by the additional certificate and overlap in Section 64, with the displayed center and all its positive-tail counterparts also consumed by Section 65. For $0<\beta<1/2$, the fixed-weight theorem covers only (S.102); the spread criterion (S.28), common-vector reduction of Section 59 and earlier results retain their respective ranges. An all-center general-beta analogue of the overlap, or an additional obstruction using four common orthogonal top-three-supported defect vectors, is not established here. No strict feasible relaxation or counterexample outside the certified regions is inferred.
+
+The original target (S.66) remains the uniform statement for every $0<\beta\leq1/2$, every allowed original-real actual encoder with actual rank at most nine, all admissible third columns, all complex whole-output CPTP recoveries, every finite complex reference and the unhalved diamond norm. Its general-beta part remains unresolved. Theorem 66.2 is a conditional half-beta consequence toward that unchanged target. An actual counterexample would still require an allowed common implementation and a full-reference diamond upper certificate below $1-\sqrt{1-\beta}$; passing an individual necessary scalar test cannot supply either.
+
+## 追加锚（本行以下为增补区）
