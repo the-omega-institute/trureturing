@@ -367,8 +367,8 @@ namespace PartialTransposeKroneckerConj
 
 /-- Observe the partial transpose after local conjugation. -/
 abbrev signature : Signature where
-  Params := Matrix (Fin 2) (Fin 2) ℂ × Matrix (Fin 2) (Fin 2) ℂ
-  State _ := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ
+  Params := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ × Matrix (Fin 2) (Fin 2) ℂ
+  State _ := Matrix (Fin 2) (Fin 2) ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -381,7 +381,7 @@ open _root_.D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 
 def actual : Realization signature :=
   realize signature
-    (fun _ p ρ => partialTransposeB ((p.1 ⊗ₖ p.2) * ρ * (p.1 ⊗ₖ p.2)ᴴ))
+    (fun _ p V => partialTransposeB ((p.2 ⊗ₖ V) * p.1 * (p.2 ⊗ₖ V)ᴴ))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -391,7 +391,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (U V : Matrix (Fin 2) (Fin 2) ℂ),
-    R.readout () (U, V) ρ =
+    R.readout () (ρ, U) V =
       (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ
 
 theorem rejected_law : ¬ arena.Law rejected := by
@@ -437,7 +437,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p ρ => partialTransposeB ((p.1 ⊗ₖ p.2) * ρ * (p.1 ⊗ₖ p.2)ᴴ))
+    (fun _ p V => partialTransposeB ((p.2 ⊗ₖ V) * p.1 * (p.2 ⊗ₖ V)ᴴ))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -446,10 +446,10 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
