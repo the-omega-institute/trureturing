@@ -50,24 +50,24 @@ theorem active_visible (φ : Bool) (S : Spins) (e : ℤ) :
   have hm : (2 * e + φ.toInt - φ.toInt) % 2 = 0 := by omega
   simp [visible, hm, hd]
 
-theorem separator_visible (φ : Bool) (S : Spins) (e : ℤ) :
+private theorem separator_visible (φ : Bool) (S : Spins) (e : ℤ) :
     visible φ S (2 * e + φ.toInt + 1) = false := by
   have hm : (2 * e + φ.toInt + 1 - φ.toInt) % 2 ≠ 0 := by omega
   simp [visible, hm]
 
-theorem active_hidden (φ : Bool) (S : Spins) (e : ℤ) :
+private theorem active_hidden (φ : Bool) (S : Spins) (e : ℤ) :
     hidden φ S (2 * e + φ.toInt) = .a (S e) := by
   have hd : (2 * e + φ.toInt - φ.toInt) / 2 = e := by omega
   have hm : (2 * e + φ.toInt - φ.toInt) % 2 = 0 := by omega
   simp [hidden, hm, hd]
 
-theorem separator_hidden (φ : Bool) (S : Spins) (e : ℤ) :
+private theorem separator_hidden (φ : Bool) (S : Spins) (e : ℤ) :
     hidden φ S (2 * e + φ.toInt + 1) = .b (S (e + 1)) := by
   have hd : (2 * e + φ.toInt + 1 - φ.toInt) / 2 = e := by omega
   have hm : (2 * e + φ.toInt + 1 - φ.toInt) % 2 ≠ 0 := by omega
   simp [hidden, hm, hd]
 
-theorem negative_seam (S : Spins) : hidden true S 0 = .b (S 0) := by
+private theorem negative_seam (S : Spins) : hidden true S 0 = .b (S 0) := by
   simpa using separator_hidden true S (-1)
 
 theorem actual_endpoint (j φ : Bool) (S : Spins) :
@@ -152,7 +152,7 @@ def support : ReadTree → Finset ℤ
       (z.support ∪ o.support)
 
 
-theorem paid_le_height (T : ReadTree) (x : ℤ → Bool) : (T.run x).paid ≤ T.height := by
+private theorem paid_le_height (T : ReadTree) (x : ℤ → Bool) : (T.run x).paid ≤ T.height := by
   induction T with
   | leaf a => exact le_rfl
   | read t z o hz ho =>
@@ -178,7 +178,7 @@ theorem record_addresses (T : ReadTree) (x : ℤ → Bool) :
       · exact Finset.mem_insert_self _ _
       · exact Finset.mem_insert_of_mem (Finset.mem_union_left _ (hz a ha))
 
-theorem run_eq_of_agree (T : ReadTree) (x y : ℤ → Bool)
+private theorem run_eq_of_agree (T : ReadTree) (x y : ℤ → Bool)
     (h : ∀ t ∈ T.addresses, x t = y t) : T.run x = T.run y := by
   induction T with
   | leaf a => rfl
@@ -226,7 +226,7 @@ def stopComb : List ℤ → ReadTree
   | [] => .leaf (some (.a false))
   | t :: ts => .read t (stopComb ts) (.leaf (some (.a true)))
 
-@[simp] theorem height_stopComb (ts : List ℤ) : (stopComb ts).height = ts.length := by
+@[simp] private theorem height_stopComb (ts : List ℤ) : (stopComb ts).height = ts.length := by
   induction ts with
   | nil => rfl
   | cons t ts ih => simp [stopComb, height, ih]
@@ -321,11 +321,11 @@ structure CompletionLawful (Q : RawRule U) (ν : Measure U) : Prop where
   measurable_wait : ∀ r, @Measurable (NullMeasurableSpace U ν) ℝ≥0 inferInstance _
     (fun u => Q.wait u r)
 
-theorem CompletionLawful.aemeasurable_next {Q : RawRule U} {ν : Measure U}
+private theorem CompletionLawful.aemeasurable_next {Q : RawRule U} {ν : Measure U}
     (hQ : Q.CompletionLawful ν) (r : Record) : AEMeasurable (fun u => Q.next u r) ν :=
   (show NullMeasurable (fun u => Q.next u r) ν from hQ.measurable_next r).aemeasurable
 
-theorem CompletionLawful.aemeasurable_wait {Q : RawRule U} {ν : Measure U}
+private theorem CompletionLawful.aemeasurable_wait {Q : RawRule U} {ν : Measure U}
     (hQ : Q.CompletionLawful ν) (r : Record) : AEMeasurable (fun u => Q.wait u r) ν :=
   (show NullMeasurable (fun u => Q.wait u r) ν from hQ.measurable_wait r).aemeasurable
 
@@ -384,7 +384,7 @@ def unfold (Q : RawRule U) : ℕ → U → Record → ReadTree
 
 def normalize (Q : RawRule U) (k : ℕ) (u : U) : ReadTree := Q.unfold k u []
 
-theorem readPrefix_length (Q : RawRule U) (u : U) (x : ℤ → Bool) (n : ℕ) (r : Record)
+private theorem readPrefix_length (Q : RawRule U) (u : U) (x : ℤ → Bool) (n : ℕ) (r : Record)
     (h : Q.readPrefix u x n = some r) : r.length = n := by
   induction n generalizing r with
   | zero => simpa [readPrefix] using h.symm
@@ -400,11 +400,11 @@ theorem readPrefix_length (Q : RawRule U) (u : U) (x : ℤ → Bool) (n : ℕ) (
         subst r
         simp [ih s hp]
 
-theorem readPrefix_bound (Q : RawRule U) (u : U) (x : ℤ → Bool) (n : ℕ) (r : Record)
+private theorem readPrefix_bound (Q : RawRule U) (u : U) (x : ℤ → Bool) (n : ℕ) (r : Record)
     (h : Q.readPrefix u x n = some r) : (n : ℕ∞) ≤ Q.paidCount u x := by
   exact le_iSup_of_le n (by simp [h])
 
-theorem readPrefix_none_mono (Q : RawRule U) (u : U) (x : ℤ → Bool) {n m : ℕ}
+private theorem readPrefix_none_mono (Q : RawRule U) (u : U) (x : ℤ → Bool) {n m : ℕ}
     (h : Q.readPrefix u x n = none) (hnm : n ≤ m) : Q.readPrefix u x m = none := by
   induction m with
   | zero => have hn : n = 0 := by omega
@@ -415,7 +415,7 @@ theorem readPrefix_none_mono (Q : RawRule U) (u : U) (x : ℤ → Bool) {n m : �
     · have he : n = m + 1 := by omega
       simpa only [he] using h
 
-theorem terminal_readPrefix_bound (Q : RawRule U) (u : U) (x : ℤ → Bool)
+private theorem terminal_readPrefix_bound (Q : RawRule U) (u : U) (x : ℤ → Bool)
     {n m : ℕ} {r s : Record} {a : Option Hidden}
     (hr : Q.readPrefix u x n = some r) (ha : Q.next u r = .terminal a)
     (hs : Q.readPrefix u x m = some s) : m ≤ n := by
@@ -425,7 +425,7 @@ theorem terminal_readPrefix_bound (Q : RawRule U) (u : U) (x : ℤ → Bool)
   rw [hs] at this
   contradiction
 
-theorem completes_unique (Q : RawRule U) (u : U) (x : ℤ → Bool)
+private theorem completes_unique (Q : RawRule U) (u : U) (x : ℤ → Bool)
     {v w : Execution} (hv : Q.Completes u x v) (hw : Q.Completes u x w) : v = w := by
   have hlen : v.paid = w.paid := Nat.le_antisymm
     (Q.terminal_readPrefix_bound u x hw.1 hw.2 hv.1)
@@ -437,7 +437,7 @@ theorem completes_unique (Q : RawRule U) (u : U) (x : ℤ → Bool)
   cases v; cases w; simp_all
 
 /-- The actual uncapped output and total paid count of a finite semantic completion. -/
-theorem completes_observables (Q : RawRule U) (u : U) (x : ℤ → Bool)
+private theorem completes_observables (Q : RawRule U) (u : U) (x : ℤ → Bool)
     {v : Execution} (hv : Q.Completes u x v) :
     Q.output u x = v.output ∧ Q.paidCount u x = v.paid := by
   have hn : Q.paidCount u x ≤ v.paid := by
@@ -509,7 +509,7 @@ theorem unfold_correct (Q : RawRule U) (u : U) (x : ℤ → Bool) (k n : ℕ) (r
           List.append_assoc, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hh
 
 /-- Every earlier acquired record is a literal prefix of every later one. -/
-theorem readPrefix_extension (Q : RawRule U) (u : U) (x : ℤ → Bool)
+private theorem readPrefix_extension (Q : RawRule U) (u : U) (x : ℤ → Bool)
     {n m : ℕ} {r s : Record} (hr : Q.readPrefix u x n = some r)
     (hs : Q.readPrefix u x m = some s) (hnm : n ≤ m) : ∃ tail, s = r ++ tail := by
   induction m generalizing s with
@@ -546,7 +546,7 @@ theorem completes_record_subset (Q : RawRule U) (u : U) (x : ℤ → Bool)
   exact List.mem_append_left _ ha
 
 /-- A cap on one execution suffices for exact normalization on that execution. -/
-theorem normalization_execution (Q : RawRule U) (k : ℕ) (u : U) (x : ℤ → Bool)
+private theorem normalization_execution (Q : RawRule U) (k : ℕ) (u : U) (x : ℤ → Bool)
     (hc : Q.paidCount u x ≤ k) :
     let v := (Q.normalize k u).run x
     Q.Completes u x v ∧ Q.output u x = v.output ∧ Q.paidCount u x = v.paid := by
@@ -576,7 +576,7 @@ theorem normalization_return_indicator (Q : RawRule U) (k : ℕ) (hc : Q.TotalCa
   simpa only [decide_eq_true_eq, Execution.returned, ho] using
     Q.finite_return_iff u (visible φ S)
 
-theorem measurable_unfold (Q : RawRule U) (hQ : Q.Lawful) (k : ℕ) :
+private theorem measurable_unfold (Q : RawRule U) (hQ : Q.Lawful) (k : ℕ) :
     ∀ r : Record, Measurable (fun u => Q.unfold k u r) := by
   induction k with
   | zero =>
@@ -611,12 +611,12 @@ def ordinaryVersion (Q : RawRule U) (ν : Measure U) (hQ : Q.CompletionLawful ν
   next u r := (hQ.aemeasurable_next r).mk (fun u => Q.next u r) u
   wait u r := (hQ.aemeasurable_wait r).mk (fun u => Q.wait u r) u
 
-theorem ordinaryVersion_lawful (Q : RawRule U) (ν : Measure U) (hQ : Q.CompletionLawful ν) :
+private theorem ordinaryVersion_lawful (Q : RawRule U) (ν : Measure U) (hQ : Q.CompletionLawful ν) :
     (Q.ordinaryVersion ν hQ).Lawful :=
   ⟨fun r => (hQ.aemeasurable_next r).measurable_mk,
     fun r => (hQ.aemeasurable_wait r).measurable_mk⟩
 
-theorem ordinaryVersion_common_set (Q : RawRule U) (ν : Measure U)
+private theorem ordinaryVersion_common_set (Q : RawRule U) (ν : Measure U)
     (hQ : Q.CompletionLawful ν) :
     ∀ᵐ u ∂ν, ∀ r, Q.next u r = (Q.ordinaryVersion ν hQ).next u r ∧
       Q.wait u r = (Q.ordinaryVersion ν hQ).wait u r := by
@@ -624,7 +624,7 @@ theorem ordinaryVersion_common_set (Q : RawRule U) (ν : Measure U)
   intro r
   exact (hQ.aemeasurable_next r).ae_eq_mk.and (hQ.aemeasurable_wait r).ae_eq_mk
 
-theorem unfold_congr (Q R : RawRule U) (u : U)
+private theorem unfold_congr (Q R : RawRule U) (u : U)
     (h : ∀ r, Q.next u r = R.next u r) (k : ℕ) (r : Record) :
     Q.unfold k u r = R.unfold k u r := by
   induction k generalizing r with
@@ -677,7 +677,7 @@ def eventAfter (T : ReadTree) (r : Record) : EventKind :=
   | some (.leaf a) => .terminal a
   | some (.read t _ _) => .read t
 
-theorem follow_append (T : ReadTree) (r s : Record) :
+private theorem follow_append (T : ReadTree) (r s : Record) :
     T.follow (r ++ s) = (T.follow r).bind (fun V => V.follow s) := by
   induction r generalizing T with
   | nil => rfl
@@ -691,7 +691,7 @@ theorem follow_append (T : ReadTree) (r s : Record) :
       · exact ih z
       · rfl
 
-theorem follow_height (T : ReadTree) (r : Record) (V : ReadTree)
+private theorem follow_height (T : ReadTree) (r : Record) (V : ReadTree)
     (h : T.follow r = some V) : r.length + V.height ≤ T.height := by
   induction r generalizing T with
   | nil => simp only [follow, Option.some.injEq] at h; subst V; simp
@@ -724,7 +724,7 @@ theorem realize_lawful (T : U → ReadTree) (hT : Measurable T) : (realize T).La
     exact (measurable_of_countable (fun V : ReadTree => V.eventAfter r)).comp hT
   · intro _; exact measurable_const
 
-theorem realize_prefix (T : U → ReadTree) (u : U) (x : ℤ → Bool) (n : ℕ)
+private theorem realize_prefix (T : U → ReadTree) (u : U) (x : ℤ → Bool) (n : ℕ)
     (r : Record) (hr : (realize T).readPrefix u x n = some r) :
     ∃ V, (T u).follow r = some V := by
   induction n generalizing r with
@@ -762,7 +762,7 @@ theorem realize_cap (T : U → ReadTree) (k : ℕ) (hT : ∀ u, (T u).height ≤
     have hn : n ≤ k := by have := hT u; omega
     exact_mod_cast hn
 
-theorem unfold_realize (T : U → ReadTree) (u : U) (n : ℕ) (r : Record) (V : ReadTree)
+private theorem unfold_realize (T : U → ReadTree) (u : U) (n : ℕ) (r : Record) (V : ReadTree)
     (hr : (T u).follow r = some V) (hV : V.height ≤ n) :
     (realize T).unfold n u r = V := by
   induction n generalizing r V with
@@ -809,7 +809,7 @@ def CompletionAvailable {Ω : Type v} {U : Type u} {Y : Type w}
     f ⁻¹' E =ᵐ[μ] seed ⁻¹' B
 
 /-- Countable event fibers admit one ordinary version without assumptions on the seed space. -/
-theorem completion_available_countable_version {Ω : Type v} {U : Type u} {Y : Type w}
+private theorem completion_available_countable_version {Ω : Type v} {U : Type u} {Y : Type w}
     [MeasurableSpace Ω] [MeasurableSpace U] [MeasurableSpace Y]
     [Countable Y] [Nonempty Y] [MeasurableSingletonClass Y]
     (μ : Measure Ω) (seed : Ω → U) (f : Ω → Y)
@@ -869,7 +869,7 @@ structure Lawful (Q : CompletedRule U) (μ : Measure (SourcePoint × U)) : Prop 
   next_available : ∀ r, CompletionAvailable μ Prod.snd (fun p => Q.next p r)
   wait_available : ∀ r, CompletionAvailable μ Prod.snd (fun p => Q.wait p r)
 
-theorem fromRaw_lawful (R : RawRule U) (hR : R.Lawful)
+private theorem fromRaw_lawful (R : RawRule U) (hR : R.Lawful)
     (μ : Measure (SourcePoint × U)) : (fromRaw R).Lawful μ := by
   constructor
   · intro r E hE
@@ -909,7 +909,7 @@ def normalize (Q : CompletedRule U) (k : ℕ) (p : SourcePoint × U) : ReadTree 
   (Q.atSource p.1).normalize k p.2
 
 /-- Finite waits can be replaced by zero; all event kinds share one ambient full-measure set. -/
-theorem ordinary_version (Q : CompletedRule U) (μ : Measure (SourcePoint × U))
+private theorem ordinary_version (Q : CompletedRule U) (μ : Measure (SourcePoint × U))
     (hQ : Q.Lawful μ) :
     ∃ R : RawRule U, R.Lawful ∧ ∀ᵐ p ∂μ, ∀ r, Q.next p r = R.next p.2 r := by
   have h (r : Record) := completion_available_countable_version μ Prod.snd
@@ -931,7 +931,7 @@ theorem normalization_version (Q : CompletedRule U) (μ : Measure (SourcePoint �
   exact (Q.atSource p.1).unfold_congr R p.2 hp k []
 
 /-- Actual records and nonreturn counts are preserved on every capped ambient execution. -/
-theorem normalization_execution (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
+theorem completed_normalization_execution (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
     (p : SourcePoint × U) :
     let v := (Q.normalize k p).run (visible p.1.1 p.1.2)
     (Q.atSource p.1).Completes p.2 (visible p.1.1 p.1.2) v ∧

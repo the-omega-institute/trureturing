@@ -29,7 +29,7 @@ def AllStoppingDepths (T : ReadTree) (φ : Bool) (k : ℕ) : Prop :=
       (T.run (visible φ S)).paid = i
 
 /-- Neither the comb shape nor the addresses' parity is an input assumption. -/
-theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
+private theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
     (hh : T.height ≤ k) (hA : T.OppositeSection φ k)
     (hB : T.AllStoppingDepths φ k) :
     ∃ ts : List ℤ, ts.length = k ∧
@@ -109,7 +109,7 @@ theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
       · rw [heq, holeaf]; rfl
 
 /-- Active integer labels are exactly the lifted spin-edge indices, without an ordering restriction. -/
-theorem stopComb_edge_indices (k : ℕ) (T : ReadTree) (φ : Bool)
+private theorem stopComb_edge_indices (k : ℕ) (T : ReadTree) (φ : Bool)
     (hh : T.height ≤ k) (hA : T.OppositeSection φ k)
     (hB : T.AllStoppingDepths φ k) :
     ∃ es : List ℤ, es.length = k ∧
@@ -164,7 +164,7 @@ theorem stopComb_outcomes (ts : List ℤ) (x : ℤ → Bool) :
           houtput, Execution.paid_prepend, List.length_cons]
         exact ⟨h.1, by omega, by omega⟩
 
-theorem stopComb_not_a1_at_zero (ts : List ℤ) (x : ℤ → Bool) :
+private theorem stopComb_not_a1_at_zero (ts : List ℤ) (x : ℤ → Bool) :
     ¬(((stopComb ts).run x).output = some (.a true) ∧ ((stopComb ts).run x).paid = 0) := by
   intro h
   rcases stopComb_outcomes ts x with ha | ha
@@ -172,7 +172,7 @@ theorem stopComb_not_a1_at_zero (ts : List ℤ) (x : ℤ → Bool) :
   · omega
 
 /-- A new one response is exactly the difference of successive zero-prefix events. -/
-theorem zero_prefix_difference (ts : List ℤ) (x : ℤ → Bool) (r : ℕ)
+private theorem zero_prefix_difference (ts : List ℤ) (x : ℤ → Bool) (r : ℕ)
     (hr : r < ts.length) :
     (ZeroReplies ts r x ∧ ¬ZeroReplies ts (r + 1) x) ↔
       ((stopComb ts).run x).output = some (.a true) ∧
@@ -270,7 +270,7 @@ def HasStoppingLaw (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ) (T : ReadTr
 
 namespace SpinWindow
 
-theorem split_spin (β : Bias) (V : Finset ℤ) (q : ℤ) (E : Set Spins) :
+private theorem split_spin (β : Bias) (V : Finset ℤ) (q : ℤ) (E : Set Spins) :
     prob β V E = prob β V ({S | S q = false} ∩ E) +
       prob β V ({S | S q = true} ∩ E) := by
   have he : E = ({S | S q = false} ∩ E) ∪ ({S | S q = true} ∩ E) := by
@@ -298,7 +298,7 @@ end SpinWindow
 
 namespace ReadTree
 
-theorem observation_a_iff (j φ s : Bool) (T : ReadTree) (S : Spins)
+private theorem observation_a_iff (j φ s : Bool) (T : ReadTree) (S : Spins)
     (o : Option Hidden) (n : ℕ) :
     observation j φ T S = ⟨.a s, o, o.isSome, n⟩ ↔
       φ = j ∧ S (targetIndex j j) = s ∧
@@ -307,7 +307,7 @@ theorem observation_a_iff (j φ s : Bool) (T : ReadTree) (S : Spins)
     simp [observation, hidden, Bool.toInt, targetClass, targetIndex,
       Observation.mk.injEq, Execution.returned] <;> aesop
 
-theorem observation_b_iff (j φ s : Bool) (T : ReadTree) (S : Spins)
+private theorem observation_b_iff (j φ s : Bool) (T : ReadTree) (S : Spins)
     (o : Option Hidden) (n : ℕ) :
     observation j φ T S = ⟨.b s, o, o.isSome, n⟩ ↔
       φ = !j ∧ S j.toInt = s ∧
@@ -335,7 +335,7 @@ theorem fullMass_b (β : Bias) (V : Finset ℤ) (j s : Bool) (T : ReadTree)
   simp_rw [observation_b_iff]
   cases j <;> simp [Fintype.sum_bool]
 
-theorem stopping_law_b_depth (β : Bias) (V : Finset ℤ) (j s : Bool) (k i : ℕ)
+private theorem stopping_law_b_depth (β : Bias) (V : Finset ℤ) (j s : Bool) (k i : ℕ)
     (T : ReadTree) (hlaw : HasStoppingLaw β V j k T) (hi : 1 ≤ i) (hik : i ≤ k) :
     SpinWindow.prob β V {S | S j.toInt = s ∧
       (T.run (visible (!j) S)).output = some (.a true) ∧
@@ -347,7 +347,7 @@ theorem stopping_law_b_depth (β : Bias) (V : Finset ℤ) (j s : Bool) (k i : �
   simp only [stoppingMass, hi, hik, and_self, ↓reduceIte] at h
   linarith
 
-theorem stopping_law_sections (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ)
+private theorem stopping_law_sections (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ)
     (T : ReadTree) (hV : T.support ⊆ V) (hlaw : HasStoppingLaw β V j k T) :
     T.OppositeSection (!j) k ∧ T.AllStoppingDepths (!j) k := by
   have hA (s : Bool) : SpinWindow.prob β V {S | S (targetIndex j j) = s ∧
@@ -422,7 +422,7 @@ theorem zero_edge_difference (es : List ℤ) (φ : Bool) (r : ℕ) (hr : r < es.
   rw [← ReadTree.edge_zero_prefix, ← ReadTree.edge_zero_prefix]
   exact ReadTree.zero_prefix_difference _ _ r (by simpa using hr)
 
-theorem joint_zero_prefix_mass (β : Bias) (V : Finset ℤ) (j : Bool) (es : List ℤ)
+private theorem joint_zero_prefix_mass (β : Bias) (V : Finset ℤ) (j : Bool) (es : List ℤ)
     (hq : j.toInt ∈ V) (hlaw : HasStoppingLaw β V j es.length (ReadTree.edgeComb es (!j)))
     (s : Bool) (r : ℕ) (hr : r ≤ es.length) :
     prob β V (zeroEdges (es.take r).toFinset ∩ {S | S j.toInt = s}) =
@@ -560,7 +560,7 @@ def remoteMass (β : Bias) (V : Finset ℤ) (j : Bool) (R : ℕ) (T : ReadTree) 
   (∑ φ : Bool, SpinWindow.prob β V (remoteEvent T j R φ)) / 2
 
 /-- A first occurrence exists for any decidable predicate on a finite list. -/
-theorem first_far_split (j : Bool) (R : ℕ) (ts : List ℤ)
+private theorem first_far_split (j : Bool) (R : ℕ) (ts : List ℤ)
     (h : ∃ t ∈ ts, Far j R t) :
     ∃ pre : List ℤ, ∃ t : ℤ, ∃ post : List ℤ,
       ts = pre ++ t :: post ∧ (∀ a ∈ pre, ¬Far j R a) ∧ Far j R t := by
@@ -624,7 +624,7 @@ theorem edgeComb_opposite_remote (es : List ℤ) (j : Bool) (R : ℕ)
 end ReadTree
 
 /-- Exact source mass of the first remote call, with the paid-depth boundary m=1 included. -/
-theorem comb_first_remote_section (β : Bias) (V : Finset ℤ) (j : Bool) (R : ℕ)
+private theorem comb_first_remote_section (β : Bias) (V : Finset ℤ) (j : Bool) (R : ℕ)
     (es : List ℤ) (hq : j.toInt ∈ V)
     (hlaw : HasStoppingLaw β V j es.length (ReadTree.edgeComb es (!j)))
     (hfar : ∃ t ∈ es.map (fun e => 2 * e + (!j).toInt), Far j R t) :
@@ -693,7 +693,7 @@ open scoped BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
-theorem observation_eq_of_agree (j φ : Bool) (T : ReadTree) (S R : Spins)
+private theorem observation_eq_of_agree (j φ : Bool) (T : ReadTree) (S R : Spins)
     (h : ∀ i ∈ lawWindow T, S i = R i) : observation j φ T S = observation j φ T R := by
   have hr := T.source_run_eq_of_agree φ S R (fun i hi => h i (Finset.mem_union_left _ hi))
   have hq : targetIndex j φ ∈ lawWindow T := by
@@ -823,15 +823,15 @@ instance : IsProbabilityMeasure fairPhase := by unfold fairPhase; infer_instance
 instance (β : Bias) : IsProbabilityMeasure (sourceLaw β) := by
   unfold sourceLaw; infer_instance
 
-theorem spinMarginal_singleton (β : Bias) (s : Bool) :
+private theorem spinMarginal_singleton (β : Bias) (s : Bool) :
     (spinMarginal β).real {s} = β.π s := by
   cases s <;> simp [spinMarginal, bernoulliMeasure_real_apply, Bias.parameter, Bias.π]
 
-theorem fairPhase_singleton (φ : Bool) : fairPhase.real {φ} = 1 / 2 := by
+private theorem fairPhase_singleton (φ : Bool) : fairPhase.real {φ} = 1 / 2 := by
   cases φ <;> norm_num [fairPhase, bernoulliMeasure_real_apply]
 
 /-- A finite marginal is the positive weighted model used by the rigidity core. -/
-theorem finiteSpinMeasure_mass (β : Bias) (V : Finset ℤ) (E : Set (V → Bool)) :
+private theorem finiteSpinMeasure_mass (β : Bias) (V : Finset ℤ) (E : Set (V → Bool)) :
     (Measure.pi (fun _ : V => spinMarginal β)).real E = FiniteSpinLaw.mass β E := by
   classical
   let μ := Measure.pi (fun _ : V => spinMarginal β)
@@ -854,7 +854,7 @@ theorem finiteSpinMeasure_mass (β : Bias) (V : Finset ℤ) (E : Set (V → Bool
       · intro σ _; rfl
 
 /-- Arbitrary finite-support events have their exact original infinite-source mass. -/
-theorem spinLaw_finite_event (β : Bias) (V : Finset ℤ) (E : Set Spins)
+private theorem spinLaw_finite_event (β : Bias) (V : Finset ℤ) (E : Set Spins)
     (hE : ∀ S R, (∀ i ∈ V, S i = R i) → (S ∈ E ↔ R ∈ E)) :
     (spinLaw β).real E = SpinWindow.prob β V E := by
   let A : Set (V → Bool) := SpinWindow.extend V ⁻¹' E
@@ -871,7 +871,7 @@ theorem spinLaw_finite_event (β : Bias) (V : Finset ℤ) (E : Set Spins)
       rw [spinLaw, Measure.infinitePi_map_restrict]
     _ = SpinWindow.prob β V E := finiteSpinMeasure_mass β V A
 
-theorem measurable_visible (φ : Bool) (t : ℤ) : Measurable (fun S : Spins => visible φ S t) := by
+private theorem measurable_visible (φ : Bool) (t : ℤ) : Measurable (fun S : Spins => visible φ S t) := by
   unfold visible
   split_ifs
   · change Measurable (fun S : Spins => Bool.xor (S ((t - φ.toInt) / 2))
@@ -881,7 +881,7 @@ theorem measurable_visible (φ : Bool) (t : ℤ) : Measurable (fun S : Spins => 
         (measurable_pi_apply (X := fun _ : ℤ => Bool) ((t - φ.toInt) / 2 + 1)))
   · exact measurable_const
 
-theorem measurable_hidden (φ : Bool) (t : ℤ) : Measurable (fun S : Spins => hidden φ S t) := by
+private theorem measurable_hidden (φ : Bool) (t : ℤ) : Measurable (fun S : Spins => hidden φ S t) := by
   unfold hidden
   split_ifs <;> exact (measurable_of_countable _).comp (measurable_pi_apply _)
 
@@ -905,7 +905,7 @@ theorem measurable_observation (j : Bool) (T : ReadTree) :
       ((measurable_hidden φ j.toInt).prodMk (T.measurable_source_run φ))
 
 /-- Averaging any measurable source event over the two original phases. -/
-theorem sourceLaw_real_sections (β : Bias) (E : Set SourcePoint) (hE : MeasurableSet E) :
+private theorem sourceLaw_real_sections (β : Bias) (E : Set SourcePoint) (hE : MeasurableSet E) :
     (sourceLaw β).real E = (∑ φ : Bool, (spinLaw β).real {S | (φ, S) ∈ E}) / 2 := by
   have he : E = ⋃ φ : Bool, ({φ} ×ˢ {S | (φ, S) ∈ E}) := by ext z; simp
   have hd : Pairwise (fun φ ψ : Bool => Disjoint

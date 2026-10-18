@@ -43,7 +43,7 @@ def T (β : Bias) (n : ℕ) : ℝ := (1 - β.p)^n + β.p^n
 
 def d (β : Bias) (n : ℕ) : ℝ := β.T n - β.T (n + 1)
 
-theorem π_pos (β : Bias) (s : Bool) : 0 < β.π s := by
+private theorem π_pos (β : Bias) (s : Bool) : 0 < β.π s := by
   cases s <;> simp only [π, Bool.false_eq_true, ↓reduceIte]
   · linarith [β.lt_one]
   · exact β.pos
@@ -52,7 +52,7 @@ theorem π_sum (β : Bias) : β.π false + β.π true = 1 := by simp [π]
 
 theorem T_one (β : Bias) : β.T 1 = 1 := by simp [T]
 
-theorem d_formula (β : Bias) (n : ℕ) :
+private theorem d_formula (β : Bias) (n : ℕ) :
     β.d n = (1 - β.p)^n * β.p + β.p^n * (1 - β.p) := by
   simp only [d, T, pow_succ]
   ring
@@ -71,7 +71,7 @@ theorem T_succ_lt (β : Bias) (n : ℕ) : β.T (n + 1) < β.T n := by
 theorem T_antitone (β : Bias) : Antitone β.T := by
   exact (strictAnti_nat_of_succ_lt β.T_succ_lt).antitone
 
-theorem unequal_powers (β : Bias) {n : ℕ} (hn : 0 < n) :
+private theorem unequal_powers (β : Bias) {n : ℕ} (hn : 0 < n) :
     (1 - β.p)^n ≠ β.p^n := by
   have hn0 : n ≠ 0 := by omega
   have h0 : 0 < 1 - β.p := by linarith [β.lt_one]
@@ -81,14 +81,14 @@ theorem unequal_powers (β : Bias) {n : ℕ} (hn : 0 < n) :
   · exact ne_of_gt (pow_lt_pow_left₀ h β.pos.le hn0)
 
 /-- The strict difference for a detached edge, with a successor exponent to avoid subtraction. -/
-theorem detached_gap_factorization (β : Bias) (n : ℕ) :
+private theorem detached_gap_factorization (β : Bias) (n : ℕ) :
     β.T (n + 3) - β.T 2 * β.T (n + 2) =
       (1 - β.p) * β.p * ((1 - β.p) - β.p) *
         ((1 - β.p)^(n + 1) - β.p^(n + 1)) := by
   simp only [T, pow_succ]
   ring
 
-theorem detached_gap_pos (β : Bias) (n : ℕ) :
+private theorem detached_gap_pos (β : Bias) (n : ℕ) :
     β.T 2 * β.T (n + 2) < β.T (n + 3) := by
   rw [← sub_pos, detached_gap_factorization]
   have h0 : 0 < 1 - β.p := by linarith [β.lt_one]
@@ -123,27 +123,27 @@ def weight (β : Bias) (σ : ι → Bool) : ℝ := ∏ i, β.π (σ i)
 def mass (β : Bias) (E : Set (ι → Bool)) : ℝ :=
   ∑ σ, if σ ∈ E then weight β σ else 0
 
-theorem weight_pos (β : Bias) (σ : ι → Bool) : 0 < weight β σ :=
+private theorem weight_pos (β : Bias) (σ : ι → Bool) : 0 < weight β σ :=
   Finset.prod_pos fun _ _ => β.π_pos _
 
-theorem weight_sum (β : Bias) : ∑ σ : ι → Bool, weight β σ = 1 := by
+private theorem weight_sum (β : Bias) : ∑ σ : ι → Bool, weight β σ = 1 := by
   rw [show (∑ σ : ι → Bool, weight β σ) = ∏ _ : ι, ∑ s : Bool, β.π s from
     (Fintype.prod_sum (fun (_ : ι) (s : Bool) => β.π s)).symm]
   simp [Fintype.sum_bool, Bias.π]
 
-theorem mass_nonneg (β : Bias) (E : Set (ι → Bool)) : 0 ≤ mass β E := by
+private theorem mass_nonneg (β : Bias) (E : Set (ι → Bool)) : 0 ≤ mass β E := by
   apply Finset.sum_nonneg
   intro σ _
   split_ifs
   · exact (weight_pos β σ).le
   · exact le_rfl
 
-@[simp] theorem mass_univ (β : Bias) : mass (ι := ι) β Set.univ = 1 := by
+@[simp] private theorem mass_univ (β : Bias) : mass (ι := ι) β Set.univ = 1 := by
   simpa [mass] using weight_sum (ι := ι) β
 
-@[simp] theorem mass_empty (β : Bias) : mass (ι := ι) β ∅ = 0 := by simp [mass]
+@[simp] private theorem mass_empty (β : Bias) : mass (ι := ι) β ∅ = 0 := by simp [mass]
 
-theorem mass_union (β : Bias) {E F : Set (ι → Bool)} (h : Disjoint E F) :
+private theorem mass_union (β : Bias) {E F : Set (ι → Bool)} (h : Disjoint E F) :
     mass β (E ∪ F) = mass β E + mass β F := by
   rw [mass, mass, mass, ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
@@ -151,7 +151,7 @@ theorem mass_union (β : Bias) {E F : Set (ι → Bool)} (h : Disjoint E F) :
   have hn : ¬(σ ∈ E ∧ σ ∈ F) := fun hh => Set.disjoint_left.mp h hh.1 hh.2
   by_cases he : σ ∈ E <;> by_cases hf : σ ∈ F <;> simp_all
 
-theorem mass_diff (β : Bias) {E F : Set (ι → Bool)} (h : F ⊆ E) :
+private theorem mass_diff (β : Bias) {E F : Set (ι → Bool)} (h : F ⊆ E) :
     mass β (E \ F) = mass β E - mass β F := by
   have hu : E = (E \ F) ∪ F := by ext σ; simp only [Set.mem_union, Set.mem_diff]; tauto
   have hd : Disjoint (E \ F) F := Set.disjoint_sdiff_left
@@ -159,13 +159,13 @@ theorem mass_diff (β : Bias) {E F : Set (ι → Bool)} (h : F ⊆ E) :
   rw [← hu] at he
   linarith
 
-theorem mass_mono (β : Bias) {E F : Set (ι → Bool)} (h : E ⊆ F) :
+private theorem mass_mono (β : Bias) {E F : Set (ι → Bool)} (h : E ⊆ F) :
     mass β E ≤ mass β F := by
   have hn := mass_nonneg β (F \ E)
   rw [mass_diff β h] at hn
   linarith
 
-theorem mass_pos_iff (β : Bias) (E : Set (ι → Bool)) :
+private theorem mass_pos_iff (β : Bias) (E : Set (ι → Bool)) :
     0 < mass β E ↔ E.Nonempty := by
   constructor
   · intro hp
@@ -180,7 +180,7 @@ theorem mass_pos_iff (β : Bias) (E : Set (ι → Bool)) :
     exact (weight_pos β σ).trans_le hle
 
 /-- A finite probability-one assertion holds at every configuration. -/
-theorem mass_one_iff (β : Bias) (E : Set (ι → Bool)) :
+private theorem mass_one_iff (β : Bias) (E : Set (ι → Bool)) :
     mass β E = 1 ↔ E = Set.univ := by
   constructor
   · intro he
@@ -199,7 +199,7 @@ theorem mass_one_iff (β : Bias) (E : Set (ι → Bool)) :
   · rintro rfl; exact mass_univ β
 
 /-- Arbitrary coordinatewise constraints factor as a finite product. -/
-theorem mass_pi (β : Bias) (A : ι → Set Bool) :
+private theorem mass_pi (β : Bias) (A : ι → Set Bool) :
     mass β {σ | ∀ i, σ i ∈ A i} =
       ∏ i, ∑ s : Bool, if s ∈ A i then β.π s else 0 := by
   rw [Fintype.prod_sum]
@@ -209,7 +209,7 @@ theorem mass_pi (β : Bias) (A : ι → Set Bool) :
     (Fintype.prod_ite_zero (p := fun i => σ i ∈ A i) (f := fun i => β.π (σ i))).symm
 
 /-- Prescribing a finite set of coordinates leaves every other spin unrestricted. -/
-theorem prescribed_mass (β : Bias) (A : Finset ι) (v : ι → Bool) :
+private theorem prescribed_mass (β : Bias) (A : Finset ι) (v : ι → Bool) :
     mass β {σ | ∀ i ∈ A, σ i = v i} = ∏ i ∈ A, β.π (v i) := by
   have hs : {σ : ι → Bool | ∀ i ∈ A, σ i = v i} =
       {σ | ∀ i, σ i ∈ (if i ∈ A then {v i} else Set.univ : Set Bool)} := by
@@ -230,13 +230,13 @@ theorem prescribed_mass (β : Bias) (A : Finset ι) (v : ι → Bool) :
   simp_rw [hcoord]
   exact Finset.prod_ite_mem_eq A (fun i => β.π (v i))
 
-theorem constant_mass (β : Bias) (A : Finset ι) (s : Bool) :
+private theorem constant_mass (β : Bias) (A : Finset ι) (s : Bool) :
     mass β {σ | ∀ i ∈ A, σ i = s} = (β.π s)^A.card := by
   rw [prescribed_mass]
   simp
 
 /-- Nonempty monochromatic blocks split into two disjoint constant-spin cylinders. -/
-theorem monochromatic_mass (β : Bias) (A : Finset ι) (ha : A.Nonempty) :
+private theorem monochromatic_mass (β : Bias) (A : Finset ι) (ha : A.Nonempty) :
     mass β {σ | (∀ i ∈ A, σ i = false) ∨ (∀ i ∈ A, σ i = true)} = β.T A.card := by
   have hd : Disjoint {σ : ι → Bool | ∀ i ∈ A, σ i = false}
       {σ | ∀ i ∈ A, σ i = true} := by
@@ -267,7 +267,7 @@ variable {ι : Type*} [Fintype ι]
 
 def restrict (A : Finset ι) (σ : ι → Bool) : A → Bool := fun i => σ i
 
-theorem restriction_fiber_mass (β : Bias) (A : Finset ι) (τ : A → Bool) :
+private theorem restriction_fiber_mass (β : Bias) (A : Finset ι) (τ : A → Bool) :
     mass β {σ : ι → Bool | restrict A σ = τ} = weight β τ := by
   let v : ι → Bool := fun i => if h : i ∈ A then τ ⟨i, h⟩ else false
   have he : {σ : ι → Bool | restrict A σ = τ} = {σ | ∀ i ∈ A, σ i = v i} := by
@@ -286,7 +286,7 @@ theorem restriction_fiber_mass (β : Bias) (A : Finset ι) (τ : A → Bool) :
   simp only [v, dif_pos (Subtype.property _), weight]
 
 /-- Marginalization is proved for every event, not just constant-spin cylinders. -/
-theorem restriction_mass (β : Bias) (A : Finset ι) (E : Set (A → Bool)) :
+private theorem restriction_mass (β : Bias) (A : Finset ι) (E : Set (A → Bool)) :
     mass β {σ : ι → Bool | restrict A σ ∈ E} = mass β E := by
   have hsingle (σ : ι → Bool) :
       (if restrict A σ ∈ E then weight β σ else 0) =
@@ -314,7 +314,7 @@ theorem restriction_mass (β : Bias) (A : Finset ι) (E : Set (A → Bool)) :
   · simp [he]
 
 /-- An arbitrary coordinate partition has independent product marginals. -/
-theorem partition_mass (β : Bias) (p : ι → Prop) [DecidablePred p]
+private theorem partition_mass (β : Bias) (p : ι → Prop) [DecidablePred p]
     (E : Set ({i // p i} → Bool)) (F : Set ({i // ¬p i} → Bool)) :
     mass β {σ : ι → Bool | (fun i : {i // p i} => σ i) ∈ E ∧
       (fun i : {i // ¬p i} => σ i) ∈ F} = mass β E * mass β F := by
@@ -337,7 +337,7 @@ theorem partition_mass (β : Bias) (p : ι → Prop) [DecidablePred p]
   by_cases he : σ ∈ E <;> by_cases hf : τ ∈ F <;> simp [he, hf]
 
 /-- Events depending on disjoint coordinate sets are independent. -/
-theorem disjoint_event_mass (β : Bias) (A B : Finset ι) (hd : Disjoint A B)
+private theorem disjoint_event_mass (β : Bias) (A B : Finset ι) (hd : Disjoint A B)
     (E F : Set (ι → Bool))
     (hE : ∀ σ τ : ι → Bool, (∀ i ∈ A, σ i = τ i) → (σ ∈ E ↔ τ ∈ E))
     (hF : ∀ σ τ : ι → Bool, (∀ i ∈ B, σ i = τ i) → (σ ∈ F ↔ τ ∈ F)) :
@@ -384,7 +384,7 @@ def pathEdges (L : ℤ) (n : ℕ) : Finset ℤ := Finset.Icc L (L + n - 1)
 def pathVertices (L : ℤ) (n : ℕ) : Finset ℤ := Finset.Icc L (L + n)
 
 /-- The three cases include arbitrary negative edge indices. -/
-theorem integer_edge_trichotomy (L e : ℤ) {n : ℕ} (hn : 1 ≤ n) :
+private theorem integer_edge_trichotomy (L e : ℤ) {n : ℕ} (hn : 1 ≤ n) :
     e ∈ pathEdges L n ∨ (e = L - 1 ∨ e = L + n) ∨
       Disjoint ({e, e + 1} : Finset ℤ) (pathVertices L n) := by
   by_cases hi : e ∈ pathEdges L n
@@ -401,13 +401,13 @@ theorem integer_edge_trichotomy (L e : ℤ) {n : ℕ} (hn : 1 ≤ n) :
   simp only [pathEdges, Finset.mem_Icc, not_and_or, not_le] at hi
   rcases hv with rfl | rfl <;> omega
 
-theorem extend_left (L : ℤ) (n : ℕ) :
+private theorem extend_left (L : ℤ) (n : ℕ) :
     insert (L - 1) (pathEdges L n) = pathEdges (L - 1) (n + 1) := by
   ext e
   simp only [Finset.mem_insert, pathEdges, Finset.mem_Icc, Nat.cast_add, Nat.cast_one]
   omega
 
-theorem extend_right (L : ℤ) (n : ℕ) :
+private theorem extend_right (L : ℤ) (n : ℕ) :
     insert (L + n) (pathEdges L n) = pathEdges L (n + 1) := by
   ext e
   simp only [Finset.mem_insert, pathEdges, Finset.mem_Icc, Nat.cast_add, Nat.cast_one]
@@ -418,7 +418,7 @@ theorem vertices_card (L : ℤ) (n : ℕ) : (pathVertices L n).card = n + 1 := b
   omega
 
 /-- Adjacent equalities on an integer interval force a single common spin value. -/
-theorem path_constant_iff (L : ℤ) (n : ℕ) (S : Spins) :
+private theorem path_constant_iff (L : ℤ) (n : ℕ) (S : Spins) :
     (∀ e ∈ pathEdges L n, S e = S (e + 1)) ↔
       ∀ v ∈ pathVertices L n, S v = S L := by
   constructor
@@ -449,7 +449,7 @@ theorem path_constant_iff (L : ℤ) (n : ℕ) (S : Spins) :
     exact (h e h0).trans (h _ h1).symm
 
 /-- A target contained in a zero path specifies the spin of every vertex. -/
-theorem path_target_iff (L q : ℤ) (n : ℕ) (S : Spins) (s : Bool)
+private theorem path_target_iff (L q : ℤ) (n : ℕ) (S : Spins) (s : Bool)
     (hq : q ∈ pathVertices L n) :
     ((∀ e ∈ pathEdges L n, S e = S (e + 1)) ∧ S q = s) ↔
       ∀ v ∈ pathVertices L n, S v = s := by
@@ -498,7 +498,7 @@ namespace SpinWindow
 def extend (V : Finset ℤ) (σ : V → Bool) : Spins :=
   fun i => if hi : i ∈ V then σ ⟨i, hi⟩ else false
 
-@[simp] theorem extend_apply (V : Finset ℤ) (σ : V → Bool) (i : ℤ) (hi : i ∈ V) :
+@[simp] private theorem extend_apply (V : Finset ℤ) (σ : V → Bool) (i : ℤ) (hi : i ∈ V) :
     extend V σ i = σ ⟨i, hi⟩ := dif_pos hi
 
 def prob (β : Bias) (V : Finset ℤ) (E : Set Spins) : ℝ :=
@@ -507,7 +507,7 @@ def prob (β : Bias) (V : Finset ℤ) (E : Set Spins) : ℝ :=
 @[simp] theorem prob_univ (β : Bias) (V : Finset ℤ) : prob β V Set.univ = 1 :=
   FiniteSpinLaw.mass_univ β
 
-@[simp] theorem prob_empty (β : Bias) (V : Finset ℤ) : prob β V ∅ = 0 :=
+@[simp] private theorem prob_empty (β : Bias) (V : Finset ℤ) : prob β V ∅ = 0 :=
   FiniteSpinLaw.mass_empty β
 
 theorem prob_union (β : Bias) (V : Finset ℤ) {E F : Set Spins} (h : Disjoint E F) :
@@ -552,7 +552,7 @@ theorem constant_prob (β : Bias) (V A : Finset ℤ) (hA : A ⊆ V) (s : Bool) :
   rw [he, FiniteSpinLaw.constant_mass, Finset.card_subtype,
     Finset.filter_eq_self.mpr hA]
 
-theorem constant_disjoint (A : Finset ℤ) (hA : A.Nonempty) :
+private theorem constant_disjoint (A : Finset ℤ) (hA : A.Nonempty) :
     Disjoint (constant A false) (constant A true) := by
   apply Set.disjoint_left.mpr
   intro S h0 h1
@@ -560,7 +560,7 @@ theorem constant_disjoint (A : Finset ℤ) (hA : A.Nonempty) :
   have := (h0 i hi).symm.trans (h1 i hi)
   cases this
 
-theorem monoBlock_prob (β : Bias) (V A : Finset ℤ) (hA : A ⊆ V) (hne : A.Nonempty) :
+private theorem monoBlock_prob (β : Bias) (V A : Finset ℤ) (hA : A ⊆ V) (hne : A.Nonempty) :
     prob β V (monoBlock A) = β.T A.card := by
   let C : Finset V := A.subtype (· ∈ V)
   have hc : C.Nonempty := by
@@ -596,14 +596,14 @@ theorem zero_path_eq_block (L : ℤ) (n : ℕ) :
     have hl : L ∈ pathVertices L n := by simp [pathVertices]
     rcases h with h | h <;> exact (h v hv).trans (h L hl).symm
 
-theorem zero_path_prob (β : Bias) (V : Finset ℤ) (L : ℤ) (n : ℕ)
+private theorem zero_path_prob (β : Bias) (V : Finset ℤ) (L : ℤ) (n : ℕ)
     (hV : pathVertices L n ⊆ V) :
     prob β V (zeroEdges (pathEdges L n)) = β.T (n + 1) := by
   rw [zero_path_eq_block, monoBlock_prob β V _ hV, vertices_card]
   exact ⟨L, by simp [pathVertices]⟩
 
 /-- The target section becomes a constant-spin block if the target lies on the path. -/
-theorem target_collision_prob (β : Bias) (V : Finset ℤ) (L q : ℤ) (n : ℕ)
+private theorem target_collision_prob (β : Bias) (V : Finset ℤ) (L q : ℤ) (n : ℕ)
     (hV : pathVertices L n ⊆ V) (hq : q ∈ pathVertices L n) (s : Bool) :
     prob β V (zeroEdges (pathEdges L n) ∩ {S | S q = s}) = (β.π s)^(n + 1) := by
   have he : zeroEdges (pathEdges L n) ∩ {S | S q = s} = constant (pathVertices L n) s := by
@@ -611,7 +611,7 @@ theorem target_collision_prob (β : Bias) (V : Finset ℤ) (L q : ℤ) (n : ℕ)
     exact path_target_iff L q n S s hq
   rw [he, constant_prob β V _ hV, vertices_card]
 
-theorem target_collision_conditional (β : Bias) (V : Finset ℤ) (L q : ℤ) (n : ℕ)
+private theorem target_collision_conditional (β : Bias) (V : Finset ℤ) (L q : ℤ) (n : ℕ)
     (hV : pathVertices L n ⊆ V) (hq : q ∈ pathVertices L n) (s : Bool) :
     prob β V (zeroEdges (pathEdges L n) ∩ {S | S q = s}) / β.π s = (β.π s)^n := by
   rw [target_collision_prob β V L q n hV hq s, pow_succ,
@@ -635,7 +635,7 @@ def SupportedOn (V : Finset ℤ) (E : Set Spins) : Prop :=
   ∀ S R : Spins, (∀ i ∈ V, S i = R i) → (S ∈ E ↔ R ∈ E)
 
 /-- Two spin events on disjoint finite coordinates are independent in any containing window. -/
-theorem prob_independent (β : Bias) (V A B : Finset ℤ) (hA : A ⊆ V) (hB : B ⊆ V)
+private theorem prob_independent (β : Bias) (V A B : Finset ℤ) (hA : A ⊆ V) (hB : B ⊆ V)
     (hd : Disjoint A B) (E F : Set Spins) (hE : SupportedOn A E) (hF : SupportedOn B F) :
     prob β V (E ∩ F) = prob β V E * prob β V F := by
   let A' : Finset V := A.subtype (· ∈ V)
@@ -665,7 +665,7 @@ namespace FiniteSpinLaw
 
 variable {ι : Type*} [Fintype ι]
 
-theorem two_constant_mass (β : Bias) (A B : Finset ι) (hd : Disjoint A B) (s t : Bool) :
+private theorem two_constant_mass (β : Bias) (A B : Finset ι) (hd : Disjoint A B) (s t : Bool) :
     mass β ({σ | ∀ i ∈ A, σ i = s} ∩ {σ | ∀ i ∈ B, σ i = t}) =
       (β.π s)^A.card * (β.π t)^B.card := by
   have hs (C : Finset ι) (u : Bool) (σ τ : ι → Bool)
@@ -685,7 +685,7 @@ end FiniteSpinLaw
 
 namespace SpinWindow
 
-theorem two_constant_prob (β : Bias) (V A B : Finset ℤ)
+private theorem two_constant_prob (β : Bias) (V A B : Finset ℤ)
     (hA : A ⊆ V) (hB : B ⊆ V) (hd : Disjoint A B) (s t : Bool) :
     prob β V (constant A s ∩ constant B t) =
       (β.π s)^A.card * (β.π t)^B.card := by
@@ -727,7 +727,7 @@ theorem block_constant_prob (β : Bias) (V A B : Finset ℤ)
   simp only [Bias.T, Bias.π, Bool.false_eq_true, ↓reduceIte]
   ring
 
-theorem two_blocks_prob (β : Bias) (V A B : Finset ℤ)
+private theorem two_blocks_prob (β : Bias) (V A B : Finset ℤ)
     (hA : A ⊆ V) (hB : B ⊆ V) (hd : Disjoint A B)
     (hneA : A.Nonempty) (hneB : B.Nonempty) :
     prob β V (monoBlock A ∩ monoBlock B) = β.T A.card * β.T B.card := by
@@ -741,24 +741,24 @@ theorem two_blocks_prob (β : Bias) (V A B : Finset ℤ)
   rw [prob_independent β V A B hA hB hd _ _ (hs A) (hs B),
     monoBlock_prob β V A hA hneA, monoBlock_prob β V B hB hneB]
 
-theorem zero_insert (E : Finset ℤ) (e : ℤ) :
+private theorem zero_insert (E : Finset ℤ) (e : ℤ) :
     zeroEdges (insert e E) = zeroEdges E ∩ {S | S e = S (e + 1)} := by
   ext S; simp only [zeroEdges, Set.mem_inter_iff, Set.mem_setOf_eq,
     Finset.forall_mem_insert]; tauto
 
-theorem pair_zero_eq_block (e : ℤ) :
+private theorem pair_zero_eq_block (e : ℤ) :
     {S : Spins | S e = S (e + 1)} = monoBlock {e, e + 1} := by
   ext S
   simp only [monoBlock, constant, Set.mem_union, Set.mem_setOf_eq, Finset.forall_mem_insert,
     Finset.mem_singleton, forall_eq]
   cases h0 : S e <;> cases h1 : S (e + 1) <;> simp [h0, h1]
 
-theorem repeated_edge_prob (β : Bias) (V : Finset ℤ) (L e : ℤ) (n : ℕ)
+private theorem repeated_edge_prob (β : Bias) (V : Finset ℤ) (L e : ℤ) (n : ℕ)
     (hV : pathVertices L n ⊆ V) (he : e ∈ pathEdges L n) :
     prob β V (zeroEdges (insert e (pathEdges L n))) = β.T (n + 1) := by
   rw [Finset.insert_eq_of_mem he, zero_path_prob β V L n hV]
 
-theorem separated_edge_prob (β : Bias) (V : Finset ℤ) (L e : ℤ) (n : ℕ)
+private theorem separated_edge_prob (β : Bias) (V : Finset ℤ) (L e : ℤ) (n : ℕ)
     (hV : pathVertices L n ⊆ V) (heV : {e, e + 1} ⊆ V)
     (hd : Disjoint ({e, e + 1} : Finset ℤ) (pathVertices L n)) :
     prob β V (zeroEdges (insert e (pathEdges L n))) = β.T 2 * β.T (n + 1) := by
@@ -802,7 +802,7 @@ theorem path_vertices_supported (V : Finset ℤ) (L : ℤ) {n : ℕ} (hn : 1 ≤
     simpa using hp
 
 /-- The required new mass rules out repetition and a vertex-disjoint edge. -/
-theorem mass_forces_extension (β : Bias) (V : Finset ℤ) (L e : ℤ) {n : ℕ}
+private theorem mass_forces_extension (β : Bias) (V : Finset ℤ) (L e : ℤ) {n : ℕ}
     (hn : 1 ≤ n) (hV : pathVertices L n ⊆ V) (heV : {e, e + 1} ⊆ V)
     (hm : prob β V (zeroEdges (insert e (pathEdges L n))) = β.T (n + 2)) :
     e = L - 1 ∨ e = L + n := by
@@ -879,7 +879,7 @@ theorem prefixes_force_consecutive (β : Bias) (V : Finset ℤ) (es : List ℤ)
       simpa [hL] using extend_right L es.length
 
 /-- Both actual target-spin sections exclude a target vertex on the recovered path. -/
-theorem joint_masses_force_target_separation (β : Bias) (V : Finset ℤ)
+private theorem joint_masses_force_target_separation (β : Bias) (V : Finset ℤ)
     (es : List ℤ) (q L : ℤ) (hk : 1 ≤ es.length)
     (hV : SupportsEdges V es) (hL : es.toFinset = pathEdges L es.length)
     (htarget : ∀ s : Bool,

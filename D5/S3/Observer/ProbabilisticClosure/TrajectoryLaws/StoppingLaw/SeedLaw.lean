@@ -24,10 +24,10 @@ def witnessEdges (j : Bool) (k : ℕ) : List ℤ :=
 def witnessTree (j : Bool) (k : ℕ) : ReadTree :=
   ReadTree.edgeComb (witnessEdges j k) (!j)
 
-@[simp] theorem witnessEdges_length (j : Bool) (k : ℕ) : (witnessEdges j k).length = k := by
+@[simp] private theorem witnessEdges_length (j : Bool) (k : ℕ) : (witnessEdges j k).length = k := by
   simp [witnessEdges]
 
-theorem witness_prefix_edges (j : Bool) (k r : ℕ) (hr : r ≤ k) :
+private theorem witness_prefix_edges (j : Bool) (k r : ℕ) (hr : r ≤ k) :
     ((witnessEdges j k).take r).toFinset = pathEdges (j.toInt + 1) r := by
   unfold witnessEdges
   rw [← List.map_take, List.take_range, Nat.min_eq_left hr]
@@ -47,7 +47,7 @@ theorem witness_read_addresses (j : Bool) (k : ℕ) :
   cases j <;> simp only [Function.comp_apply, Bool.toInt_false, Bool.toInt_true,
     Bool.not_false, Bool.not_true] <;> ring
 
-theorem witness_opposite_run (j : Bool) (k : ℕ) (S : Spins) :
+private theorem witness_opposite_run (j : Bool) (k : ℕ) (S : Spins) :
     (witnessTree j k).run (visible j S) =
       ⟨some (.a false), ((witnessEdges j k).map (fun e => 2 * e + (!j).toInt)).map
         (fun t => (t, false))⟩ := by
@@ -57,7 +57,7 @@ theorem witness_opposite_run (j : Bool) (k : ℕ) (S : Spins) :
   have ha : (2 * e + (!j).toInt - (!j).toInt) % 2 = 0 := by omega
   simpa only [Bool.not_not] using opposite_phase_visible (!j) S _ ha
 
-theorem witness_outcomes (j φ : Bool) (k : ℕ) (S : Spins) :
+private theorem witness_outcomes (j φ : Bool) (k : ℕ) (S : Spins) :
     ((witnessTree j k).run (visible φ S)).output = some (.a false) ∧
       ((witnessTree j k).run (visible φ S)).paid = k ∨
     ((witnessTree j k).run (visible φ S)).output = some (.a true) ∧
@@ -67,7 +67,7 @@ theorem witness_outcomes (j φ : Bool) (k : ℕ) (S : Spins) :
     ReadTree.stopComb_outcomes ((witnessEdges j k).map (fun e => 2 * e + (!j).toInt))
       (visible φ S)
 
-theorem witness_joint_prefix (β : Bias) (V : Finset ℤ) (j : Bool) (k r : ℕ)
+private theorem witness_joint_prefix (β : Bias) (V : Finset ℤ) (j : Bool) (k r : ℕ)
     (hr : r ≤ k) (hq : j.toInt ∈ V) (hV : pathVertices (j.toInt + 1) k ⊆ V) (s : Bool) :
     SpinWindow.prob β V (SpinWindow.zeroEdges ((witnessEdges j k).take r).toFinset ∩
       {S | S j.toInt = s}) = β.π s * β.T (r + 1) := by
@@ -90,7 +90,7 @@ theorem witness_joint_prefix (β : Bias) (V : Finset ℤ) (j : Bool) (k r : ℕ)
     ⟨j.toInt + 1, by simp [pathVertices]⟩, vertices_card]
   simp [mul_comm]
 
-theorem witness_joint_stop (β : Bias) (V : Finset ℤ) (j : Bool) (k i : ℕ)
+private theorem witness_joint_stop (β : Bias) (V : Finset ℤ) (j : Bool) (k i : ℕ)
     (hi : 1 ≤ i) (hik : i ≤ k) (hq : j.toInt ∈ V)
     (hV : pathVertices (j.toInt + 1) k ⊆ V) (s : Bool) :
     SpinWindow.prob β V {S | S j.toInt = s ∧
@@ -119,7 +119,7 @@ theorem witness_joint_stop (β : Bias) (V : Finset ℤ) (j : Bool) (k i : ℕ)
   unfold Bias.d
   ring
 
-theorem witness_joint_final (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ)
+private theorem witness_joint_final (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ)
     (hq : j.toInt ∈ V) (hV : pathVertices (j.toInt + 1) k ⊆ V) (s : Bool) :
     SpinWindow.prob β V {S | S j.toInt = s ∧
       ((witnessTree j k).run (visible (!j) S)).output = some (.a false) ∧
@@ -145,7 +145,7 @@ theorem witness_joint_final (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ)
   exact witness_joint_prefix β V j k k le_rfl hq hV s
 
 /-- Unsupported outputs and nonreturn indicators have zero complete source mass. -/
-theorem witness_mass_support (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ) (z : Observation)
+private theorem witness_mass_support (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ) (z : Observation)
     (h : z.returned ≠ true ∨ (z.output ≠ some (.a false) ∧ z.output ≠ some (.a true))) :
     fullMass β V j (witnessTree j k) z = 0 := by
   have he (φ : Bool) : {S : Spins | observation j φ (witnessTree j k) S = z} = ∅ := by
@@ -165,7 +165,7 @@ theorem witness_mass_support (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ) (
   simp [fullMass, he]
 
 /-- Exact full law on any finite window containing the used block and target coordinates. -/
-theorem witness_full_law (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ) (hk : 1 ≤ k)
+private theorem witness_full_law (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ) (hk : 1 ≤ k)
     (h01 : ({0, 1} : Finset ℤ) ⊆ V) (hV : pathVertices (j.toInt + 1) k ⊆ V) :
     HasStoppingLaw β V j k (witnessTree j k) := by
   have hq : j.toInt ∈ V := h01 (by cases j <;> simp)
@@ -256,7 +256,7 @@ open scoped BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
-theorem witness_window (j : Bool) (k : ℕ) (hk : 1 ≤ k) :
+private theorem witness_window (j : Bool) (k : ℕ) (hk : 1 ≤ k) :
     pathVertices (j.toInt + 1) k ⊆ lawWindow (witnessTree j k) := by
   apply SpinWindow.path_vertices_supported _ _ hk
   intro e he
@@ -272,7 +272,7 @@ theorem witness_canonical_law (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) :
     HasStoppingLaw β (lawWindow (witnessTree j k)) j k (witnessTree j k) :=
   witness_full_law β _ j k hk Finset.subset_union_right (witness_window j k hk)
 
-theorem witness_address_bound (j : Bool) (k : ℕ) :
+private theorem witness_address_bound (j : Bool) (k : ℕ) :
     ∀ t ∈ (witnessEdges j k).map (fun e => 2 * e + (!j).toInt),
       |t - j.toInt| ≤ (2 * k + 1 : ℕ) := by
   rw [witness_read_addresses]
@@ -284,7 +284,7 @@ theorem witness_address_bound (j : Bool) (k : ℕ) :
   omega
 
 /-- Every actual call is charged and remains within the original-clock radius. -/
-theorem witness_execution_bounds (j φ : Bool) (k : ℕ) (S : Spins) :
+private theorem witness_execution_bounds (j φ : Bool) (k : ℕ) (S : Spins) :
     ((witnessTree j k).run (visible φ S)).paid ≤ k ∧
       ∀ a ∈ ((witnessTree j k).run (visible φ S)).record,
         |a.1 - j.toInt| ≤ (2 * k + 1 : ℕ) := by
@@ -301,7 +301,7 @@ theorem witness_execution_bounds (j φ : Bool) (k : ℕ) (S : Spins) :
     rw [hc] at hm
     exact witness_address_bound j k a.1 (List.mem_toFinset.mp hm)
 
-theorem witness_remote_active (j : Bool) (n : ℕ) :
+private theorem witness_remote_active (j : Bool) (n : ℕ) :
     remoteEvent (witnessTree j (n + 1)) j (2 * (n + 1) + 1) (!j) =
       SpinWindow.zeroEdges ((witnessEdges j (n + 1)).take n).toFinset := by
   let pre := (witnessEdges j n).map (fun e => 2 * e + (!j).toInt)
@@ -337,7 +337,7 @@ theorem witness_remote_active (j : Bool) (n : ℕ) :
   rw [hsplit, ← hlen, List.take_left, List.take_length]
 
 /-- The witness attains the lower probability, including probability one at budget one. -/
-theorem witness_remote_mass (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) :
+private theorem witness_remote_mass (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) :
     remoteMass β (lawWindow (witnessTree j k)) j (2 * k + 1) (witnessTree j k) =
       (1 + β.T k) / 2 := by
   obtain ⟨n, rfl⟩ : ∃ n : ℕ, k = n + 1 := ⟨k - 1, by omega⟩
@@ -383,14 +383,14 @@ namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 universe u
 
 /-- Evaluation on a countable tree space is jointly measurable. -/
-theorem measurable_tree_observation (j : Bool) :
+private theorem measurable_tree_observation (j : Bool) :
     Measurable (fun p : SourcePoint × ReadTree => observation j p.1.1 p.2 p.1.2) :=
   measurable_from_prod_countable_left (fun T => measurable_observation j T)
 
 def selectorJoint {U : Type u} (j : Bool) (T : U → ReadTree)
     (z : SourcePoint × U) : U × Observation := (z.2, observation j z.1.1 (T z.2) z.1.2)
 
-theorem measurable_selectorJoint {U : Type u} [MeasurableSpace U]
+private theorem measurable_selectorJoint {U : Type u} [MeasurableSpace U]
     (j : Bool) (T : U → ReadTree) (hT : Measurable T) : Measurable (selectorJoint j T) :=
   measurable_snd.prodMk ((measurable_tree_observation j).comp
     (measurable_fst.prodMk (hT.comp measurable_snd)))
@@ -398,13 +398,13 @@ theorem measurable_selectorJoint {U : Type u} [MeasurableSpace U]
 namespace RawRule
 variable {U : Type u} [MeasurableSpace U]
 
-def observation (Q : RawRule U) (j : Bool) (s : SourcePoint) (u : U) : Observation :=
+def rawObservation (Q : RawRule U) (j : Bool) (s : SourcePoint) (u : U) : Observation :=
   let o := Q.output u (visible s.1 s.2)
   ⟨hidden s.1 s.2 j.toInt, o, decide (Q.returnTime u (visible s.1 s.2) < ⊤),
     (Q.paidCount u (visible s.1 s.2)).toNat⟩
 
 def joint (Q : RawRule U) (j : Bool) (z : SourcePoint × U) : U × Observation :=
-  (z.2, Q.observation j z.1 z.2)
+  (z.2, Q.rawObservation j z.1 z.2)
 
 def fullLaw (Q : RawRule U) (β : Bias) (j : Bool) (ν : Measure U) : Measure (U × Observation) :=
   ((sourceLaw β).prod ν).map (Q.joint j)
@@ -412,30 +412,30 @@ def fullLaw (Q : RawRule U) (β : Bias) (j : Bool) (ν : Measure U) : Measure (U
 def SameFullLaw (Q R : RawRule U) (β : Bias) (j : Bool) (ν : Measure U) : Prop :=
   Q.fullLaw β j ν = R.fullLaw β j ν
 
-theorem observation_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k)
+private theorem observation_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k)
     (j : Bool) (s : SourcePoint) (u : U) :
-    Q.observation j s u = StoppingLaw.observation j s.1 (Q.normalize k u) s.2 := by
+    Q.rawObservation j s u = StoppingLaw.observation j s.1 (Q.normalize k u) s.2 := by
   obtain ⟨_, ho, hn⟩ := Q.normalization_pointwise k hc s.1 s.2 u
-  simp only [observation, StoppingLaw.observation, ho, hn, ENat.toNat_natCast,
+  simp only [rawObservation, StoppingLaw.observation, ho, hn, ENat.toNat_natCast,
     Q.normalization_return_indicator k hc]
 
-theorem joint_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k) (j : Bool) :
+private theorem joint_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k) (j : Bool) :
     Q.joint j = selectorJoint j (Q.normalize k) := by
   funext z
   exact congrArg (Prod.mk z.2) (Q.observation_normalize k hc j z.1 z.2)
 
-theorem Lawful.completionLawful {Q : RawRule U} (hQ : Q.Lawful) (ν : Measure U) :
+private theorem Lawful.completionLawful {Q : RawRule U} (hQ : Q.Lawful) (ν : Measure U) :
     Q.CompletionLawful ν :=
   ⟨fun r => (hQ.measurable_next r).nullMeasurable.measurable',
     fun r => (hQ.measurable_wait r).nullMeasurable.measurable'⟩
 
-theorem aemeasurable_normalize (Q : RawRule U) (ν : Measure U)
+private theorem aemeasurable_normalize (Q : RawRule U) (ν : Measure U)
     (hQ : Q.CompletionLawful ν) (k : ℕ) : AEMeasurable (Q.normalize k) ν := by
   obtain ⟨T₀, hm, he⟩ := Q.completion_normalization_version ν hQ k
   have he' : Q.normalize k =ᵐ[ν] (fun u => (T₀ u).val) := he
   exact (measurable_subtype_coe.comp hm).aemeasurable.congr he'.symm
 
-theorem aemeasurable_joint (Q : RawRule U) (ν : Measure U) (β : Bias)
+private theorem aemeasurable_joint (Q : RawRule U) (ν : Measure U) (β : Bias)
     (hQ : Q.CompletionLawful ν) (k : ℕ) (hc : Q.TotalCap k) (j : Bool) :
     AEMeasurable (Q.joint j) ((sourceLaw β).prod ν) := by
   rw [Q.joint_normalize k hc]
@@ -448,7 +448,7 @@ theorem aemeasurable_joint (Q : RawRule U) (ν : Measure U) (β : Bias)
     ((measurable_tree_observation j).comp_aemeasurable hp)
 
 /-- No change of seed space or measure occurs when a tree selector is realized. -/
-theorem fullLaw_realize (T : U → ReadTree) (k : ℕ) (hT : ∀ u, (T u).height ≤ k)
+private theorem fullLaw_realize (T : U → ReadTree) (k : ℕ) (hT : ∀ u, (T u).height ≤ k)
     (β : Bias) (j : Bool) (ν : Measure U) :
     (realize T).fullLaw β j ν = ((sourceLaw β).prod ν).map (selectorJoint j T) := by
   have hc := realize_cap T k hT
@@ -462,7 +462,7 @@ theorem fullLaw_realize (T : U → ReadTree) (k : ℕ) (hT : ∀ u, (T u).height
 end RawRule
 
 /-- Countable fibers recover source sections from the complete unchanged-seed joint law. -/
-theorem selector_full_law_sections {U : Type u} [MeasurableSpace U]
+private theorem selector_full_law_sections {U : Type u} [MeasurableSpace U]
     (β : Bias) (j : Bool) (ν : Measure U) [IsProbabilityMeasure ν]
     (T : U → ReadTree) (hT : Measurable T) (w : SourcePoint → Observation) (hw : Measurable w)
     (hlaw : ((sourceLaw β).prod ν).map (selectorJoint j T) =
@@ -530,7 +530,7 @@ theorem full_same_seed_law_forces_sections {U : Type u} [MeasurableSpace U]
       apply Bool.eq_iff_iff.mpr
       simpa only [decide_eq_true_eq, Execution.returned, ho] using
         Q.finite_return_iff p.2 (visible p.1.1 p.1.2)
-    simp only [RawRule.joint, RawRule.observation, selectorJoint,
+    simp only [RawRule.joint, RawRule.rawObservation, selectorJoint,
       StoppingLaw.observation, ho, hn, hd, ENat.toNat_natCast, T]
   have hmap : ((sourceLaw β).prod ν).map (selectorJoint j T) =
       ((sourceLaw β).prod ν).map (fun z : SourcePoint × U => (z.2, w z.1)) :=
@@ -543,13 +543,13 @@ theorem full_same_seed_law_forces_sections {U : Type u} [MeasurableSpace U]
 def stoppingRule {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) : RawRule U :=
   RawRule.realize (fun _ => witnessTree j k)
 
-theorem stoppingRule_height (j : Bool) (k : ℕ) : (witnessTree j k).height ≤ k := by
+private theorem stoppingRule_height (j : Bool) (k : ℕ) : (witnessTree j k).height ≤ k := by
   simp [witnessTree, ReadTree.edgeComb]
 
-theorem stoppingRule_lawful {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) :
+private theorem stoppingRule_lawful {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) :
     (stoppingRule (U := U) j k).Lawful := RawRule.realize_lawful _ measurable_const
 
-theorem stoppingRule_cap {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) :
+private theorem stoppingRule_cap {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) :
     (stoppingRule (U := U) j k).TotalCap k :=
   RawRule.realize_cap _ k (fun _ => stoppingRule_height j k)
 
@@ -578,7 +578,7 @@ theorem stopping_witness_full_law {U : Type u} [MeasurableSpace U]
   ring
 
 /-- Full original-rule law forces the finite-core stopping law at almost every seed. -/
-theorem original_stopping_law_sections {U : Type u} [MeasurableSpace U]
+private theorem original_stopping_law_sections {U : Type u} [MeasurableSpace U]
     (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) (ν : Measure U) [IsProbabilityMeasure ν]
     (Q : RawRule U) (hQ : Q.CompletionLawful ν) (hc : Q.TotalCap k)
     (hlaw : Q.SameFullLaw (stoppingRule j k) β j ν) :
@@ -615,7 +615,7 @@ def selectorRemote {U : Type u} (T : U → ReadTree) (j : Bool) (R : ℕ) :
     Set (SourcePoint × U) :=
   {p | ∃ a ∈ ((T p.2).run (visible p.1.1 p.1.2)).record, Far j R a.1}
 
-theorem measurable_selectorRemote {U : Type u} [MeasurableSpace U]
+private theorem measurable_selectorRemote {U : Type u} [MeasurableSpace U]
     (T : U → ReadTree) (hT : Measurable T) (j : Bool) (R : ℕ) :
     MeasurableSet (selectorRemote T j R) := by
   have he : Measurable (fun p : SourcePoint × ReadTree => p.2.run (visible p.1.1 p.1.2)) := by
@@ -638,7 +638,7 @@ def WithinActualRadius (Q : RawRule U) (j : Bool) (R : ℕ) : Prop :=
     Q.readPrefix u (visible φ S) n = some r →
       ∀ a ∈ r, |a.1 - j.toInt| ≤ (R : ℤ)
 
-theorem remote_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k) (j : Bool) (R : ℕ) :
+private theorem remote_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k) (j : Bool) (R : ℕ) :
     Q.remote j R = selectorRemote (Q.normalize k) j R := by
   ext p
   have hv := (Q.normalization_pointwise k hc p.1.1 p.1.2 p.2).1
@@ -651,7 +651,7 @@ theorem remote_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k) (j : Bool
 end RawRule
 
 /-- Measurable countable selectors integrate their finite source-section bounds. -/
-theorem selector_remote_lower_bound {U : Type u} [MeasurableSpace U]
+private theorem selector_remote_lower_bound {U : Type u} [MeasurableSpace U]
     (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) (ν : Measure U) [IsProbabilityMeasure ν]
     (T : U → ReadTree) (hT : Measurable T) (hh : ∀ u, (T u).height ≤ k)
     (hlaw : ∀ᵐ u ∂ν, HasStoppingLaw β (lawWindow (T u)) j k (T u)) :
@@ -680,7 +680,7 @@ theorem selector_remote_lower_bound {U : Type u} [MeasurableSpace U]
   exact this
 
 /-- Sharp lower probability for actual paid reads of every raw original-rule competitor. -/
-theorem original_rule_remote_probability {U : Type u} [MeasurableSpace U]
+private theorem original_rule_remote_probability {U : Type u} [MeasurableSpace U]
     (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) (ν : Measure U) [IsProbabilityMeasure ν]
     (Q : RawRule U) (hQ : Q.CompletionLawful ν) (hc : Q.TotalCap k)
     (hlaw : Q.SameFullLaw (stoppingRule j k) β j ν) :
@@ -701,7 +701,7 @@ theorem original_rule_remote_probability {U : Type u} [MeasurableSpace U]
   exact hb.trans_eq (congrArg ENNReal.toReal (measure_congr hE)).symm
 
 /-- The raw witness attains the remote-read bound on the same arbitrary seed space. -/
-theorem stopping_witness_remote_probability {U : Type u} [MeasurableSpace U]
+private theorem stopping_witness_remote_probability {U : Type u} [MeasurableSpace U]
     (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) (ν : Measure U) [IsProbabilityMeasure ν] :
     ((sourceLaw β).prod ν).real ((stoppingRule (U := U) j k).remote j (2 * k + 1)) =
       (1 + β.T k) / 2 := by
@@ -732,7 +732,7 @@ theorem original_rule_sharp_remote_probability {U : Type u} [MeasurableSpace U]
   simpa [hk1, β.T_one] using hb
 
 /-- The witness stays inside radius 2k+1 on every source and seed, including null paths. -/
-theorem stopping_witness_radius {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) :
+private theorem stopping_witness_radius {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) :
     (stoppingRule (U := U) j k).WithinActualRadius j (2 * k + 1) := by
   intro φ S u n r hr a ha
   have hnorm := (stoppingRule (U := U) j k).normalization_pointwise k
@@ -810,36 +810,36 @@ namespace CompletedRule
 universe u
 variable {U : Type u} [MeasurableSpace U]
 
-def joint (Q : CompletedRule U) (j : Bool) (p : SourcePoint × U) : U × Observation :=
-  (p.2, (Q.atSource p.1).observation j p.1 p.2)
+def completedJoint (Q : CompletedRule U) (j : Bool) (p : SourcePoint × U) : U × Observation :=
+  (p.2, (Q.atSource p.1).rawObservation j p.1 p.2)
 
 def fullLaw (Q : CompletedRule U) (β : Bias) (j : Bool) (ν : Measure U) :
-    Measure (U × Observation) := ((sourceLaw β).prod ν).map (Q.joint j)
+    Measure (U × Observation) := ((sourceLaw β).prod ν).map (Q.completedJoint j)
 
 def remote (Q : CompletedRule U) (j : Bool) (R : ℕ) : Set (SourcePoint × U) :=
   {p | p ∈ (Q.atSource p.1).remote j R}
 
-def WithinActualRadius (Q : CompletedRule U) (j : Bool) (R : ℕ) : Prop :=
+def CompletedWithinActualRadius (Q : CompletedRule U) (j : Bool) (R : ℕ) : Prop :=
   ∀ (s : SourcePoint) (u : U) (n : ℕ) (r : Record),
     (Q.atSource s).readPrefix u (visible s.1 s.2) n = some r →
       ∀ a ∈ r, |a.1 - j.toInt| ≤ (R : ℤ)
 
-theorem joint_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
+private theorem completed_joint_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
     (j : Bool) (p : SourcePoint × U) :
-    Q.joint j p = (p.2, observation j p.1.1 (Q.normalize k p) p.1.2) := by
-  obtain ⟨_, ho, hn⟩ := Q.normalization_execution k hc p
+    Q.completedJoint j p = (p.2, observation j p.1.1 (Q.normalize k p) p.1.2) := by
+  obtain ⟨_, ho, hn⟩ := Q.completed_normalization_execution k hc p
   have hd : decide ((Q.atSource p.1).returnTime p.2 (visible p.1.1 p.1.2) < ⊤) =
       ((Q.normalize k p).run (visible p.1.1 p.1.2)).returned := by
     apply Bool.eq_iff_iff.mpr
     simpa only [decide_eq_true_eq, Execution.returned, ho] using
       (Q.atSource p.1).finite_return_iff p.2 (visible p.1.1 p.1.2)
-  simp only [joint, RawRule.observation, observation, ho, hn, hd, ENat.toNat_natCast]
+  simp only [completedJoint, RawRule.rawObservation, observation, ho, hn, hd, ENat.toNat_natCast]
 
-theorem remote_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
+private theorem completed_remote_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
     (j : Bool) (R : ℕ) (p : SourcePoint × U) :
     p ∈ Q.remote j R ↔ ∃ a ∈ ((Q.normalize k p).run (visible p.1.1 p.1.2)).record,
       Far j R a.1 := by
-  have hv := (Q.normalization_execution k hc p).1
+  have hv := (Q.completed_normalization_execution k hc p).1
   constructor
   · rintro ⟨n, r, hr, a, ha, hf⟩
     exact ⟨a, (Q.atSource p.1).completes_record_subset _ _ hv hr a ha, hf⟩
@@ -860,9 +860,9 @@ theorem full_law_sections (β : Bias) (j : Bool) (ν : Measure U) [IsProbability
           (sourceLaw β).real (w ⁻¹' {z})) := by
   obtain ⟨T, hm, he⟩ := Q.normalization_version ((sourceLaw β).prod ν) hQ k
   have hT : Measurable (fun u => (T u).val) := measurable_subtype_coe.comp hm
-  have hj : Q.joint j =ᵐ[(sourceLaw β).prod ν] selectorJoint j (fun u => (T u).val) := by
+  have hj : Q.completedJoint j =ᵐ[(sourceLaw β).prod ν] selectorJoint j (fun u => (T u).val) := by
     filter_upwards [he] with p hp
-    rw [Q.joint_normalize k hc j p, hp]
+    rw [Q.completed_joint_normalize k hc j p, hp]
     rfl
   have hmap := (Measure.map_congr hj).symm.trans hlaw
   have hs := selector_full_law_sections β j ν (fun u => (T u).val) hT w hw hmap
@@ -904,7 +904,7 @@ theorem original_rule_stopping_results (β : Bias) (j : Bool) (k : ℕ) (hk : 1 
         selectorRemote (fun u => (T u).val) j (2 * k + 1) := by
       filter_upwards [he] with p hp
       apply propext
-      rw [Q.remote_normalize k hc, hp]
+      rw [Q.completed_remote_normalize k hc, hp]
       rfl
     have hbound : (1 + β.T k) / 2 ≤
         ((sourceLaw β).prod ν).real (Q.remote j (2 * k + 1)) :=
@@ -915,11 +915,11 @@ theorem original_rule_stopping_results (β : Bias) (j : Bool) (k : ℕ) (hk : 1 
     simpa [hk1, β.T_one] using hbound
 
 /-- The exact law-preserving radius also ranges over ambient completed lawful events. -/
-theorem stopping_witness_exact_radius (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k)
+theorem completed_stopping_witness_exact_radius (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k)
     (ν : Measure U) [IsProbabilityMeasure ν] :
     IsLeast {R : ℕ | ∃ Q : CompletedRule U, Q.Lawful ((sourceLaw β).prod ν) ∧
       Q.TotalCap k ∧ Q.fullLaw β j ν = (stoppingRule j k).fullLaw β j ν ∧
-        Q.WithinActualRadius j R} (2 * k + 1) := by
+        Q.CompletedWithinActualRadius j R} (2 * k + 1) := by
   constructor
   · refine ⟨fromRaw (stoppingRule j k),
       fromRaw_completion_lawful _ ν ((stoppingRule_lawful j k).completionLawful ν) _

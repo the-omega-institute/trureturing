@@ -78,7 +78,7 @@ $$\forall (\operatorname{U} : \operatorname{Type}), ([\operatorname{MeasurableSp
 
 *Commentary.*
 
-CompletedRule allows source-dependent ambient-null versions of the available observation field. A single ordinary seed selector agrees product-almost everywhere. Separately, normalization_execution preserves each actual completed execution under its all-path cap; that pointwise execution assertion is distinct from the almost-everywhere selector identity.
+CompletedRule allows source-dependent ambient-null versions of the available observation field. A single ordinary seed selector agrees product-almost everywhere. Separately, completed_normalization_execution preserves each actual completed execution under its all-path cap; that pointwise execution assertion is distinct from the almost-everywhere selector identity.
 
 The normalization construction changes neither the seed space nor the actual read clock. It is a finite semantic unfolding and does not decide divergence of arbitrary programs.
 
