@@ -55,7 +55,7 @@ The canonical source is `D5/S3/Quantum/Information/StabilizerAutocorrelationNorm
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The refutation `result` is exempt from §3.9 registration, and the module has no other public theorem.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.lean.json`, statement `sha256:b236cda68b2d9cb8c1fdde1e49a1af1d84f1128619600bbb26251fabb5c032da`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.lean.json`, statement `sha256:98d73580c6caae193fa2402bc692e5a3378f58013896a300f0dbf13482d694d4`.
 
 Declaration statements:
 - `result`: `sha256:a518e704544ca5781d5400415ca6bf126f2d9507468c47c165ad6b4541b09cb0`;
