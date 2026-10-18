@@ -1385,3 +1385,240 @@ positions and coupling to omitted positions remain uncontrolled.
 No bound for the separated correction $C$ is extracted, and the result
 is compatible with (W29). Full physical positivity, the strict Robin
 upper and RH remain unproved.
+
+
+## A joint moment bound for every fixed finite sign count
+
+The actual source permits more than the one-change comparison (W32).
+For each fixed window width and each fixed finite sign count, the
+following argument pays complete sampled and smooth signed quadratic
+forms, with no restriction on the number or spacing of sampled nodes.
+For general measures the explicit polynomial-sign condition below is
+the contract; repeated roots include isolated signed atoms. The height
+threshold may depend on both width and sign count. The classical Cauchy
+determinant, Newton divided differences and finite Schur determinant
+are reused inside this source-specific application; no new general
+criterion, literature-priority claim or Lean verification is asserted.
+
+### Keep every fixed derivative order in the complete source limit
+
+The theta-series argument for (W23) works through any prescribed finite
+order $N$. The differentiated summand majorant remains
+$C_k(1+y)^km^{4+2k}e^{-(m^2-1)y}$ for $k\le N$; the summable tail
+leaves a polynomial times $e^{-3y}$. Consequently, for each fixed $N$,
+
+$$
+g(u)=\log(4\pi^2)+\tfrac92u-\pi e^{2u}+v(u),\qquad
+|v^{(k)}(u)|\le C_Ne^{-2u}\quad(u\ge1,\ k\le N),
+$$
+
+and $|g^{(k)}(u)|\le C_Ne^{2|u|}$ for $1\le k\le N$ on the whole
+real line. This extends derivative bounds, not all-order Laguerre signs.
+
+Fix an integer $r\ge0$ and $D>0$, and use $N=2r+2$. Retain exactly the complete
+direct and reflected integrals $Q,B$ in the proof of (W24), with
+$E=e^{-2x}$ and $T=Q-B/x$. In
+
+$$
+F=Et\sum_{s\in\{-1,1\}}\int_0^1g'(x+sd+vEt)\,dv,
+$$
+
+every mixed derivative through total order $r$ retains the factor
+$Et$. The bounds above give
+$C_{r,D}t(1+t)^re^{2Et}$. Together with $F\le-c_Dt$, the chain rule
+supplies an integrable majorant
+$C_{r,D}(1+t)^{M_r}e^{-c_Dt/2}$ once $x$ is sufficiently large.
+The leading expression displayed in (W24) converges with all these
+fixed-order derivatives; its $x$ derivatives vanish.
+
+For the reflected term, the same even divided-difference identity
+extends to every fixed $j\ge1$:
+
+$$
+\partial_z^j\mathscr H(x,z)=
+\frac1{2^{2j-1}(j-1)!}
+\int_{-1}^1(1-s^2)^{j-1}g^{(2j)}(x+s\sqrt z)\,ds.
+$$
+
+Integration by parts gives the identity inductively, including its
+continuous value at $z=0$. Derivatives of
+$G=Et\int_0^1\mathscr H_z(x,d^2+vEt)\,dv$
+through order $r$ use only $2j+k\le2r+2$. They are bounded by
+$C_{r,D}t(1+t)^re^{2\sqrt t}$. The same global favorable sign
+$G\le-t/2$ therefore gives the integrable majorant
+$C_{r,D}(1+t)^{M'_r}e^{2r\sqrt t-t/2}$. Thus $B$ has bounded
+fixed-order derivatives and $B/x$ has derivatives $O_{r,D}(1/x)$.
+The entire reflected exterior remains included.
+
+Dominated convergence and the exact diagonal normalization of (W25)
+now give, for every fixed finite $r$ and $W>0$,
+
+$$
+\boxed{K_A(u,v):=R(A+u,A+v)
+\longrightarrow S(u,v):=\operatorname{sech}(u-v)
+\quad\text{in total-order }C^r([0,W]^2).}
+\tag{W33}
+$$
+
+Constants and thresholds may depend on $r,W$; there is no simultaneous
+uniform assertion over derivative orders.
+
+### Pay arbitrary confluence before taking the signed form
+
+For distinct row and column nodes define
+
+$$
+V(u)=\prod_{i<j}(u_j-u_i),\qquad
+\mathcal Q_n(K;u,v)=\frac{\det[K(u_i,v_j)]}{V(u)V(v)}.
+$$
+
+Newton row and column operations express this quotient as the
+determinant of the array of bivariate divided differences with nested
+prefixes of nodes. Its $(i,j)$ entry uses derivatives through orders
+$i-1,j-1$. The classical integral formula in de Boor,
+[*Divided Differences*, arXiv:math/0502036v1](https://arxiv.org/pdf/math/0502036v1),
+equation (52), printed p.64, supplies the continuous confluent
+extension and the uniform bound by the corresponding derivative norm
+divided by $(i-1)!(j-1)!$. Therefore (W33) through order $2n-2$
+gives uniform convergence of $\mathcal Q_n$ on the entire closed
+ordered node simplexes, including coinciding boundary nodes.
+
+The classical Cauchy determinant gives
+
+$$
+\mathcal Q_n(S;u,v)=
+\frac{2^ne^{\sum_i u_i+\sum_j v_j}}
+ {\prod_{i,j}(e^{2u_i}+e^{2v_j})}
+\prod_{i<j}
+\frac{e^{2u_j}-e^{2u_i}}{u_j-u_i}
+\frac{e^{2v_j}-e^{2v_i}}{v_j-v_i}.
+$$
+
+On $[0,W]$, each difference quotient lies in $[2,2e^{2W}]$, also at
+coincidence. Hence
+$e^{-2n^2W}\le\mathcal Q_n(S;u,v)\le e^{2n^2W}$.
+Fix an integer $m\ge1$. Taking the maximum of the finitely many
+thresholds for $n\le m+1$ gives one $A_{W,m}$ such that, on every
+physical window $[c,c+W]$ with $c\ge A_{W,m}$,
+
+$$
+\boxed{\tfrac12e^{-2n^2W}\le\mathcal Q_n(R;u,v)
+\le2e^{2n^2W}\qquad(1\le n\le m+1).}
+\tag{W34}
+$$
+
+Physical nodes are shifted by $c$ when applying (W33); Vandermonde
+differences are unchanged. Permuting distinct row or column nodes
+leaves their determinant quotient unchanged. The threshold in (W34)
+is independent of node separation; this is stronger than convergence
+at separately fixed distinct tuples.
+
+### The sign separators pay all cross terms together
+
+Fix a multiset $s_1\le\cdots\le s_r$ of separators in the same window,
+with $1\le r\le m$. Write its distinct sites as $t_1<\cdots<t_d$,
+with multiplicities $k_1+\cdots+k_d=r$, and put
+
+$$
+p(a)=\prod_{j=1}^r(a-s_j)=\prod_{\alpha=1}^d(a-t_\alpha)^{k_\alpha}.
+$$
+
+Use the normalized actual Hermite anchors, indexed first by site and
+then by $0\le i<k_\alpha$:
+
+$$
+\begin{aligned}
+h_{\alpha,i}(a)&=\frac{\partial_1^iR(t_\alpha,a)}{i!},\\
+E_{(\alpha,i),(\beta,j)}
+ &=\frac{\partial_1^i\partial_2^jR(t_\alpha,t_\beta)}{i!j!}.
+\end{aligned}
+$$
+
+Let $D(s)=\prod_{\alpha<\beta}
+(t_\beta-t_\alpha)^{k_\alpha k_\beta}>0$, with empty product one.
+Coalescing the distinct nodes after within-cluster Newton operations
+gives $\det E=D(s)^2\mathcal Q_r(R;s,s)$. Normalized jets are the
+limits of these divided differences, so no additional factorials
+occur. Each leading principal minor has the same formula for its
+truncated site/multiplicity list. It is positive by (W34); hence $E$
+is positive definite by Sylvester's criterion.
+
+The exact Schur residual is
+
+$$
+B_s(a,b)=R(a,b)-h(a)^TE^{-1}h(b).
+$$
+
+Apply the same within-cluster operations to the bordered determinant,
+leaving its final row and column unchanged. For $a,b$ off the sites,
+its limit is $D(s)^2p(a)p(b)
+\mathcal Q_{r+1}(R;(s,a),(s,b))$. Division by $\det E$ gives
+
+$$
+\boxed{B_s(a,b)=p(a)p(b)
+\frac{\mathcal Q_{r+1}(R;(s,a),(s,b))}
+ {\mathcal Q_r(R;s,s)}.}
+\tag{W35}
+$$
+
+The derivatives used have total order at most $2r\le2m$, already
+covered by (W33)--(W34). Directly,
+$h(t_\alpha)=Ee_{\alpha,0}$, so the residual vanishes when either
+argument is a separator site. Off the sites, (W34) gives
+$\operatorname{sgn}(p(a)p(b))B_s(a,b)\ge c_{W,r}|p(a)p(b)|$, where
+
+$$
+c_{W,r}=\tfrac14e^{-2W((r+1)^2+r^2)}>0.
+$$
+
+Let $\mu$ be a finite nonzero real signed measure in this window and
+suppose that $\epsilon p\mu$ is a nonnegative measure for some
+$\epsilon\in\{-1,1\}$. Off the separators this says its signs
+follow those of $\epsilon p$; atoms at its roots may have either sign. Repeated
+roots are allowed: positive continuous mass minus an interior negative
+atom at $t$ is covered by $p(a)=(a-t)^2$. This explicit condition
+avoids relying on an unstated convention for sign variation of general
+measures. Sampled or smooth profiles with fewer changes use fewer
+separators; one-signed measures are already covered by (W14). Set
+
+$$
+d\nu=\sqrt J\,d\mu,\qquad z=\int h(a)\,d\nu(a).
+$$
+
+The exact decomposition and full joint lower bound are
+
+$$
+\boxed{\begin{aligned}
+\iint L_0(a,b)\,d\mu(a)d\mu(b)
+&=z^TE^{-1}z+\iint B_s(a,b)\,d\nu(a)d\nu(b)\\
+&\ge z^TE^{-1}z+
+ c_{W,r}\left(\int|p(a)|\,d|\nu|(a)\right)^2>0.
+\end{aligned}}
+\tag{W36}
+$$
+
+Indeed $\nu$ has sign $\epsilon\operatorname{sgn}p$ away from the
+separators, so (W35) controls the complete residual integral, including
+every cross block. If its displayed moment is positive, strictness is
+immediate. If it is zero, $\nu=\sum_\alpha b_\alpha\delta_{t_\alpha}$.
+Let $\widetilde b_{\alpha,0}=b_\alpha$ and set its higher jet
+entries to zero. Then $z=E\widetilde b$ and
+$z^TE^{-1}z=\widetilde b^TE\widetilde b>0$ since $\nu\ne0$.
+The jets are observation functions; no derivative distributions have
+been substituted for the finite measure. All integrals are finite on
+the compact window; no source or independent extremal configuration
+is substituted.
+
+For each fixed $m$, this includes nonzero real sampled measures with
+arbitrarily many nodes and at most $m$ sign changes, after merging
+repeated nodes. It also includes real smooth densities with the same
+support and sign condition. Their odd physical tests have the full
+$K_0$ form equal to twice (W36). The estimate pays their full joint
+form, rather than merely asserting positivity of each sign block.
+
+The threshold depends on $m$ and $W$. There is no single threshold
+covering unrestricted sign patterns, no positivity assertion for the
+linear span of these cones, and no arbitrary complex-measure or
+unweighted-gap claim. Compact positions and coupling to omitted
+positions remain uncontrolled. Full physical positivity, the strict
+all-integer Robin upper and RH remain unproved.
