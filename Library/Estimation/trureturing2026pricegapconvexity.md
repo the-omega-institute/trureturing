@@ -10349,3 +10349,223 @@ $\mathcal I_X^A$. The remaining comparison is on the same selected
 set, including its original omissions and full future response.
 No favorable cofinal sequence, all-integer Robin bound or RH proof
 is supplied. No uniformity as $\eta\uparrow13/30$ is asserted.
+
+## The complete future integral has a full-range common head at the total clock
+
+Keep CR17--CR20's original conditional RH-failure source, every
+original full window, maximizing tie and positive outgoing weight,
+and the originally supplied parameters
+
+$$
+1-\Theta<\eta<1/2,\qquad \Theta\le1,\qquad
+M=X^{1/2-\eta}\log X,\qquad L=t_m-t_0.
+\tag{FCT1}
+$$
+
+The original fixed positive compensation parameter $a$ is unchanged.
+Use the already defined complete future account from AO1,
+
+$$
+\mathsf H(x)=s_x\int_x^\infty E(v)k(v)dv,
+\qquad s_x=\sqrt x\log x,\qquad E=x-\psi,
+\qquad \mathsf H(x)=G_a(x)+\frac{aE(x)}{\sqrt x}.
+$$
+
+This is the original uncompensated account from CR19--CR23 and
+MB2, not a new RH criterion or a claim that the local compensation
+is negligible. It retains all prime powers and the infinite endpoint.
+The additional source application transports this account to the
+actual total clock and pays a common raw finite zero mask throughout
+FCT1. It reuses CR19, AO1--AO6, the original degree-two coefficient
+and the classical zero count. No new PNT, zero-density theorem,
+literature-priority or Lean verification is asserted.
+
+### Transport the whole future account without a short-interval asymptotic
+
+At each original label retain $A=B+t$, $u=N_A^{\rm str}$,
+$K(A)=B$, $\Delta=B-K(B)$ and $Q=K-\psi$.
+CR17--CR19 and CR43--CR44 give fixed positive constants with
+
+$$
+\begin{aligned}
+\mathsf H(B)&\ge h_X(B)+\chi_{p,u}\frac t{\sqrt B},
+&h_X(B)&=\frac d2X^{-\eta}\sqrt B\log B,
+&\chi_{p,u}&\longrightarrow1,\\
+0\le\Delta&\le Ct+C_1\sqrt B,
+&|Q(v)|&\le H_Q\sqrt v,
+&\rho_X:=\sup\frac tB&\longrightarrow0.
+\end{aligned}
+$$
+
+The fixed capacity coefficient can be any original $C>8/5$.
+JM2--JM3's scalar coercivity argument applies to the single
+unabridged CR19 account: the height excludes $B/X\to\infty$ and
+the lag excludes $B/X\to0$ for bounded $\mathsf H(B)/M$.
+On a fixed compact positive range of $B/X$, $\log B/\log X\to1$.
+For every fixed requested $\epsilon>0$, its same AM--GM calculation
+therefore gives
+
+$$
+\mathsf H(B)\ge(d/2-\epsilon)M,
+\qquad h_X(B)+t/\sqrt B+1\ll\mathsf H(B)
+\tag{FCT2}
+$$
+
+eventually, uniformly in every original label and tie. No attained
+minimizing core ratio or bounded normalized response is assumed.
+
+Put $q=s_B/s_A$. Splitting the same full integral, as in AO1, gives
+exactly
+
+$$
+q\mathsf H(A)-\mathsf H(B)
+=-I_{\rm past},\qquad
+I_{\rm past}=s_B\int_B^A E(v)k(v)dv.
+$$
+
+For $B\le v\le A$, monotonicity and $K(A)=B$ imply
+$0\le v-K(v)\le t+\Delta$. Thus
+$|E(v)|\ll t+\sqrt B$ and $s_Bk(B)\le2B^{-3/2}$ give
+
+$$
+|I_{\rm past}|\ll\frac tB\left(\frac t{\sqrt B}+1\right)
+=o(\mathsf H(B)).
+$$
+
+Since $q\to1$, FCT2 yields the uniform full-range transport
+
+$$
+\boxed{\sup_{\text{original labels and ties}}
+\frac{|\mathsf H(A)-\mathsf H(B)|}{\mathsf H(B)}\longrightarrow0.}
+\tag{FCT3}
+$$
+
+Only the complete future account is transported in FCT3.
+The term $(\Delta-t)/\sqrt B$ in WRC3 belongs to the retained
+local compensation; FCT3 neither bounds it nor extends WRC6
+for $G_a$ beyond its stated exponent range. No short-interval
+asymptotic is used here.
+
+### Retain the actual visited set and original quadrature
+
+Write
+
+$$
+\mathcal H_X^B=\sum_{i<m}\delta_i\mathsf H(B_i),\qquad
+\mathcal H_X^A=\sum_{i<m}\delta_i\mathsf H(A_i),\qquad
+\mathcal I_X^H=\int_{D_X}\mathsf H(v)dv.
+$$
+
+FCT2--FCT3 and the original positive weights give
+$\mathcal H_X^A/\mathcal H_X^B\to1$ and
+$\mathcal H_X^B\ge(d/2-\epsilon)ML$ eventually.
+AO5's complete-integral variation calculation, with the local
+compensation absent from this readout, gives
+$\operatorname{Var}\mathsf H\ll\sqrt{R_X}\log(eR_X)$ on the
+same total-clock range. Use AO6's tagged monotone selector and
+original label mesh, and PT10/PG9's exact pushforward onto $D_X$.
+The existing quadrature allowance is
+$O(\varepsilon_X^{\rm lab}\sqrt{R_X}\log(eR_X))=o(1)$.
+Consequently
+
+$$
+\boxed{\frac{\mathcal I_X^H}{\mathcal H_X^B}\longrightarrow1,
+\qquad \frac{\mathcal H_X^A}{\mathcal H_X^B}\longrightarrow1.}
+\tag{FCT4}
+$$
+
+Here $D_X$ is exactly the original visited set, with every skipped
+switch interval retained as an omission. AO5--AO6's coarse ceiling
+and mesh are still used for quadrature. This does not make the atomic
+core occupation Lebesgue measure or impose independent sampling.
+
+### Pay both deleted zero sectors on one common raw height
+
+Use the existing full original formula from MB2 and HC1 at $x=A_i$:
+
+$$
+\mathsf H(x)=2\operatorname{Re}\sum_{\gamma>0}
+ m_\rho s_xF_x(\rho)+r_x,\qquad
+|s_xF_x(\rho)|\le2x^{\beta-1/2}/\gamma^2,
+\qquad r_x=O(x^{-1/2}).
+$$
+
+It is absolutely convergent for each actual $x$ and retains its
+original elementary correction. In particular no conditionally
+convergent compensated $1/\rho$ series is substituted. Set
+
+$$
+T_X=\max\{51,X^\eta\log X\},\qquad
+\mu=1/2-\eta>0.
+$$
+
+The classical reciprocal-square zero count, used already in MB2
+and BH3, pays the whole suffix, with all real parts and
+multiplicities:
+
+$$
+2\sum_{\gamma>T_X}m_\rho|s_xF_x(\rho)|
+\ll\frac{\sqrt x\log(eT_X)}{T_X}.
+$$
+
+At every actual $x=A_i$, FCT2--FCT3 imply
+$h_X(x)\ll\mathsf H(x)$, $M\ll\mathsf H(x)$ and
+$\log x\gg_\eta\log X$. Therefore the last bound, divided by
+$\mathsf H(x)$, is $O_\eta(1/\log X)$.
+For the disjoint lower-real-part class in the remaining finite head,
+
+$$
+2\sum_{\substack{0<\gamma\le T_X\\\beta\le1-\eta}}
+ m_\rho|s_xF_x(\rho)|\ll x^\mu.
+$$
+
+If $x\le X$, divide by $\mathsf H(x)\gg M$; if $x>X$,
+divide by $\mathsf H(x)\gg X^{-\eta}\sqrt x\log x$.
+Both give $O_\eta(1/\log X)$. The elementary correction is
+uniformly $o(\mathsf H(x))$ since all actual clocks escape and
+$M\to\infty$. These are absolute payments for the two stated
+sectors, relative to this same positive response.
+
+Define the one common actual raw head
+
+$$
+\mathcal P_X^H=2\operatorname{Re}
+\sum_{\substack{0<\gamma\le T_X\\\beta>1-\eta}}
+m_\rho\sum_{i<m}\delta_i s_{A_i}F_{A_i}(\rho).
+$$
+
+Summing the paid positive absolute bounds with the unchanged weights
+gives, throughout FCT1,
+
+$$
+\boxed{\frac{\mathcal P_X^H}{\mathcal H_X^B}\longrightarrow1,
+\qquad \frac{\mathcal P_X^H}{\mathcal I_X^H}\longrightarrow1.}
+\tag{FCT5}
+$$
+
+In particular every fixed requested $\epsilon>0$ has
+
+$$
+\boxed{\mathcal P_X^H\ge(d/2-\epsilon)M_XL_X
+\quad\text{eventually on every original full window and tie}.}
+\tag{FCT6}
+$$
+
+The common height is only a raw summation cut for the absolutely
+convergent original degree-two formula. No CHJ admissibility or
+common legal explicit-formula height is asserted. It includes
+$\Theta=1$ on the entire originally supplied $\eta<1/2$ range,
+without a clock-ratio ceiling or a prime-counting restriction.
+The original coarse quadrature ceiling remains as specified above.
+
+CR21's uncompensated account and its signed upper obligation were
+already present. FCT3--FCT5 supply the additional full-range clock
+transport, actual-visited-integral comparison and common finite-mask
+payment; they do not reclassify those existing accounts as new.
+The remaining low-frequency head has its actual phases, complete
+$F_{A_i}$ coefficients, original weights and multiplicities. Every
+fixed zero with $\beta>1-\eta$ eventually remains in it.
+No strict signed upper on that head or $\mathcal I_X^H$, favorable
+cofinal sequence, all-integer Robin bound or RH proof is supplied.
+FCT3--FCT5 do not assert equality with the compensated sums, an
+absolute $o(M_XL_X)$ transport error, or uniformity as $\eta\uparrow1/2$.
