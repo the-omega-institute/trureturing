@@ -24,25 +24,12 @@ state=$(op_data stale "$OP_MAIN" "$T" "$lag") || exit $?
 case "$state" in skip*) echo "CACHE_REFRESH $state tree=$T"; exit 0;; esac
 mkdir -p "$(dirname "$lock")" || op_fail 16 IO_ERROR "$lock"
 op_lock "$lock" "$rounds" || op_fail 15 LOCK_TIMEOUT "$lock"
-work=
-cleanup() { [ -z "$work" ] || rm -rf "$work"; rmdir "$lock"; }
+cleanup() { rmdir "$lock"; }
 trap cleanup EXIT
 check_idle || exit 0
 state=$(op_data stale "$OP_MAIN" "$T" "$lag") || exit $?
 case "$state" in skip*) echo "CACHE_REFRESH $state tree=$T"; exit 0;; esac
 read -r _ msha mtime <<< "$state"
-mkdir -p "$T/.lake" || op_fail 16 IO_ERROR .lake
-work=$(mktemp -d "$T/.lake/build.refresh.XXXXXX") || op_fail 16 IO_ERROR refresh
-# clonefile is a macOS capability; ordinary copies provide the same cache contents.
-if [ "$(uname -s)" = Darwin ]; then
-  cp -cR "$OP_MAIN/.lake/build" "$work/build" || op_fail 16 CACHE_COPY_FAILED clonefile
-else
-  cp -R "$OP_MAIN/.lake/build" "$work/build" || op_fail 16 CACHE_COPY_FAILED copy
-fi
-printf '%s %s\n' "$msha" "$mtime" > "$work/build/.main-cloned-at" || op_fail 16 IO_ERROR stamp
-[ ! -d "$T/.lake/build" ] || mv "$T/.lake/build" "$work/old" || op_fail 16 IO_ERROR old-build
-if ! mv "$work/build" "$T/.lake/build"; then
-  [ ! -d "$work/old" ] || mv "$work/old" "$T/.lake/build"
-  op_fail 16 CACHE_SWAP_FAILED "$T"
-fi
+rm -rf -- "$T/.lake" && make -C "$T" lean-cache-ensure || op_fail 16 CACHE_REFRESH_FAILED "$T"
+printf '%s %s\n' "$msha" "$mtime" > "$T/.lake/build/.main-cloned-at" || op_fail 16 IO_ERROR stamp
 echo "CACHE_REFRESH done tree=$T main_sha=$msha rc=0"

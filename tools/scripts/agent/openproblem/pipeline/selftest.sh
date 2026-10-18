@@ -47,6 +47,11 @@ cat > "$t/bin/make" <<'STUB'
 #!/bin/bash
 printf '%s\n' "$*" >> "$OP_TEST_ROOT/make-calls"
 if [ "${OP_TEST_MAKE_RC:-0}" -ne 0 ]; then exit "$OP_TEST_MAKE_RC"; fi
+if [ "${OP_TEST_CACHE_REFRESH:-0}" = 1 ] && [ "${3:-}" = lean-cache-ensure ]; then
+  [ ! -e "$2/.lake" ] || exit 95
+  mkdir -p "$2/.lake/build" || exit 16
+  printf 'seeded\n' > "$2/.lake/build/content" || exit 16
+fi
 for arg in "$@"; do case "$arg" in DEST=*) mkdir -p "${arg#DEST=}";; esac; done
 exit 0
 STUB
@@ -181,18 +186,32 @@ case "$tool" in
   refresh-if-stale)
     run "$t/tree with space"; rc=$?; check 'unstamped main skipped' test "$rc" -eq 0
     check 'unstamped reason' contains main-not-stamped
+    check 'unstamped main does not ensure cache' test ! -e "$t/make-calls"
     mkdir -p "$t/repo/.lake/build"
     printf '%040d 2000-01-01T00:00:00Z\n' 0 > "$t/repo/.lake/build/.main-built-at"
-    echo cache > "$t/repo/.lake/build/content"
+    mkdir -p "$t/tree with space/.lake/build" "$t/tree with space/.lake/packages"
+    touch "$t/tree with space/.lake/build/old" "$t/tree with space/.lake/packages/old"
+    refresh_tree=$(cd "$t/tree with space" && pwd -P)
+    export OP_TEST_CACHE_REFRESH=1
     run "$t/tree with space"; rc=$?; check 'stale clean tree refreshed' test "$rc" -eq 0
-    check 'cache contents copied' test -f "$t/tree with space/.lake/build/content"
+    check 'cache ensure called for lane' grep -Fxq -- "-C $refresh_tree lean-cache-ensure" "$t/make-calls"
+    check 'cache reseeded by make stub' grep -qx seeded "$t/tree with space/.lake/build/content"
+    check 'old build removed' test ! -e "$t/tree with space/.lake/build/old"
+    check 'old packages removed' test ! -e "$t/tree with space/.lake/packages/old"
+    check 'clone stamp preserved' cmp -s "$t/repo/.lake/build/.main-built-at" "$t/tree with space/.lake/build/.main-cloned-at"
+    check 'refresh receipt preserved' grep -Fxq -- "CACHE_REFRESH done tree=$refresh_tree main_sha=0000000000000000000000000000000000000000 rc=0" "$t/out"
     run "$t/tree with space"; check 'recent clone skipped' contains tree-cloned-recently
     : > "$t/dirty"; run "$t/tree with space"; check 'lane changes preserved' contains lane-work-present
     rm "$t/dirty"
     printf '20 1 bash /stub/run-codex-worker.sh --flight-id bbbbbbbbbbbbbbbbbbbbbbbb --work-target %s\n' "$t/tree with space" > "$t/ps-rows"
     run "$t/tree with space"; check 'in-flight tree preserved' contains seat-in-flight
     : > "$t/ps-rows"
+    check 'skipped trees do not ensure cache' test "$(wc -l < "$t/make-calls" | tr -d ' ')" -eq 1
     rm "$t/tree with space/.lake/build/.main-cloned-at"
+    OP_TEST_MAKE_RC=7 run "$t/tree with space"; rc=$?; check 'cache ensure failure rejected' test "$rc" -eq 16
+    check 'cache ensure failure named' contains CACHE_REFRESH_FAILED
+    check 'failed ensure leaves no clone stamp' test ! -e "$t/tree with space/.lake/build/.main-cloned-at"
+    check 'refresh lock released on failure' test ! -d "$OP_STATE/main-lean.lock"
     mkdir "$OP_STATE/main-lean.lock"
     run "$t/tree with space"; rc=$?; check 'held refresh lock fails closed' test "$rc" -eq 15;;
   prep-lane-tree)
