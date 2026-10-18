@@ -124,18 +124,6 @@ theorem stopping_law_b_depth (β : Bias) (V : Finset ℤ) (j s : Bool) (k i : �
   simp only [stoppingMass, hi, hik, and_self, ↓reduceIte] at h
   linarith
 
-theorem stopping_law_b_final (β : Bias) (V : Finset ℤ) (j s : Bool) (k : ℕ)
-    (T : ReadTree) (hlaw : HasStoppingLaw β V j k T) :
-    SpinWindow.prob β V {S | S j.toInt = s ∧
-      (T.run (visible (!j) S)).output = some (.a false) ∧
-        (T.run (visible (!j) S)).paid = k} = β.π s * β.T (k + 1) := by
-  have h := hlaw ⟨.b s, some (.a false), true, k⟩
-  have hmass := fullMass_b β V j s T (some (.a false)) k
-  simp only [Option.isSome_some] at hmass
-  rw [hmass] at h
-  simp only [stoppingMass, ↓reduceIte] at h
-  linarith
-
 theorem stopping_law_sections (β : Bias) (V : Finset ℤ) (j : Bool) (k : ℕ)
     (T : ReadTree) (hV : T.support ⊆ V) (hlaw : HasStoppingLaw β V j k T) :
     T.OppositeSection (!j) k ∧ T.AllStoppingDepths (!j) k := by
