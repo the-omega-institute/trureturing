@@ -6,7 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.claim; result=D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.result; claim=D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.claim
    digest: The Fourier Clifford changes the Euclidean operator norm of MUB autocorrelations. -/
 
-import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
+import D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap
+import D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation
 import D5.S3.Arith.Lattices.Klartag.Walk.StepInputs2
 
 /-!
@@ -15,6 +16,7 @@ Clifford unitary. A dimension-five Fourier transform separates the operator norm
 -/
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 10000
 set_option maxHeartbeats 4000000
 noncomputable section
@@ -26,17 +28,17 @@ namespace D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation
 def omega : ℂ := D5.S3.Observer.WindowRegister.windowRoot 5
 
 /-- The phase convention for odd-dimensional displacements. -/
-def tau : ℂ := omega ^ 3
+def tau : ℂ := D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap.tau 5
 
 /-- The cyclic shift, with `X |j⟩ = |j+1⟩`. -/
-def shift : Matrix (Fin 5) (Fin 5) ℂ := fun i j => if i = j + 1 then 1 else 0
+def shift : Matrix (Fin 5) (Fin 5) ℂ := D5.S3.Observer.WindowRegister.shiftMatrix 5
 
 /-- The clock in the computational basis. -/
-def clock : Matrix (Fin 5) (Fin 5) ℂ := diagonal fun j => omega ^ j.val
+def clock : Matrix (Fin 5) (Fin 5) ℂ := D5.S3.Observer.WindowRegister.clockMatrix 5
 
 /-- `D(p,q) = τ^(pq) X^p Z^q`. -/
 def displacement (p q : Fin 5) : Matrix (Fin 5) (Fin 5) ℂ :=
-  tau ^ (p.val * q.val) • (shift ^ p.val * clock ^ q.val)
+  D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap.paperDisplacement 5 (p, q)
 
 /-- The native spectral labels of the six canonical Weyl--Heisenberg MUBs.
 `none` denotes infinity, and `some m` denotes the line `(mr,r)`. -/
@@ -67,13 +69,34 @@ def claim : Prop :=
 
 /-- The positive-exponent Fourier unitary. -/
 def fourier : Matrix (Fin 5) (Fin 5) ℂ :=
-  fun i j => omega ^ ((i * j : Fin 5).val) / (Real.sqrt 5 : ℂ)
+  D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation.fourier 5
 
 /-- A two-coordinate pure state. -/
 def psi : Fin 5 → ℂ := fun j => if j = 0 ∨ j = 1 then (Real.sqrt 2 : ℂ)⁻¹ else 0
 
 private def s : ℝ := Real.sqrt 5
 private def t : ℝ := Real.sin (2 * Real.pi / 5)
+
+private lemma tau_eq : tau = omega ^ 3 := by
+  unfold tau D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap.tau omega
+  rw [D5.S3.Observer.WindowRegister.windowRoot, ← Complex.exp_nat_mul]
+  calc
+    -Complex.exp ((Real.pi : ℂ) * Complex.I / 5) =
+        Complex.exp ((Real.pi : ℂ) * Complex.I) *
+          Complex.exp ((Real.pi : ℂ) * Complex.I / 5) := by
+      rw [Complex.exp_pi_mul_I]
+      ring
+    _ = _ := by
+      rw [← Complex.exp_add]
+      congr 1
+      push_cast
+      ring
+
+private lemma shift_eq : shift = fun i j => if i = j + 1 then 1 else 0 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> rfl
+
+private lemma clock_eq : clock = diagonal fun j => omega ^ j.val := rfl
 
 private lemma s_sq : s ^ 2 = 5 := by norm_num [s]
 
@@ -166,13 +189,14 @@ private lemma omega_table (n : ℕ) :
 private lemma shift_power (p : Fin 5) (i j : Fin 5) :
     (shift ^ p.val) i j = if i = j + p then 1 else 0 := by
   fin_cases p <;> fin_cases i <;> fin_cases j <;>
-    norm_num [shift, pow_succ, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
+    norm_num [shift_eq, pow_succ, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
 
 private lemma displacement_entry (p q i j : Fin 5) :
     displacement p q i j =
       if i = j + p then omega ^ (3 * p.val * q.val + q.val * j.val) else 0 := by
-  simp only [displacement, clock, Matrix.diagonal_pow, Matrix.mul_diagonal,
-    Matrix.smul_apply, smul_eq_mul, shift_power, Pi.pow_apply, tau]
+  change (tau ^ (p.val * q.val) • (shift ^ p.val * clock ^ q.val)) i j = _
+  simp only [clock_eq, Matrix.diagonal_pow, Matrix.mul_diagonal,
+    Matrix.smul_apply, smul_eq_mul, shift_power, Pi.pow_apply, tau_eq]
   split_ifs <;> simp only [zero_mul, mul_zero, one_mul]
   rw [← pow_mul, ← pow_mul, ← pow_add]
   congr 1
@@ -182,7 +206,16 @@ private lemma fourier_entry (i j : Fin 5) :
     fourier i j = (s / 5 : ℝ) * omega ^ ((i * j : Fin 5).val) := by
   have hi : (Real.sqrt 5 : ℂ)⁻¹ = (s / 5 : ℝ) := by
     apply Complex.ext <;> norm_num [s, Complex.inv_re, Complex.inv_im, Complex.normSq]
-  simp only [fourier, div_eq_mul_inv, hi]
+  have hp : omega ^ ((i * j : Fin 5).val) =
+      Complex.exp (2 * Real.pi * Complex.I * (i.val : ℂ) * (j.val : ℂ) / 5) := by
+    rw [Fin.val_mul, omega_mod, omega, D5.S3.Observer.WindowRegister.windowRoot,
+      ← Complex.exp_nat_mul]
+    congr 1
+    push_cast
+    ring
+  change Complex.exp (2 * Real.pi * Complex.I * (i.val : ℂ) * (j.val : ℂ) / 5) /
+    (Real.sqrt 5 : ℂ) = _
+  rw [← hp, div_eq_mul_inv, hi]
   ring
 
 private def c : ℝ := Real.sqrt 2 / 2
@@ -221,13 +254,13 @@ private lemma fourier_clifford : IsClifford fourier := by
   · refine ⟨0, 1, 1, by norm_num, ?_⟩
     ext i j
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      norm_num [fourier_entry, shift, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      norm_num [fourier_entry, shift_eq, Matrix.mul_apply, Matrix.conjTranspose_apply,
         Fin.sum_univ_succ, Matrix.smul_apply, smul_eq_mul, displacement_entry,
         Complex.mul_re, Complex.mul_im, omega_table, rootTable, omega_re, omega_im] <;> real_ring
   · refine ⟨4, 0, 1, by norm_num, ?_⟩
     ext i j
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      norm_num [fourier_entry, clock, Matrix.mul_apply, Matrix.diagonal_apply,
+      norm_num [fourier_entry, clock_eq, Matrix.mul_apply, Matrix.diagonal_apply,
         Matrix.conjTranspose_apply, Fin.sum_univ_succ, Matrix.smul_apply, smul_eq_mul,
         displacement_entry, Complex.mul_re, Complex.mul_im, omega_table, rootTable,
         omega_re, omega_im] <;>
