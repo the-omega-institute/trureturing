@@ -8,6 +8,8 @@
 
 import D5.S3.Factorization.AlternatingGcdSumPillai
 import D5.S3.Weil.ZetaGamma.GammaSeries
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.NumberTheory.LSeries.Dirichlet
 import Mathlib.NumberTheory.LSeries.Deriv
 import Mathlib.Analysis.Asymptotics.Lemmas
@@ -36,13 +38,19 @@ private lemma realZeta_derivative :
 theorem kernel_one_prefix (N : ℕ) :
     (∑ j ∈ range N, 1 / (((j : ℝ) + 1) * ((j : ℝ) + 2))) =
       1 - 1 / ((N : ℝ) + 1) := by
-  induction N with
-  | zero => simp
-  | succ N ih =>
-    rw [sum_range_succ, ih]
-    push_cast
-    field_simp
-    ring
+  calc
+    (∑ j ∈ range N, 1 / (((j : ℝ) + 1) * ((j : ℝ) + 2))) =
+        ∑ j ∈ range N, (1 / ((j : ℝ) + 1) - 1 / (((j + 1 : ℕ) : ℝ) + 1)) := by
+      apply sum_congr rfl
+      intro j hj
+      push_cast
+      have h1 : (j : ℝ) + 1 ≠ 0 := by positivity
+      have h2 : (j : ℝ) + 2 ≠ 0 := by positivity
+      field_simp
+      <;> ring
+    _ = _ := by
+      simpa only [Nat.cast_zero, zero_add, div_one] using
+        (Finset.sum_range_sub' (fun j : ℕ => 1 / ((j : ℝ) + 1)) N)
 
 theorem hasSum_kernel_one :
     HasSum (fun j : ℕ => 1 / (((j : ℝ) + 1) * ((j : ℝ) + 2))) 1 := by
@@ -54,12 +62,13 @@ theorem hasSum_kernel_one :
 
 theorem sum_Icc_cast (q : ℕ) :
     (∑ r ∈ Icc 1 q, (r : ℝ)) = (q : ℝ) * ((q : ℝ) + 1) / 2 := by
-  induction q with
-  | zero => simp
-  | succ q ih =>
-    rw [sum_Icc_succ_top (by omega : 1 ≤ q + 1), ih]
-    push_cast
-    ring
+  have h := congrArg (fun n : ℕ => (n : ℝ)) (Finset.sum_range_id_mul_two (q + 1))
+  simp only [Nat.add_sub_cancel] at h
+  push_cast at h
+  rw [Finset.sum_range_eq_add_Ico (fun n : ℕ => (n : ℝ)) (by omega : 0 < q + 1),
+    Finset.Ico_add_one_right_eq_Icc] at h
+  simp only [Nat.cast_zero, zero_add] at h
+  linarith
 
 theorem quotient_ratio_limit (d : ℕ) :
     Tendsto (fun N : ℕ => ((N / d : ℕ) : ℝ) / N) atTop (𝓝 (1 / (d : ℝ))) := by

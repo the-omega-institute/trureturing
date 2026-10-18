@@ -27,6 +27,7 @@ internal sealed class A400361PillaiMeanDocument : IScribeDocumentDefinition
                 Sub(D(1), Div(D(1), Add(V("N"), D(1)))))),
                 "For every natural N, the sum from j=0 to N-1 of "
                 + "1/((j+1)*(j+2)) is 1-1/(N+1), including the empty prefix. "
+                + "It is the reciprocal specialization of Mathlib's Finset.sum_range_sub'. "
                 + "This identity is consumed by the kernel sum and reciprocal-square tail.", DescribeRole.Theorem),
             Node("hasSum_kernel_one", "The telescoping kernel series", Disp(Call("HasSum",
                 Seq(V("j"), Sp, Mapsto, Sp, Kernel()), D(1))),
@@ -37,7 +38,8 @@ internal sealed class A400361PillaiMeanDocument : IScribeDocumentDefinition
                 Sum("r", Call("Icc", D(1), V("q")), Call("toReal", V("r"))),
                 Div(Mul(Call("toReal", V("q")), Add(Call("toReal", V("q")), D(1))), D(2)))),
                 "Every positive integer through q is included. The equality "
-                + "is in the reals and holds also at q=0.", DescribeRole.Theorem),
+                + "is in the reals and holds also at q=0. It follows from Mathlib's "
+                + "Finset.sum_range_id_mul_two by casting and changing the summation interval.", DescribeRole.Theorem),
             Node("quotient_ratio_limit", "The quotient ratio limit", QuotientFormula(),
                 "N tends to infinity through all natural numbers. The parameter d "
                 + "is any natural number, including zero: natural division and real "

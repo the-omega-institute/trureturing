@@ -32,7 +32,7 @@ $$\forall N \in \operatorname{Nat}\left(\right), \sum_{j \in \operatorname{range
 
 *Commentary.*
 
-For every natural N, the sum from j=0 to N-1 of 1/((j+1)*(j+2)) is 1-1/(N+1), including the empty prefix. This identity is consumed by the kernel sum and reciprocal-square tail.
+For every natural N, the sum from j=0 to N-1 of 1/((j+1)*(j+2)) is 1-1/(N+1), including the empty prefix. It is the reciprocal specialization of Mathlib's Finset.sum_range_sub'. This identity is consumed by the kernel sum and reciprocal-square tail.
 
 **Theorem 1.3 (The telescoping kernel series).**
 
@@ -60,7 +60,7 @@ $$\forall q \in \operatorname{Nat}\left(\right), \sum_{r \in \operatorname{Icc}\
 
 *Commentary.*
 
-Every positive integer through q is included. The equality is in the reals and holds also at q=0.
+Every positive integer through q is included. The equality is in the reals and holds also at q=0. It follows from Mathlib's Finset.sum_range_id_mul_two by casting and changing the summation interval.
 
 **Theorem 1.5 (The quotient ratio limit).**
 

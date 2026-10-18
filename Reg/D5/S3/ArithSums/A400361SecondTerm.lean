@@ -109,4 +109,3 @@ noncomputable def registration_1 :
   options := #[] }
 
 end Reg.D5.S3.ArithSums.A400361SecondTerm
-
