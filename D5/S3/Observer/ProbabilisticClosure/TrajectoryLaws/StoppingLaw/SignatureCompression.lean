@@ -35,19 +35,19 @@ private def EdgeConnected (E : Finset ℤ) (x y : ℤ) : Prop :=
   ∀ e : ℤ, min x y ≤ e → e < max x y → e ∈ E
 
 /-- All endpoints of specified edges, together with the distinguished target. -/
-private def specifiedOccupiedVertices (E : Finset ℤ) (q : ℤ) : Finset ℤ :=
+def specifiedOccupiedVertices (E : Finset ℤ) (q : ℤ) : Finset ℤ :=
   insert q (E ∪ E.image (fun e => e + 1))
 
 /-- The graph has exactly the specified edges, including when two occupied
 vertices are adjacent across an edge absent from `E`. -/
-private def specifiedEdgeGraph (E : Finset ℤ) : SimpleGraph ℤ where
+def specifiedEdgeGraph (E : Finset ℤ) : SimpleGraph ℤ where
   Adj x y := (x ∈ E ∧ y = x + 1) ∨ (y ∈ E ∧ x = y + 1)
   symm := ⟨fun _ _ h => h.elim Or.inr Or.inl⟩
   loopless := ⟨by intro x h; rcases h with h | h <;> omega⟩
 
 /-- A maximal interval partition, indexed in the original order by its least vertices.
 The half-open intervals partition exactly the specified edges. -/
-private structure IntegerLineIntervals (E : Finset ℤ) (q : ℤ) where
+structure IntegerLineIntervals (E : Finset ℤ) (q : ℤ) where
   roots : Finset ℤ
   right : ℤ → ℤ
   nonempty : ∀ a ∈ roots, a ≤ right a
@@ -198,7 +198,7 @@ private theorem roots_spec {E : Finset ℤ} {q a : ℤ} (ha : a ∈ allRoots E q
 
 /-- Every finite specified edge set has its maximal, ordered interval decomposition;
 no decomposition or positivity assumption is supplied by the caller. -/
-private theorem integer_line_component_intervals (E : Finset ℤ) (q : ℤ) :
+theorem integer_line_component_intervals (E : Finset ℤ) (q : ℤ) :
     Nonempty (IntegerLineIntervals E q) := by
   classical
   let A := allRoots E q
@@ -295,12 +295,12 @@ private theorem integer_line_component_intervals (E : Finset ℤ) (q : ℤ) :
 
 
 /-- An initial segment in the original order of component minima. -/
-private def OrderedPrefix (A L : Finset ℤ) : Prop :=
+def OrderedPrefix (A L : Finset ℤ) : Prop :=
   L ⊆ A ∧ ∀ a ∈ L, ∀ b ∈ A, b < a → b ∈ L
 
 /-- Small families go entirely right; otherwise use the shortest prefix whose
 vertex sum reaches the number of detached components minus one. -/
-private def ShortestPrefix (A : Finset ℤ) (size : ℤ → ℤ) (L : Finset ℤ) : Prop :=
+def ShortestPrefix (A : Finset ℤ) (size : ℤ → ℤ) (L : Finset ℤ) : Prop :=
   OrderedPrefix A L ∧
     (A.card ≤ 1 → L = ∅) ∧
     (2 ≤ A.card → (A.card : ℤ) - 1 ≤ ∑ a ∈ L, size a) ∧
@@ -377,7 +377,7 @@ private theorem shortest_prefix_split (A : Finset ℤ) (ell : ℤ → ℤ)
     omega
 
 /-- Sum of vertex sizes strictly before the component with minimum `a`. -/
-private noncomputable def precedingSize (A : Finset ℤ) (size : ℤ → ℤ) (a : ℤ) : ℤ := by
+noncomputable def precedingSize (A : Finset ℤ) (size : ℤ → ℤ) (a : ℤ) : ℤ := by
   classical
   exact ∑ b ∈ A.filter (fun b => b < a), size b
 
@@ -412,7 +412,7 @@ private theorem preceding_strict_step (A : Finset ℤ) (size : ℤ → ℤ)
 
 /-- The complete specified construction, including the original-order shortest
 prefix, the translation formula, and guarantees on the entire occupied domain. -/
-private structure CanonicalTargetPacking (E : Finset ℤ) (q : ℤ) where
+structure CanonicalTargetPacking (E : Finset ℤ) (q : ℤ) where
   intervals : IntegerLineIntervals E q
   left : Finset ℤ
   split : ShortestPrefix (intervals.roots.erase intervals.target)
@@ -436,7 +436,7 @@ private structure CanonicalTargetPacking (E : Finset ℤ) (q : ℤ) where
 
 /-- The ordered shortest-prefix construction fixes the whole target component,
 is injective on all occupied vertices, and bounds every queried left endpoint. -/
-private theorem canonical_target_fixed_packing (E : Finset ℤ) (q : ℤ) :
+theorem canonical_target_fixed_packing (E : Finset ℤ) (q : ℤ) :
     Nonempty (CanonicalTargetPacking E q) := by
   classical
   let D := Classical.choice (integer_line_component_intervals E q)
