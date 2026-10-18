@@ -6,6 +6,7 @@
    utility: none
    digest: Spectral reduction, integrability and continuity of density-matrix subentropy. -/
 
+import Mathlib.Analysis.Matrix.Spectrum
 import D5.S3.Quantum.Subentropy.KernelBounds
 import D5.S3.Quantum.Subentropy.UniformIntegrals
 
