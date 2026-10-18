@@ -6,11 +6,32 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.claim; result=D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.result; claim=D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.claim
    digest: The Fourier Clifford changes the Euclidean operator norm of MUB autocorrelations. -/
 
+/-
+result: proof_shape: bind-only
+escape_witness: none
+admission_basis: open-problem-resolution (#18928; Refuted)
+The designated refutation result is the only public theorem and is exempt from
+four-slot escape registration. All private lemmas are consumed by its normalization,
+Fourier Clifford certificate, probability tables, or operator-norm separation.
+Direct frozen dependencies:
+  D5/S3/Observer/WindowRegister.windowRoot
+    module statement_id: sha256:1f03573f26ffc97bee9217cd4164f7e0941cb73ba680130d6cfd2e970fc3554a
+  D5/S3/Quantum/Algebra/WeylPhaseArithmetic.windowRoot_pow_mod
+    module statement_id: sha256:4d8cb610ca10401018714711b996eb7561a95eb2075c94c708a598155c4f2cf6
+  D5/S3/Arith/Lattices/Klartag/Walk/StepInputs2.opNorm_le_frobenius
+    module statement_id: sha256:aa6e330285c4882d66215d211541a6ffb44f7add8a2c59e5add45257b3da1134
+-/
+
 import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
 import D5.S3.Arith.Lattices.Klartag.Walk.StepInputs2
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
+
+/-!
+The native MUB spectral labels do not admit one common column permutation under every
+Clifford unitary. A dimension-five Fourier transform separates the operator norms.
+-/
 
 set_option autoImplicit false
 set_option maxRecDepth 10000
@@ -84,7 +105,7 @@ private lemma omega_re : omega.re = (s - 1) / 4 := by
   rw [he]
   simp only [Complex.exp_re, Complex.mul_re, Complex.ofReal_re, Complex.I_re,
     Complex.ofReal_im, Complex.I_im, mul_zero, sub_zero, mul_one, Complex.mul_im,
-    zero_mul, add_zero, Real.exp_zero, one_mul]
+    add_zero, Real.exp_zero, one_mul]
   have hc := Real.cos_two_mul (Real.pi / 5)
   rw [Real.cos_pi_div_five] at hc
   change Real.cos (2 * Real.pi / 5) = (s - 1) / 4
@@ -227,7 +248,8 @@ private lemma fourier_clifford : IsClifford fourier := by
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
       norm_num [fourier_entry, clock, Matrix.mul_apply, Matrix.diagonal_apply,
         Matrix.conjTranspose_apply, Fin.sum_univ_succ, Matrix.smul_apply, smul_eq_mul,
-        displacement_entry, Complex.mul_re, Complex.mul_im, omega_table, rootTable, omega_re, omega_im] <;>
+        displacement_entry, Complex.mul_re, Complex.mul_im, omega_table, rootTable,
+        omega_re, omega_im] <;>
       real_ring
 
 private def inputProb : Option (Fin 5) → Fin 5 → ℝ
@@ -342,5 +364,8 @@ private lemma norms_differ : ‖autocorr (fourier *ᵥ psi)‖ ≠ ‖autocorr p
 theorem result : ¬ claim := by
   intro h
   exact norms_differ (h psi psi_normalized fourier fourier_clifford)
+
+#print axioms claim
+#print axioms result
 
 end D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation
