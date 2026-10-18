@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding;
 
 internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion.";
+    private const string Prefix = "D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion.";
     private static Formula.BoundVariable B(string name, Formula type) =>
         new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) =>

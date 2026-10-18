@@ -1,5 +1,5 @@
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
-import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry

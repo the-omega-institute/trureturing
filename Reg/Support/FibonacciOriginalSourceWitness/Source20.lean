@@ -1,5 +1,5 @@
 import Reg.Support.SingleDependentReadout
-import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
 import Reg.Support.FibonacciConsensusUniverse
 import Reg.Support.FibonacciQuadratic
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit

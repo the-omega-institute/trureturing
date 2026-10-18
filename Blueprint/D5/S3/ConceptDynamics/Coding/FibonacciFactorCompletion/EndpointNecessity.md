@@ -25,4 +25,4 @@ This is necessity for the closed relaxation. It asserts neither ownership-sensit
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/EndpointNecessity.original_fixed_tail_endpoint_budget`
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion](../FibonacciFactorCompletion.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion](../FibonacciFactorCompletion.md)

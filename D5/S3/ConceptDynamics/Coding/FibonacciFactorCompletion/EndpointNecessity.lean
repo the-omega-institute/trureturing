@@ -6,7 +6,7 @@
    utility: none
    digest: Fixed actual tails force the complete indexed endpoint budget in Q(t). -/
 
-import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
 
 set_option autoImplicit false
 
