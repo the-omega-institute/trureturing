@@ -3706,3 +3706,303 @@ the sign cones or unrestricted all-order positivity on one fixed
 physical interval. No compact-core sign, strict all-integer Robin
 upper or RH proof follows. The result is a repository-derived paper
 estimate, not a Lean/kernel-certified theorem.
+
+
+## Fixed finite sign degree on the complete high half-line
+
+Keep the same complete actual kernel $L_0$, its positive diagonal $J$
+and $R=L_0/\sqrt{J(a)J(b)}$. For every prescribed integer $m\ge3$
+there is one $A_m$ such that all ordered row/column minors of $R$
+through size $m$, including their Hermite-confluent versions, are
+strictly positive for nodes in $[A_m,\infty)$. The start depends on
+$m$ but not on support width, sample density or the upper endpoint.
+The new input is a relative estimate for the actual distant mixed
+jets. Fixed-width (W33), the classical Chebyshev criterion and the
+existing Schur consumer are reused. This is a paper derivation, with
+no literature-priority or Lean/kernel-verification claim.
+
+### Complete endpoint moments retain their fixed jets
+
+Fix $n\ge2$, put $g=\log\Phi$, $P=p(a)=-g'(a)$, $q=p(b)$,
+$\rho=P/q$ and $r=b/a$ for $b\ge a+D$. All constants below may
+depend on $n$, not on either position or their distance. The fixed-order
+theta bounds preceding (W33) give, for every fixed derivative order,
+
+$$
+p(x)=2\pi e^{2x}-\tfrac92+O(e^{-2x}),\qquad
+p^{(j)}(x)=2^{j+1}\pi e^{2x}+O_j(e^{-2x})\quad(j\ge1).
+$$
+
+They also give the owned whole-line bounds on derivatives of $g$.
+Use (W69)'s complete moments $I_k$, now through $k=n$, and put
+$\mu_k=I_k/I_0$. For $0\le k\le n$ and $0\le j\le n-1$,
+
+$$
+\boxed{\partial_b^j\mu_k(b)
+ =k!(-2k)^j q^{-k}+O_n(q^{-k-1})\quad(k\ge1),\qquad
+\mu_0=1.}
+\tag{W72}
+$$
+
+Here and below $0^0=1$, while a positive derivative of the constant
+$\mu_0$ is zero. To justify every differentiated moment, retain the
+exact change $t=z/q$ from (W69). Set
+$R_b(v)=p(b+v/q)/q$ and $G_b(z)=-\int_0^zR_b(v)dv$.
+The identity
+
+$$
+R_b(v)-1=\int_0^v\frac{p'(b+s/q)}{q^2}\,ds
+$$
+
+and the fixed-order bounds give
+
+$$
+|\partial_b^j(G_b(z)+z)|
+ \le\frac{C_nz^2}{q}(1+z/q)^{n-1}e^{2z/q}
+\quad(0\le j\le n-1),\qquad G_b(z)\le-z.
+$$
+
+For $j\ge1$ the left side is just $|\partial_b^jG_b|$.
+The chain rule gives integrable majorants consisting of a fixed
+polynomial times $e^{-z/2}$ once $q$ exceeds one fixed constant.
+The exponential difference bound and differentiation under these
+majorants yield
+$M_k:=\int_0^\infty z^ke^{G_b(z)}dz=k!+O_n(q^{-1})$ and
+$M_k^{(j)}=O_n(q^{-1})$ for $1\le j\le n-1$.
+Since $I_k=q^{-k-1}M_k$, $q'/q=2+O(q^{-1})$, and all positive
+fixed derivatives of $q'/q$ are $O_n(q^{-1})$, the quotient rule
+proves (W72). In particular all fixed positive derivatives of
+$\log I_0$ are bounded.
+
+### An exact finite-rank expansion with a relative remainder
+
+Let
+
+$$
+c_k(a)=\frac{\Phi^{(k)}(a)}{k!\Phi(a)},\qquad
+\epsilon_k=\begin{cases}0&k\text{ even},\\1&k\text{ odd},\end{cases}
+$$
+
+and define
+
+$$
+U_0=1,\qquad
+U_k=\begin{cases}
+c_k+2c_{k-1}/a,&k\ge2\text{ even},\\
+c_k/a,&k\text{ odd},
+\end{cases}
+\qquad V_k(b)=b^{\epsilon_k}\mu_k(b).
+$$
+
+Retain (W70)'s exact positive separable normalization
+
+$$
+Z(a,b)=\frac{2L_0(a,b)}{a\Phi(a)\Phi(b)I_0(b)}.
+$$
+
+Taylor's formula inside its full forward-variable integral gives
+
+$$
+\boxed{Z(a,b)=\sum_{k=0}^{n-1}U_k(a)V_k(b)+F_n(a,b),\qquad
+\max_{0\le i,j<n}|\partial_a^i\partial_b^jF_n|
+ \le C_n r\rho^n.}
+\tag{W73}
+$$
+
+The parity and the $2c_{k-1}/a$ term follow before any estimate:
+if $f_\pm=\Phi(a\pm t)/\Phi(a)$, then
+
+$$
+\frac{(a+b+2t)f_+-(b-a+2t)f_-}{2a}
+ =\sum_{k\text{ even}}c_kt^k
+  +\frac ba\sum_{k\text{ odd}}c_kt^k
+  +\frac2a\sum_{k\text{ odd}}c_kt^{k+1}.
+$$
+
+This line denotes the Taylor coefficients, not an interchange of an
+infinite Taylor series with the improper integral. Truncate at degree
+$n-1$. The omitted last term from $2t(f_+-f_-)$ is included in $F_n$.
+
+For completeness, the integral Taylor remainder of order $n$ obeys
+
+$$
+\max_{0\le i<n}|\partial_a^i
+ [f_\pm-\sum_{k<n}(\pm1)^kc_kt^k]|
+ \le C_nP^nt^n(1+Pt)^{n-1}e^{(P+C_n)t}.
+$$
+
+Here $c_k$ already contains the sign of $\Phi^{(k)}$; the plus
+expansion uses $c_kt^k$ and the minus expansion uses $(-1)^kc_kt^k$.
+The remainder estimate follows from differentiating the integral
+Taylor remainder, the owned whole-line derivative bounds, global
+concavity $f_\pm\le e^{Pt}$, and
+$|\partial_a^j\log f_\pm|\le C_nPt e^{2t}$ for fixed $j\ge1$.
+It remains valid when $a-t<0$.
+After dividing the affine coefficients by $2a$, every required
+$a$ derivative is bounded by a constant times
+$r(1+t)P^nt^n(1+Pt)^{n-1}e^{(P+C_n)t}$.
+The explicit $b$ derivatives of those coefficients have the same bound.
+Each derivative of the normalized density
+$[\Phi(b+t)/\Phi(b)]/I_0(b)$ is the density times a fixed polynomial
+in logarithmic derivatives bounded by $C_n(1+qt e^{2t})$.
+Choose $D$ and the high start so that $q\ge2(P+C'_n)$.
+Integrating the resulting bounds, including all density derivatives,
+against $Ce^{-qt}q$ proves (W73). No part of either half-line integral
+is removed.
+
+### Scale the complete jet before comparing its determinant
+
+The fixed-order theta expansion and Bell's derivative formula give
+$c_k^{(i)}=(-1)^k(2k)^iP^k/k!+O_n(P^{k-1})$ for $k\ge1$.
+Set
+
+$$
+\alpha_k=P^ka^{-\epsilon_k},\qquad
+\beta_k=q^{-k}b^{\epsilon_k},\qquad
+ d_k=\alpha_k\beta_k=r^{\epsilon_k}\rho^k.
+$$
+
+Let $\widehat U$ have entries $U_k^{(i)}/\alpha_k$ and
+$\widehat V$ entries $V_k^{(j)}/\beta_k$, with $0\le i,j,k<n$.
+Equations (W72)--(W73) imply
+
+$$
+\widehat U_{ik}=
+ \frac{(-1)^k}{k!}(2k)^i+O_n(a^{-1}+P^{-1}),\qquad
+\widehat V_{jk}=k!(-2k)^j+O_n(b^{-1}+q^{-1}).
+$$
+
+The $k=0$ columns are exactly $(1,0,\ldots,0)^T$.
+These fixed Vandermonde limits are invertible, so both inverse norms
+are bounded beyond a start depending only on $n$. Write the complete
+mixed jet matrix $\mathcal J_nZ=[\partial_a^i\partial_b^jZ]_{i,j<n}$
+as
+
+$$
+\widehat U^{-1}(\mathcal J_nZ)\widehat V^{-T}
+ =\operatorname{diag}(d_0,\ldots,d_{n-1})+\mathcal E,
+\qquad \|\mathcal E\|\le C_nr\rho^n.
+$$
+
+Since $r\ge1$ and $r\rho\le C(1+b-a)e^{-2(b-a)}$, choose one
+$D=D_n$ so large that $r\rho<1$. Successive $d_k$ then decrease:
+their ratios are $r\rho$ and $\rho/r$. Consequently
+
+$$
+\|\operatorname{diag}(d_k)^{-1}\mathcal E\|
+ \le C_n\frac{r\rho^n}{r^{\epsilon_{n-1}}\rho^{n-1}}
+ \le C_nr\rho.
+$$
+
+Increasing $D_n$ makes this as small as required, uniformly in both
+positions. This scaling is essential: an absolute error in the
+unscaled determinant would not pay its small distant main term.
+The determinants of the two limiting Vandermonde matrices have
+product
+
+$$
+\kappa_n=2^{n(n-1)}\prod_{k=0}^{n-1}(k!)^2>0.
+$$
+
+Choose the high start so their actual determinant product is at least
+$\kappa_n/2$, and $D_n$ so the transformed relative determinant
+is at least $1/2$. With $N_n=n(n-1)/2$ and
+$e_n=\lfloor n/2\rfloor$, this proves
+
+$$
+\boxed{\det\mathcal J_nZ(a,b)
+ \ge\frac{\kappa_n}{4}\,r^{e_n}\rho^{N_n}>0
+ \qquad(b\ge a+D_n).}
+\tag{W74}
+$$
+
+For $n=3$ has leading factor
+$\kappa_3r\rho^3=256(b/a)(P/q)^3$. Terms retained only through
+first order have rank at most two and would lose this main term.
+
+Multiplication by positive separable factors changes a mixed jet
+determinant only by a positive factor, using triangular derivative
+matrices. Thus (W74) gives the actual mixed jet sign for $R$ and
+$L_0$. Symmetry treats $a\ge b+D_n$.
+On $|a-b|\le D_n$, reuse (W33) through total order $2n-2$.
+The confluent Cauchy determinant gives
+
+$$
+\det\mathcal J_n[\operatorname{sech}(a-b)]
+ =\left(\prod_{k=0}^{n-1}(k!)^2\right)
+   \operatorname{sech}^{n^2}(a-b)>0.
+$$
+
+Its minimum on this one fixed strip is positive. Uniform derivative
+convergence therefore pays the same actual jet sign there after
+increasing the start. Taking the maximum for $1\le n\le m$ yields
+one start for all those orders, independent of distance.
+
+### Reuse the classical Chebyshev criterion twice
+
+Use Grau--Mañosas--Villadelprat,
+[*A Chebyshev criterion for Abelian integrals*, arXiv:0805.1140v2](https://arxiv.org/pdf/0805.1140v2),
+Definitions 2.1--2.2 and Lemma 2.3(a)--(b), printed pp.4--5.
+It states the equivalence of nonvanishing leading Wronskians and the
+extended complete Chebyshev property for analytic functions on an
+open interval, as well as its ordinary collocation counterpart.
+Only this classical criterion is reused, not that paper's additional
+Abelian-integral hypotheses. Analyticity of the present actual kernel
+is already supplied in (W37); the positive diagonal makes $R$ analytic.
+
+For fixed $a$, apply the criterion in $b$ to
+$R(a,b),\partial_aR(a,b),\ldots,\partial_a^{m-1}R(a,b)$.
+Their leading Wronskians are the positive mixed jets just paid.
+Their ordered Hermite collocations are nonzero by the zero-count
+property and positive by coalescence and the positive local jets.
+For a fixed ordered column multiset, these collocations are the
+leading $a$-Wronskians of its column functions
+$\partial_b^jR(a,b_\ell)$. Apply the same criterion in $a$.
+It follows that every ordered row/column Hermite minor through size
+$m$ is positive. Increase the reported start by one so all compact
+node sets lie inside the open interval of application. In (W34)'s
+normalized notation this gives
+
+$$
+\boxed{\mathcal Q_n(R;\mathbf a,\mathbf b)>0
+ \quad(1\le n\le m,\quad
+ \mathbf a,\mathbf b\text{ ordered in }[A_m,\infty)),}
+\tag{W75}
+$$
+
+including all coincident-node limits. No uniform assertion over $m$
+is made.
+
+### Consume the same complete form for finite sign degree
+
+Fix $r\le m-1$ and a monic separator $p$ of degree $r$ with roots
+in $[A_m,T]$, allowing multiplicities. Let $\mu\ne0$ be a finite real
+measure supported in $[A_m,T]$ with $\epsilon p\mu\ge0$.
+Use exactly (W35)--(W36)'s Hermite anchor matrix $E$, observation
+vector $h$, $d\nu=\sqrt J\,d\mu$ and $z=\int h\,d\nu$.
+Equation (W75) makes $E$ positive definite and the exact quotient
+$\mathcal Q_{r+1}(R;(s,a),(s,b))/\mathcal Q_r(R;s,s)$ positive
+and continuous on the full compact node sets. Hence its minimum
+$c_{m,r,T}>0$ can be chosen uniformly in the separator roots.
+The existing exact Schur identity therefore gives
+
+$$
+\boxed{Q_{L_0}(\mu)\ge z^TE^{-1}z+
+ c_{m,r,T}\left(\int|p(a)|\,d|\nu|(a)\right)^2>0.}
+\tag{W76}
+$$
+
+For degree zero use already owned one-signed positivity. The root
+atoms in positive degrees keep unrestricted signs; if all mass is
+at the roots, the positive anchor square supplies strictness just as
+in (W36). The constant in the final moment lower bound may depend on
+$T$; the high start does not. Every direct/reflected contribution and
+all mutual sign-block interactions remain in the actual full form.
+
+Thus each fixed finite separator degree has a width-independent high
+half-line, including arbitrary sample density and confluence. This
+does not give one start for all degrees, unrestricted complex measures,
+all-order positivity on one fixed interval, compact-core positivity,
+the independent original Robin signed upper, or RH. The analytic
+finite-degree gain is not a claim that FIB coordinate changes preserve
+or improve the arithmetic form.
