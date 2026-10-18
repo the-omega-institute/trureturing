@@ -234,7 +234,149 @@ private theorem height_binary (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (h : ℤ × ℤ →
 private def IsDownset (ℓ : ℕ) (I : Finset (ℤ × ℤ)) : Prop :=
   ∀ u v, Adjacent u v → ground ℓ u + 1 = ground ℓ v → v ∈ I → u ∈ I
 
-theorem result : claim := by
+private theorem height_support (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (h : ℤ × ℤ → ℤ)
+    (hh : IsHeight ℓ h) (hvol : volume ℓ h = 5) :
+    hh.1.toFinset.card = 5 ∧ IsDownset ℓ hh.1.toFinset := by
+  classical
+  constructor
+  · have he : volume ℓ h = (hh.1.toFinset.card : ℚ) := by
+      unfold volume
+      rw [finsum_eq_sum_of_support_subset _ (s := hh.1.toFinset) ?_]
+      · calc
+          _ = ∑ v ∈ hh.1.toFinset, (1 : ℚ) := by
+            apply Finset.sum_congr rfl
+            intro v hv
+            have hn := hh.1.mem_toFinset.mp hv
+            rcases height_binary ℓ hℓ h hh hvol v with hz | hz
+            · exact (hn hz).elim
+            · rw [hz]
+              norm_num
+          _ = _ := by simp only [Finset.sum_const, nsmul_eq_mul, mul_one]
+      · intro v hv
+        apply hh.1.mem_toFinset.mpr
+        intro hz
+        apply hv
+        simp only [hz, sub_self, Int.cast_zero, zero_div]
+    rw [hvol] at he
+    exact_mod_cast he.symm
+  · intro u v huv hground hv
+    apply hh.1.mem_toFinset.mpr
+    intro hu
+    have hn := hh.1.mem_toFinset.mp hv
+    have hb := height_binary ℓ hℓ h hh hvol v
+    have hd := edge_difference h hh.2.2 u v huv
+    simp only [abs_eq_max_neg] at hd
+    change h u = ground ℓ u at hu
+    change h v ≠ ground ℓ v at hn
+    omega
+
+private def lift (ℓ : ℕ) (I : Finset (ℤ × ℤ)) (v : ℤ × ℤ) : ℤ :=
+  ground ℓ v + if v ∈ I then 2 else 0
+
+private theorem lift_edge (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) (u v : ℤ × ℤ) (huv : Adjacent u v) :
+    |lift ℓ I u - lift ℓ I v| = 1 := by
+  have hg := ground_edge ℓ hℓ u v huv
+  have hsym : Adjacent v u := by
+    unfold Adjacent at huv ⊢
+    simpa only [abs_sub_comm] using huv
+  by_cases hu : u ∈ I
+  · by_cases hv : v ∈ I
+    · unfold lift
+      rw [ite_eq_left hu, ite_eq_left hv]
+      simpa only [add_sub_add_right_eq_sub] using hg
+    · have hn : ground ℓ v + 1 ≠ ground ℓ u := fun he => hv (hI v u hsym he hu)
+      unfold lift
+      rw [ite_eq_left hu, ite_eq_right hv]
+      simp only [abs_eq_max_neg] at hg ⊢
+      omega
+  · by_cases hv : v ∈ I
+    · have hn : ground ℓ u + 1 ≠ ground ℓ v := fun he => hu (hI u v huv he hv)
+      unfold lift
+      rw [ite_eq_right hu, ite_eq_left hv]
+      simp only [abs_eq_max_neg] at hg ⊢
+      omega
+    · unfold lift
+      simpa only [ite_eq_right hu, ite_eq_right hv, add_zero] using hg
+
+private theorem lift_height (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) : IsHeight ℓ (lift ℓ I) := by
+  refine ⟨I.finite_toSet.subset ?_, ?_, ?_⟩
+  · intro v hv
+    by_contra hn
+    change v ∉ I at hn
+    apply hv
+    change lift ℓ I v = ground ℓ v
+    unfold lift
+    simp only [ite_eq_right hn, add_zero]
+  · intro v
+    unfold lift
+    split_ifs <;> omega
+  · intro v
+    constructor <;> apply lift_edge ℓ hℓ I hI <;>
+      unfold Adjacent <;> dsimp only <;> simp only [abs_eq_max_neg] <;> omega
+
+private theorem lift_volume (ℓ : ℕ) (I : Finset (ℤ × ℤ)) :
+    volume ℓ (lift ℓ I) = (I.card : ℚ) := by
+  unfold volume
+  rw [finsum_eq_sum_of_support_subset _ (s := I) ?_]
+  · calc
+      _ = ∑ v ∈ I, (1 : ℚ) := by
+        apply Finset.sum_congr rfl
+        intro v hv
+        unfold lift
+        simp only [ite_eq_left hv]
+        norm_num
+      _ = _ := by simp only [Finset.sum_const, nsmul_eq_mul, mul_one]
+  · intro v hv
+    by_contra hn
+    change v ∉ I at hn
+    apply hv
+    unfold lift
+    simp only [ite_eq_right hn, add_zero, sub_self, Int.cast_zero, zero_div]
+
+private noncomputable def heightEquiv (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
+    {h : ℤ × ℤ → ℤ // IsHeight ℓ h ∧ volume ℓ h = 5} ≃
+      {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} where
+  toFun h := ⟨h.property.1.1.toFinset, height_support ℓ hℓ h h.property.1 h.property.2⟩
+  invFun I := ⟨lift ℓ I, lift_height ℓ hℓ I I.property.2, by
+    rw [lift_volume, I.property.1]; norm_num⟩
+  left_inv h := by
+    apply Subtype.ext
+    funext v
+    change lift ℓ h.property.1.1.toFinset v = h.val v
+    unfold lift
+    by_cases hv : h.val v = ground ℓ v
+    · have hn : v ∉ h.property.1.1.toFinset := by
+        intro hm
+        exact (h.property.1.1.mem_toFinset.mp hm) hv
+      rw [ite_eq_right hn]
+      omega
+    · rw [ite_eq_left (h.property.1.1.mem_toFinset.mpr hv)]
+      rcases height_binary ℓ hℓ h h.property.1 h.property.2 v with he | he
+      · exact (hv he).elim
+      · omega
+  right_inv I := by
+    apply Subtype.ext
+    ext v
+    change v ∈ (lift_height ℓ hℓ I.val I.property.2).1.toFinset ↔ v ∈ I.val
+    rw [Set.Finite.mem_toFinset]
+    change lift ℓ I.val v ≠ ground ℓ v ↔ v ∈ I.val
+    unfold lift
+    by_cases hv : v ∈ I.val
+    · rw [ite_eq_left hv]
+      exact ⟨fun _ => hv, fun _ => by omega⟩
+    · rw [ite_eq_right hv]
+      exact ⟨fun hn => (hn (by omega)).elim, fun hm => (hv hm).elim⟩
+
+private theorem downset_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    (Nat.card {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} : ℤ) =
+      (ℓ.choose 5 : ℤ) + 10 * ℓ.choose 3 - 2 * ℓ.choose 2 + 36 * ℓ - 14 := by
   sorry
+
+theorem result : claim := by
+  intro ℓ hℓ
+  rw [Nat.card_congr (heightEquiv ℓ (by omega))]
+  exact downset_count ℓ hℓ
 
 end D5.S3.StatisticalMechanics.SquareIceFiveOrangeCount
