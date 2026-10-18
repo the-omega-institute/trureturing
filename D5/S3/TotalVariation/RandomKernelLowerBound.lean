@@ -94,14 +94,6 @@ def matchingLaw {d : ℕ} (S : Finset (Fin d)) : Option (Fin d × Fin d) → ℝ
 def matchingEvent {d : ℕ} (S : Finset (Fin d)) : Finset (Option (Fin d × Fin d)) :=
   ((S ×ˢ S).filter (fun z => z.1 ≠ z.2)).map ⟨some, Option.some_injective _⟩
 
-private theorem matching_marginals {d : ℕ} (S : Finset (Fin d)) (x : Fin d) :
-    (∑ y, matchingLaw S (some (x,y))) = (if x ∈ S then 1 / (S.card : ℝ) else 0) ∧
-    (∑ y, matchingLaw S (some (y,x))) = (if x ∈ S then 1 / (S.card : ℝ) else 0) := by
-  classical
-  constructor
-  · by_cases hx : x ∈ S <;> simp [matchingLaw, hx]
-  · simp [matchingLaw]
-
 private theorem matching_probability {d : ℕ} (S : Finset (Fin d)) (hS : S.Nonempty) :
     (∀ z, 0 ≤ matchingLaw S z) ∧ ∑ z, matchingLaw S z = 1 := by
   classical
@@ -119,8 +111,7 @@ private theorem matching_completion {d : ℕ} (S : Finset (Fin d)) :
   funext z
   cases z with
   | none => rfl
-  | some z => simp [completion, matchingLaw, (matching_marginals S z.1).1,
-      (matching_marginals S z.2).2]
+  | some z => simp [completion, matchingLaw]
 
 private theorem completion_matching_mass {d : ℕ} (S : Finset (Fin d)) (hS : S.Nonempty) :
     ∑ z, completion (matchingLaw S) z = 1 := by
@@ -380,6 +371,75 @@ theorem stochastic_kernel_minimax {d : ℕ} (hd : 2 ≤ d) :
     (optimal_kernel_attains hd).2.symm⟩, ?_⟩
   rintro e ⟨K, hK, rfl⟩
   exact sharp_uniform_kernel_lower_bound hd K hK (worstError K) (worst_error_bounds K hK)
+
+private theorem optimal_matching_event {d : ℕ} (S : Finset (Fin d)) (hS : S.Nonempty) :
+    (∑ z ∈ matchingEvent S, kernelOutput (optimalKernel d) (matchingLaw S) z) =
+      ((S.card : ℝ)-1) * beta d := by
+  classical
+  have hn : (0 : ℝ) < S.card := by exact_mod_cast Finset.card_pos.mpr hS
+  have hentry (r s i : Fin d) (hrs : r ≠ s) :
+      optimalKernel d (some (r,s)) (some (i,i)) =
+        (if s = i then beta d / 2 else 0) + (if r = i then beta d / 2 else 0) := by
+    by_cases hr : r = i <;> by_cases hs : s = i
+    all_goals simp [optimalKernel, replacement, hr, hs, hrs] at * <;> ring
+  have hout (r s : Fin d) (hr : r ∈ S) (hs : s ∈ S) (hrs : r ≠ s) :
+      kernelOutput (optimalKernel d) (matchingLaw S) (some (r,s)) = beta d / S.card := by
+    rw [matching_output]
+    have hsum : (∑ i ∈ S, optimalKernel d (some (r,s)) (some (i,i))) = beta d := by
+      simp_rw [hentry r s _ hrs, Finset.sum_add_distrib]
+      simp [hr, hs]
+    rw [hsum]
+    ring
+  rw [event_mass]
+  have hrow (r : Fin d) (hr : r ∈ S) :
+      (∑ s ∈ S, if r = s then (0 : ℝ) else
+        kernelOutput (optimalKernel d) (matchingLaw S) (some (r,s))) =
+      ((S.card : ℝ)-1) * (beta d / S.card) := by
+    calc
+      _ = ∑ s ∈ S, (beta d / S.card - if r = s then beta d / S.card else 0) := by
+        apply Finset.sum_congr rfl
+        intro s hs
+        by_cases hrs : r = s
+        · simp [hrs]
+        · simp [hrs, hout r s hr hs hrs]
+      _ = _ := by simp [Finset.sum_sub_distrib, hr, nsmul_eq_mul]; ring
+  rw [Finset.sum_congr rfl hrow]
+  simp only [Finset.sum_const, nsmul_eq_mul]
+  field_simp
+  <;> ring
+
+/-- Every uniform diagonal matching whose support size maximizes the defining
+finite expression attains the error rho(d) of the explicit kernel. -/
+theorem maximizing_matching_attains {d : ℕ} (hd : 2 ≤ d)
+    (S : Finset (Fin d)) (hk : 2 ≤ S.card)
+    (hmax : beta d = coefficient d S.card) :
+    totalVariation (kernelOutput (optimalKernel d) (matchingLaw S))
+      (completion (matchingLaw S)) = rho d := by
+  classical
+  have hS : S.Nonempty := Finset.card_pos.mp (by omega)
+  have hp := matching_probability S hS
+  have hu := optimal_kernel_upper_bound hd
+  apply le_antisymm (hu.2 _ hp.1 hp.2)
+  have hmass := (completion_matching_mass S hS).trans
+    (kernel_mass _ hu.1.2 _ hp.2).symm
+  have hgap := (total_variation_eq_sup_event_gap (completion (matchingLaw S))
+    (kernelOutput (optimalKernel d) (matchingLaw S)) hmass).2
+    (Set.mem_range_self (matchingEvent S))
+  rw [total_variation_comm] at hgap
+  have h := (le_abs_self _).trans hgap
+  rw [matching_event_completion S hS, optimal_matching_event S hS] at h
+  have hkR : (2 : ℝ) ≤ S.card := by exact_mod_cast hk
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hk0 : (S.card : ℝ) ≠ 0 := by linarith
+  have hid : ((S.card : ℝ)-1) / S.card - ((S.card : ℝ)-1)*beta d = rho d := by
+    have ht : (d : ℝ) + S.card - 2 ≠ 0 := by linarith
+    rw [rho, hmax, coefficient]
+    field_simp [hk0, ht]
+    <;> ring
+  rw [hid] at h
+  exact h
+
+#print axioms maximizing_matching_attains
 
 #print axioms sharp_uniform_kernel_lower_bound
 #print axioms stochastic_kernel_minimax

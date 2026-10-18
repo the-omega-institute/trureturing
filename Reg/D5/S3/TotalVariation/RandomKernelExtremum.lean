@@ -45,10 +45,10 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨2, (fun _ => 0), (fun _ => 1), ?_⟩
+  refine ⟨2, Pi.single (0 : Fin 2) 1, Pi.single (1 : Fin 2) 1, ?_⟩
   intro h
   have he := congrFun h (0 : Fin 2)
-  norm_num [actual, realize] at he
+  norm_num [actual, realize, Pi.single_apply] at he
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.sharp_simplex_overlap_bound)) where
   actual := actual
@@ -137,10 +137,11 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨2, (fun _ => 0), (fun _ => 1), ?_⟩
+  refine ⟨2, Pi.single ((0,0) : Fin 2 × Fin 2) 1,
+    Pi.single ((1,1) : Fin 2 × Fin 2) 1, ?_⟩
   intro h
   have he := congrFun h ((0,0) : Fin 2 × Fin 2)
-  norm_num [actual, realize] at he
+  norm_num [actual, realize, Pi.single_apply] at he
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.active_joint_upper_bound)) where
   actual := actual
@@ -231,10 +232,11 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨2, (fun _ => 0), (fun _ => 1), ?_⟩
+  refine ⟨2, Pi.single (none : Option (Fin 2 × Fin 2)) 1,
+    Pi.single (some ((0,0) : Fin 2 × Fin 2)) 1, ?_⟩
   intro h
   have he := congrFun h (none : Option (Fin 2 × Fin 2))
-  norm_num [actual, realize] at he
+  norm_num [actual, realize, Pi.single_apply] at he
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.optimal_kernel_upper_bound)) where
   actual := actual
@@ -322,9 +324,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 2, ?_⟩
-  have hz : rho 0 = 0 := by norm_num [rho, beta, coefficient]
-  simpa [actual, realize, hz, rho_values.1] using (by norm_num : (0 : ℝ) ≠ 1/4)
+  refine ⟨(), 2, 4, ?_⟩
+  norm_num [actual, realize, rho_values.1, rho_values.2.2.1]
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.optimal_kernel_attains)) where
   actual := actual
@@ -412,7 +413,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨2, 0, 1, ?_⟩
+  refine ⟨2, (1/4 : ℝ), 1, ?_⟩
   norm_num [actual, realize]
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.uniform_kernel_lower_bound)) where
@@ -496,9 +497,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 2, ?_⟩
-  have hz : rho 0 = 0 := by norm_num [rho, beta, coefficient]
-  simpa [actual, realize, hz, rho_values.1] using (by norm_num : (0 : ℝ) ≠ 1/4)
+  refine ⟨(), 2, 4, ?_⟩
+  norm_num [actual, realize, rho_values.1, rho_values.2.2.1]
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.rho_tendsto_one)) where
   actual := actual
@@ -580,9 +580,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 2, ?_⟩
-  have hz : rho 0 = 0 := by norm_num [rho, beta, coefficient]
-  simpa [actual, realize, hz, rho_values.1] using (by norm_num : (0 : ℝ) ≠ 1/4)
+  refine ⟨(), 2, 4, ?_⟩
+  norm_num [actual, realize, rho_values.1, rho_values.2.2.1]
 
 def registration : Registration arena (type_of% (@_root_.D5.S3.TotalVariation.RandomKernelExtremum.rho_values)) where
   actual := actual

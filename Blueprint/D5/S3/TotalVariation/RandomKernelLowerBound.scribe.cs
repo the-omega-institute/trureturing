@@ -45,5 +45,20 @@ internal sealed class RandomKernelLowerBoundDocument : IScribeDocumentDefinition
                     + "supremum is well-defined as an upper bound on every source "
                     + "error. Applying the sharp uniform lower bound to that "
                     + "supremum closes the lower half of the minimax assertion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("maximizing-matching-attains"),
+                DeclarationHandle.Create(
+                    "D5/S3/TotalVariation/RandomKernelLowerBound.maximizing_matching_attains"),
+                H("Every maximizing diagonal subset is extremal"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural d>=2 and every subset S of Fin d of cardinal "
+                    + "k>=2 satisfying beta(d)=c(d,k), the uniform diagonal source "
+                    + "matchingLaw(S) has error exactly rho(d) under optimalKernel(d). "
+                    + "Its completed mass on matchingEvent(S) is (k-1)/k, while "
+                    + "the kernel output puts (k-1)beta(d) there. The maximizing "
+                    + "identity makes their difference rho(d). The event lower "
+                    + "bound and the full-source upper bound give equality."))),
                 DescribeRole.Theorem))));
 }
