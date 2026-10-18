@@ -13,11 +13,19 @@ internal sealed class HircheArimotoCombiningDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hirche's binary Arimoto information combining conjecture holds with threshold three halves on the full closed coordinate range.",
         H("Hirche's Arimoto information combining conjecture"), Blocks(
-            Paragraph(Text("C. Hirche, Rényi Bounds on Information Combining, arXiv:2004.14408v1, "
-                + "§IV-A, Conjecture IV.6 asks for a threshold 1 < α̂ < 1.5783, with "
-                + "kα(kα⁻¹(x) ∗ kα⁻¹(y)) convex for 0 < α < 1 and concave for 1 < α ≤ α̂. "
-                + "The assertion concerns each coordinate separately. All powers in k and delta use Real.rpow. "
+            Paragraph(Text("C. Hirche, Rényi Bounds on Information Combining, ISIT 2020, arXiv:2004.14408v1, "
+                + "§IV-A, Conjecture IV.6: “There exists a value 1 < α̂ < 1.5783, such that "
+                + "k_α^A(k_α^A⁻¹(x) ∗ k_α^A⁻¹(y)) (47) is convex for 0 < α < 1 and concave for 1 < α ≤ α̂.” "
+                + "Equation (23) defines K_α^A(X|Y) = e^{((1−α)/α) H_α^A(X|Y)}. "
+                + "For binary X ~ {p, 1−p}, k_α^A(p) = K_α^A(X) = (p^α + (1−p)^α)^{1/α}; "
+                + "write k for this coordinate. The assertion concerns each coordinate separately. "
+                + "All powers in k and delta use Real.rpow. "
                 + "At alpha=1, k is constant and the inverse branch does not exist; this order is excluded.")),
+            Paragraph(Text("O. Rioul and J. Béguinot, The role of Mrs. Gerber's Lemma for evaluating the information "
+                + "leakage of secret sharing schemes, Barron Festschrift (Springer), HAL hal-05074668v1, "
+                + "§4, p. 20, Proposition 1 and Remark 6, give the prior numerical statement of the threshold α̂ = 3/2. "
+                + "Their support is a numerical sign plot produced with SageMath (Figure 3); no proof is given there. See "),
+                Ref("D5/L/Entropy/rioulbeguinot2025informationcombining"), Text(".")),
             Node("k", "Binary Arimoto coordinate", All("alpha", All("p",
                 Equal(Call("k", N("alpha"), N("p")), Pow(Add(Pow(N("p"), N("alpha")),
                     Pow(Subtract(D(1), N("p")), N("alpha"))), Frac(D(1), N("alpha")))))),

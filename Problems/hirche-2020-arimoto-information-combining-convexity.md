@@ -12,16 +12,28 @@ motivation_gids:
 
 ## Problem
 
-C. Hirche, “Rényi Bounds on Information Combining”, arXiv:2004.14408v1,
-§IV-A, Conjecture IV.6 asks for a threshold $1<\hat\alpha<1.5783$
-with separate convexity for $0<\alpha<1$ and separate concavity for
-$1<\alpha\le\hat\alpha$ of
+C. Hirche, Rényi Bounds on Information Combining, ISIT 2020,
+arXiv:2004.14408v1, §IV-A, Conjecture IV.6:
+
+> There exists a value 1 < α̂ < 1.5783, such that k_α^A(k_α^A⁻¹(x) ∗ k_α^A⁻¹(y)) (47) is convex for 0 < α < 1 and concave for 1 < α ≤ α̂.
+
+Equation (23) defines
 
 $$
-k_\alpha(k_\alpha^{-1}(x)\star k_\alpha^{-1}(y)),\qquad
-k_\alpha(p)=(p^\alpha+(1-p)^\alpha)^{1/\alpha},\qquad
+K_\alpha^A(X\mid Y)=e^{((1-\alpha)/\alpha)H_\alpha^A(X\mid Y)}.
+$$
+
+For binary $X\sim\{p,1-p\}$, $k_\alpha^A(p)=K_\alpha^A(X)$, hence
+
+$$
+k_\alpha^A(p)=(p^\alpha+(1-p)^\alpha)^{1/\alpha},\qquad
 p\star q=p+q-2pq.
 $$
+
+Write $k_\alpha=k_\alpha^A$ below. Lemma IV.3, cited from
+Hsu–Asoodeh–Salamatian–Calmon, gives convexity for $\alpha\ge2$;
+Lemma IV.4 shows neither convexity nor concavity for
+$\alpha\in(1.58,1.97)$.
 
 The inverse is the restriction to $[0,1/2]$, with range
 $I_\alpha=[\min(1,\delta_\alpha),\max(1,\delta_\alpha)]$,
@@ -141,9 +153,14 @@ endpoints. The hyperbolic certificate is
 
 ## Triage
 
-The exact threshold $3/2$ is **proved on paper**; the sharpness statement
-is not included in the formal result. The full separate-curvature
-classification on positive orders is:
+Conjecture IV.6 is **PROVED** with $\hat\alpha=3/2$ by `result : claim`.
+Since $1<3/2<1.5783$, this witness meets the source's strict numerical
+bound. The conjecture asks for the existence of such a threshold; it does
+not assert concavity throughout $(3/2,1.5783)$.
+
+The following full separate-curvature classification on positive orders
+is **computed**, with its strictness and additional order ranges **OPEN**
+as formalization targets:
 
 | Order | Internal slices |
 | --- | --- |
@@ -157,8 +174,8 @@ Endpoint slices are constant or identity and satisfy the non-strict
 inequalities. At $\alpha=1$ the original coordinate is constant and the
 specified inverse does not exist.
 
-For sharpness, let $Q(z)=\sinh z/z$ with $Q(0)=1$. Its convergent even
-Taylor expansion is $Q(z)=1+z^2/6+O(z^4)$. Therefore
+For the computed sharpness calculation, let $Q(z)=\sinh z/z$ with
+$Q(0)=1$. Its convergent even Taylor expansion is $Q(z)=1+z^2/6+O(z^4)$. Therefore
 
 $$
 \mathcal E_b(s)={Q(s)\cosh^2s\over Q(bs)\cosh(\alpha s)},\qquad
@@ -174,12 +191,13 @@ $E_\alpha(t)\to+\infty$ as $t\to1^-$, whereas $E_\alpha(vt)$ has a finite
 limit. The second derivative is then negative near that endpoint,
 excluding convexity as well. For $b\ge1$, parameter comparison gives
 $L_b\le L_1=2(\tanh s-\tanh(2s))<0$, so elasticity decreases and internal
-slices are strictly convex. These sharpness, strictness and remaining-range
-arguments are paper conclusions, not additional kernel-verified theorems.
+slices are strictly convex. Sharpness for $\alpha>3/2$, including failure
+of concavity at $y=k_\alpha(1/4)$ for $\alpha\in(3/2,1.5783)$, is
+**computed / OPEN**: these sharpness, strictness and remaining-range
+arguments are not formalized.
 
 ## ASSUMED-UNVERIFIED
 
-The arXiv locator, verbatim wording, HAL attribution and absence of a
-subsequent proof have not been independently checked against primary texts
-or later literature. The cited locators and threshold attribution are
-supplied with the problem. No network literature search is asserted.
+Citation indexes and subsequent literature have not been exhaustively
+checked; bibliographic priority and the absence of a later analytic proof
+are not established.
