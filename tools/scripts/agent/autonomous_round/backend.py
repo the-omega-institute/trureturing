@@ -81,12 +81,13 @@ class Backend(Workers):
             # No search-index consistency assumption; include closed issues and every page.
             records = self.gh(API + '/issues?state=all&per_page=100&since=' + intent['since'],
                               timeout, paginate=True)
-            records = [x for x in records if 'pull_request' not in x]
         else:
             number = self.number(intent['issue'])
             records = self.gh(API + f'/issues/{number}/comments?per_page=100', timeout, paginate=True)
         if not all(isinstance(x, dict) and isinstance(x.get('body'), (str, type(None))) for x in records):
             raise Stop('CARRIER_MALFORMED')
+        if intent['kind'] == 'candidate':
+            records = [x for x in records if 'pull_request' not in x]
         found = [x for x in records if intent['marker'] in (x['body'] or '')]
         for carrier in found:
             self.reference(carrier, intent)

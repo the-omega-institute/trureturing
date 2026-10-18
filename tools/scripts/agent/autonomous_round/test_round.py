@@ -2,6 +2,8 @@
 import copy
 import json
 import os
+import signal
+import time
 from pathlib import Path
 import subprocess
 import sys
@@ -101,8 +103,31 @@ class RoundTests(unittest.TestCase):
         saved = self.state()
         self.assertEqual(1, saved['calls'])
         self.assertEqual(300, saved['active']['reserved_seconds'])
-        self.assertEqual('CALL_OUTCOME_UNKNOWN', self.run_round()['status'])
+        resumed = self.run_round()
+        self.assertEqual('terminal', resumed['status'])
+        self.assertEqual('invalid', resumed['terminal_status'])
+        self.assertIn('CALL_OUTCOME_UNKNOWN: generate', resumed['gaps'])
         self.assertEqual(saved['calls'], self.state()['calls'])
+
+    def test_unknown_solver_outcome_closes_unresolved_without_replaying_the_seat(self):
+        self.backend.interrupt_role = 'solve'
+        with self.assertRaises(KeyboardInterrupt):
+            self.run_round()
+        self.backend.interrupt_role = None
+        self.assertEqual('WAIT_DEADLINE', self.run_round('wake-b')['status'])
+        self.assertEqual(1, self.backend.roles.count('solve'))
+        self.backend.now += 4000
+        self.assertEqual('unresolved', self.run_round('wake-c')['terminal_status'])
+
+    def test_unknown_prediction_is_missing_and_never_replayed(self):
+        self.backend.interrupt_role = 'predict_gpt'
+        with self.assertRaises(KeyboardInterrupt):
+            self.run_round()
+        self.backend.interrupt_role = None
+        result = self.run_round()
+        self.assertEqual('terminal', result['status'])
+        self.assertEqual(1, self.backend.roles.count('predict_gpt'))
+        self.assertEqual(['Claude'], result['readouts']['units'][0]['model_families'])
 
     def test_exhausted_budget_and_deadline_do_not_reset_on_new_wake(self):
         limited = Limits(unit_calls=1)
@@ -269,6 +294,53 @@ class RoundTests(unittest.TestCase):
 
 
 class CarrierTests(unittest.TestCase):
+    def test_controller_death_does_not_remove_the_worker_deadline_or_seat_lock(self):
+        from runtime import locked
+        with tempfile.TemporaryDirectory() as name:
+            checkpoint, pidfile = Path(name) / 'checkpoint.json', Path(name) / 'worker.pid'
+            source = str(Path(__file__).resolve().parent)
+            worker = ('import os,time; from pathlib import Path; '
+                      f'Path({str(pidfile)!r}).write_text(str(os.getpid())); time.sleep(30)')
+            controller = ('import sys; from pathlib import Path; '
+                f'sys.path.insert(0,{source!r}); from runtime import locked,execute; '
+                f'p=Path({str(checkpoint)!r}); '\
+                f'\nwith locked(p) as fd: execute([sys.executable,"-c",{worker!r}], p.parent, 1, lock_fd=fd)')
+            process = subprocess.Popen([sys.executable, '-c', controller],
+                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            pid = None
+            try:
+                until = time.monotonic() + 2
+                while not pidfile.exists() and time.monotonic() < until:
+                    time.sleep(0.01)
+                self.assertTrue(pidfile.exists(), 'worker did not start')
+                pid = int(pidfile.read_text())
+                process.kill()
+                process.wait(timeout=2)
+                with self.assertRaisesRegex(Stop, 'ALREADY_RUNNING'):
+                    with locked(checkpoint):
+                        pass
+                until = time.monotonic() + 3
+                released = False
+                while time.monotonic() < until:
+                    try:
+                        with locked(checkpoint):
+                            released = True
+                            break
+                    except Stop:
+                        time.sleep(0.02)
+                self.assertTrue(released, 'orphan worker exceeded the reserved deadline')
+                with self.assertRaises(ProcessLookupError):
+                    os.kill(pid, 0)
+            finally:
+                if process.poll() is None:
+                    process.kill()
+                    process.wait(timeout=2)
+                if pid:
+                    try:
+                        os.killpg(pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+
     def test_timeout_kills_the_child_process_group(self):
         from runtime import execute
         with self.assertRaisesRegex(Stop, 'WORKER_TIMEOUT'):
@@ -322,6 +394,14 @@ class CarrierTests(unittest.TestCase):
         with patch.object(backend, 'call', return_value=json.dumps({'body': body})) as call:
             backend.gh('some/route', 1, payload={'body': body})
             self.assertEqual({'body': body}, json.loads(call.call_args.args[2]))
+
+    def test_malformed_carrier_page_is_not_an_empty_write_reconciliation(self):
+        from backend import Backend
+        backend = Backend(Path(__file__).resolve().parents[4])
+        intent = dict(kind='candidate', marker='marker', since=utc(1800000000))
+        with patch.object(backend, 'gh', return_value=[None]):
+            with self.assertRaisesRegex(Stop, 'CARRIER_MALFORMED'):
+                backend.find(intent, 1)
 
 
 if __name__ == '__main__':

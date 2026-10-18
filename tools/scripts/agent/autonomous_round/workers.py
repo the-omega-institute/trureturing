@@ -1,6 +1,6 @@
 """Fresh carrier calls with role-specific schemas and attribution from the carrier."""
 import json
-import os
+import shutil
 from pathlib import Path
 import sys
 import tempfile
@@ -80,6 +80,14 @@ class Workers:
 
     def call(self, argv, timeout, stdin='', cwd=None):
         return execute(argv, cwd or self.root, timeout, stdin, self.lock_fd)
+
+    def clean_scratch(self):
+        # Called only under the live lock, after every orphaned supervisor has released it.
+        for path in self.scratch.iterdir():
+            if path.is_dir() and not path.is_symlink():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
 
     def worker(self, role, payload, timeout):
         with tempfile.TemporaryDirectory(dir=self.scratch) as name:

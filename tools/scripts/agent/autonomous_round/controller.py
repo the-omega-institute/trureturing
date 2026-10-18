@@ -43,6 +43,8 @@ class Round:
                 raise Stop('WAKE_ID_REQUIRED', 'use a stable host invocation identity')
             with locked(self.path) as fd:
                 self.backend.lock_fd = fd
+                if hasattr(self.backend, 'clean_scratch'):
+                    self.backend.clean_scratch()
                 self.load(wake_id)
                 if self.wake['done']:
                     return self.result('already_completed')
@@ -51,7 +53,7 @@ class Round:
                     self.save()
                     return self.result('already_completed')
                 if self.unit.get('inflight'):
-                    raise Stop('CALL_OUTCOME_UNKNOWN', self.unit['inflight'])
+                    self.recover_call()
                 while self.unit['stage'] != 'done':
                     if self.io('head') != self.unit['head']:
                         raise Stop('HEAD_CHANGED', 'the pinned unit was not rebound')
@@ -144,11 +146,26 @@ class Round:
             answer = self.backend.worker(role, payload, timeout=seconds)
         except Stop:
             self.unit['inflight'] = None
-            self.save()
             raise
         self.unit['inflight'] = None
-        self.save()
         return answer
+
+    def recover_call(self):
+        # The supervisor held this same lock until the old seat and its deadline ended.
+        unit, role = self.unit, self.unit['inflight']
+        if role not in ('generate', 'predict_gpt', 'predict_other', 'solve', 'verify', 'evaluate'):
+            raise Stop('CHECKPOINT_CONFLICT', 'unknown inflight role')
+        unit['inflight'] = None
+        unit['gaps'].append('CALL_OUTCOME_UNKNOWN: ' + role)
+        if role.startswith('predict_'):
+            if role == 'predict_other':
+                unit['gaps'].append('NON_GPT_UNAVAILABLE: CALL_OUTCOME_UNKNOWN')
+            self.advance('predict_other' if role == 'predict_gpt' else 'preregister')
+        elif role == 'generate':
+            unit.update(stage='done', terminal_status='invalid', boundary='CALL_OUTCOME_UNKNOWN')
+        else:
+            self.unresolved('CALL_OUTCOME_UNKNOWN: ' + role)
+        self.save()
 
     def write(self, kind, body):
         unit = self.unit

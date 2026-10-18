@@ -8,6 +8,8 @@ import os
 from pathlib import Path
 import signal
 import subprocess
+import sys
+import time
 
 
 class Stop(Exception):
@@ -71,15 +73,19 @@ def locked(path):
 def execute(argv, root, timeout, stdin='', lock_fd=None):
     if timeout <= 0:
         raise Stop('WALL_BUDGET')
+    deadline = time.monotonic() + timeout
+    request = dict(argv=argv, deadline=deadline, lock_fd=lock_fd)
     try:
-        child = subprocess.Popen(argv, cwd=root, stdin=subprocess.PIPE,
+        # This bounded supervisor survives controller death and owns the process-group deadline.
+        child = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), json.dumps(request)],
+                                 cwd=root, stdin=subprocess.PIPE,
                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                  text=True, start_new_session=True,
                                  pass_fds=() if lock_fd is None else (lock_fd,))
     except OSError as error:
         raise Stop('CAPABILITY_UNAVAILABLE', str(error)) from error
     try:
-        out, err = child.communicate(stdin, timeout=timeout)
+        out, err = child.communicate(stdin, timeout=timeout + 2)
     except BaseException as error:
         try:
             os.killpg(child.pid, signal.SIGKILL)
@@ -89,9 +95,39 @@ def execute(argv, root, timeout, stdin='', lock_fd=None):
         if isinstance(error, subprocess.TimeoutExpired):
             raise Stop('WORKER_TIMEOUT') from error
         raise
+    if child.returncode == -signal.SIGKILL and time.monotonic() >= deadline:
+        raise Stop('WORKER_TIMEOUT')
     if child.returncode:
-        raise Stop('COMMAND_FAILED', f'{argv[0]} exit={child.returncode}: {err[-500:]} {out[-500:]}')
-    return out
+        raise Stop('SUPERVISOR_FAILED', f'exit={child.returncode}: {err[-500:]}')
+    result = decode(out)
+    if result['code']:
+        raise Stop(result['reason'], f'{argv[0]} exit={result["code"]}: '
+                   f'{result["stderr"][-500:]} {result["stdout"][-500:]}')
+    return result['stdout']
+
+
+def supervise(request):
+    """One bounded child, no continuation. Parent and worker share this process group."""
+    fd = request['lock_fd']
+    def stop_group(signum, frame):
+        os.killpg(os.getpgrp(), signal.SIGKILL)
+    signal.signal(signal.SIGTERM, stop_group)
+    signal.signal(signal.SIGINT, stop_group)
+    if time.monotonic() >= request['deadline']:
+        os.killpg(os.getpgrp(), signal.SIGKILL)
+    try:
+        child = subprocess.Popen(request['argv'], stdin=sys.stdin, stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE, text=True, errors='replace',
+                                 pass_fds=() if fd is None else (fd,))
+    except OSError as error:
+        return dict(code=127, reason='CAPABILITY_UNAVAILABLE', stdout='', stderr=str(error))
+    try:
+        out, err = child.communicate(timeout=max(0, request['deadline'] - time.monotonic()))
+    except BaseException:
+        # Includes the supervisor: no controller is needed to kill orphaned descendants.
+        os.killpg(os.getpgrp(), signal.SIGKILL)
+        raise AssertionError('unreachable')
+    return dict(code=child.returncode, reason='COMMAND_FAILED', stdout=out, stderr=err)
 
 
 def decode(raw):
@@ -107,3 +143,7 @@ def decode(raw):
                           parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
     except (ValueError, TypeError) as error:
         raise Stop('WORKER_MALFORMED', str(error)) from error
+
+
+if __name__ == '__main__':
+    print(json.dumps(supervise(json.loads(sys.argv[1]))))
