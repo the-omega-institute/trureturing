@@ -420,12 +420,12 @@ private theorem weighted_survival_limit {d : ℕ}
   have hsurv (N : ℕ) :
       D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival Q N =
         survivalEffect K c N := by
-    induction N with
-    | zero => rfl
-    | succ N ih =>
-      rw [D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival, ih,
-        hQ]
-      simp only [survivalEffect, Function.iterate_succ_apply']
+    have hstep : Function.Semiconj
+        (D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival Q)
+        Nat.succ (weightedDual K c) := fun j => hQ _
+    simpa only [Nat.succ_iterate, Nat.zero_add,
+      D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival,
+      survivalEffect] using hstep.iterate_right N 0
   have hsurvfun :
       D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival Q =
         survivalEffect K c := funext hsurv
@@ -450,10 +450,8 @@ private theorem initial_gap_quadratic {d : ℕ}
   obtain ⟨L, μ, hμ, hsupp, _⟩ := finite_reachable_faithful_sum K c hc ρ hρ
   obtain ⟨F, hlim, hF, hfix, htrace⟩ := weighted_survival_limit K c hc hcomp
   have hρF : (ρ * F).trace = 0 := tendsto_nhds_unique (htrace ρ) hterm
-  have hFiter (k : ℕ) : (weightedDual K c)^[k] F = F := by
-    induction k with
-    | zero => rfl
-    | succ k ih => rw [Function.iterate_succ_apply', ih, hfix]
+  have hFiter (k : ℕ) : (weightedDual K c)^[k] F = F :=
+    Function.IsFixedPt.iterate hfix k
   have hRF : (F * orbitSum K c ρ L).trace = 0 := by
     rw [Matrix.trace_mul_comm]
     simp only [orbitSum, Matrix.sum_mul, Matrix.trace_sum]
@@ -559,9 +557,9 @@ omit [DecidableEq n] in
 private theorem weightedCP_mono (K : α → Matrix n n ℂ)
     (c : α → ℝ) (hc : ∀ a, 0 ≤ c a) :
     Monotone (weightedCP K c) := by
-  intro X Y h
-  rw [Matrix.le_iff, ← map_sub]
-  exact weightedCP_psd K c hc (Matrix.le_iff.mp h)
+  exact (monotone_iff_map_nonneg (weightedCP K c)).mpr fun X hX =>
+    Matrix.nonneg_iff_posSemidef.mpr
+      (weightedCP_psd K c hc (Matrix.nonneg_iff_posSemidef.mp hX))
 omit [DecidableEq n] in
 private theorem weightedCP_weight_mono (K : α → Matrix n n ℂ)
     (c b : α → ℝ) (hcb : ∀ a, b a ≤ c a)
@@ -614,22 +612,21 @@ private theorem return_comparison (K : α → Matrix n n ℂ)
   have hi k : ((g ^ (k + 1) : ℝ) : ℂ) •
       (weightedDual K b)^[k] (1 - weightedDual K b 1) ≤
         (weightedDual K c)^[k] (1 - weightedDual K c 1) := by
-    induction k with
-    | zero => simpa using hcompare
-    | succ k ih =>
-      rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
+    apply hm.seq_le_seq (x := fun j => ((g ^ (j + 1) : ℝ) : ℂ) •
+      (weightedDual K b)^[j] (1 - weightedDual K b 1))
+      (y := fun j => (weightedDual K c)^[j] (1 - weightedDual K c 1)) k
+    · simpa using hcompare
+    · intro j _
+      rw [Function.iterate_succ_apply', map_smul]
       have hw := weightedCP_weight_mono (fun a => (K a)ᴴ) c
-        (fun a => g * b a) hcb _ (hp k)
+        (fun a => g * b a) hcb _ (hp j)
       rw [weightedCP_scale] at hw
       have hs := smul_le_smul_of_nonneg_left hw
-        (Complex.zero_le_real.mpr (pow_nonneg hg (k + 1)))
-      have hi' := hm ih
-      rw [map_smul] at hi'
-      have heq : ((g ^ (k + 1 + 1) : ℝ) : ℂ) =
-          ((g ^ (k + 1) : ℝ) : ℂ) * (g : ℂ) := by
-        rw [pow_succ, Complex.ofReal_mul]
-      rw [heq, mul_smul]
-      exact hs.trans hi'
+        (Complex.zero_le_real.mpr (pow_nonneg hg (j + 1)))
+      simpa only [pow_succ, Complex.ofReal_mul, mul_smul, weightedDual] using hs
+    · intro j _
+      rw [Function.iterate_succ_apply']
+      exact le_rfl
   rw [return_telescoping, return_telescoping, Finset.smul_sum]
   apply Finset.sum_le_sum
   intro k hk
@@ -660,11 +657,12 @@ private theorem reachable_geometric_tail (K : α → Matrix n n ℂ)
     Matrix.nonneg_iff_posSemidef.mp
       (positive_iterate K c hc σ (Matrix.nonneg_iff_posSemidef.mpr hσ) k)
   have hsupp k : matrixSupport ((weightedCP K c)^[k] σ) ≤ reachableSpace K ρ := by
-    induction k with
-    | zero => exact hs
-    | succ k ih =>
-      rw [Function.iterate_succ_apply']
-      exact weightedCP_reachable_support K c hc ρ _ (hpos k) ih
+    have hmap : Set.MapsTo (weightedCP K c)
+      {X : Matrix n n ℂ | X.PosSemidef ∧ matrixSupport X ≤ reachableSpace K ρ}
+      {X : Matrix n n ℂ | X.PosSemidef ∧ matrixSupport X ≤ reachableSpace K ρ} :=
+      fun X hX => ⟨weightedCP_psd K c hc hX.1,
+        weightedCP_reachable_support K c hc ρ X hX.1 hX.2⟩
+    exact (hmap.iterate k ⟨hσ, hs⟩).2
   have hstep (X : Matrix n n ℂ) (hX : X.PosSemidef) :
       (weightedCP K c X).trace.re ≤ X.trace.re := by
     have h := RHLinalg.trace_mul_nonneg_of_posSemidef hX (Matrix.le_iff.mp hcomp)
@@ -681,18 +679,22 @@ private theorem reachable_geometric_tail (K : α → Matrix n n ℂ)
     exact hstep _ (hpos k)
   have hblock (k : ℕ) :
       ((weightedCP K c)^[k * N] σ).trace.re ≤ q ^ k * σ.trace.re := by
-    induction k with
-    | zero => simp
-    | succ k ih =>
+    apply (show Monotone (fun r : ℝ => q * r) from
+      fun a b hab => mul_le_mul_of_nonneg_left hab hq).seq_le_seq
+      (x := fun j => ((weightedCP K c)^[j * N] σ).trace.re)
+      (y := fun j => q ^ j * σ.trace.re) k
+    · simp
+    · intro j _
       rw [Nat.succ_mul, Nat.add_comm, Function.iterate_add_apply]
       have hb := trace_le_of_support_quadratic (reachableSpace K ρ)
-        (survivalEffect K c N) _ (hpos (k * N)) (hsupp (k * N)) q hgap
-      have hp := weightedCP_iterate_trace K c N ((weightedCP K c)^[k * N] σ) 1
+        (survivalEffect K c N) _ (hpos (j * N)) (hsupp (j * N)) q hgap
+      have hp := weightedCP_iterate_trace K c N ((weightedCP K c)^[j * N] σ) 1
       rw [Matrix.mul_one] at hp
       rw [hp]
-      exact hb.trans (by
-        have hh := mul_le_mul_of_nonneg_left ih hq
-        simpa only [pow_succ, mul_assoc, mul_left_comm, mul_comm] using hh)
+      exact hb
+    · intro j _
+      rw [pow_succ]
+      exact le_of_eq (by ring)
   intro k
   exact (hanti (Nat.div_mul_le_self k N)).trans (hblock (k / N))
 /-- The minimum of one and all branch-weight ratios on a compact parameter set.
