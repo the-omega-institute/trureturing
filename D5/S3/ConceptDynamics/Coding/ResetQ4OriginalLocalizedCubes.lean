@@ -572,7 +572,7 @@ private theorem originalScalar_unitShift_val :
 
 /-- The residue of the ACTUAL original forward shift is annihilated.
 This is proved in the integral chart, before any dyadic localization. -/
-theorem original_time_residue :
+theorem original_time_residueCharacter_eq_zero :
     residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom
       (Units.map (plus 4).toMonoidHom
         (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))))) = 0 := by

@@ -40,9 +40,9 @@ example :
             (ResetFullStandardBeamRepresentation.rho 4 (by decide) f)
             (ResetHistoryKernel.rho_time 4 (by decide) f)))
     let chi_add : ResetFullAut 4 → ZMod 3 := fun f =>
-      ResetQ4UnitCubes.residueQuotientCharacter
+      ResetQ4UnitCubes.vanishingResidueQuotientCharacter
         (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))
-        ResetQ4OriginalLocalizedCubes.original_time_residue (Additive.ofMul
+        ResetQ4OriginalLocalizedCubes.original_time_residueCharacter_eq_zero (Additive.ofMul
           (QuotientGroup.mk'
             (Subgroup.zpowers (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))))
             (psi f)))
@@ -63,9 +63,9 @@ example :
           (ResetFullStandardBeamRepresentation.rho 4 (by decide) f)
           (ResetHistoryKernel.rho_time 4 (by decide) f)))
   let chi_add : ResetFullAut 4 → ZMod 3 := fun f =>
-    ResetQ4UnitCubes.residueQuotientCharacter
+    ResetQ4UnitCubes.vanishingResidueQuotientCharacter
       (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))
-      ResetQ4OriginalLocalizedCubes.original_time_residue (Additive.ofMul
+      ResetQ4OriginalLocalizedCubes.original_time_residueCharacter_eq_zero (Additive.ofMul
         (QuotientGroup.mk'
           (Subgroup.zpowers (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))))
           (psi f)))

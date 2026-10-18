@@ -721,7 +721,7 @@ theorem residueCharacter_plus_factorization (u : Plus4ˣ)
 
 /-- Descend the actual oriented residue character through powers of any unit
 on which it vanishes. The subgroup is the literal `Subgroup.zpowers t`. -/
-def residueQuotientCharacter (t : (Common 4)ˣ)
+def vanishingResidueQuotientCharacter (t : (Common 4)ˣ)
     (ht : residueCharacter (Additive.ofMul t) = 0) :
     Additive ((Common 4)ˣ ⧸ Subgroup.zpowers t) →+ ZMod 3 := by
   have hker : Subgroup.zpowers t ≤ residueCharacter.toMultiplicativeRight.ker := by
@@ -733,9 +733,9 @@ def residueQuotientCharacter (t : (Common 4)ˣ)
 
 /-- On every actual plus-order unit, the quotient character computes to the
 same oriented character of its literal common residue. -/
-theorem residueQuotientCharacter_plus (t : (Common 4)ˣ)
+theorem vanishingResidueQuotientCharacter_plus (t : (Common 4)ˣ)
     (ht : residueCharacter (Additive.ofMul t) = 0) (u : (Plus 4)ˣ) :
-    residueQuotientCharacter t ht
+    vanishingResidueQuotientCharacter t ht
       (Additive.ofMul ((QuotientGroup.mk' (Subgroup.zpowers t))
         (Units.map (rplus 4).toMonoidHom u))) =
       residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom u)) := by

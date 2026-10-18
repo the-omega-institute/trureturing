@@ -76,9 +76,9 @@ example :
             (ResetFullStandardBeamRepresentation.rho 4 (by decide) f)
             (ResetHistoryKernel.rho_time 4 (by decide) f)))
     let chi_add : ResetFullAut 4 → ZMod 3 := fun f =>
-      ResetQ4UnitCubes.residueQuotientCharacter
+      ResetQ4UnitCubes.vanishingResidueQuotientCharacter
         (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))
-        ResetQ4OriginalLocalizedCubes.original_time_residue (Additive.ofMul
+        ResetQ4OriginalLocalizedCubes.original_time_residueCharacter_eq_zero (Additive.ofMul
           (QuotientGroup.mk'
             (Subgroup.zpowers (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))))
             (psi f)))
@@ -115,9 +115,9 @@ example :
             (ResetFullStandardBeamRepresentation.rho 4 (by decide) f)
             (ResetHistoryKernel.rho_time 4 (by decide) f)))
     let chi_add : ResetFullAut 4 → ZMod 3 := fun f =>
-      ResetQ4UnitCubes.residueQuotientCharacter
+      ResetQ4UnitCubes.vanishingResidueQuotientCharacter
         (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))
-        ResetQ4OriginalLocalizedCubes.original_time_residue (Additive.ofMul
+        ResetQ4OriginalLocalizedCubes.original_time_residueCharacter_eq_zero (Additive.ofMul
           (QuotientGroup.mk'
             (Subgroup.zpowers (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))))
             (psi f)))
@@ -610,16 +610,16 @@ example :
       obtain ⟨i,j,v,hfactor,hnative⟩ :=
         ResetQ4OriginalLocalizedCubes.original_character_factorization h
       have hnativeValue : chi_add h = (j.val : ZMod 3) := by
-        change ResetQ4UnitCubes.residueQuotientCharacter
+        change ResetQ4UnitCubes.vanishingResidueQuotientCharacter
           (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))
-          ResetQ4OriginalLocalizedCubes.original_time_residue (Additive.ofMul
+          ResetQ4OriginalLocalizedCubes.original_time_residueCharacter_eq_zero (Additive.ofMul
           (QuotientGroup.mk'
             (Subgroup.zpowers (psi (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))))
             (Units.map (ResetIntegralGluing.rplus 4).toMonoidHom
               (Units.map (ResetIntegralGluing.plus 4).toMonoidHom
                 (ResetNativeUnitNormalForm.scalarUnit 4 (by decide)
                   (rho 4 (by decide) h) (ResetHistoryKernel.rho_time 4 (by decide) h)))))) = _
-        rw [ResetQ4UnitCubes.residueQuotientCharacter_plus]
+        rw [ResetQ4UnitCubes.vanishingResidueQuotientCharacter_plus]
         exact hnative
       -- Actual time and I+T calibrations are local to this universal root.
       have sumCons {k : ℕ} (f : (Fin (k+1) → Fin 8) → ℤ) :
