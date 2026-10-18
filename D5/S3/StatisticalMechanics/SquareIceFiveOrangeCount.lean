@@ -95,6 +95,15 @@ private theorem edge_difference (h : ℤ × ℤ → ℤ)
   · exact (hh (z, y)).2
   · simpa only [abs_sub_comm] using (hh (x, w)).2
 
+private theorem ground_lipschitz (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (u v : ℤ × ℤ) :
+    ground ℓ u ≤ ground ℓ v + |u.1 - v.1| + |u.2 - v.2| := by
+  obtain ⟨_, i, hi, hil, hvi⟩ := ground_nearest ℓ hℓ v
+  have hu := (ground_nearest ℓ hℓ u).1 i hi hil
+  have hx := abs_sub_le u.1 v.1 i
+  have hy := abs_sub_le u.2 v.2 (-i)
+  simp only [sub_neg_eq_add] at hy
+  omega
+
 private theorem ground_edge (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (u v : ℤ × ℤ)
     (huv : Adjacent u v) : |ground ℓ u - ground ℓ v| = 1 := by
   rcases ground_nearest ℓ hℓ u with ⟨hu, i, hi, hil, hui⟩
@@ -306,7 +315,6 @@ private theorem lift_height (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × �
     by_contra hn
     change v ∉ I at hn
     apply hv
-    change lift ℓ I v = ground ℓ v
     unfold lift
     simp only [ite_eq_right hn, add_zero]
   · intro v
@@ -368,6 +376,52 @@ private noncomputable def heightEquiv (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
       exact ⟨fun _ => hv, fun _ => by omega⟩
     · rw [ite_eq_right hv]
       exact ⟨fun hn => (hn (by omega)).elim, fun hm => (hv hm).elim⟩
+
+private theorem geodesic_mem (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) (u v : ℤ × ℤ)
+    (he : ground ℓ u + |u.1 - v.1| + |u.2 - v.2| = ground ℓ v)
+    (hv : v ∈ I) : u ∈ I := by
+  suffices hall : ∀ n : ℕ, ∀ u v : ℤ × ℤ,
+      (|u.1 - v.1| + |u.2 - v.2|).toNat = n →
+      ground ℓ u + |u.1 - v.1| + |u.2 - v.2| = ground ℓ v → v ∈ I → u ∈ I by
+    exact hall _ u v rfl he hv
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro u v hn he hv
+    by_cases huv : u = v
+    · simpa only [huv] using hv
+    have next : ∃ w : ℤ × ℤ, Adjacent v w ∧
+        |u.1 - w.1| + |u.2 - w.2| + 1 = |u.1 - v.1| + |u.2 - v.2| := by
+      by_cases hx : u.1 < v.1
+      · refine ⟨(v.1 - 1, v.2), ?_, ?_⟩ <;>
+          (try unfold Adjacent) <;> dsimp only <;> simp only [abs_eq_max_neg] <;> omega
+      · by_cases hxr : v.1 < u.1
+        · refine ⟨(v.1 + 1, v.2), ?_, ?_⟩ <;>
+            (try unfold Adjacent) <;> dsimp only <;> simp only [abs_eq_max_neg] <;> omega
+        · have hy : u.2 ≠ v.2 := by
+            intro hy
+            apply huv
+            exact Prod.ext (by omega) hy
+          by_cases hyl : u.2 < v.2
+          · refine ⟨(v.1, v.2 - 1), ?_, ?_⟩ <;>
+              (try unfold Adjacent) <;> dsimp only <;> simp only [abs_eq_max_neg] <;> omega
+          · refine ⟨(v.1, v.2 + 1), ?_, ?_⟩ <;>
+              (try unfold Adjacent) <;> dsimp only <;> simp only [abs_eq_max_neg] <;> omega
+    obtain ⟨w, hw, hd⟩ := next
+    have hl := ground_lipschitz ℓ hℓ w u
+    rw [abs_sub_comm w.1 u.1, abs_sub_comm w.2 u.2] at hl
+    have hg := ground_edge ℓ hℓ v w hw
+    have hwg : ground ℓ w + 1 = ground ℓ v := by
+      simp only [abs_eq_max_neg] at hg
+      omega
+    have hwi : w ∈ I := hI w v (by
+      unfold Adjacent at hw ⊢
+      simpa only [abs_sub_comm] using hw) hwg hv
+    apply ih (|u.1 - w.1| + |u.2 - w.2|).toNat (by
+      have ha := abs_nonneg (u.1 - w.1)
+      have hb := abs_nonneg (u.2 - w.2)
+      omega) u w rfl (by omega) hwi
 
 private theorem downset_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} : ℤ) =
