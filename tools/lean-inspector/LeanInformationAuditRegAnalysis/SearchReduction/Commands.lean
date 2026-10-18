@@ -171,7 +171,8 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let safeName := (namePrefix.map (fun c => if c.isAlphanum then c else '_')) ++
       s!"_{hash name.getId}"
     let moduleName := "SearchReductionProbe_" ++ safeName
-    let directory : System.FilePath := ".lake/build/search-reduction/" ++ safeName
+    let directory : System.FilePath := ".lake/build/search-reduction/" ++ safeName ++
+      s!"_{← IO.Process.getPID}"
     IO.FS.createDirAll directory
     let directory ← IO.FS.realPath directory
     let input := directory / (moduleName ++ ".lean")

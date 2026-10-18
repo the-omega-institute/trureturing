@@ -1,4 +1,5 @@
-import LeanInformationAuditRegTests.SearchReduction.Calibration
+import LeanInformationAuditRegAnalysis.SearchReduction.Commands
+import LeanInformationAuditRegTests.SearchReduction.Candidates
 
 /-! Resource faults and missing inputs never certify finite-search failure. -/
 open Lean Meta

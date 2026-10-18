@@ -191,7 +191,7 @@ private def factExpr (fact : Fact) : MetaM Expr := do
 
 partial def structural (goal : MVarId) (extra : Array Name) :
     StateRefT FactIndex MetaM (Array MVarId) := goal.withContext do
-  let original ← goal.getType
+  let original ← instantiateMVars (← goal.getType)
   let type ← withTransparency .reducible <| whnf original
   for key in #[original.hash, type.hash] do
     for name in (← get).statements[key]?.getD #[] do
