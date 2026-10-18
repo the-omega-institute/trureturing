@@ -4696,3 +4696,10 @@ Thus the local hypotheses in Section 474, with C repetition replaced
 by D repetition, do not imply the same source gap. This exact tuple
 is a scalar counterexample to that substituted implication; it is
 not an actual complete face quotient or a flat-exclusion counterexample. QED.
+
+## Continuation: repeated-axis two-flat obstructions
+
+The [repeated-axis continuation](CFMP_GEOMETRIC_REALIZATION_SIX_EDGE_REPEATED_AXES.md)
+gives the exact six two-flat role cases and excludes v>m-2 in the stated
+two-flat, six-actual-edge repeated-frame branch. The one-flat and
+v<=m-2 two-flat branches remain open.
