@@ -18,7 +18,7 @@ internal sealed class A5CosetPacketDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("The first theorem computes that every one of the twelve points is fixed by lowReturn^2 and no point is fixed by lowReturn. Therefore the twelve points split into six two-cycles.")),
                     Paragraph(Text("The second theorem computes that every one of the twelve points is fixed by highReturn^3 and no point is fixed by highReturn. Therefore the twelve points split into four three-cycles.")),
-                    Paragraph(Text("These statements verify the displayed finite return data only. They do not establish the classical identification of the generated subgroup with A5, the existence of a geometric realization, or the general non-normal-coset construction. The source records an unfinished four-slot registration audit in Issue #19015."))
+                    Paragraph(Text("These statements verify the displayed finite return data only. They do not establish the classical identification of the generated subgroup with A5, the existence of a geometric realization, or the general non-normal-coset construction. The faithful four-slot escape audit for these public theorems remains unfinished under https://github.com/the-omega-institute/trureturing/issues/19015. The issue records missing registration evidence only; it supplies neither a mathematical proof nor a declared_validated registration."))
                 ),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -29,7 +29,7 @@ internal sealed class A5CosetPacketDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The high return computation has twelve points of period dividing three and no fixed points, so its cycle decomposition consists of four three-cycles.")),
-                    Paragraph(Text("This is a concrete finite permutation check. It does not claim the A5 subgroup identification, geometric existence, or a general coset theorem. The unfinished registration audit is tracked in Issue #19015."))
+                    Paragraph(Text("This is a concrete finite permutation check. It does not claim the A5 subgroup identification, geometric existence, or a general coset theorem. The faithful four-slot escape audit for this public theorem remains unfinished under https://github.com/the-omega-institute/trureturing/issues/19015. The issue records missing registration evidence only; it supplies neither a mathematical proof nor a declared_validated registration."))
                 ),
                 DescribeRole.Theorem)
         )
