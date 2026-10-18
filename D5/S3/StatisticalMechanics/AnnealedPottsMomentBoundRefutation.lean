@@ -410,9 +410,218 @@ private lemma F2_at_zero : 0 < averaged g2 3 0 := by
   rw [heq, density_moments.1, density_moments.2.1]
   norm_num
 
+private def expPoly (q : ℚ) : ℚ :=
+  ∑ k ∈ Finset.range 16, (q / 8) ^ k / (k.factorial : ℚ)
+private def expError : ℚ := 17 / (16 * (16).factorial)
+
+private lemma exp_rational_bounds (q l u : ℚ) (hq : 0 ≤ q ∧ q ≤ 8)
+    (hl : l ≤ expPoly q ^ 8) (hu : (expPoly q + expError) ^ 8 ≤ u) :
+    (l : ℝ) ≤ Real.exp (q : ℝ) ∧ Real.exp (q : ℝ) ≤ (u : ℝ) := by
+  have hq0 : 0 ≤ (q : ℝ) / 8 := by exact_mod_cast (div_nonneg hq.1 (by norm_num) : 0 ≤ q / 8)
+  have hq1 : (q : ℝ) / 8 ≤ 1 := by exact_mod_cast (show q / 8 ≤ 1 by linarith [hq.2])
+  have hp : (expPoly q : ℝ) = ∑ k ∈ Finset.range 16, ((q : ℝ) / 8) ^ k / (k.factorial : ℝ) := by
+    simp only [expPoly]; push_cast; rfl
+  have hp0 : 0 ≤ (expPoly q : ℝ) := by rw [hp]; positivity
+  have hlow : (expPoly q : ℝ) ≤ Real.exp ((q : ℝ) / 8) := by
+    rw [hp]; exact Real.sum_le_exp_of_nonneg hq0 16
+  have hupper : Real.exp ((q : ℝ) / 8) ≤ (expPoly q : ℝ) + (expError : ℝ) := by
+    have h := Real.exp_bound' hq0 hq1 (by norm_num : 0 < (16 : ℕ))
+    have hpow : ((q : ℝ) / 8) ^ 16 ≤ 1 := pow_le_one₀ hq0 hq1
+    rw [← hp] at h
+    norm_num [expError] at h ⊢
+    linarith
+  have heq : Real.exp (q : ℝ) = Real.exp ((q : ℝ) / 8) ^ 8 := by
+    rw [← Real.exp_nat_mul]; congr 1; ring
+  have hl' : (l : ℝ) ≤ (expPoly q : ℝ) ^ 8 := by exact_mod_cast hl
+  have hu' : ((expPoly q : ℝ) + (expError : ℝ)) ^ 8 ≤ (u : ℝ) := by exact_mod_cast hu
+  rw [heq]
+  exact ⟨hl'.trans (pow_le_pow_left₀ hp0 hlow 8),
+    (pow_le_pow_left₀ (Real.exp_pos _).le hupper 8).trans hu'⟩
+
+private def logLower (a : ℚ) : ℚ :=
+  2 * ∑ k ∈ Finset.range 16, ((a - 1) / (a + 1)) ^ (2 * k + 1) / (2 * k + 1)
+
+private lemma log_rational_lower (a : ℚ) (ha : 1 ≤ a) : (logLower a : ℝ) ≤ Real.log (a : ℝ) := by
+  have ha' : 1 ≤ (a : ℝ) := by exact_mod_cast ha
+  have h0 : 0 ≤ ((a : ℝ) - 1) / (a + 1) := by positivity
+  have h1 : ((a : ℝ) - 1) / (a + 1) < 1 := (div_lt_one (by linarith)).2 (by linarith)
+  have h := Real.sum_range_le_log_div h0 h1 16
+  have heq : (1 + ((a : ℝ) - 1) / (a + 1)) / (1 - ((a : ℝ) - 1) / (a + 1)) = a := by
+    field_simp; ring
+  rw [heq] at h
+  have hp : (logLower a : ℝ) =
+      2 * ∑ k ∈ Finset.range 16, (((a : ℝ) - 1) / (a + 1)) ^ (2 * k + 1) / (2 * k + 1) := by
+    simp only [logLower]; push_cast; rfl
+  rw [hp]; linarith
+
+private lemma interval_exp_bounds (a b l u : ℚ) (ha : 0 ≤ a) (hb : b ≤ 8)
+    (hl : l ≤ expPoly a ^ 8) (hu : (expPoly b + expError) ^ 8 ≤ u)
+    {x : ℝ} (hx : (a : ℝ) ≤ x ∧ x ≤ (b : ℝ)) :
+    (l : ℝ) ≤ Real.exp x ∧ Real.exp x ≤ (u : ℝ) := by
+  have hab : a ≤ b := by exact_mod_cast hx.1.trans hx.2
+  have h1 := exp_rational_bounds a l ((expPoly a + expError) ^ 8)
+    ⟨ha, hab.trans hb⟩ hl le_rfl
+  have h2 := exp_rational_bounds b (expPoly b ^ 8) u ⟨ha.trans hab, hb⟩ le_rfl hu
+  exact ⟨h1.1.trans (Real.exp_le_exp.mpr hx.1), (Real.exp_le_exp.mpr hx.2).trans h2.2⟩
+
+private lemma curvature_upper (w wu e el eu : ℝ) (hw : 0 ≤ w) (hwu : w ≤ wu)
+    (he : 0 < e) (hel : 0 < el) (hle : el ≤ e) (heu : e ≤ eu) :
+    w ^ 3 * (3 * e * (2 - e) / (e + 2) ^ 3) ≤
+      3 * wu ^ 3 * eu * max 0 (2 - el) / (el + 2) ^ 3 := by
+  have hwu0 : 0 ≤ wu := hw.trans hwu
+  have heu0 : 0 ≤ eu := he.le.trans heu
+  have hsub : 2 - e ≤ max 0 (2 - el) := (sub_le_sub_left hle 2).trans (le_max_right _ _)
+  have hnum : 3 * w ^ 3 * e * (2 - e) ≤ 3 * wu ^ 3 * eu * max 0 (2 - el) := by
+    by_cases h2 : e ≤ 2
+    · have h2' : 0 ≤ 2 - e := sub_nonneg.mpr h2
+      gcongr <;> first | positivity | assumption
+    · exact (mul_nonpos_of_nonneg_of_nonpos (by positivity) (by linarith)).trans (by positivity)
+  calc
+    _ = (3 * w ^ 3 * e * (2 - e)) / (e + 2) ^ 3 := by ring
+    _ ≤ (3 * wu ^ 3 * eu * max 0 (2 - el)) / (e + 2) ^ 3 :=
+      div_le_div_of_nonneg_right hnum (by positivity)
+    _ ≤ _ := div_le_div_of_nonneg_left (by positivity) (by positivity) (by gcongr)
+
+private lemma curvature_upper_negative (w wl e el eu : ℝ) (hw : 0 ≤ wl) (hwl : wl ≤ w)
+    (hel : 2 < el) (hle : el ≤ e) (heu : e ≤ eu) :
+    w ^ 3 * (3 * e * (2 - e) / (e + 2) ^ 3) ≤
+      -3 * wl ^ 3 * el * (el - 2) / (eu + 2) ^ 3 := by
+  have he : 0 < e := by linarith
+  have he0 : 0 < el := by linarith
+  have hw0 : 0 ≤ w := hw.trans hwl
+  have heu0 : 0 < eu := he.trans_le heu
+  have he2 : 0 ≤ e - 2 := by linarith
+  have hnum : 3 * wl ^ 3 * el * (el - 2) ≤ 3 * w ^ 3 * e * (e - 2) := by
+    gcongr <;> positivity
+  have h : (3 * wl ^ 3 * el * (el - 2)) / (eu + 2) ^ 3 ≤
+      (3 * w ^ 3 * e * (e - 2)) / (e + 2) ^ 3 := by
+    calc
+      _ ≤ (3 * w ^ 3 * e * (e - 2)) / (eu + 2) ^ 3 :=
+        div_le_div_of_nonneg_right hnum (by positivity)
+      _ ≤ _ := div_le_div_of_nonneg_left (by positivity) (by positivity) (by gcongr)
+  calc
+    _ = -((3 * w ^ 3 * e * (e - 2)) / (e + 2) ^ 3) := by ring
+    _ ≤ -((3 * wl ^ 3 * el * (el - 2)) / (eu + 2) ^ 3) := neg_le_neg h
+    _ = _ := by ring
+
+private lemma weighted_density_le (h : ℝ → ℝ) (hh : Continuous h) (l u : ℝ)
+    (hl : ∀ w ∈ Icc (999 / 1000 : ℝ) (1001 / 1000), h w ≤ l)
+    (hu : ∀ w ∈ Icc (10999 / 1000 : ℝ) (11001 / 1000), h w ≤ u) :
+    (∫ w, h w * density w) ≤ 1331 / 1340 * l + 9 / 1340 * u := by
+  have h1 := intervalIntegral.integral_mono_on (μ := volume) (by norm_num : (999 / 1000 : ℝ) ≤ 1001 / 1000)
+    (hh.intervalIntegrable _ _) intervalIntegrable_const hl
+  have h11 := intervalIntegral.integral_mono_on (μ := volume) (by norm_num : (10999 / 1000 : ℝ) ≤ 11001 / 1000)
+    (hh.intervalIntegrable _ _) intervalIntegrable_const hu
+  rw [integral_weighted_density _ hh]
+  norm_num at h1 h11
+  linarith
+
+private def gridA (i : Fin 26) : ℚ := 9 / 50 + (i.val : ℚ) / 50
+private def gridB (i : Fin 26) : ℚ := gridA i + 1 / 50
+private def gridData : Fin 26 → ℚ × ℚ × ℚ × ℚ :=
+  ![
+    (119700 / 100000, 122165 / 100000, 724143 / 100000, 902682 / 100000),
+    (122115 / 100000, 124636 / 100000, 902320 / 100000, 1124834 / 100000),
+    (124580 / 100000, 127156 / 100000, 1124338 / 100000, 1401657 / 100000),
+    (127094 / 100000, 129727 / 100000, 1400984 / 100000, 1746607 / 100000),
+    (129659 / 100000, 132351 / 100000, 1745698 / 100000, 2176450 / 100000),
+    (132275 / 100000, 135027 / 100000, 2175231 / 100000, 2712078 / 100000),
+    (134945 / 100000, 137757 / 100000, 2710450 / 100000, 3379525 / 100000),
+    (137668 / 100000, 140543 / 100000, 3377361 / 100000, 4211231 / 100000),
+    (140446 / 100000, 143385 / 100000, 4208367 / 100000, 5247622 / 100000),
+    (143281 / 100000, 146285 / 100000, 5243844 / 100000, 6539070 / 100000),
+    (146172 / 100000, 149243 / 100000, 6534101 / 100000, 8148346 / 100000),
+    (149122 / 100000, 152261 / 100000, 8141829 / 100000, 10153667 / 100000),
+    (152132 / 100000, 155340 / 100000, 10145141 / 100000, 12652502 / 100000),
+    (155202 / 100000, 158481 / 100000, 12641371 / 100000, 15766303 / 100000),
+    (158334 / 100000, 161686 / 100000, 15751804 / 100000, 19646416 / 100000),
+    (161529 / 100000, 164955 / 100000, 19627564 / 100000, 24481431 / 100000),
+    (164789 / 100000, 168291 / 100000, 24456961 / 100000, 30506352 / 100000),
+    (168115 / 100000, 171694 / 100000, 30474641 / 100000, 38014015 / 100000),
+    (171508 / 100000, 175166 / 100000, 37972982 / 100000, 47369327 / 100000),
+    (174969 / 100000, 178708 / 100000, 47316302 / 100000, 59026997 / 100000),
+    (178500 / 100000, 182322 / 100000, 58958564 / 100000, 73553638 / 100000),
+    (182102 / 100000, 186009 / 100000, 73465426 / 100000, 91655310 / 100000),
+    (185777 / 100000, 189770 / 100000, 91541727 / 100000, 114211833 / 100000),
+    (189526 / 100000, 193607 / 100000, 114065735 / 100000, 142319554 / 100000),
+    (193351 / 100000, 197523 / 100000, 142131815 / 100000, 177344631 / 100000),
+    (197253 / 100000, 201517 / 100000, 177103606 / 100000, 220989438 / 100000)]
+
+private def gridLow (i : Fin 26) : ℚ :=
+  3 * (1001 / 1000) ^ 3 * (gridData i).2.1 * max 0 (2 - (gridData i).1) /
+    ((gridData i).1 + 2) ^ 3
+private def gridHigh (i : Fin 26) : ℚ :=
+  -3 * (10999 / 1000) ^ 3 * (gridData i).2.2.1 * ((gridData i).2.2.1 - 2) /
+    ((gridData i).2.2.2 + 2) ^ 3
+
+private lemma grid_certified (i : Fin 26) :
+    0 < (gridData i).1 ∧ 2 < (gridData i).2.2.1 ∧
+    (gridData i).1 ≤ expPoly (gridA i * (999 / 1000)) ^ 8 ∧
+    (expPoly (gridB i * (1001 / 1000)) + expError) ^ 8 ≤ (gridData i).2.1 ∧
+    (gridData i).2.2.1 ≤ expPoly (gridA i * (10999 / 1000)) ^ 8 ∧
+    (expPoly (gridB i * (11001 / 1000)) + expError) ^ 8 ≤ (gridData i).2.2.2 ∧
+    1331 * gridLow i + 9 * gridHigh i < 0 := by
+  revert i
+  set_option maxRecDepth 10000 in
+    set_option maxHeartbeats 8000000 in
+      decide +kernel
+
 private lemma F2_middle_negative :
     ∀ t ∈ Icc (9 / 50 : ℝ) (7 / 10), averaged g2 3 t < 0 := by
-  sorry
+  intro t ht
+  have hgrid : ∃ i : Fin 26, (gridA i : ℝ) ≤ t ∧ t ≤ (gridB i : ℝ) := by
+    by_cases hlast : t = 7 / 10
+    · refine ⟨25, ?_, ?_⟩ <;> norm_num [gridA, gridB, hlast]
+    · let n : ℕ := ⌊50 * (t - 9 / 50)⌋₊
+      have hn0 : 0 ≤ 50 * (t - 9 / 50) := by linarith [ht.1]
+      have hn := Nat.floor_le hn0
+      have hn' := Nat.lt_floor_add_one (50 * (t - 9 / 50))
+      have hlt : n < 26 := by
+        apply (Nat.floor_lt hn0).2
+        have htt : t < 7 / 10 := lt_of_le_of_ne ht.2 hlast
+        linarith
+      refine ⟨⟨n, hlt⟩, ?_, ?_⟩ <;> simp only [gridA, gridB, Rat.cast_add,
+        Rat.cast_div, Rat.cast_natCast, Rat.cast_ofNat]
+      · linarith
+      · linarith
+  obtain ⟨i, hta, htb⟩ := hgrid
+  have hi := grid_certified i
+  have hir : (i.val : ℚ) < 26 := by exact_mod_cast i.isLt
+  have hbounds (w wl wu : ℝ) (hw : wl ≤ w ∧ w ≤ wu) (hl : 0 ≤ wl) :
+      (gridA i : ℝ) * wl ≤ t * w ∧ t * w ≤ (gridB i : ℝ) * wu := by
+    have ht0 : 0 ≤ t := by linarith [ht.1]
+    have ha0 : 0 ≤ (gridA i : ℝ) := by simp [gridA]; positivity
+    exact ⟨mul_le_mul hta hw.1 hl ht0,
+      mul_le_mul htb hw.2 (hl.trans hw.1) (ha0.trans (hta.trans htb))⟩
+  have hs (w : ℝ) (hw : w ∈ Icc (999 / 1000 : ℝ) (1001 / 1000)) :=
+    interval_exp_bounds (gridA i * (999 / 1000)) (gridB i * (1001 / 1000))
+      (gridData i).1 (gridData i).2.1 (by dsimp [gridA]; positivity)
+      (by dsimp [gridB, gridA]; nlinarith) hi.2.2.1 hi.2.2.2.1
+      (by simpa only [Rat.cast_mul, Rat.cast_div, Rat.cast_ofNat] using hbounds w _ _ hw (by norm_num))
+  have hh (w : ℝ) (hw : w ∈ Icc (10999 / 1000 : ℝ) (11001 / 1000)) :=
+    interval_exp_bounds (gridA i * (10999 / 1000)) (gridB i * (11001 / 1000))
+      (gridData i).2.2.1 (gridData i).2.2.2 (by dsimp [gridA]; positivity)
+      (by dsimp [gridB, gridA]; nlinarith) hi.2.2.2.2.1 hi.2.2.2.2.2.1
+      (by simpa only [Rat.cast_mul, Rat.cast_div, Rat.cast_ofNat] using hbounds w _ _ hw (by norm_num))
+  have hle := weighted_density_le (fun w => w ^ 3 * g2 (t * w)) (by fun_prop)
+    (gridLow i) (gridHigh i) (fun w hw => by
+      have he := hs w hw
+      have h := curvature_upper w (1001 / 1000) (Real.exp (t * w))
+        (gridData i).1 (gridData i).2.1 (by linarith [hw.1]) hw.2 (Real.exp_pos _)
+        (by exact_mod_cast hi.1) he.1 he.2
+      simpa only [g2, gridLow, Rat.cast_div, Rat.cast_mul, Rat.cast_pow,
+        Rat.cast_sub, Rat.cast_add, Rat.cast_ofNat, Rat.cast_max, Rat.cast_zero] using h)
+    (fun w hw => by
+      have he := hh w hw
+      have h := curvature_upper_negative w (10999 / 1000) (Real.exp (t * w))
+        (gridData i).2.2.1 (gridData i).2.2.2 (by norm_num) hw.1
+        (by exact_mod_cast hi.2.1) he.1 he.2
+      simpa only [g2, gridHigh, Rat.cast_div, Rat.cast_mul, Rat.cast_pow,
+        Rat.cast_sub, Rat.cast_add, Rat.cast_ofNat, Rat.cast_neg] using h)
+  apply div_neg_of_neg_of_pos ?_ (by rw [density_moments.1]; norm_num)
+  have hcert : (1331 : ℝ) * (gridLow i : ℝ) + 9 * (gridHigh i : ℝ) < 0 := by
+    exact_mod_cast hi.2.2.2.2.2.2
+  linarith
 
 private lemma F2_tail_negative {t : ℝ} (ht : 7 / 10 ≤ t) : averaged g2 3 t < 0 := by
   apply div_neg_of_neg_of_pos ?_ (by rw [density_moments.1]; norm_num)
@@ -447,6 +656,79 @@ private lemma K_zero_unique :
       (neg_ne_zero.mpr (ne_of_gt hz))
   exact F2_zero_unique x y hx hy (hcancel x hx hx0) (hcancel y hy hy0)
 
+private def scalarK (x : ℝ) : ℝ := logKernel x - x / 3 * g x - x / 3
+private def scalarKp (x : ℝ) : ℝ := (g x - x * g1 x) / 3
+private def scalarKpp (x : ℝ) : ℝ := -x / 3 * g2 x
+
+private lemma scalarK_deriv (x : ℝ) : HasDerivAt scalarK (scalarKp x) x := by
+  apply (((logKernel_deriv x).sub (((hasDerivAt_id x).div_const 3).mul (g_deriv x))).sub
+    ((hasDerivAt_id x).div_const 3)).congr_deriv
+  dsimp [scalarKp]; ring
+
+private lemma scalarKp_deriv (x : ℝ) : HasDerivAt scalarKp (scalarKpp x) x := by
+  apply (((g_deriv x).sub ((hasDerivAt_id x).mul (g1_deriv x))).div_const 3).congr_deriv
+  dsimp [scalarKpp]; ring
+
+private lemma g2_abs_le_one (x : ℝ) : |g2 x| ≤ 1 := by
+  have he := Real.exp_pos x
+  have hab : |2 - Real.exp x| ≤ Real.exp x + 2 := abs_le.2 ⟨by linarith, by linarith⟩
+  have hsq : 3 * Real.exp x ≤ (Real.exp x + 2) ^ 2 := by nlinarith [sq_nonneg (Real.exp x)]
+  unfold g2
+  rw [abs_div, abs_mul, abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 3),
+    abs_of_pos he, abs_of_pos (by positivity : 0 < (Real.exp x + 2) ^ 3)]
+  apply (div_le_one (by positivity)).2
+  calc
+    3 * Real.exp x * |2 - Real.exp x| ≤ 3 * Real.exp x * (Real.exp x + 2) :=
+      mul_le_mul_of_nonneg_left hab (by positivity)
+    _ ≤ (Real.exp x + 2) ^ 2 * (Real.exp x + 2) :=
+      mul_le_mul_of_nonneg_right hsq (by positivity)
+    _ = _ := by ring
+
+private lemma symmetric_integral_lower (h hp hpp : ℝ → ℝ) (a e M : ℝ)
+    (he : 0 < e) (hM : 0 ≤ M) (hd : ∀ x, HasDerivAt h (hp x) x)
+    (hdp : ∀ x, HasDerivAt hp (hpp x) x)
+    (hb : ∀ x ∈ Icc (a - e) (a + e), |hpp x| ≤ M) :
+    2 * e * (h a - M * e ^ 2) ≤ ∫ x in (a - e)..(a + e), h x := by
+  have ha : a ∈ Icc (a - e) (a + e) := by constructor <;> linarith
+  have hnorm (x : ℝ) (hx : x ∈ Icc (a - e) (a + e)) : |x - a| ≤ e := by
+    exact abs_le.2 ⟨by linarith [hx.1], by linarith [hx.2]⟩
+  have hpb (x : ℝ) (hx : x ∈ Icc (a - e) (a + e)) : |hp x - hp a| ≤ M * e := by
+    have h := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
+      (fun y _ => (hdp y).hasDerivWithinAt) (fun y hy => by simpa using hb y hy)
+      (convex_Icc (a - e) (a + e)) ha hx
+    exact (show |hp x - hp a| ≤ M * |x - a| by simpa using h).trans
+      (mul_le_mul_of_nonneg_left (hnorm x hx) hM)
+  let r : ℝ → ℝ := fun x => h x - h a - (x - a) * hp a
+  have hr (x : ℝ) : HasDerivAt r (hp x - hp a) x := by
+    apply (((hd x).sub_const (h a)).sub
+      (((hasDerivAt_id x).sub_const a).mul_const (hp a))).congr_deriv
+    simp
+  have hc : Continuous h := continuous_iff_continuousAt.2 fun x => (hd x).continuousAt
+  have hpoint (x : ℝ) (hx : x ∈ Icc (a - e) (a + e)) :
+      h a + (x - a) * hp a - M * e ^ 2 ≤ h x := by
+    have h := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
+      (fun y _ => (hr y).hasDerivWithinAt) (fun y hy => by simpa using hpb y hy)
+      (convex_Icc (a - e) (a + e)) ha hx
+    have hh : |r x| ≤ M * e ^ 2 := by
+      have h' : |r x| ≤ M * e * |x - a| := by simpa [r] using h
+      exact h'.trans (by nlinarith [mul_le_mul_of_nonneg_left (hnorm x hx) (mul_nonneg hM he.le)])
+    have h' := (abs_le.mp hh).1
+    dsimp [r] at h'; linarith
+  have hlincont : Continuous (fun x => h a + (x - a) * hp a - M * e ^ 2) := by fun_prop
+  have hi := intervalIntegral.integral_mono_on (μ := volume) (by linarith : a - e ≤ a + e)
+    (hlincont.intervalIntegrable _ _) (hc.intervalIntegrable _ _) hpoint
+  have hlin : (∫ x in (a - e)..(a + e), h a + (x - a) * hp a - M * e ^ 2) =
+      2 * e * (h a - M * e ^ 2) := by
+    have heq : (fun x : ℝ => h a + (x - a) * hp a - M * e ^ 2) =
+        fun x => (h a - a * hp a - M * e ^ 2) + x * hp a := by ext x; ring
+    rw [heq, intervalIntegral.integral_add (f := fun _ : ℝ => h a - a * hp a - M * e ^ 2)
+      (g := fun x : ℝ => x * hp a) intervalIntegrable_const
+      ((continuous_id.mul continuous_const).intervalIntegrable _ _),
+      intervalIntegral.integral_mul_const]
+    simp only [intervalIntegral.integral_const, integral_id, smul_eq_mul]
+    ring
+  rwa [hlin] at hi
+
 private lemma K_positive_test : 0 < K density 3 (6931 / 50000) := by
   sorry
 
@@ -461,7 +743,7 @@ private lemma density_small_zero :
       t ≤ 2 * (moment density 3 / moment density 4) * Real.log (3 - 1) := by
   have hc : Continuous (averaged g2 3) :=
     continuous_iff_continuousAt.2 fun t => (F2_deriv t).continuousAt
-  obtain ⟨a, ha, hazero⟩ := intermediate_value_Icc (by norm_num : (0 : ℝ) ≤ 9 / 50)
+  obtain ⟨a, ha, hazero⟩ := intermediate_value_Icc' (by norm_num : (0 : ℝ) ≤ 9 / 50)
     hc.continuousOn ⟨(F2_middle_negative (9 / 50) (by norm_num)).le, F2_at_zero.le⟩
   have ha0 : 0 < a := by
     have hne : a ≠ 0 := by intro h; subst a; linarith [F2_at_zero]
