@@ -96,8 +96,6 @@ private lemma shift_eq : shift = fun i j => if i = j + 1 then 1 else 0 := by
   ext i j
   fin_cases i <;> fin_cases j <;> rfl
 
-private lemma clock_eq : clock = diagonal fun j => omega ^ j.val := rfl
-
 private lemma s_sq : s ^ 2 = 5 := by norm_num [s]
 
 private lemma omega_re : omega.re = (s - 1) / 4 := by
@@ -194,6 +192,7 @@ private lemma shift_power (p : Fin 5) (i j : Fin 5) :
 private lemma displacement_entry (p q i j : Fin 5) :
     displacement p q i j =
       if i = j + p then omega ^ (3 * p.val * q.val + q.val * j.val) else 0 := by
+  have clock_eq : clock = diagonal fun j => omega ^ j.val := rfl
   change (tau ^ (p.val * q.val) • (shift ^ p.val * clock ^ q.val)) i j = _
   simp only [clock_eq, Matrix.diagonal_pow, Matrix.mul_diagonal,
     Matrix.smul_apply, smul_eq_mul, shift_power, Pi.pow_apply, tau_eq]
@@ -242,6 +241,7 @@ private lemma fourier_psi : fourier *ᵥ psi = phi := by
       phi, omega_table, rootTable, omega_re, omega_im, Complex.mul_re, Complex.mul_im] <;> ring
 
 private lemma fourier_clifford : IsClifford fourier := by
+  have clock_eq : clock = diagonal fun j => omega ^ j.val := rfl
   have hh : fourierᴴ * fourier = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
