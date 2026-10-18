@@ -2003,3 +2003,722 @@ $$
 [BC-Y]: https://arxiv.org/pdf/1810.09642v1
 
 ## 追加锚（本行以下为增补区）
+
+## 34. 完整量子码与受限插入的纠缠破坏指数
+
+**定义 34.1（纠缠破坏与控制指数）。** 系统、参考、噪声与控制沿用
+定义 27.1–27.2；特别是 $R$ 为任意有限复参考，电荷为零且不受操作。
+一条系统通道为 EB，指它与 $\operatorname{id}_R$ 的张量积把每个联合态送成
+$S:R$ 可分态。这里可分正算子允许未归一化，指有限个正乘积算子之和。
+固定基完全 CBC 使用定义 27.1，因而 CBC 蕴含 EB：输出具有
+$\sum_a P_a\otimes B_a$ 的形式，$B_a\succeq0$。
+反向不成立；不能用一个非 CBC 输出代替非 EB 证据。
+
+令 $\mathcal U_N=\{\operatorname{Ad}_U:[U,N_{\mathrm{tot}}]=0\}$。
+对 $\mathsf P\in\{\mathrm{EB},\mathrm{CBC}\}$，定义
+
+$$
+\begin{aligned}
+n_{\mathsf P}(\Psi_k)
+ &=\min\{n\ge1:\Psi_k^n\text{ 具有 }\mathsf P\},\\
+n_{\mathsf P}^{\mathcal U_N}(\Psi_k)
+ &=\min\{n\ge1:\text{每个 }U_1,\ldots,U_{n-1}
+ \text{ 均使 }\mathcal C_{k,n;\mathbf U}\text{ 具有 }\mathsf P\}.
+\end{aligned}
+\tag{34.1}
+$$
+
+空集的最小值为 $\infty$。控制可以不同；恰有 $n$ 次噪声、$n-1$ 个中间槽，
+没有初始或末端控制。EB 的受限插入量词直接采用
+[arXiv:1411.2517v4，定义 1、式 (9)–(12)][QI-I]；
+该文的定义不提供本通道的数值，也不建立 EB 与 CBC 的一般等价。
+
+**定理 34.2（参考完整的二维精确码）。** 对每个 $k\ge1$，置
+$h=1+\lfloor\log_2k\rfloor$、$L=2^{h-1}$。
+存在同一个守恒置换 $U_{\mathrm{arb}}$、输入等距映射
+$W_0:\mathbb C^2\to S$ 及等距映射 $W_j:\mathbb C^2\to S$，使
+
+$$
+(\mathcal C_{k,j;U_{\mathrm{arb}}}\otimes\operatorname{id}_R)
+ [(W_0\otimes I_R)Z(W_0^\dagger\otimes I_R)]
+ =(W_j\otimes I_R)Z(W_j^\dagger\otimes I_R)
+\tag{34.2}
+$$
+
+对每个 $Z\in M_2\otimes\mathcal B(\mathcal H_R)$ 和 $1\le j\le h$ 成立。
+因此优化的非 EB 与非 CBC 存活次数同为 $h$，而
+
+$$
+n_{\mathrm{EB}}(\Psi_k)=n_{\mathrm{CBC}}(\Psi_k)=2,
+\qquad
+n_{\mathrm{EB}}^{\mathcal U_N}(\Psi_k)
+=n_{\mathrm{CBC}}^{\mathcal U_N}(\Psi_k)=h+1.
+\tag{34.3}
+$$
+
+证明。使用定理 30.1 的同一个置换，但验证完整码代数，而不只验证相干元。
+为明确其环境标签，令
+
+$$
+f(0)=2,\quad f(a)=4\ (a\ne0),\qquad
+\ell(0)=\ell(2)=0,\quad\ell(1)=1,\quad\ell(3)=3,\quad\ell(4)=4.
+$$
+
+局部 Stinespring 等距映射为 $e_a\mapsto e_{f(a)}\otimes|\ell(a)\rangle$；
+两输入标签不同但环境标签相同的唯一可能是 $0,2$。
+逐坐标张量化得到复线性恒等式
+
+$$
+\Psi_k(|a\rangle\langle b|)
+ =\mathbf1_{\ell(a)=\ell(b)}|f(a)\rangle\langle f(b)|.
+\tag{34.4}
+$$
+
+取 $W_0|0\rangle=|0^L4^{k-L}\rangle$、
+$W_0|1\rangle=|0^{L-1}2\,4^{k-L}\rangle$。
+第 $j$ 次后取 $m=L/2^{j-1}$，令
+$W_j|0\rangle=|\xi_m\rangle$、$W_j|1\rangle=|\eta_m\rangle$，
+其中 $\xi_m,\eta_m$ 为 (30.5) 的不同基字。
+第一次噪声把四个码单位分别送到
+$P_{\xi_L},|\xi_L\rangle\langle\eta_L|,
+|\eta_L\rangle\langle\xi_L|,P_{\eta_L}$，系数均一。
+每个后续槽的 (30.6) 对换保持缺额，并把这对字送到
+$0^{m/2}4^{k-m/2}$、$0^{m/2-1}2\,4^{k-m/2}$。
+它们环境标签相同，下一噪声又把四个单位精确送到下标 $m/2$ 的四个单位。
+对换在不同扇区内互不相交，$m=2$ 的第二项是固定点，故无未完成的酉延拓。
+这证明 (34.2) 的全部四个系统单位；参考系数可为任意复算子，故也证明其完整参考版本。
+
+以 $Z$ 为一个逻辑 qubit 与参考 qubit 的 Bell 投影，输出仍是 Bell 投影。
+其 Schmidt 秩为二，故非可分，给出非 EB 见证；
+以逻辑 $|+\rangle$ 的投影为输入，输出有系统非对角元 $1/2$，给非 CBC 见证。
+在第 $h+1$ 次，定理 29.3 对每个控制列都给精确替换
+$P_{4^k}\otimes\operatorname{Tr}_S$，同时 EB 且 CBC。
+这给受限指数的上下界；同一置换已经见证每个较短长度。
+无插入时，(27.8) 的二次替换和上述一次码给其余两式。证毕。
+
+码的两个初始字分别有缺额 $2L,2L-1$，所以 Bell 扩张不满足联合不变性。
+这里完整量子码是相对于授予的输入与全局守恒控制而言；
+它不授予跨电荷相干的制备，不是定义 33.3 的原恢复问题。
+
+## 35. 联合不变输入的纠缠门槛与锐缺额
+
+**定理 35.1（任意守恒复酉下的精确纠缠阈值）。** 对整数 $k,r\ge1$，
+存在联合不变输入 $[\rho_{SR},N_{\mathrm{tot}}\otimes I_R]=0$ 及允许控制，
+使恰好 $r$ 次后的输出在 $S:R$ 间纠缠，当且仅当
+
+$$
+k\ge2^r.
+\tag{35.1}
+$$
+
+必要性允许各槽不同的任意守恒复酉。充分性由一个固定守恒置换、二维参考和
+联合不变 Bell 码达到。更精确地，令 $\Pi_d=Q_d=\mathbf1_{\{d\}}(D)$，置
+
+$$
+q_r=\left\lfloor\frac{2k}{2^r}\right\rfloor-1.
+\tag{35.2}
+$$
+
+每个非可分输出扇区的缺额均满足 $1\le d\le q_r$。
+若 $q_r\ge1$，则存在上述构造在 $d=q_r$ 达到非可分；
+若 $q_r<1$，非可分扇区集合为空。
+
+证明。联合不变输入有局部于 $S$ 的正直和
+$\rho_{SR}=\sum_d\rho_d$，其中
+$\rho_d=(\Pi_d\otimes I_R)\rho_{SR}(\Pi_d\otimes I_R)\succeq0$。
+协变噪声和守恒控制保持联合不变性。
+这样的直和可分当且仅当每个未归一化块可分：
+一个方向对块求和；另一个方向对可分态施加局部正投影。
+守恒系统酉只在每个扇区内作用，保持该块的 $S:R$ 可分性。
+
+考虑一次噪声中从缺额 $d$ 到缺额 $m$ 的 CP 块映射
+
+$$
+\mathcal E_{m,d}(X)=\Pi_m\Psi_k(\Pi_dX\Pi_d)\Pi_m.
+$$
+
+输入字有 $z$ 个 $0$、$s$ 个单占位字母时，$d=2z+s$，输出缺额为 $m=z$。
+所以 $d<2m$ 时此映射为零；在边界 $d=2m$ 必有 $s=0$。
+贡献字全为恰含 $m$ 个 $0$ 的 $\{0,4\}$ 字。
+两个不同这样的字必有 $0/4$ 错位，环境标签不同，由 (34.4) 得
+
+$$
+(\mathcal E_{m,2m}\otimes\operatorname{id}_R)(X_{SR})
+ =\sum_{\substack{x\in\{0,4\}^k\\z(x)=m}}
+ P_{f(x)}\otimes\langle x|X_{SR}|x\rangle.
+\tag{35.3}
+$$
+
+对正输入，右侧每项是正乘积算子。这是边界映射的显式测量制备分解，
+不是以 PPT 条件替代可分证明。
+
+若所有输入块 $d>Q$ 已可分，则输出中每个
+$m>\lfloor(Q-1)/2\rfloor$ 的块均可分。
+事实上 $d<2m$ 不贡献，$d=2m$ 由 (35.3) 可分；
+$d>2m$ 则 $d\ge2m+1>Q$，其可分性在局部 CP 映射下保持。
+初始最大缺额 $2k$ 的系统空间只有 $|0^k\rangle$，故该块必可分，
+可取 $Q_0=2k-1$。每次使用的递推是
+
+$$
+Q_{j+1}=\left\lfloor\frac{Q_j-1}{2}\right\rfloor,
+\qquad Q_j=\left\lfloor\frac{2k}{2^j}\right\rfloor-1.
+\tag{35.4}
+$$
+
+缺额零空间也只有一个系统字 $4^k$，不可能有 $S:R$ 纠缠。
+所以非可分须 $q_r\ge1$，等价于 $k\ge2^r$。
+这使用正块及其可分锥，对任意参考、任意复控制均成立，未假设控制是置换。
+
+为证锐性，给定 $m\ge1$ 且 $2^{r-1}(m+1)\le k$，使用 (32.5) 的四字
+$x_t,y_t,A_t,B_t$。由 (32.6) 及其伴随，
+$\Psi_k$ 在 $\operatorname{span}\{x_t,y_t\}$ 的全部 $M_2$ 单位上等距地变为
+$\operatorname{span}\{A_t,B_t\}$。
+令
+
+$$
+t_j=2^{r-1-j}(m+1)-1\quad(0\le j\le r-1).
+\tag{35.5}
+$$
+
+于是 $1\le t_j\le k-1$、$t_{r-1}=m$ 且 $t_j=2t_{j+1}+1$。
+同一个控制交换
+$A_{t_j}\leftrightarrow x_{t_{j+1}}$、
+$B_{t_j}\leftrightarrow y_{t_{j+1}}$，$0\le j\le r-2$，其余基字固定。
+每组四字在缺额 $t_j$ 扇区：源无 $0$，目标有 $0$，组内两源及两目标分别不同。
+不同组的 $t_j$ 严格不同，故所有对换不交，确实给一个守恒酉置换。
+输入
+
+$$
+|\zeta\rangle
+ =\frac{|x_{t_0}\rangle|0_R\rangle+|y_{t_0}\rangle|1_R\rangle}{\sqrt2}
+\tag{35.6}
+$$
+
+的两系统字共同缺额为 $2t_0+1$，所以联合投影不变。
+四个码单位在每个槽均以系数一运输，最后得到
+$(|A_m\rangle|0_R\rangle+|B_m\rangle|1_R\rangle)/\sqrt2$ 的 Bell 投影。
+取 $m=1$ 得 (35.1) 的充分性；若 $q_r\ge1$，取 $m=q_r$，则
+$2^{r-1}(m+1)=2^{r-1}\lfloor k/2^{r-1}\rfloor\le k$，达到 (35.2)。证毕。
+
+**命题 35.2（基相干、系统内部纠缠与参考纠缠的分界）。** 在整数区间
+
+$$
+\left\lceil3\cdot2^{r-2}\right\rceil\le k<2^r
+\tag{35.7}
+$$
+
+内，一般守恒酉可从联合不变输入得到非 CBC 输出，但每个联合不变输入的最终
+$S:R$ 态均可分。$r=1$ 时该整数区间为空；第一例是 $k=3,r=2$。
+这不排除 $S$ 内各份之间的纠缠，也不宣称该完整通道是 EB。
+
+证明。非 CBC 的存在性直接使用既有定理 31.2；
+$S:R$ 可分性由定理 35.1 的必要性给出。
+例如命题 33.1 的三份构造从 $000$ 经 $222$ 和守恒控制得到
+$(024+204)/\sqrt2$，最后是 $(244+424)/\sqrt2$ 的投影，交叉元 $1/2$。
+该态可以在 $S$ 的份间纠缠；$S:R$ 可分只约束另一条张量切分。
+
+联合不变性不可减为约化不变性。取
+$(|004\rangle|0_R\rangle+|024\rangle|1_R\rangle)/\sqrt2$，
+其系统约化态不变，但联合交叉块连接不同电荷。
+第一次噪声得到 $(224|0_R\rangle+244|1_R\rangle)/\sqrt2$。
+用交换 $224\leftrightarrow044$、固定其余字的守恒置换后，
+第二次噪声精确保留 Bell 态 $(244|0_R\rangle+444|1_R\rangle)/\sqrt2$。
+这里两输入分支在每次噪声都共享环境标签，故四个码单位全部保留。
+因此对这个相同控制，完整通道非 EB，虽其联合不变输入全被送成 $S:R$ 可分态。
+
+一般地，令 $\omega=(|24\rangle+|42\rangle)/\sqrt2$。
+替换通道 $X\mapsto\operatorname{Tr}(X)P_\omega$ 为 EB，因为参考扩张为
+$P_\omega\otimes\operatorname{Tr}_SX$，却非 CBC，且 $P_\omega$ 总电荷不变。
+这也直接排除从非 CBC 推出非 EB 的推理。证毕。
+
+## 36. 噪声的带电浴酉扩张与系统生成元边界
+
+**定理 36.1（严格非相干噪声的完整守恒扩张）。** (27.5) 的 $\Phi$ 严格非相干，
+存在四维、初始电荷为一且无 $U(1)$ 非对称性的浴，及总电荷守恒的全空间酉置换，
+使其约化通道精确等于 $\Phi$，包括全部复算子与有限参考。
+该浴供应的平均电荷为 $1-\rho_{44}$。
+与此同时，$\Phi$ 不能成为有限维系统上从恒等映射出发、有限时间内由
+范数可积时局部线性生成元得到的传播子。
+
+证明。严格非相干的 Kraus 条件是每个 Kraus 及其伴随均将固定基对角正算子
+送为固定基对角正算子；每行、每列各至多一个非零元即足够。
+(27.5) 的四个 Kraus 全满足此条件。
+电荷升移和协变性已由 (27.11)–(27.12) 给出；特别是既有恒等式
+
+$$
+\Phi^\dagger(N)=\operatorname{diag}(1,2,2,2,2),\qquad
+\Phi^\dagger(N)-N=I-P_4
+\tag{36.1}
+$$
+
+说明系统本身不守恒，而不是控制违反守恒。
+
+令浴基为 $f_0,f_1,f_3,f_4$，电荷分别为 $0,0,0,1$，初态 $P_{f_4}$。
+在 $S\otimes B$ 上定义四个对换
+
+$$
+\begin{aligned}
+e_0f_4&\longleftrightarrow e_2f_0,&
+e_1f_4&\longleftrightarrow e_4f_1,\\
+e_2f_4&\longleftrightarrow e_4f_0,&
+e_3f_4&\longleftrightarrow e_4f_3,
+\end{aligned}
+\tag{36.2}
+$$
+
+固定其余全部基向量，包括 $e_4f_4$。
+八个端点两两不同，每个对换两端总电荷相等。
+总电荷 $0,1,2,3$ 的扇区维数分别是 $3,10,6,1$；
+(36.2) 加上固定点因此定义了完整二十维酉置换 $W_{\mathrm{bath}}$，
+并满足 $[W_{\mathrm{bath}},N+N_B]=0$。
+它在初始浴子空间的作用为
+
+$$
+e_a f_4\longmapsto e_{f(a)}f_{\ell(a)}.
+\tag{36.3}
+$$
+
+对 $f_0,f_1,f_3,f_4$ 取浴矩阵元，依次正是 $K_0,K_1,K_2,K_3$。
+故偏迹所得为 (27.5)，对参考块逐项成立。
+浴的最终电荷期望为 $\rho_{44}$，初始为一，与 (36.1) 的系统增量相抵。
+初态是电荷本征态，因而无相位非对称性；它仍是带电资源。
+
+最后，$\Phi(E_{01})=0$，所以 $\Phi$ 作为 $M_5$ 上线性映射非可逆。
+若 $T(0)=I$、$\dot T(t)=\mathcal L(t)T(t)$，且
+$\int_0^T\|\mathcal L(t)\|dt<\infty$，有限维基本解满足
+
+$$
+\det T(T)=\exp\!\left(\int_0^T\operatorname{tr}\mathcal L(t)\,dt\right)\ne0.
+\tag{36.4}
+$$
+
+这里行列式和迹取于整个算子空间；也可由
+$\dot S=-S\mathcal L$、$S(0)=I$ 得 $S(t)T(t)=I$。
+因此这种系统传播子不能等于 $\Phi$，无需另加 Markov 性或 CP 可分性。
+联合酉再偏迹不受这个系统可逆性论证限制，故与 (36.2) 相容。证毕。
+
+数学引文。[Johnson–Ticozzi–Viola，arXiv:1703.06183v1，命题 II.7][QI-JTV]
+在时变线性方程之外还假设不变吸引线性子空间，结论为从外部不能有限时间进入它。
+这里非可逆系统通道的排除来自 (36.4)，不把该文带额外假设的命题扩大使用。
+奇异且范数不可积的端点生成元不在本定理范围。
+电荷没有被指定为 Hamiltonian 能量；本定理不计算浴准备、重置、功或局域实现成本。
+
+## 37. 协变非酉回收与完整有限梯置换
+
+**定理 37.1（协变滤波的精确回收）。** 在单份系统上定义
+
+$$
+F_0=E_{02}+E_{24},\qquad F_1=E_{00},\qquad
+F_2=E_{01},\qquad F_3=E_{03},\qquad
+\mathcal F(X)=\sum_{a=0}^3F_aXF_a^\dagger.
+\tag{37.1}
+$$
+
+则 $\mathcal F$ 为 CPTP、严格非相干且 $U(1)$ 协变，且
+
+$$
+\Phi\circ\mathcal F\circ\Phi=\Phi,\qquad
+\Phi\circ(\mathcal F\circ\Phi)^{r-1}=\Phi\quad(r\ge1).
+\tag{37.2}
+$$
+
+这些是全部复算子及有限参考上的恒等式。
+
+证明。$F_0^\dagger F_0=P_2+P_4$，其余三个完备项分别为 $P_0,P_1,P_3$，
+相加得 $I$。每个 $F_a$ 每行、每列至多一项，电荷升移依次为 $-1,0,-1,-1$，
+故严格非相干和协变性的 Kraus 计算与 (27.11)–(27.12) 相同。
+设 $\mathcal Q=\operatorname{span}\{e_2,e_4\}$。
+$\Phi$ 的整个输出代数支撑在 $\mathcal Q$，而 $\mathcal F$ 在此代数上给
+
+$$
+P_2\mapsto P_0,\quad P_4\mapsto P_2,\quad
+E_{24}\mapsto E_{02},\quad E_{42}\mapsto E_{20}.
+\tag{37.3}
+$$
+
+再施加 $\Phi$ 将四项全部送回原项，得到第一式，归纳得第二式。
+四个单位的参考系数任意，所以没有只检查约化态的缺口。证毕。
+
+$\mathcal F$ 的菜单是一般协变 CPTP 滤波，不是系统上守恒酉。
+它可降低系统电荷，不能把 (37.2) 当作原控制菜单中的无限存活。
+
+**定理 37.2（每个前缀的显式有限梯回收）。** 令 $B_J$ 为非简并梯
+$|0\rangle_B,\ldots,|J\rangle_B$，电荷 $N_B=\sum_{n=0}^Jn|n\rangle\langle n|$，
+初态 $P_{0,B}$，$J\ge0$。
+存在一个与 $N+N_B$ 对易的完整酉置换 $W_J$，在全部中间槽重复使用时满足
+
+$$
+X_{SR}\longmapsto
+[(\Phi\otimes\operatorname{id}_R)(X_{SR})]\otimes P_{r-1,B}
+\quad(1\le r\le J+1),
+\tag{37.4}
+$$
+
+其中因子按 $S,R,B$ 顺序显示；电池是唯一控制辅助系统，
+不重置、替换、丢弃或测量，噪声每次只在 $S$ 上作用为给定的 $\Phi$。
+
+证明。以下用 $(a,n)$ 表示 $e_a\otimes|n\rangle_B$，
+循环中每个顶点映到下一个。$J=0$ 取恒等。
+$J\ge1$ 时，在总电荷一扇区用二循环 $((2,0),(0,1))$；
+对 $2\le t\le J$ 用三循环
+
+$$
+((4,t-2),(2,t-1),(0,t));
+\tag{37.5}
+$$
+
+在总电荷 $J+1$ 扇区用二循环 $((4,J-1),(2,J))$，其余顶点固定。
+各循环内总电荷相同，不同循环属于不同扇区，故完全不交。
+这也明确固定全部 $e_1,e_3$ 顶点、$(0,0)$、$(4,J)$，
+给出全部 $5(J+1)$ 维空间上的酉置换，而不是把重叠箭头误作不交对换。
+其所需箭头恰为
+
+$$
+W_J(2,n)=(0,n+1),\qquad W_J(4,n)=(2,n+1)\quad(0\le n<J).
+\tag{37.6}
+$$
+
+所以在 $\mathcal Q\otimes|n\rangle_B$ 上，两逻辑字都给同一个最终电池向量
+$|n+1\rangle_B$；随后噪声的同一个 $K_0$ 将二字分别送回 $e_2,e_4$。
+四个码单位及任意参考系数均以系数一保留。
+第一次噪声已把整个系统输出放入 $\mathcal Q$，电池仍为 $|0\rangle_B$，
+归纳得到 (37.4)。证毕。
+
+此构造实现访问码上的同一电荷降移及其与噪声的复合，
+没有在全系统输入上实现 (37.1) 或完整的非守恒循环。
+对输入 $P_0$，此特定完成在第 $J+2$ 次得到系统 $P_4$ 而非 $P_2$：
+此前系统为 $e_2$、电池为 $J$，顶端二循环将其送到 $(4,J-1)$；
+$J=0$ 则直接由 $\Phi^2(P_0)=P_4$ 给出。
+这只刻画该构造的长度，最小容量须按终端、前缀或联合记忆目标分别判定。
+
+## 38. 全循环门的精确守恒阻断与近似非对称性成本
+
+**定义 38.1（全门与最坏纠缠 Bures 误差）。** 记 (28.2) 的完整循环为
+$V_{\mathrm{cyc}}$：$0\mapsto4\mapsto2\mapsto0$，固定 $1,3$。
+全门实现要求对全部 $M_5$ 输入实现 $\operatorname{Ad}_{V_{\mathrm{cyc}}}$。
+探针初态 $\sigma_B$ 固定且与任意系统输入乘积，实际实现为
+
+$$
+\Lambda(X)=\operatorname{Tr}_B[W(X\otimes\sigma_B)W^\dagger],\qquad
+W^\dagger(N+N_B)W=N+N_B.
+\tag{38.1}
+$$
+
+加法含相应的恒等张量因子；无界自伴探针取自伴算子的守恒等式。
+对任意 $\rho_S$ 的纯化 $|\psi_\rho\rangle$，令
+
+$$
+\begin{aligned}
+\mathcal E&=\operatorname{Ad}_{V_{\mathrm{cyc}}^\dagger}\circ\Lambda,\\
+f_e(\rho,\mathcal E)
+ &=\sqrt{\langle\psi_\rho|
+   (\mathcal E\otimes\operatorname{id}_R)(P_{\psi_\rho})
+   |\psi_\rho\rangle},\\
+\varepsilon_I(\Lambda,V_{\mathrm{cyc}})
+ &=\max_{\rho_S}\sqrt{2[1-f_e(\rho,\mathcal E)]}.
+\end{aligned}
+\tag{38.2}
+$$
+
+这里 $f_e$ 是根纠缠保真度；先开根再代入 Bures 距离。
+它既不是 overlap 的平方，也不是 diamond 误差。
+此接口取自 [arXiv:1906.04076v2，式 (4)–(8)][QI-TSS]。
+
+**定理 38.2（全门的必要资源界）。** 在 (38.1) 的固定乘积探针菜单中，
+$V_{\mathrm{cyc}}$ 不可能被精确实现；此排除允许无界探针电荷，
+不要求探针电荷有有限期望。
+在 [QI-TSS] 的守恒酉演化假设下，若
+$\varepsilon_I\le\varepsilon$、$0<\varepsilon\le\sqrt2$，则
+
+$$
+\sqrt{F_Q(\sigma_B,N_B)}
+ \ge\max\left\{0,\frac{3}{2\varepsilon}-4\right\}.
+\tag{38.3}
+$$
+
+若整个探针的电荷谱包含于 $[0,J]$，则实际误差必满足
+
+$$
+\varepsilon_I\ge\frac{3}{2(J+4)}.
+\tag{38.4}
+$$
+
+所有携带电荷或非对称性的辅助资源都须计入 $B$。
+
+证明。逐个基向量相减得到
+
+$$
+V_{\mathrm{cyc}}^\dagger NV_{\mathrm{cyc}}-N
+ =\operatorname{diag}(2,0,-1,0,-1).
+\tag{38.5}
+$$
+
+[Kuramochi–Tajima，arXiv:2208.13494v3，定理 2、式 (1)、(3)–(4)][QI-KT]
+的接口是：固定密度探针、任意系统输入、联合酉及输入输出可加守恒观测量；
+若精确实现一个系统酉通道，则
+$U_S^\dagger L'_S U_S=L_S+\gamma I$。
+取 $L'_S=L_S=N$，同一有限系统上的迹使 $\gamma=0$。
+(38.5) 并非零，甚至不是标量，故矛盾。
+该全酉通道定理不需要测量情形的 Yanase 条件，也不对探针均值另加有限性。
+
+近似部分采用 [QI-TSS，式 (1)–(3)、(9)–(14)，定理 1]：
+有限系统、固定乘积探针、由与 $A_S+A_B$ 对易的联合 Hamiltonian 生成的酉，
+及 (38.2) 的误差不超过 $\varepsilon$，蕴含
+
+$$
+\sqrt{F_Q(\sigma_B,A_B)}
+ \ge\frac{A_U}{\varepsilon}-4\|A_S\|,
+\qquad
+A_U=\frac{\lambda_{\max}(U^\dagger A_SU-A_S)
+              -\lambda_{\min}(U^\dagger A_SU-A_S)}2.
+\tag{38.6}
+$$
+
+有限维守恒 $W$ 可以逐总电荷块取 Hermitian 对数，得到同样守恒的生成元，
+所以任意有限梯守恒酉属于这个接口。
+取 $A_S=N-I$、$A_B=N_B$，则 $\|A_S\|=1$，
+(38.5) 的谱直径是三，故 $A_U=3/2$。
+结合 QFI 非负性得到 (38.3)。
+零误差由前述精确排除处理，不在 (38.6) 中除以零。
+
+这里 QFI 的约定为纯态时 $4\operatorname{Var}(N_B)$。
+例如对 $\sigma_B=\sum_a p_a|a\rangle\langle a|$，
+
+$$
+F_Q(\sigma_B,N_B)
+ =2\sum_{a,b:p_a+p_b>0}\frac{(p_a-p_b)^2}{p_a+p_b}
+       |\langle a|N_B|b\rangle|^2
+ \le4\operatorname{Var}_{\sigma_B}(N_B).
+\tag{38.7}
+$$
+
+上界可先将 $N_B$ 减去其均值，再用
+$(p_a-p_b)^2/(p_a+p_b)\le p_a+p_b$ 逐项求和。
+若谱在 $[0,J]$，则 $N_B^2\preceq JN_B$，从而
+$\operatorname{Var}(N_B)\le J\mu-\mu^2\le J^2/4$，其中 $\mu=\operatorname{Tr}\sigma_BN_B$。
+故 $\sqrt{F_Q}\le J$，与 (38.6) 合得
+$J+4\ge3/(2\varepsilon)$。
+取实际的正误差 $\varepsilon=\varepsilon_I$ 即 (38.4)。证毕。
+
+(38.3)–(38.4) 是必要条件。[QI-TSS，定理 2 及 §VII、引理 2] 的充分性构造
+使用连续位置探针与 Gaussian 态，不能据此推出有限整数梯对完整循环的充分性。
+定义 37.2 的梯回收只访问同一升降模的码，与完整门的 (38.5) 非标量变荷不同，
+所以不与精确阻断矛盾。这里没有作向 diamond 范数的误差转换。
+
+## 39. 终端、全部前缀与联合记忆的三种最小梯容量
+
+**定义 39.1（初始化的单个保留电池菜单）。** 本节只用一份 $S=\mathbb C^5$ 和
+一个非简并 $B_J$，$J$ 为非负整数，初态严格为 $P_{0,B}$。
+噪声为 $\Phi\otimes\operatorname{id}_B\otimes\operatorname{id}_R$；
+$R$ 仍为任意有限、平凡电荷、始终不受触碰的复参考。
+恰有 $r$ 次噪声及 $r-1$ 个与 $H=N+N_B$ 对易的中间复酉。
+控制可以不同，且可按指定的终止长度选择。
+没有初始或末端控制，没有电池重置、替换、丢弃、测量或其他辅助系统。
+对输入 $X_{SR}$，记第 $j$ 次噪声后的联合输出为 $\Gamma_j(X_{SR})$，
+系统参考输出为 $T_j(X_{SR})=\operatorname{Tr}_B\Gamma_j(X_{SR})$。
+
+终端目标要求 $T_r=\Phi\otimes\operatorname{id}_R$ 对每个复输入成立；
+前缀目标要求同一控制列对每个 $1\le j\le r$ 都有此等式。
+联合记忆目标在授予的输入码
+$C_{\mathrm{in}}=\operatorname{span}\{e_0,e_2\}$ 上要求完整 $M_2$ 等距保留到 $S B$：
+存在等距 $V_r:\mathbb C^2\to S B$，使
+
+$$
+\Gamma_r[(V_{\mathrm{in}}\otimes I_R)Z(V_{\mathrm{in}}^\dagger\otimes I_R)]
+ =(V_r\otimes I_R)Z(V_r^\dagger\otimes I_R)
+\tag{39.1}
+$$
+
+对全部 $Z\in M_2\otimes\mathcal B(\mathcal H_R)$ 成立，其中
+$V_{\mathrm{in}}|0\rangle=e_0$、$V_{\mathrm{in}}|1\rangle=e_2$。
+它不要求逻辑信息留在 $S$，也不含免费的最终解码。
+三种最小 $J$ 分别记为 $J_T(r),J_P(r),J_M(r)$。
+容量只指初始化梯的电荷范围，不指能量、功或实现噪声的浴成本。
+
+**定理 39.2（三个锐最小值与解码变体）。** 在定义 39.1 的精确菜单内，
+对每个 $r\ge1$，
+
+$$
+J_T(r)=\min\{r-1,2\},\qquad
+J_P(r)=r-1,\qquad
+J_M(r)=\begin{cases}0,&r=1,\\1,&r\ge2.\end{cases}
+\tag{39.2}
+$$
+
+终端上界还实现更强的联合恒等式
+$\Gamma_r(X_{SR})=[(\Phi\otimes\operatorname{id}_R)(X_{SR})]\otimes P_{J_T(r),B}$。
+若另行允许一个守恒末端解码酉，则 $r\ge2$ 时 $J=1$ 已能在最终噪声之后
+恢复同一个系统通道，且电池恰为不相关的 $P_{1,B}$。
+这项变体明确多了一个末端控制槽。
+
+证明。先写噪声在任意 $B R$ 算子系数上的恒等式。
+对 $Z=\sum_{a,b}E_{ab}\otimes Z_{ab}$，
+
+$$
+(\Phi\otimes\operatorname{id}_{BR})(Z)
+ =P_2\otimes Z_{00}+P_4\otimes\sum_{a\ne0}Z_{aa}
+  +E_{24}\otimes Z_{02}+E_{42}\otimes Z_{20}.
+\tag{39.3}
+$$
+
+特别地，若正的迹一输入经噪声后系统约化态是 $P_2$，则
+$\operatorname{Tr}Z_{00}=1$、$\sum_{a\ne0}\operatorname{Tr}Z_{aa}=0$。
+各对角块均正，故 $Z_{aa}=0$ 对 $a\ne0$。
+正矩阵块满足
+$|\langle u|Z_{ab}|v\rangle|^2
+ \le\langle u|Z_{aa}|u\rangle\langle v|Z_{bb}|v\rangle$，
+所以这些零对角块的全部行列也零。因此噪声前输入必为
+
+$$
+Z=P_0\otimes\tau_{BR}.
+\tag{39.4}
+$$
+
+这是正性结论，不容许不同路径以干涉或抵消规避。
+
+还需联合电荷支撑：由 (27.11)，
+$[H,K_a\otimes I_{BR}]=\Delta_a(K_a\otimes I_{BR})$，其中
+$\Delta_a\in\{0,1\}$。
+故每个 Kraus 将电荷 $q$ 空间送入 $q+\Delta_a$ 空间，
+并保持 $H\ge q$ 的谱支撑；每个守恒酉与全部谱投影对易。
+该论证作用于整个正联合算子，允许混态及不同电荷之间的相干，
+不需要把一般复酉演化看成经典字路径。
+
+先证终端下界。只用实际输入 $P_0\otimes P_{0,B}$。
+第一次噪声后总电荷恰为一。
+第一个控制保持此扇区；因电池电荷非负，系统不可能为电荷二的 $e_4$。
+因此电荷零升移分支 $K_3$ 在此输入上为零，其余分支全升一，
+第二次噪声后总电荷恰为二。
+若 $r\ge3$，到末次噪声前的整个支撑都在 $H\ge2$。
+终端系统必须是 $P_2$，由 (39.4)，末次噪声前必为 $P_0\otimes\tau_B$；
+其电池支撑因而在 $N_B\ge2$，要求 $J\ge2$。
+$r=2$ 时，末次噪声前总电荷恰为一；(39.4) 强制电池是 $P_{1,B}$，要求 $J\ge1$。
+$r=1$ 则没有中间控制，$J=0$ 已足够。
+这些下界允许任意不同的守恒复酉，未限制为置换。
+
+终端上界在 $r=2,J=1$ 时用两个不交对换
+
+$$
+(2,0)\longleftrightarrow(0,1),\qquad
+(4,0)\longleftrightarrow(2,1),
+\tag{39.5}
+$$
+
+固定其余基向量；四个访问码单位经下一噪声成为原单位乘 $P_{1,B}$。
+$r\ge3$ 时取 $J=2$，定义完整酉置换 $A,D$：
+
+$$
+\begin{aligned}
+A:&\quad(4,0)\longleftrightarrow(2,1),\\
+D:&\quad(4,0)\longleftrightarrow(0,2),\quad
+        (4,1)\longleftrightarrow(2,2),
+\end{aligned}
+\tag{39.6}
+$$
+
+每个置换固定所有未列向量，各对换保持总电荷。
+第一个控制用 $A$，最后一个中间控制用 $D$，其余 $r-3$ 个控制用恒等。
+第一噪声的像在 $\mathcal Q\otimes|0\rangle_B$，而
+
+$$
+\begin{array}{c|cc}
+ &|2,0\rangle&|4,0\rangle\\ \hline
+(\Phi\otimes\operatorname{id}_B)\operatorname{Ad}_A
+ &|4,0\rangle&|4,1\rangle
+\end{array}
+\tag{39.7}
+$$
+
+这里 ket 箭头表示相应等距码作用：两像都来自噪声的同一个 $K_0$，
+所以四个码单位全部保留。
+因此第二次噪声后，系统固定为 $P_4$，逻辑矩阵停泊在电池 $0,1$ 两级。
+写 $X_{ab}=\langle e_a|X_{SR}|e_b\rangle$，停泊态为
+
+$$
+P_4\otimes\beta_{BR}(X),\qquad
+\beta_{BR}(X)=
+ |0\rangle\langle0|\otimes X_{00}
+ +|1\rangle\langle1|\otimes\sum_{a\ne0}X_{aa}
+ +|0\rangle\langle1|\otimes X_{02}
+ +|1\rangle\langle0|\otimes X_{20}.
+\tag{39.8}
+$$
+
+恒等控制和后续噪声固定此态。
+最后用 $D$ 将 $(4,0),(4,1)$ 分别送到 $(0,2),(2,2)$；
+末次噪声的同一个 $K_0$ 再送到 $(2,2),(4,2)$。
+四个单位重建 $\Phi(X)$，电池为共同的 $P_{2,B}$。
+$r=3$ 的两个槽正是 $A,D$，无需增加槽。
+所有式子都对复算子和参考系数成立，得到终端上界。
+这给随指定长度选择的 $A,I,\ldots,I,D$，不声称存在一个固定重复酉实现所有终端长度。
+
+再证前缀下界。同取 $P_0$ 输入，每次要求系统输出 $P_2$。
+第一次后的联合态是 $P_2\otimes P_{0,B}$。
+若第 $j$ 次后为 $P_2\otimes P_{j-1,B}$，总电荷恰为 $j$；
+下一控制仍保持总电荷 $j$，而 (39.4) 强制下一噪声前系统为 $P_0$。
+非简并梯于是强制电池恰为 $P_{j,B}$，下一噪声后为 $P_2\otimes P_{j,B}$。
+归纳要求级 $0,1,\ldots,r-1$ 全存在，故 $J\ge r-1$。
+取 $J=r-1$，重复定理 37.2 的同一个 $W_J$，即以 (37.4) 对全部输入、
+全部参考同时达到每个前缀等式。线性容量因此是前缀目标的锐成本。
+
+最后证联合记忆。当 $J=1$ 时，用 (39.6) 的 $A$ 作第一控制，此后全为恒等。
+第二次及每个更晚噪声后都保持 (39.8)。
+在 $C_{\mathrm{in}}$ 上，它给等距映射
+$|0\rangle\mapsto|4,0\rangle$、$|1\rangle\mapsto|4,1\rangle$，
+故完整 $M_2$ 及其 Bell 参考保持在 $S B$ 中。
+$J=0$ 时，任意守恒复酉都把 $e_4$ 只乘相位、把 $e_2$ 送到电荷一空间；
+定理 28.1 给
+$\Phi\operatorname{Ad}_U\Phi(X)=\operatorname{Tr}(X)P_4$。
+第二次后已无任何输入码信息，后续操作不能恢复完整 $M_2$。
+因此 $r\ge2$ 的联合记忆最小 $J$ 是一，$r=1$ 则由一次码知最小值为零。
+若允许额外最终解码，仍用 $A$：它把 $(4,0)$ 送到 $(2,1)$，固定 $(4,1)$，
+所以把 (39.8) 恰送到 $\Phi(X_{SR})\otimes P_{1,B}$，无需再加噪声。
+$J=0$ 的替换下界也排除用最终解码挽回信息。证毕。
+
+停泊时 $S:R$ 为乘积，但 $B:R$ 可以保持 Bell 纠缠。
+把保留电池迹掉会丢掉这个联合记忆，因此终端系统通道、每个前缀通道、联合码和
+允许最终解码的目标必须分别使用各自菜单。
+定理 37.2 的线性回收构造是前缀最优，而不是终端容量的线性下界。
+
+## 40. 通道特定推导的文献接口与恢复边界
+
+**定义 40.1（所用结论的范围）。** §§34–39 的源特定内容是：
+由同一置换运输完整 $M_2$ 得到的非 EB 指数；
+联合不变输入的正块可分递推、锐非可分缺额及纠缠阈值；
+带电无非对称性浴的完成置换与系统非可逆性限制；
+协变滤波和有限梯访问码回收；完整循环的守恒阻断与代入后的 QFI 常数；
+以及初始化保留梯的三个不同最小容量。
+这些是本模型内的解析推导（repo-derived），不把 §§27–33 的基相干、支撑和重置定理
+重新作为新增结果，也不把所引用的通用定理申报为新内容。
+
+数学引文的精确用途为：[QI-I] 定义 1、式 (9)–(12) 供应插入指数的量词；
+[QI-KT] 的固定乘积实现式 (1)、可加守恒式 (3)、定理 2 及式 (4)
+供应精确全酉通道的障碍；[QI-TSS] 的式 (4)–(14)、定理 1 供应
+根纠缠保真度、Bures 误差、QFI 约定和必要不等式。
+[QI-JTV] 命题 II.7 的额外不变吸引子空间假设不可省略，
+也未被用来代替 (36.4) 的非可逆论证。
+[arXiv:1205.0693v1，定义 2.1、定理 3.1][QI-R] 的替换通道根阶要求最小阶，
+其 $d^2-1$ 界针对重复同一通道且没有插入滤波；它不推出本模型的受控对数寿命。
+文献接口与通道特定推导的区分不等于文献穷尽或全球新颖性证明。
+
+本模型的系统控制守恒，但给定噪声注入电荷。
+有限平凡电荷参考的代数恒等式不授予带电参考、原生操作、局域门分解或免费浴。
+完整全门、访问码上的同一电荷降移、非酉协变滤波及保留电池是不同资源条件。
+上述容量是电荷范围；并不包含能量、功、浴供应或控制实现成本的最优性。
+上述通道特定证明为普通解析推导，所引全门定理按各自探针假设使用；
+这些陈述不带 Lean kernel 或物理实现认证。
+
+原定义 33.3 的全部实际全实 Kraus 类 $\mathcal N:M_3\to M_5$、
+全部复 CPTP 恢复、全部输入及完整有限复参考的未折半 diamond 目标
+$\delta_{\mathcal N}\ge1-\sqrt{1-\beta}$，以及原 $G$，仍未证明。
+本卷的指定方形 $M_5\to M_5$ 通道、码等距性、EB/CBC 指数、
+全门 Bures 必要成本或保留电池存储均不替代该目标；
+没有由这些结果导出原类统一恢复、原资源域可达性或所需的全参考误差运输。
+
+[QI-I]: https://arxiv.org/pdf/1411.2517v4
+[QI-JTV]: https://arxiv.org/pdf/1703.06183v1
+[QI-KT]: https://arxiv.org/pdf/2208.13494v3
+[QI-TSS]: https://arxiv.org/pdf/1906.04076v2
+[QI-R]: https://arxiv.org/pdf/1205.0693v1
+
+## 追加锚（本行以下为增补区）
