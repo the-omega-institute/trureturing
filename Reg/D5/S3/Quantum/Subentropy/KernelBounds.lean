@@ -34,7 +34,7 @@ abbrev arena : Arena where
   Law r := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
     (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i) (hsum : ∑ i, p i = 1)
     (x : ι) (t : ℝ) (ht : 0 < t),
-    0 ≤ r.readout () t (subentropyKernel (diagonal (fun i => (p i : ℂ)))) ∧
+    0 ≤ subentropyKernel (diagonal (fun i => (p i : ℂ))) t ∧
       r.readout () t (subentropyKernel (diagonal (fun i => (p i : ℂ)))) ≤
         (1 - p x) / (1 + t)^2
 
@@ -87,11 +87,6 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[7]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn"]
-      booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
