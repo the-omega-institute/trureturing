@@ -109,7 +109,7 @@ internal sealed class SpinThreeHalvesClassicalBasisDocument : IScribeDocumentDef
     private static Formula All(Formula variable, Formula domain, Formula body) =>
         Seq(Forall, Sp, variable, Sp, Colon, Sp, domain, Comma, Sp, body);
     private static Formula SumOver(string variable, byte size, Formula body) =>
-        Seq(Sum, Underscore, Grp(Member(F.Id(variable), Fin(size))), Sp, Parenthesized(body));
+        Seq(new Formula.Subscript(Sum, Seq(Member(F.Id(variable), Fin(size)))), Sp, Parenthesized(body));
     private static Formula Root(Formula value) => Seq(Sqrt, Grp(value));
     private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Fin(byte size) => Call("Fin", D(size));
