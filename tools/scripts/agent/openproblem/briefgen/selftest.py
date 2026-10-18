@@ -17,6 +17,13 @@ TOOLS = HERE.parent
 DATA = HERE / 'testdata'
 
 
+def assert_dtr_source(text):
+    for instruction in re.split(r'\n\s*\n|\n(?=\s*(?:[-*]|\d+\.)\s)', text):
+        assert not (re.search(r'\bDTR\b', instruction) and
+                    re.search(r'\bmake\s+lean-report(?:-scoped)?(?![\w-])', instruction)), \
+            'DTR findings require the pushed delivery head CI current job reading'
+
+
 def assert_scoped_builds(text, *, binding=False, all_commands=False):
     from common import BUILD_SCOPE
     if binding:
@@ -44,6 +51,21 @@ def assert_scoped_builds(text, *, binding=False, all_commands=False):
 
 def build_scope_regressions():
     from common import BUILD_SCOPE
+    ci_source = ('Read `DTR-Declared` from the pushed delivery head required CI '
+                 '`current` job using `gh run view <run-id> --log --job <current-job-id>`.')
+    assert_dtr_source(ci_source)
+    assert_dtr_source('Run `make lean-report-scoped LEAN_TARGETS="D5.Sample"`.')
+    assert_dtr_source('- Run `make lean-report-scoped LEAN_TARGETS="D5.Sample"`.\n- ' + ci_source)
+    for command in ('make lean-report-scoped LEAN_TARGETS="D5.Sample"', 'make lean-report'):
+        for text in (f'Read the DTR finding for the target in `{command}`.',
+                     f'For example `DTR-Unregistered` from `{command}`.',
+                     f'Read `{command}`\nfor the target\'s `DTR-Declared` finding.'):
+            try:
+                assert_dtr_source(text)
+            except AssertionError:
+                pass
+            else:
+                raise AssertionError('unsafe DTR source accepted: ' + text)
     assert_scoped_builds(BUILD_SCOPE, binding=True, all_commands=True)
     for text in ('', BUILD_SCOPE.replace('binding;', 'optional;'),
                  *(BUILD_SCOPE + '\n' + command for command in (
@@ -82,6 +104,7 @@ def build_scope_regressions():
     for path in [TOOLS / 'templates/impl-base-brief.md', *blocks]:
         template = path.read_text()
         try:
+            assert_dtr_source(template)
             assert_scoped_builds(template, all_commands=True)
         except AssertionError as exc:
             raise AssertionError(str(path.relative_to(TOOLS)) + ': ' + str(exc)) from exc
@@ -235,6 +258,10 @@ def collect(root, before):
         if path.is_file() and path.suffix in ('.md',):
             value=path.read_text()
             if before.get(str(path)) == value: continue
+            try:
+                assert_dtr_source(value)
+            except AssertionError as exc:
+                raise AssertionError(str(path.relative_to(root)) + ': ' + str(exc)) from exc
             for spelling in sorted({str(root),str(root.resolve())},key=len,reverse=True):
                 value=value.replace(spelling,'<FIXTURE>')
             value=value.replace(str(TOOLS.parents[3]),'<REPOSITORY>')

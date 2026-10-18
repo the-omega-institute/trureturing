@@ -43,13 +43,13 @@
   "gen_stage_briefs.py": {
     "scratch/briefs/mirror-check-sample.md": "79b13c12c24e75cdea877a86630dd9165e4c85ae9b7cce8df785b1f965e6f71f",
     "scratch/briefs/impl-op-w1-sample.stageB.md": "b8ee2256046acb71bd76e458a85e2c2528d8cce56cea6bf474dd8f0efcc5e3a9",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "43b88b5171cffa815159b06be37c93aa6b856c83a95d8df1f99297b4642d0a8a"
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "4763a73df1a2d3eb96cd767a73e9695f1b9331c34738bd5f4a29a6a57450fded"
   },
   "implb_head.py": {
     "scratch/briefs/implb-sample-r1.head.md": "f68fc98dc5a87b41e82f034bcfa64164eed88d5e6a5e11368ba44644fb3560cb"
   },
   "lane_brief.py": {
-    "scratch/briefs/impl-op-w1-sample.md": "7ec1596b0101b86bcf4cac272e08ab3191a69293b88f9b1b8f84073553fad005"
+    "scratch/briefs/impl-op-w1-sample.md": "c2d867afd8bfc0ae4c756f57fc2f6cec972057640d6bf3699078f41b8a1ed8c8"
   },
   "postb3.sh": {
     "scratch/briefs/review-sample-quality.md": "c796fba1f88936bd7539c2939651949db8d82f674691be2b5666240d2929a012",
@@ -79,25 +79,25 @@
   },
   "stages.sh": {
     "scratch/briefs/mirror-check-sample.md": "e47408206734d24608ceca7b872196f205d25c7dcaa0273d73c15c98a80fc2bb",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "a465b71cd3a319e59f6c7c5a898fa9c8fc8298b8e12668f9c67d33fd1590b6e0",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "09b68b5609b8a230a8e46d9a2287a2e03545ce4547a342542d330d2f88cce34f",
-    "scratch/briefs/impl-op-w1-sample.md": "7ec1596b0101b86bcf4cac272e08ab3191a69293b88f9b1b8f84073553fad005"
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "06254d3531debb27628d197f6152e385be0b23d6b9b8f0e703480c25058618f2",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "4eee369f3b9498007bee95aac45d9cf5a169ff4bba58f55f3ba4db97ea6d10ac",
+    "scratch/briefs/impl-op-w1-sample.md": "c2d867afd8bfc0ae4c756f57fc2f6cec972057640d6bf3699078f41b8a1ed8c8"
   },
   "standing_append.py": {
     "capture.md": "e032d4e10774a54af596dd9562af2ac8d8be6c3da007f7744899a749a907f67a"
   },
   "gen_stage_briefs.py:defaults": {
     "scratch/briefs/mirror-check-sample.md": "e47408206734d24608ceca7b872196f205d25c7dcaa0273d73c15c98a80fc2bb",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "ffa35dcad810b96a3a838d24573a737bd57eaa17af072413db565bc2aa4b5b57",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "53b84085af1855720c78c93cfa0115b8c6e83e881c8f7bdaf010c31f77d87e33",
-    "scratch/briefs/impl-op-w1-sample.md": "da7e704abc903f212919b25470e08b61dfac56041a8ae4a2171c8780fe562568"
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "9413aae7de9f606035c3fb4c8c71d48784e8c5f96ce988714fe8b5d3b7700394",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "d5a615a12f5d90b67a962350e3a290436c6b70d932c51f7595119927a6dbe1a9",
+    "scratch/briefs/impl-op-w1-sample.md": "c5853afb17ed10ab1c873bafabff6433c8184538aec8150d0f5e4360f3eeec00"
   },
   "fill_mirror_fixes.py:defaults": {
     "scratch/briefs/mirror-check-sample.md": "e47408206734d24608ceca7b872196f205d25c7dcaa0273d73c15c98a80fc2bb",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "ffa35dcad810b96a3a838d24573a737bd57eaa17af072413db565bc2aa4b5b57",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "53b84085af1855720c78c93cfa0115b8c6e83e881c8f7bdaf010c31f77d87e33",
-    "scratch/briefs/impl-op-w1-sample.md": "da7e704abc903f212919b25470e08b61dfac56041a8ae4a2171c8780fe562568",
-    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "cd4a149f4177fed2612c1062b9fb2da32b322ddaff80d3792a5d120b22649ae6"
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "9413aae7de9f606035c3fb4c8c71d48784e8c5f96ce988714fe8b5d3b7700394",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "d5a615a12f5d90b67a962350e3a290436c6b70d932c51f7595119927a6dbe1a9",
+    "scratch/briefs/impl-op-w1-sample.md": "c5853afb17ed10ab1c873bafabff6433c8184538aec8150d0f5e4360f3eeec00",
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "d4572b6acab504e20cfb77bd1a8abaec3909d583a69a2ca429ed25fd42c1e2a9"
   },
   "rework_brief.py:defaults": {
     "scratch/briefs/rework-sample.md": "865d9a67e38c027e4c1a73f924a096854dda29a61c3a70dc3b08024762e75a3a"
