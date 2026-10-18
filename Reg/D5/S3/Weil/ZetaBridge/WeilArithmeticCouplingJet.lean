@@ -696,4 +696,134 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
 
 end Floor
 
+
+/-! SOURCE_ONLY_UNCOMPILED r3347. The four dependent-family obligations below
+are source proof candidates. They are not producer/judge enrollment evidence.
+The law keeps the complete existential constant and the full positive-mode
+quantifier, including c>=2; only the native smoothWeight occurrence varies. -/
+namespace ActualAsymptotic
+
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ c m => smoothWeight c m) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law r := ∀ (c : ℕ) (hc : 2 ≤ c),
+    ∃ K : ℝ, 0 < K ∧ ∀ m : ℕ, 0 < m →
+      |(m : ℝ) ^ 2 * r.readout () c m - Real.pi / 4| ≤ K / (m : ℝ)
+
+private theorem source_reconstruction :
+    (type_of% (@smooth_weight_actual_asymptotic)) ↔ arena.Law actual := Iff.rfl
+
+private def source_type_reconstruction : LeanInformationAudit.Analysis.Reconstruction
+    (type_of% (@smooth_weight_actual_asymptotic)) (arena.Law actual) := .exact
+
+private theorem actual_law : arena.Law actual := by
+  intro c hc
+  exact smooth_weight_actual_asymptotic c hc
+
+/-- No single K works for the constant negative readout: choose a positive
+natural mode above K+1. This refutes the entire existential/forall law. -/
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  obtain ⟨K, hK, hbound⟩ := hall 2 (by decide)
+  let m : ℕ := Nat.ceil (K + 1)
+  have hceil : K + 1 ≤ (m : ℝ) := Nat.le_ceil (K + 1)
+  have hmR : (0 : ℝ) < m := by linarith
+  have hm : 0 < m := by exact_mod_cast hmR
+  have hm1 : (1 : ℝ) ≤ m := by linarith
+  have hbad := hbound m hm
+  change |(m : ℝ) ^ 2 * (-1) - Real.pi / 4| ≤ K / (m : ℝ) at hbad
+  have hnegative : (m : ℝ) ^ 2 * (-1) - Real.pi / 4 ≤ 0 := by
+    nlinarith [sq_nonneg (m : ℝ), Real.pi_pos]
+  rw [abs_of_nonpos hnegative] at hbad
+  have hratio : K / (m : ℝ) ≤ K := by
+    simpa only [div_one] using
+      (div_le_div_of_nonneg_left hK.le (by norm_num : (0 : ℝ) < 1) hm1)
+  have hsmall := hbad.trans hratio
+  nlinarith [sq_nonneg ((m : ℝ) - 1), Real.pi_pos]
+
+/-- The pinned private dependence proof already distinguishes actual modes
+0 and 1 at c=2, and is consumed here in its physical source owner. -/
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  exact ⟨2, 0, 1, WeightDependence.modes_differ⟩
+
+def familyRegistration : Registration arena (type_of% (@smooth_weight_actual_asymptotic)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      cases i
+      cases j
+      exact (hj rfl).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- Proposed source route, UNVERIFIED: two outer forall bodies; Exists's
+predicate and its lambda body; And's right argument; the m and hm bodies;
+then <= left, abs argument, subtraction left, multiplication right. The
+selected complete smoothWeight c m application has final operand m.
+The existential K and its positivity conjunct are never selected or varied.
+The source-family bridge is exact, but the scoped m binder under Exists,
+coordinate lifting, template lawfulness/E1--E8, and all four audit slots still
+require the real producer/judge. No declared_validated is fabricated.
+The current owning dependent-family enrollment is reused without modification;
+its availability is not a claim that this new binding has been accepted.
+Unresolved audit gap is tracked by the caller-linked issue #18940.
+-/
+noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@smooth_weight_actual_asymptotic) (type_of% actual) Type Unit := {
+  unitName := `Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet.ActualAsymptotic.smooth_weight_actual_asymptotic.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet.ActualAsymptotic.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ c m => smoothWeight c m) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg", "body", "body",
+        "fn", "arg", "arg", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end ActualAsymptotic
+
 end Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet

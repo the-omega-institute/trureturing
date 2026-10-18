@@ -485,6 +485,147 @@ private theorem gamma_positive_refined {L w : ℝ} (hL : 0 ≤ L) (hw : 0 < w) :
     _ ≤ Real.pi / 4 + 3 / (4 * w) :=
       Real.tsum_le_of_sum_range_le (majorant_nonneg hw.le) (majorant_partial_refined hw)
 
+
+/-! SOURCE_ONLY_UNCOMPILED r3347: the lower comparison is for the genuine
+half-shifted majorant, and the removed exponential series is summable. -/
+
+open Filter
+open scoped Topology
+
+/-- Left-endpoint rectangles dominate the finite shifted-kernel integral.
+The arctan endpoint tends to pi/2; summability permits passage to the actual
+majorant sum. The omitted initial half-interval costs at most 1/(4*w). -/
+private theorem majorant_tsum_lower {w : ℝ} (hw : 0 < w) :
+    Real.pi / 4 - 1 / (4 * w) ≤ ∑' j : ℕ, gammaMajorant w j := by
+  let g : ℝ → ℝ := fun x => gammaKernel w (2 * x + 1 / 2)
+  have hfinite (M : ℕ) :
+      (Real.arctan ((2 * (M : ℝ) + 1 / 2) / w) -
+        Real.arctan ((1 / 2) / w)) / 2 ≤ ∑' j : ℕ, gammaMajorant w j := by
+    have hg : AntitoneOn g (Set.Icc (0 : ℝ) (0 + (M : ℝ))) := by
+      intro x hx y hy hxy
+      apply gammaKernel_antitone hw
+      · change 0 ≤ 2 * x + 1 / 2
+        linarith [hx.1]
+      · change 0 ≤ 2 * y + 1 / 2
+        linarith [hy.1]
+      · linarith
+    have he (j : ℕ) : gammaMajorant w j = g (j : ℝ) := by
+      dsimp [gammaMajorant, gammaRate, g, gammaKernel]
+      rw [add_comm (w ^ 2)]
+    have hint_le : (∫ x : ℝ in (0 : ℝ)..(M : ℝ), g x) ≤
+        ∑ j ∈ Finset.range M, gammaMajorant w j := by
+      calc
+        _ ≤ ∑ j ∈ Finset.range M, g (0 + (j : ℝ)) := by
+          simpa only [zero_add] using hg.integral_le_sum
+        _ = _ := by
+          apply Finset.sum_congr rfl
+          intro j _
+          simpa only [zero_add] using (he j).symm
+    have hsubst := intervalIntegral.mul_integral_comp_mul_add
+      (f := gammaKernel w) (a := (0 : ℝ)) (b := (M : ℝ)) (2 : ℝ) (1 / 2 : ℝ)
+    have hint : 2 * (∫ x : ℝ in (0 : ℝ)..(M : ℝ), g x) =
+        Real.arctan ((2 * (M : ℝ) + 1 / 2) / w) -
+          Real.arctan ((1 / 2) / w) := by
+      simpa only [g, mul_zero, zero_add, gammaKernel,
+        _root_.integral_div_sq_add_sq] using hsubst
+    have hsum : (∑ j ∈ Finset.range M, gammaMajorant w j) ≤
+        ∑' j : ℕ, gammaMajorant w j :=
+      Summable.sum_le_tsum (Finset.range M)
+        (fun j _ => majorant_nonneg hw.le j) (majorant_summable hw.le)
+    linarith
+  have hnat : Tendsto (fun M : ℕ => (M : ℝ)) atTop atTop :=
+    tendsto_natCast_atTop_atTop
+  have harg : Tendsto (fun M : ℕ => (2 * (M : ℝ) + 1 / 2) / w)
+      atTop atTop := by
+    have hlinear := tendsto_atTop_add_const_right atTop ((1 / 2 : ℝ) / w)
+      (hnat.const_mul_atTop (div_pos (by norm_num : (0 : ℝ) < 2) hw))
+    convert hlinear using 1 <;> ext M <;> ring
+  have hatan : Tendsto (fun M : ℕ =>
+      Real.arctan ((2 * (M : ℝ) + 1 / 2) / w)) atTop (𝓝 (Real.pi / 2)) :=
+    (Real.tendsto_arctan_atTop.mono_right nhdsWithin_le_nhds).comp harg
+  have hlim : Tendsto (fun M : ℕ =>
+      (Real.arctan ((2 * (M : ℝ) + 1 / 2) / w) -
+        Real.arctan ((1 / 2) / w)) / 2) atTop
+      (𝓝 ((Real.pi / 2 - Real.arctan ((1 / 2) / w)) / 2)) :=
+    (hatan.sub tendsto_const_nhds).div_const (2 : ℝ)
+  have hlimit := le_of_tendsto' hlim hfinite
+  have hinitial : Real.arctan ((1 / 2 : ℝ) / w) ≤ (1 / 2 : ℝ) / w :=
+    Real.arctan_le_self (div_nonneg (by norm_num) hw.le)
+  calc
+    Real.pi / 4 - 1 / (4 * w) = (Real.pi / 2 - (1 / 2 : ℝ) / w) / 2 := by ring
+    _ ≤ (Real.pi / 2 - Real.arctan ((1 / 2 : ℝ) / w)) / 2 := by linarith
+    _ ≤ _ := hlimit
+
+private def gammaExpCorrection (L w : ℝ) (j : ℕ) : ℝ :=
+  w * Real.exp (-gammaRate j * L) / (gammaRate j ^ 2 + w ^ 2)
+
+/-- The exponential loss is dominated termwise by a positive geometric series.
+Both its actual summability and the value of the geometric majorant are used. -/
+private theorem gamma_correction_summable_bound {L w : ℝ} (hL : 0 < L) (hw : 0 < w) :
+    Summable (gammaExpCorrection L w) ∧
+      (∑' j : ℕ, gammaExpCorrection L w j) ≤
+        Real.exp (-L / 2) / (w * (1 - Real.exp (-2 * L))) := by
+  let q : ℝ := Real.exp (-2 * L)
+  let A : ℝ := Real.exp (-L / 2) / w
+  have hq0 : 0 ≤ q := (Real.exp_pos _).le
+  have hq1 : q < 1 := Real.exp_lt_one_iff.mpr (by nlinarith)
+  have hgeom : HasSum (fun j : ℕ => A * q ^ j) (A * (1 - q)⁻¹) :=
+    (hasSum_geometric_of_lt_one hq0 hq1).mul_left A
+  have hnonneg (j : ℕ) : 0 ≤ gammaExpCorrection L w j := by
+    unfold gammaExpCorrection
+    exact div_nonneg (mul_nonneg hw.le (Real.exp_pos _).le) (by positivity)
+  have hpoint (j : ℕ) : gammaExpCorrection L w j ≤ A * q ^ j := by
+    have he : Real.exp (-gammaRate j * L) = Real.exp (-L / 2) * q ^ j := by
+      calc
+        _ = Real.exp (-L / 2 + (j : ℝ) * (-2 * L)) := by
+          congr 1
+          dsimp [gammaRate]
+          ring
+        _ = _ := by simp only [q, Real.exp_add, Real.exp_nat_mul]
+    calc
+      gammaExpCorrection L w j ≤ w * Real.exp (-gammaRate j * L) / w ^ 2 := by
+        unfold gammaExpCorrection
+        exact div_le_div_of_nonneg_left (by positivity) (sq_pos_of_pos hw)
+          (le_add_of_nonneg_left (sq_nonneg _))
+      _ = A * q ^ j := by
+        rw [he]
+        dsimp [A]
+        field_simp [hw.ne'] <;> ring
+  have hs : Summable (gammaExpCorrection L w) :=
+    Summable.of_nonneg_of_le hnonneg hpoint hgeom.summable
+  refine ⟨hs, ?_⟩
+  calc
+    (∑' j : ℕ, gammaExpCorrection L w j) ≤ ∑' j : ℕ, A * q ^ j :=
+      hs.tsum_le_tsum hpoint hgeom.summable
+    _ = Real.exp (-L / 2) / (w * (1 - Real.exp (-2 * L))) := by
+      rw [hgeom.tsum_eq]
+      dsimp [A, q]
+      simp only [div_eq_mul_inv, mul_inv_rev] <;> ring
+
+/-- Exact subtraction of two genuinely summable series recovers the actual
+Gamma sine series. This is a lower estimate for that series, not a new model. -/
+private theorem gamma_positive_lower {L w : ℝ} (hL : 0 < L) (hw : 0 < w) :
+    Real.pi / 4 -
+        (1 / 4 + Real.exp (-L / 2) / (1 - Real.exp (-2 * L))) / w ≤
+      ∑' j : ℕ, gammaSineTerm L w j := by
+  obtain ⟨hcorr, hbound⟩ := gamma_correction_summable_bound hL hw
+  have hmajor := majorant_summable hw.le
+  have hidentity : (∑' j : ℕ, gammaSineTerm L w j) =
+      (∑' j : ℕ, gammaMajorant w j) - ∑' j : ℕ, gammaExpCorrection L w j := by
+    rw [← hmajor.tsum_sub hcorr]
+    apply tsum_congr
+    intro j
+    dsimp [gammaSineTerm, gammaMajorant, gammaExpCorrection]
+    ring
+  have hden : 0 < 1 - Real.exp (-2 * L) :=
+    sub_pos.mpr (Real.exp_lt_one_iff.mpr (by nlinarith))
+  have hsplit :
+      (1 / 4 + Real.exp (-L / 2) / (1 - Real.exp (-2 * L))) / w =
+        1 / (4 * w) + Real.exp (-L / 2) / (w * (1 - Real.exp (-2 * L))) := by
+    field_simp [hw.ne', hden.ne'] <;> ring
+  rw [hidentity, hsplit]
+  linarith [majorant_tsum_lower hw]
+
 end GammaIntegralComparison
 
 private theorem weighted_kernel_antitone {a B r x y : ℝ}
@@ -734,6 +875,69 @@ theorem smooth_weight_floor {c m : ℕ} (hc : 2 ≤ c) (hm : 0 < m)
   refine ⟨hpositive, ?_⟩
   rw [heq]
   linarith
+
+
+/-- For every fixed natural cutoff c>=2 the actual smooth mass approaches pi/4
+with an O(1/m) error, at every positive natural mode. The constant is chosen
+before m; no frequency threshold, cutoff restriction, or tail/RH claim enters. -/
+theorem smooth_weight_actual_asymptotic (c : ℕ) (hc : 2 ≤ c) :
+    ∃ K : ℝ, 0 < K ∧ ∀ m : ℕ, 0 < m →
+      |(m : ℝ) ^ 2 * smoothWeight c m - Real.pi / 4| ≤ K / (m : ℝ) := by
+  let C : ℝ := Real.exp (-logLength c / 2) /
+    (1 - Real.exp (-2 * logLength c))
+  let K : ℝ := poleCoefficient c + (1 + C) / modeScale c
+  have hL := owner_log_pos hc
+  have ha := modeScale_pos hc
+  have hden : 0 < 1 - Real.exp (-2 * logLength c) :=
+    sub_pos.mpr (Real.exp_lt_one_iff.mpr (by nlinarith))
+  have hC : 0 ≤ C := (div_pos (Real.exp_pos _) hden).le
+  have hU : 0 ≤ poleCoefficient c :=
+    div_nonneg (mul_nonneg (by norm_num)
+      (sub_nonneg.mpr (Real.one_le_cosh _))) ha.le
+  have hK : 0 < K :=
+    add_pos_of_nonneg_of_pos hU (div_pos (by linarith) ha)
+  have hupper_constant : poleCoefficient c + 3 / (4 * modeScale c) ≤ K := by
+    have h := div_le_div_of_nonneg_right
+      (show (3 / 4 : ℝ) ≤ 1 + C by linarith) ha.le
+    have he : (3 / 4 : ℝ) / modeScale c = 3 / (4 * modeScale c) := by ring
+    rw [he] at h
+    dsimp [K]
+    linarith
+  have hlower_constant : (1 / 4 + C) / modeScale c ≤ K := by
+    have h := div_le_div_of_nonneg_right
+      (show (1 / 4 : ℝ) + C ≤ 1 + C by linarith) ha.le
+    dsimp [K]
+    linarith
+  refine ⟨K, hK, ?_⟩
+  intro m hm
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  have hw : 0 < frequency c (m : ℤ) := by
+    rw [frequency_nat]
+    exact mul_pos ha hmR
+  have hgamma := gamma_positive_lower hL hw
+  change Real.pi / 4 - (1 / 4 + C) / frequency c (m : ℤ) ≤ _ at hgamma
+  have hscale : (1 / 4 + C) / frequency c (m : ℤ) =
+      ((1 / 4 + C) / modeScale c) / (m : ℝ) := by
+    simp only [frequency_nat, div_mul_eq_div_div]
+  rw [hscale] at hgamma
+  have hpole : 0 ≤ poleSine (logLength c) (frequency c (m : ℤ)) := by
+    unfold poleSine
+    exact div_nonneg
+      (mul_nonneg (mul_nonneg (by norm_num) hw.le)
+        (sub_nonneg.mpr (Real.one_le_cosh _))) (by positivity)
+  have hmass : (m : ℝ) ^ 2 * smoothWeight c m =
+      poleSine (logLength c) (frequency c (m : ℤ)) +
+      ∑' j : ℕ, gammaSineTerm (logLength c) (frequency c (m : ℤ)) j := by
+    unfold smoothWeight
+    field_simp [hmR.ne']
+  apply abs_le.mpr
+  constructor
+  · have h := div_le_div_of_nonneg_right hlower_constant hmR.le
+    rw [hmass]
+    linarith
+  · have hmass_upper := (smooth_mass_bounds hc hm).2
+    have h := div_le_div_of_nonneg_right hupper_constant hmR.le
+    linarith
 
 end
 end D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
