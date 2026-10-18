@@ -15,6 +15,14 @@ internal sealed class ThreeTerminalTriangleArmsDocument : IScribeDocumentDefinit
                 "The three terminals are 0,1,2 and the central ports are 3,4,5. "
                     + "The six edges in order are (3,4),(4,5),(3,5),(0,3),(1,4),(2,5), "
                     + "with independent opening rates u,v,s,A,B,C."),
+            Node("arms_partition", "Configuration-level terminal relations", DescribeRole.Theorem,
+                "For every edge configuration omega:Fin6->Bool, the actual terminal "
+                    + "partition is read from the simultaneous relations "
+                    + "omega3 and omega4 and (omega0 or (omega2 and omega1)), "
+                    + "omega4 and omega5 and (omega1 or (omega0 and omega2)), and "
+                    + "omega3 and omega5 and (omega2 or (omega0 and omega1)), using "
+                    + "the five-mode priority. The finite actual-open-graph calculation "
+                    + "classifies all sixty-four configurations before assigning edge rates."),
             Node("triangle_arms_law", "The full five-mode source law", DescribeRole.Theorem,
                 "For all real u,v,s,A,B,C, put U=u+(1-u)sv, V=v+(1-v)us, "
                     + "W=s+(1-s)uv and K=uv+us+vs-2uvs. The actual law p of the "

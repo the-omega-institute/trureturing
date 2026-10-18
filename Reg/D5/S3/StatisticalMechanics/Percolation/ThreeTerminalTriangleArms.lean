@@ -163,6 +163,62 @@ def register_triangle_arms_bound : Contract.Registration (@triangle_arms_bound) 
   familyRecord := none
   options := #[]
 
+namespace Configurations
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Unit (fun _ => Fin 6 → Bool) (fun _ => Mode)
+def actual : Realization signature := realize _
+  (fun _ _ ω => partition triangleArmsEnds 0 1 2 ω) (fun e => nomatch e)
+def bad : Realization signature := realize _ (fun _ _ _ => .all) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ ω : Fin 6 → Bool, R.readout () () ω =
+    if ω 3 && ω 4 && (ω 0 || (ω 2 && ω 1)) then
+      (if ω 4 && ω 5 && (ω 1 || (ω 0 && ω 2)) then .all else .ab)
+    else if ω 4 && ω 5 && (ω 1 || (ω 0 && ω 2)) then .bc
+    else if ω 3 && ω 5 && (ω 2 || (ω 0 && ω 1)) then .ac else .separate
+private theorem rejected : ¬ arena.Law bad := by
+  intro h
+  have hh := h (fun _ => false)
+  cases hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(),(fun _ => false),(fun _ => true),?_⟩
+  change partition triangleArmsEnds 0 1 2 (fun _ => false) ≠
+    partition triangleArmsEnds 0 1 2 (fun _ => true)
+  decide +kernel
+
+def registration : Registration arena (type_of% @arms_partition) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨arms_partition,bad,rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ actual bad rejected
+  dependence := dependence
+
+def register_arms_partition : Contract.Registration (@arms_partition)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms.Configurations.register_arms_partition
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms.Configurations.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ ω => partition triangleArmsEnds 0 1 2 ω) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Configurations
+
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms
 
@@ -184,3 +240,8 @@ in
 /-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms.register_triangle_arms_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms register_triangle_arms_bound
+
+open Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms.Configurations in
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms.Configurations.register_arms_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_arms_partition

@@ -46,7 +46,7 @@ private theorem singleton_tree : (⊥ : SimpleGraph PUnit.{u+1}).IsTree :=
   ⟨SimpleGraph.connected_bot_iff.mpr ⟨inferInstance,inferInstance⟩,
    SimpleGraph.isAcyclic_bot⟩
 
-private theorem same_terminal_law {V : Type u} {G : SimpleGraph V}
+theorem same_terminal_law {V : Type u} {G : SimpleGraph V}
     [Fintype G.edgeSet] (a : V) (θ : G.edgeSet → ℝ) :
     bondLaw G a a a θ .all = 1 ∧ bondLaw G a a a θ .separate = 0 := by
   classical
@@ -343,6 +343,113 @@ def register_bondLaw_sum : Contract.Registration (@bondLaw_sum.{u})
   options := #[]
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Cylinder
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+open scoped BigOperators
+universe u
+noncomputable section
+
+structure Parameters where
+  Edges : Type u
+  finiteEdges : Fintype Edges
+  decidableEdges : DecidableEq Edges
+  rate : Edges → ℝ
+
+abbrev signature : Signature where
+  Params := Parameters.{u}
+  State p := Finset p.Edges
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} := realize _
+  (fun _ p S => by
+    classical
+    letI := p.finiteEdges
+    letI := p.decidableEdges
+    exact ∑ ω : p.Edges → Bool,
+      if (∀ e ∈ S, ω e = true) then weight p.rate ω else 0)
+  (fun e => nomatch e)
+
+def bad : Realization signature.{u} := realize _ (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {E : Type u} [hE : Fintype E] [dE : DecidableEq E]
+    (θ : E → ℝ) (S : Finset E),
+    R.readout () ⟨E,hE,dE,θ⟩ S = ∏ e ∈ S, θ e
+
+private theorem rejected : ¬ arena.{u}.Law bad := by
+  classical
+  intro h
+  have hh := h (E := PEmpty.{u+1}) (fun _ => 0) ∅
+  simpa [bad,realize] using hh
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  classical
+  intro i
+  refine ⟨⟨PUnit.{u+1},inferInstance,inferInstance,fun _ => 0⟩,∅,{PUnit.unit},?_⟩
+  simp [actual,realize,cylinder_mass]
+
+def registration : Registration arena.{u} (type_of% @cylinder_mass.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨cylinder_mass,bad,rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad,?_,?_,rejected⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def register_cylinder_mass : Contract.Registration (@cylinder_mass.{u})
+    (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Cylinder.register_cylinder_mass
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Cylinder.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p S => by
+      classical
+      letI := p.finiteEdges
+      letI := p.decidableEdges
+      exact ∑ ω : p.Edges → Bool,
+        if (∀ e ∈ S, ω e = true) then weight p.rate ω else 0)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+/-- info: 'Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Cylinder.register_cylinder_mass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms register_cylinder_mass
+
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Cylinder
 
 open
   Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree

@@ -19,7 +19,7 @@ set_option backward.isDefEq.respectTransparency.types false
 def triangleArmsEnds : Fin 6 → Fin 6 × Fin 6 :=
   ![(3,4),(4,5),(3,5),(0,3),(1,4),(2,5)]
 
-private lemma arms_partition (ω : Fin 6 → Bool) :
+theorem arms_partition (ω : Fin 6 → Bool) :
     partition triangleArmsEnds 0 1 2 ω =
       if ω 3 && ω 4 && (ω 0 || (ω 2 && ω 1)) then
         (if ω 4 && ω 5 && (ω 1 || (ω 0 && ω 2)) then .all else .ab)
@@ -140,5 +140,9 @@ theorem triangle_arms_bound (u v s A B C : ℝ) (hu : u ∈ Set.Icc 0 1)
 /-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms.triangle_arms_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms triangle_arms_bound
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms.arms_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms arms_partition
 
 end D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTriangleArms

@@ -36,6 +36,15 @@ internal sealed class ThreeTerminalTreeDocument : IScribeDocumentDefinition
                     + "product weight over all actual edge configurations omega whose "
                     + "open graph has mode s. With rates in [0,1], this is the actual "
                     + "five-partition probability law."),
+            Node("cylinder_mass", "Joint mass of prescribed open bonds", DescribeRole.Theorem,
+                "For every finite edge type E with decidable equality, arbitrary real "
+                    + "rates theta:E -> R and finite subset S of E, the sum of Bernoulli "
+                    + "product weights over the complete configuration cube subject to "
+                    + "omega(e)=true for every e in S equals the product of theta(e) "
+                    + "over S. Coordinates outside S are summed out. The identity "
+                    + "includes empty S and rates equal to zero or one; no positivity "
+                    + "assumption is used. This supplies exact simultaneous arc-event "
+                    + "masses as well as the tree's path-event masses."),
             Node("bondLaw_sum", "Normalization of the partition law", DescribeRole.Theorem,
                 "For every simple graph with finite edge type, terminals a,b,c and "
                     + "real rates theta, the sum of the five bondLaw masses is one. "

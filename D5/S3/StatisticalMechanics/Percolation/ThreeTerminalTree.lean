@@ -149,7 +149,7 @@ def bondLaw (G : SimpleGraph V) [Fintype G.edgeSet]
   exact ∑ ω : G.edgeSet → Bool,
     if graphMode (bondGraph G ω) a b c = s then weight θ ω else 0
 
-private lemma cylinder_mass {E : Type*} [Fintype E] [DecidableEq E]
+lemma cylinder_mass {E : Type*} [Fintype E] [DecidableEq E]
     (θ : E → ℝ) (S : Finset E) :
     (∑ ω : E → Bool, if (∀ e ∈ S, ω e = true) then weight θ ω else 0) =
       ∏ e ∈ S, θ e := by
