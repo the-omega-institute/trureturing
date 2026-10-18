@@ -540,6 +540,104 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end TensorCurrentWard
 
+namespace TensorVirasoroWard
+
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  (Σ lattice : LatticeData, Σ _ : Charge lattice, ℤ)
+  (fun _ => ℤ) (fun _ => ℂ)
+
+def actual : Realization signature := realize signature
+  (fun _ parameter exponent =>
+    (((exponent - 2*parameter.2.2 + (parameter.2.2+1)*
+      bilinear parameter.1 parameter.2.1 parameter.2.1 : ℤ) : ℂ)/2))
+  (fun empty => nomatch empty)
+
+def rejected : Realization signature := realize signature
+  (fun _ _ _ => 1) (fun empty => nomatch empty)
+
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (lattice : LatticeData) (hu : IsUnit lattice.G.det)
+    (charge : Charge lattice) (mode exponent : ℤ) (v : ActualTensor lattice hu),
+    _root_.D5.S3.VertexAlgebra.LatticeHalfFock.tensorL lattice (ActualGround lattice hu)
+        ((lattice.G⁻¹).map (Int.castRingHom ℂ)) mode
+        (chargedCoefficient lattice hu charge exponent v) -
+      chargedCoefficient lattice hu charge exponent
+        (_root_.D5.S3.VertexAlgebra.LatticeHalfFock.tensorL lattice (ActualGround lattice hu)
+          ((lattice.G⁻¹).map (Int.castRingHom ℂ)) mode v) =
+      readout.readout () ⟨lattice, charge, mode⟩ exponent •
+        chargedCoefficient lattice hu charge (exponent-2*mode) v
+
+theorem source_bridge : (type_of% (@charged_tensor_virasoro_ward)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have bad := law hyperbolic hyperbolic_unit 0 1 2
+    ((1 : Oscillator hyperbolic) ⊗ₜ[ℂ] probeVector)
+  have good := charged_tensor_virasoro_ward hyperbolic hyperbolic_unit 0 1 2
+    ((1 : Oscillator hyperbolic) ⊗ₜ[ℂ] probeVector)
+  have zero :
+      _root_.D5.S3.VertexAlgebra.LatticeHalfFock.tensorL hyperbolic
+          (ActualGround hyperbolic hyperbolic_unit)
+          ((hyperbolic.G⁻¹).map (Int.castRingHom ℂ)) 1
+          (chargedCoefficient hyperbolic hyperbolic_unit 0 2
+            ((1 : Oscillator hyperbolic) ⊗ₜ[ℂ] probeVector)) -
+        chargedCoefficient hyperbolic hyperbolic_unit 0 2
+          (_root_.D5.S3.VertexAlgebra.LatticeHalfFock.tensorL hyperbolic
+            (ActualGround hyperbolic hyperbolic_unit)
+            ((hyperbolic.G⁻¹).map (Int.castRingHom ℂ)) 1
+            ((1 : Oscillator hyperbolic) ⊗ₜ[ℂ] probeVector)) = 0 := by
+    simpa [bilinear] using good
+  rw [zero] at bad
+  exact probe_leading (by simpa [rejected, realize] using bad.symm)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨⟨hyperbolic, 0, 1⟩, 2, 4, ?_⟩
+  norm_num [actual, realize, bilinear]
+
+def familyRegistration : Registration arena (type_of% (@charged_tensor_virasoro_ward)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp charged_tensor_virasoro_ward, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@charged_tensor_virasoro_ward) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str
+    `D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.charged_tensor_virasoro_ward "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.TensorVirasoroWard.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+    definition := none
+    coordinates := #[0, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end TensorVirasoroWard
+
 end
 
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients

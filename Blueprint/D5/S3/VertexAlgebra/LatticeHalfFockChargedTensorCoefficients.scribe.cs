@@ -228,11 +228,63 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
                 + "Otherwise their sum of weights is n+e+q_a. The exact remaining application is "
                 + "L0(T_d)=(D.rank/16+(n+e+q_a)/2) T_d, for all integer n and e, using "
                 + "the actual L_zero_monomial_coeff supplier and finite monomial decomposition. "
-                + "This termwise identity remains open pending its exact Lean application under the two stated inverse-Gram hypotheses. "
+                + "This separate termwise formulation remains open in this source under the two stated inverse-Gram hypotheses. "
                 + "The ground shift remains D.rank/16 and physical z=t^2. Lifting the termwise identity to a complete "
-                + "charged tensor coefficient covariance is a distinct remaining endpoint.")),
-            Paragraph(Text("Energy covariance and a full conformal twisted-module structure require further identities "
-                + "beyond the local product and faithfulness application. "
+                + "charged tensor coefficient covariance is supplied below by the native coherent-seed proof.")),
+            Describe.Lean(
+                DescribeId.Create("charged-tensor-virasoro-ward"),
+                DeclarationHandle.Create(Prefix + "charged_tensor_virasoro_ward"),
+                H("All integer Virasoro modes on every actual tensor state"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, GroundParameters, Comma, Sp,
+                    ChargeParameter, Comma, Sp, IntegerParameter("m"), Comma, Sp,
+                    IntegerParameter("e"), Comma, Sp, F.Id("v"), Colon,
+                    Call("ActualTensor", F.Id("D"), F.Id("hu")), Comma, Sp,
+                    Call("L", F.Id("m"), Call("A", F.Id("a"), F.Id("e"), F.Id("v"))), Minus,
+                    Call("A", F.Id("a"), F.Id("e"), Call("L", F.Id("m"), F.Id("v"))), Eq,
+                    Call("k", F.Id("a"), F.Id("m"), F.Id("e")), Sp,
+                    Call("A", F.Id("a"), Seq(F.Id("e"), Minus, F.D(2), F.Id("m")), F.Id("v"))))),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(
+                    Paragraph(Text("Here H=(G(D) inverse).map(Int.castRingHom C), L_m is exactly "
+                        + "tensorL(D,ActualGround(D,hu),H,m), and A_a[e] is the original chargedCoefficient. "
+                        + "The scalar is k(a,m,e)=(e-2m+(m+1)B(a,a))/2, with the integer numerator cast to C. "
+                        + "The telescope contains every D:LatticeData, hu:IsUnit(det(G)), a:Charge(D), "
+                        + "m,e:Integer and v:ActualTensor(D,hu). There is no positivity, positive-rank, signature, "
+                        + "homogeneity, occupation cutoff or additional inverse premise. Both inverse identities "
+                        + "are obtained locally from hu. The cover remains t with physical z=t^2; "
+                        + "q=B(a,a), s_a=2^(-q) and the actual groundAction are unchanged.")),
+                    Paragraph(Text("Put F_d=halfCreationCoeff(a,d), A_n=sum_i a_i X(i,n), w_n=2n+1. "
+                        + "Coefficient extraction from exponential_derivative and series_derivative_coeff gives "
+                        + "sum_n A_n F_(R-w_n)=(R/2)F_R for every signed R; only finitely many terms survive. "
+                        + "The normal action is split into its two mixed regions, its positive double-contraction "
+                        + "interval and its genuine negative vacuum quadratic. The two inverse Gram contractions "
+                        + "identify the mixed terms, and their sum is the creation recurrence with its low terms removed. "
+                        + "All normal sums are finite on each polynomial, as supplied by normalPair_finite; "
+                        + "no finite endomorphism support or convergence hypothesis is introduced.")),
+                    Paragraph(Text("The native coherent seeds use precisely m=1,-1,2,-2. For m=-N, N=1,2, "
+                        + "write Q_N=rawL_(-N)1. Actual translation gives O_(d-q)Q_N=Q_N F_d "
+                        + "minus sum_(n<N) A_n F_(d+2N-w_n) plus (Nq/2)F_(d+2N). "
+                        + "Thus subtracting O_(d-q)Q_N completes the recurrence and proves "
+                        + "rawL_m F_d-O_(d-q)(rawL_m1)=((d-2m+mq)/2)F_(d-2m). "
+                        + "Every signed d is included. At d=-2N the input creation coefficient vanishes "
+                        + "but the translated quadratic contributes Nq/2 times F_0, so the residual is -Nq/2. "
+                        + "This branch is retained rather than replacing d by d.toNat.")),
+                    Paragraph(Text("For each seed mode form R_e=[L_m,O_e]-k(a,m,e)O_(e-2m). "
+                        + "The existing oscillator current Ward identity and L_current_commutator imply "
+                        + "[J_i(j),R_e]=B(e_i,a)R_(e-(2j+1)); the scalar cancellation is "
+                        + "k(a,m,e)-k(a,m,e-(2j+1))=j+1/2. Polynomial generation then uses the predicate "
+                        + "for every e, R_e(p)=0, so multiplication by a variable has the required shifted "
+                        + "induction hypothesis. This proves each generator mode on arbitrary nonhomogeneous polynomials.")),
+                    Paragraph(Text("The imported exact L_virasoro identity and commutator Jacobi close the modes: "
+                        + "the bracket of modes r,s yields r+s whenever r differs from s, since "
+                        + "k(a,s,e)k(a,r,e-2s)-k(a,r,e)k(a,s,e-2r)=(r-s)k(a,r+s,e). "
+                        + "Its central scalar identity commutes. Modes 1,-1 give zero; induction from 2 with 1 "
+                        + "and from -2 with -1 gives every remaining integer. Tensor extensionality carries "
+                        + "this full oscillator theorem through the literal scalar and actual ground action. "
+                        + "The rank/16 ground energy therefore cancels and is absent from the charged primary weight."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The all-mode theorem proves conformal covariance of the original charged generator on every target state. "
+                + "A full conformal twisted-module structure for all corrected source states still requires further identities. "
                 + "The actual native spectrum keeps ground shift D.rank/16 and variable z=t^2. "
                 + "Leech realization, orbifold extension, Monster symmetry, full VOA and CFT, anomalies, fusion, "
                 + "string theory and AdS/CFT remain open. The classical construction and these native supplier applications "
