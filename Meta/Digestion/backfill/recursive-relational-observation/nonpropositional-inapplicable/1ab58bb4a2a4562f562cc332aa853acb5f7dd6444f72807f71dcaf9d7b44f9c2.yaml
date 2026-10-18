@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ab58bb4a2a4562f562cc332aa853acb5f7dd6444f72807f71dcaf9d7b44f9c2
+  normalized_sha256: sha256:1ab58bb4a2a4562f562cc332aa853acb5f7dd6444f72807f71dcaf9d7b44f9c2
+cas_ref: sha256:1ab58bb4a2a4562f562cc332aa853acb5f7dd6444f72807f71dcaf9d7b44f9c2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 修订 56a005855ea17e0b0958f73ec801ae140b0a1679；证书由 flight 6ad528bc39edccf1d16d5743 编译，binding-certificate.lean full-certificate-build exit 0，certificate-comparison 87/87 definitionally equal；公理仅 propext、Classical.choice、Quot.sound；仓内无 GID，零新增 Lean。实际上游声明包括 Function.Semiconj.iterate_right、Order.succ_iterate、Function.iterate_succ_apply'、LinearMap.adjoint_inner_right、LinearMap.ker_adjoint_comp_self、LinearMap.range_adjoint_comp_self、LinearMap.finrank_range_adjoint、LinearMap.isPositive_linearIsometryEquiv_conj_iff、LinearMap.exists_rightInverse_of_surjective、Submodule.span_le、Submodule.map_top、LinearMap.finrank_range_add_finrank_ker、Finset.sum_comm 及 ring/module/omega 规范化。 r≥1、平坦秩、S_{r−1} 正性、最小实现、未来唯一、GR=h 和下一矩由 even_flat_statement、even_flat_raw、even_flat_future_unique、even_flat_next_moment 覆盖；文献引文只是来源说明。
+    previous_atom_id: 4d38e1243fe036ba14c91fa54bbde1aa063a100fde14ca097bc9bc66c52501ca
+    next_atom_id: 074c642a447aeba025747ee77b04b31e8a820cf7f7b8adddf4e0faca5d3e7b88
