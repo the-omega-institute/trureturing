@@ -224,16 +224,34 @@ private theorem singular_product (v : Fin 2 × Fin 2 → ℂ)
   · by_cases h01 : v (0, 1) = 0
     · refine ⟨![0, 1], ![v (1, 0), v (1, 1)], ?_⟩
       funext ⟨i, j⟩
-      fin_cases i <;> fin_cases j <;> simp [h00, h01]
+      fin_cases i <;> fin_cases j
+      · change v (0, 0) = 0 * v (1, 0)
+        simpa only [zero_mul] using h00
+      · change v (0, 1) = 0 * v (1, 1)
+        simpa only [zero_mul] using h01
+      · exact (one_mul _).symm
+      · exact (one_mul _).symm
     · have h10 : v (1, 0) = 0 := by
         simpa only [h00, zero_mul, zero_sub, neg_eq_zero, mul_eq_zero, h01, false_or] using hv
       refine ⟨![v (0, 1), v (1, 1)], ![0, 1], ?_⟩
       funext ⟨i, j⟩
-      fin_cases i <;> fin_cases j <;> simp [h00, h10]
+      fin_cases i <;> fin_cases j
+      · change v (0, 0) = v (0, 1) * 0
+        simpa only [mul_zero] using h00
+      · exact (mul_one _).symm
+      · change v (1, 0) = v (1, 1) * 0
+        simpa only [mul_zero] using h10
+      · exact (mul_one _).symm
   · refine ⟨![v (0, 0), v (1, 0)], ![1, v (0, 1) / v (0, 0)], ?_⟩
     funext ⟨i, j⟩
-    fin_cases i <;> fin_cases j <;> simp <;> field_simp
-    all_goals first | (ring; done) | linear_combination hv
+    fin_cases i <;> fin_cases j
+    · exact (mul_one _).symm
+    · change v (0, 1) = v (0, 0) * (v (0, 1) / v (0, 0))
+      rw [← mul_div_assoc, mul_div_cancel_left₀ _ h00]
+    · exact (mul_one _).symm
+    · change v (1, 1) = v (1, 0) * (v (0, 1) / v (0, 0))
+      rw [← mul_div_assoc, eq_div_iff h00]
+      linear_combination hv
 
 /-- A complex determinant pencil supplies a product vector in any two-vector span. -/
 private theorem product_in_span (v w : Fin 2 × Fin 2 → ℂ) (hw : w ≠ 0)
