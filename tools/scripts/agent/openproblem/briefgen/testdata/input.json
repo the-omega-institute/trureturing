@@ -1,0 +1,87 @@
+{
+  "blocks": [
+    "actions-cache-block.md",
+    "appt-multimodule-block.md",
+    "ci-gate-block.md",
+    "compile-cost-block.md",
+    "cost-gate-block.md",
+    "definition-fidelity-block.md",
+    "dossier-sections-block.md",
+    "escape-audit-block.md",
+    "fix-rules-block.md",
+    "frozen-state-contract-block.md",
+    "gate-disclosure-block.md",
+    "importer-repin-block.md",
+    "lean-report-block.md",
+    "library-locator-block.md",
+    "mathdb-access-block.md",
+    "mirror-import-rule-block.md",
+    "mirror-module-admission-block.md",
+    "mirror-proofshape-block.md",
+    "mirror-reuse-block.md",
+    "no-nyx-block.md",
+    "no-preflight-block.md",
+    "one-builder-commit-block.md",
+    "opr-shape-block.md",
+    "per-decl-deps-block.md",
+    "probe-tail-block.md",
+    "process-safety-block.md",
+    "report-seed-recovery-block.md",
+    "result-node-block.md",
+    "reuse-sweep-block.md",
+    "review-provenance-block.md",
+    "review-readonly-block.md",
+    "review-trigger-fields-block.md",
+    "review-verdict-use-block.md",
+    "rework-mirror-block.md",
+    "scoped-doors-block.md",
+    "scribe-vocab-block.md",
+    "search-selection-block.md",
+    "search-stop-rule-block.md",
+    "self-sweep-block.md",
+    "stagea-scribe-build-block.md",
+    "stagea-stop-block.md",
+    "stageb-body-rules-block.md",
+    "stageb-mechanical-fixes-block.md",
+    "sync-before-emit-block.md",
+    "review-oprc-clarification.md"
+  ],
+  "head": "1111111111111111111111111111111111111111",
+  "lane": {
+    "lane": "sample",
+    "title": "Synthetic fixture",
+    "worktree": "{root}/tree",
+    "branch": "lane/math/op-sample",
+    "module": "D5/S1/Fixtures/Sample",
+    "gid": "D5/S1/Fixtures/Sample.result",
+    "target_md": "Synthetic target: issue **#12345**. Settlement: **Proved**. `Problems/sample.md`\n**Library note.** One note for synthetic input.\n`generality: I`",
+    "commit_subject": "formalize: synthetic fixture",
+    "pr_title_hint": "Synthetic fixture"
+  },
+  "body": "| round | head | seat | carrier | decision |\n| --- | --- | --- | --- | --- |\n\nRound 1 tally: 0 approve, 0 reject, 0 abstain.\n\nRound 1 seat layout at `HEAD`: architecture codex-cli, quality codex-cli, tests codex-cli.\n\n| Required CI | pending |\n| CI current reading | pending |\nCI run `1` pending.\n",
+  "standing": {
+    "rows": [
+      "| 1 | `1111111111111111111111111111111111111111` | architecture | codex-cli | approve |",
+      "| 1 | `1111111111111111111111111111111111111111` | quality | codex-cli | approve |",
+      "| 1 | `1111111111111111111111111111111111111111` | tests | codex-cli | approve |"
+    ],
+    "tally": "Round 1 tally: 3 approve, 0 reject, 0 abstain. Carried-forward approvals: none. Disagreement adjudication: none.",
+    "next": "No round is open."
+  },
+  "mirror": {
+    "conclusion": {
+      "verdict": "reject",
+      "blocking_findings": [
+        {
+          "file_line": "fixture:1",
+          "claim": "Synthetic finding",
+          "fix": "Synthetic fix",
+          "evidence": "Fixture evidence"
+        }
+      ],
+      "advisory_findings": [
+        "Synthetic advisory"
+      ]
+    }
+  }
+}

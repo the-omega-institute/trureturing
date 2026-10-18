@@ -130,7 +130,7 @@ end
 section
 variable {n : ℕ}
 
-private theorem psd_diag_le_trace {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.PosSemidef)
+theorem psd_diag_le_trace {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.PosSemidef)
     (j : Fin n) : (A j j).re ≤ RHLinalg.rtrace A := by
   change (A j j).re ≤ (Matrix.trace A).re
   simp only [Matrix.trace, Matrix.diag_apply, Complex.re_sum]

@@ -21,6 +21,12 @@ internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
         "The identity plus twice a normalized bipartite rank-one projector is a finite sum of positive semidefinite Kronecker products.",
         H("Low-rank separable rays"), Blocks(
             Paragraph(Text("Write R_x = xx* and let the separable cone consist of finite sums of Kronecker products of positive semidefinite matrices. For every complex vector on Fin m times Fin n with sum of squared coordinate norms one, the matrix I + 2 R_x belongs to this cone. The conclusion includes all finite dimensions; the normalization cannot hold when either index set is empty.")),
+            Describe.Lean(DescribeId.Create("complex-dot-star-self"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.dot_star_self"),
+                H("The squared coordinate norm"), StatementSource.FromAuthor(F.Disp(DotStarSelfStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite index type and every complex vector, the dot product of its conjugate with itself is the complex coercion of the sum of squared coordinate norms."))),
+                DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("identity-plus-twice-rank-one-is-separable"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.separableCone_one_add_two_rankOne"),
                 H("A normalized rank-one ray"), StatementSource.FromAuthor(F.Disp(Statement())),
@@ -30,6 +36,20 @@ internal sealed class LowRankRaysDocument : IScribeDocumentDefinition
                     Paragraph(Text("When lambda is at most one half, twice the finite product-vector average represents 2 R_x plus a reduced-matrix term. The remaining factor I - 2 rho is positive semidefinite.")),
                     Paragraph(Text("When lambda is at least one half, subtract alpha u tensor v to obtain chi, orthogonal to both selected factors. Put U = R_u, V = R_v, P = I - U and Q = I - V. The squared norm of chi is 1 - lambda, and compression of the Gram bound proves K = (1 - lambda) Q - rho_chi positive semidefinite. The projected finite average is corrected by U tensor (V + Q - 4 lambda rho_chi) and P tensor (Q - 2 rho_chi). The correction factors equal V + (2 lambda - 1) squared Q + 4 lambda K and (2 lambda - 1) Q + 2 K, respectively.")),
                     Paragraph(Text("Every averaged vector is a product vector. The proof uses finite moments and compactness, without a Schmidt decomposition. Separability here is the algebraic cone property of finite matrices."))), DescribeRole.Theorem))));
+
+    private static Formula DotStarSelfStatement()
+    {
+        var j = F.Id("J");
+        var x = F.Id("x");
+        var real = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+        var sum = F.Seq(F.Sum, F.Underscore, F.Grp(F.Id("j"), F.Colon, F.Sp, j),
+            F.Sp, Pow(new Formula.Norm(Call("x", F.Id("j"))), 2));
+        var cast = Par(F.Seq(Par(F.Seq(sum, F.Colon, F.Sp, real)), F.Colon, F.Sp, C));
+        var equality = Equal(Call("dotProduct", Call("star", x), x), cast);
+        var body = F.Seq(F.OpenBracket, Call("Fintype", j), F.CloseBracket, F.Comma, F.Sp,
+            All("x", new Formula.TypeArrow(j, C), equality));
+        return All("J", F.Id("Type"), body);
+    }
 
     private static Formula Statement()
     {

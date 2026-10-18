@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d509a86f92f68a47df7ad5b7b90d90027c4131a11acf4ad62f8431b21f0d9dd
+  normalized_sha256: sha256:9d509a86f92f68a47df7ad5b7b90d90027c4131a11acf4ad62f8431b21f0d9dd
+cas_ref: sha256:9d509a86f92f68a47df7ad5b7b90d90027c4131a11acf4ad62f8431b21f0d9dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 修订 56a005855ea17e0b0958f73ec801ae140b0a1679；证书由 flight 6ad528bc39edccf1d16d5743 编译，binding-certificate.lean full-certificate-build exit 0，certificate-comparison 87/87 definitionally equal；公理仅 propext、Classical.choice、Quot.sound；仓内无 GID，零新增 Lean。实际上游声明包括 Function.Semiconj.iterate_right、Order.succ_iterate、Function.iterate_succ_apply'、LinearMap.adjoint_inner_right、LinearMap.ker_adjoint_comp_self、LinearMap.range_adjoint_comp_self、LinearMap.finrank_range_adjoint、LinearMap.isPositive_linearIsometryEquiv_conj_iff、LinearMap.exists_rightInverse_of_surjective、Submodule.span_le、Submodule.map_top、LinearMap.finrank_range_add_finrank_ker、Finset.sum_comm 及 ring/module/omega 规范化。 共同正交块扩张、D 在 lowerSpace 和 ker C 上为零、首个未定矩差由 realization_eq_block_extension、next_defect_operator_binding 覆盖。
+    previous_atom_id: f6e39d6b72212c3361d3a65852d3f4ecccf7646993ef6bacb8447d7163f5518f
+    next_atom_id: c75d4007884b7064ec2f3eb2f404838ecb1c26527baa1295ba5ab3f1363c70e7

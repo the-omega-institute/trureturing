@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Joint moment of ordered real defects under the literal positive semidefinite constraint. -/
+/- UNCOMPILED integration changes; original upstream proofs are preserved. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
 import Mathlib.Analysis.Matrix.PosDef
 
@@ -491,6 +492,27 @@ private theorem tail_to_head_psd (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
       linarith [dn 3, dn 4, dn 5, dn 6, dn 8,
         dord (show (4 : Fin 9) ≤ 5 by decide), dord (show (6 : Fin 9) ≤ 8 by decide)]
 
+-- Shared original flatHead bookkeeping, extracted from large_head_moment.
+-- Both that proof and the w-dependent transfer below consume it.
+private theorem flatHead_facts (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hn : ∀ i, 0 ≤ h i) (ho : Antitone h)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d) :
+    (∑ i, flatHead h d i) = (∑ i, h i) + (d 6 + d 7 + d 8) ∧
+    (∑ i, (flatHead h d i) ^ 2) =
+      (∑ i, (h i) ^ 2) + 2 * h 0 * (d 6 + d 7 + d 8) + (d 6 + d 7 + d 8) ^ 2 ∧
+    (∀ i, 0 ≤ flatHead h d i) ∧ Antitone (flatHead h d) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simp [flatHead, Fin.sum_univ_succ] <;> ring
+  · simp [flatHead, Fin.sum_univ_succ] <;> ring
+  · intro i
+    fin_cases i <;> simp [flatHead] <;>
+      linarith [hn 0, hn 1, hn 2, hn 3, hn 4, dn 6, dn 7, dn 8]
+  · intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num at hij <;> norm_num [flatHead] <;>
+      linarith [ho (show (0 : Fin 5) ≤ 1 by decide), ho (show (1 : Fin 5) ≤ 2 by decide),
+        ho (show (2 : Fin 5) ≤ 3 by decide), ho (show (3 : Fin 5) ≤ 4 by decide),
+        dn 6, dn 7, dn 8]
+
 private theorem large_head_moment (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
     (hn : ∀ i, 0 ≤ h i) (ho : Antitone h)
     (dn : ∀ i, 0 ≤ d i) (dord : Monotone d)
@@ -500,20 +522,9 @@ private theorem large_head_moment (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
   let r := d 6 + d 7 + d 8
   have hr : 0 ≤ r := by dsimp [r]; linarith [dn 6, dn 7, dn 8]
   obtain ⟨hD2, hrD, hD⟩ := ordered_tail_bounds d dn dord
-  have hsum : (∑ i, flatHead h d i) = (∑ i, h i) + r := by
-    simp [flatHead, Fin.sum_univ_succ, r] <;> ring
-  have hsum2 : (∑ i, (flatHead h d i) ^ 2) =
-      (∑ i, (h i) ^ 2) + 2 * h 0 * r + r ^ 2 := by
-    simp [flatHead, Fin.sum_univ_succ, r] <;> ring
-  have hflat_nonneg : ∀ i, 0 ≤ flatHead h d i := by
-    intro i
-    fin_cases i <;> simp [flatHead] <;> linarith [hn 0, hn 1, hn 2, hn 3, hn 4, dn 6, dn 7, dn 8]
-  have hflat_order : Antitone (flatHead h d) := by
-    intro i j hij
-    fin_cases i <;> fin_cases j <;> norm_num at hij <;> norm_num [flatHead] <;>
-      linarith [ho (show (0 : Fin 5) ≤ 1 by decide), ho (show (1 : Fin 5) ≤ 2 by decide),
-        ho (show (2 : Fin 5) ≤ 3 by decide), ho (show (3 : Fin 5) ≤ 4 by decide),
-        dn 6, dn 7, dn 8]
+  obtain ⟨hsum, hsum2, hflat_nonneg, hflat_order⟩ := flatHead_facts h d hn ho dn dord
+  change (∑ i, flatHead h d i) = (∑ i, h i) + r at hsum
+  change (∑ i, (flatHead h d i) ^ 2) = (∑ i, (h i) ^ 2) + 2 * h 0 * r + r ^ 2 at hsum2
   have hflat_mass : (∑ i, flatHead h d i) ≤ 4 := by
     rw [hsum]
     change r ≤ ∑ i, d i at hrD
@@ -740,6 +751,182 @@ theorem actual_psd_flat_tail_middle_energy (w : ℝ) (h : Fin 5 → ℝ)
   simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc,
     Finset.univ_eq_empty, Finset.sum_empty, add_zero]
   nlinarith only [hb]
+
+-- K_w(h,d) is exactly actualK (fun i => w + h i) d.
+-- Its two original row budgets are derived, never added as PSD premises.
+private theorem shifted_actual_defects (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : H h + D d ≤ 4 - 6 * w)
+    (hK : (actualK (fun i => w + h i) d).PosSemidef) :
+    DefectData 1 w h d := by
+  have h111 := hK.dotProduct_mulVec_nonneg (![1, 1, 1] : Fin 3 → ℝ)
+  have h110 := hK.dotProduct_mulVec_nonneg (![1, 1, 0] : Fin 3 → ℝ)
+  rw [actualK_form] at h111 h110
+  norm_num at h111 h110
+  refine ⟨hn, ho, fun i => (hd i).1, dord, fun i => (hd i).2, ?_, ?_, ?_⟩
+  · dsimp [H3, D6]
+    linarith only [h111]
+  · simpa only [mul_one] using hL4
+  · dsimp [D3]
+    linarith only [h110]
+
+-- The w term charges D-r, not D.  The two original ordered-tail
+-- conclusions pay it when w ≤ h0.  No compensation hypothesis is used.
+private theorem shifted_flatHead_energy (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hw : 0 ≤ w) (hn : ∀ i, 0 ≤ h i) (ho : Antitone h)
+    (dn : ∀ i, 0 ≤ d i) (dord : Monotone d) (hlarge : w ≤ h 0)
+    (hK : (actualK (fun i => w + h i) d).PosSemidef) :
+    (actualK (fun i => w + flatHead h d i) 0).PosSemidef ∧
+    E w h d ≤ w * (∑ i, flatHead h d i) + (∑ i, (flatHead h d i) ^ 2) := by
+  have hg_nonneg : ∀ i, 0 ≤ w + h i := fun i => add_nonneg hw (hn i)
+  have hg_order : Antitone (fun i => w + h i) :=
+    fun i j hij => by simpa only [add_comm] using add_le_add_left (ho hij) w
+  have hflatK := tail_to_head_psd (fun i => w + h i) d
+    hg_nonneg hg_order dn dord hK
+  have hid : flatHead (fun i => w + h i) d = fun i => w + flatHead h d i := by
+    ext i
+    fin_cases i <;> simp [flatHead] <;> ring
+  rw [hid] at hflatK
+  refine ⟨hflatK, ?_⟩
+  obtain ⟨hsum, hsum2, _, _⟩ := flatHead_facts h d hn ho dn dord
+  obtain ⟨hD2, _, hD⟩ := ordered_tail_bounds d dn dord
+  let r := d 6 + d 7 + d 8
+  have hr : 0 ≤ r := by dsimp [r]; linarith [dn 6, dn 7, dn 8]
+  have hmass_charge := mul_le_mul_of_nonneg_left hD hw
+  have hhead_charge := mul_nonneg hr (sub_nonneg.mpr hlarge)
+  change (∑ i, (d i) ^ 2) ≤ r ^ 2 at hD2
+  change (∑ i, d i) ≤ 3 * r at hD
+  change w * (∑ i, d i) ≤ w * (3 * r) at hmass_charge
+  change (∑ i, flatHead h d i) = (∑ i, h i) + r at hsum
+  change (∑ i, (flatHead h d i) ^ 2) =
+    (∑ i, (h i) ^ 2) + 2 * h 0 * r + r ^ 2 at hsum2
+  rw [hsum, hsum2]
+  dsimp [E, H, D, H2, D2]
+  nlinarith only [hD2, hmass_charge, hhead_charge]
+
+/-- Nonflat-tail energy on the original middle interval.  All fourteen
+defects remain arbitrary reals with the original ordering, caps, L4 budget,
+and literal shifted PSD matrix.  The small-head and upper-interval branches
+consume the original StructuralCone estimates. -/
+theorem actual_psd_nonflat_middle_energy (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4 - 6 * w)
+    (hw : 1 / 4 ≤ w) (hw1 : w ≤ 1 / 2)
+    (hK : (!![2 * (1 - d 8), -(w + h 0 + d 7), -(w + h 1 + d 5);
+                -(w + h 0 + d 7), 2 * (1 - d 6), -(w + h 2 + d 4);
+                -(w + h 1 + d 5), -(w + h 2 + d 4), 2 * (1 - d 3)] :
+      Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    w * ((∑ i, h i) + (∑ i, d i)) + (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2) ≤
+      if w ≤ (5 - Real.sqrt 17) / 2 then
+        4 - 2 * w - 4 * w ^ 2 + w ^ 3 + w ^ 4
+      else (4 - 6 * w) * (4 - 5 * w) := by
+  change (actualK (fun i => w + h i) d).PosSemidef at hK
+  have hw0 : 0 ≤ w := by linarith
+  have hdata := shifted_actual_defects w h d ho hn dord hd hL4 hK
+  change E w h d ≤ _
+  split_ifs with hrho
+  · by_cases hsmall : h 0 ≤ 1
+    · have he := small_head_energy hdata hw0 hsmall
+      have hp : 0 ≤ w ^ 2 * (2 + w + w ^ 2) :=
+        mul_nonneg (sq_nonneg _) (by nlinarith only [hw0, sq_nonneg w])
+      nlinarith only [he, hp]
+    · have hlarge : 1 ≤ h 0 := le_of_lt (lt_of_not_ge hsmall)
+      obtain ⟨hflatK, henergy⟩ := shifted_flatHead_energy w h d hw0 hn ho
+        (fun i => (hd i).1) dord (by linarith) hK
+      obtain ⟨hsum, _, hflat_nonneg, hflat_order⟩ :=
+        flatHead_facts h d hn ho (fun i => (hd i).1) dord
+      have hrD := (ordered_tail_bounds d (fun i => (hd i).1) dord).2.1
+      have hflat_mass : (∑ i, flatHead h d i) ≤ 4 - 6 * w := by
+        rw [hsum]
+        linarith only [hrD, hL4]
+      have hflat_large : 1 ≤ flatHead h d 0 := by
+        simp only [flatHead, Matrix.cons_val_zero]
+        linarith [hlarge, (hd 6).1, (hd 7).1, (hd 8).1]
+      have he := actual_psd_flat_tail_middle_energy w (flatHead h d)
+        hflat_order hflat_nonneg hflat_mass hflat_large hw hrho
+        (by simpa only [actualK, Pi.zero_apply, sub_zero, mul_one, add_zero] using hflatK)
+      exact henergy.trans he
+  · simpa only [mul_one] using total_energy_estimate (u := 1) hdata hw0
+
+-- Shift ALL FIVE heads.  Their added 5w mass is paid by 4-6w.
+-- This is the live use of the proved 7/2 moment, with no reproof of it.
+private theorem shifted_zero_jump_energy (w : ℝ) (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (hw : 0 ≤ w) (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : H h + D d ≤ 4 - 6 * w)
+    (hK : (actualK (fun i => w + h i) d).PosSemidef) :
+    E w h d ≤ 7 / 2 + (1 / 4 - w) * (H h - D d) + 5 * w / 4 - 5 * w ^ 2 := by
+  have hsum : (∑ i : Fin 5, (w + h i)) = 5 * w + H h := by
+    simp [H, Fin.sum_univ_succ] <;> ring
+  have hsum2 : (∑ i : Fin 5, (w + h i) ^ 2) = H2 h + 2 * w * H h + 5 * w ^ 2 := by
+    simp [H, H2, Fin.sum_univ_succ] <;> ring
+  have hmass : (∑ i : Fin 5, (w + h i)) + (∑ i, d i) ≤ 4 := by
+    rw [hsum]
+    change 5 * w + H h + D d ≤ 4
+    linarith only [hL4, hw]
+  have hm := actual_psd_zero_jump_moment (fun i => w + h i) d
+    (fun i j hij => by simpa only [add_comm] using add_le_add_left (ho hij) w)
+    (fun i => add_nonneg hw (hn i)) dord hd hmass
+    (by simpa only [actualK] using hK)
+  rw [hsum, hsum2] at hm
+  change H2 h + 2 * w * H h + 5 * w ^ 2 + D2 d - (5 * w + H h - D d) / 4 ≤ 7 / 2 at hm
+  dsimp [E]
+  nlinarith only [hm]
+
+/-- The exact small-jump normalized mass/square inequality with the original
+natural rounding, for every N ≥ 56.  The sole PSD premise is literal K_w.
+The proof consumes the existing 7/2 zero-jump theorem through the five-head
+shift, then the original square-completion and rounding suppliers. -/
+theorem actual_psd_small_jump_defect_bound (N : ℕ) (hN : 56 ≤ N) (j w : ℝ)
+    (hj : 6 ≤ j) (hw : 0 ≤ w) (hw1 : w ≤ 1 / 4)
+    (h : Fin 5 → ℝ) (d : Fin 9 → ℝ)
+    (ho : Antitone h) (hn : ∀ i, 0 ≤ h i)
+    (dord : Monotone d) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+    (hL4 : (∑ i, h i) + (∑ i, d i) ≤ 4 - 6 * w)
+    (hK : (!![2 * (1 - d 8), -(w + h 0 + d 7), -(w + h 1 + d 5);
+                -(w + h 0 + d 7), 2 * (1 - d 6), -(w + h 2 + d 4);
+                -(w + h 1 + d 5), -(w + h 2 + d 4), 2 * (1 - d 3)] :
+      Matrix (Fin 3) (Fin 3) ℝ).PosSemidef) :
+    (2 + w) * ((N : ℝ) + w * j + (∑ i, h i) - (∑ i, d i)) - (1 + w) * N +
+      (w * ((∑ i, h i) + (∑ i, d i)) + (∑ i, (h i) ^ 2) + (∑ i, (d i) ^ 2)) ≤
+      target N * ((N : ℝ) + w * j + (∑ i, h i) - (∑ i, d i)) ^ 2 := by
+  change (actualK (fun i => w + h i) d).PosSemidef at hK
+  have hm := shifted_zero_jump_energy w h d hw ho hn dord hd hL4 hK
+  let S : ℝ := (N : ℝ) + w * j + H h - D d
+  let theta : ℝ := commonEnvelope (N : ℝ)
+  have hNr : (56 : ℝ) ≤ N := by exact_mod_cast hN
+  have hB : 0 < 15 * (N : ℝ) - 4 := by linarith
+  have hden : 0 < 80 * (N : ℝ) - 224 := by linarith
+  have ht : 0 < theta := by
+    dsimp [theta, commonEnvelope]
+    exact div_pos (by linarith) (sq_pos_of_pos hB)
+  have hlo : 81 / (80 * (N : ℝ) - 224) ≤ theta := by
+    dsimp [theta, commonEnvelope]
+    apply (div_le_div_iff₀ hden (sq_pos_of_pos hB)).2
+    apply sub_nonneg.mp
+    have hshift : 0 ≤ (N : ℝ) - 56 := by linarith
+    calc
+      _ = 975 * ((N : ℝ) - 56) ^ 2 + 54920 * ((N : ℝ) - 56) + 45296 := by ring
+      _ ≥ 0 := by positivity
+  have hdisc : (9 / 4 : ℝ) ^ 2 ≤ 4 * theta * (5 * (N : ℝ) / 4 - 7 / 2) := by
+    have hh := (div_le_iff₀ hden).mp hlo
+    nlinarith only [hh]
+  have hp : 0 ≤ w * (1 / 4 - w) := mul_nonneg hw (by linarith)
+  have hjp := mul_nonneg hp (sub_nonneg.mpr hj)
+  have hcoarse : (2 + w) * S - (1 + w) * (N : ℝ) + E w h d ≤
+      (9 / 4) * S - (5 * (N : ℝ) / 4 - 7 / 2) := by
+    dsimp [S]
+    nlinarith only [hm, hp, hjp]
+  have hs := square_completion theta (9 / 4) (5 * (N : ℝ) / 4 - 7 / 2) S ht hdisc
+  have hcommon : theta ≤ target N := by
+    simpa only [theta, target, bulkValue, bulkIndex] using
+      common_le_integer_bulk N hN
+  have hfinal := hcoarse.trans (hs.trans
+    (mul_le_mul_of_nonneg_right hcommon (sq_nonneg S)))
+  change (2 + w) * S - (1 + w) * (N : ℝ) + E w h d ≤ target N * S ^ 2
+  exact hfinal
 
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound

@@ -278,8 +278,7 @@ def produce(entry, output, roots):
     entry.environment.update(STRATALINT_INSPECTOR_MODULE_WORK=str(entry.logs / 'module-work.jsonl'),
         STRATALINT_INSPECTOR_ACTIVITY=str(entry.logs / 'native-work.jsonl'),
         STRATALINT_INSPECTOR_PHASES=str(entry.logs / 'native-phases.jsonl'))
-    targets = ['+' + row['module'] + ':report' for row in scope['modules']]
-    entry.phase('report', entry.guarded('build', *targets))
+    entry.phase('report', entry.guarded('build', ':moduleReports'))
     if capture(entry.root, scope, utilities) != before:
         raise ValueError('scoped inputs changed during report production')
     aggregate = entry.temporary / 'scoped-report.zip'

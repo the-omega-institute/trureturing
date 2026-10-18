@@ -55,7 +55,7 @@ private theorem shift_perm_pow_apply (n : ℕ) (i : ZMod M) :
       simp only [shiftPerm, Equiv.subRight_apply, Nat.cast_succ]
       ring
 
-private theorem shift_matrix_pow_apply (n : ℕ) (r s : ZMod M) :
+theorem shift_matrix_pow_apply (n : ℕ) (r s : ZMod M) :
     (shiftMatrix M ^ n) r s =
       if r - s = (n : ZMod M) then 1 else 0 := by
   have hPower : shiftMatrix M ^ n = (shiftPerm M ^ n).permMatrix ℂ := by

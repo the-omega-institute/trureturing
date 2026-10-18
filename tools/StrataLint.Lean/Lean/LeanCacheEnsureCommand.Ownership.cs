@@ -71,7 +71,7 @@ internal static partial class LeanCacheEnsureCommand
             removePartial: null,
             continueOnCacheGetFailure: true,
             stateProbe,
-            out var cacheState, donorRepository);
+            out var cacheState, donorRepository, refreshWarmArchive: false);
         if (!ensured.Success) return ensured;
 
         var receipt = ensured.Output;

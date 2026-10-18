@@ -460,7 +460,7 @@ theorem periodic_correlation_integrable_le
         periodic_shift_energy_eq, windowEnergy]
     _ = windowEnergy d t u := by ring
 
-private theorem zero_extension_memLp
+theorem zero_extension_memLp
     (d t : ℝ) (u : ℝ → ℂ) (hu : MemLp u 2 (windowMeasure d t)) :
     MemLp (zeroExtension d t u) 2 volume := by
   exact (memLp_indicator_iff_restrict (μ := volume)

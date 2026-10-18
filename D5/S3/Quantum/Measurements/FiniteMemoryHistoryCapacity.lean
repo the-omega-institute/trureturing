@@ -40,7 +40,7 @@ lemma zero_trace_mul_eq_zero {d : Nat}
       simp only [mul_assoc]
     _ = 0 := by rw [hAB, mul_zero, zero_mul]
 
-private lemma zero_trace_support {d : Nat}
+lemma zero_trace_support {d : Nat}
     (E rho : Matrix (Fin d) (Fin d) ℂ)
     (hE : E.PosSemidef) (hRho : rho.PosSemidef)
     (hTrace : (E * rho).trace = 0) :

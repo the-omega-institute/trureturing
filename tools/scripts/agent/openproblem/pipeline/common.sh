@@ -95,7 +95,7 @@ def result_path(flight):
         die('invalid flight id')
     candidates = []
     for p in (pathlib.Path(os.environ['SSHX_HOME']) / flight).glob('attempt-*/result.json'):
-        m = re.fullmatch('attempt-(\d+)', p.parent.name)
+        m = re.fullmatch(r'attempt-(\d+)', p.parent.name)
         if m and p.is_file():
             candidates.append((int(m[1]), str(p)))
     return max(candidates, default=(0, 'NO_RESULT'))[1]

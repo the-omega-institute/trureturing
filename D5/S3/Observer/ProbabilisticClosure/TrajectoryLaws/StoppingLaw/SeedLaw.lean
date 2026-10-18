@@ -390,7 +390,7 @@ private theorem measurable_tree_observation (j : Bool) :
 def selectorJoint {U : Type u} (j : Bool) (T : U → ReadTree)
     (z : SourcePoint × U) : U × Observation := (z.2, observation j z.1.1 (T z.2) z.1.2)
 
-private theorem measurable_selectorJoint {U : Type u} [MeasurableSpace U]
+theorem measurable_selectorJoint {U : Type u} [MeasurableSpace U]
     (j : Bool) (T : U → ReadTree) (hT : Measurable T) : Measurable (selectorJoint j T) :=
   measurable_snd.prodMk ((measurable_tree_observation j).comp
     (measurable_fst.prodMk (hT.comp measurable_snd)))
@@ -448,7 +448,7 @@ private theorem aemeasurable_joint (Q : RawRule U) (ν : Measure U) (β : Bias)
     ((measurable_tree_observation j).comp_aemeasurable hp)
 
 /-- No change of seed space or measure occurs when a tree selector is realized. -/
-private theorem fullLaw_realize (T : U → ReadTree) (k : ℕ) (hT : ∀ u, (T u).height ≤ k)
+theorem fullLaw_realize (T : U → ReadTree) (k : ℕ) (hT : ∀ u, (T u).height ≤ k)
     (β : Bias) (j : Bool) (ν : Measure U) :
     (realize T).fullLaw β j ν = ((sourceLaw β).prod ν).map (selectorJoint j T) := by
   have hc := realize_cap T k hT
@@ -824,7 +824,7 @@ def CompletedWithinActualRadius (Q : CompletedRule U) (j : Bool) (R : ℕ) : Pro
     (Q.atSource s).readPrefix u (visible s.1 s.2) n = some r →
       ∀ a ∈ r, |a.1 - j.toInt| ≤ (R : ℤ)
 
-private theorem completed_joint_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
+theorem completed_joint_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
     (j : Bool) (p : SourcePoint × U) :
     Q.completedJoint j p = (p.2, observation j p.1.1 (Q.normalize k p) p.1.2) := by
   obtain ⟨_, ho, hn⟩ := Q.completed_normalization_execution k hc p
