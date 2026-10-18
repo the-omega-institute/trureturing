@@ -423,3 +423,99 @@ privileged among sequences with the same divergent uniqueness sum, and
 no computational advantage is asserted. No all-size matrix positivity,
 full physical $K_0$ positivity, signed Robin estimate or Lean verification
 is supplied.
+
+## Square-variable concavity controls reflected physical entries
+
+For the complete original physical kernel (W2), reuse the classical
+square-variable concavity stated in Csordas,
+[*Fourier transforms of positive definite kernels and the Riemann
+xi-function*, arXiv:1309.0055v2](https://arxiv.org/abs/1309.0055v2),
+Theorem 4.2(b), PDF p.11. The theorem attributes this concavity to
+Csordas--Varga, *Moment inequalities and the Riemann hypothesis*,
+Theorem 2.1. With $K_C$ denoting Csordas' kernel, the actual theta
+normalization is $\Phi(x)=2K_C(x/2)$, as in the
+[fixed-source correspondence](../Zeros/planatsole2026secondlevel.md).
+Consequently
+
+$$
+h(r)=\log\Phi(\sqrt r)=\log2+\log K_C(\sqrt{r/4})
+$$
+
+is strictly concave for $r>0$ and continuous at zero. This uses the
+first-level classical result, without an all-order derivative hypothesis
+or the newer second-level concavity claim. The following is a paper
+application to the original physical kernel, with no literature-priority
+or Lean/kernel-verification claim.
+
+For $0\le v<1/2$ and $a,b\ge0$, the actual entries satisfy
+
+$$
+\boxed{0<K_v(a,-b)\le K_v(a,b),}
+\tag{W12}
+$$
+
+with strict second inequality when $ab>0$, and equality when $ab=0$.
+In particular this comparison preserves the full theta series and the
+infinite integral in (W2).
+
+To obtain it, put $p=(a+b)/2$, $d=|a-b|/2$ and $r_0=p^2+d^2$.
+For $c\in\{d,p\}$ and $r\ge r_0$, define
+
+$$
+\begin{aligned}
+k_c(r)&=2c\sqrt{r-c^2},\\
+I_c(r)&=\cosh(2v\sqrt{r-c^2})
+ \exp\{h(r+k_c(r))+h(r-k_c(r))\}.
+\end{aligned}
+$$
+
+The changes of variable $r=y^2+d^2$ and $r=y^2+p^2$ give, respectively,
+
+$$
+K_v(a,b)=\frac14\int_{r_0}^{\infty}I_d(r)\,dr,
+\qquad
+K_v(a,-b)=\frac14\int_{r_0}^{\infty}I_p(r)\,dr.
+\tag{W13}
+$$
+
+Evenness of $\Phi$ handles the possible negative argument $y-p$.
+The square-variable arguments stay nonnegative since $k_c(r)\le r$.
+Moreover,
+
+$$
+k_p(r)^2-k_d(r)^2=4ab(r-r_0)\ge0.
+$$
+
+For concave $h$, the symmetric sum $h(r+k)+h(r-k)$ decreases as
+$k$ increases in $[0,r]$. Its endpoint values follow by continuity.
+Also $\sqrt{r-p^2}\le\sqrt{r-d^2}$, so the $I_p$ cosh factor is
+no larger. Hence $I_p\le I_d$. Strict concavity gives strict inequality
+when $ab>0$ and $r>r_0$, including at $v=0$. Integrating proves (W12).
+
+This controls an actual class of smooth original tests. Let a nonzero
+real $f\in C_c^\infty(\mathbb R)$ be odd and suppose
+$g=f|_{(0,\infty)}\ge0$. Symmetry and (W12) give
+
+$$
+\boxed{\begin{aligned}
+\iint_{\mathbb R^2}f(a)K_v(a,b)f(b)\,da\,db
+&=2\iint_{(0,\infty)^2}g(a)
+ [K_v(a,b)-K_v(a,-b)]g(b)\,da\,db\\
+&>0.
+\end{aligned}}
+\tag{W14}
+$$
+
+A nonzero smooth nonnegative $g$ is positive on an open set, where
+the bracket is strictly positive. No restriction on its compact support
+size or truncation of the physical kernel is imposed.
+For $a>0$, the two-point Gram matrix on $\{a,-a\}$ also has strictly
+positive eigenvalues $K_v(a,a)\pm K_v(a,-a)$. At $a=0$ the points
+coincide and only positive semidefiniteness is asserted.
+
+The tests in (W14) form a sign-constrained cone, not the entire linear
+odd subspace. Pointwise positivity of the odd-parity difference does
+not control arbitrary signed restrictions or their cross terms.
+No all-size Gram positivity, full $K_0$ positivity, Green-trace
+Schur domination, signed Robin upper estimate or RH proof follows
+from (W12)--(W14) alone. Those original targets remain unproved.
