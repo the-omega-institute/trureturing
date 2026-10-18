@@ -12,6 +12,9 @@ import Mathlib.Algebra.Polynomial.Reverse
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.LinearCombination
 
 /-! Polynomial, matrix and collinearity identities for the inverse-square conjecture. -/
 
@@ -135,10 +138,9 @@ private theorem core_trace (n : ℕ) (b : Fin n → ℂ) :
   simp only [Matrix.trace, Matrix.diag_apply, Matrix.diagonal_apply_eq, Matrix.diagonal_mul,
     Matrix.mul_diagonal, Matrix.of_apply, J, mul_one, one_mul, Matrix.mul_apply]
   simp only [Matrix.diagonal_apply, mul_ite, ite_mul, mul_zero, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-  trace_state
-  simp_rw [← Finset.sum_mul]
-  rw [hnorm, hnorm, hnorm, hnorm']
+    Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  simp_rw [← Finset.mul_sum, ← Finset.sum_mul]
+  rw [hnorm, hnorm']
   push_cast
   ring
 
@@ -189,7 +191,7 @@ private theorem eval_charpoly_B {n : ℕ} (b : Fin n → ℂ) (t : ℂ)
 private theorem reverse_linear (w : ℂ) :
     (X - C w : ℂ[X]).reverse = 1 - C w * X := by
   rw [sub_eq_add_neg, ← C_neg, Polynomial.reverse_add_C]
-  simp [Polynomial.reverse]
+  simp [Polynomial.reverse, sub_eq_add_neg]
 
 private theorem roots_reverse (q : ℂ[X]) (hq0 : q.eval 0 ≠ 0) :
     q.reverse.roots = q.roots.map (fun w => w⁻¹) := by
@@ -293,12 +295,14 @@ private theorem charpoly_B {n : ℕ} (b : Fin n → ℂ) :
   apply (Set.infinite_univ.sdiff (Set.finite_range b)).mono
   intro t ht
   have h := eval_charpoly_B b t (fun i hi => ht.2 ⟨i, hi.symm⟩)
-  simpa using h
+  simpa [Polynomial.eval_prod, Polynomial.eval_finsetSum] using h
 
 private theorem reversed_derivative {n : ℕ} (z : Fin n → ℂ) (hz : ∀ j, z j ≠ 0) :
     (P z).derivative.reverse = C (∏ j, -z j) * (B (fun j => (z j)⁻¹)).charpoly := by
+  have hprod := reflect_product (fun j => (z j)⁻¹) (Finset.univ : Finset (Fin n))
+  simp only [Finset.card_univ, Fintype.card_fin] at hprod
   rw [Polynomial.reverse, derivative_degree, normalized_derivative z hz,
-    Polynomial.reflect_C_mul, Polynomial.reflect_sub, reflect_product, charpoly_B]
+    Polynomial.reflect_C_mul, Polynomial.reflect_sub, hprod, charpoly_B]
   congr 1
   have hsum (s : Finset (Fin n)) (p : Fin n → ℂ[X]) :
       Polynomial.reflect n (∑ i ∈ s, p i) = ∑ i ∈ s, Polynomial.reflect n (p i) := by
@@ -306,6 +310,7 @@ private theorem reversed_derivative {n : ℕ} (z : Fin n → ℂ) (hz : ∀ j, z
     | empty => simp
     | @insert i s hi ih => simp [Finset.sum_insert hi, Polynomial.reflect_add, ih]
   rw [hsum]
+  congr 1
   apply Finset.sum_congr rfl
   intro i _
   rw [mul_assoc, Polynomial.reflect_C_mul]
@@ -323,7 +328,7 @@ private theorem roots_derivative {n : ℕ} (z : Fin n → ℂ) (hz : ∀ j, z j 
   have hc : (∏ j, -z j) ≠ 0 := Finset.prod_ne_zero_iff.mpr (fun j _ => neg_ne_zero.mpr (hz j))
   have hq0 : (P z).derivative.eval 0 ≠ 0 := by
     rw [normalized_derivative z hz]
-    simpa using hc
+    simpa [Polynomial.eval_prod, Polynomial.eval_finsetSum] using hc
   rw [← roots_reverse _ hq0, reversed_derivative z hz, Polynomial.roots_C_mul _ hc]
 
 private theorem sandwich_reduction {n : ℕ} (b : Fin n → ℂ)
@@ -392,8 +397,12 @@ private theorem spectral_inequality (n : ℕ) (b : Fin n → ℂ) :
       (n : ℝ) * (s + 1)⁻¹ * (-(s * (s + 1))⁻¹) = 0 := by
     field_simp
     nlinarith [hs]
-  have hc : 2 * c + (n : ℂ) * c ^ 2 = 1 := by exact_mod_cast hcr
-  have hd : c + d + (n : ℂ) * c * d = 0 := by exact_mod_cast hdr
+  have hc : 2 * c + (n : ℂ) * c ^ 2 = 1 := by
+    dsimp only [c]
+    exact_mod_cast hcr
+  have hd : c + d + (n : ℂ) * c * d = 0 := by
+    dsimp only [c, d]
+    exact_mod_cast hdr
   let R : Matrix (Fin n) (Fin n) ℂ := 1 + c • J n
   let S : Matrix (Fin n) (Fin n) ℂ := 1 + d • J n
   have hR : Rᴴ = R := by simp [R, Matrix.conjTranspose_smul, J_conjTranspose, c]

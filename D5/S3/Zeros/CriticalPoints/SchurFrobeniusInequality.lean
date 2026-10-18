@@ -12,11 +12,7 @@ import Mathlib.Analysis.Normed.Module.Normalize
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.LinearCombination
 
 /-! Unitary reduction and the sum of squared moduli of the characteristic roots. -/
 
