@@ -29,12 +29,12 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ) (W : Matrix (Fin n) (Fin n) ℂ), IsUnit W.det →
+  Law R := ∀ {n : ℕ} (W : Matrix (Fin n) (Fin n) ℂ), IsUnit W.det →
     ∀ (t : ℝ), 0 < t → (R.readout () ⟨n, W⟩ t - 1).PosSemidef
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := h 1 1 (by simp) 1 (by norm_num)
+  have hh := @h 1 1 (by simp) 1 (by norm_num)
   dsimp only [signature, Reg.Support.SingleDependentReadout.signature, rejected, realize] at hh
   simp only [zero_sub] at hh
   change Matrix.PosSemidef (-(1 : Matrix (Fin 1) (Fin 1) ℂ)) at hh
@@ -82,7 +82,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Schatten.ExpandingAverage
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "fn", "arg"]
       stateBinder := 3
