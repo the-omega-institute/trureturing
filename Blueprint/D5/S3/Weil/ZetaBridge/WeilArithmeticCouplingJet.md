@@ -184,7 +184,7 @@ For every natural c with hc:2<=c there exists one real K>0, depending only on c,
 
 Write L=log(c)>0, a=2*pi/L>0, w=a*m, C=exp(-L/2)/(1-exp(-2*L)), and U=2*(cosh(L/2)-1)/a. The proof chooses K=U+(1+C)/a before introducing m. The half-shifted Cauchy majorant has sum at least pi/4-1/(4*w), by left-endpoint integral comparison, the exact finite arctan substitution and its pi/2 endpoint limit. Mathlib's arctan_le_self bounds the initial shift error. The removed nonnegative exponential correction is truly summable and at most exp(-L/2)/(w*(1-exp(-2*L))), by a positive geometric majorant. Subtraction uses both summability hypotheses. Combining that lower bound with the existing smooth_mass_bounds upper estimate proves the absolute bound.
 
-Native Lean4.35 validation accepted the exact theorem with only Classical.choice, Quot.sound and propext. The D5 and full-law Reg builds exited 0, and the combined scoped report records declared_validated with no diagnostic for this binding. The owning Reg retains the complete existential/forall law and uses the existing private actual weight-dependence helper. The current producer accepted SourceSelection and its scoped coordinates under the existential; the candidate's linked issue #18940 is not a remaining gap for this binding in this report. Native validation and canonical delivery/CI acceptance are separate evidence boundaries. This fixed-c asymptotic establishes no uniform tail or RH theorem.
+For each fixed c at least 2, the constant K is chosen before m. The estimate holds for every positive natural m, including m=1. It gives no constant uniform in c and by itself establishes neither a coefficient-uniform tail bound nor RH.
 
 **Theorem 1.15 (The exact native smooth and prime split).**
 

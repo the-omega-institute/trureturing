@@ -289,18 +289,10 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                             + "hypotheses. Combining that lower bound with the existing "
                             + "smooth_mass_bounds upper estimate proves the absolute bound.")),
                         Paragraph(Text(
-                            "Native Lean4.35 validation accepted the exact theorem with "
-                            + "only Classical.choice, Quot.sound and propext. The D5 and "
-                            + "full-law Reg builds exited 0, and the combined scoped report "
-                            + "records declared_validated with no diagnostic for this binding. "
-                            + "The owning Reg retains the complete existential/forall law "
-                            + "and uses the existing private actual weight-dependence helper. "
-                            + "The current producer accepted SourceSelection and its scoped "
-                            + "coordinates under the existential; the candidate's linked "
-                            + "issue #18940 is not a remaining gap for this binding in this "
-                            + "report. Native validation and canonical delivery/CI acceptance "
-                            + "are separate evidence boundaries. This fixed-c asymptotic establishes no uniform "
-                            + "tail or RH theorem."))),
+                            "For each fixed c at least 2, the constant K is chosen before m. "
+                            + "The estimate holds for every positive natural m, including m=1. "
+                            + "It gives no constant uniform in c and by itself establishes "
+                            + "neither a coefficient-uniform tail bound nor RH."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("arithmetic-symbol-smooth-split"),
