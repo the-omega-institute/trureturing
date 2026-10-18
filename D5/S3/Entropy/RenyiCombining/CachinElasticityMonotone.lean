@@ -26,12 +26,12 @@ noncomputable def A (n r : ℝ) : ℝ := n * r ^ (n - 1) * (1 - r ^ (2 : ℕ)) /
 noncomputable def B (n r : ℝ) : ℝ := ((1 - r) / (1 + r)) * T n r
 noncomputable def F (n r : ℝ) : ℝ := (A n r - B n r) / (1 + B n r)
 
-private noncomputable def J (n z : ℝ) : ℝ :=
+noncomputable def J (n z : ℝ) : ℝ :=
   (n - 1) - (n + 1) * z + (n + 1) * z ^ n - (n - 1) * z ^ (n + 1)
-private noncomputable def J₁ (n z : ℝ) : ℝ :=
+noncomputable def J₁ (n z : ℝ) : ℝ :=
   (n + 1) * (-1 + n * z ^ (n - 1) - (n - 1) * z ^ n)
 
-private theorem J_hasDerivAt (n z : ℝ) (hz : 0 < z) :
+theorem J_hasDerivAt (n z : ℝ) (hz : 0 < z) :
     HasDerivAt (J n) (J₁ n z) z := by
   have hn := Real.hasDerivAt_rpow_const (p := n) (Or.inl hz.ne')
   have hn1 := Real.hasDerivAt_rpow_const (p := n + 1) (Or.inl hz.ne')
@@ -39,7 +39,7 @@ private theorem J_hasDerivAt (n z : ℝ) (hz : 0 < z) :
     (hn.const_mul (n + 1))).sub (hn1.const_mul (n - 1)) using 1 <;>
     dsimp [J, J₁] <;> congr 1 <;> ring_nf
 
-private theorem J₁_hasDerivAt (n z : ℝ) (hz : 0 < z) :
+theorem J₁_hasDerivAt (n z : ℝ) (hz : 0 < z) :
     HasDerivAt (J₁ n) (n * (n ^ (2 : ℕ) - 1) * z ^ (n - 2) * (1 - z)) z := by
   have hn := Real.hasDerivAt_rpow_const (p := n) (Or.inl hz.ne')
   have hn1 := Real.hasDerivAt_rpow_const (p := n - 1) (Or.inl hz.ne')
@@ -53,7 +53,7 @@ private theorem J₁_hasDerivAt (n z : ℝ) (hz : 0 < z) :
   · rw [show n - 1 - 1 = n - 2 by ring, he]
     ring
 
-private theorem J_nonneg (n z : ℝ) (hn : 1 ≤ n) (hz : z ∈ Ioo 0 1) :
+theorem J_nonneg (n z : ℝ) (hn : 0 ≤ n * (n ^ (2 : ℕ) - 1)) (hz : z ∈ Ioo 0 1) :
     0 ≤ J n z := by
   have hder₁ : ∀ x ∈ Icc z 1, HasDerivAt (J₁ n)
       (n * (n ^ (2 : ℕ) - 1) * x ^ (n - 2) * (1 - x)) x := by
@@ -66,7 +66,7 @@ private theorem J_nonneg (n z : ℝ) (hn : 1 ≤ n) (hz : z ∈ Ioo 0 1) :
       (fun x hx => by
         rw [(hder₁ x (interior_subset hx)).deriv]
         have hx' := interior_subset hx
-        have hnn : 0 ≤ n * (n ^ (2 : ℕ) - 1) := by nlinarith
+        have hnn : 0 ≤ n * (n ^ (2 : ℕ) - 1) := hn
         exact mul_nonneg (mul_nonneg hnn (Real.rpow_nonneg (le_of_lt (hz.1.trans_le hx'.1)) _))
           (sub_nonneg.mpr hx'.2))
   have hj₁ : ∀ x ∈ Icc z 1, J₁ n x ≤ 0 := by
@@ -119,10 +119,16 @@ private theorem A_pos (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) : 0 < A n 
 private theorem B_pos (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) : 0 < B n r := by
   exact mul_pos (div_pos (sub_pos.mpr hr.2) (by linarith [hr.1])) (T_pos n r hn hr)
 
-private theorem A_hasDerivAt (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) :
+theorem A_hasDerivAt (n r : ℝ) (hn : n ≠ 0) (hr : r ∈ Ioo 0 1) :
     HasDerivAt (A n) (n * r ^ (n - 2) * J n (r ^ (2 : ℕ)) /
       (1 - r ^ (2 * n)) ^ (2 : ℕ)) r := by
-  have hlt := Real.rpow_lt_one hr.1.le hr.2 (by linarith : 0 < 2 * n)
+  have hne : 1 - r ^ (2 * n) ≠ 0 := by
+    rcases lt_or_gt_of_ne hn with hn | hn
+    · have hlt : 1 < r ^ (2 * n) := by
+        have h := Real.rpow_lt_rpow_of_exponent_gt hr.1 hr.2 (by linarith : 2 * n < 0)
+        simpa using h
+      exact sub_ne_zero.mpr (ne_of_lt hlt)
+    · exact sub_ne_zero.mpr (ne_of_gt (Real.rpow_lt_one hr.1.le hr.2 (by linarith)))
   have hd := Real.hasDerivAt_rpow_const (p := n - 1) (Or.inl hr.1.ne')
   have hd2 := Real.hasDerivAt_rpow_const (p := 2 * n) (Or.inl hr.1.ne')
   have he₁ : r ^ (n - 1) = r ^ n / r := by
@@ -136,19 +142,19 @@ private theorem A_hasDerivAt (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) :
   have he₅ : (r ^ (2 : ℕ)) ^ (n + 1) = r ^ (2 * n) * r ^ (2 : ℕ) := by
     rw [Real.rpow_add (sq_pos_of_pos hr.1), he₄, Real.rpow_one]
   have hraw := ((hd.const_mul n).mul ((hasDerivAt_const r 1).sub (hasDerivAt_pow 2 r))).div
-    ((hasDerivAt_const r 1).sub hd2) (sub_ne_zero.mpr (ne_of_gt hlt))
+    ((hasDerivAt_const r 1).sub hd2) hne
   convert hraw using 1
   · rfl
   · dsimp [J]
     rw [show n - 1 - 1 = n - 2 by ring, he₁, he₂, he₃, he₄, he₅]
-    field_simp [hr.1.ne', sub_ne_zero.mpr (ne_of_gt hlt)]
+    field_simp [hr.1.ne', hne]
     <;> ring
 
-private noncomputable def B₁ (n r : ℝ) : ℝ :=
+noncomputable def B₁ (n r : ℝ) : ℝ :=
   -2 * T n r / (1 + r) ^ (2 : ℕ) -
     2 * n * ((1 - r) / (1 + r)) * r ^ (n - 1) / (1 + r ^ n) ^ (2 : ℕ)
 
-private theorem B_hasDerivAt (n r : ℝ) (hr : r ∈ Ioo 0 1) :
+theorem B_hasDerivAt (n r : ℝ) (hr : r ∈ Ioo 0 1) :
     HasDerivAt (B n) (B₁ n r) r := by
   have hne : 1 + r ≠ 0 := by linarith [hr.1]
   have hd := (((hasDerivAt_const r 1).sub (hasDerivAt_id r)).div
@@ -174,22 +180,22 @@ private theorem B₁_neg (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) :
   dsimp [B₁]
   linarith
 
-private noncomputable def A₁ (n r : ℝ) : ℝ :=
+noncomputable def A₁ (n r : ℝ) : ℝ :=
   n * r ^ (n - 2) * J n (r ^ (2 : ℕ)) / (1 - r ^ (2 * n)) ^ (2 : ℕ)
 
 private theorem A₁_nonneg (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) :
     0 ≤ A₁ n r := by
   have hr₂ : r ^ (2 : ℕ) ∈ Ioo (0 : ℝ) 1 := ⟨sq_pos_of_pos hr.1, by nlinarith [hr.1, hr.2]⟩
   exact div_nonneg (mul_nonneg (mul_nonneg (by linarith) (Real.rpow_nonneg hr.1.le _))
-    (J_nonneg n _ hn hr₂)) (sq_nonneg _)
+    (J_nonneg n _ (by nlinarith) hr₂)) (sq_nonneg _)
 
-private noncomputable def F₁ (n r : ℝ) : ℝ :=
+noncomputable def F₁ (n r : ℝ) : ℝ :=
   A₁ n r / (1 + B n r) - (1 + A n r) * B₁ n r / (1 + B n r) ^ (2 : ℕ)
 
-private theorem F_hasDerivAt (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) :
+theorem F_hasDerivAt (n r : ℝ) (hn : n ≠ 0) (hr : r ∈ Ioo 0 1)
+    (hB : 0 < 1 + B n r) :
     HasDerivAt (F n) (F₁ n r) r := by
-  have hB := B_pos n r hn hr
-  have hne : 1 + B n r ≠ 0 := by linarith
+  have hne : 1 + B n r ≠ 0 := ne_of_gt hB
   have hdA : HasDerivAt (A n) (A₁ n r) r := A_hasDerivAt n r hn hr
   convert (hdA.sub (B_hasDerivAt n r hr)).div
     ((hasDerivAt_const r 1).add (B_hasDerivAt n r hr)) hne using 1
@@ -213,10 +219,10 @@ private theorem F₁_pos (n r : ℝ) (hn : 1 ≤ n) (hr : r ∈ Ioo 0 1) :
 
 theorem monotoneOn_F (n : ℝ) (hn : 1 ≤ n) : MonotoneOn (F n) (Ioo 0 1) := by
   apply (strictMonoOn_of_deriv_pos (convex_Ioo _ _)
-    (fun r hr => (F_hasDerivAt n r hn hr).continuousAt.continuousWithinAt) _).monotoneOn
+    (fun r hr => (F_hasDerivAt n r (by linarith) hr (by have h := B_pos n r hn hr; linarith)).continuousAt.continuousWithinAt) _).monotoneOn
   intro r hr
   have hr' : r ∈ Ioo (0 : ℝ) 1 := interior_subset hr
-  rw [(F_hasDerivAt n r hn hr').deriv]
+  rw [(F_hasDerivAt n r (by linarith) hr' (by have h := B_pos n r hn hr'; linarith)).deriv]
   exact F₁_pos n r hn hr'
 
 end D5.S3.Entropy.RenyiCombining.CachinElasticityMonotone
