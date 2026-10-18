@@ -3290,3 +3290,298 @@ Theorem 113.4 includes the exceptional locus left by Theorem 112.4 through a dir
 Theorem 113.2 applies to every opposite rank but leaves the all-rank-two projection cases at other ranks unresolved. Neither class of Corollary 113.5 is excluded here. The representative conclusion does not preserve the ranks or local minimality of an arbitrary given leaking optimizer; it is an existence assertion after the exact physical reduction and rank descent. The unrestricted global interval remains $[\sqrt3-3/2,1/4]$, and the quarter-optimum question remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 114. Original-fibre stress positivity and two-fibre rank saturation
+
+### 114.1. Original domain and the common curved quadratic
+
+Let the four original fibres have two coordinates each. Write $\mathcal E$ for the positive semidefinite Hermitian $8\times8$ matrices whose four diagonal fibre blocks are $I_2$. The calibrated channels have Stinespring records
+
+$$
+ |f,i\rangle\longmapsto |f\rangle\otimes a_{fi},
+ \qquad
+ |f,i\rangle\longmapsto |f\rangle\otimes b_{fi},
+ \qquad G,H\in\mathcal E.
+ \tag{114.1}
+$$
+
+The logical input is encoded as $|f,i\rangle\mapsto|f,i\rangle\otimes|f,i\rangle$, and the output as $|f\rangle\mapsto|f\rangle\otimes|f\rangle$. With the target coefficient matrix $T_{ff}=I_2$ and $T_{fg}=J_2/2$ for $f\ne g$, the original unhalved diamond error, allowing arbitrary references, equals
+
+$$
+ F(G,H)=\max\left\{2\operatorname{Tr}[(T-G\odot H)W]:
+ \rho\ge0,\quad \rho=\bigoplus_f\rho_f,\quad
+ \operatorname{Tr}\rho=1,\quad0\le W\le\rho\right\}.
+ \tag{114.2}
+$$
+
+Throughout the exclusion arguments, $(G,H)$ is assumed to be a local minimum of $F$ on the full domain $\mathcal E\times\mathcal E$, including competitors of different ranks, and
+
+$$
+ \operatorname{rank}G=7,\qquad
+ \ker G=\mathbb C a,\qquad a_i\ne0\ \text{for every }i,
+ \qquad 0<F(G,H)<\tfrac12.
+ \tag{114.3}
+$$
+
+The common-stress results of [RT III §§92,95,98](ARITHMETIC_HOLOGRAPHIC_RT_III.md#98-curved-common-stress-tests-and-finite-principal-quotients), in the form used in §113.1, give
+
+$$
+ \begin{aligned}
+ P_A&=\alpha aa^*,&
+ P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a)\ge0,\\
+ \alpha&>0,&R&\ge0,\quad R_{ii}=1,\quad
+ G=H\odot\bar R,\quad PH=0.
+ \end{aligned}
+ \tag{114.4}
+$$
+
+All cross-fibre entries of $G,H,R,P$ are nonzero: the matrix-unit test gives $|1/2-G_{ij}H_{ij}|\le F(G,H)<1/2$. Also $P_{ii}=\alpha|a_i|^2>0$.
+
+Let $h=\operatorname{rank}H$, let $N$ be the orthogonal projection onto the entire kernel of $H$, and choose a full-row-rank matrix $U$ with $`\operatorname{range}U^*=\ker H`$. The same normalized stress gives one nonnegative real quadratic on the whole curved tangent space:
+
+$$
+ \begin{aligned}
+ \mathcal T_H&=\{D=D^*:D_{ff}=0,\ NDN=0\},
+ &D_A&=-\bar R\odot D,\\
+ Q(D)&=-\sum_{f(i)\ne f(j)}
+      \frac{\bar P_{ij}D_{ij}^{\,2}}{H_{ij}}
+      +\alpha a^*D_AG^+D_Aa+\operatorname{Tr}(PDH^+D)
+      \ge0.
+ \end{aligned}
+ \tag{114.5}
+$$
+
+The sum is ordered and uses complex squares. The superscript $+$ denotes the Moore–Penrose inverse. The common-witness positive-scaling argument in the cited result fixes the same $P$ for every direction in (114.5); the nonnegativity is not obtained by choosing a different norming witness for each direction.
+
+### 114.2. Partition stars and oriented normal matrices
+
+**Lemma 114.1 (original partition stars).** Under (114.3)–(114.5), partition the coordinates into complementary unions $A,B$ of original fibres. Suppose $n$ is supported on $A$, $m$ is supported on $B$, $Pn=Pm=0$, and at least one of $n,m$ belongs to $\operatorname{range}H$. Then the matrix
+
+$$
+ Z(n,m)_{ij}=
+ \begin{cases}
+ P_{ij}\bar n_i m_j/\bar H_{ij},&i\in A,\ j\in B,\\
+ 0,&\text{otherwise}
+ \end{cases}
+ \tag{114.6}
+$$
+
+satisfies $HZ=ZH=0$. In particular its columns belong to $\ker H\cap\mathbb C^A$ and the columns of $`Z^*`$ belong to $\ker H\cap\mathbb C^B$.
+
+**Proof.** For every $z\in\mathbb C$, put
+
+$$
+ S(z)=z\,nm^*+\bar z\,mn^*.
+ \tag{114.7}
+$$
+
+The disjoint unions of fibres give $S(z)_{ff}=0$. Since one of $Nn,Nm$ is zero, $NS(z)N=0$. Also $S(z)P=PS(z)=0$. The exact product-cancellation identity is
+
+$$
+ \bigl(D_A(S(z))a\bigr)_i
+   =-\frac{(S(z)P)_{ii}}{\alpha\bar a_i}=0.
+ \tag{114.8}
+$$
+
+Both nonnegative curvature costs in (114.5) therefore vanish, as do their real polarizations against every $D\in\mathcal T_H$. The mixed term on (114.7) has the form $-2\operatorname{Re}(z^2c)$. Nonnegativity for every complex $z$ forces $c=0$. Thus $S(1)$ and $S(i)$ are radical vectors of the same nonnegative quadratic on the whole space $\mathcal T_H$.
+
+For either such $S$, define the Hermitian matrix
+
+$$
+ \mathcal A(S)_{ij}
+   =\frac{P_{ij}\bar S_{ij}}{\bar H_{ij}}\quad(f(i)\ne f(j)),
+ \qquad \mathcal A(S)_{ff}=0.
+ \tag{114.9}
+$$
+
+Its negative real Hilbert–Schmidt pairing with $D$ is the mixed-term polarization. Hence it annihilates $\mathcal T_H$. The normal space of the intersection of the two linear kernels defining $\mathcal T_H$ is the sum of their normal spaces, so
+
+$$
+ \mathcal A(S(1))=\Lambda_1+U^*Y_1U,
+ \qquad
+ \mathcal A(S(i))=\Lambda_i+U^*Y_iU,
+ \tag{114.10}
+$$
+
+where each $\Lambda$ is original-fibre-block diagonal and each $Y$ is Hermitian. The normal multipliers may vary; the stress $P$ does not. Taking half the first equation plus $i/2$ times the second gives exactly (114.6), with
+
+$$
+ Z=\Lambda+U^*YU,
+ \qquad HZ=H\Lambda,\qquad ZH=\Lambda H.
+ \tag{114.11}
+$$
+
+The combined $\Lambda,Y$ need not be Hermitian. For a fibre $f\subset A$, the columns of $Z$ on $f$ vanish, so $(HZ)_{ff}=0$ and $H_{ff}=I_2$ imply $\Lambda_{ff}=0$. For a fibre $g\subset B$, the rows of $Z$ on $g$ vanish, so $(ZH)_{gg}=0$ similarly implies $\Lambda_{gg}=0$. Therefore $\Lambda=0$ and $HZ=ZH=0$. The stated support properties follow. ∎
+
+### 114.3. Every stress fibre has rank two when the opposite rank exceeds two
+
+**Theorem 114.2 (positive stress fibre blocks).** Under (114.3), if $h>2$, every original block $P_{ff}$ is positive definite. Equivalently every $R_{ff}$ is positive definite.
+
+**Proof.** If some $P_{ff}$ is singular, choose a nonzero vector $n$ supported on $f$ with $P_{ff}n_f=0$. Positivity of $P$ implies $Pn=0$. Factor $`H=B_0^*B_0`$ with $B_0$ an $h\times8$ full-row-rank record matrix. Its two columns on $f$ are orthonormal. Since $h>2$, choose a nonzero $x$ perpendicular to their span and put $`m=B_0^*x`$. Then $m\ne0$, $m_f=0$, and $m\in\operatorname{range}H$, so $Pm=0$.
+
+Apply Lemma 114.1 with $A=f$. Every column of its $Z$ lies in $\ker H\cap\mathbb C^f=\{0\}$, because $H_{ff}=I_2$. Hence $Z=0$. But a nonzero coordinate of $n$ and a nonzero coordinate of $m$ give a nonzero entry in (114.6), since every cross-fibre coefficient is nonzero. This contradiction proves $P_{ff}>0$. The nonsingular diagonal congruence in (114.4) proves the equivalent assertion about $R_{ff}$. ∎
+
+The hypothesis $h>2$ supplies the supported range vector $m$. At $h=2$, the two records in one fibre already span the environment, and this argument supplies no such vector. The theorem concerns the actual common stress, rather than only the projection of the full kernel of $H$.
+
+### 114.4. Singular two-fibre Grams force stress-rank saturation
+
+**Theorem 114.3 (two-fibre rank saturation).** Under (114.3), assume $h=4$. Let $A,B$ each consist of two original fibres and put
+
+$$
+ r_A=\operatorname{rank}H_{AA},\qquad
+ r_B=\operatorname{rank}H_{BB},\qquad
+ p_B=\operatorname{rank}P_{BB}.
+ \tag{114.12}
+$$
+
+If $r_B<4$, then $p_B=r_A$. The assertion with $A,B$ interchanged also holds.
+
+**Proof.** Consider the complex vector spaces
+
+$$
+ V_A=\operatorname{range}H\cap\mathbb C^A,
+ \qquad M_B=\ker P\cap\mathbb C^B.
+ \tag{114.13}
+$$
+
+An injective record map $`B_0^*:\mathbb C^4\to\mathbb C^8`$ identifies $V_A$ with the kernel of its $B$-coordinate restriction. Positivity identifies $M_B$ with the kernel of its principal block. Thus
+
+$$
+ \dim_{\mathbb C}V_A=4-r_B,
+ \qquad \dim_{\mathbb C}M_B=4-p_B.
+ \tag{114.14}
+$$
+
+Every $n\in V_A$, $m\in M_B$ satisfies the hypotheses of Lemma 114.1. The matrices $\bar n_A m_B^{\mathsf T}$ span a tensor-product matrix space of complex dimension $(4-r_B)(4-p_B)$. Entrywise multiplication by $(P_{ij}/\bar H_{ij})_{i\in A,j\in B}$ is invertible on all $4\times4$ matrices, because each entry is nonzero. Consequently the span of the matrices $Z(n,m)$ has the same dimension.
+
+On the other hand, their column spaces lie in the kernel of $H$ supported on $A$, of dimension $4-r_A$, and their adjoint column spaces lie in the corresponding space on $B$, of dimension $4-r_B$. Therefore
+
+$$
+ (4-r_B)(4-p_B)\le(4-r_A)(4-r_B).
+ \tag{114.15}
+$$
+
+The assumption $r_B<4$ permits cancellation, giving $p_B\ge r_A$.
+
+For the reverse inequality, $\operatorname{range}P\subset\ker H$. The coordinate projection of this kernel onto $B$ has dimension $\operatorname{rank}U_B$. The kernel of $`U_B^*`$ corresponds, through the injective $`U^*`$, to the kernel of $H$ supported on $A$, which has dimension $4-r_A$. Since $U$ has four rows,
+
+$$
+ p_B\le\operatorname{rank}U_B
+       =4-(4-r_A)=r_A.
+ \tag{114.16}
+$$
+
+This proves equality. ∎
+
+**Corollary 114.4 (rank-deficient stress consumers).** Under the hypotheses of Theorem 114.3, if $\operatorname{rank}P\le3$, complementary two-fibre principal Grams of $H$ cannot have exactly one positive-definite member. If $\operatorname{rank}P=\operatorname{rank}R=2$, every two-fibre principal Gram of $H$ is positive definite.
+
+**Proof.** The first assertion follows from $p_B=r_A=4$, which would contradict $p_B\le\operatorname{rank}P\le3$.
+
+For the second, suppose $H_{BB}$ is singular. Theorem 114.3 gives $r_A=p_B\le2$. Each two-fibre principal Gram contains $I_2$, so $r_A=2$. Interchanging $A,B$ gives $r_B=2$. Since $\operatorname{rank}H=4$, the spans of the $H$-records on the two halves form a direct sum.
+
+Write $H_{ij}=\langle h_i,h_j\rangle$ and $R_{ij}=\langle r_i,r_j\rangle$. The product records $h_i\otimes\bar r_i$ have Gram $G$, and hence
+
+$$
+ \sum_i a_i h_i\otimes\bar r_i=0.
+ \tag{114.17}
+$$
+
+Project the first tensor factor onto the $A$-record span along the complementary $B$-record span. This gives a nontrivial relation supported only on $A$. It is impossible because every proper principal Gram of $G$ is positive definite: a null vector of such a principal Gram extends by zero to a null vector of $G$, whereas every nonzero vector in $\ker G$ has full support.
+
+This last direct-sum argument is the elementary connected-factor implication of [Lovitz–Petrov, arXiv:2103.15633v2, Proposition 5](https://arxiv.org/html/2103.15633v2#S4), recorded in the [Library note](../../../Library/Factorization/lovitzpetrov2023kruskal.md). Its role here is the product-circuit step after the new stress-rank equality; no new general connectedness theorem is asserted. ∎
+
+### 114.5. A physical rank-two quotient with two singular half Grams
+
+**Proposition 114.5 (nonvacuity outside the one-full-block and spectral subclasses).** There are calibrated physical Grams with ranks $(\operatorname{rank}G,\operatorname{rank}H)=(7,4)$, a full-support kernel of $G$, and a positive semidefinite factor $P$ satisfying the algebraic identities (114.4), such that $\operatorname{rank}P=2$, every $P_{ff}>0$, both complementary half Grams have rank three, all cross-fibre entries are nonzero, and $\lambda_{\max}(H)>3$. The quadratic expression on the right of (114.5) has an explicit negative zero-cost direction.
+
+**Proof.** Use zero-based ambient coordinates $0,1,2,3$. Let $J$ contain the first two columns of $I_4$, let $R_{ij}(c,s)$ be $I_4$ with the $i,j$ block $\left(\begin{smallmatrix}c&-s\\s&c\end{smallmatrix}\right)$, and let $r(c,s)$ be that two-by-two rotation. Define
+
+$$
+ \begin{aligned}
+ B_0&=Jr(3/5,4/5),\\
+ B_1&=R_{02}(99/101,20/101)Jr(5/13,12/13),\\
+ B_2&=R_{03}(35/37,12/37)Jr(8/17,15/17),\\
+ B_3&=R_{03}(35/37,12/37)R_{12}(63/65,16/65)Jr(7/25,24/25),\\
+ B_\circ&=[B_0\ B_1\ B_2\ B_3],\qquad H=B_\circ^{\mathsf T}B_\circ.
+ \end{aligned}
+ \tag{114.18}
+$$
+
+Each original fibre is an orthonormal pair. A rational kernel basis is
+
+$$
+ U=\begin{pmatrix}
+ -52/25&-39/25&12/5&1&0&0&0&0\\
+ -17/10&-51/40&0&0&15/8&1&0&0\\
+ 83397/31250&876483/1625000&-9696/3125&0&-119/200&0&1&0\\
+ -12252/15625&-206082/203125&-2828/3125&0&51/25&0&0&1
+ \end{pmatrix},
+ \tag{114.19}
+$$
+
+so $`UB_\circ^{\mathsf T}=0`$. Put
+
+$$
+ \begin{aligned}
+ V&=\begin{pmatrix}1&3&7&11\\2&-1&5&13\end{pmatrix}U,
+ &P&=V^{\mathsf T}V,&G_0&=H\odot P,\\
+ a_i&=\sqrt{P_{ii}},&
+ R&=\operatorname{diag}(a)^{-1}P\operatorname{diag}(a)^{-1},&
+ G&=H\odot R.
+ \end{aligned}
+ \tag{114.20}
+$$
+
+These are positive semidefinite Grams; the positive diagonal congruence gives (114.4) with $\alpha=1$. The original Grams $G,H$ have fibre blocks $I_2$ because the off-diagonal entry of each $H_{ff}$ vanishes.
+
+The following residues modulo $1009$ provide exact nonzero rank and cross-entry certificates; all displayed rational denominators are invertible modulo $1009$. Coordinate subsets here use the order $0,\ldots,7$ of (114.18):
+
+$$
+ \begin{aligned}
+ \det(B_{\circ,\{0,1,2,4\}})&\equiv626,&
+ \det(H_{\{0,1,2\}})&\equiv299,&
+ \det(H_{\{4,5,6\}})&\equiv30,\\
+ (\det V_0,\det V_1,\det V_2,\det V_3)
+    &\equiv(321,456,910,36),&&&\\
+ \det((G_0)_{\{0,\ldots,6\}})&\equiv811,&&&\\
+ \prod_{\substack{i<j\\f(i)\ne f(j)}}H_{ij}&\equiv671,&
+ \prod_{\substack{i<j\\f(i)\ne f(j)}}P_{ij}&\equiv601.
+ \end{aligned}
+ \tag{114.21}
+$$
+
+They follow by substitution into (114.18)–(114.20). The first two fibres span a three-dimensional space; the last two also span a three-dimensional space, as their rotation formulas show. The nonzero three-coordinate minors prove the exact half ranks. The four nonzero $\det V_f$ prove $P_{ff}>0$ and $\operatorname{rank}P=2$. Moreover $PH=0$ gives $G_0\mathbf1=0$ term by term. Its seven-coordinate minor therefore proves rank seven and the full-support kernel $\ker G=\mathbb C a$. The two cross products certify every original cross entry is nonzero. Finally
+
+$$
+ \lambda_{\max}(H)\ge(B_\circ B_\circ^{\mathsf T})_{00}
+   =\frac{52375188}{13965169}>3.
+ \tag{114.22}
+$$
+
+For the partition into the first and last four coordinates, set
+
+$$
+ \begin{aligned}
+ n_A&=(-1313/1980,\ 1313/1485,\ -5/12,\ 1)^{\mathsf T},&n_B&=0,\\
+ m_A&=0,&m_B&=(-2200/8891,\ -3219/8891,\ 1,\ 0)^{\mathsf T},\\
+ D&=i(nm^{\mathsf T}-mn^{\mathsf T}).
+ \end{aligned}
+ \tag{114.23}
+$$
+
+Direct multiplication gives $Un=0$, $Pn=Pm=0$, $D_{ff}=0$, $`UDU^*=0`$ and $DP=0$. Both costs in (114.5) vanish, and its mixed term is
+
+$$
+ Q(D)=-\frac{
+ 325333932610778388092304109579748666754408132364187198677}{
+ 395150328355529340430401159343798921639721694765543750}<0.
+ \tag{114.24}
+$$
+
+Thus the stated geometric class is nonempty and is excluded by the common curved criterion. No norming witness or subquarter error is asserted for this fixture. ∎
+
+### 114.6. Remaining scope
+
+Theorem 114.2 excludes a singular original stress-fibre block for every opposite rank greater than two. Theorem 114.3 and Corollary 114.4 impose additional two-fibre restrictions at opposite rank four. They leave the class with all six two-fibre $H$ principal Grams positive definite unresolved, and the rank count alone does not exclude stress rank three with two complementary rank-three $H$ blocks. The existential global-rank alternative in Corollary 113.5 is therefore not reduced to a lower maximum rank by this section. No arbitrary leaking optimizer is asserted to preserve its ranks under calibration, and the unrestricted quarter optimum remains open.
+
+## 追加锚（本行以下为增补区）
