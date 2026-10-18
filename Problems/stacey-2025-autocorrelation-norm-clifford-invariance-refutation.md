@@ -50,7 +50,7 @@ The refutation would fail if the module's quantities differed from the source's.
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.lean` (352 lines).
+The canonical source is `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.lean` (391 lines).
 - **Proof.** It proves `result : ¬ claim` for the witness above.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Registration.** The refutation `result` is exempt from §3.9 registration, and the module has no other public theorem.
