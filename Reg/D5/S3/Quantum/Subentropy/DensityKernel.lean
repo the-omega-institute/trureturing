@@ -322,4 +322,86 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end Continuity
 
+namespace SpectralProbability
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
+    {A : Matrix ι ι ℂ} (hA : A.PosSemidef) (htr : A.trace = 1),
+    (∀ i, R.readout () () (hA.isHermitian.eigenvalues i)) ∧
+      ∑ i, hA.isHermitian.eigenvalues i = 1
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have he := @h (ULift.{u} Unit) inferInstance inferInstance 1
+    Matrix.PosSemidef.one (by simp [Matrix.trace])
+  exact he.1 ⟨()⟩
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, -1, ?_⟩
+  norm_num [actual, realize]
+
+def source_registration : Registration arena.{u} (type_of% @spectral_prob.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@spectral_prob, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@spectral_prob.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Subentropy.DensityKernel.spectral_prob.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Subentropy.DensityKernel.SpectralProbability.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => 0 ≤ x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Subentropy.DensityKernel
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end SpectralProbability
+
 end Reg.D5.S3.Quantum.Subentropy.DensityKernel
