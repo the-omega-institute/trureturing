@@ -143,17 +143,6 @@ theorem mass_nonneg (β : Bias) (E : Set (ι → Bool)) : 0 ≤ mass β E := by
 
 @[simp] theorem mass_empty (β : Bias) : mass (ι := ι) β ∅ = 0 := by simp [mass]
 
-theorem mass_mono (β : Bias) {E F : Set (ι → Bool)} (h : E ⊆ F) :
-    mass β E ≤ mass β F := by
-  apply Finset.sum_le_sum
-  intro σ _
-  by_cases he : σ ∈ E
-  · simp [he, h he]
-  · simp only [he, ↓reduceIte]
-    split_ifs
-    · exact (weight_pos β σ).le
-    · exact le_rfl
-
 theorem mass_union (β : Bias) {E F : Set (ι → Bool)} (h : Disjoint E F) :
     mass β (E ∪ F) = mass β E + mass β F := by
   rw [mass, mass, mass, ← Finset.sum_add_distrib]
@@ -170,6 +159,12 @@ theorem mass_diff (β : Bias) {E F : Set (ι → Bool)} (h : F ⊆ E) :
   rw [← hu] at he
   linarith
 
+theorem mass_mono (β : Bias) {E F : Set (ι → Bool)} (h : E ⊆ F) :
+    mass β E ≤ mass β F := by
+  have hn := mass_nonneg β (F \ E)
+  rw [mass_diff β h] at hn
+  linarith
+
 theorem mass_pos_iff (β : Bias) (E : Set (ι → Bool)) :
     0 < mass β E ↔ E.Nonempty := by
   constructor
@@ -178,14 +173,10 @@ theorem mass_pos_iff (β : Bias) (E : Set (ι → Bool)) :
     have he : E = ∅ := Set.not_nonempty_iff_eq_empty.mp hn
     simp [he] at hp
   · rintro ⟨σ, hσ⟩
+    have hs : mass β {σ} = weight β σ := by simp [mass]
     have hle : weight β σ ≤ mass β E := by
-      calc
-        weight β σ = if σ ∈ E then weight β σ else 0 := by simp [hσ]
-        _ ≤ ∑ τ : ι → Bool, if τ ∈ E then weight β τ else 0 :=
-          Finset.single_le_sum (f := fun τ : ι → Bool => if τ ∈ E then weight β τ else 0) (fun τ _ => by
-            split_ifs
-            · exact (weight_pos β τ).le
-            · exact le_rfl) (Finset.mem_univ σ)
+      rw [← hs]
+      exact mass_mono β (Set.singleton_subset_iff.mpr hσ)
     exact (weight_pos β σ).trans_le hle
 
 /-- A finite probability-one assertion holds at every configuration. -/
@@ -345,23 +336,6 @@ theorem partition_mass (β : Bias) (p : ι → Prop) [DecidablePred p]
   intro τ _
   by_cases he : σ ∈ E <;> by_cases hf : τ ∈ F <;> simp [he, hf]
 
-/-- Reindexing a finite coordinate carrier preserves every event mass. -/
-theorem reindex_mass {κ : Type*} [Fintype κ] (β : Bias) (e : ι ≃ κ)
-    (E : Set (κ → Bool)) :
-    mass β {σ : ι → Bool | (fun i => σ (e.symm i)) ∈ E} = mass β E := by
-  let q : (ι → Bool) ≃ (κ → Bool) :=
-    { toFun := fun σ i => σ (e.symm i)
-      invFun := fun τ i => τ (e i)
-      left_inv := by intro σ; funext i; simp
-      right_inv := by intro σ; funext i; simp }
-  have hw (σ : ι → Bool) : weight β σ = weight β (q σ) := by
-    apply Fintype.prod_equiv e
-    intro i
-    simp [q]
-  unfold mass
-  simp only [Set.mem_setOf_eq]
-  exact Fintype.sum_equiv q _ _ (fun σ => by rw [hw]; rfl)
-
 /-- Events depending on disjoint coordinate sets are independent. -/
 theorem disjoint_event_mass (β : Bias) (A B : Finset ι) (hd : Disjoint A B)
     (E F : Set (ι → Bool))
@@ -386,10 +360,13 @@ theorem disjoint_event_mass (β : Bias) (A B : Finset ι) (hd : Disjoint A B)
   have heqE : E = {σ | (fun i : {i // i ∈ A} => σ i) ∈ E'} := by ext σ; exact he σ
   have heqF : F = {σ | (fun i : {i // i ∉ A} => σ i) ∈ F'} := by ext σ; exact hf σ
   rw [heq, partition_mass]
-  have hmE := partition_mass β (fun i : ι => i ∈ A) E' Set.univ
+  have hmE : mass β {σ : ι → Bool | (fun i : {i // i ∈ A} => σ i) ∈ E'} =
+      mass β E' := by
+    convert restriction_mass β A E' using 1 <;> congr 1 <;> exact Subsingleton.elim _ _
   have hmF := partition_mass β (fun i : ι => i ∈ A) Set.univ F'
   simp only [Set.mem_univ, and_true, true_and, mass_univ, mul_one, one_mul] at hmE hmF
   rw [heqE, heqF, hmE, hmF]
+  congr!
 
 end FiniteSpinLaw
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
@@ -585,9 +562,24 @@ theorem constant_disjoint (A : Finset ℤ) (hA : A.Nonempty) :
 
 theorem monoBlock_prob (β : Bias) (V A : Finset ℤ) (hA : A ⊆ V) (hne : A.Nonempty) :
     prob β V (monoBlock A) = β.T A.card := by
-  rw [monoBlock, prob_union β V (constant_disjoint A hne),
-    constant_prob β V A hA, constant_prob β V A hA]
-  rfl
+  let C : Finset V := A.subtype (· ∈ V)
+  have hc : C.Nonempty := by
+    obtain ⟨i, hi⟩ := hne
+    exact ⟨⟨i, hA hi⟩, Finset.mem_subtype.mpr hi⟩
+  have hconst (u : Bool) (σ : V → Bool) :
+      (∀ i ∈ A, extend V σ i = u) ↔ (∀ i ∈ C, σ i = u) := by
+    constructor
+    · intro h i hi
+      simpa only [extend_apply V σ i.val i.property] using h i.val (Finset.mem_subtype.mp hi)
+    · intro h i hi
+      simpa only [extend_apply V σ i (hA hi)] using h ⟨i, hA hi⟩ (Finset.mem_subtype.mpr hi)
+  have he : {σ : V → Bool | extend V σ ∈ monoBlock A} =
+      {σ | (∀ i ∈ C, σ i = false) ∨ (∀ i ∈ C, σ i = true)} := by
+    ext σ
+    exact or_congr (hconst false σ) (hconst true σ)
+  change FiniteSpinLaw.mass β {σ : V → Bool | extend V σ ∈ monoBlock A} = _
+  rw [he, FiniteSpinLaw.monochromatic_mass β C hc]
+  simp [C, Finset.card_subtype, Finset.filter_eq_self.mpr hA]
 
 theorem zero_path_eq_block (L : ℤ) (n : ℕ) :
     zeroEdges (pathEdges L n) = monoBlock (pathVertices L n) := by
@@ -637,6 +629,37 @@ open Classical
 open scoped BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+namespace SpinWindow
+
+def SupportedOn (V : Finset ℤ) (E : Set Spins) : Prop :=
+  ∀ S R : Spins, (∀ i ∈ V, S i = R i) → (S ∈ E ↔ R ∈ E)
+
+/-- Two spin events on disjoint finite coordinates are independent in any containing window. -/
+theorem prob_independent (β : Bias) (V A B : Finset ℤ) (hA : A ⊆ V) (hB : B ⊆ V)
+    (hd : Disjoint A B) (E F : Set Spins) (hE : SupportedOn A E) (hF : SupportedOn B F) :
+    prob β V (E ∩ F) = prob β V E * prob β V F := by
+  let A' : Finset V := A.subtype (· ∈ V)
+  let B' : Finset V := B.subtype (· ∈ V)
+  have hd' : Disjoint A' B' := by
+    apply Finset.disjoint_left.mpr
+    intro i hiA hiB
+    exact Finset.disjoint_left.mp hd (Finset.mem_subtype.mp hiA) (Finset.mem_subtype.mp hiB)
+  apply FiniteSpinLaw.disjoint_event_mass β A' B' hd'
+  · intro σ τ h
+    apply hE
+    intro i hi
+    have hh := h ⟨i, hA hi⟩ (Finset.mem_subtype.mpr hi)
+    simpa only [extend_apply V σ i (hA hi), extend_apply V τ i (hA hi)] using hh
+  · intro σ τ h
+    apply hF
+    intro i hi
+    have hh := h ⟨i, hB hi⟩ (Finset.mem_subtype.mpr hi)
+    simpa only [extend_apply V σ i (hB hi), extend_apply V τ i (hB hi)] using hh
+
+end SpinWindow
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
 namespace FiniteSpinLaw
 
@@ -645,33 +668,18 @@ variable {ι : Type*} [Fintype ι]
 theorem two_constant_mass (β : Bias) (A B : Finset ι) (hd : Disjoint A B) (s t : Bool) :
     mass β ({σ | ∀ i ∈ A, σ i = s} ∩ {σ | ∀ i ∈ B, σ i = t}) =
       (β.π s)^A.card * (β.π t)^B.card := by
-  have he : ({σ : ι → Bool | ∀ i ∈ A, σ i = s} ∩ {σ | ∀ i ∈ B, σ i = t}) =
-      {σ | ∀ i ∈ A ∪ B, σ i = if i ∈ A then s else t} := by
-    ext σ
-    constructor
-    · rintro ⟨hA, hB⟩ i hi
-      by_cases hia : i ∈ A
-      · simp [hia, hA i hia]
-      · have hib : i ∈ B := (Finset.mem_union.mp hi).resolve_left hia
-        simp [hia, hB i hib]
-    · intro h
-      constructor
-      · intro i hi; simpa [hi] using h i (Finset.mem_union_left _ hi)
-      · intro i hi
-        have hn : i ∉ A := fun ha => Finset.disjoint_left.mp hd ha hi
-        simpa [hn] using h i (Finset.mem_union_right _ hi)
-  rw [he, prescribed_mass, Finset.prod_union hd]
-  have hA : (∏ i ∈ A, β.π (if i ∈ A then s else t)) = (β.π s)^A.card := by
-    calc
-      _ = ∏ _ ∈ A, β.π s := Finset.prod_congr rfl fun i hi => by simp [hi]
-      _ = _ := by simp
-  have hB : (∏ i ∈ B, β.π (if i ∈ A then s else t)) = (β.π t)^B.card := by
-    calc
-      _ = ∏ _ ∈ B, β.π t := Finset.prod_congr rfl fun i hi => by
-        have hn : i ∉ A := fun ha => Finset.disjoint_left.mp hd ha hi
-        simp [hn]
-      _ = _ := by simp
-  rw [hA, hB]
+  have hs (C : Finset ι) (u : Bool) (σ τ : ι → Bool)
+      (h : ∀ i ∈ C, σ i = τ i) :
+      (∀ i ∈ C, σ i = u) ↔ (∀ i ∈ C, τ i = u) := by
+    constructor <;> intro hc i hi
+    · rw [← h i hi]; exact hc i hi
+    · rw [h i hi]; exact hc i hi
+  calc
+    _ = mass β {σ : ι → Bool | ∀ i ∈ A, σ i = s} *
+        mass β {σ : ι → Bool | ∀ i ∈ B, σ i = t} :=
+      disjoint_event_mass β A B hd {σ | ∀ i ∈ A, σ i = s}
+        {σ | ∀ i ∈ B, σ i = t} (hs A s) (hs B t)
+    _ = _ := by rw [constant_mass, constant_mass]
 
 end FiniteSpinLaw
 
@@ -723,18 +731,15 @@ theorem two_blocks_prob (β : Bias) (V A B : Finset ℤ)
     (hA : A ⊆ V) (hB : B ⊆ V) (hd : Disjoint A B)
     (hneA : A.Nonempty) (hneB : B.Nonempty) :
     prob β V (monoBlock A ∩ monoBlock B) = β.T A.card * β.T B.card := by
-  have he : monoBlock A ∩ monoBlock B =
-      (monoBlock A ∩ constant B false) ∪ (monoBlock A ∩ constant B true) := by
-    ext S; simp only [monoBlock, Set.mem_inter_iff, Set.mem_union]; tauto
-  have hdis : Disjoint (monoBlock A ∩ constant B false)
-      (monoBlock A ∩ constant B true) := by
-    apply Set.disjoint_left.mpr
-    intro S h0 h1
-    exact Set.disjoint_left.mp (constant_disjoint B hneB) h0.2 h1.2
-  rw [he, prob_union β V hdis, block_constant_prob β V A B hA hB hd hneA,
-    block_constant_prob β V A B hA hB hd hneA]
-  simp only [Bias.T, Bias.π, Bool.false_eq_true, ↓reduceIte]
-  ring
+  have hs (C : Finset ℤ) : SupportedOn C (monoBlock C) := by
+    intro S R h
+    have hc (u : Bool) : S ∈ constant C u ↔ R ∈ constant C u := by
+      constructor <;> intro hC i hi
+      · rw [← h i hi]; exact hC i hi
+      · rw [h i hi]; exact hC i hi
+    exact or_congr (hc false) (hc true)
+  rw [prob_independent β V A B hA hB hd _ _ (hs A) (hs B),
+    monoBlock_prob β V A hA hneA, monoBlock_prob β V B hB hneB]
 
 theorem zero_insert (E : Finset ℤ) (e : ℤ) :
     zeroEdges (insert e E) = zeroEdges E ∩ {S | S e = S (e + 1)} := by
@@ -773,56 +778,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 open Classical
 
-namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
-namespace SpinWindow
 
-def SupportedOn (V : Finset ℤ) (E : Set Spins) : Prop :=
-  ∀ S R : Spins, (∀ i ∈ V, S i = R i) → (S ∈ E ↔ R ∈ E)
-
-/-- Enlarging a finite coordinate window preserves every event supported in the old window. -/
-theorem prob_enlarge (β : Bias) (V W : Finset ℤ) (hVW : V ⊆ W)
-    (E : Set Spins) (hE : SupportedOn V E) : prob β W E = prob β V E := by
-  let A : Finset W := V.subtype (· ∈ W)
-  let e : A ≃ V :=
-    { toFun := fun a => ⟨a.val.val, Finset.mem_subtype.mp a.property⟩
-      invFun := fun v => ⟨⟨v, hVW v.property⟩, Finset.mem_subtype.mpr v.property⟩
-      left_inv := by intro a; rfl
-      right_inv := by intro a; rfl }
-  let E' : Set (A → Bool) := {τ | extend V (fun v => τ (e.symm v)) ∈ E}
-  have he : {σ : W → Bool | extend W σ ∈ E} =
-      {σ : W → Bool | FiniteSpinLaw.restrict A σ ∈ E'} := by
-    ext σ
-    apply hE
-    intro i hi
-    simp [E', FiniteSpinLaw.restrict, e, extend_apply, hi, hVW hi]
-  unfold prob
-  rw [he, FiniteSpinLaw.restriction_mass]
-  exact FiniteSpinLaw.reindex_mass β e {τ : V → Bool | extend V τ ∈ E}
-
-/-- Two spin events on disjoint finite coordinates are independent in any containing window. -/
-theorem prob_independent (β : Bias) (V A B : Finset ℤ) (hA : A ⊆ V) (hB : B ⊆ V)
-    (hd : Disjoint A B) (E F : Set Spins) (hE : SupportedOn A E) (hF : SupportedOn B F) :
-    prob β V (E ∩ F) = prob β V E * prob β V F := by
-  let A' : Finset V := A.subtype (· ∈ V)
-  let B' : Finset V := B.subtype (· ∈ V)
-  have hd' : Disjoint A' B' := by
-    apply Finset.disjoint_left.mpr
-    intro i hiA hiB
-    exact Finset.disjoint_left.mp hd (Finset.mem_subtype.mp hiA) (Finset.mem_subtype.mp hiB)
-  apply FiniteSpinLaw.disjoint_event_mass β A' B' hd'
-  · intro σ τ h
-    apply hE
-    intro i hi
-    have hh := h ⟨i, hA hi⟩ (Finset.mem_subtype.mpr hi)
-    simpa only [extend_apply V σ i (hA hi), extend_apply V τ i (hA hi)] using hh
-  · intro σ τ h
-    apply hF
-    intro i hi
-    have hh := h ⟨i, hB hi⟩ (Finset.mem_subtype.mpr hi)
-    simpa only [extend_apply V σ i (hB hi), extend_apply V τ i (hB hi)] using hh
-
-end SpinWindow
-end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
 end
 

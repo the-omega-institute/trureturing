@@ -519,13 +519,19 @@ theorem full_same_seed_law_forces_sections {U : Type u} [MeasurableSpace U]
     ∀ᵐ u ∂ν, ∀ z : Observation,
       fullMass β (lawWindow (Q.normalize k u)) j (Q.normalize k u) z =
         (sourceLaw β).real (w ⁻¹' {z}) := by
-  obtain ⟨T₀, hm, he⟩ := Q.completion_normalization_version ν hQ k
+  obtain ⟨T₀, hm, he, ht⟩ := Q.completion_normalization_bridge ν hQ k hc
   let T : U → ReadTree := fun u => (T₀ u).val
   have hT : Measurable T := measurable_subtype_coe.comp hm
   have hj : Q.joint j =ᵐ[(sourceLaw β).prod ν] selectorJoint j T := by
-    rw [Q.joint_normalize k hc]
-    filter_upwards [Measure.quasiMeasurePreserving_snd.ae he] with p hp
-    simp only [selectorJoint, hp, T]
+    filter_upwards [Measure.quasiMeasurePreserving_snd.ae ht] with p hp
+    obtain ⟨_, ho, hn⟩ := hp p.1.1 p.1.2
+    have hd : decide (Q.returnTime p.2 (visible p.1.1 p.1.2) < ⊤) =
+        ((T₀ p.2).val.run (visible p.1.1 p.1.2)).returned := by
+      apply Bool.eq_iff_iff.mpr
+      simpa only [decide_eq_true_eq, Execution.returned, ho] using
+        Q.finite_return_iff p.2 (visible p.1.1 p.1.2)
+    simp only [RawRule.joint, RawRule.observation, selectorJoint,
+      StoppingLaw.observation, ho, hn, hd, ENat.toNat_natCast, T]
   have hmap : ((sourceLaw β).prod ν).map (selectorJoint j T) =
       ((sourceLaw β).prod ν).map (fun z : SourcePoint × U => (z.2, w z.1)) :=
     (Measure.map_congr hj).symm.trans hlaw
@@ -741,7 +747,7 @@ theorem stopping_witness_radius {U : Type u} [MeasurableSpace U] (j : Bool) (k :
 theorem stopping_witness_original_contract {U : Type u} [MeasurableSpace U]
     (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) (ν : Measure U) [IsProbabilityMeasure ν] :
     (stoppingRule (U := U) j k).Lawful ∧ (stoppingRule (U := U) j k).TotalCap k ∧
-      (∀ x : ℤ → Bool, let v := (witnessTree j k).run x
+      (∀ v ∈ (witnessTree j k).formalRuns,
         v.returned = true ∧ 1 ≤ v.paid ∧ v.paid ≤ k) ∧
       (∀ B : Set U, MeasurableSet B → ∀ z : Observation,
         ((stoppingRule j k).fullLaw β j ν).real (B ×ˢ {z}) =
@@ -750,13 +756,12 @@ theorem stopping_witness_original_contract {U : Type u} [MeasurableSpace U]
   refine ⟨stoppingRule_lawful j k, stoppingRule_cap j k, ?_,
     (fun B hB z => stopping_witness_full_law β j k hk ν B hB z),
     stopping_witness_radius j k⟩
-  intro x
-  have hout : ((witnessTree j k).run x).output = some (.a false) ∧
-      ((witnessTree j k).run x).paid = k ∨
-    ((witnessTree j k).run x).output = some (.a true) ∧
-      1 ≤ ((witnessTree j k).run x).paid ∧ ((witnessTree j k).run x).paid ≤ k := by
+  intro v hv
+  have hout : v.output = some (.a false) ∧ v.paid = k ∨
+      v.output = some (.a true) ∧ 1 ≤ v.paid ∧ v.paid ≤ k := by
     simpa only [witnessTree, ReadTree.edgeComb, List.length_map, witnessEdges_length] using
-      ReadTree.stopComb_outcomes ((witnessEdges j k).map (fun e => 2 * e + (!j).toInt)) x
+      ReadTree.stopComb_formal_outcomes
+        ((witnessEdges j k).map (fun e => 2 * e + (!j).toInt)) v hv
   rcases hout with ⟨ho, hn⟩ | ⟨ho, hn, hb⟩
   · exact ⟨by simp [Execution.returned, ho], by omega, by omega⟩
   · exact ⟨by simp [Execution.returned, ho], hn, hb⟩
@@ -875,7 +880,10 @@ theorem original_rule_stopping_results (β : Bias) (j : Bool) (k : ℕ) (hk : 1 
         ∃ es : List ℤ, es.length = k ∧ es.Nodup ∧ ∃ L : ℤ,
           (T u).val = ReadTree.stopComb (es.map (fun e => 2 * e + (!j).toInt)) ∧
           es.toFinset = pathEdges L k ∧ j.toInt ∉ pathVertices L k)) ∧
-      (1 + β.T k) / 2 ≤ ((sourceLaw β).prod ν).real (Q.remote j (2 * k + 1)) := by
+      ((1 + β.T k) / 2 ≤ ((sourceLaw β).prod ν).real (Q.remote j (2 * k + 1))) ∧
+      (((sourceLaw β).prod ν).real
+        ((stoppingRule (U := U) j k).remote j (2 * k + 1)) = (1 + β.T k) / 2) ∧
+      (k = 1 → ((sourceLaw β).prod ν).real (Q.remote j (2 * k + 1)) = 1) := by
   have hW := RawRule.fullLaw_realize (fun _ : U => witnessTree j k) k
     (fun _ => stoppingRule_height j k) β j ν
   obtain ⟨T, hm, he, hs⟩ := Q.full_law_sections β j ν hQ k hc
@@ -898,7 +906,13 @@ theorem original_rule_stopping_results (β : Bias) (j : Bool) (k : ℕ) (hk : 1 
       apply propext
       rw [Q.remote_normalize k hc, hp]
       rfl
-    exact hb.trans_eq (congrArg ENNReal.toReal (measure_congr hE)).symm
+    have hbound : (1 + β.T k) / 2 ≤
+        ((sourceLaw β).prod ν).real (Q.remote j (2 * k + 1)) :=
+      hb.trans_eq (congrArg ENNReal.toReal (measure_congr hE)).symm
+    refine ⟨hbound, stopping_witness_remote_probability β j k hk ν, ?_⟩
+    intro hk1
+    apply le_antisymm measureReal_le_one
+    simpa [hk1, β.T_one] using hbound
 
 /-- The exact law-preserving radius also ranges over ambient completed lawful events. -/
 theorem stopping_witness_exact_radius (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k)
@@ -908,7 +922,8 @@ theorem stopping_witness_exact_radius (β : Bias) (j : Bool) (k : ℕ) (hk : 1 �
         Q.WithinActualRadius j R} (2 * k + 1) := by
   constructor
   · refine ⟨fromRaw (stoppingRule j k),
-      fromRaw_lawful _ (stoppingRule_lawful j k) _, ?_, rfl, ?_⟩
+      fromRaw_completion_lawful _ ν ((stoppingRule_lawful j k).completionLawful ν) _
+        Measure.quasiMeasurePreserving_snd, ?_, rfl, ?_⟩
     · intro s u; exact stoppingRule_cap j k s.1 s.2 u
     · intro s u n r hr a ha
       exact stopping_witness_radius j k s.1 s.2 u n r hr a ha
@@ -921,7 +936,7 @@ theorem stopping_witness_exact_radius (β : Bias) (j : Bool) (k : ℕ) (hk : 1 �
       have hb := hR p.1 p.2 n r hr a ha
       unfold Far at hf
       omega
-    have hb := (Q.original_rule_stopping_results β j k hk ν hQ hc hlaw).2
+    have hb := (Q.original_rule_stopping_results β j k hk ν hQ hc hlaw).2.1
     rw [he, measureReal_empty] at hb
     have hT : 0 ≤ β.T k := add_nonneg
       (pow_nonneg (sub_nonneg.mpr β.lt_one.le) _) (pow_nonneg β.pos.le _)

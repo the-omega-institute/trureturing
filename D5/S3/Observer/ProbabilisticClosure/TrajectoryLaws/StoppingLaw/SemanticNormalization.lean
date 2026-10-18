@@ -120,8 +120,6 @@ def prepend (t : ℤ) (b : Bool) (v : Execution) : Execution :=
 @[simp] theorem paid_prepend (t : ℤ) (b : Bool) (v : Execution) :
     (v.prepend t b).paid = v.paid + 1 := by simp [paid, prepend]
 
-@[simp] theorem output_prepend (t : ℤ) (b : Bool) (v : Execution) :
-    (v.prepend t b).output = v.output := rfl
 
 end Execution
 
@@ -136,6 +134,12 @@ def run : ReadTree → (ℤ → Bool) → Execution
   | .leaf a, _ => ⟨a, []⟩
   | .read t z o, x => (if x t then o.run x else z.run x).prepend t (x t)
 
+/-- All formal reply branches, including branches inconsistent with repeated addresses. -/
+def formalRuns : ReadTree → List Execution
+  | .leaf a => [⟨a, []⟩]
+  | .read t z o => (z.formalRuns.map (Execution.prepend t false)) ++
+      (o.formalRuns.map (Execution.prepend t true))
+
 /-- Every potential queried address, including nodes not visited in this execution. -/
 def addresses : ReadTree → Finset ℤ
   | .leaf _ => ∅
@@ -147,13 +151,6 @@ def support : ReadTree → Finset ℤ
   | .read t z o => {t / 2, t / 2 + 1, (t - 1) / 2, (t - 1) / 2 + 1} ∪
       (z.support ∪ o.support)
 
-@[simp] theorem run_leaf (a : Option Hidden) (x : ℤ → Bool) :
-    (leaf a).run x = ⟨a, []⟩ := rfl
-
-@[simp] theorem height_leaf (a : Option Hidden) : (leaf a).height = 0 := rfl
-
-@[simp] theorem paid_leaf (a : Option Hidden) (x : ℤ → Bool) :
-    ((leaf a).run x).paid = 0 := rfl
 
 theorem paid_le_height (T : ReadTree) (x : ℤ → Bool) : (T.run x).paid ≤ T.height := by
   induction T with
@@ -196,21 +193,25 @@ theorem run_eq_of_agree (T : ReadTree) (x y : ℤ → Bool)
 theorem source_run_eq_of_agree (T : ReadTree) (φ : Bool) (S R : Spins)
     (h : ∀ i ∈ T.support, S i = R i) :
     T.run (visible φ S) = T.run (visible φ R) := by
-  induction T with
-  | leaf a => rfl
-  | read t z o hz ho =>
-    have ht : visible φ S t = visible φ R t := by
-      have hs (i : ℤ) (hi : i ∈ ({t / 2, t / 2 + 1,
-          (t - 1) / 2, (t - 1) / 2 + 1} : Finset ℤ)) : S i = R i :=
-        h i (Finset.mem_union_left _ hi)
-      cases φ <;> simp only [visible, Bool.toInt_false, Bool.toInt_true, sub_zero]
-      · rw [hs _ (by simp), hs _ (by simp)]
-      · rw [hs _ (by simp), hs _ (by simp)]
-    have hz' := hz (fun i hi => h i (Finset.mem_union_right _
-      (Finset.mem_union_left _ hi)))
-    have ho' := ho (fun i hi => h i (Finset.mem_union_right _
-      (Finset.mem_union_right _ hi)))
-    simp only [run, ht, hz', ho']
+  have hs : ∀ t ∈ T.addresses,
+      ({t / 2, t / 2 + 1, (t - 1) / 2, (t - 1) / 2 + 1} : Finset ℤ) ⊆ T.support := by
+    clear h
+    induction T with
+    | leaf a => simp [addresses]
+    | read a z o hz ho =>
+      intro t ht i hi
+      rcases Finset.mem_insert.mp ht with rfl | ht
+      · exact Finset.mem_union_left _ hi
+      · rcases Finset.mem_union.mp ht with ht | ht
+        · exact Finset.mem_union_right _ (Finset.mem_union_left _ (hz t ht hi))
+        · exact Finset.mem_union_right _ (Finset.mem_union_right _ (ho t ht hi))
+  apply T.run_eq_of_agree
+  intro t ht
+  have he (i : ℤ) (hi : i ∈ ({t / 2, t / 2 + 1,
+      (t - 1) / 2, (t - 1) / 2 + 1} : Finset ℤ)) : S i = R i := h i (hs t ht hi)
+  cases φ <;> simp only [visible, Bool.toInt_false, Bool.toInt_true, sub_zero]
+  · rw [he _ (by simp), he _ (by simp)]
+  · rw [he _ (by simp), he _ (by simp)]
 
 /-- A zero paid count forces an actual leaf, including for a nonreturning execution. -/
 theorem leaf_of_paid_zero (T : ReadTree) (x : ℤ → Bool) (h : (T.run x).paid = 0) :
@@ -239,6 +240,33 @@ theorem stopComb_all_zero (ts : List ℤ) (x : ℤ → Bool)
     simp only [stopComb, run, h t (by simp), Bool.false_eq_true, ↓reduceIte]
     rw [ih (fun a ha => h a (by simp [ha]))]
     rfl
+
+/-- Every formal comb branch returns at its own depth, without padding early leaves. -/
+theorem stopComb_formal_outcomes (ts : List ℤ) :
+    ∀ v ∈ (stopComb ts).formalRuns,
+      v.output = some (.a false) ∧ v.paid = ts.length ∨
+      v.output = some (.a true) ∧ 1 ≤ v.paid ∧ v.paid ≤ ts.length := by
+  induction ts with
+  | nil =>
+    intro v hv
+    have hv' : v = ⟨some (.a false), []⟩ := by simpa [stopComb, formalRuns] using hv
+    subst v
+    exact Or.inl ⟨rfl, rfl⟩
+  | cons t ts ih =>
+    intro v hv
+    simp only [stopComb, formalRuns, List.mem_append, List.mem_map] at hv
+    rcases hv with ⟨w, hw, rfl⟩ | ⟨w, hw, rfl⟩
+    · rcases ih w hw with ⟨ho, hn⟩ | ⟨ho, hn, hb⟩
+      · refine Or.inl ⟨ho, ?_⟩
+        simp only [Execution.paid_prepend, List.length_cons]
+        omega
+      · refine Or.inr ⟨ho, ?_, ?_⟩
+        · simp only [Execution.paid_prepend]; omega
+        · simp only [Execution.paid_prepend, List.length_cons]; omega
+    · have hw' : w = ⟨some (.a true), []⟩ := by simpa only [List.mem_singleton] using hw
+      subst w
+      exact Or.inr ⟨rfl, by simp [Execution.paid, Execution.prepend], by
+        simp [Execution.paid, Execution.prepend]⟩
 
 end ReadTree
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
@@ -622,12 +650,13 @@ theorem completion_normalization_version (Q : RawRule U) (ν : Measure U)
 theorem completion_normalization_bridge (Q : RawRule U) (ν : Measure U)
     (hQ : Q.CompletionLawful ν) (k : ℕ) (hc : Q.TotalCap k) :
     ∃ T₀ : U → {T : ReadTree // T.height ≤ k}, Measurable T₀ ∧
+      (∀ᵐ u ∂ν, Q.normalize k u = (T₀ u).val) ∧
       ∀ᵐ u ∂ν, ∀ (φ : Bool) (S : Spins),
         let v := (T₀ u).val.run (visible φ S)
         Q.Completes u (visible φ S) v ∧ Q.output u (visible φ S) = v.output ∧
           Q.paidCount u (visible φ S) = v.paid := by
   obtain ⟨T₀, hm, he⟩ := Q.completion_normalization_version ν hQ k
-  refine ⟨T₀, hm, ?_⟩
+  refine ⟨T₀, hm, he, ?_⟩
   filter_upwards [he] with u hu
   intro φ S
   simpa only [hu] using Q.normalization_pointwise k hc φ S u
@@ -849,6 +878,25 @@ theorem fromRaw_lawful (R : RawRule U) (hR : R.Lawful)
   · intro r E hE
     exact ⟨(fun u => R.wait u r) ⁻¹' E, hR.measurable_wait r hE,
       Filter.EventuallyEq.rfl⟩
+
+/-- Seed-completed rules embed into the ambient observation completion without new randomness. -/
+theorem fromRaw_completion_lawful (R : RawRule U) (ν : Measure U)
+    (hR : R.CompletionLawful ν) (μ : Measure (SourcePoint × U))
+    (hp : QuasiMeasurePreserving Prod.snd μ ν) : (fromRaw R).Lawful μ := by
+  let R₀ := R.ordinaryVersion ν hR
+  have h₀ := fromRaw_lawful R₀ (R.ordinaryVersion_lawful ν hR) μ
+  have he := hp.ae (R.ordinaryVersion_common_set ν hR)
+  constructor
+  · intro r E hE
+    obtain ⟨B, hB, hb⟩ := h₀.next_available r E hE
+    refine ⟨B, hB, ?_⟩
+    filter_upwards [he, hb] with p hpr hpb
+    exact (congrArg (fun e => e ∈ E) (hpr r).1).trans hpb
+  · intro r E hE
+    obtain ⟨B, hB, hb⟩ := h₀.wait_available r E hE
+    refine ⟨B, hB, ?_⟩
+    filter_upwards [he, hb] with p hpr hpb
+    exact (congrArg (fun e => e ∈ E) (hpr r).2).trans hpb
 
 def atSource (Q : CompletedRule U) (s : SourcePoint) : RawRule U where
   next u r := Q.next (s,u) r

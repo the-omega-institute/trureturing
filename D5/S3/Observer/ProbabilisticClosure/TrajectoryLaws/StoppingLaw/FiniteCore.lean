@@ -34,6 +34,8 @@ theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
     (hB : T.AllStoppingDepths φ k) :
     ∃ ts : List ℤ, ts.length = k ∧
       (∀ t ∈ ts, (t - φ.toInt) % 2 = 0) ∧ T = stopComb ts := by
+  have houtput (t : ℤ) (b : Bool) (v : Execution) :
+      (v.prepend t b).output = v.output := rfl
   induction k generalizing T with
   | zero =>
     have h0 := hA (fun _ => false)
@@ -50,7 +52,7 @@ theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
       have hzero := hA (fun _ => false)
       have hconst : visible (!φ) (fun _ => false) t = false := constant_visible _ _ _
       have hzout : (z.run (visible (!φ) (fun _ => false))).output = some (.a false) := by
-        simpa only [run, hconst, Bool.false_eq_true, ↓reduceIte, Execution.output_prepend]
+        simpa only [run, hconst, Bool.false_eq_true, ↓reduceIte, houtput]
           using hzero.1
       have htrue : visible φ S t = true := by
         cases he : visible φ S t with
@@ -60,7 +62,7 @@ theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
             omega
           have hzleaf := leaf_of_paid_zero z (visible φ S) hz0
           have hzlabel : (z.run (visible φ S)).output = some (.a true) := by
-            simpa only [run, he, Bool.false_eq_true, ↓reduceIte, Execution.output_prepend] using hs
+            simpa only [run, he, Bool.false_eq_true, ↓reduceIte, houtput] using hs
           rw [hzlabel] at hzleaf
           rw [hzleaf] at hzout
           simp [run] at hzout
@@ -73,7 +75,7 @@ theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
         omega
       have holeaf := leaf_of_paid_zero o (visible φ S) ho0
       have holabel : (o.run (visible φ S)).output = some (.a true) := by
-        simpa only [run, htrue, ↓reduceIte, Execution.output_prepend] using hs
+        simpa only [run, htrue, ↓reduceIte, houtput] using hs
       rw [holabel] at holeaf
       have hzheight : z.height ≤ k := by
         simp only [height] at hh
@@ -84,7 +86,7 @@ theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
         have hr := hA R
         have hv := opposite_phase_visible φ R t ht
         simp only [run, hv, Bool.false_eq_true, ↓reduceIte,
-          Execution.output_prepend, Execution.paid_prepend] at hr
+          houtput, Execution.paid_prepend] at hr
         exact ⟨hr.1, by omega⟩
       have hzB : z.AllStoppingDepths φ k := by
         intro i hi hik
@@ -96,7 +98,7 @@ theorem sections_force_stopComb (k : ℕ) (T : ReadTree) (φ : Bool)
             simp [run, he, holeaf, Execution.paid, Execution.prepend] at hrn
             omega
         simp only [run, hv, Bool.false_eq_true, ↓reduceIte,
-          Execution.output_prepend, Execution.paid_prepend] at hrout hrn
+          houtput, Execution.paid_prepend] at hrout hrn
         exact ⟨R, hrout, by omega⟩
       obtain ⟨ts, hlen, hpar, heq⟩ := ih z hzheight hzA hzB
       refine ⟨t :: ts, by simp [hlen], ?_, ?_⟩
@@ -142,6 +144,8 @@ theorem stopComb_outcomes (ts : List ℤ) (x : ℤ → Bool) :
       ((stopComb ts).run x).paid = ts.length ∨
     ((stopComb ts).run x).output = some (.a true) ∧
       1 ≤ ((stopComb ts).run x).paid ∧ ((stopComb ts).run x).paid ≤ ts.length := by
+  have houtput (t : ℤ) (b : Bool) (v : Execution) :
+      (v.prepend t b).output = v.output := rfl
   induction ts with
   | nil => exact Or.inl ⟨rfl, rfl⟩
   | cons t ts ih =>
@@ -153,11 +157,11 @@ theorem stopComb_outcomes (ts : List ℤ) (x : ℤ → Bool) :
       rcases ih with h | h
       · left
         simpa only [stopComb, run, ht, Bool.false_eq_true, ↓reduceIte,
-          Execution.output_prepend, Execution.paid_prepend, List.length_cons] using
+          houtput, Execution.paid_prepend, List.length_cons] using
           And.intro h.1 (congrArg (· + 1) h.2)
       · right
         simp only [stopComb, run, ht, Bool.false_eq_true, ↓reduceIte,
-          Execution.output_prepend, Execution.paid_prepend, List.length_cons]
+          houtput, Execution.paid_prepend, List.length_cons]
         exact ⟨h.1, by omega, by omega⟩
 
 theorem stopComb_not_a1_at_zero (ts : List ℤ) (x : ℤ → Bool) :
@@ -173,6 +177,8 @@ theorem zero_prefix_difference (ts : List ℤ) (x : ℤ → Bool) (r : ℕ)
     (ZeroReplies ts r x ∧ ¬ZeroReplies ts (r + 1) x) ↔
       ((stopComb ts).run x).output = some (.a true) ∧
         ((stopComb ts).run x).paid = r + 1 := by
+  have houtput (t : ℤ) (b : Bool) (v : Execution) :
+      (v.prepend t b).output = v.output := rfl
   induction ts generalizing r with
   | nil => simp at hr
   | cons t ts ih =>
@@ -185,7 +191,7 @@ theorem zero_prefix_difference (ts : List ℤ) (x : ℤ → Bool) (r : ℕ)
         simp only [ZeroReplies, List.take_zero, List.take_succ_cons, List.forall_mem_cons,
           List.not_mem_nil, IsEmpty.forall_iff, implies_true, and_true,
           hx, not_true_eq_false, true_and, stopComb, run, Bool.false_eq_true, ↓reduceIte,
-          Execution.output_prepend, Execution.paid_prepend] at *
+          houtput, Execution.paid_prepend] at *
         simpa using hn
     | succ r =>
       have hr' : r < ts.length := by simpa using hr
@@ -194,20 +200,22 @@ theorem zero_prefix_difference (ts : List ℤ) (x : ℤ → Bool) (r : ℕ)
         simp [ZeroReplies, stopComb, run, hx, Execution.paid, Execution.prepend]
       | false =>
         simpa [ZeroReplies, stopComb, run, hx, Execution.paid_prepend,
-          Execution.output_prepend, Nat.add_assoc] using ih r hr'
+          houtput, Nat.add_assoc] using ih r hr'
 
 /-- The final zero prefix is the a0 return event, rather than strict survival. -/
 theorem zero_prefix_final (ts : List ℤ) (x : ℤ → Bool) :
     ZeroReplies ts ts.length x ↔
       ((stopComb ts).run x).output = some (.a false) ∧
         ((stopComb ts).run x).paid = ts.length := by
+  have houtput (t : ℤ) (b : Bool) (v : Execution) :
+      (v.prepend t b).output = v.output := rfl
   induction ts with
   | nil => simp [ZeroReplies, stopComb, run, Execution.paid]
   | cons t ts ih =>
     cases hx : x t with
-    | true => simp [ZeroReplies, stopComb, run, hx]
+    | true => simp [ZeroReplies, stopComb, run, hx, houtput]
     | false =>
-      simpa [ZeroReplies, stopComb, run, hx, Execution.output_prepend,
+      simpa [ZeroReplies, stopComb, run, hx, houtput,
         Execution.paid_prepend] using ih
 
 /-- Before the last call, a zero prefix means strictly more paid reads. -/
@@ -711,29 +719,6 @@ theorem observation_eq_of_agree (j φ : Bool) (T : ReadTree) (S R : Spins)
     cases j <;> cases φ <;> simp [lawWindow, targetIndex]
   simp only [observation, hr, actual_endpoint, h _ hq]
 
-/-- No completion or seed claim is needed for finite coordinate-window consistency. -/
-theorem fullMass_enlarge (β : Bias) (V : Finset ℤ) (j : Bool) (T : ReadTree)
-    (hV : lawWindow T ⊆ V) (z : Observation) :
-    fullMass β V j T z = fullMass β (lawWindow T) j T z := by
-  have he (φ : Bool) : SpinWindow.prob β V {S | observation j φ T S = z} =
-      SpinWindow.prob β (lawWindow T) {S | observation j φ T S = z} := by
-    apply SpinWindow.prob_enlarge β _ _ hV
-    intro S R h
-    exact congrArg (fun a => a = z) (observation_eq_of_agree j φ T S R h) |>.to_iff
-  unfold fullMass
-  simp_rw [he]
-
-theorem remoteMass_enlarge (β : Bias) (V : Finset ℤ) (j : Bool) (R : ℕ) (T : ReadTree)
-    (hV : lawWindow T ⊆ V) :
-    remoteMass β V j R T = remoteMass β (lawWindow T) j R T := by
-  have he (φ : Bool) : SpinWindow.prob β V (remoteEvent T j R φ) =
-      SpinWindow.prob β (lawWindow T) (remoteEvent T j R φ) := by
-    apply SpinWindow.prob_enlarge β _ _ hV
-    intro S Q h
-    have hr := T.source_run_eq_of_agree φ S Q (fun i hi => h i (Finset.mem_union_left _ hi))
-    simp only [remoteEvent, Set.mem_setOf_eq, hr]
-  unfold remoteMass
-  simp_rw [he]
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
