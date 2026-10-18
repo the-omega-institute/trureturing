@@ -311,7 +311,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   linarith
 
 def family : Registration arena.{u,v} (type_of% @matrixSubentropy_rectangular_gram.{u,v}) where
-  actual := actual
+  actual := realize signature observation emptyAnchor
   bridge := Iff.rfl
   variation := ⟨@matrixSubentropy_rectangular_gram, rejected, rejected_law⟩
   sensitivity := by
@@ -386,7 +386,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   linarith
 
 def family : Registration arena.{u,v} (type_of% @matrixSubentropy_isometric_embedding.{u,v}) where
-  actual := actual
+  actual := realize signature observation emptyAnchor
   bridge := Iff.rfl
   variation := ⟨@matrixSubentropy_isometric_embedding, rejected, rejected_law⟩
   sensitivity := by
@@ -480,7 +480,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   norm_num [actual, realize, observation]
 
 def family : Registration arena.{u} (type_of% @matrixSubentropy_pure.{u}) where
-  actual := actual
+  actual := realize signature observation emptyAnchor
   bridge := Iff.rfl
   variation := ⟨@matrixSubentropy_pure, rejected, rejected_law⟩
   sensitivity := by

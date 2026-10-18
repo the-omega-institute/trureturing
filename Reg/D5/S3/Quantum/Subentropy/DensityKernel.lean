@@ -277,7 +277,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
 
 def source_registration : Registration arena.{u}
     (type_of% @continuousOn_matrixSubentropy.{u}) where
-  actual := actual
+  actual := realize signature.{u} observation.{u} emptyAnchor.{u}
   bridge := Iff.rfl
   variation := ⟨@continuousOn_matrixSubentropy, rejected, rejected_law⟩
   sensitivity := by
