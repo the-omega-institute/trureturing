@@ -374,176 +374,6 @@ end
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-noncomputable section
-open Classical MeasureTheory ProbabilityTheory
-open scoped BigOperators NNReal ENNReal
-
-namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
-
-instance : MeasurableSpace Execution := ⊤
-instance : MeasurableSingletonClass Execution := ⟨fun _ => trivial⟩
-deriving instance Countable for Execution
-deriving instance Countable for Observation
-instance : MeasurableSpace Observation := ⊤
-instance : MeasurableSingletonClass Observation := ⟨fun _ => trivial⟩
-
-abbrev SourcePoint := Bool × Spins
-
-def Bias.parameter (β : Bias) : unitInterval := ⟨β.p, β.pos.le, β.lt_one.le⟩
-
-def spinMarginal (β : Bias) : Measure Bool :=
-  bernoulliMeasure true false β.parameter
-
-/-- Bernoulli(p) spins on all integer indices, without deleting separator coordinates. -/
-def spinLaw (β : Bias) : Measure Spins := Measure.infinitePi (fun _ : ℤ => spinMarginal β)
-
-def fairPhase : Measure Bool := bernoulliMeasure true false (⟨(1 : ℝ) / 2, by norm_num, by norm_num⟩ : unitInterval)
-
-/-- The fair phase is independent of the entire iid integer spin family. -/
-def sourceLaw (β : Bias) : Measure SourcePoint := fairPhase.prod (spinLaw β)
-
-instance (β : Bias) : IsProbabilityMeasure (spinMarginal β) := by
-  unfold spinMarginal; infer_instance
-instance (β : Bias) : IsProbabilityMeasure (spinLaw β) := by
-  unfold spinLaw; infer_instance
-instance : IsProbabilityMeasure fairPhase := by unfold fairPhase; infer_instance
-instance (β : Bias) : IsProbabilityMeasure (sourceLaw β) := by
-  unfold sourceLaw; infer_instance
-
-theorem spinMarginal_singleton (β : Bias) (s : Bool) :
-    (spinMarginal β).real {s} = β.π s := by
-  cases s <;> simp [spinMarginal, bernoulliMeasure_real_apply, Bias.parameter, Bias.π]
-
-theorem fairPhase_singleton (φ : Bool) : fairPhase.real {φ} = 1 / 2 := by
-  cases φ <;> norm_num [fairPhase, bernoulliMeasure_real_apply]
-
-/-- A finite marginal is the positive weighted model used by the rigidity core. -/
-theorem finiteSpinMeasure_mass (β : Bias) (V : Finset ℤ) (E : Set (V → Bool)) :
-    (Measure.pi (fun _ : V => spinMarginal β)).real E = FiniteSpinLaw.mass β E := by
-  classical
-  let μ := Measure.pi (fun _ : V => spinMarginal β)
-  have hs (σ : V → Bool) : μ.real {σ} = FiniteSpinLaw.weight β σ := by
-    simp only [μ, measureReal_def, Measure.pi_singleton, ENNReal.toReal_prod,
-      FiniteSpinLaw.weight]
-    exact Finset.prod_congr rfl (fun i _ => spinMarginal_singleton β (σ i))
-  have he : (↑(Finset.univ.filter (fun σ : V → Bool => σ ∈ E)) : Set (V → Bool)) = E := by
-    ext σ; simp
-  calc
-    μ.real E = ∑ σ ∈ Finset.univ.filter (fun σ : V → Bool => σ ∈ E), μ.real {σ} := by
-      have hsum := sum_measureReal_singleton (μ := μ)
-        (Finset.univ.filter (fun σ : V → Bool => σ ∈ E))
-      rw [he] at hsum
-      exact hsum.symm
-    _ = FiniteSpinLaw.mass β E := by
-      simp only [Finset.sum_filter, hs, FiniteSpinLaw.mass]
-      apply Finset.sum_congr
-      · ext σ; simp
-      · intro σ _; rfl
-
-/-- Arbitrary finite-support events have their exact original infinite-source mass. -/
-theorem spinLaw_finite_event (β : Bias) (V : Finset ℤ) (E : Set Spins)
-    (hE : ∀ S R, (∀ i ∈ V, S i = R i) → (S ∈ E ↔ R ∈ E)) :
-    (spinLaw β).real E = SpinWindow.prob β V E := by
-  let A : Set (V → Bool) := SpinWindow.extend V ⁻¹' E
-  have he : E = V.restrict ⁻¹' A := by
-    ext S
-    apply hE S (SpinWindow.extend V (V.restrict S))
-    intro i hi; simp [SpinWindow.extend, hi, Finset.restrict]
-  have hm : MeasurableSet A := MeasurableSet.of_discrete
-  calc
-    (spinLaw β).real E = ((spinLaw β).map V.restrict).real A := by
-      rw [map_measureReal_apply (V.measurable_restrict) hm]
-      exact congrArg (spinLaw β).real he
-    _ = (Measure.pi (fun _ : V => spinMarginal β)).real A := by
-      rw [spinLaw, Measure.infinitePi_map_restrict]
-    _ = SpinWindow.prob β V E := finiteSpinMeasure_mass β V A
-
-theorem measurable_visible (φ : Bool) (t : ℤ) : Measurable (fun S : Spins => visible φ S t) := by
-  unfold visible
-  split_ifs
-  · change Measurable (fun S : Spins => Bool.xor (S ((t - φ.toInt) / 2))
-      (S ((t - φ.toInt) / 2 + 1)))
-    exact (measurable_of_countable (fun p : Bool × Bool => Bool.xor p.1 p.2)).comp
-      ((measurable_pi_apply (X := fun _ : ℤ => Bool) ((t - φ.toInt) / 2)).prodMk
-        (measurable_pi_apply (X := fun _ : ℤ => Bool) ((t - φ.toInt) / 2 + 1)))
-  · exact measurable_const
-
-theorem measurable_hidden (φ : Bool) (t : ℤ) : Measurable (fun S : Spins => hidden φ S t) := by
-  unfold hidden
-  split_ifs <;> exact (measurable_of_countable _).comp (measurable_pi_apply _)
-
-theorem ReadTree.measurable_source_run (T : ReadTree) (φ : Bool) :
-    Measurable (fun S : Spins => T.run (visible φ S)) := by
-  induction T with
-  | leaf a => exact measurable_const
-  | read t z o hz ho =>
-    have hr : Measurable (fun S : Spins =>
-        if visible φ S t then o.run (visible φ S) else z.run (visible φ S)) :=
-      ho.ite ((measurable_visible φ t) (measurableSet_singleton true)) hz
-    exact (measurable_of_countable (fun p : Bool × Execution =>
-      p.2.prepend t p.1)).comp ((measurable_visible φ t).prodMk hr)
-
-theorem measurable_observation (j : Bool) (T : ReadTree) :
-    Measurable (fun z : SourcePoint => observation j z.1 T z.2) := by
-  apply measurable_from_prod_countable_right
-  intro φ
-  exact (measurable_of_countable (fun p : Hidden × Execution =>
-    (⟨p.1, p.2.output, p.2.returned, p.2.paid⟩ : Observation))).comp
-      ((measurable_hidden φ j.toInt).prodMk (T.measurable_source_run φ))
-
-/-- Averaging any measurable source event over the two original phases. -/
-theorem sourceLaw_real_sections (β : Bias) (E : Set SourcePoint) (hE : MeasurableSet E) :
-    (sourceLaw β).real E = (∑ φ : Bool, (spinLaw β).real {S | (φ, S) ∈ E}) / 2 := by
-  have he : E = ⋃ φ : Bool, ({φ} ×ˢ {S | (φ, S) ∈ E}) := by ext z; simp
-  have hd : Pairwise (fun φ ψ : Bool => Disjoint
-      ({φ} ×ˢ {S | (φ, S) ∈ E}) ({ψ} ×ˢ {S | (ψ, S) ∈ E})) := by
-    intro φ ψ hne
-    exact Set.disjoint_left.mpr (by rintro z ⟨hφ, _⟩ ⟨hψ, _⟩; exact hne (hφ.symm.trans hψ))
-  conv_lhs => rw [he]
-  rw [measureReal_iUnion_fintype hd (fun φ =>
-    (measurableSet_singleton φ).prod (measurable_prodMk_left hE))]
-  simp only [sourceLaw, measureReal_prod_prod, fairPhase_singleton]
-  rw [← Finset.mul_sum]
-  ring
-
-/-- The actual original (H_j,O,D,N) law, with all nonreturn depths retained. -/
-theorem sourceLaw_observation (β : Bias) (j : Bool) (T : ReadTree) (z : Observation) :
-    (sourceLaw β).real {s | observation j s.1 T s.2 = z} =
-      fullMass β (lawWindow T) j T z := by
-  rw [sourceLaw_real_sections β {s | observation j s.1 T s.2 = z}
-    ((measurable_observation j T) (measurableSet_singleton z))]
-  unfold fullMass
-  congr 1
-  apply Finset.sum_congr rfl
-  intro φ _
-  apply spinLaw_finite_event β (lawWindow T)
-  intro S R h
-  change observation j φ T S = z ↔ observation j φ T R = z
-  rw [observation_eq_of_agree j φ T S R h]
-
-/-- The same finite-support projection also preserves actual-read events. -/
-theorem sourceLaw_remote (β : Bias) (j : Bool) (R : ℕ) (T : ReadTree) :
-    (sourceLaw β).real {s | ∃ a ∈ (T.run (visible s.1 s.2)).record, Far j R a.1} =
-      remoteMass β (lawWindow T) j R T := by
-  have hm : Measurable (fun s : SourcePoint => T.run (visible s.1 s.2)) :=
-    measurable_from_prod_countable_right (T.measurable_source_run)
-  rw [sourceLaw_real_sections β {s | ∃ a ∈ (T.run (visible s.1 s.2)).record, Far j R a.1}
-    (hm (MeasurableSet.of_discrete (s := {v : Execution | ∃ a ∈ v.record, Far j R a.1})))]
-  unfold remoteMass
-  congr 1
-  apply Finset.sum_congr rfl
-  intro φ _
-  apply spinLaw_finite_event β (lawWindow T)
-  intro S S' h
-  have hr := T.source_run_eq_of_agree φ S S' (fun i hi => h i (Finset.mem_union_left _ hi))
-  simp only [Set.mem_setOf_eq, hr, remoteEvent]
-
-end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
-
-end
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
 set_option maxHeartbeats 1000000
 noncomputable section
 open Classical MeasureTheory
@@ -570,7 +400,8 @@ variable {U : Type u} [MeasurableSpace U]
 
 def observation (Q : RawRule U) (j : Bool) (s : SourcePoint) (u : U) : Observation :=
   let o := Q.output u (visible s.1 s.2)
-  ⟨hidden s.1 s.2 j.toInt, o, o.isSome, (Q.paidCount u (visible s.1 s.2)).toNat⟩
+  ⟨hidden s.1 s.2 j.toInt, o, decide (Q.returnTime u (visible s.1 s.2) < ⊤),
+    (Q.paidCount u (visible s.1 s.2)).toNat⟩
 
 def joint (Q : RawRule U) (j : Bool) (z : SourcePoint × U) : U × Observation :=
   (z.2, Q.observation j z.1 z.2)
@@ -586,7 +417,7 @@ theorem observation_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k)
     Q.observation j s u = StoppingLaw.observation j s.1 (Q.normalize k u) s.2 := by
   obtain ⟨_, ho, hn⟩ := Q.normalization_pointwise k hc s.1 s.2 u
   simp only [observation, StoppingLaw.observation, ho, hn, ENat.toNat_natCast,
-    Execution.returned]
+    Q.normalization_return_indicator k hc]
 
 theorem joint_normalize (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k) (j : Bool) :
     Q.joint j = selectorJoint j (Q.normalize k) := by
@@ -891,8 +722,8 @@ theorem original_rule_sharp_remote_probability {U : Type u} [MeasurableSpace U]
   have hb := original_rule_remote_probability β j k hk ν Q hQ hc hlaw
   refine ⟨⟨hb, stopping_witness_remote_probability β j k hk ν⟩, ?_⟩
   intro hk1
-  apply le_antisymm (probReal_le_one _)
-  simpa only [hk1, β.T_one] using hb
+  apply le_antisymm measureReal_le_one
+  simpa [hk1, β.T_one] using hb
 
 /-- The witness stays inside radius 2k+1 on every source and seed, including null paths. -/
 theorem stopping_witness_radius {U : Type u} [MeasurableSpace U] (j : Bool) (k : ℕ) :
@@ -905,6 +736,30 @@ theorem stopping_witness_radius {U : Type u} [MeasurableSpace U] (j : Bool) (k :
   have hmem := (stoppingRule (U := U) j k).completes_record_subset _ _ hnorm.1 hr a ha
   rw [hn] at hmem
   exact (witness_execution_bounds j φ k S).2 a hmem
+
+/-- The complete original-rule witness contract, including all formal branch returns. -/
+theorem stopping_witness_original_contract {U : Type u} [MeasurableSpace U]
+    (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k) (ν : Measure U) [IsProbabilityMeasure ν] :
+    (stoppingRule (U := U) j k).Lawful ∧ (stoppingRule (U := U) j k).TotalCap k ∧
+      (∀ x : ℤ → Bool, let v := (witnessTree j k).run x
+        v.returned = true ∧ 1 ≤ v.paid ∧ v.paid ≤ k) ∧
+      (∀ B : Set U, MeasurableSet B → ∀ z : Observation,
+        ((stoppingRule j k).fullLaw β j ν).real (B ×ˢ {z}) =
+          ν.real B * stoppingMass β k z) ∧
+      (stoppingRule (U := U) j k).WithinActualRadius j (2 * k + 1) := by
+  refine ⟨stoppingRule_lawful j k, stoppingRule_cap j k, ?_,
+    (fun B hB z => stopping_witness_full_law β j k hk ν B hB z),
+    stopping_witness_radius j k⟩
+  intro x
+  have hout : ((witnessTree j k).run x).output = some (.a false) ∧
+      ((witnessTree j k).run x).paid = k ∨
+    ((witnessTree j k).run x).output = some (.a true) ∧
+      1 ≤ ((witnessTree j k).run x).paid ∧ ((witnessTree j k).run x).paid ≤ k := by
+    simpa only [witnessTree, ReadTree.edgeComb, List.length_map, witnessEdges_length] using
+      ReadTree.stopComb_outcomes ((witnessEdges j k).map (fun e => 2 * e + (!j).toInt)) x
+  rcases hout with ⟨ho, hn⟩ | ⟨ho, hn, hb⟩
+  · exact ⟨by simp [Execution.returned, ho], by omega, by omega⟩
+  · exact ⟨by simp [Execution.returned, ho], hn, hb⟩
 
 /-- The actual positive-mass remote event excludes every smaller preserving radius. -/
 theorem original_rule_radius_lower {U : Type u} [MeasurableSpace U]
@@ -932,11 +787,146 @@ theorem stopping_witness_exact_radius {U : Type u} [MeasurableSpace U]
     IsLeast {R : ℕ | ∃ Q : RawRule U, Q.CompletionLawful ν ∧ Q.TotalCap k ∧
       Q.SameFullLaw (stoppingRule j k) β j ν ∧ Q.WithinActualRadius j R} (2 * k + 1) := by
   constructor
-  · exact ⟨stoppingRule j k, (stoppingRule_lawful j k).completionLawful ν,
-      stoppingRule_cap j k, rfl, stopping_witness_radius j k⟩
+  · have hw := stopping_witness_original_contract β j k hk ν
+    exact ⟨stoppingRule j k, hw.1.completionLawful ν, hw.2.1, rfl, hw.2.2.2.2⟩
   · rintro R ⟨Q, hQ, hc, hlaw, hR⟩
     exact original_rule_radius_lower β j k hk ν Q hQ hc hlaw R hR
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
+end
+
+
+noncomputable section
+open Classical MeasureTheory
+open scoped ENNReal
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+namespace CompletedRule
+universe u
+variable {U : Type u} [MeasurableSpace U]
+
+def joint (Q : CompletedRule U) (j : Bool) (p : SourcePoint × U) : U × Observation :=
+  (p.2, (Q.atSource p.1).observation j p.1 p.2)
+
+def fullLaw (Q : CompletedRule U) (β : Bias) (j : Bool) (ν : Measure U) :
+    Measure (U × Observation) := ((sourceLaw β).prod ν).map (Q.joint j)
+
+def remote (Q : CompletedRule U) (j : Bool) (R : ℕ) : Set (SourcePoint × U) :=
+  {p | p ∈ (Q.atSource p.1).remote j R}
+
+def WithinActualRadius (Q : CompletedRule U) (j : Bool) (R : ℕ) : Prop :=
+  ∀ (s : SourcePoint) (u : U) (n : ℕ) (r : Record),
+    (Q.atSource s).readPrefix u (visible s.1 s.2) n = some r →
+      ∀ a ∈ r, |a.1 - j.toInt| ≤ (R : ℤ)
+
+theorem joint_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
+    (j : Bool) (p : SourcePoint × U) :
+    Q.joint j p = (p.2, observation j p.1.1 (Q.normalize k p) p.1.2) := by
+  obtain ⟨_, ho, hn⟩ := Q.normalization_execution k hc p
+  have hd : decide ((Q.atSource p.1).returnTime p.2 (visible p.1.1 p.1.2) < ⊤) =
+      ((Q.normalize k p).run (visible p.1.1 p.1.2)).returned := by
+    apply Bool.eq_iff_iff.mpr
+    simpa only [decide_eq_true_eq, Execution.returned, ho] using
+      (Q.atSource p.1).finite_return_iff p.2 (visible p.1.1 p.1.2)
+  simp only [joint, RawRule.observation, observation, ho, hn, hd, ENat.toNat_natCast]
+
+theorem remote_normalize (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
+    (j : Bool) (R : ℕ) (p : SourcePoint × U) :
+    p ∈ Q.remote j R ↔ ∃ a ∈ ((Q.normalize k p).run (visible p.1.1 p.1.2)).record,
+      Far j R a.1 := by
+  have hv := (Q.normalization_execution k hc p).1
+  constructor
+  · rintro ⟨n, r, hr, a, ha, hf⟩
+    exact ⟨a, (Q.atSource p.1).completes_record_subset _ _ hv hr a ha, hf⟩
+  · rintro ⟨a, ha, hf⟩
+    exact ⟨_, _, hv.1, a, ha, hf⟩
+
+/-- Ambient null changes are transported through one common event version and Fubini.
+The actual cap and pointwise execution theorem remain separate from this a.e. identity. -/
+theorem full_law_sections (β : Bias) (j : Bool) (ν : Measure U) [IsProbabilityMeasure ν]
+    (Q : CompletedRule U) (hQ : Q.Lawful ((sourceLaw β).prod ν))
+    (k : ℕ) (hc : Q.TotalCap k) (w : SourcePoint → Observation) (hw : Measurable w)
+    (hlaw : Q.fullLaw β j ν =
+      ((sourceLaw β).prod ν).map (fun p : SourcePoint × U => (p.2, w p.1))) :
+    ∃ T : U → {t : ReadTree // t.height ≤ k}, Measurable T ∧
+      (Q.normalize k =ᵐ[(sourceLaw β).prod ν] fun p => (T p.2).val) ∧
+      (∀ᵐ u ∂ν, (∀ᵐ s ∂sourceLaw β, Q.normalize k (s,u) = (T u).val) ∧
+        ∀ z, fullMass β (lawWindow (T u).val) j (T u).val z =
+          (sourceLaw β).real (w ⁻¹' {z})) := by
+  obtain ⟨T, hm, he⟩ := Q.normalization_version ((sourceLaw β).prod ν) hQ k
+  have hT : Measurable (fun u => (T u).val) := measurable_subtype_coe.comp hm
+  have hj : Q.joint j =ᵐ[(sourceLaw β).prod ν] selectorJoint j (fun u => (T u).val) := by
+    filter_upwards [he] with p hp
+    rw [Q.joint_normalize k hc j p, hp]
+    rfl
+  have hmap := (Measure.map_congr hj).symm.trans hlaw
+  have hs := selector_full_law_sections β j ν (fun u => (T u).val) hT w hw hmap
+  have hswap : ∀ᵐ p ∂ν.prod (sourceLaw β), Q.normalize k (p.2,p.1) = (T p.1).val :=
+    (Measure.measurePreserving_swap (μ := ν) (ν := sourceLaw β)).quasiMeasurePreserving.ae he
+  exact ⟨T, hm, he, (Measure.ae_ae_of_ae_prod hswap).and hs⟩
+
+/-- Stopping rigidity and the sharp read bound include the permitted ambient completion versions. -/
+theorem original_rule_stopping_results (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k)
+    (ν : Measure U) [IsProbabilityMeasure ν] (Q : CompletedRule U)
+    (hQ : Q.Lawful ((sourceLaw β).prod ν)) (hc : Q.TotalCap k)
+    (hlaw : Q.fullLaw β j ν = (stoppingRule j k).fullLaw β j ν) :
+    (∃ T : U → {t : ReadTree // t.height ≤ k}, Measurable T ∧
+      (∀ᵐ u ∂ν, (∀ᵐ s ∂sourceLaw β, Q.normalize k (s,u) = (T u).val) ∧
+        ∃ es : List ℤ, es.length = k ∧ es.Nodup ∧ ∃ L : ℤ,
+          (T u).val = ReadTree.stopComb (es.map (fun e => 2 * e + (!j).toInt)) ∧
+          es.toFinset = pathEdges L k ∧ j.toInt ∉ pathVertices L k)) ∧
+      (1 + β.T k) / 2 ≤ ((sourceLaw β).prod ν).real (Q.remote j (2 * k + 1)) := by
+  have hW := RawRule.fullLaw_realize (fun _ : U => witnessTree j k) k
+    (fun _ => stoppingRule_height j k) β j ν
+  obtain ⟨T, hm, he, hs⟩ := Q.full_law_sections β j ν hQ k hc
+    (fun s => observation j s.1 (witnessTree j k) s.2)
+    (measurable_observation j (witnessTree j k)) (hlaw.trans hW)
+  have hLaw : ∀ᵐ u ∂ν, HasStoppingLaw β (lawWindow (T u).val) j k (T u).val := by
+    filter_upwards [hs] with u hu
+    intro z
+    exact (hu.2 z).trans ((sourceLaw_observation β j (witnessTree j k) z).trans
+      (witness_canonical_law β j k hk z))
+  constructor
+  · refine ⟨T, hm, ?_⟩
+    filter_upwards [hs, hLaw] with u hu hl
+    exact ⟨hu.1, finite_full_law_forces_stopping_path β j k hk (T u).val (T u).property hl⟩
+  · have hb := selector_remote_lower_bound β j k hk ν (fun u => (T u).val)
+      (measurable_subtype_coe.comp hm) (fun u => (T u).property) hLaw
+    have hE : Q.remote j (2 * k + 1) =ᵐ[(sourceLaw β).prod ν]
+        selectorRemote (fun u => (T u).val) j (2 * k + 1) := by
+      filter_upwards [he] with p hp
+      apply propext
+      rw [Q.remote_normalize k hc, hp]
+      rfl
+    exact hb.trans_eq (congrArg ENNReal.toReal (measure_congr hE)).symm
+
+/-- The exact law-preserving radius also ranges over ambient completed lawful events. -/
+theorem stopping_witness_exact_radius (β : Bias) (j : Bool) (k : ℕ) (hk : 1 ≤ k)
+    (ν : Measure U) [IsProbabilityMeasure ν] :
+    IsLeast {R : ℕ | ∃ Q : CompletedRule U, Q.Lawful ((sourceLaw β).prod ν) ∧
+      Q.TotalCap k ∧ Q.fullLaw β j ν = (stoppingRule j k).fullLaw β j ν ∧
+        Q.WithinActualRadius j R} (2 * k + 1) := by
+  constructor
+  · refine ⟨fromRaw (stoppingRule j k),
+      fromRaw_lawful _ (stoppingRule_lawful j k) _, ?_, rfl, ?_⟩
+    · intro s u; exact stoppingRule_cap j k s.1 s.2 u
+    · intro s u n r hr a ha
+      exact stopping_witness_radius j k s.1 s.2 u n r hr a ha
+  · rintro R ⟨Q, hQ, hc, hlaw, hR⟩
+    by_contra hn
+    have he : Q.remote j (2 * k + 1) = ∅ := by
+      apply Set.eq_empty_iff_forall_notMem.mpr
+      intro p hp
+      obtain ⟨n, r, hr, a, ha, hf⟩ := hp
+      have hb := hR p.1 p.2 n r hr a ha
+      unfold Far at hf
+      omega
+    have hb := (Q.original_rule_stopping_results β j k hk ν hQ hc hlaw).2
+    rw [he, measureReal_empty] at hb
+    have hT : 0 ≤ β.T k := add_nonneg
+      (pow_nonneg (sub_nonneg.mpr β.lt_one.le) _) (pow_nonneg β.pos.le _)
+    linarith
+
+end CompletedRule
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 end

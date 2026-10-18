@@ -21,6 +21,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
 abbrev Spins := ℤ → Bool
+abbrev SourcePoint := Bool × Spins
 
 inductive Hidden where
   | a (spin : Bool)
@@ -246,7 +247,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open Classical MeasureTheory
-open scoped NNReal
+open scoped NNReal ENNReal
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
@@ -255,6 +256,8 @@ inductive EventKind where
   | read (address : ℤ)
   | terminal (output : Option Hidden)
   deriving DecidableEq, Countable
+
+instance : Nonempty EventKind := ⟨.terminal none⟩
 
 deriving instance Countable for ReadTree
 
@@ -324,6 +327,22 @@ def Returns (Q : RawRule U) (u : U) (x : ℤ → Bool) (a : Hidden) : Prop :=
 /-- Infinite reads and internal permanent continuation both have output none. -/
 def output (Q : RawRule U) (u : U) (x : ℤ → Bool) : Option Hidden :=
   if h : ∃ a, Q.Returns u x a then some h.choose else none
+
+/-- The elapsed finite waits include the wait preceding the terminal return. -/
+def elapsed (Q : RawRule U) (u : U) (r : Record) : ℝ≥0 :=
+  ∑ i ∈ Finset.range (r.length + 1), Q.wait u (r.take i)
+
+/-- Every nonreturn has infinite return time, even at a finite paid count. -/
+def returnTime (Q : RawRule U) (u : U) (x : ℤ → Bool) : ℝ≥0∞ :=
+  if h : ∃ a, Q.Returns u x a then
+    (Q.elapsed u ((h.choose_spec.choose_spec).choose) : ℝ≥0∞) else ⊤
+
+/-- A finite sequence of finite waits returns finitely exactly when its output exists. -/
+theorem finite_return_iff (Q : RawRule U) (u : U) (x : ℤ → Bool) :
+    Q.returnTime u x < ⊤ ↔ (Q.output u x).isSome = true := by
+  by_cases h : ∃ a, Q.Returns u x a
+  · simp [returnTime, output, h]
+  · simp [returnTime, output, h]
 
 /-- Expansion truncates only a further read at exhausted fuel, without charging it. -/
 def unfold (Q : RawRule U) : ℕ → U → Record → ReadTree
@@ -498,20 +517,36 @@ theorem completes_record_subset (Q : RawRule U) (u : U) (x : ℤ → Bool)
   rw [ht]
   exact List.mem_append_left _ ha
 
+/-- A cap on one execution suffices for exact normalization on that execution. -/
+theorem normalization_execution (Q : RawRule U) (k : ℕ) (u : U) (x : ℤ → Bool)
+    (hc : Q.paidCount u x ≤ k) :
+    let v := (Q.normalize k u).run x
+    Q.Completes u x v ∧ Q.output u x = v.output ∧ Q.paidCount u x = v.paid := by
+  have h := Q.unfold_correct u x k 0 [] rfl (by
+    intro m r hr
+    have hm := (Q.readPrefix_bound u x m r hr).trans hc
+    simpa using (show m ≤ k by exact_mod_cast hm))
+  have hv : Q.Completes u x ((Q.normalize k u).run x) := by
+    simpa [normalize, Completes] using h
+  exact ⟨hv, Q.completes_observables u x hv⟩
+
 /-- Pointwise normalization on every original source/seed path, including nonreturns. -/
 theorem normalization_pointwise (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k)
     (φ : Bool) (S : Spins) (u : U) :
     let v := (Q.normalize k u).run (visible φ S)
     Q.Completes u (visible φ S) v ∧
       Q.output u (visible φ S) = v.output ∧
-      Q.paidCount u (visible φ S) = v.paid := by
-  have h := Q.unfold_correct u (visible φ S) k 0 [] rfl (by
-    intro m r hr
-    have hm := (Q.readPrefix_bound u (visible φ S) m r hr).trans (hc φ S u)
-    simpa using (show m ≤ k by exact_mod_cast hm))
-  have hv : Q.Completes u (visible φ S) ((Q.normalize k u).run (visible φ S)) := by
-    simpa [normalize, Completes] using h
-  exact ⟨hv, Q.completes_observables u (visible φ S) hv⟩
+      Q.paidCount u (visible φ S) = v.paid :=
+  Q.normalization_execution k u (visible φ S) (hc φ S u)
+
+theorem normalization_return_indicator (Q : RawRule U) (k : ℕ) (hc : Q.TotalCap k)
+    (φ : Bool) (S : Spins) (u : U) :
+    decide (Q.returnTime u (visible φ S) < ⊤) =
+      ((Q.normalize k u).run (visible φ S)).returned := by
+  have ho := (Q.normalization_pointwise k hc φ S u).2.1
+  apply Bool.eq_iff_iff.mpr
+  simpa only [decide_eq_true_eq, Execution.returned, ho] using
+    Q.finite_return_iff u (visible φ S)
 
 theorem measurable_unfold (Q : RawRule U) (hQ : Q.Lawful) (k : ℕ) :
     ∀ r : Record, Measurable (fun u => Q.unfold k u r) := by
@@ -728,4 +763,134 @@ theorem normalize_realize (T : U → ReadTree) (k : ℕ) (u : U)
 end RawRule
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
+end
+
+
+noncomputable section
+open Classical MeasureTheory
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
+open scoped NNReal
+universe u v w
+
+/-- Measurability in the available observation field completed by ambient null sets. -/
+def CompletionAvailable {Ω : Type v} {U : Type u} {Y : Type w}
+    [MeasurableSpace Ω] [MeasurableSpace U] [MeasurableSpace Y]
+    (μ : Measure Ω) (seed : Ω → U) (f : Ω → Y) : Prop :=
+  ∀ E : Set Y, MeasurableSet E → ∃ B : Set U, MeasurableSet B ∧
+    f ⁻¹' E =ᵐ[μ] seed ⁻¹' B
+
+/-- Countable event fibers admit one ordinary version without assumptions on the seed space. -/
+theorem completion_available_countable_version {Ω : Type v} {U : Type u} {Y : Type w}
+    [MeasurableSpace Ω] [MeasurableSpace U] [MeasurableSpace Y]
+    [Countable Y] [Nonempty Y] [MeasurableSingletonClass Y]
+    (μ : Measure Ω) (seed : Ω → U) (f : Ω → Y)
+    (hf : CompletionAvailable μ seed f) :
+    ∃ g : U → Y, Measurable g ∧ f =ᵐ[μ] (fun ω => g (seed ω)) := by
+  letI : Encodable Y := Encodable.ofCountable Y
+  letI : Inhabited Y := ⟨Classical.choice inferInstance⟩
+  let e : ℕ → Y := fun n => (Encodable.decode n).getD default
+  have he : Function.Surjective e := fun a => ⟨Encodable.encode a, by simp [e]⟩
+  choose B hB hEq using fun a : Y => hf {a} (measurableSet_singleton a)
+  let p : U → ℕ → Prop := fun u n => u ∈ B (e n) ∨ (∀ a, u ∉ B a) ∧ n = 0
+  have hp : ∀ u, ∃ n, p u n := by
+    intro u
+    by_cases h : ∃ a, u ∈ B a
+    · obtain ⟨a, ha⟩ := h
+      obtain ⟨n, rfl⟩ := he a
+      exact ⟨n, Or.inl ha⟩
+    · exact ⟨0, Or.inr ⟨by simpa only [not_exists] using h, rfl⟩⟩
+  have hm : ∀ n, MeasurableSet {u | p u n} := by
+    intro n
+    by_cases hn : n = 0
+    · have hs : MeasurableSet {u | ∀ a, u ∉ B a} := by
+        have ht : {u | ∀ a, u ∉ B a} = ⋂ a, (B a)ᶜ := by ext u; simp
+        rw [ht]
+        exact MeasurableSet.iInter (fun a => (hB a).compl)
+      have ht : {u | p u n} = B (e n) ∪ {u | ∀ a, u ∉ B a} := by
+        ext u; simp only [p, hn, and_true, Set.mem_union, Set.mem_setOf_eq]
+      rw [ht]
+      exact (hB (e n)).union hs
+    · simpa only [p, hn, and_false, or_false, Set.setOf_mem_eq] using hB (e n)
+  refine ⟨fun u => e (Nat.find (hp u)),
+    (measurable_of_countable e).comp (measurable_find hp hm), ?_⟩
+  have hAll : ∀ᵐ ω ∂μ, ∀ a : Y, f ω = a ↔ seed ω ∈ B a := by
+    apply ae_all_iff.2
+    intro a
+    filter_upwards [hEq a] with ω hω
+    exact Iff.of_eq hω
+  filter_upwards [hAll] with ω hω
+  rcases Nat.find_spec (hp (seed ω)) with h | h
+  · exact (hω _).mpr h
+  · exact (h.1 (f ω) ((hω _).mp rfl)).elim
+
+/-- Ambient completion versions have no source information beyond null modifications
+of the seed-and-record observation field. -/
+structure CompletedRule (U : Type u) [MeasurableSpace U] where
+  next : SourcePoint × U → Record → EventKind
+  wait : SourcePoint × U → Record → ℝ≥0
+
+namespace CompletedRule
+variable {U : Type u} [MeasurableSpace U]
+
+def fromRaw (R : RawRule U) : CompletedRule U where
+  next p r := R.next p.2 r
+  wait p r := R.wait p.2 r
+
+structure Lawful (Q : CompletedRule U) (μ : Measure (SourcePoint × U)) : Prop where
+  next_available : ∀ r, CompletionAvailable μ Prod.snd (fun p => Q.next p r)
+  wait_available : ∀ r, CompletionAvailable μ Prod.snd (fun p => Q.wait p r)
+
+theorem fromRaw_lawful (R : RawRule U) (hR : R.Lawful)
+    (μ : Measure (SourcePoint × U)) : (fromRaw R).Lawful μ := by
+  constructor
+  · intro r E hE
+    exact ⟨(fun u => R.next u r) ⁻¹' E, hR.measurable_next r hE,
+      Filter.EventuallyEq.rfl⟩
+  · intro r E hE
+    exact ⟨(fun u => R.wait u r) ⁻¹' E, hR.measurable_wait r hE,
+      Filter.EventuallyEq.rfl⟩
+
+def atSource (Q : CompletedRule U) (s : SourcePoint) : RawRule U where
+  next u r := Q.next (s,u) r
+  wait u r := Q.wait (s,u) r
+
+def TotalCap (Q : CompletedRule U) (k : ℕ) : Prop :=
+  ∀ (s : SourcePoint) (u : U), (Q.atSource s).paidCount u (visible s.1 s.2) ≤ k
+
+def normalize (Q : CompletedRule U) (k : ℕ) (p : SourcePoint × U) : ReadTree :=
+  (Q.atSource p.1).normalize k p.2
+
+/-- Finite waits can be replaced by zero; all event kinds share one ambient full-measure set. -/
+theorem ordinary_version (Q : CompletedRule U) (μ : Measure (SourcePoint × U))
+    (hQ : Q.Lawful μ) :
+    ∃ R : RawRule U, R.Lawful ∧ ∀ᵐ p ∂μ, ∀ r, Q.next p r = R.next p.2 r := by
+  have h (r : Record) := completion_available_countable_version μ Prod.snd
+    (fun p => Q.next p r) (hQ.next_available r)
+  choose g hg he using h
+  refine ⟨⟨fun u r => g r u, fun _ _ => 0⟩,
+    ⟨hg, fun _ => measurable_const⟩, ?_⟩
+  exact ae_all_iff.2 he
+
+/-- Ambient versions give an a.e. tree identity, separately from the all-path cap. -/
+theorem normalization_version (Q : CompletedRule U) (μ : Measure (SourcePoint × U))
+    (hQ : Q.Lawful μ) (k : ℕ) :
+    ∃ T : U → {t : ReadTree // t.height ≤ k}, Measurable T ∧
+      Q.normalize k =ᵐ[μ] (fun p => (T p.2).val) := by
+  obtain ⟨R, hR, he⟩ := Q.ordinary_version μ hQ
+  refine ⟨fun u => ⟨R.normalize k u, R.unfold_height k u []⟩,
+    (R.measurable_normalize hR k).subtype_mk, ?_⟩
+  filter_upwards [he] with p hp
+  exact (Q.atSource p.1).unfold_congr R p.2 hp k []
+
+/-- Actual records and nonreturn counts are preserved on every capped ambient execution. -/
+theorem normalization_execution (Q : CompletedRule U) (k : ℕ) (hc : Q.TotalCap k)
+    (p : SourcePoint × U) :
+    let v := (Q.normalize k p).run (visible p.1.1 p.1.2)
+    (Q.atSource p.1).Completes p.2 (visible p.1.1 p.1.2) v ∧
+      (Q.atSource p.1).output p.2 (visible p.1.1 p.1.2) = v.output ∧
+      (Q.atSource p.1).paidCount p.2 (visible p.1.1 p.1.2) = v.paid :=
+  (Q.atSource p.1).normalization_execution k p.2 (visible p.1.1 p.1.2) (hc p.1 p.2)
+
+end CompletedRule
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 end
