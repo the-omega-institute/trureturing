@@ -54,7 +54,9 @@ def zeroIsometry (a : ℝ) : WindowL2 a →ₗᵢ[ℂ] LineL2 where
     filter_upwards [zeroClass_ae a (u + v), zeroClass_ae a u, zeroClass_ae a v,
       Lp.coeFn_add (zeroClass a u) (zeroClass a v), h] with x huv hu hv hadd hi
     rw [huv, hadd, Pi.add_apply, hu, hv]
-    simpa only [zeroExtension, window, Set.indicator_add, Pi.add_apply] using hi
+    by_cases hx : x ∈ Ioc (-a) a
+    · simpa only [zeroExtension, window, Set.indicator_of_mem hx, Pi.add_apply] using hi
+    · simp only [zeroExtension, window, Set.indicator_of_notMem hx, add_zero]
   map_smul' c u := by
     apply Lp.ext
     have h := (ae_eq_restrict_iff_indicator_ae_eq measurableSet_Ioc).mp (Lp.coeFn_smul c u)
@@ -62,7 +64,9 @@ def zeroIsometry (a : ℝ) : WindowL2 a →ₗᵢ[ℂ] LineL2 where
       Lp.coeFn_smul c (zeroClass a u), h] with x hcu hu hsm hi
     simp only [RingHom.id_apply]
     rw [hcu, hsm, Pi.smul_apply, hu]
-    simpa only [zeroExtension, window, Set.indicator_smul, Pi.smul_apply] using hi
+    by_cases hx : x ∈ Ioc (-a) a
+    · simpa only [zeroExtension, window, Set.indicator_of_mem hx, Pi.smul_apply] using hi
+    · simp only [zeroExtension, window, Set.indicator_of_notMem hx, smul_zero]
   norm_map' u := by
     rw [Lp.norm_toLp]
     change (eLpNorm ((window a).indicator u) 2 volume).toReal = ‖u‖
