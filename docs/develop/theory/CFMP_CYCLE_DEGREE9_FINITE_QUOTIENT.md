@@ -54,3 +54,11 @@ The previous center-link and low-edge counts still imply 24 divides N. The finit
 - R. B. Howlett, “Introduction to Coxeter groups,” ANU Research Report 97-6 (1997), which gives the finite-subgroup-in-finite-parabolic theorem: https://www.maths.usyd.edu.au/u/ResearchReports/Algebra/How/1997-6.html.
 - D. E. Taylor, *The Geometry of the Classical Groups*, Sigma Series in Pure Mathematics 9, Heldermann (1992), for finite classical/orthogonal-group order formulas: https://mail.maths.usyd.edu.au/u/don/papers/gcg.pdf.
 - Standard finite orthogonal-group order formula |Omega⁺₄(q)|=q²(q²-1)²/2 for odd q.
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [verify_cycle9_coxeter_order.cpp](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_cycle9_coxeter_order.cpp)
+- [verify_cycle9_coxeter_local.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_cycle9_coxeter_local.py)

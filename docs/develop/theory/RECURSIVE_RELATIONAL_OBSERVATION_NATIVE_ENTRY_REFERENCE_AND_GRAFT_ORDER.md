@@ -728,3 +728,703 @@ universal spacetime or ontological theorem is asserted.
 [Kowshik]: https://arxiv.org/html/1105.0240v2
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Reference-free entrances and a completed-cut ternary source
+
+This appendix uses the same free ordered trees and substitution (ER.1), but
+declares a different initialization, evolving source menu and present-literal
+task. Its source is the actual register being updated, rather than the
+stationary original register of Definition 1.2. The new classification
+concerns when that source can retain both an arbitrary seed and an arbitrary
+committed command word without a supplementary entry reference. The original
+prediction task (ER.3), its initialization and all preceding results retain
+their stated domains.
+
+### 9.1 Disjoint images and the location of entry
+
+**Definition 9.1 (compound carrier and labelled ancestry).** Write
+$\mathcal C=\{\langle s,t\rangle:s,t\in\mathcal T\}$ and retain the image
+$I=\rho[\mathcal T]$ and its effective inverse $\delta$ from (ER.8).
+For fixed $a,b\in\mathcal T$ put
+
+$$
+U(x)=\rho(x),\qquad L_a(x)=\langle a,x\rangle,\qquad
+R_b(x)=\langle x,b\rangle\quad(x\in\mathcal C).
+\tag{ER.22}
+$$
+
+All these maps preserve $\mathcal C$. In the special case $a=b=\alpha$,
+write $L=L_\alpha$, $R=R_\alpha$, $\Lambda=\{\mathsf U,\mathsf L,\mathsf R\}$
+and
+
+$$
+\mathcal P=\mathcal C\setminus\bigl(U[\mathcal C]\cup
+                  L[\mathcal C]\cup R[\mathcal C]\bigr).
+\tag{ER.23}
+$$
+
+A primitive root in this appendix means an element of $\mathcal P$:
+it has no predecessor under this entire three-command menu. This differs
+from being primitive for substitution alone. Let
+$F_w(x)=\operatorname{run}_w(x)$ for finite words over $\Lambda$,
+executed from left to right, with $F_\epsilon(x)=x$. Thus
+$F_{vw}=F_w\circ F_v$.
+An entry class $E\subseteq\mathcal C$ is an ancestry antichain if distinct
+members are never related by $e'=F_w(e)$ with $w\ne\epsilon$.
+The actual entry of a history is its stipulated starting element of $E$;
+it need not be a primitive root.
+
+**Theorem 9.2 (exact fixed-constant criterion).** For every fixed
+$a,b\in\mathcal T$, the three maps in (ER.22) are injective.
+Their images on precisely $\mathcal C$ are pairwise disjoint if and only if
+
+$$
+a\notin I,\qquad b\notin I,\qquad
+(a=\alpha\ \text{or}\ b=\alpha).
+\tag{ER.24}
+$$
+
+In particular $\alpha$ is the unique shared fixed constant for which
+$U,L_a,R_a$ have pairwise disjoint images on all of $\mathcal C$.
+
+Proof. Reuse substitution injectivity and the disjoint grammar (ER.8).
+On compound predecessors its exceptional leaf production is excluded, so
+
+$$
+U[\mathcal C]=\{\langle i,j\rangle:i,j\in I\}.
+\tag{ER.25}
+$$
+
+Consequently $U[\mathcal C]\cap L_a[\mathcal C]\ne\varnothing$ if and
+only if $a\in I$. For the nontrivial direction choose the other child
+to be $\rho(\beta)\in I\cap\mathcal C$. The symmetric intersection with
+$R_b[\mathcal C]$ is nonempty if and only if $b\in I$.
+Finally ordered-child cancellation gives
+
+$$
+L_a[\mathcal C]\cap R_b[\mathcal C]\ne\varnothing
+\quad\Longleftrightarrow\quad a,b\in\mathcal C:
+\tag{ER.26}
+$$
+
+any intersection must be $\langle a,b\rangle$, with both variable arguments
+compound, and this tree suffices. Under $a,b\notin I$, the only possible
+noncompound constant is $\alpha$, since $\beta=\rho(\alpha)\in I$.
+The three intersection tests therefore give exactly (ER.24).
+Each graft is injective by free ordered pairing. The shared-constant
+conclusion follows by setting $a=b$. $\square$
+
+**Theorem 9.3 (effective forest and exact entry criterion).** For the
+$\alpha$-graft menu, evaluation is an effective bijection
+
+$$
+\mathcal P\times\Lambda^{<\omega}\longrightarrow\mathcal C,
+\qquad (p,w)\longmapsto F_w(p).
+\tag{ER.27}
+$$
+
+For every $E\subseteq\mathcal C$, the evaluation map
+$E\times\Lambda^{<\omega}\to\mathcal C$ is injective if and only if $E$
+is an ancestry antichain. If membership in $E$ is decidable, membership
+in its attained evaluation image is decidable. If, in addition, $E$ is
+an ancestry antichain, every endpoint in that image uniquely and
+effectively determines its actual entry in $E$ and its command word.
+No entry-dependent reference with one fixed finite alphabet makes
+evaluation injective for unrestricted $E=\mathcal C$.
+
+Proof. Theorem 9.2 gives at most one predecessor together with its last
+command label. It is effective: test (ER.25) and use $\delta$ on its
+children for a $U$ predecessor; test for left child $\alpha$ and compound
+right child for an $L$ predecessor; test the symmetric condition for $R$.
+These tests are disjoint. A graft whose variable child is a leaf does
+not pass the compound-predecessor test.
+
+Use the already supplied positive measure $\nu(x)=2A(x)+3B(x)$ from
+(ER.9). A $U$ step increases it by $A(x)+2B(x)>0$, and either graft
+increases it by $2$. Every backward step strictly decreases this integer.
+The resulting unique finite labelled chain ends at one element of
+$\mathcal P$; reversing the removed labels gives (ER.27).
+This is a finite syntax computation, not permission to undo the source.
+
+Any two entries reaching one endpoint occur on that same chain. If they
+are distinct they are comparable by its nonempty intervening word.
+If they coincide their suffix words coincide by uniqueness of the labelled
+chain and strict growth. Conversely $e'=F_v(e)$ between distinct entries
+gives the collision $(e,v)$ and $(e',\epsilon)$. This proves the
+antichain equivalence. For decidable $E$, testing membership at every
+point of the finite chain decides whether the endpoint is in its attained
+evaluation image. If $E$ is also an ancestry antichain, an attained
+endpoint has exactly one such point; the removed suffix supplies its
+unique command word. For every history starting in this $E$, that point
+is its actual entry, even when the chain continues further back.
+Without the antichain condition, more than one chain point can belong
+to $E$, and image recognition does not identify the actual entry.
+
+For the last assertion take $p=\langle\alpha,\alpha\rangle\in\mathcal P$.
+For each $N\ge0$, the $N+1$ entries $L^j(p)$, $0\le j\le N$, all reach
+$L^N(p)$ by different suffixes. A reference depending only on the entry
+must distinguish all these entries. Since $N$ is arbitrary, no fixed
+finite reference alphabet suffices. This is a supplementary-reference
+bound conditional on the endpoint, not a bound on total retained material.
+$\square$
+
+### 9.2 One-graft entrances and the stronger root target
+
+**Theorem 9.4 (classification of one-graft entrance classes).** Define
+the forward substitution orbit
+$\mathcal A_\alpha=\{\rho^k(\alpha):k\ge0\}$.
+For every fixed $a\in\mathcal T$, each of the following classes is an
+ancestry antichain if and only if $a\notin\mathcal A_\alpha$:
+
+$$
+E_a^\ell=\{\langle a,u\rangle:u\in\mathcal T\},\qquad
+E_a^r=\{\langle u,a\rangle:u\in\mathcal T\}.
+\tag{ER.28}
+$$
+
+Proof. Consider $E_a^\ell$. Suppose a nonempty word carries
+$e=\langle a,u\rangle$ to $\langle a,v\rangle$.
+If it has no graft, it is $\mathsf U^k$, $k>0$, and child cancellation
+gives $\rho^k(a)=a$, contradicting strict increase of $\nu$.
+Otherwise split it at its last graft as $v'X\mathsf U^k$,
+$k\ge0$, and put $y=F_{v'}(e)$.
+We have $\nu(y)\ge\nu(e)>\nu(a)$.
+If $X=\mathsf R$, the final left child is $\rho^k(y)$, which cannot
+equal $a$ by this inequality. If $X=\mathsf L$, that child is
+$\rho^k(\alpha)$, so necessarily $a\in\mathcal A_\alpha$.
+This excludes every comparison when $a$ is off that orbit.
+
+Conversely if $a=\rho^k(\alpha)$, the nonempty word
+$\mathsf L\mathsf U^k$ sends every $e\in E_a^\ell$ to
+$\langle a,\rho^k(e)\rangle\in E_a^\ell$.
+Strict growth makes these distinct entries, proving failure of the
+antichain condition. For $E_a^r$ use right children: a last left graft
+would force $a=\rho^k(y)$, and a last right graft forces
+$a=\rho^k(\alpha)$. The converse word is
+$\mathsf R\mathsf U^k$. $\square$
+
+**Corollary 9.5 (attained one-graft entry and its restricted minimum).**
+Put
+
+$$
+a_0=\langle\alpha,\alpha\rangle,\qquad
+j(u)=\langle a_0,u\rangle\quad(u\in\mathcal T).
+\tag{ER.29}
+$$
+
+Then $j$ is injective, its range is a decidable ancestry antichain, and
+$F_w(j(u))$ uniquely and effectively determines every finite $u$ and
+every finite $w\in\Lambda^{<\omega}$.
+One fixed whole left graft suffices to initialize all seeds for this
+reference-free recovery target. Zero grafts, with the arbitrary compound
+source left unchanged as entrance and all future words allowed, do not.
+This zero-versus-one minimum concerns only fixed whole-graft initialization
+with unchanged arbitrary seeds.
+
+Proof. The grammar (ER.8) excludes $a_0$ from $I$: it is not the
+exceptional pair and neither child is an image. Every positive iterate of
+$\alpha$ lies in $I$, while $a_0\ne\alpha$, so
+$a_0\notin\mathcal A_\alpha$. Theorem 9.4 makes $j[\mathcal T]$ an
+ancestry antichain, and its membership test is exactly “a pair with left
+child $a_0$.” Apply Theorem 9.3 to this decidable ancestry antichain and
+remove the known left child at the selected entry. With no initializer,
+any $x\in\mathcal C$ and $U(x)\in\mathcal C$ are comparable allowed
+entries and give a
+collision. The point $j(\alpha)=R(a_0)$ also shows why the attained
+one-graft entrance is not a uniform primitive-root initializer. $\square$
+
+**Proposition 9.6 (uniform primitive-root initialization).** The map
+
+$$
+\iota(u)=\langle\beta,\langle\alpha,u\rangle\rangle
+\tag{ER.30}
+$$
+
+injects all of $\mathcal T$ into $\mathcal P$. It is realized by two
+fixed whole left grafts, first $\alpha$, then $\beta$.
+Among initializers consisting solely of a fixed sequence of whole left
+or right grafts with source-independent constant trees, two are necessary
+and sufficient to send every seed in $\mathcal T$ into $\mathcal P$.
+
+Proof. Neither outer child of $\iota(u)$ is $\alpha$, and its right
+child $\langle\alpha,u\rangle$ is outside $I$ by (ER.8).
+Thus none of the three predecessor tests applies. Cancelling its two
+fixed wrappers recovers $u$.
+For a single graft with compound constant $a$, choose seed $\alpha$:
+the result is the opposite $\alpha$-graft from $a\in\mathcal C$.
+For constant $\alpha$, choose any compound seed: the result is already
+in its corresponding graft image. The only other constant is the leaf
+$\beta$; choose seed $\beta$, giving
+$\langle\beta,\beta\rangle=U(\langle\alpha,\alpha\rangle)$ in either
+orientation. These cases exhaust both orientations and all constants.
+Zero grafts leave leaf seeds outside $\mathcal C$, and also leave
+nonroot compound seeds nonroot. The displayed two grafts attain the bound.
+
+This target is stronger than Corollary 9.5's entry antichain target.
+Neither lower bound ranges over substitutions during initialization,
+source-dependent editing, alternative controllers or alternative primitives.
+The startup $\beta$ graft is additional to the ongoing
+$U,L_\alpha,R_\alpha$ menu. Indeed every nonempty word of that menu
+starting in $\mathcal C$ ends in one of its images, so cannot enter
+$\mathcal P$. $\square$
+
+### 9.3 Encoding the evolving source itself
+
+**Definition 9.7 (same-register encoded menu).** Fix the one-graft
+initializer $j$ for the rest of the appendix and put
+$c=\rho^2(\alpha)=\langle\beta,\alpha\rangle$.
+The actual source starts as the supplied unknown $u$, is left-grafted
+with one freshly prepared $a_0$, and then undergoes two actual
+substitutions. Its initialized value is $r_0=\rho^2(j(u))$.
+Its subsequent three source operations are
+
+$$
+\widehat U(r)=\rho(r),\qquad
+\widehat L(r)=\langle c,r\rangle,\qquad
+\widehat R(r)=\langle r,c\rangle.
+\tag{ER.31}
+$$
+
+Each graft consumes a fresh actual copy of $c$.
+The initial $a_0$ graft is a separately supplied startup operation;
+it is not one of the ongoing $c$ grafts.
+No reset, unknown-source copy, inverse substitution or rebuilding from
+a freely supplied source table is included.
+
+**Theorem 9.8 (reference-free source-support recovery).** For every
+finite $u\in\mathcal T$ and every finite ternary word $w$, the above
+same-register operations give
+
+$$
+x(u,w)=F_w(j(u)),\qquad r(u,w)=\rho^2(x(u,w)).
+\tag{ER.32}
+$$
+
+Each of the current ordered unlabelled node support
+$\operatorname{Pos}(r(u,w))$ and the current terminal-path antichain
+$\operatorname{LeafPos}(r(u,w))$ uniquely and effectively determines
+$(u,w)$ on this attained image. Neither decoder takes an entry height,
+elapsed epoch, command count or order archive as an argument.
+The corresponding assertion with $\iota$ holds under its separately
+executed two-graft initialization.
+
+Proof. Preservation of pairing and commutation of powers of $\rho$ give,
+for each $A\in\{U,L,R\}$,
+
+$$
+\widehat A\circ\rho^2=\rho^2\circ A.
+\tag{ER.33}
+$$
+
+For a graft this uses precisely $c=\rho^2(\alpha)$; substitution uses
+$\rho\rho^2=\rho^2\rho$. Initialization and induction on actual commits
+give (ER.32).
+From the full finite support, mark nodes with children as branches and
+the rest as leaves, obtaining $\operatorname{sh}(r)$.
+Reuse [ABT, Theorem 12.1, (ABT.30)–(ABT.31)][ERABT]:
+its effective actual-image decoder sends
+$\operatorname{sh}(\rho^2(x))$ to exactly $x$.
+Apply Theorem 9.3 with the decidable ancestry antichain
+$j[\mathcal T]$ established in Corollary 9.5 and strip its initializer.
+The boundary determines the same support by finite prefix closure,
+giving its decoder separately.
+For $\iota$, use the primitive-root bijection (ER.27) and strip the
+two fixed wrappers by Proposition 9.6 instead.
+
+The fixed code depth two is not a measured elapsed epoch. In a mixed
+word the graft constants would themselves be substituted by later $U$
+steps; (ER.33) nevertheless keeps a fixed outer coding relation.
+The ABT decoder is reused only on that actual ordered image.
+It grants no recovery of absolute epochs for arbitrary unmarked sources,
+and no physical inverse update. $\square$
+
+### 9.4 Acquisition, retained use and the continuation task
+
+**Assumption 9.9 (one actual source and paid capabilities).** Fix one
+source occurrence, root port, left/right orientation and owner before
+choosing $u$ or any future command. Its canonical initial installation
+contains the actual finite tree $u$, not its description as advice.
+Declare exclusive owner authority for total actual substitution, the
+startup graft and (ER.31), consuming prepared known constants as in
+[PG, Definition 44.1][PG]. Add genuine original-root literal Reads with
+the four replies of Definition 1.2, now addressing this evolving register.
+A Read preserves its current version. Updates acknowledge success; they
+do not return a free syntax table.
+
+Supply a paid ternary input port and source-independent finite effective
+control with arbitrarily large finite local workspace. The owner can
+retain, inspect and copy its acquired local data and issue framed outputs.
+The source is locked against updates during each acquisition traversal.
+Only one command is acquired between consecutive completed cuts; no
+second command arrives before completion of its update, refresh and output.
+Every finite command word is admitted, including the empty word.
+There are no additional independently varying waits, interrupts, requests,
+allocation names, source encodings, preparation identities or consumer
+schedules. Constant supply, allocation and local routines follow fixed
+canonical rules, so their actual finite behavior is determined by the
+data already acquired and the next supplied command.
+
+These are explicit capabilities of this mathematical source model.
+The two leaf labels alone supply none of pairing, root access,
+substitution, graft rights, input, ownership or workspace.
+In particular the graft and input operations are not opcodes established
+by [NativeSerialMachine][ERNSM], whose instruction constructors are local
+step, Read, substitution and stop. No identification with the guarded
+original source or the earlier stationary-source/work-copy interface is
+made.
+
+**Construction 9.10 (actual acquisition and current local use).** At the
+initial installed $u$, perform a source-blind left-first stationary
+traversal. Reuse [NativeFullSourceProducer][ERPROD],
+its source control and native source producer theorem, with its
+[owning exposition][ERPRODB]. At a branch the actual reply schedules its
+left address and saves the right address; acquired children are combined
+by local steps. At a leaf the actual reply supplies its label.
+The theorem supplies termination for every finite source and precisely
+one actual Read at every node in preorder. Unknown subtrees appearing
+in its proof invariants are not runtime inputs.
+
+A local receiver records each submitted address and returned reply.
+It therefore builds the complete current finite table
+
+$$
+\mathsf F(r)=\bigl[(p,r_r(p)):p\in\operatorname{Pos}(r)
+                       \text{ in left-first preorder}\bigr].
+\tag{ER.34}
+$$
+
+Recording, addressing and combining are actual paid local work.
+After initial acquisition, perform Definition 9.7's initialization on
+that same source port. Traverse its new stationary version to obtain
+$\mathsf F(r_0)$, retain it in the owner's current-table slot, and perform
+a prescribed local lookup at address $LL$. The lookup scans the retained
+finite table; if the address is absent it returns
+$\mathsf{absent}$, otherwise the recorded reply. Completeness of the table
+makes this correct also below a leaf. No new source Read is used by this
+lookup. Release the framed table and lookup reply and enter
+$\mathsf{Ready}$.
+
+At each subsequent $\mathsf{Ready}$, acquire the actual next ternary
+symbol, prepare its required constant if any, and use that symbol to
+actuate exactly one operation (ER.31). Invalidate the old current-table
+binding, run the same traversal while the new version is stationary,
+replace the current-table slot with its newly acquired table, perform the
+same local lookup and release the complete response before returning
+to $\mathsf{Ready}$. The source binding of the current-table slot is
+the causal relation to this just-finished traversal at the fixed port,
+not a free variable timestamp or a second source.
+
+Retain the producer's actual protocol record, with canonical framing,
+in separate charged backing. Include actual input symbols, source-call
+acknowledgements, Read addresses/replies, prescribed local work, lookups
+and outputs in its ordered occurrence word. No history record is an
+input to the source controller or to the geometric decoder.
+Current table, record, code, buffers, preparation material, retained old
+cells and allocator state all belong to the actual joint state and
+resource account. Scratch cleanup or retention follows one fixed rule.
+The record need not be part of the selected current-memory view below.
+
+Let $J(u,w)$ be the complete joint state reached after this actual
+schedule, through the refresh and output for $w$, including the initialized
+empty-word cut. It contains the actual source, current table, lookup
+result, control, all retained records and material, and their bindings
+and rights. This is one jointly realized image, not a product of
+independently possible field values. The fixed rules give a finite
+deterministic execution for every $u,w$: stationary traversals terminate
+by the supplier, known preparations are finite, and each source operation
+acts on a finite tree. Each next completed state is exactly $J(u,wa)$.
+
+**Definition 9.11 (current-table and continued-command task).** The task
+$Q_{\rm cur}$ is present-source disclosure and continued actuation.
+Its present readout at a completed cut is the actually acquired table
+$\mathsf F(r)$ and its prescribed local $LL$ result.
+The legal actions are exactly the three complete
+input/update/refresh/lookup/output transactions, all total on these
+completed states. For action $a$ at $J(u,w)$ the complete response is
+
+$$
+\begin{aligned}
+\operatorname{Resp}(J(u,w),a)=
+\bigl(&a,\mathsf{legal},\mathsf{ok},
+       \mathsf F(r(u,wa)),\operatorname{lookup}_{LL}\mathsf F(r(u,wa)),\\
+     &\Delta\Gamma,\Delta\mathsf{Out},J(u,wa)\bigr).
+\end{aligned}
+\tag{ER.35}
+$$
+
+Here $\Delta\Gamma$ is the actual protocol-record append and
+$\Delta\mathsf{Out}$ the actual framed-output append of that transaction.
+The last component is the complete original joint successor, including
+rights and retained material, not merely a reconstructed view of it.
+All such transactions return to $\mathsf{Ready}$; no executed failure
+or no-op is included. Symbols outside the declared alphabet have no
+response or successor. Finite future words compose these complete
+responses. The empty experiment includes the present readout.
+Two completed histories are $Q_{\rm cur}$-equivalent when their present
+readouts and all these finite responses agree, including lawful domains
+and complete successors. A readout is an observation of the already
+acquired result, not an extra independently interleavable recall command.
+
+This task is specified by present literal access and continued source
+operation, not by asking directly for a past word or seed.
+It is different from (ER.3); full current literal disclosure is an
+explicit part of its observational strength.
+
+**Definition 9.12 (four actual expressions at completed cuts).** On the
+domain $\mathcal H=\mathcal T\times\Lambda^{<\omega}$ indexing precisely
+the $\mathsf{Ready}$ cuts just defined, take:
+
+| Expression | Independently specified actual content |
+| --- | --- |
+| $S(u,w)$ | The current source's ordered unlabelled support $\operatorname{Pos}(r(u,w))$, at the fixed root. No workspace, table, clock, reference or record support is attached. |
+| $B(u,w)$ | The terminal-path antichain $\operatorname{LeafPos}(r(u,w))$ of that source: the addresses where actual current descent ends, with colours erased. |
+| $T(u,w)$ | The ordered actual protocol occurrences from the installed-source entrance through the completed cut, including initial truthful acquisition replies and actually received command symbols, as specified in Construction 9.10. It has no appended endpoint snapshot and is not physical duration. |
+| $M(u,w)$ | The acquired current addressed literal table in the owner-local slot, with its fixed owner, port binding and current local-lookup authority. No seed copy, old command word, chronology rank or past transcript is an additional payload. |
+
+These are projections of one actual process. Their definitions do not
+use their desired inverse maps. The table's label erasure and terminal
+addresses give acquired finite descriptions of $S$ and $B$ using the
+same traversal; they are not free new scanning ports.
+The temporal record is acquired by recording actual occurrences.
+Access to any such description, its serialization and its decoder work
+is charged. A mathematical view value by itself grants no other owner
+authority to read the source or the private local slot.
+
+### 9.5 Individual kernels and all completed-command transports
+
+**Theorem 9.13 (completed-cut four-expression recovery).** Under
+Assumption 9.9 and Construction 9.10, for each individual
+$V\in\{S,B,T,M\}$ and all $h=(u,w),h'=(v,z)\in\mathcal H$,
+
+$$
+V(h)=V(h')
+\quad\Longleftrightarrow\quad h=h'
+\quad\Longleftrightarrow\quad h\sim_{Q_{\rm cur}}h'.
+\tag{ER.36}
+$$
+
+Every view has a finite effective decoder on its actual image recovering
+the same seed, committed word and complete $J(h)$.
+All twelve directed same-cut recoveries exist, are inverse in opposite
+directions, agree along every route, and preserve the full response
+(ER.35) and complete successor for each of the three commands.
+These assertions concern exactly the completed-cut domain and task above.
+
+Proof. For $S$, use Theorem 9.8. For $B$, take prefix closure and use
+that same theorem. For $M$, reconstruct the labelled finite tree directly
+from its actual complete table, then use its support decoder.
+For $T$, the initial truthful acquisition determines $u$, and the actual
+command-input occurrences determine $w$. Conversely $u,w$ determine
+each of these views and the full original joint state by executing the
+fixed finite descriptive schedule. This latter computation uses local
+descriptions already recovered; it does not reset or copy an unknown
+source. It reconstructs retained logs, allocation, buffers, output
+records, preparation residue and rights as well as the current tree.
+Thus each view separately has equality of $h$ as its kernel.
+
+For clarity, both task-kernel inclusions can be checked individually.
+Equal $S$ gives the same $u,w$, hence identical current states and all
+complete future responses. In the other direction, task equivalence
+includes equal present tables, hence equal labelled current trees and
+equal $S$. Equal $B$ gives the same $u,w$ through prefix closure,
+hence the same responses; task equivalence gives equal current trees,
+hence equal terminal boundaries. Equal $T$ gives the same acquired seed
+and command inputs, hence identical responses; task equivalence gives
+equal present trees, Theorem 9.8 gives equal $u,w$, and the fixed
+schedule then gives equal temporal words. Equal $M$ gives equal current
+tables, hence equal $u,w$ and responses; task equivalence includes equal
+present tables and their common fixed binding and rights, hence equal
+$M$. This proves both inclusions separately for every view, as required
+by [PG, Proposition 43.1][PG]. Nonredundancy here already follows from
+the present readout, without using hidden successor coordinates to
+separate histories.
+
+Let $d_V$ be the described actual-image decoder to $h$ and define
+$R_{VW}=W\circ d_V$. Since $d_V(V(h))=h$, on the actual images
+
+$$
+R_{WV}R_{VW}=\operatorname{id},\qquad
+R_{WZ}R_{VW}=R_{VZ}.
+\tag{ER.37}
+$$
+
+Every same-cut route decodes and re-encodes the same $h$, proving all
+route agreements. For a command $a$, define the induced view successor
+$A_a^V(V(u,w))=V(u,wa)$ and compute its output by (ER.35) from
+$d_V(V(u,w))$. These maps are defined on the entire attained view
+image and have attained successors, because Construction 9.10 actually
+acquires $a$, performs (ER.31), finishes its finite refresh and reaches
+$J(u,wa)$. Consequently
+
+$$
+R_{VW}A_a^V=A_a^W R_{VW},\qquad
+\operatorname{Resp}_a^W R_{VW}=\operatorname{Resp}_a^V.
+\tag{ER.38}
+$$
+
+The response equality includes the actual input, acquired outputs,
+record/output appends and original $J(u,wa)$ in (ER.35).
+Induction gives compatibility for every finite future command word.
+No equation transports an interrupted traversal or internal source-write
+cut. These are finite recovery algorithms on acquired descriptions,
+not an installed arbitrary-view delivery or physical reversal service.
+$\square$
+
+### 9.6 The same-run account and the remaining domains
+
+**Proposition 9.14 (explicit construction charges).** Write
+$\lambda(t)=A(t)+B(t)$ and $N(t)=2\lambda(t)-1$ for the literal occurrence
+node count. For seed $u$ and word $w=a_1\cdots a_k$, put
+$x_i=F_{a_1\cdots a_i}(j(u))$ and $r_i=\rho^2(x_i)$, including $i=0$.
+The specified execution has exactly
+
+$$
+\begin{aligned}
+N_{\rm Read}
+ &=N(u)+\sum_{i=0}^{k}N(r_i),\\
+L_{\rm addr}
+ &=\sum_{p\in\operatorname{Pos}(u)}|p|
+   +\sum_{i=0}^{k}\sum_{p\in\operatorname{Pos}(r_i)}|p|,\\
+\lambda(r_i)&=\nu(x_i),\qquad N(r_i)=2\nu(x_i)-1.
+\end{aligned}
+\tag{ER.39}
+$$
+
+It also performs one startup source graft, two warm-up source
+substitutions, $k$ acquired ternary choices and $k$ subsequent source
+commits. Preparing the startup $a_0$ uses two fresh known $\alpha$
+occurrences and one known pairing. A sufficient preparation of every
+later $c$ is a fresh known $\alpha$ followed by two separately charged
+known-constant substitutions. Each command graft consumes that copy.
+These preparations are additional to operations on the unknown-source
+register.
+
+In an eager occurrence-tree representation a $c$ graft adds four source
+nodes, and a substitution visits the old tree and increases its node
+count by twice its old number of $\beta$ leaves. In particular
+
+$$
+\begin{aligned}
+N(\rho^2(j(u)))&=4A(u)+6B(u)+7,\\
+N(\rho^2(\iota(u)))&=4A(u)+6B(u)+9.
+\end{aligned}
+\tag{ER.40}
+$$
+
+For each fixed seed $u$, the $3^k$ words of length $k$ give $3^k$
+distinct attained source supports. Thus the source retains unbounded
+command information; eliminating a supplementary entry or order argument
+does not imply bounded total memory.
+
+Proof. The stationary producer gives one actual Read at each node of
+each visited version. The only source traversals in this schedule are
+the initial one and the $k+1$ refreshes; the local $LL$ lookups read
+the acquired tables. This proves the first two equations, counting
+repeated addresses on different versions as distinct actual calls.
+The two leaf codes under $\rho^2$ have respectively two and three
+leaves, so $\lambda(\rho^2(x))=2A(x)+3B(x)$.
+The full binary-tree node identity gives the rest of (ER.39).
+Each acquired command drives its one actual commit, giving the stated
+source-operation counts.
+
+The tree $c$ has three nodes and needs one attachment root, giving
+four new source nodes. Substitution changes an old $\beta$ leaf into
+a three-node pair and changes an old $\alpha$ only to a leaf.
+Hence its node increase is $2B$; the traversal of old occurrences is
+an explicitly chosen eager recipe, not a lower bound on every primitive.
+The logical initializer $j$ adds two $\alpha$ leaves, whereas $\iota$
+adds one $\alpha$ and one $\beta$. Applying the preceding leaf-code
+identity proves (ER.40). This two-node source-material difference is
+not a total implementation-cost comparison.
+Finally Theorem 9.8 separates all the words for a fixed $u$, proving
+the support count. Encoding this family by fixed-width bits would
+require at least $\lceil k\log_2 3\rceil$ bits. $\square$
+
+The account also charges the actual source installation and supply,
+constant carriers, root attachments, code, input handling, address
+emission, traversal stacks, tables, protocol records, output frames,
+old material retained during replacement and all simultaneous copies.
+Local lookup, parsing, replay on descriptions and serialization consume
+additional finite work and storage. The producer has two local
+combination/switch steps per branch; recording and the chosen table
+receiver add their own work. No constant-time lookup or decoder tariff
+is assumed. Equation (ER.39) counts raw literal calls and submitted
+letters on this one run; it is neither a total fee formula nor an
+optimality theorem. Pointwise finite termination gives no uniform
+finite workspace bound over all seeds and words.
+
+**Open problem 9.15 (ingress, source-busy and returned-use domains).**
+Extend the independently meaningful expressions through actual unfinished
+input, source and refresh operations, or establish a source-specific
+obstruction for a stated finer interface. The existing acquired-input
+fiber principle of [AIF, §§4–5][ERAIF] already requires a live distinction
+here: fix one completed cut and independently supply any of the three
+symbols. Before its source effect the current source, and hence $S$
+and $B$, is identical in these three cases, while the acquired command
+differs. A sufficient supplement for that command must therefore take
+at least three values on this fiber. This is credited supplier
+application, not a new binary pending-bit theorem.
+
+Theorem 9.13 does not give individual task kernels or view transport
+through pending input, source-operation internals, partial refresh,
+table replacement or partial output. Extending it requires an actual
+source/control realization retaining those distinctions, with its
+legal inputs, full responses, successors and resource account.
+The sparse binary all-cut proposal has different source, live-input,
+reference, receipt and atomicity hypotheses and remains a separate
+question; none of its all-cut assertions is imported here.
+
+A mathematical decoder also does not install a service for arbitrary
+historical-cut selection, authenticated view acquisition, publication,
+cross-owner delivery or returned conversion. Those operations require
+their own actual backing, ingress, rights and completed responses.
+The present construction supplies actual initial/current acquisition
+and retained owner-local use under Assumption 9.9; implementation below
+its declared source primitives remains unproved.
+Every original fixed-source, original-$Q$, unchanged-initialization,
+parked-consumer and full-domain obligation retains its earlier scope.
+In particular Open problem 8.1 for the original task and
+[NCR, obligation 11.3(2)][ERNCR] are not settled by this new model.
+The original $M_1(D)$, sharp $\lambda$, effective all-size certificates,
+coherent infinite-source realization and the sustained four-expression
+programme remain open. No physical spacetime interpretation, global
+generator minimum, total-resource optimum or physical realization follows.
+
+### 9.7 Supplier and novelty boundary
+
+**Convention 9.16 (sources of the deduction).** The additional repository
+references in this appendix designate their text at
+$\texttt{3581743f15781df4f0db6bacedb6b7d637b9bb60}$;
+Convention 7.1 continues to govern the preceding sections.
+The new content is the concrete compound-tree image classification,
+the one-graft entrance classification, their two distinct initializer
+targets and the resulting source-only completed-cut application.
+Backward determinism, finite ancestry parsing, shape decoding,
+stationary acquisition, replay, task kernels and inverse-route algebra
+are reused mechanisms. The deductions are ordinary mathematics, with
+no new formal certificate or claim of worldwide priority.
+
+| Supplier | Exact use and retained boundary |
+| --- | --- |
+| ER Theorem 3.1 and (ER.8)–(ER.9); §§5–6 | Effective substitution parsing and a strict descent measure; the earlier binary entry-height result, transported-constant collisions and omitted Read/failure histories are unchanged. |
+| [PG, Definition 44.1 and Theorem 44.6][PG]; [Intrinsic Substitution Coordinates][ERISC], no-alpha and pair-image declarations and [owning exposition][ERISCB] | Paid prepared whole contexts, substitution injectivity and the exact image grammar. Fixed-context injectivity is not unknown-word recovery. Its intrinsic substitution root is a different notion from $\mathcal P$ and is not borrowed as an executable inverse. |
+| [ABT, Theorem 12.1 and (ABT.39)][ERABT] | The exact effective two-step ordered shape code and its forward substitution correspondence. Equation (ER.33) additionally checks both actual grafts; no arbitrary-epoch inverse is inferred. |
+| [Native Full Source Producer][ERPROD] and [owning exposition][ERPRODB] | One source-blind stationary traversal, exact original-node preorder, no repeated node and pointwise finite termination with unbounded finite workspace. The addressed table receiver and current local use are explicitly added paid work; no installed graft/input or arbitrary delivery follows. |
+| [PG, Proposition 43.1][PG]; [SSA, Theorems 7.2–7.3][ERSSA]; [CSA, Theorem 6.3 and Corollary 6.4][ERCSA] | The two task-kernel inclusions and actual-image route/transition obligations. Their whole-storage observation and primitive-domain hypotheses are not identified with bare current-source support here. |
+| [NCR, §§5–8 and 11.3][ERNCR]; [AIF, §§4–5][ERAIF] | Existing clocked/replay and acquired-input results, including the precommit fiber obstruction. The new word-separating menu and initializer do not extend their unchanged busy domains. |
+| [Paid View Conversion, Assumptions 1.2 onward, Theorems 5.7 and 6.5][ERPVC] | An existing installed conversion/returned-use supplier under its own fixed-capacity entrance, installation, backing and authority contracts. Those stronger service hypotheses are not supplied by Theorem 9.13. |
+| [Bennett][Bennett], transition-range criterion and history/copy/reverse construction; [Lanese–Phillips–Ulidowski, Definition 7.9 and Proposition 7.10][Lanese] | Classical backward uniqueness includes the command label; well-foundedness is a separate requirement. History retention, copying and reverse execution consume supplied resources. Their general mechanisms do not prove this tree partition or its entrance law. Causal equivalence allowing swaps/cancellation is not the literal finite-word target here. |
+
+[ERABT]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md
+[ERPROD]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean
+[ERPRODB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs
+[ERNSM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean
+[ERISC]: ../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean
+[ERISCB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.scribe.cs
+[ERNCR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md
+[ERAIF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md
+[ERSSA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md
+[ERCSA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md
+[ERPVC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md
+
+## 追加锚（本行以下为增补区）
