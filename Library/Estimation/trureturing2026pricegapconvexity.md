@@ -9712,3 +9712,212 @@ No signed upper bound for that remaining head, favorable cofinal
 window, full Robin inequality or RH proof is supplied. This is an
 application of classical density and zero-free inputs to the same
 source, without a new density theorem or literature-priority claim.
+
+
+## The retained response pays all real parts above the same local cut
+
+Keep JM1--JM7's original conditional source, all full windows,
+maximizing ties, positive outgoing weights, actual multiplicities and
+legal individual upper heights. Impose the additional restriction on
+the originally supplied exponent
+
+$$
+\boxed{\eta<\eta_D(\Theta):=
+\frac{2-\min\{\Theta,7/10\}}3.}
+\tag{FHA1}
+$$
+
+For $\Theta\ge7/10$, including $\Theta=1$, this reads
+$\eta<13/30$. For $\Theta<7/10$, it reads
+$\eta<(2-\Theta)/3$. The original condition $1-\Theta<\eta<1/2$
+is retained; no supplied parameter is reselected. This is a
+`repo-derived` paper application of the existing Ingham and
+[Guth--Maynard fixed-real-part density inputs](../Analytic/guthmaynard2024largevalues.md#the-zero-density-input-for-cumulative-contributions),
+the retained positive source height, LHA2 and NE6. It introduces no
+new density theorem, literature-priority claim or Lean verification.
+
+Write $M=M_X=X^\mu\log X$, $\mu=1/2-\eta$, $L=L_X$ and retain
+NE1--NE6's same lower cut
+
+$$
+H_{B,X}=\max\{51,\sqrt B/M\}.
+$$
+
+The original source gives $\sqrt{b_X}/M\to\infty$, so uniformly
+over all actual cores this equals $\sqrt B/M$ eventually and is
+below every original legal $\tau\asymp\sqrt B$. No upper clock
+ceiling is used. Define the entire actual high-frequency allowance
+
+$$
+\mathcal R_X^{\rm high}
+=2\sum_{i<m}\delta_i
+ \sum_{H_{B_i,X}<\gamma\le\tau_i}
+ m_\rho|c_{B_i,a}(\rho)|,
+\qquad
+c_{B,a}(\rho)=s_BF_B(\rho)-aB^{\rho-1/2}/\rho.
+$$
+
+There is no restriction on the real part in this definition. The
+complete coefficient and original upper masks remain unchanged.
+
+### The compact middle class has a strict source-height exponent gap
+
+Set $u=1-\eta$ and $v=\min\{\Theta,\sigma_\circ\}$, with NE1's
+$\sigma_\circ=9999/10000$. The actual middle class is
+$u<\beta<\sigma_\circ$; its upper endpoint also respects
+$\beta\le\Theta$. If $u\ge v$, that class is empty and its allowance
+is zero. Otherwise work on the fixed compact interval $[u,v]$.
+
+Reuse the published density exponents, with their existing
+reciprocal-height consequence at finitely many fixed real parts:
+
+$$
+D(\sigma)=
+\begin{cases}
+3(1-\sigma)/(2-\sigma),&\sigma\le7/10,\\
+15(1-\sigma)/(3+5\sigma),&\sigma\ge7/10,
+\end{cases}
+\qquad E(\sigma)=\sigma-1+\frac{D(\sigma)}2.
+$$
+
+The two exponents agree at $7/10$, and $0<D<1$ on $[u,v]$.
+Moreover
+
+$$
+\frac{1-\sigma}{D(\sigma)}=
+\begin{cases}
+(2-\sigma)/3,&\sigma\le7/10,\\
+(3+5\sigma)/15,&\sigma\ge7/10.
+\end{cases}
+$$
+
+FHA1 therefore gives
+$\mu D(\sigma)-E(\sigma)=1-\sigma-\eta D(\sigma)>0$ throughout
+this interval. Since also $\mu D>0$, compactness gives a fixed
+positive gap
+
+$$
+r_0:=\min_{\sigma\in[u,v]}
+ \{\mu D(\sigma)-\max(E(\sigma),0)\}>0.
+\tag{FHA2}
+$$
+
+Choose a fixed $q>0$ with $4q\le r_0$ and
+$\max_{[u,v]}E+q<1/2$. Use finitely many disjoint half-open bins,
+closing the last endpoint when needed, with $7/10$ as an endpoint
+whenever it lies inside the interval. Choose the maximum width
+$\omega$ and one fixed density loss $\epsilon>0$ so that
+$\omega+\epsilon/2\le q$ and
+$D(\sigma_j)+\epsilon<1$ at every left endpoint. No uniformity of
+a moving-real-part $o(1)$ is assumed.
+
+Let $r_{X,j}^{\rm mid}(B,\tau)$ be twice the absolute complete
+coefficient sum in one actual middle-class bin. Write
+$D_j=D(\sigma_j)$ and $E_j=E(\sigma_j)$. DH3's existing bound
+$|c_{B,a}(\rho)|\le(a+2)B^{\beta-1/2}/\gamma$ and the existing
+reciprocal-height estimate give
+
+$$
+\begin{aligned}
+r_{X,j}^{\rm mid}(B,\tau)
+&\ll B^{\sigma_{j+1}-1/2}
+ H_{B,X}^{D_j-1+\epsilon}\\
+&\le M^{1-D_j}B^{E_j+q}.
+\end{aligned}
+$$
+
+The favorable $M^{-\epsilon}$ is discarded only after the exact
+substitution $H_{B,X}=\sqrt B/M$. Extending the positive
+reciprocal-height sum above $\tau$ is an upper bound for the same
+finite mask; it changes no original height assignment.
+
+For $B\le X$, use
+$B^{E_j+q}\le X^{\max(E_j,0)+q}$, giving
+
+$$
+\frac{r_{X,j}^{\rm mid}(B,\tau)}M
+\ll X^{-\mu D_j+\max(E_j,0)+q}(\log X)^{-D_j}
+\ll X^{-3q}.
+$$
+
+Here $E_j$ can be negative near one; replacing $B^{E_j}$ by
+$X^{E_j}$ would have the wrong direction. For $B>X$, retain
+$h_X(B)=(d/2)X^{-\eta}\sqrt B\log B$ from HIA2. Since
+$E_j+q<1/2$,
+
+$$
+\begin{aligned}
+\frac{r_{X,j}^{\rm mid}(B,\tau)}{h_X(B)}
+&\ll X^\eta M^{1-D_j}
+ \frac{B^{E_j+q-1/2}}{\log B}\\
+&\ll X^{-\mu D_j+E_j+q}(\log X)^{-D_j}
+\ll X^{-3q}.
+\end{aligned}
+$$
+
+Both parts of the original core source are retained. Summing the
+fixed finite bins and actual positive outgoing weights proves, with
+$\mathscr H_X=\sum_{i<m}\delta_i h_X(B_i)$,
+
+$$
+\boxed{\mathcal R_X^{\rm mid}
+\le C X^{-q}[M_XL_X+\mathscr H_X].}
+\tag{FHA3}
+$$
+
+An empty middle class satisfies this with zero allowance.
+
+### Combine disjoint actual classes inside the same complete response
+
+Partition the high-frequency mask into
+$\beta\le1-\eta$, $1-\eta<\beta<\sigma_\circ$, and
+$\beta>1-\eta$, $\beta\ge\sigma_\circ$. Bound these by LHA2's
+entire lower-real-part allowance, FHA3 and NE6, respectively. The
+actual classes are disjoint even when $1-\eta\ge\sigma_\circ$;
+that case has no middle class. Consequently
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal R_X^{\rm high}
+&\le\left(\frac C{\log X}+CX^{-q}\right)
+ [M_XL_X+\mathscr H_X]+o(M_XL_X),\\
+\frac{\mathcal R_X^{\rm high}}{\mathcal G_X}&\longrightarrow0.
+\end{aligned}}
+\tag{FHA4}
+$$
+
+The second line spends only HIA3's already retained
+$\mathscr H_X\le\mathcal G_X+O_a(L_X)$ and JM7's
+$\mathcal G_X\ge(R_\eta/2)M_XL_X$ eventually. It does not assume
+$\mathscr H_X=O(M_XL_X)$ or assert an absolute $o(M_XL_X)$ bound
+for the whole high-frequency allowance.
+
+Deleting precisely this full high-frequency real contribution from
+the original head retains its lower margin, up to any fixed
+positive loss, by HC2 and FHA4. If the entire LHA lower-real-part
+class is deleted as well, charge it once and add only the disjoint
+middle and near-one high-frequency classes. The exact remaining head
+then has mask
+
+$$
+\boxed{\beta>1-\eta,\qquad
+0<\gamma\le H_{B_i,X},\qquad
+S_X^{\rm rem}(\boldsymbol\tau)
+\ge(R_\eta-\varepsilon_0)M_XL_X\quad\text{eventually}}
+\tag{FHA5}
+$$
+
+for every fixed $\varepsilon_0>0$, on every original qualifying full
+window, maximizing-tie assignment and legal individual height
+assignment satisfying FHA1. This removes the middle high-frequency
+class left after LHA3 and NE6 at the same lower cut. AHA4 retains its
+own smaller cut $\sqrt B/M_X^{19/10}$ on its narrower real-part band
+and supplied-parameter range; it is not replaced by a stronger claim
+at that smaller cut.
+
+Every fixed actual zero with $\beta>1-\eta$ still eventually lies
+in FHA5's remaining low-frequency mask. No sufficient signed upper
+estimate for that head or favorable cofinal window is supplied.
+All-integer Robin and RH remain unproved. The bounds are not claimed
+uniform as FHA1 approaches equality or the supplied parameters vary.
