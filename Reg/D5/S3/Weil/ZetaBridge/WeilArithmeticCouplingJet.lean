@@ -103,7 +103,13 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_envelope))
       refine ⟨bad, ?_, rfl, ?_⟩
       · intro j hj
         funext c n
-        cases i <;> cases j <;> simp_all [actual, bad, realize]
+        change smoothEnvelope c n =
+          (if j = i then (-1 : ℝ) else smoothEnvelope c n)
+        cases i <;> cases j
+        · exact (hj rfl).elim
+        · rfl
+        · rfl
+        · exact (hj rfl).elim
       · intro hall
         have h := hall (c := 2) (n := 1) (m := 1)
           (by decide) (by decide) (by decide)
@@ -173,7 +179,8 @@ end Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 /-! All additional material below is SOURCE_ONLY_UNCOMPILED. The shared helper
 is a Reg proof of nonconstancy of the actual owner readout, not a new owner
 mathematical assertion and not an assumed positivity premise. Private owner
-operands are expanded by their pinned defining formulas using `change`. -/
+operands are compared with their pinned defining formulas using Lean's
+standard full-transparency reflexivity tactic. -/
 namespace Reg.D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 
 namespace WeightDependence
@@ -221,7 +228,7 @@ private theorem positive_mode : 0 < smoothWeight 2 1 := by
         (1 - Real.exp (-(2 * (j : ℝ) + 1 / 2) * logLength 2)) /
         ((2 * (j : ℝ) + 1 / 2) ^ 2 + frequency 2 (1 : ℤ) ^ 2)) /
       (1 : ℝ) ^ 2 := by
-    unfold smoothWeight <;> rfl
+    rfl'
   rw [hweight]
   norm_num only [one_pow, div_one]
   exact add_pos_of_pos_of_nonneg hp hgamma
@@ -399,7 +406,15 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_antitone))
       refine ⟨intervention i, ?_, rfl, intervention_rejects i⟩
       intro j hj
       funext c m
-      cases i <;> cases j <;> simp_all [actual, intervention, realize]
+      change smoothWeight c m =
+        (if j = i then
+          (if i then smoothWeight c m - 1 else smoothWeight c m + 1)
+          else smoothWeight c m)
+      cases i <;> cases j
+      · exact (hj rfl).elim
+      · rfl
+      · rfl
+      · exact (hj rfl).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence

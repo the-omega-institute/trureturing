@@ -8,7 +8,8 @@
 
 /-
 SOURCE_ONLY_UNCOMPILED. This source candidate is not an accepted Lean result.
-The complete pinned import, declaration, definition and proof body is unchanged.
+The pinned imports and intended public statements are preserved; concrete
+hosted diagnostics and signed-sum binding are repaired below.
 The companion Reg source attempts select existing absolute-value/norm function
 operands; they introduce no mathematical declarations in this D5 module.
 Elaboration, kernel and axiom checks, compiled source selection, registration
@@ -207,7 +208,7 @@ private theorem inverse_weights_summable {N : ℕ} (hN : 0 < N) :
 private theorem inverse_weights_tsum {N : ℕ} (hN : 0 < N) :
     (∑' j : ℕ, inverseSquareWeight N j) ≤ 1 / (N : ℝ) := by
   have hNR : (0 : ℝ) < N := by exact_mod_cast hN
-  simpa only [one_div] using Real.tsum_le_of_sum_range_le
+  simpa only [inverseSquareWeight, one_div] using Real.tsum_le_of_sum_range_le
     (fun j => sq_nonneg (((N : ℝ) + (j : ℝ) + 1)⁻¹)) (inverse_square_partial_le hNR)
 
 private theorem weight_tail_dom {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (j : ℕ) :
@@ -291,7 +292,7 @@ private theorem full_real_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) :
   obtain ⟨hma, hmb⟩ := signed_mixed_tail hc hN
   have hm : Summable (fun j : ℕ => mixedTerm c (N + j + 1)) := by
     apply Summable.of_norm
-    simpa only [Real.norm_eq_abs] using hma
+    simpa only [mixedTerm, Real.norm_eq_abs] using hma
   have hid (j : ℕ) :
       arithmeticBoundarySymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j =
         primeSymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j +
@@ -313,13 +314,19 @@ private theorem full_real_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) :
     2 * primeFirstMoment c * smoothEnvelope c (N + 1) / ((N + 1 : ℕ) : ℝ) ^ 2
   change - (primeFirstMoment c * smoothEnvelope c (N + 1) / ((N + 1 : ℕ) : ℝ) ^ 2) ≤
     ∑' j : ℕ, mixedTerm c (N + j + 1) at hlo
-  linarith
+  calc
+    _ ≤ PrimeSymbolResonance.tailBudget c N + smoothEnvelope c N ^ 2 / (N : ℝ) +
+        2 * (primeFirstMoment c * smoothEnvelope c (N + 1) /
+          ((N + 1 : ℕ) : ℝ) ^ 2) := by
+      linarith only [hpb, hhb, hlo]
+    _ = _ := by ring
 
 private theorem full_complex_energy (c N j : ℕ) (β : ℂ) :
     ‖β * (arithmeticBoundarySymbol c ((N + j + 1 : ℕ) : ℤ) : ℂ) /
       ((N + j + 1 : ℕ) : ℂ)‖ ^ 2 =
       ‖β‖ ^ 2 * (arithmeticBoundarySymbol c ((N + j + 1 : ℕ) : ℤ) ^ 2 * inverseSquareWeight N j) := by
-  have hm : ‖((N + j + 1 : ℕ) : ℂ)‖ = (N : ℝ) + (j : ℝ) + 1 := by simp
+  have hm : ‖((N + j + 1 : ℕ) : ℂ)‖ = (N : ℝ) + (j : ℝ) + 1 := by
+    simpa only [Nat.cast_add, Nat.cast_one] using Complex.norm_natCast (N + j + 1)
   rw [norm_div, norm_mul, div_pow, mul_pow, hm, Complex.norm_real, Real.norm_eq_abs, sq_abs]
   simp only [inverseSquareWeight, div_eq_mul_inv, inv_pow]
   ring
@@ -376,9 +383,10 @@ private theorem first_jet_pair (c N j : ℕ) (S : Finset ℤ) (v : ℤ → ℂ) 
     simp only [mul_neg, div_neg]
     ring
   have hz : ‖z‖ ^ 2 = Real.pi ^ 2 * ((N + j + 1 : ℕ) : ℝ) ^ 2 := by
-    dsimp [z, m]
-    rw [norm_mul, mul_pow, Complex.norm_real, Real.norm_eq_abs, sq_abs]
-    simp
+    have hm : ‖(((N + j + 1 : ℕ) : ℤ) : ℂ)‖ = ((N + j + 1 : ℕ) : ℝ) := by
+      simpa only [Int.cast_natCast] using Complex.norm_natCast (N + j + 1)
+    dsimp only [z, m]
+    rw [norm_mul, mul_pow, Complex.norm_real, Real.norm_eq_abs, sq_abs, hm]
   have hV : ‖V‖ ^ 2 = arithmeticBoundarySymbol c m ^ 2 * ‖β‖ ^ 2 := by
     dsimp [V]
     rw [norm_mul, mul_pow, norm_neg, Complex.norm_real, Real.norm_eq_abs, sq_abs]
@@ -400,8 +408,8 @@ theorem paired_first_jet_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N)
       ‖couplingFirstJet c S v ((N + j + 1 : ℕ) : ℤ)‖ ^ 2 +
       ‖couplingFirstJet c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
     (∑' j : ℕ,
-      ‖couplingFirstJet c S v ((N + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-      ‖couplingFirstJet c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2) ≤
+      (‖couplingFirstJet c S v ((N + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+        ‖couplingFirstJet c S v (-((N + j + 1 : ℕ) : ℤ))‖ ^ 2)) ≤
       (2 / Real.pi ^ 2) *
         (‖∑ n ∈ S, (arithmeticBoundarySymbol c n : ℂ) * v n‖ ^ 2 / (N : ℝ) +
           ‖∑ n ∈ S, v n‖ ^ 2 * fullSymbolTailBudget c N) := by
@@ -506,7 +514,10 @@ private theorem remainder_square_majorant {c M : ℕ} (hc : 2 ≤ c)
     ‖couplingColumn c S v m - couplingFirstJet c S v m‖ ^ 2 ≤
       remainderConstant c M A S v ^ 2 / ((M + j + 1 : ℕ) : ℝ) ^ 4 := by
   let t : ℝ := ((M + j + 1 : ℕ) : ℝ)
-  have ht : (M : ℝ) + 1 ≤ t := by dsimp [t]; push_cast; linarith [Nat.cast_nonneg j]
+  have ht : (M : ℝ) + 1 ≤ t := by
+    dsimp [t]
+    push_cast
+    linarith [Nat.cast_nonneg (α := ℝ) j]
   have hgap : 0 < t - A := by linarith
   have hd : 0 < (M : ℝ) + 1 - A := sub_pos.mpr hsep
   have ht0 : 0 < t := by linarith
@@ -538,7 +549,7 @@ private theorem remainder_square_majorant {c M : ℕ} (hc : 2 ≤ c)
   calc
     _ ≤ (remainderConstant c M A S v / t ^ 2) ^ 2 :=
       pow_le_pow_left₀ (norm_nonneg _) hnorm 2
-    _ = _ := by dsimp [t]; simp only [div_pow, ← pow_mul]; norm_num
+    _ = _ := by dsimp [t]; simp only [div_pow, ← pow_mul]
 
 private theorem remainder_budget_eq {c M : ℕ} {A : ℝ}
     (hM : 0 < M) (hsep : A < (M : ℝ) + 1) (S : Finset ℤ) (v : ℤ → ℂ) :
@@ -561,10 +572,10 @@ theorem paired_first_jet_remainder_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
       ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
         couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
     (∑' j : ℕ,
-      ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
+      (‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
         couplingFirstJet c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-      ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
-        couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ≤
+        ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ)) -
+          couplingFirstJet c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2)) ≤
       pairedRemainderBudget c M A S v := by
   let e : ℕ → ℝ := fun j =>
     ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ) -
@@ -574,10 +585,13 @@ theorem paired_first_jet_remainder_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
   have he (j : ℕ) : e j ≤
       (2 * remainderConstant c M A S v ^ 2) *
         (1 / ((M : ℝ) + (j : ℝ) + 1) ^ 4) := by
+    have hcast : (0 : ℝ) ≤ ((M + j + 1 : ℕ) : ℝ) := Nat.cast_nonneg _
     have hp := remainder_square_majorant hc S v hA hS hsep j
-      ((M + j + 1 : ℕ) : ℤ) (by simp)
+      ((M + j + 1 : ℕ) : ℤ) (by
+        simpa only [Int.cast_natCast] using abs_of_nonneg hcast)
     have hn := remainder_square_majorant hc S v hA hS hsep j
-      (-((M + j + 1 : ℕ) : ℤ)) (by simp)
+      (-((M + j + 1 : ℕ) : ℤ)) (by
+        simpa only [Int.cast_neg, abs_neg, Int.cast_natCast] using abs_of_nonneg hcast)
     calc
       e j ≤ remainderConstant c M A S v ^ 2 / ((M + j + 1 : ℕ) : ℝ) ^ 4 +
           remainderConstant c M A S v ^ 2 / ((M + j + 1 : ℕ) : ℝ) ^ 4 := add_le_add hp hn
@@ -639,8 +653,8 @@ theorem paired_coupling_column_tail {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
       ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
       ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
     (∑' j : ℕ,
-      ‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
-      ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ≤
+      (‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
+        ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2)) ≤
       (Real.sqrt (pairedJetBudget c M S v) +
         Real.sqrt (pairedRemainderBudget c M A S v)) ^ 2 := by
   classical

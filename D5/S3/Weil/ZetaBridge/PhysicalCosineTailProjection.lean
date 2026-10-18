@@ -39,7 +39,8 @@ private lemma mode_norm_bound (a : ℝ) (n : ℕ) (x : ℝ) :
 
 lemma mode_memLp (a : ℝ) (n : ℕ) :
     MemLp (fun x => (mode a n x : ℂ)) 2 (windowMeasure a) := by
-  exact ((mode_continuous a n).aestronglyMeasurable).of_bound
+  change MemLp (fun x => (mode a n x : ℂ)) 2 (volume.restrict (Ioc (-a) a))
+  exact MemLp.of_bound (mode_continuous a n).aestronglyMeasurable
     |amplitude a n| (Eventually.of_forall (mode_norm_bound a n))
 
 def modeL2 (a : ℝ) (n : ℕ) : WindowL2 a :=
@@ -53,7 +54,9 @@ private lemma pairing_zero_eq_window (a : ℝ) (f g : ℝ → ℂ) :
 private lemma matrixEntry_zero_diagonal (a : ℝ) (ha : 0 < a) (n : ℕ) :
     matrixEntry a n n 0 = 1 := by
   have ha0 : 0 ≤ a := ha.le
-  rw [matrixEntry_eq_matrix a ha, matrix, if_pos (show |(0 : ℝ)| ≤ 2 * a by positivity)]
+  rw [matrixEntry_eq_matrix a ha, PhysicalCompressedCosineMatrix.matrix,
+    if_pos (show |(0 : ℝ)| ≤ 2 * a by
+      simpa only [abs_zero] using mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) ha.le)]
   simp only [abs_zero, mul_zero, zero_div, Real.cos_zero, one_mul, sub_zero]
   rw [show (2 * a) / 2 = a by ring, sub_self, S_zero]
   by_cases hn : n = 0
@@ -82,16 +85,18 @@ private lemma matrixEntry_zero_diagonal (a : ℝ) (ha : 0 < a) (n : ℕ) :
 private lemma matrixEntry_zero_gram (a : ℝ) (ha : 0 < a) (n m : ℕ) :
     matrixEntry a n m 0 = if n = m then 1 else 0 := by
   classical
+  have hcap : |(0 : ℝ)| ≤ 2 * a := by
+    simpa only [abs_zero] using mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) ha.le
   by_cases h : n = m
   · subst m
     simp only [if_pos rfl]
     exact matrixEntry_zero_diagonal a ha n
   · rw [if_neg h]
     rcases lt_or_gt_of_ne h with hnm | hmn
-    · rw [matrixEntry_offdiagonal a ha n m hnm 0 (show |(0 : ℝ)| ≤ 2 * a by positivity)]
+    · rw [matrixEntry_offdiagonal a ha n m hnm 0 hcap]
       simp
     · rw [matrixEntry_symmetric a ha n m 0,
-        matrixEntry_offdiagonal a ha m n hmn 0 (show |(0 : ℝ)| ≤ 2 * a by positivity)]
+        matrixEntry_offdiagonal a ha m n hmn 0 hcap]
       simp
 
 private lemma modeL2_inner (a : ℝ) (n m : ℕ) :
@@ -102,6 +107,8 @@ private lemma modeL2_inner (a : ℝ) (n m : ℕ) :
       apply integral_congr_ae
       filter_upwards [(mode_memLp a n).coeFn_toLp, (mode_memLp a m).coeFn_toLp]
         with x hn hm
+      change modeL2 a n x = (mode a n x : ℂ) at hn
+      change modeL2 a m x = (mode a m x : ℂ) at hm
       rw [hn, hm]
       simp [RCLike.inner_apply']
     _ = _ := by
@@ -140,13 +147,15 @@ private lemma profile_norm_bound (a : ℝ) (N : ℕ) (v : ℕ → ℂ) (x : ℝ)
 private lemma compressed_head_memLp (a : ℝ) (N : ℕ) (v : ℕ → ℂ) (s : ℝ) :
     MemLp (compression a s (profile a (Finset.range (N + 1)) v)) 2
       (windowMeasure a) := by
+  change MemLp (compression a s (profile a (Finset.range (N + 1)) v)) 2
+    (volume.restrict (Ioc (-a) a))
   have hB : 0 ≤ profileBound a N v :=
     Finset.sum_nonneg fun _ _ => mul_nonneg (norm_nonneg _) (abs_nonneg _)
   have hm : Measurable (compression a s (profile a (Finset.range (N + 1)) v)) := by
     unfold compression zeroExtension
     exact (((profile_continuous a (Finset.range (N + 1)) v).measurable.indicator
       measurableSet_Ioc).comp (measurable_id.add_const s)).indicator measurableSet_Ioc
-  apply hm.aestronglyMeasurable.of_bound (profileBound a N v)
+  apply MemLp.of_bound hm.aestronglyMeasurable (profileBound a N v)
   filter_upwards [] with x
   by_cases hx : x ∈ window a
   · by_cases hxs : x + s ∈ window a
@@ -168,7 +177,11 @@ private lemma compressed_pairing_eq_window (a s : ℝ) (f g : ℝ → ℂ) :
     · simp [hx]
     · simp [compression, zeroExtension, hx]
   unfold pairing
-  rw [he, integral_indicator measurableSet_Ioc]
+  calc
+    _ = ∫ x : ℝ, (window a).indicator
+        (fun x => f x * compression a s g x) x := congrArg (integral volume) he
+    _ = _ := MeasureTheory.integral_indicator
+      (s := window a) (μ := volume) (show MeasurableSet (window a) from measurableSet_Ioc)
 
 private lemma shiftHeadL2_coefficient (a : ℝ) (N : ℕ) (v : ℕ → ℂ)
     (s : ℝ) (m : ℕ) :
@@ -180,6 +193,9 @@ private lemma shiftHeadL2_coefficient (a : ℝ) (N : ℕ) (v : ℕ → ℂ)
       apply integral_congr_ae
       filter_upwards [(mode_memLp a m).coeFn_toLp,
         (compressed_head_memLp a N v s).coeFn_toLp] with x hm hs
+      change modeL2 a m x = (mode a m x : ℂ) at hm
+      change shiftHeadL2 a N v s x =
+        compression a s (profile a (Finset.range (N + 1)) v) x at hs
       rw [hm, hs]
       simp [RCLike.inner_apply']
     _ = _ := (compressed_pairing_eq_window a s _ _).symm
@@ -211,7 +227,13 @@ lemma primeHeadL2_ae_action (a : ℝ) (N : ℕ) (v : ℕ → ℂ) :
       (compressed_head_memLp a N v (Real.log (r : ℝ))).coeFn_toLp,
       (compressed_head_memLp a N v (-Real.log (r : ℝ))).coeFn_toLp]
       with x hsm ha hp hm
-    simpa only [Pi.smul_apply, Pi.add_apply, smul_eq_mul, hp, hm, ha] using hsm
+    change shiftHeadL2 a N v (Real.log (r : ℝ)) x =
+      compression a (Real.log (r : ℝ)) (profile a (Finset.range (N + 1)) v) x at hp
+    change shiftHeadL2 a N v (-Real.log (r : ℝ)) x =
+      compression a (-Real.log (r : ℝ)) (profile a (Finset.range (N + 1)) v) x at hm
+    simp only [Pi.smul_apply, Pi.add_apply, smul_eq_mul] at hsm ha
+    rw [ha, hp, hm] at hsm
+    exact hsm
   filter_upwards [hsum, ae_all_iff.mpr hterm] with x hx hterms
   change ((∑ r ∈ Finset.Icc 1 (primeCutoff a), (primeWeight r : ℂ) •
     (shiftHeadL2 a N v (Real.log (r : ℝ)) +
@@ -230,6 +252,7 @@ private lemma primeHeadL2_coefficient (a : ℝ) (N : ℕ) (v : ℕ → ℂ) (m :
       apply integral_congr_ae
       filter_upwards [(mode_memLp a m).coeFn_toLp, primeHeadL2_ae_action a N v]
         with x hm hp
+      change modeL2 a m x = (mode a m x : ℂ) at hm
       rw [hm, hp]
       simp [RCLike.inner_apply']
     _ = _ := by
@@ -242,7 +265,12 @@ private lemma primeHeadL2_coefficient (a : ℝ) (N : ℕ) (v : ℕ → ℂ) (m :
         · simp [hx]
         · simp [primeAction, compression, zeroExtension, hx]
       unfold primeCoefficient
-      rw [he, integral_indicator measurableSet_Ioc]
+      calc
+        _ = ∫ x : ℝ, (window a).indicator (fun x => (mode a m x : ℂ) *
+            primeAction a (primeCutoff a) (profile a (Finset.range (N + 1)) v) x) x :=
+          (MeasureTheory.integral_indicator (s := window a) (μ := volume)
+            (show MeasurableSet (window a) from measurableSet_Ioc)).symm
+        _ = _ := congrArg (integral volume) he.symm
 
 
 /-! A concrete infinite-dimensional exterior projection, with no completeness
@@ -263,14 +291,16 @@ private def exteriorMode (a : ℝ) (M j : ℕ) : exteriorSpace a M :=
 private lemma exteriorMode_orthonormal (a : ℝ) (ha : 0 < a) (M : ℕ) :
     Orthonormal ℂ (exteriorMode a M) := by
   exact ((modes_orthonormal a ha).comp (fun j : ℕ => M + j + 1) (by
-    intro i j hij; omega)).codRestrict (exteriorSpace a M)
+    intro i j hij
+    change M + i + 1 = M + j + 1 at hij
+    omega)).codRestrict (exteriorSpace a M)
       (fun j => (exteriorMode a M j).property)
 
 private lemma exteriorMode_orthogonal_eq_bot (a : ℝ) (M : ℕ) :
     (Submodule.span ℂ (Set.range (exteriorMode a M)))ᗮ = ⊥ := by
   apply le_antisymm _ bot_le
   intro y hy
-  apply Submodule.mem_bot.mpr
+  apply (Submodule.mem_bot ℂ).mpr
   have hi (j : ℕ) : inner ℂ (exteriorMode a M j) y = 0 :=
     (Submodule.mem_orthogonal _ _).mp hy _
       (Submodule.subset_span (Set.mem_range_self j))
@@ -308,8 +338,8 @@ private lemma exteriorProjection_parseval (a : ℝ) (ha : 0 < a)
       ∑' j : ℕ, ‖inner ℂ (modeL2 a (M + j + 1)) F‖ ^ 2 := by
   let b := exteriorBasis a ha M
   let y := exteriorProjection a M F
-  have h := lp.norm_rpow_eq_tsum (p := (2 : ℝ≥0∞))
-    (by norm_num : 0 < (2 : ℝ≥0∞).toReal) (b.repr y)
+  have h := lp.norm_rpow_eq_tsum (p := (2 : ENNReal))
+    (by norm_num : 0 < (2 : ENNReal).toReal) (b.repr y)
   have hnorm : ‖y‖ ^ 2 = ∑' j : ℕ, ‖b.repr y j‖ ^ 2 := by
     simpa only [ENNReal.toReal_ofNat, Real.rpow_two, LinearIsometryEquiv.norm_map] using h
   rw [hnorm]
