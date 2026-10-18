@@ -80,7 +80,7 @@ The same all-length equality gives both inverse directions on FlatInput and Flat
 
 Admission and audit: the complete-record recurrence and overlap invariants supply the substantive content. Every retained auxiliary declaration lies on a live proof path of the complete-record recurrence or overlap results. Four-slot registration is unfinished: https://github.com/the-omega-institute/trureturing/issues/18714 records the missing compiled reconstruction, whole-family interventions, sensitivity and observational dependence. Under CLAUDE section 3.9 this linked issue discloses the unfinished audit; declared_validated is zero. Lean acceptance does not validate the missing registrations.
 
-Remaining original25 obligations include padded partition coordinates, exact positive depths and actual inertness, arbitrary rectangular SSE and arbitrary positive SE lower bounds, full certificate counting/minima, the actual prescribed history map with signed windows, and all twisted counts for every h and every positive j. Earlier accepted transient alignment evidence does not close these obligations, and the failed final receiver is not used here.
+Remaining original25 obligations include padded partition coordinates; actual augmentation, actual Inertness and exact positive depths; arbitrary rectangular SSE, arbitrary positive SE lower bounds and full certificate counting/minima; the actual prescribed history map with signed windows for every h; and positive-j fibre counts for every h and every positive j. These fixed-cut results do not discharge those obligations.
 
 Provenance and literature: these are repository constructions building on the existing counted-path suppliers. No external priority or literature novelty claim is made.
 
