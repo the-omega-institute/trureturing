@@ -3,6 +3,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Contract.AuricFib
 import Reg.Support.SingleDependentReadout
 
+/-! Source-owned registrations and typed analysis of the five partition masses. -/
+
 noncomputable section
 namespace Reg.D5.S3.StatisticalMechanics.ThreeLabelCoalescent
 open _root_.D5.S3.StatisticalMechanics.ThreeLabelCoalescent
@@ -152,6 +154,64 @@ def foldEvidence : Registration foldArena (type_of% unique_fold_classification) 
     foldArena.Law foldActual foldRejected foldRejectedLaw
   dependence := foldDependence
 
+abbrev endpointSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature
+    ((Fin 7 → ℝ) × (ℝ → Fin 5 → ℝ)) (fun _ => ℝ) (fun _ => ℝ)
+
+def endpointActual : Realization endpointSignature :=
+  realize endpointSignature (fun _ rp t => rp.2 t 0) (fun e => nomatch e)
+
+def endpointRejected : Realization endpointSignature :=
+  realize endpointSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def endpointArena : Arena where
+  signature := endpointSignature
+  Law R := ∀ (r : Fin 7 → ℝ) (_hr : ∀ i, 0 < r i)
+    (p : ℝ → Fin 5 → ℝ) (_hp : GeneralForwardLaw r p),
+    (∀ t, 0 ≤ t → R.readout () (r, p) t = Real.exp (-outgoing r * t)) ∧
+    (∀ t, 0 ≤ t → p t 1 * p t 2 / p t 0 ≤
+      r 0 * r 1 * t ^ 2 *
+        Real.exp (-(min (r 4) (outgoing r) + min (r 5) (outgoing r) - outgoing r) * t)) ∧
+    HasDerivAt (fun t => delta (p t)) (r 3) 0 ∧
+    (∀ h, 0 < h →
+      min (baseRates h 4) (outgoing (baseRates h)) +
+        min (baseRates h 5) (outgoing (baseRates h)) - outgoing (baseRates h) = 1 / 4 ∧
+      ∀ q, ForwardLaw h q → GeneralForwardLaw (baseRates h) q)
+
+private theorem endpointRejectedLaw : ¬ endpointArena.Law endpointRejected := by
+  intro hl
+  have hq := (positive_probability_solution 1 (by norm_num)).1
+  have hgeneral : GeneralForwardLaw (baseRates 1) (explicit 1) := by
+    refine ⟨hq.start, ?_, ?_, ?_⟩
+    · intro t ht i
+      convert hq.equation t ht i using 1
+      fin_cases i <;> norm_num [generalForward, forward, baseRates, outgoing, ell] <;> ring
+    · intro t ht i
+      rcases eq_or_lt_of_le ht with he | he
+      · rw [← he, hq.start]; fin_cases i <;> norm_num [initial]
+      · exact ((positive_probability_solution 1 (by norm_num)).2 _ hq t he).2.2.1 i |>.le
+    · intro t ht
+      rcases eq_or_lt_of_le ht with he | he
+      · rw [← he, hq.start]; norm_num [initial, Fin.sum_univ_succ]
+      · exact ((positive_probability_solution 1 (by norm_num)).2 _ hq t he).2.1
+  have hpos : ∀ i, 0 < baseRates 1 i := by
+    intro i; fin_cases i <;> norm_num [baseRates, ell]
+  have hz := (hl (baseRates 1) hpos (explicit 1) hgeneral).1 0 le_rfl
+  norm_num [endpointRejected, realize] at hz
+
+private theorem endpointDependence : ObservationalDependence endpointSignature endpointActual := by
+  intro i
+  refine ⟨((fun _ => 1), (fun t => ![t, 0, 0, 0, 0])), 0, 1, ?_⟩
+  norm_num [endpointActual, realize]
+
+def endpointEvidence : Registration endpointArena (type_of% seven_rate_endpoint_certificates) where
+  actual := endpointActual
+  bridge := Iff.rfl
+  variation := ⟨seven_rate_endpoint_certificates, endpointRejected, endpointRejectedLaw⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    endpointArena.Law endpointActual endpointRejected endpointRejectedLaw
+  dependence := endpointDependence
+
 /-- The function-valued operand p(t) has the finite partition type as its domain. -/
 def forwardSelection : Contract.SourceSelection where
   owner := `D5.S3.StatisticalMechanics.ThreeLabelCoalescent
@@ -193,6 +253,17 @@ def foldSelection : Contract.SourceSelection where
   readouts := #[{
     path := #["arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
     stateBinder := 1
+    functionOperand := false
+    stateOperand := none
+    booleanPredicate := false }]
+
+def endpointSelection : Contract.SourceSelection where
+  owner := `D5.S3.StatisticalMechanics.ThreeLabelCoalescent
+  definition := none
+  coordinates := #[0, 2]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"]
+    stateBinder := 4
     functionOperand := false
     stateOperand := none
     booleanPredicate := false }]
@@ -289,6 +360,29 @@ def foldRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
   familyRecord := none
   options := #[]
 
+def endpointRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}
+    (@seven_rate_endpoint_certificates) (Realization endpointSignature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.ThreeLabelCoalescent.endpointUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.ThreeLabelCoalescent.endpointEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨endpointArena⟩
+  objectArena := .source ⟨endpointArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source endpointArena ⟨endpointEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize endpointSignature endpointActual.readout (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some endpointSelection
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 /-- The selected source is the complete five-partition probability law at one
 observation time, with its complete original theorem telescope. -/
 def probabilitySource : Analysis.Source (@positive_probability_solution) :=
@@ -305,5 +399,6 @@ def probabilityAnalysis : AuricFib.Contract.Application (@positive_probability_s
 #print axioms probabilityRegistration
 #print axioms zerosRegistration
 #print axioms foldRegistration
+#print axioms endpointRegistration
 #print axioms probabilityAnalysis
 end Reg.D5.S3.StatisticalMechanics.ThreeLabelCoalescent

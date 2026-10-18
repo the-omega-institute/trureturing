@@ -104,6 +104,28 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
                     + "second derivative strictly positive. Parameter monotonicity gives strict "
                     + "positivity above the threshold. This theorem concerns the specified one-parameter "
                     + "family; stability under arbitrary perturbation of seven rates is not asserted."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("For seven rates r=(alpha,beta,gamma,zeta,d,e,f), let "
+                + "L=alpha+beta+gamma+zeta. GeneralForwardLaw requires an initially N, normalized "
+                + "nonnegative trajectory satisfying the seven-rate forward equations. It assumes "
+                + "no explicit mass formula or determinant bound. Put "
+                + "M(r)=min(d,L)+min(e,L)-L. Here deltaTrajectory(p) means the function t maps to delta(p(t)). The embedding baseRates(h) is "
+                + "(3,1,1/4,h,1/4,17/4+h,1/4).")),
+            Describe.Lean(
+                DescribeId.Create("three-label-seven-rate-endpoints"),
+                DeclarationHandle.Create(Prefix + "seven_rate_endpoint_certificates"),
+                H("Seven-rate tail and initial-derivative certificates"),
+                StatementSource.FromAuthor(Disp(EndpointFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each incoming branch, multiply its mass by exp(min(d,L)t). "
+                    + "Its derivative is bounded above by the corresponding incoming rate, since "
+                    + "both the forcing exponential and the nonnegative-loss term have the required signs. "
+                    + "The mean-value bound gives pA<=alpha*t*exp(-min(d,L)t) and the analogous "
+                    + "bound for pB. Multiplication and division by pN give the global ratio bound. "
+                    + "The forward equations at zero give the association derivative zeta. "
+                    + "The original family is a probability trajectory of this generator and has M=1/4. "
+                    + "These are endpoint certificates; a uniform neighborhood with exactly two roots "
+                    + "has not been established."))),
                 DescribeRole.Theorem)
         )));
 
@@ -158,6 +180,34 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
             And(critical, And(unique, And(low, And(middle, high))))));
         return new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("hc"), R,
             new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("tc"), R, body));
+    }
+
+    private static Formula EndpointFormula()
+    {
+        Formula r = F.Id("r"), p = F.Id("p"), t = F.Id("t"), i = F.Id("i");
+        Formula h = F.Id("h"), q = F.Id("q");
+        Formula Rate(byte j) => Seq(r, Open, D(j), Close);
+        Formula MassAt(byte j) => Seq(p, Open, t, Comma, D(j), Close);
+        Formula neg(Formula a) => Seq(Minus, a);
+        Formula sum(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+        Formula sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+        Formula l = Call("outgoing", r);
+        Formula m = sub(sum(Call("min", Rate(4), l), Call("min", Rate(5), l)), l);
+        Formula bound = Le(new Formula.Fraction(Mul(MassAt(1), MassAt(2)), MassAt(0)),
+            Mul(Mul(Mul(Rate(0), Rate(1)), new Formula.Power(t, D(2))), Call("exp", Mul(neg(m), t))));
+        Formula first = All("t", R, Imp(Le(D(0), t), Eq(MassAt(0), Call("exp", Mul(neg(l), t)))));
+        Formula tail = All("t", R, Imp(Le(D(0), t), bound));
+        Formula slope = Call("HasDerivAt", Call("deltaTrajectory", p), Rate(3), D(0));
+        Formula baseRates = Call("baseRates", h), baseL = Call("outgoing", baseRates);
+        Formula baseM = sub(sum(Call("min", Seq(baseRates, Open, D(4), Close), baseL),
+            Call("min", Seq(baseRates, Open, D(5), Close), baseL)), baseL);
+        Formula embedding = All("h", R, Imp(Lt(D(0), h), And(Eq(baseM,
+            new Formula.Fraction(D(1), D(4))),
+            All("q", Trajectory, Imp(Call("ForwardLaw", h, q), Call("GeneralForwardLaw", baseRates, q))))));
+        Formula body = And(first, And(tail, And(slope, embedding)));
+        Formula positive = All("i", Call("Fin", D(7)), Lt(D(0), Seq(r, Open, i, Close)));
+        return All("r", Arrow(Call("Fin", D(7)), R), Imp(positive, All("p", Trajectory,
+            Imp(Call("GeneralForwardLaw", r, p), body))));
     }
 
 }

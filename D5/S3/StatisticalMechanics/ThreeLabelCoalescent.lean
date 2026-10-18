@@ -756,6 +756,150 @@ theorem unique_fold_classification :
   · intro t ht hne
     exact lt_of_le_of_ne (hnon t ht) (Ne.symm (fun he => hne (only t ht he)))
 
+/-- Seven rates in the order alpha,beta,gamma,zeta,d,e,f. -/
+def outgoing (r : Fin 7 → ℝ) : ℝ := r 0 + r 1 + r 2 + r 3
+
+def generalForward (r : Fin 7 → ℝ) (q : Fin 5 → ℝ) : Fin 5 → ℝ :=
+  ![-outgoing r * q 0, r 0 * q 0 - r 4 * q 1, r 1 * q 0 - r 5 * q 2,
+    r 3 * q 0 + r 4 * q 1 + r 5 * q 2 + r 6 * q 4, r 2 * q 0 - r 6 * q 4]
+
+/-- A probability trajectory independently anchored by the seven-rate generator. -/
+structure GeneralForwardLaw (r : Fin 7 → ℝ) (p : ℝ → Fin 5 → ℝ) : Prop where
+  start : p 0 = initial
+  equation : ∀ t, 0 ≤ t → ∀ i,
+    HasDerivAt (fun s => p s i) (generalForward r (p t) i) t
+  nonneg : ∀ t, 0 ≤ t → ∀ i, 0 ≤ p t i
+  normalized : ∀ t, 0 ≤ t → ∑ i, p t i = 1
+
+def baseRates (h : ℝ) : Fin 7 → ℝ := ![3, 1, 1 / 4, h, 1 / 4, ell h, 1 / 4]
+
+private lemma general_N (r : Fin 7 → ℝ) (p : ℝ → Fin 5 → ℝ)
+    (hp : GeneralForwardLaw r p) (t : ℝ) (ht : 0 ≤ t) :
+    p t 0 = Real.exp (-outgoing r * t) := by
+  apply scalar_unique (-outgoing r) _ _ t ht
+  · simpa [initial] using congrFun hp.start 0
+  · intro s hs
+    have he := ((hasDerivAt_id s).const_mul (-outgoing r)).exp
+    convert (hp.equation s hs 0).sub he using 1
+    · ext x; simp
+    · simp [generalForward]; ring
+
+private lemma incoming_bound (r : Fin 7 → ℝ) (p : ℝ → Fin 5 → ℝ)
+    (hp : GeneralForwardLaw r p) (i : Fin 5) (a d : ℝ) (ha : 0 ≤ a)
+    (hz : p 0 i = 0)
+    (hd : ∀ s, 0 ≤ s → HasDerivAt (fun t => p t i) (a * p s 0 - d * p s i) s)
+    (t : ℝ) (ht : 0 ≤ t) :
+    p t i ≤ a * t * Real.exp (-min d (outgoing r) * t) := by
+  let m := min d (outgoing r)
+  let F := fun s => Real.exp (m * s) * p s i
+  have hder (s : ℝ) (hs : 0 ≤ s) : HasDerivAt F
+      (a * Real.exp ((m - outgoing r) * s) +
+        (m - d) * Real.exp (m * s) * p s i) s := by
+    have he := ((hasDerivAt_id s).const_mul m).exp
+    convert he.mul (hd s hs) using 1
+    · ext x; simp [F]
+    · dsimp
+      rw [general_N r p hp s hs]
+      rw [show Real.exp ((m - outgoing r) * s) =
+        Real.exp (m * s) * Real.exp (-outgoing r * s) by
+          rw [← Real.exp_add]; congr 1; ring]
+      ring
+  have hbound (s : ℝ) (hs : 0 ≤ s) : deriv F s ≤ a := by
+    rw [(hder s hs).deriv]
+    have hmL : m ≤ outgoing r := min_le_right _ _
+    have hmd : m ≤ d := min_le_left _ _
+    have he : Real.exp ((m - outgoing r) * s) ≤ 1 :=
+      Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr hmL) hs)
+    have hn : (m - d) * Real.exp (m * s) * p s i ≤ 0 :=
+      mul_nonpos_of_nonpos_of_nonneg
+        (mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr hmd) (Real.exp_pos _).le)
+        (hp.nonneg s hs i)
+    nlinarith [mul_le_mul_of_nonneg_left he ha]
+  have hb := (convex_Ici (0 : ℝ)).image_sub_le_mul_sub_of_deriv_le
+    (fun s hs => (hder s hs).continuousAt.continuousWithinAt)
+    (fun s hs => (hder s (interior_subset hs)).differentiableAt.differentiableWithinAt)
+    (fun s hs => hbound s (interior_subset hs)) 0 (by simp) t ht ht
+  have hF0 : F 0 = 0 := by simp [F, hz]
+  rw [hF0, sub_zero, sub_zero] at hb
+  have hepos := Real.exp_pos (m * t)
+  have hmul : Real.exp (m * t) * (a * t * Real.exp (-m * t)) = a * t := by
+    rw [show -m * t = -(m * t) by ring, Real.exp_neg]
+    field_simp
+  change p t i ≤ a * t * Real.exp (-m * t)
+  have hb' : Real.exp (m * t) * p t i ≤
+      Real.exp (m * t) * (a * t * Real.exp (-m * t)) := by
+    rw [hmul]
+    exact hb
+  exact (mul_le_mul_iff_right₀ hepos).mp hb'
+
+/-- Global tail control and the initial association derivative for arbitrary
+positive seven-rate probability trajectories, with the resonant family embedded. -/
+theorem seven_rate_endpoint_certificates (r : Fin 7 → ℝ) (hr : ∀ i, 0 < r i)
+    (p : ℝ → Fin 5 → ℝ) (hp : GeneralForwardLaw r p) :
+    (∀ t, 0 ≤ t → p t 0 = Real.exp (-outgoing r * t)) ∧
+    (∀ t, 0 ≤ t → p t 1 * p t 2 / p t 0 ≤
+      r 0 * r 1 * t ^ 2 *
+        Real.exp (-(min (r 4) (outgoing r) + min (r 5) (outgoing r) - outgoing r) * t)) ∧
+    HasDerivAt (fun t => delta (p t)) (r 3) 0 ∧
+    (∀ h, 0 < h →
+      min (baseRates h 4) (outgoing (baseRates h)) +
+        min (baseRates h 5) (outgoing (baseRates h)) - outgoing (baseRates h) = 1 / 4 ∧
+      ∀ q, ForwardLaw h q → GeneralForwardLaw (baseRates h) q) := by
+  refine ⟨general_N r p hp, ?_, ?_, ?_⟩
+  · intro t ht
+    have ha := incoming_bound r p hp 1 (r 0) (r 4) (hr 0).le
+      (by simpa [initial] using congrFun hp.start 1)
+      (fun s hs => by simpa [generalForward] using hp.equation s hs 1) t ht
+    have hb := incoming_bound r p hp 2 (r 1) (r 5) (hr 1).le
+      (by simpa [initial] using congrFun hp.start 2)
+      (fun s hs => by simpa [generalForward] using hp.equation s hs 2) t ht
+    have hap : 0 ≤ r 0 * t * Real.exp (-min (r 4) (outgoing r) * t) :=
+      mul_nonneg (mul_nonneg (hr 0).le ht) (Real.exp_pos _).le
+    have hab := mul_le_mul ha hb (hp.nonneg t ht 2) hap
+    rw [general_N r p hp t ht]
+    apply (div_le_iff₀ (Real.exp_pos _)).mpr
+    convert hab using 1
+    calc
+      _ = (r 0 * r 1 * t ^ 2) *
+          (Real.exp (-(min (r 4) (outgoing r) + min (r 5) (outgoing r) - outgoing r) * t) *
+            Real.exp (-outgoing r * t)) := by ring
+      _ = (r 0 * r 1 * t ^ 2) *
+          (Real.exp (-min (r 4) (outgoing r) * t) *
+            Real.exp (-min (r 5) (outgoing r) * t)) := by
+        rw [← Real.exp_add, ← Real.exp_add]
+        congr 2 <;> ring
+      _ = _ := by ring
+  · have hn := hp.equation 0 le_rfl 0
+    have ha := hp.equation 0 le_rfl 1
+    have hb := hp.equation 0 le_rfl 2
+    have ht := hp.equation 0 le_rfl 3
+    convert (hn.mul ht).sub (ha.mul hb) using 1
+    · ext t; rfl
+    · simp [hp.start, initial, generalForward]
+  · intro h hh
+    have hL : outgoing (baseRates h) = ell h := by dsimp [outgoing, baseRates, ell]; ring
+    have hl : (1 : ℝ) / 4 ≤ ell h := by dsimp [ell]; linarith
+    refine ⟨?_, ?_⟩
+    · rw [hL]
+      change min (1 / 4 : ℝ) (ell h) + min (ell h) (ell h) - ell h = 1 / 4
+      rw [min_eq_left hl, min_self]
+      ring
+    · intro q hq
+      refine ⟨hq.start, ?_, ?_, ?_⟩
+      · intro t ht i
+        convert hq.equation t ht i using 1
+        fin_cases i <;> simp only [generalForward, forward, hL] <;>
+          simp [baseRates] <;> ring
+      · intro t ht i
+        rcases eq_or_lt_of_le ht with he | he
+        · rw [← he, hq.start]; fin_cases i <;> norm_num [initial]
+        · exact ((positive_probability_solution h hh).2 q hq t he).2.2.1 i |>.le
+      · intro t ht
+        rcases eq_or_lt_of_le ht with he | he
+        · rw [← he, hq.start]; norm_num [initial, Fin.sum_univ_succ]
+        · exact ((positive_probability_solution h hh).2 q hq t he).2.1
+
+#print axioms seven_rate_endpoint_certificates
 #print axioms forward_solution
 #print axioms positive_probability_solution
 #print axioms no_three_positive_zeros
