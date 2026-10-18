@@ -1,0 +1,75 @@
+import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree
+import Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
+
+/-! The full finite-attainment statement with its minimum comparison exposed. -/
+
+namespace Reg.D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree
+open _root_.D5.S3.Quantum.Schatten
+open _root_.D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
+open Matrix
+open scoped Matrix
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+
+abbrev arena : Arena where
+  signature := relationSignature
+  Law R := ∀ (n : ℕ) (G : Matrix (Fin n) (Fin n) ℂ) (ν : UINorm n),
+    ∃ σ : Equiv.Perm (Fin n),
+      (∀ τ : Equiv.Perm (Fin n),
+        R.readout () () (ν.N ((σ.permMatrix ℂ) ⊙ G)) (ν.N ((τ.permMatrix ℂ) ⊙ G))) ∧
+      ν.N ((σ.permMatrix ℂ) ⊙ G) * ν.N ((σ.permMatrix ℂ)⁻¹ ⊙ Gᵀ) =
+        ν.N ((σ.permMatrix ℂ) ⊙ G) ^ 2
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨σ, hσ, _⟩ := h 0 0 zeroDimNorm
+  exact hσ σ
+
+def source_registration : Registration arena (type_of% @exists_minimizing_permutation) where
+  actual := orderActual
+  bridge := Iff.rfl
+  variation := ⟨exists_minimizing_permutation, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law orderActual rejected
+    rejected_law
+  dependence := order_dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@exists_minimizing_permutation) (Realization relationSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree.unit
+  realizationName := `Reg.D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize relationSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "body", "fn", "arg", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end
+end Reg.D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree
