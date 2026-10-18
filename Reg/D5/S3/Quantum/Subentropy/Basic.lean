@@ -181,8 +181,12 @@ def emptyAnchor : ∀ (e : signature.{u,v}.Anchor) (p : signature.{u,v}.Params),
     signature.{u,v}.State p :=
   fun e => nomatch e
 
+def observation : ∀ (i : signature.{u,v}.Role) (p : signature.{u,v}.Params),
+    signature.{u,v}.State p → signature.{u,v}.Output i p :=
+  fun _ _ V => V.conjTranspose
+
 def actual : Realization signature.{u,v} :=
-  realize signature (fun _ _ V => V.conjTranspose) emptyAnchor
+  realize signature observation emptyAnchor
 
 def badAdjoint {ι : Type u} {κ : Type v} (V : Matrix ι κ ℂ) : Matrix κ ι ℂ := by
   classical
@@ -331,7 +335,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ V => V.conjTranspose) emptyAnchor)
+  readout := some (realize signature observation emptyAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -406,7 +410,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ V => V.conjTranspose) emptyAnchor)
+  readout := some (realize signature observation emptyAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -445,9 +449,12 @@ def emptyAnchor : ∀ (e : signature.{u}.Anchor) (p : signature.{u}.Params),
     signature.{u}.State p :=
   fun e => nomatch e
 
+def observation : ∀ (i : signature.{u}.Role) (p : signature.{u}.Params),
+    signature.{u}.State p → signature.{u}.Output i p :=
+  fun _ p f => f (vecMulVec p.2 (star p.2))
+
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p f => f (vecMulVec p.2 (star p.2)))
-    emptyAnchor
+  realize signature observation emptyAnchor
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ p f => f (vecMulVec p.2 (star p.2)) + 1)
@@ -470,7 +477,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   refine ⟨⟨ULift.{u} Unit, fun _ => 0⟩, (fun _ => 0), (fun _ => 1), ?_⟩
-  norm_num [actual, realize]
+  norm_num [actual, realize, observation]
 
 def family : Registration arena.{u} (type_of% @matrixSubentropy_pure.{u}) where
   actual := actual
@@ -497,8 +504,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ p f => f (vecMulVec p.2 (star p.2))) emptyAnchor)
+  readout := some (realize signature observation emptyAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

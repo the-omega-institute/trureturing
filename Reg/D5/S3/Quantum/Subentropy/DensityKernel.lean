@@ -231,11 +231,18 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+def emptyAnchor : ∀ (e : signature.{u}.Anchor) (p : signature.{u}.Params),
+    signature.{u}.State p := fun e => nomatch e
+
+def observation : ∀ (i : signature.{u}.Role) (p : signature.{u}.Params),
+    signature.{u}.State p → signature.{u}.Output i p :=
+  fun _ _ f => ContinuousOn f
+
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ f => ContinuousOn f) (fun e => nomatch e)
+  realize signature.{u} observation.{u} emptyAnchor.{u}
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize signature.{u} (fun _ _ _ _ => False) emptyAnchor.{u}
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -294,7 +301,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ _ f => ContinuousOn f) (fun e => nomatch e))
+  readout := some (realize signature.{u} observation.{u} emptyAnchor.{u})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
