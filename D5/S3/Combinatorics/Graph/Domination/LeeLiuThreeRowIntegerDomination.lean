@@ -9,8 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#17651; Proved)
 escape_witness: none
-Direct frozen dependencies: F = D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.instDecidableRelFinAdjPathGraph_d5 (declaration statement_id sha256:337ad150a1d9869c2b2aaa2ac02c4f7553b8d5dfacb80d6baf8dbdaf6ece292c).
-In the declaration inventory below, frozen=F denotes exactly this dependency, and frozen=none denotes none.
+Direct frozen dependencies: F = D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.instDecidableRelFinAdjPathGraph_d5 (declaration statement_id sha256:337ad150a1d9869c2b2aaa2ac02c4f7553b8d5dfacb80d6baf8dbdaf6ece292c);
+S = D5/S1/Digit/MaxDigitSumBase.digitSum (declaration statement_id sha256:685be4a14b25d5106de2047a418119ee94c199c83c1479e7d9ab2c7f142ce490).
+In the declaration inventory below, frozen=F denotes the path-graph dependency; frozen=S denotes the digit-sum dependency, reused by the consumers of s.
 Certificate slices use kernel decisions. The other proofs reduce the column encoding and the
 Cartesian-product neighbour sets, sum the potential inequalities using Mathlib's telescoping
 identity, count the alternating construction, and apply the natural-number infimum lemmas.
@@ -20,7 +21,7 @@ decidability instance instead of declaring a second one. The base-three encoder 
 The public column_reduction theorem identifies grid domination with the zero-padded column inequalities for every row count.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17855.
 
-s: proof_shape: bind-only; escape_witness: none; frozen=none; consumers: L1, L2, L2_00, L2_01, L2_02, L2_03, L2_04, L2_05, L2_06, L2_07, L2_08, L2_09, L2_10, L2_11, L2_12, L2_13, L2_14, L2_15, L2_16, L2_17, L2_18, L2_19, L2_20, L2_21, L2_22, L2_23, L2_24, L2_25, L2_26, Phi, digit_sum, lower_bound, potential_prefix, s_uc_formula, sequence_lower_bound, sum_uc, upper_weight, weight_columns.
+s: proof_shape: bind-only; escape_witness: none; frozen=S; consumers: L1, L2, L2_00, L2_01, L2_02, L2_03, L2_04, L2_05, L2_06, L2_07, L2_08, L2_09, L2_10, L2_11, L2_12, L2_13, L2_14, L2_15, L2_16, L2_17, L2_18, L2_19, L2_20, L2_21, L2_22, L2_23, L2_24, L2_25, L2_26, Phi, digit_sum, lower_bound, potential_prefix, s_uc_formula, sequence_lower_bound, sum_uc, upper_weight, weight_columns.
 A: proof_shape: bind-only; escape_witness: none; frozen=none; consumers: L2, L2_00, L2_01, L2_02, L2_03, L2_04, L2_05, L2_06, L2_07, L2_08, L2_09, L2_10, L2_11, L2_12, L2_13, L2_14, L2_15, L2_16, L2_17, L2_18, L2_19, L2_20, L2_21, L2_22, L2_23, L2_24, L2_25, L2_26, L3, L3_00, L3_01, L3_02, L3_03, L3_04, L3_05, L3_06, L3_07, L3_08, L3_09, L3_10, L3_11, L3_12, L3_13, L3_14, L3_15, L3_16, L3_17, L3_18, L3_19, L3_20, L3_21, L3_22, L3_23, L3_24, L3_25, L3_26, aDecidable, cols_feasible, columnA_digit, potential_prefix, sequence_lower_bound, three_column_reduction, uc_feasible, upper_dominating.
 aDecidable: proof_shape: bind-only; escape_witness: none; frozen=none; consumers: L2_00, L2_01, L2_02, L2_03, L2_04, L2_05, L2_06, L2_07, L2_08, L2_09, L2_10, L2_11, L2_12, L2_13, L2_14, L2_15, L2_16, L2_17, L2_18, L2_19, L2_20, L2_21, L2_22, L2_23, L2_24, L2_25, L2_26, L3_00, L3_01, L3_02, L3_03, L3_04, L3_05, L3_06, L3_07, L3_08, L3_09, L3_10, L3_11, L3_12, L3_13, L3_14, L3_15, L3_16, L3_17, L3_18, L3_19, L3_20, L3_21, L3_22, L3_23, L3_24, L3_25, L3_26, uc_feasible.
 R: proof_shape: bind-only; escape_witness: none; frozen=none; consumers: Phi.
@@ -124,6 +125,7 @@ upper_weight: proof_shape: bind-only; escape_witness: none; frozen=none; consume
 result: proof_shape: bind-only; escape_witness: none; frozen=F; consumers: external settling result.
 -/
 import Mathlib.Algebra.BigOperators.Fin
+import D5.S1.Digit.MaxDigitSumBase
 import D5.S3.StatisticalMechanics.Percolation.DirectProductCyclePathBootstrap
 
 set_option maxRecDepth 10000
@@ -134,7 +136,7 @@ namespace D5.S3.Combinatorics.Graph.Domination.LeeLiuThreeRowIntegerDomination
 open SimpleGraph
 open scoped BigOperators
 
-private def s (a : Fin 27) : ℕ := (a.val / 9) + (a.val / 3 % 3) + (a.val % 3)
+private def s (a : Fin 27) : ℕ := D5.S1.Digit.MaxDigitSumBase.digitSum 3 a.val
 private def A (a b c : Fin 27) : Prop :=
   2 ≤ (a.val / 9) + ((b.val / 9) + (b.val / 3 % 3)) + (c.val / 9) ∧
   2 ≤ (a.val / 3 % 3) + ((b.val / 9) + (b.val / 3 % 3) + (b.val % 3)) + (c.val / 3 % 3) ∧
@@ -586,11 +588,19 @@ private theorem sequence_lower_bound (n : ℕ) (hn : 1 ≤ n) (x : ℕ → Fin 2
   omega
 
 
-private def digit (a : Fin 27) (i : Fin 3) : ℕ := if i = 0 then (a.val / 9) else if i = 1 then (a.val / 3 % 3) else (a.val % 3)
+private def digit (a : Fin 27) (i : Fin 3) : ℕ :=
+  ((finFunctionFinEquiv.symm a : Fin 3 → Fin 3) i.rev).val
 
 
 private theorem digit_sum (a : Fin 27) : ∑ i : Fin 3, digit a i = s a := by
-  simp [Fin.sum_univ_succ, digit, s, Nat.add_assoc]
+  have hs : s = fun a : Fin 27 => (a.val / 9) + (a.val / 3 % 3) + (a.val % 3) := by
+    funext a
+    fin_cases a <;> decide
+  have hd : digit = fun a : Fin 27 => fun i : Fin 3 =>
+      if i = 0 then (a.val / 9) else if i = 1 then (a.val / 3 % 3) else (a.val % 3) := by
+    funext a i
+    fin_cases i <;> fin_cases a <;> decide
+  simp [Fin.sum_univ_succ, hd, hs, Nat.add_assoc]
 
 
 private theorem weight_columns {n : ℕ} (f : Fin 3 × Fin n → ℕ) (hb : ∀ v, f v ≤ 2) :
@@ -598,7 +608,11 @@ private theorem weight_columns {n : ℕ} (f : Fin 3 × Fin n → ℕ) (hb : ∀ 
   have hs (j : Fin n) : s (cols f hb (j.val+1)) = ∑ i : Fin 3, f (i,j) := by
     rcases cols_digits f hb (j.val+1) with ⟨h0,h1,h2⟩
     rw [← digit_sum]
-    simp [digit, h0, h1, h2, pad_succ, Fin.sum_univ_succ]
+    have hd : digit = fun a : Fin 27 => fun i : Fin 3 =>
+        if i = 0 then (a.val / 9) else if i = 1 then (a.val / 3 % 3) else (a.val % 3) := by
+      funext a i
+      fin_cases i <;> fin_cases a <;> decide
+    simp [hd, h0, h1, h2, pad_succ, Fin.sum_univ_succ]
   rw [Fintype.sum_prod_type]
   rw [Finset.sum_comm]
   simp_rw [← hs]
@@ -655,12 +669,15 @@ private theorem uc_feasible (n j : ℕ) (hj : j < n) : A (uc n j) (uc n (j+1)) (
 
 
 private theorem digit_bound (a : Fin 27) (i : Fin 3) : digit a i ≤ 2 := by
-  unfold digit
-  split_ifs <;> omega
+  exact Nat.le_of_lt_succ ((finFunctionFinEquiv.symm a : Fin 3 → Fin 3) i.rev).isLt
 
 private theorem columnA_digit (a b c : Fin 27) : ColumnA 3 (digit a) (digit b) (digit c) ↔ A a b c := by
   rw [columnA_three]
-  simp [digit, A]
+  have hd : digit = fun a : Fin 27 => fun i : Fin 3 =>
+      if i = 0 then (a.val / 9) else if i = 1 then (a.val / 3 % 3) else (a.val % 3) := by
+    funext a i
+    fin_cases i <;> fin_cases a <;> decide
+  simp [hd, A]
 
 private def upper_f (n : ℕ) (v : Fin 3 × Fin n) : ℕ := digit (uc n (v.2.val + 1)) v.1
 
@@ -669,7 +686,11 @@ private theorem pad_upper_f (n k : ℕ) : pad (upper_f n) k = digit (uc n k) := 
   by_cases hk : 0 < k ∧ k ≤ n
   · simp [pad_apply, hk, upper_f, Nat.sub_add_cancel hk.1]
   · have hbad : k = 0 ∨ n < k := by omega
-    simp [pad_apply, hk, uc, hbad, digit]
+    have hd : digit = fun a : Fin 27 => fun i : Fin 3 =>
+        if i = 0 then (a.val / 9) else if i = 1 then (a.val / 3 % 3) else (a.val % 3) := by
+      funext a i
+      fin_cases i <;> fin_cases a <;> decide
+    simp [pad_apply, hk, uc, hbad, hd]
 
 private theorem upper_dominating (n : ℕ) : IsTwoDominating 3 n (upper_f n) := by
   apply (column_reduction _ (fun v => digit_bound _ _)).mpr
@@ -690,6 +711,9 @@ private theorem alternating_sum (n : ℕ) :
 private theorem s_uc_formula (n j : ℕ) (hn : 1 ≤ n) (hj : j < n) :
     s (uc n (j+1)) = (if (j+1) % 2 = 0 then 3 else 0) +
       (if j = 0 then 1 else 0) + (if j+1 = n ∧ n % 2 = 1 then 1 else 0) := by
+  have hs : s = fun a : Fin 27 => (a.val / 9) + (a.val / 3 % 3) + (a.val % 3) := by
+    funext a
+    fin_cases a <;> decide
   by_cases hn1 : n = 1
   · subst n
     have hj0 : j = 0 := Nat.lt_one_iff.mp hj
@@ -700,9 +724,9 @@ private theorem s_uc_formula (n j : ℕ) (hn : 1 ≤ n) (hj : j < n) :
     by_cases he : (j+1) % 2 = 0
     · have hj0 : j ≠ 0 := by omega
       have hfinal : ¬(j+1 = n ∧ n % 2 = 1) := by omega
-      simp [he, hj0, hfinal, s]
+      simp [he, hj0, hfinal, hs]
     · by_cases hj0 : j = 0 <;> by_cases hfinal : j+1 = n <;>
-        simp_all [s]
+        simp_all [hs]
 
 private theorem sum_uc (n : ℕ) (hn : 1 ≤ n) :
     ∑ j ∈ Finset.range n, s (uc n (j+1)) = 3 * n / 2 + 1 := by

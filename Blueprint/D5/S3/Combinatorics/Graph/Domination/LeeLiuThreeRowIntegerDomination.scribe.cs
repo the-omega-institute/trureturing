@@ -135,7 +135,7 @@ internal sealed class LeeLiuThreeRowIntegerDominationDocument : IScribeDocumentD
     {
         Formula m = X("m"), a = X("a"), b = X("b"), c = X("c"), i = X("i"), k = X("k");
         Formula column = FunctionType(Fin(m), Nat);
-        Formula total = Add(Add(Add(App(b, i), Sum("k", Neighbours(Path(m), i), App(b, k))),
+        Formula total = Add(Add(Add(App(b, i), Parenthesized(Sum("k", Neighbours(Path(m), i), App(b, k)))),
             App(a, i)), App(c, i));
         return Disp(All("m", Nat, All("a", column, All("b", column, All("c", column,
             Iff(Call("ColumnA", m, a, b, c), All("i", Fin(m), Le(D(2), total))))))));
