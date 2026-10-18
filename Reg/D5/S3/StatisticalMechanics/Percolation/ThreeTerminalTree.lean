@@ -67,7 +67,7 @@ private theorem same_terminal_law {V : Type u} {G : SimpleGraph V}
     rw [hm]
     exact if_neg (by decide)
 
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+theorem dependence : ObservationalDependence signature.{u} actual := by
   classical
   intro i
   let G : SimpleGraph PUnit.{u+1} := ⊥
@@ -80,7 +80,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   rw [hall,hsep]
   norm_num
 
-private theorem single_sensitivity (L : Realization signature.{u} → Prop)
+theorem single_sensitivity (L : Realization signature.{u} → Prop)
     (bad : Realization signature.{u}) (hbad : ¬ L bad) :
     Sensitivity ⟨signature,L⟩ actual := by
   constructor
@@ -200,3 +200,146 @@ def register_tree_bound : Contract.Registration (@tree_bound.{u})
 
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Path
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open SimpleGraph LeanInformationAudit
+universe u
+noncomputable section
+structure Parameters where
+  Vertices : Type u
+  graph : SimpleGraph Vertices
+  start : Vertices
+  finish : Vertices
+  walk : graph.Walk start finish
+abbrev signature : Signature where
+  Params := Parameters.{u}
+  State p := Sym2 p.Vertices
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature.{u} := realize _
+  (fun _ p e => @decide (e ∈ p.walk.edges) (Classical.propDecidable _)) (fun e => nomatch e)
+def bad : Realization signature.{u} := realize _ (fun _ _ _ => true) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {V : Type u} {G : SimpleGraph V} (_hG : G.IsAcyclic) {a b c : V}
+    (p : G.Walk a b) (q : G.Walk b c) (r : G.Walk a c)
+    (_hp : p.IsPath) (_hq : q.IsPath) (_hr : r.IsPath) (e : Sym2 V),
+    R.readout () ⟨V,G,a,c,r⟩ e = true ↔
+      (e ∈ p.edges ∧ e ∉ q.edges) ∨ (e ∈ q.edges ∧ e ∉ p.edges)
+private theorem rejected : ¬ arena.{u}.Law bad := by
+  intro h
+  have hh := @h PUnit.{u+1} (⊥ : SimpleGraph PUnit.{u+1}) isAcyclic_bot
+    PUnit.unit PUnit.unit PUnit.unit .nil .nil .nil
+    Walk.IsPath.nil Walk.IsPath.nil Walk.IsPath.nil s(PUnit.unit,PUnit.unit)
+  norm_num [bad,realize] at hh
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  classical
+  intro i
+  let G : SimpleGraph (ULift.{u} Bool) := ⊤
+  let a : ULift.{u} Bool := ULift.up false
+  let c : ULift.{u} Bool := ULift.up true
+  have hadj : G.Adj a c := by simp [G,a,c]
+  let r : G.Walk a c := .cons hadj .nil
+  refine ⟨⟨ULift Bool,G,a,c,r⟩,s(a,c),s(a,a),?_⟩
+  simp [actual,realize,r,a,c,Sym2.eq_iff]
+def registration : Registration arena.{u} (type_of% @path_edge_symmDiff.{u}) where
+  actual := actual
+  bridge := by simp only [arena,actual,realize,decide_eq_true_eq]
+  variation := ⟨by simpa only [actual,realize,decide_eq_true_eq] using
+    @path_edge_symmDiff.{u},bad,rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨bad,?_,?_,rejected⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+def register_path_edge_symmDiff : Contract.Registration (@path_edge_symmDiff.{u})
+    (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Path.register_path_edge_symmDiff
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Path.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p e => @decide (e ∈ p.walk.edges) (Classical.propDecidable _)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Path
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+universe u
+noncomputable section
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {V : Type u} {G : SimpleGraph V} [hE : Fintype G.edgeSet]
+    (a b c : V) (θ : G.edgeSet → ℝ), ∑ s, R.readout () ⟨V,G,hE,a,b,c,θ⟩ s = 1
+private theorem rejected : ¬ arena.{u}.Law two := by
+  classical
+  intro h
+  let G : SimpleGraph PUnit.{u+1} := ⊥
+  letI : Fintype G.edgeSet := Fintype.ofFinite _
+  have hh := h (G:=G) PUnit.unit PUnit.unit PUnit.unit (fun _ => 0)
+  have hc : Fintype.card Mode = 5 := by decide
+  norm_num [two,realize,hc] at hh
+
+def registration : Registration arena.{u} (type_of% @bondLaw_sum.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨bondLaw_sum,two,rejected⟩
+  sensitivity := single_sensitivity _ two rejected
+  dependence := dependence
+
+def register_bondLaw_sum : Contract.Registration (@bondLaw_sum.{u})
+    (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization.register_bondLaw_sum
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p => @bondLaw p.Vertices p.graph p.finiteEdges p.a p.b p.c p.rate)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalTree.Normalization

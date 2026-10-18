@@ -213,3 +213,141 @@ def lawAnalysis : AuricFib.Contract.Application (@star_law) where
 
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Sharpness
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  (Fin 3 → ℝ) (fun _ => Mode) (fun _ => ℝ)
+def actual : Realization signature := realize _
+  (fun _ θ => law starEnds 0 1 2 θ) (fun e => nomatch e)
+def bad : Realization signature := realize _ (fun _ _ _ => -1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ ε : ℝ, 0 < ε → ∃ θ : Fin 3 → ℝ,
+    (openGraph starEnds (fun _ => true)).IsTree ∧
+    (∀ e, 0 < θ e ∧ θ e < 1) ∧
+    (∀ s, 0 ≤ R.readout () θ s) ∧ (∑ s, R.readout () θ s) = 1 ∧
+    0 < R.readout () θ .ac ∧ (1-ε)*R.readout () θ .ac < delta (R.readout () θ)
+private theorem rejected : ¬ arena.Law bad := by
+  intro h
+  obtain ⟨θ,_,_,hp,_⟩ := h 1 (by norm_num)
+  have hh := hp .separate
+  norm_num [bad,realize] at hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨![0,0,0],.separate,.all,?_⟩
+  change law starEnds 0 1 2 ![0,0,0] .separate ≠ law starEnds 0 1 2 ![0,0,0] .all
+  rw [star_law]
+  norm_num
+def registration : Registration arena (type_of% @star_sharpness) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨star_sharpness,bad,rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ actual bad rejected
+  dependence := dependence
+def register_star_sharpness : Contract.Registration (@star_sharpness)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Sharpness.register_star_sharpness
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Sharpness.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ θ => law starEnds 0 1 2 θ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Sharpness
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.WeightSum
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+universe u
+noncomputable section
+structure Parameters where
+  Edges : Type u
+  finiteEdges : Fintype Edges
+  decidableEdges : DecidableEq Edges
+  rate : Edges → ℝ
+abbrev signature : Signature where
+  Params := Parameters.{u}
+  State p := p.Edges → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature.{u} := realize _
+  (fun _ p => @weight p.Edges p.finiteEdges p.rate) (fun e => nomatch e)
+def zero : Realization signature.{u} := realize _ (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {E : Type u} [hE : Fintype E] [hD : DecidableEq E] (θ : E → ℝ),
+    ∑ ω : E → Bool, R.readout () ⟨E,hE,hD,θ⟩ ω = 1
+private theorem rejected : ¬ arena.{u}.Law zero := by
+  intro h
+  have hh := @h PUnit.{u+1} inferInstance inferInstance (fun _ => 0)
+  norm_num [zero,realize] at hh
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨⟨PUnit,inferInstance,inferInstance,fun _ => 0⟩,
+    (fun _ => false),(fun _ => true),?_⟩
+  change weight (fun _ : PUnit.{u+1} => (0:ℝ)) (fun _ => false) ≠
+    weight (fun _ : PUnit.{u+1} => (0:ℝ)) (fun _ => true)
+  simp [weight]
+def registration : Registration arena.{u} (type_of% @weight_sum.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨weight_sum,zero,rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨zero,?_,?_,rejected⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+def register_weight_sum : Contract.Registration (@weight_sum.{u})
+    (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.WeightSum.register_weight_sum
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.WeightSum.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p => @weight p.Edges p.finiteEdges p.rate) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.WeightSum
