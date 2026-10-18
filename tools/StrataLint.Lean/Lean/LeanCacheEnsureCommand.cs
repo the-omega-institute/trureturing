@@ -221,8 +221,7 @@ internal static partial class LeanCacheEnsureCommand
                         out cacheState, writerGuard, runner,
                         // A wrapped build can use Lake's dependency traces to update a
                         // matching warm cache; age alone does not require an archive.
-                        refreshWarmArchive: refreshWarmArchive
-                            || !stateProbe.ProbeOleans(MathlibOleanRoot(lake)).IsWarm);
+                        refreshWarmArchive: refreshWarmArchive);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
@@ -786,6 +785,10 @@ internal static partial class LeanCacheEnsureCommand
         // writer lock, including a warm donor that bypassed cold-cache fallback.
         const string prefix = "LEAN_CACHE ";
         var payload = JsonNode.Parse(result.Output[prefix.Length..])!.AsObject();
+        // Wrapped warm-cache reuse and its receipt share one observation.
+        // Other ensure/provision paths retain their post-installation probe.
+        var mathlibWarmth = refreshWarmArchive
+            ? null : stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake")));
         var location = GitWorktreeInventory.Locate(root, runner);
         if (location.IsLinked)
         {
@@ -797,7 +800,7 @@ internal static partial class LeanCacheEnsureCommand
             payload["archive_workflow_run_id"] = null;
             result = result with { Output = prefix + payload.ToJsonString() + "\n" };
         }
-        else if (refreshWarmArchive && projectWarmth.IsWarm
+        else if ((refreshWarmArchive || !mathlibWarmth!.IsWarm) && projectWarmth.IsWarm
             && payload["archive_status"]?.GetValue<string>() == "not_attempted")
         {
             try
@@ -813,7 +816,10 @@ internal static partial class LeanCacheEnsureCommand
                     payload["archive_producer_commit_sha"] = refresh.ProducerCommitSha;
                     payload["archive_workflow_run_id"] = refresh.WorkflowRunId;
                     if (refresh.Outcome == LeanArchiveOutcome.Unpacked)
+                    {
                         projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
+                        mathlibWarmth = null;
+                    }
                 }
             }
             catch (Exception error) when (error is IOException or UnauthorizedAccessException)
@@ -825,7 +831,7 @@ internal static partial class LeanCacheEnsureCommand
         if (RetireRootJudgeOutputs(root, writerGuard))
             projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
         cacheState = new CacheState(
-            stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
+            mathlibWarmth ?? stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
             projectWarmth);
         return result with { Output = RecordCacheState(result.Output, cacheState) };
     }

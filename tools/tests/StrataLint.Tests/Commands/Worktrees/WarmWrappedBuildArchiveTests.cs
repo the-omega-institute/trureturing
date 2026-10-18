@@ -72,9 +72,11 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Theory]
-    [InlineData("with-cache-reader")]
-    [InlineData("with-cache-writer")]
-    public void WrappedBuildStillRefreshesWhenMathlibIsCold(string entry)
+    [InlineData("with-cache-reader", false)]
+    [InlineData("with-cache-writer", false)]
+    [InlineData("with-cache-reader", true)]
+    [InlineData("with-cache-writer", true)]
+    public void WrappedBuildStillRefreshesWhenMathlibIsCold(string entry, bool installsArchive)
     {
         using var repository = new TemporaryDirectory();
         var fixture = new EnsureArchiveFixture(repository.Path, "cold-mathlib-build");
@@ -83,8 +85,12 @@ public sealed partial class LeanCacheEnsureCommandTests
             TestEnvironmentBridge.UtcNow().AddHours(-7));
         var runner = new RecordingWorktreeProcessRunner
         {
-            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"offline\"}\n",
-            ArchiveExitCode = 1,
+            ArchiveReceipt = installsArchive
+                ? "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"partition\"}\n"
+                : "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"offline\"}\n",
+            ArchiveExitCode = installsArchive ? 0 : 1,
+            AfterArchiveFetch = installsArchive
+                ? _ => MathlibProjectionFixture.Write(Path.Combine(fixture.Target, ".lake")) : null,
         };
 
         var result = WorktreeCommand.Run(fixture.Target, [entry, "--", "lake", "build", "D5.Target"], runner);
@@ -93,7 +99,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal(1, runner.ArchiveInvocations);
         Assert.Contains("--refresh-stale", Assert.Single(runner.Invocations,
             call => call.FileName == "/bin/bash").Arguments);
-        Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
-        Assert.Equal("cold", receipt.GetProperty("mathlib_olean_state").GetString());
+        Assert.Equal(installsArchive ? "unpacked" : "miss", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal(installsArchive ? "warm" : "cold", receipt.GetProperty("mathlib_olean_state").GetString());
     }
 }
