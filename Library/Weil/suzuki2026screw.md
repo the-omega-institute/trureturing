@@ -2247,3 +2247,180 @@ makes no comparison of $\mathcal M(\mu)^2$ with a nearly null compact
 form. The compact size $U$ is fixed; no uniformity as $U\to\infty$,
 no dense remote-sector coercivity, no full all-order positivity and no
 strict all-integer Robin inequality or RH proof is supplied.
+
+
+## Fixed-order decay controls arbitrarily many confluent clusters
+
+Keep the complete actual normalized odd kernel
+$R(a,b)=L_0(a,b)/\sqrt{J(a)J(b)}$. Reuse the fixed-order theta bounds
+and local confluent estimates in (W23), (W33)--(W34), including their
+already cited classical divided-difference formula. The new input is a
+uniform derivative bound at separated escaping positions. It pays the
+whole interaction between arbitrarily many bounded-size clusters.
+This is a `repo-derived` paper application of the existing local results
+and the classical block row-sum bound, without a literature-priority or
+Lean-verification claim.
+
+### Derivatives at separated positions
+
+For every fixed integer $r\ge0$, there are $A_r,C_r>0$ such that
+
+$$
+\boxed{\max_{i+j\le r}|\partial_a^i\partial_b^jR(a,b)|
+ \le C_r(1+|a-b|)e^{-|a-b|}
+\quad(a,b\ge A_r,\ |a-b|\ge8).}
+\tag{W52}
+$$
+
+The constants are independent of both positions and their distance.
+There is no uniformity over $r$. To retain the entire reflected exterior,
+first suppose $b\ge a+8$ and put $g=\log\Phi$, $q=e^{2b}$ and
+
+$$
+\begin{aligned}
+F_+&=g(a+t)-g(a)+g(b+t)-g(b),\\
+F_-&=g(a-t)-g(a)+g(b+t)-g(b),\\
+\mathcal U(a,b)&=\frac{L_0(a,b)}{\Phi(a)\Phi(b)}\\
+&=\frac14\int_0^\infty
+ [(a+b+2t)e^{F_+}-(b-a+2t)e^{F_-}]\,dt.
+\end{aligned}
+$$
+
+This is the exact common forward-variable formula, using evenness in
+the reflected term. Global concavity of $g$ and (W19) give, for every
+$t\ge0$,
+
+$$
+F_+\le-qt,\qquad
+F_-\le-[p(b)-p(a)]t\le-qt/2,
+$$
+
+since $p(a)\le10e^{2a}$ and $10e^{-16}<1/2$. The bound remains
+valid when $a-t<0$; that part of the reflected integral is not deleted.
+For $1\le k\le r$, the whole-line fixed-order bounds preceding (W33)
+give
+
+$$
+|\partial_a^kF_\pm|+|\partial_b^kF_\pm|
+ \le C_rqt e^{2t}.
+$$
+
+Indeed each derivative is a difference of two values of $g^{(k)}$,
+and its integral remainder uses $g^{(k+1)}$ on an interval of length
+$t$. Mixed derivatives of the exponents vanish. Enlarge $A_r$ until
+$q\ge\max(1,8r)$. The chain rule then bounds each derivative of
+$e^{F_\pm}$ through total order $r$ by
+
+$$
+C_re^{-qt/4}\sum_{k=0}^r(qt)^k.
+$$
+
+These majorants justify differentiation of the full integrals. Integrating
+the constant and linear factors in $t$ yields
+
+$$
+\max_{i+j\le r}|\partial_a^i\partial_b^j\mathcal U(a,b)|
+ \le C_r(a+b+1)e^{-2b}.
+$$
+
+For normalization, reuse the fixed-order direct/reflected limit preceding
+(W33) at its unnormalized diagonal $d_*(x)=T(x,0)$ from (W24):
+
+$$
+d_*(x)=\frac{e^{2x}J(x)}{x\Phi(x)^2}\longrightarrow\frac1{8\pi},
+\qquad d_*^{(k)}(x)\longrightarrow0\quad(k\ge1\text{ fixed}).
+$$
+
+Thus $d_*$ is bounded away from zero and its fixed-order logarithmic
+derivatives are bounded beyond a common start. The function
+$\mathcal N(x)=e^x/(\sqrt x\sqrt{d_*(x)})$ satisfies
+$|\mathcal N^{(k)}(x)|\le C_r\mathcal N(x)$ for $k\le r$ there.
+Since $R(a,b)=\mathcal N(a)\mathcal N(b)\mathcal U(a,b)$, its derivatives
+are bounded by
+$C_r(a+b+1)e^{a-b}/\sqrt{ab}$.
+For $a\ge1$, $(a+b+1)/\sqrt{ab}\le3+(b-a)$.
+This proves (W52) on this half of the domain. Symmetry exchanges the
+positions and derivative orders on the other half.
+
+### The existing local estimates give one cluster metric
+
+Fix $W>0$ and an integer $m\ge1$. A cluster consists of distinct ordered
+nodes $x_{j,1}<\cdots<x_{j,n_j}$ with $1\le n_j\le m$ and hull width at most
+$W$. Let $T_j$ be the real Newton map on its evaluation vectors:
+its $k$th coordinate is the divided difference on
+$x_{j,1},\ldots,x_{j,k}$. It is invertible; no lower bound on the internal
+gaps is imposed.
+
+The local matrix
+$H_j=T_j[R(x_{j,k},x_{j,l})]_{k,l}T_j^*$ has prefix determinants
+exactly equal to the quotients in (W34). For clusters beyond the existing
+local threshold, those determinants are at least
+$\beta_{W,m}=\tfrac12e^{-2m^2W}>0$. The derivative bounds in (W33)
+and the classical integral formula bound all entries by one
+$M_{W,m}\ge1$, independently of the node gaps and cluster position.
+The positive prefix determinants give positive definiteness; the
+operator norm is at most $mM_{W,m}$. Consequently
+
+$$
+\boxed{H_j\succeq\sigma_{W,m}I,\qquad
+ \sigma_{W,m}:=\frac{\beta_{W,m}}{(mM_{W,m})^{m-1}}>0.}
+\tag{W53}
+$$
+
+This reuses the already paid bounded-window confluence estimate rather
+than assuming a positive budget for unrestricted local profiles.
+
+### The entire interaction is uniform in the number of clusters
+
+Order any finite number of clusters, and require consecutive hulls to
+have distance at least $D\ge8$. Apply the same Newton maps to every
+block of the complete normalized Gram matrix. The classical integral
+formula and (W52) with $r=2m-2$ bound each entry of a cross block with
+hull distance $\delta$ by $C_r(1+\delta)e^{-\delta}$. Its operator
+norm is at most $mC_r(1+\delta)e^{-\delta}$. The $n$th next hull has
+distance at least $nD$, so every block row sum is at most
+
+$$
+2mC_r\sum_{n\ge1}(1+nD)e^{-nD}
+=2mC_r\left[\frac{q_D}{1-q_D}
+ +\frac{Dq_D}{(1-q_D)^2}\right],\qquad q_D=e^{-D}.
+$$
+
+Choose one $D_{W,m}\ge8$ making this quantity at most
+$\sigma_{W,m}/2$, and one $A_{W,m}$ covering the existing local
+threshold and (W52). Both choices are independent of the total number
+of clusters and nodes. The standard block row-sum estimate now leaves
+$\sigma_{W,m}/2$ of the same local budget in the full matrix.
+
+For arbitrary complex coefficient vectors $c_j$, put
+
+$$
+z_j=\operatorname{diag}(\sqrt{J(x_{j,k})})c_j,\qquad
+ y_j=T_j^{-*}z_j.
+$$
+
+The block Newton congruence is exact, and therefore
+
+$$
+\boxed{\sum_{j,k}\overline{c_j}^{\,T}
+ [L_0(x_{j,s},x_{k,t})]_{s,t}c_k
+ \ge\frac{\sigma_{W,m}}2\sum_j\|y_j\|_2^2.}
+\tag{W54}
+$$
+
+Here all nodes are at least $A_{W,m}$, each cluster has at most $m$
+nodes and width at most $W$, and consecutive hull distances are at least
+$D_{W,m}$. The bound covers arbitrary coefficient sizes, complex coefficients
+and total sample counts. It remains uniform as internal gaps
+tend to zero. Repeated physical nodes may first be merged; no derivative
+distributions are substituted for the original finite samples.
+
+Unlike the separated individual samples in (W22), these families permit
+arbitrarily close nodes within each cluster and arbitrarily many sign
+changes over all clusters. The metric explicitly records the coefficient
+cancellation at confluence; no unweighted lower eigenvalue is asserted.
+The local size $m$ and width $W$ are fixed. Their thresholds and cluster
+gaps need not be uniform as $m\to\infty$, and the families are not dense
+in the unrestricted physical test space. Positivity on one fixed window
+at all orders, the complete compact signed form, the strict all-integer
+Robin upper and RH remain unproved.
