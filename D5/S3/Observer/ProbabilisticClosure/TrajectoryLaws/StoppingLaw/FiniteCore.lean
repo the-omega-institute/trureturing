@@ -364,7 +364,7 @@ private theorem stopping_law_sections (β : Bias) (V : Finset ℤ) (j : Bool) (k
     rw [SpinWindow.split_spin β V (targetIndex j j)]
     change SpinWindow.prob β V {S | S (targetIndex j j) = false ∧ _} +
       SpinWindow.prob β V {S | S (targetIndex j j) = true ∧ _} = _
-    simp only [Set.mem_setOf_eq] 
+    simp only [Set.mem_setOf_eq]
     rw [hA, hA, β.π_sum]
   constructor
   · intro S
@@ -954,4 +954,3 @@ theorem sourceLaw_remote (β : Bias) (j : Bool) (R : ℕ) (T : ReadTree) :
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
 end
-
