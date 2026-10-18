@@ -54,9 +54,13 @@ Section VII, p. 7, verbatim: “The most obvious open question is whether log-ne
 
 **Theorem 1.5 (A CPTP separation).**
 
-$$\neg claim$$
+$$\neg (\forall (dA : \mathbb{N}), \forall (dB : \mathbb{N}), \forall (r : \mathbb{N}), \forall (K : \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right)), (\sum_{k : \operatorname{Fin}\left(r\right)} (\operatorname{conjTranspose}\left(K\left(k\right)\right) \cdot K\left(k\right)) = (1 : \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right))) \Rightarrow \operatorname{capAssisted}\left(K\right) = \operatorname{capSep}\left(K\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/campbell-2010-log-negativity-resource-independence` (refuted) by `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"campbell-2010-log-negativity-resource-independence","declaration_gid":"D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
