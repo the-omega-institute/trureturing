@@ -26,7 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding
-open EssentialWordRealization ResetNumberedHistories ResetStandardBeamGeometry
+open EssentialWordRealization ResetNumberedHistories ResetStandardBeamGeometry FiniteWindowTableCriterion
 
 local instance nativeIntModule (q : ℕ) :
     Module ℤ (InertGroupBlockConjugacy.DimensionGroup (resetMatrix q)) :=
