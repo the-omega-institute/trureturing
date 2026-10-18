@@ -174,7 +174,19 @@ $$\forall (d: \mathbb{N}), \forall (n: \mathbb{N}), \forall (rho: \operatorname{
 
 The two sides choose equiangular measurements independently, with the same local dimension and number of outcomes. Pn is the n by n table formed from their effects.
 
-**Theorem 1.13 (Normalization as a conjugate dot product).**
+**Theorem 1.13 (The Hilbert–Schmidt product bound).**
+
+$$\forall (K: Type*), [\operatorname{Fintype}\left(K\right)] \forall (R: \operatorname{Matrix}\left(K, K, \mathbb{C}\right)), \forall (S: \operatorname{Matrix}\left(K, K, \mathbb{C}\right)), \operatorname{traceNorm}\left(R \cdot S\right) \le \sqrt{\operatorname{entryNormSq}\left(R\right)} \cdot \sqrt{\operatorname{entryNormSq}\left(S\right)}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM.traceNorm_mul_le_hsSq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For square complex matrices on any finite index type, the trace norm of their product is at most the product of their Frobenius norms. Here entryNormSq(M) is the sum of the squared absolute values of all entries of M. This is the Hilbert–Schmidt Hölder inequality, and it includes the empty index type.
+
+**Theorem 1.14 (Normalization as a conjugate dot product).**
 
 $$\forall (I: Type*), [\operatorname{Fintype}\left(I\right)] \forall (u: \operatorname{Ket}\left(I\right)), \operatorname{dotProduct}\left(\operatorname{star}\left((u).vec\right), (u).vec\right) = (1: \mathbb{C})$$
 
@@ -188,7 +200,7 @@ $$\forall (I: Type*), [\operatorname{Fintype}\left(I\right)] \forall (u: \operat
 
 The conjugate dot product of a normalized ket with itself equals one, in the complex field.
 
-**Theorem 1.14 (The projector as an outer product).**
+**Theorem 1.15 (The projector as an outer product).**
 
 $$\forall (I: Type*), [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall (u: \operatorname{Ket}\left(I\right)), \operatorname{proj}\left(u\right) = \operatorname{vecMulVec}\left((u).vec, \operatorname{star}\left((u).vec\right)\right)$$
 
@@ -202,7 +214,7 @@ $$\forall (I: Type*), [\operatorname{Fintype}\left(I\right)] [\operatorname{Deci
 
 The pure-state matrix equals the outer product of the ket and its complex conjugate. This identifies its entries with the coordinates used in matrix factorization.
 
-**Theorem 1.15 (Scaled pure projectors are Hermitian).**
+**Theorem 1.16 (Scaled pure projectors are Hermitian).**
 
 $$\forall (d: \mathbb{N}), \forall (A: \operatorname{Op}\left(d\right)), (\operatorname{ScaledPure}\left(A\right)) \Rightarrow (\operatorname{IsHermitian}\left(A\right))$$
 
@@ -216,7 +228,7 @@ $$\forall (d: \mathbb{N}), \forall (A: \operatorname{Op}\left(d\right)), (\opera
 
 A pure projector is Hermitian, and multiplication by a real scalar preserves Hermiticity.
 
-**Theorem 1.16 (Compression by a scaled pure projector).**
+**Theorem 1.17 (Compression by a scaled pure projector).**
 
 $$\forall (d: \mathbb{N}), \forall (A: \operatorname{Op}\left(d\right)), (\operatorname{ScaledPure}\left(A\right)) \Rightarrow (\forall (M: \operatorname{Op}\left(d\right)), A \cdot M \cdot A = \operatorname{smul}\left(\operatorname{trace}\left(M \cdot A\right), A\right))$$
 
@@ -230,7 +242,7 @@ $$\forall (d: \mathbb{N}), \forall (A: \operatorname{Op}\left(d\right)), (\opera
 
 Sandwiching an arbitrary operator M between two copies of a scaled pure projector multiplies that projector by the trace of M times the projector. The trace is complex and no Hermitian hypothesis on M is required.
 
-**Theorem 1.17 (Trace overlap of two pure projectors).**
+**Theorem 1.18 (Trace overlap of two pure projectors).**
 
 $$\forall (d: \mathbb{N}), \forall (u: \operatorname{Ket}\left(\operatorname{Fin}\left(d\right)\right)), \forall (v: \operatorname{Ket}\left(\operatorname{Fin}\left(d\right)\right)), \operatorname{trace}\left(\operatorname{proj}\left(u\right) \cdot \operatorname{proj}\left(v\right)\right) = ((\left\lVert \operatorname{dotProduct}\left(\operatorname{star}\left((u).vec\right), (v).vec\right) \right\rVert)^{2}: \mathbb{C})$$
 
@@ -244,7 +256,7 @@ $$\forall (d: \mathbb{N}), \forall (u: \operatorname{Ket}\left(\operatorname{Fin
 
 The trace of the product of two pure projectors is the squared absolute overlap of their normalized kets, regarded as a complex number.
 
-**Theorem 1.18 (From second moments to a Schmidt-number bound).**
+**Theorem 1.19 (From second moments to a Schmidt-number bound).**
 
 $$\forall (d: \mathbb{N}), \forall (r: \mathbb{N}), \forall (I: Type*), [\operatorname{Fintype}\left(I\right)] \forall (rho: \operatorname{BipartiteOp}\left(d\right)), \forall (A: (I \to \operatorname{Op}\left(d\right))), \forall (B: (I \to \operatorname{Op}\left(d\right))), \forall (alpha: \mathbb{R}), \forall (beta: \mathbb{R}), (\forall (a: I), \operatorname{ScaledPure}\left(A\left(a\right)\right)) \Rightarrow ((\forall (b: I), \operatorname{ScaledPure}\left(B\left(b\right)\right)) \Rightarrow ((0 \le alpha) \Rightarrow ((0 \le beta) \Rightarrow ((\operatorname{MomentBound}\left(A, alpha, beta\right)) \Rightarrow ((\operatorname{MomentBound}\left(B, alpha, beta\right)) \Rightarrow ((\operatorname{SchmidtNumberLE}\left(rho, r\right)) \Rightarrow (\operatorname{traceNorm}\left(\operatorname{correlation}\left(rho, A, B\right)\right) \le alpha + beta \cdot (r: \mathbb{R}))))))))$$
 
@@ -258,7 +270,7 @@ $$\forall (d: \mathbb{N}), \forall (r: \mathbb{N}), \forall (I: Type*), [\operat
 
 Two finite families of nonnegative multiples of pure projectors with the same nonnegative second-moment coefficients alpha and beta give a correlation table of trace norm at most alpha plus beta r on every state of Schmidt number at most r. The index type and the dimensions may be empty; this general statement adds no positivity assumptions on d or r.
 
-**Definition 1.19 (Tavakoli–Morelli Conjecture 2).**
+**Definition 1.20 (Tavakoli–Morelli Conjecture 2).**
 
 $$(claim) \Leftrightarrow (\forall (d: \mathbb{N}), \forall (n: \mathbb{N}), \forall (r: \mathbb{N}), (1 \le d) \Rightarrow ((1 \le r) \Rightarrow ((r \le d) \Rightarrow (\forall (A: \operatorname{EAM}\left(d, n\right)), \forall (B: \operatorname{EAM}\left(d, n\right)), \forall (rho: \operatorname{BipartiteOp}\left(d\right)), (\operatorname{SchmidtNumberLE}\left(rho, r\right)) \Rightarrow (\operatorname{traceNorm}\left(\operatorname{Pn}\left(rho, A, B\right)\right) \le \frac{(d: \mathbb{R}) \cdot ((d: \mathbb{R}) - 1) + (r: \mathbb{R}) \cdot ((n: \mathbb{R}) - (d: \mathbb{R}))}{(n: \mathbb{R}) \cdot ((n: \mathbb{R}) - 1)})))))$$
 
@@ -270,7 +282,7 @@ $$(claim) \Leftrightarrow (\forall (d: \mathbb{N}), \forall (n: \mathbb{N}), \fo
 
 Section V A, Conjecture 2, Eq. (52), asserts the displayed bound for a state of Schmidt number r. Since the bound increases with r, the statement uses Schmidt number at most r. It includes every positive local dimension, every r from one to d, and every pair of equiangular measurements with the same n greater than d. All subtractions in the bound are real subtractions.
 
-**Theorem 1.20 (The equiangular Schmidt-number bound).**
+**Theorem 1.21 (The equiangular Schmidt-number bound).**
 
 $$claim$$
 
@@ -312,6 +324,7 @@ The equiangular Gram matrix and Cauchy–Schwarz give, for every Hermitian H, th
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM.scaledPure_hermitian`
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM.scaledPure_sandwich`
 - Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM.schmidt_traceNorm_le_of_moment`
+- Truth anchor: `D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM.traceNorm_mul_le_hsSq`
 - Dependency: [D5/S3/Observer/BornReduction](../../Observer/BornReduction.md)
 - Dependency: [D5/S3/QuadraticForms/GerzonEqualityParameterIdentity](../../QuadraticForms/GerzonEqualityParameterIdentity.md)
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/IdealNorm](../Analysis/TraceClass/IdealNorm.md)
