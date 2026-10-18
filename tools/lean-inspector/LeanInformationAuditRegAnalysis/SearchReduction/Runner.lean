@@ -188,8 +188,8 @@ private def ensureMatcherIndex : StateRefT FactIndex MetaM Unit := do
     let head := statementHead info.type
     unless (head.getLast!).isAnonymous do
       heads := heads.insert head ((heads[head]?.getD #[]).push name)
-  modify fun index => {index with statementHeads := heads,
-    matcherConstants := #[], matcherIndexed := true}
+  modify fun index =>
+    {index with statementHeads := heads, matcherConstants := #[], matcherIndexed := true}
 
 private def factExpr (fact : Fact) : MetaM Expr := do
   let mut e ← mkConstWithFreshMVarLevels fact.1
