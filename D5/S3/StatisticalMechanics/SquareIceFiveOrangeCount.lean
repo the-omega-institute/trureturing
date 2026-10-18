@@ -10,14 +10,9 @@ module
 
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Rat.Cast.Order
 import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.Int.Interval
-import Mathlib.Data.Finset.Prod
-import Mathlib.Data.Fintype.Powerset
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.FinCases
 
