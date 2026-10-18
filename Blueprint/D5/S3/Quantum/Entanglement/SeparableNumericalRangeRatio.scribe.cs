@@ -92,11 +92,11 @@ internal sealed class SeparableNumericalRangeRatioDocument : IScribeDocumentDefi
         Formula vector = Seq(fin, Sp, To, Sp, complex);
         Formula array = Seq(Parenthesized(Seq(fin, Times, fin)), Sp, To, Sp, complex);
         Formula Entry(byte row, byte column) =>
-            Call(u, Seq(Open, D(row), Comma, D(column), Close));
+            Call(u, Parenthesized(Seq(D(row), Comma, D(column))));
         Formula determinant = Equal(Seq(Entry(0, 0), Sp, Entry(1, 1)),
             Seq(Entry(0, 1), Sp, Entry(1, 0)));
         Formula factors = All(i, fin, All(j, fin,
-            Equal(Call(u, Seq(Open, i, Comma, j, Close)), Seq(Call(a, i), Sp, Call(b, j)))));
+            Equal(Call(u, Parenthesized(Seq(i, Comma, j))), Seq(Call(a, i), Sp, Call(b, j)))));
         Formula exists = Seq(Exists, Sp, a, Sp, Colon, Sp, vector, Comma, Sp,
             Exists, Sp, b, Sp, Colon, Sp, vector, Comma, Sp, factors);
         return Disp(All(u, array, new Formula.Logic(determinant,
