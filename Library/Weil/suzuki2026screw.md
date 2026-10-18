@@ -2089,3 +2089,161 @@ In particular (W29) cannot be bypassed by silently replacing $G_h$ by
 $S$. The local all-order premise of (W40), original signed Robin upper
 bound and RH remain unproved. The new consumer is the order-uniform
 error estimate (W48), not a new positivity criterion.
+
+
+## The complete odd kernel has a paid compact-to-remote cross block
+
+Fix $U>0$ and keep the complete actual $\Phi$, $L_0$ and $J$ from
+(W12), (W19)--(W23). The square-variable strict concavity is the
+classical Csordas--Varga result already cited in (W12). The derivative
+tails, high-position diagonal and sparse high-block coercivity are
+reused from (W20), (W22)--(W23). This `repo-derived` paper application
+adds a uniform compact-to-remote estimate and its full cross-block
+allowance. It asserts no new generic Schur theorem, literature priority
+or Lean verification. Constants $C_U$ below depend only on $U$ and the
+fixed complete kernel, and may increase between displays.
+
+### The actual diagonal is nondegenerate through the origin
+
+Put $h_0(r)=\log\Phi(\sqrt r)$. Even analytic $\Phi$ makes $h_0$
+smooth at zero. The exact full diagonal difference is
+
+$$
+J(a)=\frac12\int_a^\infty y\Phi(y)^2\,dy
+ -\frac12\int_0^\infty y\Phi(y+a)\Phi(y-a)\,dy
+\qquad(a\ge0).
+$$
+
+The derivative tails in (W23) and evenness justify differentiation,
+Taylor expansion and integration by parts on the entire half-line.
+They give
+
+$$
+\boxed{\begin{aligned}
+J(a)&=\kappa_0a^2+O(a^4),\\
+\kappa_0
+&=\int_0^\infty y\Phi'(y)^2\,dy-\frac{\Phi(0)^2}{2}\\
+&=-\int_0^\infty r h_0''(r)e^{2h_0(r)}\,dr>0.
+\end{aligned}}
+\tag{W49}
+$$
+
+Indeed, the direct diagonal has second derivative $-\Phi(0)^2/2$ at
+zero; the reflected diagonal has second derivative
+$\int_0^\infty y(\Phi\Phi''-\Phi'^2)\,dy
+=\Phi(0)^2/2-2\int_0^\infty y\Phi'^2\,dy$.
+For the final equality in (W49), substitute $r=y^2$ and integrate the
+derivative of $\Phi\Phi'$. The boundary terms vanish by smoothness and
+the complete superexponential tail. Strict concavity gives $h_0''\le0$
+and excludes $h_0''\equiv0$; continuity supplies an interval of strict
+negativity. Thus the final integral is strictly positive.
+
+Consequently $J(a)/a^2$ extends continuously and positively to $[0,U]$.
+Together with the strict diagonal positivity from (W12), compactness
+gives $m_U>0$ such that $J(a)\ge m_Ua^2$ for $0\le a\le U$.
+No numerical value of $m_U$ is asserted.
+
+### Retain both endpoint cancellations before taking a norm
+
+For $b\ge\max(U,256)$ and $0\le a\le U$, use the same forward
+variable in both complete integrals:
+
+$$
+\begin{aligned}
+L_0(a,b)&=\frac14\int_0^\infty\Phi(b+t)B(a,b,t)\,dt,\\
+B(a,b,t)&=(a+b+2t)\Phi(t+a)-(b-a+2t)\Phi(t-a).
+\end{aligned}
+$$
+
+The bracket vanishes at $a=0$. Its derivative can be grouped as
+
+$$
+\begin{aligned}
+\partial_aB={}&\Phi(t+a)+\Phi(t-a)
+ +a[\Phi'(t+a)-\Phi'(t-a)]\\
+&+(b+2t)[\Phi'(t+a)+\Phi'(t-a)].
+\end{aligned}
+$$
+
+The complete derivative tails and compactness bound the terms without
+$b$ uniformly in $a,t$. Evenness makes $\Phi'$ odd, so
+
+$$
+\Phi'(a)+\Phi'(-a)=0,\qquad
+|\Phi'(t+a)+\Phi'(t-a)|\le2\|\Phi''\|_\infty t.
+$$
+
+The global second-derivative norm is finite by (W23), smoothness and
+evenness. Hence $|\partial_aB|\le C_U(1+bt)$ and
+$|B(a,b,t)|\le C_Ua(1+bt)$ for every $t\ge0$. On the same entire
+half-line, (W19) gives
+$\Phi(b+t)\le\Phi(b)\exp(-e^{2b}t)$. Integrating the constant and
+linear terms therefore yields
+
+$$
+|L_0(a,b)|\le C_Ua\Phi(b)[e^{-2b}+be^{-4b}]
+\le C_Ua\Phi(b)e^{-2b}.
+$$
+
+Normalize using $J(a)\ge m_Ua^2$ and the actual high diagonal in
+(W20). After absorbing fixed constants,
+
+$$
+\boxed{0<\frac{L_0(a,b)}{\sqrt{J(a)J(b)}}
+ \le C_U\frac{e^{-b}}{\sqrt b}
+\quad(0<a\le U,\ b\ge\max(U,256)).}
+\tag{W50}
+$$
+
+The estimate is uniform as $a\downarrow0$. At $a=0$ the original
+entry and $J(0)$ vanish; no undefined normalized value is assigned.
+Both the complete reflected exterior and the infinite direct tail have
+been retained. The extra decay uses the evenness cancellation at $t=0$
+in addition to the cancellation at $a=0$.
+
+### Pay the whole coupling to an arbitrary compact signed core
+
+For any finite complex Borel measure $\mu$ supported on $[0,U]$, set
+
+$$
+\mathcal Q_L(\mu)=\iint L_0(a,b)\,d\overline\mu(a)d\mu(b),
+\qquad
+\mathcal M(\mu)=\int_{[0,U]}\sqrt{J(a)}\,d|\mu|(a).
+$$
+
+Let $\nu=\sum_{j=1}^Nc_j\delta_{b_j}$, where $N$ is finite,
+$b_1\ge T\ge\max(U,256)$ and $b_{j+1}-b_j\ge8$. Keep
+$E_\nu=\sum_jJ(b_j)|c_j|^2$ and $\kappa=17/56$ from (W22).
+The normalized bound (W50), Cauchy--Schwarz and the complete geometric
+sum give
+
+$$
+\begin{aligned}
+\left|\iint L_0(a,b)\,d\overline\mu(a)d\nu(b)\right|
+&\le C_U\mathcal M(\mu)\sqrt{E_\nu}
+ \left(\sum_jb_j^{-1}e^{-2b_j}\right)^{1/2}\\
+&\le C_U\frac{e^{-T}}{\sqrt T}
+ \mathcal M(\mu)\sqrt{E_\nu},\\
+\sum_jb_j^{-1}e^{-2b_j}
+&\le\frac{e^{-2T}}{T(1-e^{-16})}.
+\end{aligned}
+$$
+
+The bounds are independent of $N$, the coefficient sizes and the sign
+pattern of the compact measure. Its atom at zero contributes nothing.
+Reuse $\mathcal Q_L(\nu)\ge\kappa E_\nu$ from (W22) and spend
+half of this same credit by Young's inequality:
+
+$$
+\boxed{\mathcal Q_L(\mu+\nu)
+ \ge\mathcal Q_L(\mu)+\frac{17}{112}E_\nu
+ -C_U\frac{e^{-2T}}T\mathcal M(\mu)^2.}
+\tag{W51}
+$$
+
+This pays an absolute vanishing allowance for the entire compact-to-sparse-
+remote cross block. It assigns no sign to $\mathcal Q_L(\mu)$ and
+makes no comparison of $\mathcal M(\mu)^2$ with a nearly null compact
+form. The compact size $U$ is fixed; no uniformity as $U\to\infty$,
+no dense remote-sector coercivity, no full all-order positivity and no
+strict all-integer Robin inequality or RH proof is supplied.
