@@ -12,6 +12,8 @@
 
 每个实际请求在首跑前固定下列输入；没有请求的声明不触发搜索或补登记机器。
 
+这里的原搜索是取得完整原陈述 T 的证明项：输入编码为编译器恢复的类型与环境，合法解关系为 kernel 在登记公理边界内接受该项具有类型 T，允许操作为固定 R 的规则，资源单位为命令心跳。T 的参数域、实例范围与量词都保留在完整类型中。若 T 另涉及对象搜索或算法复杂度，P 侧判词只认证上述证明搜索约化，不自动认证对象搜索的加速。
+
 | 输入 | 契约 |
 | --- | --- |
 | 原任务 T | 编译器完整 telescope、量词、宇宙、局部假设和目标类型；不得改成较弱特例 |
@@ -47,7 +49,7 @@ R 的加强仅可保留全部旧尝试并增加新尝试，旧尝试保持原预
 
 ### 3.3 运行结果
 
-`found` 表示完整、合规、通过 kernel 的证明。`exhausted` 表示所有规定尝试均正常结束且未找到证明，是完成的有限搜索的否定读数。任一缺件、隔离失败、实现错误、心跳超限、外部超时、取消或未决均单列原因并归证据不足，绝不冒充 `exhausted` 或非 bind-only。一次正常战术不适用可以继续其他尝试；未完成的策略不能静默略过。
+`found` 表示至少一次尝试取得完整、合规、通过 kernel 的证明；其余独立尝试的故障另行报告，不撤销已取得的成功。`exhausted` 表示所有规定尝试均正常结束且未找到证明，是完成的有限搜索的否定读数。没有成功证明时，任一缺件、隔离失败、实现错误、心跳超限、外部超时、取消或未决均单列原因并归证据不足，绝不冒充 `exhausted` 或非 bind-only。缺少规定尝试不能当作空清单正常耗尽。一次正常战术不适用可以继续其他尝试；未完成的策略不能静默略过。
 
 ## 4. P 侧判词与配对条件
 
@@ -59,7 +61,7 @@ R 的加强仅可保留全部旧尝试并增加新尝试，旧尝试保持原预
 | 非 bind-only[R] | 同时满足下面 (a)–(d) |
 | 证据不足 | 不能形成上述任一判词，具体缺口单列 |
 
-非 bind-only[R](T) 当且仅当：
+`非 bind-only[R](T)` 当且仅当：
 
 (a) T 不是 §5 可认证的基底别名或重述；
 
@@ -77,7 +79,7 @@ T 的作者证明能够编译，而 R(B + S) 仍未找到时，为“证据不�
 
 ## 5. 别名、重述与防刷边界
 
-呈现检查先于搜索，针对 B 中实际可用的完整陈述，产出可回放的转换依据。支持的可判规则是：新 def 展开、reducible definitional equality、绑定参数及声明改名、已知合取分量/方向投影和打包，以及明确参数对应下的运输。规则组合必须保留全部量词、假设及目标方向；只有全部所需分量均已存在，打包才属重述。
+呈现检查先于搜索，针对 B 中实际可用的完整陈述，产出可回放的转换依据。支持的可判规则是：新 def 展开、reducible definitional equality、绑定参数及声明改名、已知合取分量/方向投影和打包，以及明确参数对应下的运输。运输只用基底已取得的映射与等式，并须恢复完整 telescope；新造的语义等价定理不算呈现转换。规则组合必须保留全部量词、假设及目标方向；只有全部所需分量均已存在，打包才属重述。
 
 任意 `P ↔ Q` 证明不是自动重述许可证：该证书自身可能承载新数学。超出上述呈现规则的关系不强行判等，继续搜索或报告证据不足。`statement_id` 相同或不同均不替代这项检查。
 
@@ -119,17 +121,19 @@ strict 与 collapsed 在同族同域互斥。逻辑上“不存在分离对”�
 
 判官测试库中的模型须覆盖下表，不能以把两类非空放进假设来证明非退化。有限实例须实际执行正常规则、过滤目标结构并计算判词；它只是可执行契约实例，不声称模拟全部 Lean 战术。
 
-| 标记 | 必核性质 |
-| --- | --- |
-| T1 | 无界闭包读法在所有已获证明的候选上退化 |
-| T2 | 字面编译读法把可编译别名也判为 content |
-| T3 | 具体有限规则系统计算得到 bind-only 与非 bind-only 两类非空 |
-| T4 | 受支持包装/别名/重述为 bind-only，规范化后的 helper 拆分与改名不改判词 |
-| T5 | 成功集包含时的单调方向及配对判词的限定 |
-| T6 | S 中 T 及其重述的过滤防止自我配对，真实不同结构仍可闭合 |
-| A1 | 实际 LawFact 命题上的 strict/collapsed 互斥，三态证据判词穷尽 |
-| A2 | 后处理及身份元数据不增加原观察的分离 |
-| A3 | 合法常值律族的正宽度与正 Δ 不推出 strict |
+证明源为 [P 侧证据模型](../../../tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/Model.lean)、[有限规则实例](../../../tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/FiniteModel.lean) 和 [实际 LawFact 测试](../../../tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/SearchReduction.lean)。P 模型的编译、呈现认证与隔离标志是经外部核验的输入，不是该模型对真实搜索程序已经正确的证明。
+
+| 标记 | 必核性质 | 对应声明 |
+| --- | --- | --- |
+| T1 | 无界闭包读法在所有已获证明的候选上退化 | `unbounded_closure_degenerate`、`finite_closure_degenerate` |
+| T2 | 字面编译读法把可编译别名也判为 content | `literal_accepts_alias`、`finite_literal_alias_endpoint` |
+| T3 | 具体有限规则系统计算得到 bind-only 与非 bind-only 两类非空，搜索成功给出原规则系统中的推导 | `concrete_nondegeneracy`、`genuine_paired_reduction`、`search_sound`、`finite_content_has_derivation` |
+| T4 | 受支持包装/别名/重述为 bind-only，规范化后的 helper 拆分与改名不改判词 | `restatement_bind_only`、`all_baseline_presentations_bind`、`helper_renaming_invariant`、`helper_splitting_invariant` |
+| T5 | 成功集包含时的单调方向及配对判词的限定 | `union_found_iff`、`union_exhausted_iff`、`bind_only_monotone`、`baseline_miss_antitone`、`paired_content_preserved`、`paired_content_not_globally_antitone` |
+| T6 | S 中 T 及其重述的过滤防止自我配对，真实不同结构仍可闭合 | `dirty_structure_not_content`、`target_alias_cannot_close`、`mixed_target_leak_rejected` |
+| A1 | 实际 LawFact 命题上的 strict/collapsed 互斥，三态证据判词穷尽 | `strict_collapsed_exclusive`、`capture_exhaustive_exclusive`、`capture_strict_iff`、`capture_collapsed_iff`、`capture_unknown_iff` |
+| A2 | 后处理及身份元数据不增加原观察的分离 | `postprocessing_no_new_separation`、`full_state_identity_can_separate` |
+| A3 | 合法常值律族的正宽度与正 Δ 不推出 strict | `positive_width_and_sign_not_strict` |
 
 校准集在首跑前由实施方提名、独立评审后冻结声明全名、首次引入前的基线与预期。真实负例包含 `SubstitutionTowerClause` 别名及合成防刷实例。正例只是待核候选，不能直接当已校准名单：`archimedean_jump_decomposition`、`finite_acyclic_judging_graph_has_root`、`two_state_locality_yields_incremental_preservation`、TimeBoundedTwoPointPrice 与 MarkerHistorySearch 方向。缺经核验的正例，校准未完成。
 

@@ -30,6 +30,29 @@ def search : Nat → List Atom → Atom → Bool
     | .bridge => search n known .seed
     | .target => search n known .bridge
 
+inductive Derives (known : List Atom) : Atom → Prop where
+  | premise {t : Atom} : t ∈ known → Derives known t
+  | bridge : Derives known .seed → Derives known .bridge
+  | target : Derives known .bridge → Derives known .target
+
+/-- A successful computed search actually supplies a derivation in the original
+rule system. Resource-bounded failure has no converse soundness claim. -/
+theorem search_sound (fuel : Nat) (known : List Atom) (t : Atom)
+    (h : search fuel known t = true) : Derives known t := by
+  induction fuel generalizing t with
+  | zero =>
+      apply Derives.premise
+      simpa [search] using h
+  | succ n ih =>
+      simp only [search, Bool.or_eq_true] at h
+      rcases h with knownHere | step
+      · apply Derives.premise
+        simpa using knownHere
+      · cases t with
+        | seed => simp at step
+        | bridge => exact Derives.bridge (ih .seed step)
+        | target => exact Derives.target (ih .bridge step)
+
 def baseline : List Atom := [.seed]
 
 /-- Compilation in this toy system checks an actual two-step derivation. -/
@@ -47,6 +70,13 @@ def audit (t : Atom) (bundle : List Declaration) : Verdict :=
   classify (checked t) (baseline.contains t) (run baseline t)
     ((support bundle).all checked) ((support bundle).all (· != t))
     (run (baseline ++ additions t bundle) t)
+
+/-- Content in this concrete model entails a checked derivation of the original
+target, not merely a pair of unconstrained success flags. -/
+theorem finite_content_has_derivation (t : Atom) (bundle : List Declaration)
+    (h : audit t bundle = .nonBindOnly) : Derives baseline t := by
+  have checkedTarget := ((non_bind_only_iff ..).mp h).1
+  exact search_sound 2 baseline t checkedTarget
 
 def usefulStructure : List Declaration := [(.original, .bridge)]
 
@@ -112,6 +142,8 @@ theorem empty_structure_not_content : audit .target [] = .insufficient := by dec
   audit .target [(.renamed, .target)], audit .target [])
 
 #print axioms concrete_nondegeneracy
+#print axioms search_sound
+#print axioms finite_content_has_derivation
 #print axioms genuine_paired_reduction
 #print axioms finite_closure_degenerate
 #print axioms finite_literal_alias_endpoint

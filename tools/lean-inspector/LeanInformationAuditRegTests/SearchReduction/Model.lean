@@ -7,7 +7,7 @@ tactic runner. In particular, `exhausted` is not a resource exception. -/
 namespace LeanInformationAudit.Tests.SearchReduction
 
 inductive Failure where
-  | missing | isolation | execution | heartbeat | timeout | undecided
+  | missing | isolation | execution | heartbeat | timeout | cancelled | undecided
   deriving DecidableEq, Repr
 
 inductive Run where
@@ -18,8 +18,24 @@ inductive Verdict where
   | bindOnly | nonBindOnly | insufficient
   deriving DecidableEq, Repr
 
+/-- Independent attempts combine by success union. Incomplete evidence prevents
+a negative conclusion, but never invalidates a checked successful proof. -/
+def unionRun : Run → Run → Run
+  | .found, _ | _, .found => .found
+  | .incomplete reason, _ => .incomplete reason
+  | _, .incomplete reason => .incomplete reason
+  | .exhausted, .exhausted => .exhausted
+
+theorem union_found_iff (left right : Run) :
+    unionRun left right = .found ↔ left = .found ∨ right = .found := by
+  cases left <;> cases right <;> simp [unionRun]
+
+theorem union_exhausted_iff (left right : Run) :
+    unionRun left right = .exhausted ↔ left = .exhausted ∧ right = .exhausted := by
+  cases left <;> cases right <;> simp [unionRun]
+
 /-- Presentation certificates refer to actual baseline statements. Structure
-checks include target/restated exclusion and the compiled dependency closure. -/
+checks include target and alias exclusion and the compiled dependency closure. -/
 def classify (targetChecked presentation : Bool) (base : Run)
     (structureChecked structureClean : Bool) (paired : Run) : Verdict :=
   match targetChecked, presentation, base, structureChecked, structureClean, paired with
@@ -62,7 +78,7 @@ theorem dirty_structure_not_content (checked restated checkedS : Bool) (base pai
     classify checked restated base checkedS false paired ≠ .nonBindOnly := by
   simp [non_bind_only_iff]
 
-/-- Neither an uncompiled target nor an uncompiled structure supplies content. -/
+/-- An uncompiled structure cannot supply content. -/
 theorem unchecked_not_content (checked restated cleanS : Bool) (base paired : Run) :
     classify checked restated base false cleanS paired ≠ .nonBindOnly := by
   simp [non_bind_only_iff]
@@ -141,6 +157,8 @@ theorem verdicts_exhaustive (checked restated checkedS cleanS : Bool) (base pair
   cases classify checked restated base checkedS cleanS paired <;> simp
 
 #print axioms non_bind_only_iff
+#print axioms union_found_iff
+#print axioms union_exhausted_iff
 #print axioms bind_only_iff
 #print axioms baseline_failure_not_content
 #print axioms unclosed_pair_insufficient
