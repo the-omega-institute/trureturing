@@ -7,13 +7,13 @@
     "state/ci-body-12345.md": "0f6ead52e5a142022c18ad19ba620110e7d5732b7049a0accab4e9d125720a05"
   },
   "codex_search.py:deep": {
-    "scratch/briefs/codex-search-a-r1.md": "bfbb75df423674e63f8d6f49b48491649f708b8f81355d1d9d07144ad12eb9bc"
+    "scratch/briefs/codex-search-a-r1.md": "95b86488735c17b1c501bdb7ad62c7dab80bcb7325fac7cdd0447207b4df5a69"
   },
   "codex_search.py:quick": {
-    "scratch/briefs/codex-search-a-r1.md": "39da4bf215674605130c2e7ef257f7637090cd9e83347df8850514c4736cc927"
+    "scratch/briefs/codex-search-a-r1.md": "7206a3b3ec92ab0c52ab0c50a96078c3c3525913f03750a2cef5f5ace3df1bbd"
   },
   "continuation_head.py": {
-    "out.md": "638c592047a2e9006ebd8ac8d3d70d82cb0b45d8cdbba7777a7aa201f6bfbcc7"
+    "out.md": "617d544f0679680fec2edb19b4f00633f6107de4c7f01978bca574b6174e818f"
   },
   "exclusions_compact.py": {
     "scratch/briefs/search-exclusions-compact.md": "70ea1a17aed008fefe9a66880acb1432b2e09301ea1803fb08d3f9a32816434f"
@@ -28,22 +28,22 @@
     "review.md": "4ec69af323441cd4f655c2581ffba29e8d0a047a190a314a8dd49775bbb205a7"
   },
   "gen_review.py": {
-    "scratch/briefs/review-sample-architecture.md": "67751ed0019f07611b375b2eacf055d7c499dad541e69a369c1ec9ecaefae0ec",
     "scratch/briefs/review-sample-quality.md": "6ac3130e8205495ff0d137cab9c7676d4d78bedefd62d84cecfa98b40d96b46b",
+    "scratch/briefs/review-sample-architecture.md": "67751ed0019f07611b375b2eacf055d7c499dad541e69a369c1ec9ecaefae0ec",
     "scratch/briefs/review-sample-tests.md": "af9465a967a0bf0be05f37f0b3c6ac75ebe71e5de4b684b977c515c8dda8bb57"
   },
   "gen_review.py:codex3": {
-    "scratch/briefs/review-sample-architecture-r1.md": "c5af1f09fbaf8ffea404d870bdfc597d3253e27f47d58ffcf1622c3d2b5b86ee",
-    "scratch/briefs/review-sample-architecture.md": "0e813ed2f6e193906dedf7907f228a53a3b1b150ea129e040211190565c7a607",
-    "scratch/briefs/review-sample-quality-r1.md": "0fecc584dcc6506aa527cca56bd6a9f6cf5ef4466acebdae6b71be1a807e76e2",
-    "scratch/briefs/review-sample-quality.md": "234171a9bd61ba4f6f7204c553011d8e7077aaaf0a35737b57a72c9a550480f3",
-    "scratch/briefs/review-sample-tests-r1.md": "4d399f5bf2c9425b6191e8365e671b1d10037461477dd8826cb70ca654cc6ec3",
-    "scratch/briefs/review-sample-tests.md": "f93725e1267424aac2f1ad0390417e65bcd22afc9b15d139926679f73b4f75ac"
+    "scratch/briefs/review-sample-quality.md": "234d397f2c35566a2a6bfdaf31b2bea8bbb225f48a719ddc8658fae0471fcbd3",
+    "scratch/briefs/review-sample-quality-r1.md": "b7bcdcc89e3d2de63f4d546c3adb7937ba9e7bf4a7c6cd49de8bb396c2e0399c",
+    "scratch/briefs/review-sample-architecture.md": "f201a9e998f1978c36f27a07d3eca681d71200c27845d6c5848563937efc968d",
+    "scratch/briefs/review-sample-tests-r1.md": "68abea5689e19106a3d0a88225700ab79415014e6cedd8b3947c56b7c868bd6a",
+    "scratch/briefs/review-sample-architecture-r1.md": "62c534d00ce3b62d5edf7cbcec68d6d482850f4f63ec043c944d366211564eb7",
+    "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
   },
   "gen_stage_briefs.py": {
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "121daa08ec170ef12e45591af09bd2c9433e8d308e68d269f2c688feba4299c5",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "101d4f659c76571e9a2bd9d1b58ef51b9913fced8971227abb12674b824cbf0f",
-    "scratch/briefs/mirror-check-sample.md": "b9feec3d9005af3c1b181ce3f5ec5eedd854e4de7cd5c843b5c139f36df987eb"
+    "scratch/briefs/mirror-check-sample.md": "b9feec3d9005af3c1b181ce3f5ec5eedd854e4de7cd5c843b5c139f36df987eb",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "7866700a267a2ffd6fe10146070bdf0fe3a0cac01ccc8122ba1ede516aaeab96",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "d50d860b6c6ba7e01182fb4341732cc730b51514a59a70688d6d288aff540721"
   },
   "implb_head.py": {
     "scratch/briefs/implb-sample-r1.head.md": "2c8a0b651ed9d0fe4c8766d8932764ffe3f1c6860c41bcaf78ad42f1598bf8b6"
@@ -52,12 +52,12 @@
     "scratch/briefs/impl-op-w1-sample.md": "b35e0572cd498eedfcb489b650ac1aeb73250b0b5be083035e88c1ca1635396b"
   },
   "postb3.sh": {
-    "scratch/briefs/review-sample-architecture-r1.md": "937abbb554bcf646e2531bf8319122ea58dbdf7321e79c455ee60093fc40c7f2",
-    "scratch/briefs/review-sample-architecture.md": "c8e029d2e10887ac7aeeaaa6c06b1505b025e3799267235a1fea1279e5e489b3",
-    "scratch/briefs/review-sample-quality-r1.md": "e0997f7907aad4e751da448cc8db8b832c7a02c064cce4cda8c3c954f8c047b6",
-    "scratch/briefs/review-sample-quality.md": "d0127683836efacd1fca168143214905dd7234618a46b930e3bc1e09ad1577a1",
-    "scratch/briefs/review-sample-tests-r1.md": "a831aa4a128f0635ed63a835813868070b400c0afadb0353f48de6bf94d29389",
-    "scratch/briefs/review-sample-tests.md": "70d6b9219950eddfa4856dd489a5fa461a6133dfb5cf50c64740117594c07d08"
+    "scratch/briefs/review-sample-quality.md": "eae8eb54a534fb06779f3d88b5763466cc39debd6cc57015782c271c179b9e83",
+    "scratch/briefs/review-sample-quality-r1.md": "e3cbe834ddf90dbb8a48ae8f3516edba671c68ccf0cb96228b572cb9b941db57",
+    "scratch/briefs/review-sample-architecture.md": "bed5e111085d7ff6c563e00026da8b267d95b38c5ef1a723b088f05132a79d72",
+    "scratch/briefs/review-sample-tests-r1.md": "1604925a26791b03b53aa63e5e357ef9a0749ce2cf529cfa2ea37f83f409963f",
+    "scratch/briefs/review-sample-architecture-r1.md": "d909f2fd0fbba22b8dd37ab159ce594346068e9af60c8f20622475ac2eb76b90",
+    "scratch/briefs/review-sample-tests.md": "734f2afc0d1fff42243bc40364f0c7f312cb3f94bbf5b54b377a3b27157258d5"
   },
   "rehead.py": {
     "head.md": "d4b83a51d34936ffde4aa72d89c53a2db8de1ada9573b413ffc6f02ae092a8f4",
@@ -67,23 +67,39 @@
     "out.md": "899a13b578e688a26efb472fa18690da9ec85d134d3f7ef7648965832441d014"
   },
   "review.sh": {
-    "scratch/briefs/review-sample-architecture.md": "ccfa54f7788e4d6fe949369df615cfbbe3c938f5b06e291c5dbc4eb1618f6752",
-    "scratch/briefs/review-sample-quality.md": "a06004b54a00e3601f11819ecbc40ab43f30a51b87ccc7ab3b7d3daff0b6a163",
-    "scratch/briefs/review-sample-tests.md": "f93725e1267424aac2f1ad0390417e65bcd22afc9b15d139926679f73b4f75ac"
+    "scratch/briefs/review-sample-quality.md": "1d10de2f4ab5db3e249ceff0469726fad46a5b57c803113b0e8598704ce75be7",
+    "scratch/briefs/review-sample-architecture.md": "7b69da2a357bc00a762d7790d96bc2ce42ca0a6aaa2683b88f07e0ab09ed381f",
+    "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
   },
   "rework_brief.py": {
-    "scratch/briefs/rework-sample.md": "3d42261fa83fe9b5635fb7ef131cc65338d0f73bdb790e9bee8a23e065590a03"
+    "scratch/briefs/rework-sample.md": "0d61d5c45c52ec55021109230845f8815d51e466fcadde2651cd466e90825401"
   },
   "stageb_prep.sh": {
-    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "f5c7032c985c5ec20219e34d38bb0a25a792bdf04e41437f543d32e4930b247e"
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "022d8254b75d7bc1628f15bbe31d7e9ee16368ad385a1ccb37f360c0705801ca"
   },
   "stages.sh": {
-    "scratch/briefs/impl-op-w1-sample.md": "b35e0572cd498eedfcb489b650ac1aeb73250b0b5be083035e88c1ca1635396b",
-    "scratch/briefs/impl-op-w1-sample.stageA.md": "d1f14f8d9e4e771ece6e552da61528b86f93b1cdcef6b5b1e1753b32ae41696f",
-    "scratch/briefs/impl-op-w1-sample.stageB.md": "4ec8766c630662f5456a0f67c54715224616bc565d73fbb09ba15c8dbff2664b",
-    "scratch/briefs/mirror-check-sample.md": "951687c5649b7cd6d9398ee0b456309a557d25422151415881d2b5dd27f45db6"
+    "scratch/briefs/mirror-check-sample.md": "cbbae0e3209c717954af0b55141b5442fece4e69efe30d53be20e9a75a3a0eb8",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "0ad018037627b7140387a74b12d63427fae1cc722af7a332c1dabceacd11a8d5",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "80b62027a24df962c058e6bf73933cabd157d715d37b78e7fc66a09cc777502f",
+    "scratch/briefs/impl-op-w1-sample.md": "b35e0572cd498eedfcb489b650ac1aeb73250b0b5be083035e88c1ca1635396b"
   },
   "standing_append.py": {
     "capture.md": "e032d4e10774a54af596dd9562af2ac8d8be6c3da007f7744899a749a907f67a"
+  },
+  "gen_stage_briefs.py:defaults": {
+    "scratch/briefs/mirror-check-sample.md": "cbbae0e3209c717954af0b55141b5442fece4e69efe30d53be20e9a75a3a0eb8",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "0b6cc7778b4afbc0aef0443e5418578200f3dc09bd56d1aa10f4052fc81dc03d",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "d601d8fba089e9ef2bb548606bf0bea103e26782590062ecc426a66f6f1643d3",
+    "scratch/briefs/impl-op-w1-sample.md": "4d138398ad215acac420b0352b442aeab1b006ec9d681e8979c47b2a4aee810e"
+  },
+  "fill_mirror_fixes.py:defaults": {
+    "scratch/briefs/mirror-check-sample.md": "cbbae0e3209c717954af0b55141b5442fece4e69efe30d53be20e9a75a3a0eb8",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "0b6cc7778b4afbc0aef0443e5418578200f3dc09bd56d1aa10f4052fc81dc03d",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "d601d8fba089e9ef2bb548606bf0bea103e26782590062ecc426a66f6f1643d3",
+    "scratch/briefs/impl-op-w1-sample.md": "4d138398ad215acac420b0352b442aeab1b006ec9d681e8979c47b2a4aee810e",
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "3c353afac88ec5fb4d178a9dc7b72443070679d9ccb7283fd978bb6139661afc"
+  },
+  "rework_brief.py:defaults": {
+    "scratch/briefs/rework-sample.md": "0d61d5c45c52ec55021109230845f8815d51e466fcadde2651cd466e90825401"
   }
 }

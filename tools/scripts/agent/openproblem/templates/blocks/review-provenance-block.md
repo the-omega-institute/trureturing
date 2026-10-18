@@ -1,4 +1,4 @@
-## Contract clarification: provenance of a settled open question
-`AssessedProvenance.FromLiterature(note)` is the `LiteratureAttested` state: the statement is already proved in the cited source (CLAUDE.md §3.7). Here the source poses the optimality of its constants as an open question, and this delivery proves the sharpness statement. The settling `result` therefore carries `FromRepo(<source note>)`: repository-derived, with the source acknowledged.
+## Provenance of an open-problem settlement
+`AssessedProvenance.FromLiterature(note)` denotes `LiteratureAttested`: the cited source proves the statement (CLAUDE.md §3.7). A source that only poses the question does not establish the settling result.
 
-That tag is correct and is not a finding.
+Use `FromRepo(<source note>)` for a repository-derived settlement, acknowledging the source of the question. Check the cited source, the delivered statement and its proof before judging the tag. Neither tag pre-approves the settlement or its provenance.

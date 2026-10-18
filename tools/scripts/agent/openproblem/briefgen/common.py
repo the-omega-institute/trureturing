@@ -85,16 +85,20 @@ class Context:
         return path
 
     def result(self, flight):
-        if not re.fullmatch('[0-9a-f]{24}', flight):
-            fail(13, 'invalid flight id')
-        results = []
-        for path in (self.sshx / flight).glob('attempt-*/result.json'):
-            match = re.fullmatch(r'attempt-(\d+)', path.parent.name)
-            if match and path.is_file():
-                results.append((int(match[1]), path))
-        if not results:
+        result = subprocess.run(
+            ['/bin/bash', '-c', '. "$1"; op_latest_result "$2"',
+             'brief-result', str(TOOLS / 'pipeline/common.sh'), flight],
+            env=dict(os.environ, SSHX_HOME=str(self.sshx)),
+            capture_output=True, text=True)
+        if result.returncode:
+            message = result.stderr.strip()
+            if 'PIPELINE_DATA_ERROR invalid flight id' in message.splitlines():
+                fail(13, 'invalid flight id')
+            fail(16, message or 'result lookup failed')
+        path = result.stdout.strip()
+        if path == 'NO_RESULT':
             fail(11, 'missing result: ' + flight)
-        return max(results)[1]
+        return Path(path)
 
 
 def entry(main, argv=None, minimum=0, maximum=None, tool=None):

@@ -54,8 +54,6 @@ def prepare(root):
     for name in ('scratch/briefs','scratch/lanes','scratch/logs','state','sshx','main','tree','bin'):
         (root / name).mkdir(parents=True,exist_ok=True)
     scratch = root / 'scratch'
-    for name in data['blocks']:
-        (scratch / 'briefs' / name).write_text('\n## Synthetic block ' + name + '\nSynthetic rule.\n')
     (scratch / 'briefs/goal-artifact.yaml').write_text('GoalArtifact:\n  normalized_goal: Synthetic fixture\n  revisions:\n    - Synthetic current rule\n')
     spec = dict(data['lane'], worktree=str(root / 'tree'))
     (scratch / 'lanes/sample.json').write_text(json.dumps(spec))
@@ -80,7 +78,10 @@ def prepare(root):
         path=root/'bin'/command
         path.write_text('#!/bin/sh\nexec "'+sys.executable+'" "'+str(Path(__file__).resolve())+'" --stub '+command+' "$@"\n')
         path.chmod(0o755)
-    env=dict(os.environ,PATH=str(root/'bin')+os.pathsep+os.environ['PATH'],OP_SCRATCH=str(scratch),OP_STATE=str(root/'state'),SSHX_HOME=str(root/'sshx'),OP_NAME_PREFIX='fixture-',OP_PROVENANCE_MD='Synthetic provenance.\n',OP_SEARCH_WORKTREE=str(root/'tree'),OP_SEARCH_OUTPUT_DIR=str(root/'search'),OP_CODEX_EXCLUSIONS=str(root/'excluded.md'),BRIEF_FIXTURE_ROOT=str(root),REGEN='0')
+    env = {key: value for key, value in os.environ.items()
+           if not key.startswith(('OP_', 'BRIEF_FIXTURE_'))
+           and key not in ('SSHX_HOME', 'REGEN', 'ORCH_NOTE', 'JF_FLIGHT', 'PYTHONPATH')}
+    env.update(PATH=str(root/'bin')+os.pathsep+os.environ['PATH'],OP_SCRATCH=str(scratch),OP_STATE=str(root/'state'),SSHX_HOME=str(root/'sshx'),OP_NAME_PREFIX='fixture-',OP_PROVENANCE_MD='Synthetic provenance.\n',OP_SEARCH_WORKTREE=str(root/'tree'),OP_SEARCH_OUTPUT_DIR=str(root/'search'),OP_CODEX_EXCLUSIONS=str(root/'excluded.md'),BRIEF_FIXTURE_ROOT=str(root),REGEN='0')
     return env
 
 
@@ -111,6 +112,9 @@ def command(tool, root, variant=None):
       'add_base_blocks':['--base',str(root/'base.md'),str(root/'brief.md')],
     }[stem]
     if stem=='gen_review' and variant=='codex3': args=['--codex3',*triplet,'1']
+    if variant == 'defaults':
+        if stem == 'gen_stage_briefs': args = ['--lane-spec', 'sample', 'quality']
+        elif stem == 'fill_mirror_fixes': args = ['--prepare', 'sample', 'quality', 'a'*24]
     return prefix+args
 
 
@@ -131,12 +135,19 @@ def case(tool, variant=None):
     with tempfile.TemporaryDirectory(prefix='brief fixtures ') as tmp:
         root=Path(tmp)
         env=prepare(root)
-        if tool.stem in ('gen_stage_briefs','stages'):
+        assert not any((root/'scratch/briefs'/name).exists()
+                       for name in json.loads((DATA/'input.json').read_text())['blocks'])
+        if variant == 'defaults':
+            env.pop('REGEN')
+            env.pop('OP_PROVENANCE_MD')
+        if tool.stem in ('gen_stage_briefs','stages') and variant != 'defaults':
             result=subprocess.run([sys.executable,str(HERE/'lane_brief.py'),str(root/'scratch'),str(root/'scratch/lanes/sample.json')],env=env,capture_output=True,text=True)
             assert result.returncode==0,result.stderr
         before={str(p):p.read_text() for p in root.rglob('*.md')}
         result=subprocess.run(command(tool,root,variant),cwd=root,env=env,capture_output=True,text=True)
         assert result.returncode==0,(tool,result.returncode,result.stdout[-1200:],result.stderr[-3000:])
+        if variant == 'defaults':
+            print('BRIEF_DEFAULTS tool='+tool.name+' exit='+str(result.returncode))
         outputs=collect(root,before)
         assert outputs,(tool,'no output')
         return outputs
@@ -155,6 +166,15 @@ def run(tool):
                     path.mkdir(parents=True);(path/'result.json').write_text('{}')
                 ctx=Context()
                 assert ctx.result('b'*24).parent.name=='attempt-10'
+                invalid=root/'sshx'/('b'*24)/'attempt-invalid/result.json'
+                invalid.parent.mkdir(parents=True)
+                invalid.write_text('{}')
+                (root/'sshx'/('b'*24)/'attempt-99/result.json').mkdir(parents=True)
+                assert ctx.result('b'*24).parent.name=='attempt-10'
+                for flight, code in [('c'*24, 11), ('../escape', 13), ('A'*24, 13), ('a'*23, 13)]:
+                    try: ctx.result(flight)
+                    except BriefError as exc: assert exc.code==code
+                    else: raise AssertionError('invalid or missing flight accepted')
                 assert ctx.main==root/'main'
                 for value in ('../escape','bad name',''):
                     try: name(value)
@@ -184,7 +204,10 @@ def run(tool):
         print('BRIEF_SELFTEST tool='+tool.name+' failed=0')
         return 0
     expected=json.loads((DATA/'golden.json').read_text())
-    variants=('codex3',None) if tool.stem=='gen_review' else ('deep','quick') if tool.stem=='codex_search' else (None,)
+    variants = (('codex3', None) if tool.stem == 'gen_review' else
+                ('deep', 'quick') if tool.stem == 'codex_search' else
+                (None, 'defaults') if tool.stem in ('gen_stage_briefs', 'fill_mirror_fixes', 'rework_brief') else
+                (None,))
     for variant in variants:
         key=tool.name+(':'+variant if variant else '')
         got=case(tool,variant)
