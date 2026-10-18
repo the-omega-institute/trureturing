@@ -3461,3 +3461,248 @@ $\mathcal M(\mu)^2$ with a nearly null compact form. It gives neither
 unrestricted remote-complexity control nor all-order positivity on a
 fixed window. The strict original joint Robin upper and RH remain
 unproved.
+
+
+## One sign change on the complete high half-line
+
+Keep the actual complete $L_0$, its positive diagonal $J$ and the
+normalized kernel $R$. There are constants $A_*,c_*>0$ such that
+
+$$
+\boxed{\partial_a\partial_b\log R(a,b)
+ \ge c_*e^{-2|a-b|}\qquad(a,b\ge A_*).}
+\tag{W68}
+$$
+
+The start is independent of the distance between the positions. It
+therefore pays the complete form of an arbitrarily dense real profile
+with at most one global sign change on any compact subset of
+$[A_*,\infty)$, without a width restriction. This complements
+(W30)--(W36), whose starts may depend on width and sign degree, and
+(W60)--(W61), which retain their separation or local node conditions.
+The new input is the actual distant-position mixed logarithmic
+derivative below. The existing local comparison and Schur-anchor
+identity are reused; no new general positivity criterion,
+literature-priority assertion or Lean verification is claimed.
+
+### Differentiate an exact endpoint moment
+
+Reuse global concavity of $g=\log\Phi$ from (W19), and the fixed-order
+theta bounds preceding (W33). For $p=-g'$ they give
+
+$$
+\begin{aligned}
+p(x)&=2\pi e^{2x}-\tfrac92+O(e^{-2x}),\\
+p'(x)&=4\pi e^{2x}+O(e^{-2x}),\\
+p''(x)&=8\pi e^{2x}+O(e^{-2x})
+\qquad(x\longrightarrow\infty).
+\end{aligned}
+$$
+
+The same owned bounds give $|g^{(k)}(x)|\le Ce^{2|x|}$ for
+$1\le k\le3$. Beyond one start, $p\ge1$, $p'/p\to2$, and
+$p(a)/p(b)$ is between fixed positive multiples of $e^{2a-2b}$ for
+$b\ge a$. All constants $C$ below are independent of the two
+positions, their ratio and their distance beyond that start.
+
+Put $q=p(b)$ and retain the complete endpoint moments
+
+$$
+E_b(t)=\frac{\Phi(b+t)}{\Phi(b)},\qquad
+I_k(b)=\int_0^\infty t^kE_b(t)\,dt,\qquad
+\eta(b)=\frac{I_1(b)}{I_0(b)}.
+$$
+
+Global concavity gives $E_b(t)\le e^{-qt}$. After $t=z/q$, write
+
+$$
+G_b(z)=-\int_0^z\frac{p(b+v/q)}q\,dv,\qquad
+M_k(b)=\int_0^\infty z^ke^{G_b(z)}\,dz,
+\qquad I_k=q^{-k-1}M_k.
+$$
+
+The tail derivative bounds give, for every $z\ge0$,
+
+$$
+G_b(z)\le-z,\qquad
+|G_b(z)+z|+|\partial_bG_b(z)|
+ \le\frac{Cz^2}{q}e^{2z/q}.
+$$
+
+For the derivative, set $\kappa=q'/q$. Its exact integrand is
+
+$$
+\partial_b\frac{p(b+v/q)}q
+ =\frac{p'(b+v/q)-\kappa p(b+v/q)}q
+ -\kappa\frac vq\frac{p'(b+v/q)}q.
+$$
+
+The first numerator vanishes at $v=0$ and its derivative in $v/q$
+is $O(qe^{2v/q})$; the second term has the same
+$O((v/q)e^{2v/q})$ bound. Integration proves the displayed estimate,
+including the dependence of the scale $q$ on $b$. The bound for
+$G_b+z$ follows from the integral remainder for $p(b+u)-q$.
+For $q\ge4$, the exponential difference bound and differentiation
+under these integrable majorants yield
+$M_k=k!+O(q^{-1})$, $M_k'=O(q^{-1})$ for $k=0,1$. Consequently
+
+$$
+\boxed{\eta=q^{-1}(1+O(q^{-1})),\qquad
+ \eta'=-q'/q^2+O(q^{-2}),\qquad
+ I_0'/I_0=O(1),\qquad (b\eta)'\le-b/q}
+\tag{W69}
+$$
+
+at one larger start. The last sign uses $q'/q\to2$ and $b\to\infty$;
+it is uniform over all larger $b$.
+
+### The full distant remainder is smaller than its mixed curvature
+
+Suppose $b\ge a+D$, and set $P=p(a)$,
+$\rho=P/q$, $X=(b/a)\rho$. Reuse (W52)'s exact full formula:
+
+$$
+\begin{aligned}
+\mathcal U(a,b)&=\frac{L_0(a,b)}{\Phi(a)\Phi(b)}
+ =\frac14\int_0^\infty E_b(t)H(a,b,t)\,dt,\\
+H&=(a+b+2t)f_+-(b-a+2t)f_-,\qquad
+ f_\pm=\frac{\Phi(a\pm t)}{\Phi(a)}.
+\end{aligned}
+$$
+
+The reflected factor retains the original even theta function also
+when $t>a$. Global concavity gives $f_\pm\le e^{Pt}$ on this whole
+half-line, and the owned whole-line derivatives give
+$|g^{(k)}(a\pm t)|\le CPe^{2t}$ for $k\le3$.
+Let $r_\pm=f_\pm-1\mp g'(a)t$. The exact integral Taylor remainder
+and its first $a$ derivative satisfy
+
+$$
+|r_\pm|+|\partial_ar_\pm|
+ \le CP^2t^2(1+Pt)e^{(P+6)t}.
+$$
+
+Indeed $\partial_t^2f_\pm=(g''(a\pm t)+g'(a\pm t)^2)f_\pm$,
+while its $a$ derivative uses $g'''$ and
+$\partial_af_\pm=[g'(a\pm t)-g'(a)]f_\pm$;
+the last difference is bounded by $CPte^{2t}$. These bounds apply
+to every point of the integral remainder, including negative
+reflected arguments.
+
+Keep the exact affine coefficients:
+
+$$
+\begin{aligned}
+H&=2a+2bg'(a)t+H_2,\\
+H_2&=4g'(a)t^2+(a+b+2t)r_+-(b-a+2t)r_-,\\
+Z&=\frac{2\mathcal U(a,b)}{aI_0(b)}=1+T+F,\\
+T&=\frac{g'(a)}a\,b\eta(b),\qquad
+F=\frac1{2aI_0(b)}\int_0^\infty E_b(t)H_2(a,b,t)\,dt.
+\end{aligned}
+$$
+
+The bound for $r_\pm$ controls $H_2$, its $a$ derivative and its
+explicit $b,ab$ derivatives with the additional factor
+$a+b+1+t$. Differentiating the normalized density
+$E_b(t)/I_0(b)$ multiplies it by
+
+$$
+g'(b+t)-g'(b)-I_0'/I_0,
+\qquad
+\left|g'(b+t)-g'(b)-I_0'/I_0\right|
+ \le C(1+qt e^{2t}).
+$$
+
+Choose $D$ and the start so that $q\ge2(P+8)$. Every differentiated
+remainder is then dominated by a polynomial times $e^{-qt/2}$.
+Division by $I_0$ costs $O(q)$, the $t^2$ integral costs $O(q^{-3})$,
+and a factor $Pt$ or $qt$ costs $P/q$ or a fixed constant.
+The affine $t$ term costs one further $q^{-1}$; differentiating
+$1/a$ costs at most one. Since $a\ge1$ and $b\ge a$, this proves
+
+$$
+\boxed{\max_{i,j\in\{0,1\}}|\partial_a^i\partial_b^jF|
+ \le C\frac ba\rho^2=CX\rho,\qquad
+ T_{ab}\ge X,\qquad
+ \max_{i,j\in\{0,1\}}|\partial_a^i\partial_b^jT|\le CX.}
+\tag{W70}
+$$
+
+For $T_{ab}$ use (W69) and
+$\partial_a(g'(a)/a)=-(p'(a)-p(a)/a)/a\le-P/a$
+at the same larger start. Thus the main mixed derivative has a
+positive lower bound before either remainder is estimated.
+
+Both $\rho$ and $X$ tend uniformly to zero as $D\to\infty$, since
+$X\le C(1+b-a)e^{-2(b-a)}$. Fix one $D$ so large that (W70)
+gives $|Z-1|\le1/2$, $Z_{ab}\ge3X/4$ and
+$|Z_aZ_b|\le X/16$. Then
+
+$$
+\partial_a\partial_b\log Z
+ =Z_{ab}/Z-Z_aZ_b/Z^2\ge X/4.
+$$
+
+The normalizations from $R$ to $\mathcal U$ to $Z$ are exact positive
+separable factors, so they leave this mixed logarithmic derivative
+unchanged. Also $X\ge ce^{-2(b-a)}$. This proves (W68) throughout
+the distant region; symmetry covers the opposite ordering.
+For $|a-b|\le D$, reuse (W30) with this one fixed width $D$.
+The maximum of its start and the preceding start, with a smaller
+$c_*>0$, proves (W68) on the entire high half-line.
+
+### One anchor pays every cross term of a one-change measure
+
+Fix $s\ge A_*$. Define the nonnegative functions
+
+$$
+\begin{aligned}
+\Xi_s(a,b)&=
+ \int_{\min(a,s)}^{\max(a,s)}
+ \int_{\min(b,s)}^{\max(b,s)}e^{-2|u-v|}\,dv\,du,\\
+\Gamma_s(a,b)&=R(a,s)R(s,b)
+ \bigl(1-e^{-c_*\Xi_s(a,b)}\bigr).
+\end{aligned}
+$$
+
+Since $R(s,s)=1$, integration of (W68) gives
+
+$$
+\Psi_s(a,b):=\log R(a,b)-\log R(a,s)-\log R(s,b)
+ =\int_s^a\int_s^b\partial_u\partial_v\log R(u,v)\,dv\,du.
+$$
+
+Its sign is that of $(a-s)(b-s)$ and
+$|\Psi_s|\ge c_*\Xi_s$. For the already-owned rank-one Schur residual
+$B_s=R(a,b)-R(a,s)R(s,b)$ this implies
+$\operatorname{sgn}((a-s)(b-s))B_s\ge\Gamma_s$ off the anchor:
+use $e^x-1\ge1-e^{-x}$ for $x\ge0$ and the exact exponential
+identity for $x\le0$. Both sides vanish at the anchor.
+
+Let $\mu\ne0$ be a real finite measure of compact support in
+$[A_*,\infty)$, and suppose
+$\epsilon(a-s)\mu\ge0$ for some $\epsilon\in\{-1,1\}$.
+Set $d\nu=\sqrt J\,d\mu$ and $z_s=\int R(s,a)\,d\nu(a)$.
+Reuse (W36)'s exact Schur decomposition to obtain
+
+$$
+\boxed{Q_{L_0}(\mu)\ge z_s^2+
+ \iint\Gamma_s(a,b)\,d|\nu|(a)d|\nu|(b)>0.}
+\tag{W71}
+$$
+
+The sign contract pays the complete residual double integral.
+If there is mass off $s$, $\Gamma_s$ is strictly positive on its
+product with itself. Otherwise the nonzero measure is an atom at
+$s$ and $z_s\ne0$. The atom at $s$ has unrestricted sign and has
+not been dropped. Compactness makes all integrals finite; no upper
+endpoint appears in $A_*$ or $c_*$. One-signed measures were already
+covered by (W14).
+
+This pays arbitrary density and arbitrarily wide compact support for
+one global sign change. It does not cover fixed degrees $r\ge2$ on
+this whole half-line, arbitrary complex measures, the linear span of
+the sign cones or unrestricted all-order positivity on one fixed
+physical interval. No compact-core sign, strict all-integer Robin
+upper or RH proof follows. The result is a repository-derived paper
+estimate, not a Lean/kernel-certified theorem.
