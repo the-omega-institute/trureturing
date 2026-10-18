@@ -170,7 +170,7 @@ $$\neg (\operatorname{claim})$$
 
 *Commentary.*
 
-The Fourier matrix satisfies F*F = FF* = 1, FXF* = D(0,1) = Z, and FZF* = D(4,0) = X to the fourth power. Both phases are one, so F satisfies IsClifford. Its action on the chosen unit vector has coordinate (1 + ω to the power val(i))/√10 at i.
+Let W have entries stdAddChar(ji) for residues i,j modulo five. The identity WW* = 5I and F = W/√5 give F*F = FF* = 1. The entry relations FX = ZF and FZ = D(4,0)F then give FXF* = D(0,1) = Z, and FZF* = D(4,0) = X to the fourth power. Both phases are one, so F satisfies IsClifford. Its action on the chosen unit vector has coordinate (1 + ω to the power val(i))/√10 at i.
 
 For the exact probability tables, put a = (3 − √5)/20 and b = (3 + √5)/20, and list outcomes in the order 0,1,2,3,4. For ψ, the rows at ∞,0,1,2,3,4 are respectively (2/5,b,a,a,b), (1/2,1/2,0,0,0), (a,a,b,2/5,b), (b,b,a,2/5,a), (b,b,a,2/5,a), (a,a,b,2/5,b). For Fψ, the rows in the same order are (1/2,0,0,0,1/2), (2/5,b,a,a,b), (a,b,2/5,b,a), (b,a,a,b,2/5), (b,2/5,b,a,a), (a,a,b,2/5,b). These values follow by expanding the displacement entries and the fifth roots of unity.
 
@@ -196,4 +196,7 @@ The squared Frobenius norm of A(ψ)*A(ψ) is (2961 + 19√5)/1600. The operator 
 - Dependency: [D5/S3/Arith/Lattices/Klartag/Walk/StepInputs2](../../Arith/Lattices/Klartag/Walk/StepInputs2.md)
 - Dependency: [D5/S3/Observer/MatrixUnitCertificate](../../Observer/MatrixUnitCertificate.md)
 - Dependency: [D5/S3/Quantum/Magic/CepollaroPowerOfTwoZeroMagicGap](../Magic/CepollaroPowerOfTwoZeroMagicGap.md)
+- Dependency: [D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry](../Magic/QuquintWignerCriticalGeometry.md)
 - Dependency: [D5/S3/Quantum/Measurement/FourierLDOILOCCRefutation](../Measurement/FourierLDOILOCCRefutation.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity](../QuantumChannels/TomiyamaDiagonalKPositivity.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/TwirlingPhaseRetrievabilityCounterexample](../QuantumChannels/TwirlingPhaseRetrievabilityCounterexample.md)
