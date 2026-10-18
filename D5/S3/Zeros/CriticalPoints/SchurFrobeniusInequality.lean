@@ -6,6 +6,8 @@
    utility: none
    digest: Schur's eigenvalue inequality with the normality equality criterion. -/
 
+import D5.S3.Quantum.Matrix.CommutatorGap
+import D5.S3.Quantum.Matrix.CartesianVariance
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.Analysis.Normed.Module.Normalize
@@ -127,26 +129,18 @@ private theorem triangularize (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     · have hh := lift_triangular C hc V ht
       simpa only [C, Matrix.conjTranspose_mul, lift_conjTranspose, Matrix.mul_assoc] using hh
 
-private theorem frobenius_trace {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
-    ((∑ i, ∑ j, ‖A i j‖ ^ 2 : ℝ) : ℂ) = Matrix.trace (Aᴴ * A) := by
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq,
-    Complex.ofReal_sum]
-  exact Finset.sum_comm
-
 private theorem frobenius_conjugate {n : ℕ} (A U : Matrix (Fin n) (Fin n) ℂ)
     (hu : Uᴴ * U = 1) (hu' : U * Uᴴ = 1) :
     ∑ i, ∑ j, ‖(Uᴴ * A * U) i j‖ ^ 2 = ∑ i, ∑ j, ‖A i j‖ ^ 2 := by
-  apply Complex.ofReal_injective
-  rw [frobenius_trace, frobenius_trace]
+  let u : Matrix.unitaryGroup (Fin n) ℂ := ⟨U, Unitary.mem_iff.mpr ⟨hu, hu'⟩⟩
+  have h := (D5.S3.Quantum.Matrix.CommutatorGap.frobSq_unitary_right (Uᴴ * A) u).trans
+    (D5.S3.Quantum.Matrix.CommutatorGap.frobSq_unitary_left A (star u))
+  simp only [D5.S3.Quantum.Matrix.CartesianVariance.frobSq_eq_sum,
+    Complex.normSq_eq_norm_sq] at h
   calc
-    Matrix.trace ((Uᴴ * A * U)ᴴ * (Uᴴ * A * U)) =
-        Matrix.trace (Uᴴ * (Aᴴ * A) * U) := by
-      congr 1
-      simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
-      rw [← Matrix.mul_assoc U Uᴴ, hu', Matrix.one_mul]
-    _ = Matrix.trace (Aᴴ * A) := by
-      rw [Matrix.trace_mul_cycle, hu', Matrix.one_mul]
+    _ = ∑ i, ∑ j, ‖(Uᴴ * A * U) j i‖ ^ 2 := Finset.sum_comm
+    _ = ∑ i, ∑ j, ‖A j i‖ ^ 2 := h
+    _ = _ := Finset.sum_comm
 
 private theorem normal_conjugate {n : ℕ} (A U : Matrix (Fin n) (Fin n) ℂ)
     (hu : Uᴴ * U = 1) (hu' : U * Uᴴ = 1) :
@@ -251,7 +245,10 @@ theorem schur_frobenius (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
   let T := Uᴴ * A * U
   have hp : T.charpoly = A.charpoly := by
     dsimp [T]
-    rw [Matrix.charpoly_mul_comm, ← Matrix.mul_assoc, hu', Matrix.one_mul]
+    let u : Matrix.unitaryGroup (Fin n) ℂ := ⟨U, Unitary.mem_iff.mpr ⟨hu, hu'⟩⟩
+    have h := Matrix.charpoly_units_conj' (Unitary.toUnits u) A
+    change (U⁻¹ * A * U).charpoly = A.charpoly at h
+    rwa [Matrix.inv_eq_left_inv hu] at h
   have hr := triangular_roots T ht
   rw [hp] at hr
   have hf := frobenius_conjugate A U hu hu'

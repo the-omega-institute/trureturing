@@ -6,6 +6,7 @@
    utility: none
    digest: The inverse-square critical-point inequality and its collinearity equality case. -/
 
+import D5.S3.Quantum.GNSMatrix
 import D5.S3.Zeros.CriticalPoints.SchurFrobeniusInequality
 import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Algebra.Polynomial.Reverse
@@ -353,10 +354,9 @@ private theorem sandwich_reduction {n : ℕ} (b : Fin n → ℂ)
   have hf : ∑ i, ∑ j, ‖A i j‖ ^ 2 = 3 * ∑ j, ‖b j‖ ^ 2 + ‖∑ j, b j‖ ^ 2 := by
     apply Complex.ofReal_injective
     have htrace : ((∑ i, ∑ j, ‖A i j‖ ^ 2 : ℝ) : ℂ) = Matrix.trace (Aᴴ * A) := by
-      simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
-        Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq,
-        Complex.ofReal_sum]
-      exact Finset.sum_comm
+      have h := D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace A
+      change ((‖WithLp.toLp 2 (fun i => WithLp.toLp 2 (A i))‖ ^ 2 : ℝ) : ℂ) = _ at h
+      simpa only [PiLp.norm_sq_eq_of_L2] using h
     rw [htrace, hstar]
     change Matrix.trace ((R * Dᴴ * R) * (R * D * R)) = _
     rw [hm, Matrix.trace_mul_cycle, hRR, Matrix.trace_mul_comm]
