@@ -90,7 +90,7 @@ Every declaration is bind-only. The bind-only form is admitted under the open-pr
 - each step of the route holds numerically on 2000 random U ∈ SU(4).
 
 **Argued, not formalized.**
-- *Mechanism.* Λ²: SU(4) → SO(6) turns the four-vector problem into a six-frame of real symmetric 3 × 3 matrices, where the spin-2 part of Λ²(spin 3/2) is the traceless symmetric representation. Four coherent states would give S = 9. The orthogonality of the four vectors enters only through the completeness Σ_k (s_k² + t_k²) = 1 of the frame, which costs exactly one unit.
+- *Mechanism.* Λ²: SU(4) → SO(6) turns the four-vector problem into a six-frame of real symmetric 3 × 3 matrices, where the spin-2 part of Λ²(spin 3/2) is the traceless symmetric representation. Four coherent states would give S = 9. The orthogonality of the four vectors makes the transported vectors a real orthonormal six-frame: it gives the pairwise identities ‖X_k‖² = 1 − s_k², ‖Y_k‖² = 1 − t_k², ⟨X_k, Y_k⟩ = −s_k t_k and the completeness Σ_k (s_k² + t_k²) = 1, which together cost exactly one unit.
 - *Equality.* Equality needs equality in Böttcher–Wenzel for each k, so the three commutators are extremal. This matches the regular tetrahedron of polarizations of $U_4^c$. Whether every minimizer is a rotation of $U_4^c$ up to phases and column order is not determined here.
 - *Scope.* The argument uses SU(4) ≅ Spin(6) and does not extend directly to N ≥ 5; the source's numerical Conjectures 2 and 3 for N = 5, 6 are not addressed.
 
