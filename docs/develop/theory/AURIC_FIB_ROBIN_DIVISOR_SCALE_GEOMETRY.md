@@ -1117,3 +1117,122 @@ Euler 对数尾。故本允许支撑的结论不推出全整数 Robin 或 RH。�
 [OddRobin14]: https://www.numdam.org/item/10.5802/jtnb.591.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 15. 双项 Fibonacci 来源在增长最小公倍数乘子下的统一 Robin 余量
+
+**定义 15.1（来源与增长乘子）。** 令 $F_0=0$、$F_1=1$、$F_{j+2}=F_{j+1}+F_j$，$\varphi=(1+\sqrt5)/2$。对整数 $a>b\ge2$，记
+
+$$
+k=a-b,\qquad g=\gcd(a,b),\qquad q=\log a,\qquad
+Y_a=\lfloor q^2\rfloor,\qquad
+C_a=\operatorname{lcm}(1,\ldots,Y_a).
+$$
+
+只在 $a$ 足够大、$Y_a\ge1$ 时使用 $C_a$。设 $k\ge3$ 为奇数，并存在奇数 $d$ 满足
+
+$$
+d\ge5,\qquad d\mid k,\qquad\gcd(d,g)=1,\qquad
+d\le\frac{\log\log a}{\log\varphi}.
+\tag{15.1}
+$$
+
+对任意正约数 $c\mid C_a$，令 $V=F_a+F_b$、$n=cV$。这里 $c$ 随 $a,b,d$ 变化；所有约数响应仍按命题 3.2、4.2 在同一实际整数 $n$ 上取值。
+
+**命题 15.2（增长乘子全族的统一严格估计）。** 在 [Axler 作者稿 v3 式（3.4）—（3.5）][Axler15] 的 totient 包络下，存在与 $b,d,c$ 无关的 $A$，使定义 15.1 的全部参数在 $a\ge A$ 时满足
+
+$$
+\boxed{
+\frac{Z(c(F_a+F_b))}{e^\gamma\log\log(c(F_a+F_b))}
+<1-\frac1{4(\log a)^3}<1.}
+\tag{15.2}
+$$
+
+证明。[FIB 原卷式（442.3）][Fib44215] 已将 §175.1 的指标秩排除用于同一对 $a,b$：可选奇素数 $p\mid F_d$，满足
+
+$$
+p\nmid V,\qquad p<\varphi^d\le q.
+\tag{15.3}
+$$
+
+这一排除只依赖 $a,b,d$，不要求乘子固定。令 $J=v_p(c)=v_p(n)$。由 $c\mid C_a$ 及最小公倍数的实际素数赋值，
+
+$$
+p^J\le Y_a\le q^2.
+\tag{15.4}
+$$
+
+$J=0$ 时同样成立。将本卷命题 8.1 的精确加层倍率用于真实整数 $np$，得到
+
+$$
+\frac{Z(np)}{Z(n)}
+=1+\frac{(1-p^{-1})p^{-J-1}}{1-p^{-J-1}}
+\ge1+\frac1{2p^{J+1}}
+\ge1+\frac1{2q^3}.
+\tag{15.5}
+$$
+
+这里没有向 $n/\varphi(n)$ 的素因子乘积加入缺失方向。
+
+对全部 $c\mid C_a$，初等界 $C_a\le Y_a^{Y_a}$ 给
+$0\le\log c\le Y_a\log Y_a=O(q^2\log q)$。标准 Binet 增长在全部 $2\le b<a$ 上一致给
+
+$$
+\log n=a\log\varphi+O(q^2\log q),\qquad
+\Lambda_n:=\log\log n
+=q+\log\log\varphi+O\!\left(\frac{q^2\log q}{a}\right).
+\tag{15.6}
+$$
+
+因此真实 $m=np$ 一致趋于无穷，最终超过 Axler 包络的固定阈值。由 $p\le q$，
+
+$$
+0<\Lambda_m-\Lambda_n
+=\log\!\left(1+\frac{\log p}{\log n}\right)
+=O\!\left(\frac{\log q}{a}\right).
+$$
+
+记 $a_0=0.0094243$。直接复用同一 $m$ 上的已发表输入
+$Z(m)\le m/\varphi(m)<e^\gamma(\Lambda_m+a_0/\Lambda_m^2)$，并保留式（15.6）的统一性，得到
+
+$$
+\frac{\Lambda_m+a_0/\Lambda_m^2}{\Lambda_n}
+=1+\frac{a_0+o(1)}{q^3}
+\le1+\frac1{8q^3}
+\tag{15.7}
+$$
+
+对充分大 $a$ 共同成立；最后一步使用 $a_0<1/8$。$o(1)$ 对所有满足定义的 $b,d,c$ 一致，而不是固定 $c$ 后的余项。结合式（15.5）与（15.7），当 $q^3>1$ 时有
+
+$$
+\frac{Z(n)}{e^\gamma\Lambda_n}
+<\frac{1+1/(8q^3)}{1+1/(2q^3)}
+=1-\frac3{8q^3+4}
+<1-\frac1{4q^3}.
+$$
+
+这证明式（15.2）。证毕。 $\square$
+
+**命题 15.3（最大乘子下固定有限局部乘积的统一饱和）。** 在定义 15.1 中取 $c=C_a$。对任意固定非空有限素数集 $P$ 和任意固定 $0<T<1$，沿全部允许来源一致有
+
+$$
+\prod_{r\in P}\left(1-r^{-v_r(n)-1}\right)\longrightarrow1
+\qquad(a\longrightarrow\infty).
+\tag{15.8}
+$$
+
+因此该乘积最终大于 $T$，同时式（15.2）仍成立。
+
+证明。对每个固定 $r\in P$，当 $Y_a\ge r$ 时，最小公倍数给
+
+$$
+v_r(n)\ge v_r(C_a)
+=\left\lfloor\frac{\log Y_a}{\log r}\right\rfloor
+\longrightarrow\infty.
+$$
+
+每个局部因子均趋于一，且其下界与 $b,d$ 无关；固定有限乘积保留统一收敛，得到（15.8）。证毕。 $\square$
+
+[Axler15]: https://arxiv.org/pdf/2110.13478v3
+[Fib44215]: https://github.com/the-omega-institute/trureturing/blob/2c92ab86e8f97b901a52c16cbb46a73d5a6c3ce0/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#442-异奇偶双项的可变小约数切面与完整-robin-尾段
+
+## 追加锚（本行以下为增补区）
