@@ -80,7 +80,10 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
                             + "The intermediate value theorem supplies a positive zero at or below T, so the zero "
                             + "is unique and lies strictly below 2(μ₃/μ₄) ln 2. All the hypotheses hold "
                             + "while the proposed strict lower inequality fails."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("janssen-2025-annealed-potts-moment-lower-bound-refutation"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance? provenance = null) =>
