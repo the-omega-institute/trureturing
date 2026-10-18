@@ -3307,3 +3307,157 @@ one fixed window remain unproved, as do the original strict Robin
 upper and RH. This is not a diagonal choice of fixed-degree thresholds:
 the additional actual input is (W62), whose fixed complex neighborhood
 pays the explicit degree factors in (W63).
+
+## A compact core has a paid coupling to growing remote profiles
+
+The arbitrary compact core in (W51) can be coupled to the entire remote
+profiles of (W64), whose local sign counts need not have a common fixed
+cap. Reuse the complete actual $\Phi,L_0,J$, the exact transport in
+(W58), and the fixed discs, $h,w,\Lambda$ in (W62)--(W64), with their
+closed-strip clearance chosen once. The additional actual input is a
+holomorphic compact-to-remote bound retaining both cancellations in
+(W50). This is a `repo-derived` paper application without a
+literature-priority or Lean-verification claim.
+
+### Keep the compact cancellations on a fixed complex remote disc
+
+Fix $U>0$. There are $A_U,C_U>0$ such that, with the same fixed small
+remote offset radius $r$ and the positive-real diagonal square-root
+continuation from (W62),
+
+$$
+\boxed{\sup_{\substack{0<a\le U\\|v|\le r}}
+\left|\frac{L_0(a,A+v)}{\sqrt{J(a)}\sqrt{J(A+v)}}\right|
+\le C_U\frac{e^{-A}}{\sqrt A}\qquad(A\ge A_U).}
+\tag{W65}
+$$
+
+Only the remote variable is complex. At $a=0$ the original kernel
+vanishes; no normalized value is assigned there.
+
+To obtain the bound, put $b=A+v$ and use (W50)'s complete forward
+integral with bracket
+
+$$
+B(a,b,t)=(a+b+2t)\Phi(t+a)-(b-a+2t)\Phi(t-a).
+$$
+
+Its first cancellation is $B(0,b,t)=0$. The same grouping of
+$\partial_aB$ used in (W50) bounds its terms without $b$ uniformly by
+compactness and the complete derivative tails. Its second cancellation
+is $\Phi'(a)+\Phi'(-a)=0$, which bounds the coefficient of $b$ by
+$C_Ut$. Thus $|B(a,b,t)|\le C_Ua(1+|b|t)$ for every $t\ge0$.
+The already used right-strip bound for $g=\log\Phi$ gives
+
+$$
+\left|\frac{\Phi(b+t)}{\Phi(b)}\right|
+\le e^{-ce^{2A}t}.
+$$
+
+These bounds give locally uniform convergence of the entire forward
+integral in $b$. The identity theorem identifies its continuation with
+the actual kernel, and direct integration yields
+
+$$
+\left|\frac{L_0(a,b)}{\Phi(b)}\right|
+\le C_Ua(e^{-2A}+Ae^{-4A})\le C_Uae^{-2A}.
+$$
+
+No reflected part with $t-a<0$ or remote tail was removed. Divide by
+$\sqrt{J(a)}\ge\sqrt{m_U}a$ from (W49), and use
+$|\Phi(b)/\sqrt{J(b)}|\le Ce^A/\sqrt A$ from (W62), to prove (W65).
+
+### Use the same Hardy metric for each complete remote profile
+
+Let $\mu$ be any finite complex Borel measure on $[0,U]$, and retain
+$\mathcal M(\mu)=\int\sqrt{J(a)}\,d|\mu|(a)$ from (W51).
+For a real physical profile $\lambda$ on $[A-w,A+w]$, let $\nu$ be
+its exact transport from (W58). Require an explicit monic separator
+$p$ of degree $r_A$, roots in $[-h,h]$, with $\epsilon p\nu\ge0$;
+repeated roots and atoms at roots remain allowed. Put $Q=Q_H(\nu)$.
+
+For $u=\operatorname{arctanh}z$, the existing normalizer
+$c_A(z)=\sqrt{J(A+u)}d_A(u)$ is holomorphic and uniformly bounded
+on the fixed Hardy disc $|z|\le\varrho$. Consequently
+
+$$
+F_A(a,z)=\frac{d_A(u)L_0(a,A+u)}{\sqrt{J(a)}}
+$$
+
+is holomorphic there and bounded by $C_Ue^{-A}/\sqrt A$, uniformly
+for $0<a\le U$. Its Cauchy coefficients, the already proved scalar
+moment bound in (W63), and integration against the compact measure give
+
+$$
+\boxed{|B_{L_0}(\mu,\lambda)|
+\le C_U\mathcal M(\mu)\frac{e^{-A}}{\sqrt A}
+       \Lambda^{r_A/2}\sqrt Q.}
+\tag{W66}
+$$
+
+This uses the same $Q$ that pays the local positive form; no local total
+variation replaces it. For a complex remote profile, impose the explicit
+separator condition separately on its transported real and imaginary
+parts, each of degree at most $r_A$. Take $Q$ to be the sum of their two
+Hardy forms. Splitting the bilinear form and absorbing $\sqrt2$ gives
+(W66) with the same independence from degree, roots and density.
+
+### Spend the whole remote credit once
+
+Fix $q_{\rm geo}>1$ and retain
+$\tau=(q_{\rm geo}-1)/(q_{\rm geo}+1)$ and
+$\kappa=\tau/\log\Lambda$. Take any finite family of such real or
+complex remote profiles $\lambda_j$, with
+
+$$
+A_1\ge T\ge T_0(U,q_{\rm geo}),\qquad
+A_{j+1}\ge q_{\rm geo}A_j,\qquad
+r_j\le\lfloor\kappa A_j\rfloor.
+$$
+
+The start includes that of (W64), $A_U$, $U+w+1$, and
+$(q_{\rm geo}-1)T\ge1$. Write $E=\sum_jQ_j$ and keep the exact
+nonnegative cross allowance
+
+$$
+\Gamma=\sum_j A_j^{-1}e^{-2A_j}\Lambda^{r_j}.
+$$
+
+Estimate (W66) and Cauchy--Schwarz give
+$|B_{L_0}(\mu,\sum_j\lambda_j)|
+\le C_U\mathcal M(\mu)\sqrt{E\Gamma}$.
+The actual degree bounds and the center spacing imply
+
+$$
+\Gamma\le
+\frac{e^{-(2-\tau)T}}
+ {T[1-e^{-(2-\tau)(q_{\rm geo}-1)T}]}.
+$$
+
+Indeed $A_j\ge T+(j-1)(q_{\rm geo}-1)T$, and
+$\Lambda^{r_j}\le e^{\tau A_j}$. The denominator is bounded away
+from zero under the stated start. Reuse (W64), separately for real and
+imaginary parts when required, to obtain
+$Q_{L_0}(\sum_j\lambda_j)\ge E/4$. Young's inequality spends half
+of this same credit on the full cross term and leaves
+
+$$
+\boxed{Q_{L_0}\!\left(\mu+\sum_j\lambda_j\right)
+\ge Q_{L_0}(\mu)+\frac18\sum_jQ_j
+  -C_U\frac{e^{-(2-\tau)T}}T\mathcal M(\mu)^2.}
+\tag{W67}
+$$
+
+One start works for every finite family size, local sample density and
+permitted degree; those degrees may grow without a common fixed cap.
+The compact measure has no sign-count restriction. Its atom at zero
+contributes nothing. This extends (W51)'s remote point block to the
+entire growing-degree profiles and retains all their mutual interactions.
+
+The compact size $U$ and $q_{\rm geo}$ are fixed; no uniformity as
+$U\to\infty$ or $q_{\rm geo}\downarrow1$ is asserted. The estimate
+assigns no sign to $Q_{L_0}(\mu)$ and supplies no comparison of
+$\mathcal M(\mu)^2$ with a nearly null compact form. It gives neither
+unrestricted remote-complexity control nor all-order positivity on a
+fixed window. The strict original joint Robin upper and RH remain
+unproved.
