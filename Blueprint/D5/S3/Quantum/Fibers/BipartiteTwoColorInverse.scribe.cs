@@ -78,11 +78,11 @@ internal sealed class BipartiteTwoColorInverseDocument : IScribeDocumentDefiniti
 
     private static Formula InverseAFormula() => Disp(Seq(
         Forall, Sp, V("m"), Comma, Sp, V("b"), Comma, Sp, V("a"), Comma, Sp,
-        V("aPrime"), Comma, Sp, V("Ω"), Comma, Sp,
+        V("aPrime"), Comma, Sp, V("Ω"), Comma, Sp, V("c"), Comma, Sp,
         V("a"), Sp, Eq, Sp, Seq(Minus, Seq(Open, Seq(D(2), V("Ω"), Caret, D(2),
-            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, D(1), Close)),
+            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, V("c"), Close)),
         Comma, Sp, V("aPrime"), Sp, Eq, Sp, Seq(Minus, Seq(Open, Seq(D(8), V("Ω"), Caret, D(2),
-            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, D(2), Close)),
+            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, D(2), V("c"), Close)),
         Comma, Sp, V("Ω"), Sp, Neq, Sp, D(0), Rightarrow, Sp,
         V("b"), Sp, Eq, Sp, Seq(D(2), V("m"), Plus,
             new Formula.Fraction(Seq(Open, V("aPrime"), Minus, D(2), V("a"), Close),
@@ -90,11 +90,11 @@ internal sealed class BipartiteTwoColorInverseDocument : IScribeDocumentDefiniti
 
     private static Formula InverseBFormula() => Disp(Seq(
         Forall, Sp, V("m"), Comma, Sp, V("b"), Comma, Sp, V("a"), Comma, Sp,
-        V("aPrime"), Comma, Sp, V("Ω"), Comma, Sp,
+        V("aPrime"), Comma, Sp, V("Ω"), Comma, Sp, V("c"), Comma, Sp,
         V("a"), Sp, Eq, Sp, Seq(Minus, Seq(Open, Seq(D(2), V("Ω"), Caret, D(2),
-            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, D(1), Close)),
+            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, V("c"), Close)),
         Comma, Sp, V("aPrime"), Sp, Eq, Sp, Seq(Minus, Seq(Open, Seq(D(2), V("Ω"), Caret, D(2),
-            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, D(2), Close)),
+            Seq(Open, D(2), V("m"), Minus, V("b"), Close)), Plus, D(2), V("c"), Close)),
         Comma, Sp, V("Ω"), Sp, Neq, Sp, D(0), Rightarrow, Sp,
         V("b"), Sp, Eq, Sp, Seq(D(2), V("m"), Plus,
             new Formula.Fraction(Seq(Open, D(2), V("a"), Minus, V("aPrime"), Close),

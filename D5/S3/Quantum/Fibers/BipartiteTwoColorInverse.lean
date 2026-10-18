@@ -72,9 +72,9 @@ theorem p3_double_commutator (Ωu Ωv Ωw : ℂ) :
 
 /-- The A-color formula: doubling the A-color doubles exchanges and quadruples
 the diagonal term, so the blocking coordinate is recovered by subtraction. -/
-theorem two_color_inverse_A (m b a a' Ω : ℝ)
-    (h₁ : a = -(2 * Ω ^ 2 * (2 * m - b) + 1))
-    (h₂ : a' = -(8 * Ω ^ 2 * (2 * m - b) + 2))
+theorem two_color_inverse_A (m b a a' Ω c : ℝ)
+    (h₁ : a = -(2 * Ω ^ 2 * (2 * m - b) + c))
+    (h₂ : a' = -(8 * Ω ^ 2 * (2 * m - b) + 2 * c))
     (hΩ : Ω ≠ 0) :
     b = 2 * m + (a' - 2 * a) / (4 * Ω ^ 2) := by
   field_simp [hΩ]
@@ -82,9 +82,9 @@ theorem two_color_inverse_A (m b a a' Ω : ℝ)
 
 /-- The B-color formula: doubling the neighboring A-color doubles exchanges
 while preserving the diagonal term. -/
-theorem two_color_inverse_B (m b a a' Ω : ℝ)
-    (h₁ : a = -(2 * Ω ^ 2 * (2 * m - b) + 1))
-    (h₂ : a' = -(2 * Ω ^ 2 * (2 * m - b) + 2))
+theorem two_color_inverse_B (m b a a' Ω c : ℝ)
+    (h₁ : a = -(2 * Ω ^ 2 * (2 * m - b) + c))
+    (h₂ : a' = -(2 * Ω ^ 2 * (2 * m - b) + 2 * c))
     (hΩ : Ω ≠ 0) :
     b = 2 * m + (2 * a - a') / (2 * Ω ^ 2) := by
   field_simp [hΩ]
