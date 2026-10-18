@@ -34,7 +34,21 @@ Lean statement: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.conjecture`
 
 For every n≥1 and every nonzero complex family z, the conjecture asserts both the sharp moment inequality and equality if and only if all z_j coincide, for every real p≥1.
 
-**Definition 1.3 (The inequality and its equality boundary).**
+**Theorem 1.3 (The endpoint equality criterion is false).**
+
+Lean statement: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.counterexample`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.counterexample` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Q. Tang, T. Zhang (2025). *Sharp Schoenberg type inequalities and the de Bruin–Sharma problem*. DOI: [10.48550/arXiv.2508.10341](https://doi.org/10.48550/arXiv.2508.10341). URL: <https://arxiv.org/abs/2508.10341v3>.
+
+*Commentary.*
+
+Conjecture 1.13 is false. For n=2, z=(1,2), and p=1, the critical points are 1−sqrt(3)/3 and 1+sqrt(3)/3. Their reciprocal norm sum is 3, equal to c(2,1) times (1+1/2), although the nonzero roots differ.
+
+**Definition 1.4 (The inequality and its equality boundary).**
 
 Lean statement: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.claim`
 
@@ -54,7 +68,7 @@ $(\sum_{k=1}^{n} \left|w_{k}\right|^{-p}=c_{n,p} \sum_{j=1}^{n} \left|z_{j}\righ
 
 The third conjunct is the literal negation of Conjecture 1.13, including both assertions for every real p≥1. Its refutation is witnessed by n=2 and z=(1,2), whose critical points are 1−sqrt(3)/3 and 1+sqrt(3)/3. Their reciprocal norm sum is 3, equal to 2 times (1+1/2), although the nonzero roots differ. This refutes the source's endpoint equality clause while retaining the conjectured inequality at that endpoint.
 
-**Theorem 1.4 (Conjecture 1.13 is false; the sharp bound and strict-order equality case hold).**
+**Theorem 1.5 (Conjecture 1.13 is false; the sharp bound and strict-order equality case hold).**
 
 Lean statement: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.result`
 
@@ -87,5 +101,6 @@ Equality at an interior strip point propagates to the right boundary by the maxi
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.c`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.claim`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.conjecture`
+- Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.counterexample`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.result`
 - Dependency: [D5/S3/Zeros/CriticalPoints/RankOneComplexPowers](RankOneComplexPowers.md)

@@ -65,6 +65,18 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
                     + "if all z_j coincide, for every real p≥1."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("tang-zhang-real-order-counterexample"),
+                DeclarationHandle.Create(Module + ".counterexample"),
+                H("The endpoint equality criterion is false"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Conjecture 1.13 is false. For n=2, z=(1,2), and p=1, "
+                    + "the critical points are 1−sqrt(3)/3 and 1+sqrt(3)/3. "
+                    + "Their reciprocal norm sum is 3, equal to c(2,1) times "
+                    + "(1+1/2), although the nonzero roots differ."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("tang-zhang-real-order-claim"),
                 DeclarationHandle.Create(Module + ".claim"),
                 H("The inequality and its equality boundary"),

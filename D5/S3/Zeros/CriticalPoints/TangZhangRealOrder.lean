@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Zeros/CriticalPoints/TangZhangRealOrder
    mirror-E: none(waiver:open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Analysis.Complex.Hadamard]
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.conjecture; result=D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.counterexample; claim=D5/S3/Zeros/CriticalPoints/TangZhangRealOrder.conjecture
    digest: The real-order reciprocal critical-point conjecture and its equality boundary. -/
 
 import D5.S3.Zeros.CriticalPoints.RankOneComplexPowers
@@ -91,7 +91,7 @@ def conjecture : Prop :=
 
 end D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
 
-namespace D5.S3.Zeros.CriticalPoints.TangZhangRealOrderCounterexample
+namespace D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
 
 open Polynomial
 open TangZhangOrderMinusTwo (P)
@@ -139,7 +139,7 @@ private theorem explicit_sum :
   nlinarith
 
 /-- The proposed equality characterization at real order one fails. -/
-private theorem counterexample : ¬ TangZhangRealOrder.conjecture := by
+theorem counterexample : ¬ conjecture := by
   intro h
   have hz : ∀ j : Fin 2, ![(1 : ℂ), 2] j ≠ 0 := by
     intro j
@@ -154,7 +154,7 @@ private theorem counterexample : ¬ TangZhangRealOrder.conjecture := by
     (show _ from he) (0 : Fin 2) (1 : Fin 2)
   norm_num at hc
 
-end D5.S3.Zeros.CriticalPoints.TangZhangRealOrderCounterexample
+end D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
 
 namespace D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
 
@@ -193,6 +193,6 @@ theorem result : claim := by
       have hzconst : z = fun _ : Fin n => z i₀ := funext fun j => heq j i₀
       rw [hzconst]
       exact TangZhangConstantRoots.constant_roots_moment n hn (z i₀) (hz i₀) p
-  · exact TangZhangRealOrderCounterexample.counterexample
+  · exact counterexample
 
 end D5.S3.Zeros.CriticalPoints.TangZhangRealOrder
