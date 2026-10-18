@@ -41,7 +41,10 @@ def stub(kind, args):
             payload['conclusion']['status'] = payload['conclusion'].pop('verdict')
         path.write_text('invalid' if os.environ.get('CHAIN_BAD_RESULT') else json.dumps(payload))
         if not os.environ.get('CHAIN_NO_RESULT'):
-            print('FLIGHT ' + flight + ' attempt=10')
+            if not os.environ.get('CHAIN_PRESET_ONLY') and not os.environ.get('CHAIN_PRESET_ALIAS'):
+                print('FLIGHT ' + flight + ' attempt=10')
+            if os.environ.get('CHAIN_PRESET_ALIAS'):
+                path = root / 'sshx alias' / flight / 'attempt-10/result.json'
             print(path)
     elif kind == 'prep':
         assert len(args) == 1 and Path(args[0]).is_dir()
@@ -108,6 +111,7 @@ def fixture(root, mode=None, integration=False):
     target = repo / 'tools/scripts/agent/openproblem'
     shutil.copytree(TOOLS, target, ignore=shutil.ignore_patterns('__pycache__'))
     (root / 'tools').symlink_to(repo / 'tools', target_is_directory=True)
+    (root / 'sshx alias').symlink_to(root / 'sshx', target_is_directory=True)
     for kind in ('git', 'gh', 'make', 'sleep', 'pgrep', 'pkill'):
         executable(root / 'bin' / kind, '#!/bin/sh\nexec ' + shlex.quote(sys.executable) + ' ' +
                    shlex.quote(str(Path(__file__).resolve())) + ' --stub ' + kind + ' "$@"\n')
@@ -198,18 +202,22 @@ def run(mode):
                 assert result.returncode == 0 and 'CHAIN_STOP' in result.stdout
                 assert len((root / 'seats.txt').read_text().splitlines()) == 1
         extra = ({'CHAIN_REJECT_MIRROR': (0, 2), 'CHAIN_CI_FAIL': (38, 3), 'CHAIN_NO_READY': (13, 3),
-                  'CHAIN_STATUS_ONLY': (0, 6), 'CHAIN_NESTED_PR': (0, 6)} if mode == 'stagea' else
+                  'CHAIN_STATUS_ONLY': (0, 6), 'CHAIN_NESTED_PR': (0, 6),
+                  'CHAIN_PRESET_ONLY': (0, 6), 'CHAIN_PRESET_ALIAS': (0, 6)} if mode == 'stagea' else
                  {'CHAIN_HEAD_MOVED': (14, 2), 'CHAIN_UNCHANGED_HEAD': (0, 3), 'REWORK_SPEC': (0, 6)}
-                 if mode == 'rework' else {'CHAIN_PREP_FAIL': (6, 0)} if mode == 'prep-and-chain' else {})
+                 if mode == 'rework' else {'CHAIN_PREP_FAIL': (6, 0), 'PREP_MIRROR': (0, 5)} if mode == 'prep-and-chain' else {})
         for key, (code, count) in extra.items():
             with tempfile.TemporaryDirectory(prefix='chain __boundary__ with spaces ') as tmp:
                 root = Path(tmp).resolve(); target, env = fixture(root, mode)
                 args = arguments(mode, root)
                 if key == 'REWORK_SPEC': args.append(str(root / 'scratch/lanes/rework-sample.json'))
+                elif key == 'PREP_MIRROR': args = ['mirror', 'sample', str(root / 'tree'), 'mirror-sample-r1']
                 else: env[key] = '6' if key == 'CHAIN_PREP_FAIL' else '1'
                 result = invoke(target, mode, root, env, args)
                 assert result.returncode == code, (mode, key, result.returncode, result.stdout, result.stderr)
                 assert len((root / 'seats.txt').read_text().splitlines()) == count, (mode, key)
+                if key == 'PREP_MIRROR':
+                    assert (root / 'seats.txt').read_text().splitlines() == expected('from-mirror')
         with tempfile.TemporaryDirectory(prefix='chain __inputs__ with spaces ') as tmp:
             root = Path(tmp).resolve(); target, env = fixture(root, mode)
             assert invoke(target, mode, root, env, []).returncode == 10
@@ -229,13 +237,16 @@ def compare(scratch_source, shim_source):
                'rework': scratch_source / 'chain-rework.sh',
                'stageb-go': scratch_source / 'stageb-go.sh',
                'prep-and-chain': shim_source / 'prep-and-chain.sh'}
-    for mode in sources:
+    for mode in [*sources, 'prep-and-chain-mirror']:
+        source_mode = 'prep-and-chain' if mode == 'prep-and-chain-mirror' else mode
         sequences = []
         for legacy in (False, True):
             with tempfile.TemporaryDirectory(prefix='parity __fixture__ with spaces ') as tmp:
-                root = Path(tmp).resolve(); target, env = fixture(root, mode)
+                root = Path(tmp).resolve(); target, env = fixture(root, source_mode)
+                args = (['mirror', 'sample', str(root / 'tree'), 'mirror-sample-r1']
+                        if mode == 'prep-and-chain-mirror' else arguments(mode, root))
                 if not legacy:
-                    result = invoke(target, mode, root, env)
+                    result = invoke(target, source_mode, root, env, args)
                 else:
                     scratch = root / 'scratch'
                     for key, path in sources.items():
@@ -275,18 +286,17 @@ def compare(scratch_source, shim_source):
                                shlex.quote(str(target / 'pipeline/seat-wait.sh')) + ' "$seat" "$3" "$4" "$5" 0\n')
                     for block in ('lean-report-block.md', 'reuse-sweep-block.md'):
                         shutil.copyfile(target / 'templates/blocks' / block, scratch / 'briefs' / block)
-                    args = arguments(mode, root)
                     if mode in ('stagea', 'from-mirror'): args[1] = 'tree'
                     elif mode == 'rework':
                         args[3] = 'tree'; args = args[:5]
                         env.update(RW='r1', MW='rw1')
-                    elif mode == 'prep-and-chain': args[2] = 'tree'
+                    elif source_mode == 'prep-and-chain': args[2] = 'tree'
                     elif mode == 'stageb-go': args = args[1:]
-                    result = subprocess.run(['/bin/bash', str(scratch / sources[mode].name), *args],
+                    result = subprocess.run(['/bin/bash', str(scratch / sources[source_mode].name), *args],
                                             cwd=root, env=env, text=True, capture_output=True, timeout=120)
                 assert result.returncode == 0, (mode, legacy, result.stdout, result.stderr)
                 sequences.append((root / 'seats.txt').read_text().splitlines())
-        assert sequences[0] == sequences[1] == expected(mode), (mode, sequences)
+        assert sequences[0] == sequences[1] == expected('from-mirror' if mode == 'prep-and-chain-mirror' else mode), (mode, sequences)
         print('CHAIN_PARITY ' + mode + ' equal=true ' + ' -> '.join(sequences[0]), flush=True)
     return 0
 

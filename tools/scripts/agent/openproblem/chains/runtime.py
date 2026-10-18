@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """Lane continuations composed from the canonical pipeline and brief generators."""
-import json
-import os
 from pathlib import Path
 import re
 import subprocess
@@ -74,10 +72,22 @@ class Chain:
         text = read(self.logs / log)
         # Runner output names a flight; DONE presets instead print its result path.
         flights = re.findall(r'^FLIGHT ([0-9a-f]{24})(?:\s|$)', text, re.M)
-        paths = re.findall(re.escape(str(self.ctx.sshx)) + r'/([0-9a-f]{24})/attempt-[0-9]+/result\.json', text)
-        if not flights and not paths:
+        if not flights:
+            for line in text.splitlines():
+                path = Path(line.strip())
+                if path.name != 'result.json':
+                    continue
+                try:
+                    path = path if path.is_absolute() else self.ctx.main / path
+                    parts = path.resolve().relative_to(self.ctx.sshx).parts
+                except (OSError, ValueError):
+                    continue
+                if (len(parts) == 3 and re.fullmatch(r'[0-9a-f]{24}', parts[0])
+                        and re.fullmatch(r'attempt-[0-9]+', parts[1])):
+                    flights.append(parts[0])
+        if not flights:
             fail(13, 'dispatch supplied no result identity: ' + seat)
-        result = self.ctx.result((flights or paths)[-1])
+        result = self.ctx.result(flights[-1])
         payload = load(result)
         conclusion = payload.get('conclusion')
         if not isinstance(conclusion, dict):
