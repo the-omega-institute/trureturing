@@ -248,6 +248,7 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         seed_base = self.root / '.lake/lean-report-seed-base.json'
         seed_base.write_text('full seed generation metadata')
         full_archive = self.root / '.lake/build/lean-inspector/report.zip'
+        full_archive.parent.mkdir(parents=True, exist_ok=True)
         full_archive.write_bytes(b'previous whole-report archive')
         protected = [canonical, receipt, seed_base, full_archive]
         before = [path.read_bytes() for path in protected]
@@ -259,6 +260,9 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         phases = [json.loads(line) for line in (self.logs / 'native-phases.jsonl').read_text().splitlines()]
         inspections = [row for row in phases if row['phase'] == 'native-inspect' and row['boundary'] == 'start']
         self.assertEqual(len(inspections), 1, '[FAIL] selected_modules_share_one_native_inspection_batch')
+        cold_work = json.loads((self.logs / 'work.json').read_text())
+        self.assertEqual(cold_work['extracted_module_names'], ['D5.A', 'D5.B'])
+        self.assertEqual(cold_work['compiled_module_names'], ['D5.A', 'D5.B'])
         self.assertFalse((self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip').exists(),
                          '[FAIL] unrelated_module_is_never_extracted')
         self.assertEqual(before, [path.read_bytes() for path in protected],
