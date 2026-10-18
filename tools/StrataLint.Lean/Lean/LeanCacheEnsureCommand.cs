@@ -141,7 +141,8 @@ internal static partial class LeanCacheEnsureCommand
         bool continueOnCacheGetFailure,
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
-        string? donorRepository)
+        string? donorRepository,
+        bool refreshWarmArchive = true)
     {
         cacheState = null;
         var archive = LeanArchiveAttempt.Skipped("not reached");
@@ -217,7 +218,11 @@ internal static partial class LeanCacheEnsureCommand
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState, writerGuard, runner);
+                        out cacheState, writerGuard, runner,
+                        // A wrapped build can use Lake's dependency traces to update a
+                        // matching warm cache; age alone does not require an archive.
+                        refreshWarmArchive: refreshWarmArchive
+                            || !stateProbe.ProbeOleans(MathlibOleanRoot(lake)).IsWarm);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
@@ -774,7 +779,8 @@ internal static partial class LeanCacheEnsureCommand
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
         LeanCacheWriterGuard writerGuard,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        bool refreshWarmArchive = true)
     {
         // Every successful donor/provision path meets here while holding the
         // writer lock, including a warm donor that bypassed cold-cache fallback.
@@ -791,7 +797,8 @@ internal static partial class LeanCacheEnsureCommand
             payload["archive_workflow_run_id"] = null;
             result = result with { Output = prefix + payload.ToJsonString() + "\n" };
         }
-        else if (projectWarmth.IsWarm && payload["archive_status"]?.GetValue<string>() == "not_attempted")
+        else if (refreshWarmArchive && projectWarmth.IsWarm
+            && payload["archive_status"]?.GetValue<string>() == "not_attempted")
         {
             try
             {
