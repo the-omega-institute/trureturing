@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
 import D5.S3.Quantum.Schatten.ExpandingAverage
+import D5.S3.Quantum.Schatten.RankOneHadamard
+import D5.S3.Quantum.Schatten.ExpandingNormProduct
+import D5.S3.Quantum.Schatten.ExpandingDiagonal
 import Mathlib.LinearAlgebra.Matrix.Hadamard
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.LinearAlgebra.Matrix.Rank
@@ -18,7 +21,7 @@ invertible-matrix product bound, and equality at the minimizing permutation. -/
 
 noncomputable section
 open Matrix
-open scoped Matrix
+open scoped Matrix ComplexOrder
 
 namespace D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree
 
@@ -55,5 +58,27 @@ theorem exists_minimizing_permutation (n : ℕ) (G : Matrix (Fin n) (Fin n) ℂ)
     (fun τ => ν.N ((τ.permMatrix ℂ) ⊙ G)) Finset.univ_nonempty
   refine ⟨σ, fun τ => hσ τ (Finset.mem_univ τ), ?_⟩
   rw [inverse_perm_hadamard_transpose, ν.N_transpose, pow_two]
+
+/-- The rank-one assertion holds for every complex unitarily invariant norm. -/
+theorem result : claim := by
+  intro n G hG ν
+  obtain ⟨a, b, ha, hb, hred⟩ := ν.rank_one_hadamard_reduction G hG
+  obtain ⟨σ, hσ⟩ := ν.exists_permutation_expanding_lower_bound a b ha hb
+  let A : Matrix (Fin n) (Fin n) ℂ := diagonal (fun i => (a i : ℂ))
+  let B : Matrix (Fin n) (Fin n) ℂ := diagonal (fun i => (b i : ℂ))
+  refine ⟨σ, ?_, ?_, ?_⟩
+  · intro τ
+    rw [(hred (σ.permMatrix ℂ)).1, (hred (τ.permMatrix ℂ)).1]
+    apply hσ
+    have hP : (τ.permMatrix ℂ)ᴴ * τ.permMatrix ℂ = 1 := by
+      rw [conjTranspose_permMatrix, ← permMatrix_mul]
+      simp
+    rw [hP, sub_self]
+    exact PosSemidef.zero
+  · intro W hW
+    rw [(hred (σ.permMatrix ℂ)).1, (hred W).1, (hred W).2]
+    exact ν.sq_le_product_of_expanding_lower_bound A B
+      (ν.N (A * σ.permMatrix ℂ * B)) (ν.nonneg _) hσ W hW
+  · rw [inverse_perm_hadamard_transpose, ν.N_transpose, pow_two]
 
 end D5.S3.Quantum.Schatten.ZhangLiRankOneProblemThree
