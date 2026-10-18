@@ -214,7 +214,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     DescribeId.Create("prime-symbol-block"),
                     DeclarationHandle.Create(Owner + "prime_symbol_block"),
                     H("Uniform finite blocks with every prime power"),
-                    StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow, Call("SquareBlock", c, M, K), Leq, Seq(K, Sp, Call("D", c), Plus, Call("C", c))))),
+                    StatementSource.FromAuthor(Disp(Seq(Call("AtLeastTwo", c), Rightarrow, Call("SquareBlock", c, M, K), Leq, Sp, Seq(K, Sp, Call("D", c), Plus, Call("C", c))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For c>=2, any integer M and any natural K, SquareBlock(c,M,K)=sum_{j<K} S(c,M+j)^2 <= K*D(c)+C(c). The proof bounds the imaginary square by the complex norm square and applies geometric_block_norm to ordered unequal pairs. K=0 and negative block starts are admitted.")),
@@ -224,7 +224,7 @@ internal sealed class PrimeSymbolMeanSquareDocument : IScribeDocumentDefinition
                     DescribeId.Create("finite-abel-majorant"),
                     DeclarationHandle.Create(Owner + "finite_abel_majorant"),
                     H("Discrete Abel majorization with exact hypotheses"),
-                    StatementSource.FromAuthor(Disp(Seq(Call("AbelHypotheses", x, w, Dm, C), Rightarrow, Call("WeightedPartialSum", x, w, K), Leq, Seq(Dm, Sp, Call("WeightPartialSum", w, K), Plus, C, Sp, Call("AtZero", w))))),
+                    StatementSource.FromAuthor(Disp(Seq(Call("AbelHypotheses", x, w, Dm, C), Rightarrow, Call("WeightedPartialSum", x, w, K), Leq, Sp, Seq(Dm, Sp, Call("WeightPartialSum", w, K), Plus, C, Sp, Call("AtZero", w))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text("For x,w:N->R and D,C:R, assume 0<=C, every w(i)>=0, w(i+1)<=w(i), and for every natural k, sum_{i<k}x(i)<=k*D+C. Then for every natural K, sum_{i<K}x(i)*w(i)<=D*sum_{i<K}w(i)+C*w(0). No sign hypothesis is imposed on x or D. The proof uses Mathlib finite summation by parts and retains its finite boundary contribution, including K=0.")),
