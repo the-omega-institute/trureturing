@@ -1,3 +1,4 @@
+// UNCOMPILED source-only Scribe changes; no emission or C# validation has run.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -284,7 +285,7 @@ A separate estimate, valid for all nonnegative defects, is
 )),
             Paragraph(Text(
 """
-The second inequality uses H+D≤4-6w and w≥0.
+The second inequality uses H+D≤4-6w and w≥0. The reused homogeneous form total_energy_estimate retains arbitrary real u,w and DefectData u w h d with w>=0: E=w(H+D)+H2+D2<=(4u-6w)(4u-5w). It follows from H,D>=0, H2<=H^2, D2<=D^2 and H+D<=4u-6w. No PSD hypothesis is required. This homogeneous form is also used at a half-jump residual in ContinuousSpectrumAssembly; the N>=67 three-row theorem here is unchanged.
 """
 ))
             )),
