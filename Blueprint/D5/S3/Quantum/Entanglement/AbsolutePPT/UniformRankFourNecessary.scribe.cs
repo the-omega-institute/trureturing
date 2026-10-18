@@ -9,13 +9,11 @@ internal sealed class UniformRankFourNecessaryDocument : IScribeDocumentDefiniti
     private static Formula X(string n) => F.Id(n);
     private static Formula D(long n) => Num(n);
     private static Formula R => Seq(Mathbb, Grp(X("R")));
-    private static Formula C => Seq(Mathbb, Grp(X("C")));
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string n, params Formula[] xs) => new Formula.Apply(X(n), [.. xs]);
     private static Formula All(string n, Formula t, Formula f) => Seq(Forall, Sp, Par(Seq(X(n), Colon, t)), Comma, Sp, f);
     private static Formula Arrow(Formula a, Formula b) => Seq(a, To, Sp, b);
     private static Formula Product(Formula a, Formula b) => Par(Seq(a, Times, Sp, b));
-    private static Formula Eqn(Formula a, Formula b) => Seq(a, F.Eq, b);
     private static Formula Le(Formula a, Formula b) => Seq(a, Leq, Sp, b);
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Rightarrow, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Land, Sp, Par(b));

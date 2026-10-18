@@ -7,8 +7,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
 internal sealed class PartialTransposeTraceDocument : IScribeDocumentDefinition
 {
     private static Formula X(string n) => F.Id(n);
-    private static Formula D(long n) => Num(n);
-    private static Formula R => Seq(Mathbb, Grp(X("R")));
     private static Formula C => Seq(Mathbb, Grp(X("C")));
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string n, params Formula[] xs) => new Formula.Apply(X(n), [.. xs]);
@@ -16,9 +14,6 @@ internal sealed class PartialTransposeTraceDocument : IScribeDocumentDefinition
     private static Formula Arrow(Formula a, Formula b) => Seq(a, To, Sp, b);
     private static Formula Product(Formula a, Formula b) => Par(Seq(a, Times, Sp, b));
     private static Formula Eqn(Formula a, Formula b) => Seq(a, F.Eq, b);
-    private static Formula Le(Formula a, Formula b) => Seq(a, Leq, Sp, b);
-    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Rightarrow, Sp, b);
-    private static Formula And(Formula a, Formula b) => Seq(Par(a), Land, Sp, Par(b));
     private static Formula Statement()
     {
         var a=X("A"); var b=X("B"); var j=Product(a,b); var m=X("M"); var v=X("v");
