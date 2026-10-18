@@ -56,9 +56,13 @@ minimization, and balanced product argument use these comparisons to
 obtain the variational conclusion; that conclusion is not attributed to
 this book.
 
-## Locator and scope
+## Locator
 
-The bibliographic locator is Chapters III–IV and the DOI above. No finer
+DOI: 10.1007/978-1-4612-0653-8
+
+Source: https://doi.org/10.1007/978-1-4612-0653-8
+
+The bibliographic scope is Chapters III–IV. No finer
 theorem numbering or direct page inspection is asserted. The background
 attribution does not assert that the book states the Lean signatures,
 the unsorted comparison-vector variant of the gauge inequality, or the

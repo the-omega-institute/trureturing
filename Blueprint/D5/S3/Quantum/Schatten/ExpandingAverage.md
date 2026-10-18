@@ -4,7 +4,7 @@
 
 Balanced inverse-adjoint averages are expanding.
 
-The balanced diagonal-matrix and inverse average in Bhatia–Kittaneh–Li (1997), §4 Remark 2, is a related method; here the inverse adjoint permits arbitrary invertible complex W.
+The balanced diagonal-matrix and inverse average in Bhatia–Kittaneh–Li (1997), §4, is a related method; here the inverse adjoint permits arbitrary invertible complex W.
 
 **Definition 1.1 (A balanced average).**
 

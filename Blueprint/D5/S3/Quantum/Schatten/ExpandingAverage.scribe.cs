@@ -10,7 +10,7 @@ internal sealed class ExpandingAverageDocument : IScribeDocumentDefinition
         "Balanced inverse-adjoint averages are expanding.",
         H("Balanced inverse-adjoint averages are expanding"),
         Blocks(
-            Paragraph(Text("The balanced diagonal-matrix and inverse average in Bhatia–Kittaneh–Li (1997), §4 Remark 2, is a related method; here the inverse adjoint permits arbitrary invertible complex W.")),
+            Paragraph(Text("The balanced diagonal-matrix and inverse average in Bhatia–Kittaneh–Li (1997), §4, is a related method; here the inverse adjoint permits arbitrary invertible complex W.")),
             Describe.Lean(
                 DescribeId.Create("zhangli-expandingaverage-inverseadjointaverage"),
                 DeclarationHandle.Create(Module + ".inverseAdjointAverage"),

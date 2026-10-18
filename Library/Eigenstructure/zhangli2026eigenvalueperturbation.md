@@ -15,6 +15,13 @@ triage: anchor
 # On a Conjecture Related to Eigenvalue Perturbations
 
 Lei-Hong Zhang and Ren-Cang Li, arXiv:2609.25552v1, §1 Problem 3 and §5.
+
+## Locator
+
+DOI: 10.48550/arXiv.2609.25552
+
+Source: https://arxiv.org/abs/2609.25552
+
 The versioned locator for both quotations below is
 **arXiv:2609.25552v1, §1 Problem 3 and §5**.
 
