@@ -2738,3 +2738,166 @@ on one fixed window, unrestricted complex-measure result, unconditional
 premise for (W40), strict all-integer Robin inequality or RH proof is
 supplied. These are repository-derived paper estimates, without a
 literature-priority or Lean-verification claim.
+
+
+## Arbitrarily many finite-sign profiles have a joint positive margin
+
+Reuse the complete actual derivative decay (W52) and the single-window
+margin (W58). Their additional joint consumer permits arbitrary real
+finite signed measures in each cluster, with a fixed bound on local
+sign complexity and no bound on local sample count or density. Every
+cross term of the original $L_0$ is retained. The classical Hermite
+interpolation formula and block row-sum estimate are reused inside this
+source application, without a standalone generic theorem, literature
+priority or Lean-verification claim.
+
+### Use the exact local transport for every profile
+
+Fix the one small $h$ and $\Lambda$ from (W55)--(W58), put
+$w=\operatorname{arctanh}h$, and fix an integer $m\ge0$.
+Let $\mu_j$, $1\le j\le N$, be real finite signed Borel measures
+supported on the ordered physical windows
+$I_j=[A_j-w,A_j+w]$. Transport each by exactly (W58):
+$\nu_j$ is the pushforward of $d\mu_j(A_j+u)/d_{A_j}(u)$ under
+$z=\tanh u$, with $d_A(u)=\cosh(u)D_A(u)>0$.
+Require separately for every $j$ that
+
+$$
+\epsilon_jp_j\nu_j\ge0,\qquad
+p_j(z)=\prod_{k=1}^{r_j}(z-s_{j,k}),\qquad
+0\le r_j\le m,\quad s_{j,k}\in[-h,h],\quad
+\epsilon_j\in\{-1,1\}.
+$$
+
+Repeated roots and atoms at roots are allowed. Put
+
+$$
+a_{j,k}=\int z^k\,d\nu_j(z),\qquad
+B_j=\sum_{k=0}^m a_{j,k}^2,\qquad
+Q_j=Q_H(\nu_j)=\sum_{k\ge0}a_{j,k}^2.
+$$
+
+These are finite since $h<1$ and $\nu_j$ is finite. For
+$A_j\ge A_1$ and $A_j\ge m\log\Lambda$, (W58) gives
+$Q_{L_0}(\mu_j)\ge Q_j/2$.
+
+### Hermite interpolation controls integration without a density bound
+
+Here is the interpolation step used for the actual cross terms.
+For one of these measures, omit $j$ and let $f\in C^m([-h,h])$.
+For $r\ge1$, interpolate $f$ at the displayed roots, including
+their multiplicities. The Newton polynomial $P$ of degree at most
+$r-1$ has coefficient $\ell^1$ norm at most
+
+$$
+\|P\|_{\ell^1}
+\le\sum_{k=0}^{r-1}\frac{(1+h)^k}{k!}\|f\|_{C^m}
+\le e^{1+h}\|f\|_{C^m}.
+$$
+
+The same classical divided-difference integral formula already used in
+(W34)/(W54) writes $f=P+pg$, with a continuous remainder satisfying
+$\|g\|_\infty\le\|f^{(r)}\|_\infty/r!$.
+The sign contract gives
+$\int|p|\,d|\nu|=|\int p\,d\nu|$ exactly, while the coefficient
+norm of $p$ is at most $(1+h)^r$. Cauchy--Schwarz on the first
+$m+1$ moments therefore gives inside this application
+
+$$
+\left|\int f\,d\nu\right|
+\le C_h\|f\|_{C^m}\sqrt{B},\qquad C_h=2e^{1+h}.
+$$
+
+For $r=0$ the measure is one-signed and
+$\|\nu\|_{\rm TV}=|a_0|$, which gives the same bound directly.
+This argument does not divide by root separations. Signed atoms at
+roots enter through $P$ and the retained low moments.
+
+### Pay the complete cross form in the same moment metric
+
+Put $J(a)=L_0(a,a)$, as in (W52), and define
+
+$$
+c_A(z)=\cosh(u)\sqrt{M_A(u,u)},\qquad
+u=\operatorname{arctanh}z.
+$$
+
+The normalization in (W46) gives
+$c_A(z)=\sqrt{J(A+u)}d_A(u)$ exactly. On the fixed local complex
+neighborhood, (W46) gives $M_A(u,u)=1+O(A^{-1})$ uniformly.
+Its positive square root thus has uniformly bounded derivatives of
+every fixed order on the smaller real interval; this also follows
+directly by Cauchy estimates. These are bounds on the normalized
+factor, without separately bounding the large physical weights.
+
+For $i\ne j$, the exact transported cross kernel is
+
+$$
+T_{ij}(z,v)=c_{A_i}(z)c_{A_j}(v)
+ R(A_i+\operatorname{arctanh}z,
+   A_j+\operatorname{arctanh}v).
+$$
+
+For all physical positions beyond (W52)'s start at order $2m$, and
+hull gaps at least $8$, its mixed derivatives through order $m$ in
+each variable are bounded by
+$C_m(1+d_{ij})e^{-d_{ij}}$, where $d_{ij}=|A_i-A_j|$.
+The chain rule uses (W52) only through total order $2m$ and the
+uniform local normalizer bounds above. The bounded offsets cost a
+fixed factor depending on $h$, not on either center or their ratio.
+
+Apply the preceding interpolation estimate in each variable. Finite
+total variation justifies differentiation under the other integral.
+After absorbing $C_h^2$, this pays the complete actual cross form:
+
+$$
+\boxed{\begin{aligned}
+\left|\iint L_0(a,b)\,d\mu_i(a)d\mu_j(b)\right|
+&\le K_m(1+d_{ij})e^{-d_{ij}}\sqrt{B_iB_j}\\
+&\le K_m(1+d_{ij})e^{-d_{ij}}\sqrt{Q_iQ_j}.
+\end{aligned}}
+\tag{W59}
+$$
+
+All constants are independent of local measure mass, sample count,
+density, coefficient sizes, root multiplicities and root separations.
+The complete direct and reflected infinite integrals enter through the
+already paid actual derivative supplier (W52); no reference kernel or
+deleted reflected exterior replaces $L_0$ here.
+
+### One separation pays arbitrarily many interacting profiles
+
+Choose $D_m\ge8$ so large that, with $q=e^{-D_m}$,
+
+$$
+2K_m\left[\frac q{1-q}+\frac{D_mq}{(1-q)^2}\right]\le\frac14.
+$$
+
+Choose one $A_m^*$ covering (W58), $m\log\Lambda$, the local
+normalizer bounds and $A_m^*-w\ge A_{2m}$, where $A_{2m}$ is
+the physical start in (W52) at order $2m$.
+Require $A_j\ge A_m^*$ and consecutive hull gaps at least $D_m$.
+The $n$th next center is then at distance at least $nD_m$.
+Reuse (W54)'s same scalar row-sum estimate on (W59), spending the
+local $Q_j/2$ budget only once. It gives
+
+$$
+\boxed{Q_{L_0}\!\left(\sum_{j=1}^N\mu_j\right)
+\ge\frac14\sum_{j=1}^N Q_H(\nu_j)>0}
+\tag{W60}
+$$
+
+unless every $\mu_j$ is zero. Strictness uses exactly the compact
+moment uniqueness already used in (W58). The same $A_m^*,D_m$ work
+for every finite $N$ and every allowed local profile.
+
+This includes real smooth finite-sign profiles and arbitrarily dense
+real samples on arbitrarily many separated windows. Each window has
+bounded sign complexity, while the total sign complexity need not be
+bounded. The earlier complex-sample conclusion (W54), with its bound
+on local node count, remains a separate statement. No unrestricted
+complex-measure positivity, raw coefficient gap, uniformity in $m$,
+fixed-window all-order positivity, original strict Robin upper or RH
+proof follows. The positive metric is the exact transported Hardy
+moment form; the fixed small width and intervening gaps remain part
+of the hypotheses.
