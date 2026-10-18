@@ -191,7 +191,7 @@ compiled-judge-test:
 compiled-fib-test:
 	@/bin/bash tools/scripts/compiled-fib-test.sh
 
-.PHONY: search-reduction search-reduction-run search-reduction-test
+.PHONY: search-reduction search-reduction-run search-reduction-test search-reduction-replay-test
 # Requests are Lean commands; the shell only transports compiler invocations.
 search-reduction:
 	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands $(SEARCH_MODULES)"
@@ -205,3 +205,10 @@ search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(val
 
 search-reduction-test:
 	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.RealNegative"
+
+# Reexecute every probe and guard even when the compiled fixtures are current.
+search-reduction-replay-test:
+	@$(MAKE) search-reduction-test
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/Calibration.lean
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/Faults.lean
+	@$(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/RealNegative.lean

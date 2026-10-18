@@ -55,6 +55,8 @@ R 的加强仅可保留全部旧尝试并增加新尝试，旧尝试保持原预
 
 判定程序位于 `LeanInformationAuditRegAnalysis.SearchReduction`，入口为 `make search-reduction REQUESTS=<Lean声明清单> SEARCH_MODULES="<所需模块>"`。清单导入已编译目标、S 与基底的所有者模块及 `LeanInformationAuditRegAnalysis.SearchReduction.Commands`，逐条使用 `#search_reduction T at "<40位基线提交>" baseline [<基底模块>] using [<S声明>] as <结果名>`；`#search_reduction_config` 显示实际配置。`make search-reduction-test` 编译专属校准夹具。已构建且输入未变时，`make search-reduction-run REQUESTS=<同一清单>` 只执行复跑；复跑期间不并发重建其导入模块。
 
+`make search-reduction-replay-test` 先核对专属校准构建，再依次重新编译 `Calibration`、`Faults`、`RealNegative` 的源命令，完整重跑各探针与 Lean 守卫；不以缓存命中代替确定性复跑。
+
 每条请求生成独立 Lean 模块并在独立编译器进程中运行，文件位于 `.lake/build/search-reduction/`。搜索进程只静态导入 R 程序和登记基底，候选所有者用 `loadExts := false` 读取，不执行其初始化器。源环境只供恢复完整类型、编译值及公理依赖；搜索环境从 Mathlib 与登记基底重新导入，不合并交付环境的属性、实例或搜索索引。基底源码及依赖 pin 必须与登记提交一致，D5 基底成员须在该提交已有冻结状态片。源快照比较只核验基底来源，不是复用判据中的程序字节条件。
 
 生成模块包含 typed `Run` 观测、由模型中同一个 `classify` 计算的判词，以及成功时原任务的 kernel 复核证明。非 bind-only 模块还执行 `fail_if_success` 基底复跑；复跑故障留下编译错误，不能作为正常耗尽。该守卫是有限搜索的程序核验，不是 T 不可证明的数学定理。结构和各叶子策略分别使用独立默认心跳起点；允许不同叶子由不同注册策略闭合。完整证明重组后再次核验原陈述与标准公理闭包。
