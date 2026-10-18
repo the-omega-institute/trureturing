@@ -194,11 +194,12 @@ private lemma phase_invariance (ψ : Fin 4 → ℂ) (z : ℂ) (hz : star z * z =
     anticoherence (fun i => z * ψ i) = anticoherence ψ := by
   have hr : reducedState (fun i => z * ψ i) = reducedState ψ := by
     ext c d
+    simp only [reducedState.eq_1]
     apply Finset.sum_congr rfl
     intro a ha
     apply Finset.sum_congr rfl
     intro b hb
-    simp only [dicke, star_div₀, star_mul]
+    simp only [dicke.eq_1, star_div₀, star_mul]
     calc
       _ = (star z * z) *
           (ψ ⟨a.val + b.val + c.val, by omega⟩ /
@@ -277,7 +278,7 @@ private lemma compound_mul (U V : Matrix (Fin 4) (Fin 4) ℂ) :
 private lemma compound_star (U : Matrix (Fin 4) (Fin 4) ℂ) :
     compound Uᴴ = (compound U)ᴴ := by
   ext i j
-  simp only [compound, Matrix.conjTranspose_apply, star_sub, star_mul]
+  simp only [compound.eq_1, Matrix.conjTranspose_apply, star_sub, star_mul]
   ring
 
 private lemma compound_one : compound (1 : Matrix (Fin 4) (Fin 4) ℂ) = 1 := by
@@ -328,6 +329,7 @@ private lemma realBasis_identities :
     realBasisᵀ * complementForm * realBasis = 1 ∧
     (realBasisᴴ)ᵀ * realBasisᴴ = complementForm := by
   have hs : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  rw [complementForm.eq_1]
   refine ⟨?_, ?_, ?_⟩ <;> ext i j <;>
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     norm_num [realBasis, complementForm, Matrix.mul_apply, Fin.sum_univ_succ,
@@ -510,6 +512,7 @@ private lemma one_body_expansion (U H : Matrix (Fin 4) (Fin 4) ℂ)
       (Uᴴ * H * U) a d * (Uᴴ * U) b c -
       (Uᴴ * H * U) b c * (Uᴴ * U) a d +
       (Uᴴ * H * U) b d * (Uᴴ * U) a c := by
+  simp_rw [pair.eq_1]
   norm_num [liftSpin, pair, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Fin.sum_univ_succ, map_sub, map_mul]
   ring
@@ -518,6 +521,7 @@ private lemma compound_one_body (U H : Matrix (Fin 4) (Fin 4) ℂ)
     (hU : U ∈ Matrix.unitaryGroup (Fin 4) ℂ) :
     (compound U)ᴴ * liftSpin H * compound U = liftSpin (Uᴴ * H * U) := by
   ext i j
+  simp only [liftSpin.eq_1]
   have h := one_body_expansion U H (pair i).1 (pair i).2 (pair j).1 (pair j).2
   rw [show Uᴴ * U = 1 from hU.1] at h
   simp only [Matrix.one_apply] at h
@@ -572,7 +576,7 @@ private lemma generator_bridge (a : Fin 3) :
         Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq] <;>
       ring
   have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  rw [hL]
+  rw [hL, realBasis.eq_1]
   fin_cases a <;> ext i j <;> fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     norm_num [realBasis, generator, r, Matrix.mul_apply, Fin.sum_univ_succ,
       Complex.mul_re, Complex.mul_im, Complex.star_def, map_ofNat,
@@ -591,6 +595,7 @@ private lemma commutator_coordinates (v w : Fin 6 → ℝ) :
         v 3 * w 1 + Real.sqrt 3 * v 4 * w 2,
       2 * v 0 * w 1 - 2 * v 1 * w 0 + v 2 * w 3 - v 3 * w 2]
   have hg (a : Fin 3) : v ⬝ᵥ (generator a *ᵥ w) = g a := by
+    rw [generator.eq_1]
     fin_cases a <;>
       norm_num [generator, g, dotProduct, Matrix.mulVec, Fin.sum_univ_succ] <;> ring
   have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
@@ -599,6 +604,7 @@ private lemma commutator_coordinates (v w : Fin 6 → ℝ) :
       (!![0, -g 2 / 2, -g 1 / 2;
           g 2 / 2, 0, g 0 / 2;
           g 1 / 2, -g 0 / 2, 0]).map Complex.ofReal := by
+    simp_rw [shape.eq_1]
     ext i j
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
       norm_num [shape, g, Matrix.mul_apply, Fin.sum_univ_succ,
@@ -620,8 +626,9 @@ private lemma lift_pair_entry (A : Matrix (Fin 4) (Fin 4) ℂ)
     exact Real.sq_sqrt (by norm_num)
   have ht : A 0 0 + A 1 1 + A 2 2 + A 3 3 = 0 := by
     simpa [Matrix.trace, Fin.sum_univ_succ, add_assoc] using hA
+  rw [evenIndex.eq_1, oddIndex.eq_1]
   fin_cases k <;>
-    norm_num [realBasis, liftSpin, pair, evenIndex, oddIndex, Matrix.mul_apply,
+    norm_num [realBasis, liftSpin, pair, Matrix.mul_apply,
       Fin.sum_univ_succ, map_ofNat] <;>
     ring_nf <;> simp [h2, Complex.I_sq] <;>
     linear_combination -ht / 2
@@ -629,6 +636,9 @@ private lemma lift_pair_entry (A : Matrix (Fin 4) (Fin 4) ℂ)
 private lemma polarization_diagonal (U : Matrix (Fin 4) (Fin 4) ℂ)
     (a : Fin 3) (i : Fin 4) :
     polarization (fun j => U j i) a = ((Uᴴ * spinMatrix a * U) i i).re := by
+  simp only [polarization.eq_1, spinMatrix.eq_1,
+    D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jy.eq_1,
+    D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jz.eq_1]
   fin_cases a <;>
     simp [polarization, spinMatrix, Matrix.mul_apply, Matrix.mulVec, dotProduct,
       Fin.sum_univ_succ] <;> ring
@@ -660,7 +670,7 @@ private lemma polarization_pair (U : Matrix (Fin 4) (Fin 4) ℂ)
       _ = realBasisᴴ * ((compound U)ᴴ * ((-I : ℂ) • liftSpin (spinMatrix a)) *
           compound U) * realBasis := by
         rw [← generator_bridge]
-        simp only [transported, Matrix.conjTranspose_mul,
+        simp only [transported.eq_1, Matrix.conjTranspose_mul,
           Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
         simp only [← Matrix.mul_assoc realBasis realBasisᴴ, hBB, Matrix.one_mul]
       _ = _ := by
