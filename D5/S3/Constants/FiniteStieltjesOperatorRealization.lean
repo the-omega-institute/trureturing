@@ -123,7 +123,7 @@ private theorem diagonal_operator_power_apply {ι : Type*} [Fintype ι]
       rw [induction_hypothesis, pow_succ]
       ring
 
-private theorem diagonal_operator_nonnegative {ι : Type*} [Fintype ι]
+theorem diagonal_operator_nonnegative {ι : Type*} [Fintype ι]
     (node : ι -> Real) (node_nonnegative : forall i, 0 <= node i) :
     IsNonnegativeOperator (diagonalOperator node) := by
   intro vector
@@ -134,7 +134,7 @@ private theorem diagonal_operator_nonnegative {ι : Type*} [Fintype ι]
   change 0 <= (node i * vector i) * vector i
   nlinarith [node_nonnegative i, sq_nonneg (vector i)]
 
-private theorem moment_eq_operator_pairing {ι : Type*} [Fintype ι]
+theorem moment_eq_operator_pairing {ι : Type*} [Fintype ι]
     (node weight : ι -> Real) (weight_nonnegative : forall i, 0 <= weight i)
     (n : Nat) :
     finiteMoment node weight n =
