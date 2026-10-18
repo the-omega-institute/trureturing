@@ -109,7 +109,10 @@ internal sealed class StabilizerAutocorrelationNormRefutationDocument : IScribeD
                             + "Thus the squared operator norm of A(Fψ) is at least (993 + 19√5)/720, which exceeds 7/5. "
                             + "The two operator norms differ. Applying claim to ψ and F would equate them, proving its negation. "
                             + "In particular, the change of cyclic-difference labels cannot always be expressed by a single common column permutation."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("stacey-2025-autocorrelation-norm-clifford-invariance-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
