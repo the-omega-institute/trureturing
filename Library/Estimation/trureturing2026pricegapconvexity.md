@@ -9538,3 +9538,177 @@ for that head, favorable cofinal full window, all-integer Robin
 inequality or RH proof is supplied. This is a paper source application
 of existing density, coefficient and joint-height estimates, with no
 new density theorem, literature-priority claim or Lean verification.
+
+
+## A uniform near-one density input pays a lower high-frequency cut
+
+Keep JM1--JM7's original conditional source, its fixed
+$\Theta\in(1/2,1]$, $1-\Theta<\eta<1/2$, $d>0$ and
+$0<a<5\kappa/8$. Keep every full window, maximizing tie, positive
+outgoing weight, actual zero multiplicity and legal individual upper
+height. Write $M=M_X=X^{1/2-\eta}\log X$, $L=L_X$ and
+$b_X=\min_{i<m}B_i$. The original source already gives
+$\sqrt{b_X}/M\to\infty$, as used in BH1 and SIH4. Put
+
+$$
+\sigma_\circ=\frac{9999}{10000},\qquad
+H_{B,X}=\max\{51,\sqrt B/M\}.
+$$
+
+At one common source start, $H_{B,X}=\sqrt B/M\to\infty$
+uniformly over all original cores and is below every original legal
+upper height $\tau\asymp\sqrt B$. Define the actual complete-coefficient
+allowance
+
+$$
+\begin{aligned}
+r_X^{\rm edge}(B,\tau)
+&=2\!\sum_{\substack{H_{B,X}<\gamma\le\tau\\\beta\ge\sigma_\circ}}
+ m_\rho|c_{B,a}(\rho)|,\\
+\mathcal R_X^{\rm edge}
+&=\sum_{i<m}\delta_i r_X^{\rm edge}(B_i,\tau_i),\qquad
+c_{B,a}(\rho)=s_BF_B(\rho)-aB^{\rho-1/2}/\rho.
+\end{aligned}
+$$
+
+There is no fixed upper real-part endpoint below one and no
+half-isolation requirement.
+
+### Reuse Ford's uniform near-unity bound and the zero-free region
+
+Kevin Ford, *Vinogradov's integral and bounds for the Riemann zeta
+function*, [arXiv:1910.08209v1](https://arxiv.org/pdf/1910.08209v1),
+printed p.2, consequence (iii) of Theorem 1, records
+
+$$
+N(\sigma,T)\ll T^{58.05(1-\sigma)^{3/2}}\log^{15}T
+\qquad(9/10\le\sigma\le1).
+\tag{NE1}
+$$
+
+The source count uses $\sigma\le\Re\rho\le1$ and
+$|\Im\rho|\le T$, so it bounds the positive-height count used here,
+with multiplicities. This uniform estimate is distinct from
+HR1's finitely many fixed-$\sigma$ bounds with $T^\varepsilon$ loss.
+For $\sigma_\circ\le\sigma<1$,
+$58.05\sqrt{1-\sigma}\le0.5805<1$, hence the same input implies
+
+$$
+N(\sigma,T)\ll T^{1-\sigma}\log^{15}T
+\quad\text{uniformly for }\sigma_\circ\le\sigma<1.
+$$
+
+The standard dyadic reciprocal-height argument already used in DH3
+therefore gives, uniformly in that entire real-part interval,
+
+$$
+A(\sigma,H):=
+\sum_{\substack{\gamma>H\\\beta\ge\sigma}}
+ \frac{m_\rho}{\gamma}
+\ll H^{-\sigma}(\log H)^{15}
+\qquad(H\ge51).
+\tag{NE2}
+$$
+
+Indeed, the dyadic terms have ratios bounded away from one because
+$\sigma\ge\sigma_\circ>0$; their polynomial logarithmic factors
+have a common summable majorant. No moving $T^\varepsilon$ loss or
+moving implicit constant is introduced.
+
+The same primary, printed pp.1--2, records the classical
+Vinogradov--Korobov zero-free region
+$1-\beta\gg(\log\gamma)^{-2/3}(\log\log\gamma)^{-1/3}$
+for $\gamma\ge3$, with an absolute positive constant. Since the
+actual mask has $51<\gamma\le\tau<\sqrt B$, all its actual zeros
+satisfy, after decreasing a fixed positive constant if necessary,
+
+$$
+\beta\le1-\nu_B,\qquad
+\nu_B=\frac{c_0}{(\log B)^{2/3}(\log\log B)^{1/3}}.
+\tag{NE3}
+$$
+
+These analytic results remain external inputs; their proofs are not
+reproved or Lean-certified here. In particular NE3 is a cap only on
+the finite actual mask. It is not imposed on the zeros above $\tau$
+when NE2 is used as a positive upper bound.
+
+### Bound the actual finite layer integral before summing windows
+
+Reuse DH3's full-coefficient estimate
+$|c_{B,a}(\rho)|\le(a+2)B^{\beta-1/2}/\gamma$ for $\gamma\ge1$.
+If $1-\nu_B<\sigma_\circ$, the selected class is empty.
+Otherwise the positive layer identity for $B^{\beta-1/2}$ gives
+
+$$
+\begin{aligned}
+r_X^{\rm edge}(B,\tau)\ll_a{}&
+ B^{\sigma_\circ-1/2}A(\sigma_\circ,H_{B,X})\\
+ &+\log B\int_{\sigma_\circ}^{1-\nu_B}
+       B^{\sigma-1/2}A(\sigma,H_{B,X})\,d\sigma.
+\end{aligned}
+\tag{NE4}
+$$
+
+Every reciprocal-height tail on the right is an upper bound for the
+same finite masked layer. Their extension to infinite heights is
+used only for that positive upper estimate. For
+$\sigma_\circ\le\sigma\le1-\nu_B$, NE2 and
+$H_{B,X}=\sqrt B/M$ give
+
+$$
+\begin{aligned}
+B^{\sigma-1/2}H_{B,X}^{-\sigma}
+&=M^{\sigma}B^{-(1-\sigma)/2}\\
+&\le M\exp[-\nu_B\log B/2],
+\qquad \log H_{B,X}\le\tfrac12\log B.
+\end{aligned}
+$$
+
+Consequently
+
+$$
+\boxed{r_X^{\rm edge}(B,\tau)
+\ll_a M(\log B)^{16}
+ \exp\!\left[-\frac{c_0}{2}
+      \left(\frac{\log B}{\log\log B}\right)^{1/3}\right].}
+\tag{NE5}
+$$
+
+The function multiplying $M$ tends to zero as $B\to\infty$.
+Since all original cores satisfy $B_i\ge b_X\to\infty$ and
+$\sum_i\delta_i=L$, NE5 proves the uniform absolute allowance
+
+$$
+\boxed{\mathcal R_X^{\rm edge}=o(M_XL_X).}
+\tag{NE6}
+$$
+
+All constants and source starts retain the original fixed parameters;
+no uniformity as $\eta\downarrow0$ is asserted. No upper clock ceiling,
+restriction $\Theta<1$, or reselection of the supplied $\eta$ is used.
+Thus the estimate includes the original $\Theta=1$ case.
+
+BH1's already paid auxiliary interval starts at
+$T^0_{B,X}=\sqrt B\,\mathsf Y_X^2/M$, with
+$\mathsf Y_X\to\infty$. Here
+$H_{B,X}/T^0_{B,X}=\mathsf Y_X^{-2}\to0$ uniformly.
+NE6 therefore also controls the stated near-one class below those
+auxiliary cuts. This cut is only a mask for an absolute estimate;
+no new CHJ explicit formula or height-admissibility claim is made.
+It extends HR3's compact-band control to real parts approaching one,
+with its own stated lower cut.
+
+Deleting exactly this actual class changes the original weighted real
+head by $o(M_XL_X)$. HC2 and JM7 then retain its original lower margin,
+up to an arbitrarily small fixed loss, on every original full window,
+tie and admissible height assignment. If it is combined with LHA3,
+use disjoint deletion masks: retain only $\beta>1-\eta$ in this
+additional deletion, so overlaps are not paid twice. The resulting
+remaining head has $\beta>1-\eta$ and either
+$\beta<\sigma_\circ$ or $\gamma\le H_{B,X}$.
+Every fixed actual zero still eventually lies below $H_{B,X}$.
+No signed upper bound for that remaining head, favorable cofinal
+window, full Robin inequality or RH proof is supplied. This is an
+application of classical density and zero-free inputs to the same
+source, without a new density theorem or literature-priority claim.
