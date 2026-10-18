@@ -3092,3 +3092,218 @@ $m\to\infty$, nor a raw coefficient-norm lower bound, is asserted.
 The arbitrary-density real-profile class of (W60) still has its own
 sufficiently large gap. Fixed-window all-order positivity, the original
 strict all-integer Robin upper and RH remain unproved.
+
+
+## Geometric windows allow linearly growing local sign counts
+
+The local degree need not have one fixed upper bound across all windows
+if their centers grow geometrically. Keep the complete actual $L_0$ and
+the exact physical-to-Hardy transport in (W58)--(W60). Choose once
+their fixed small complex neighborhoods with the strip clearance in
+(W46)--(W47); the resulting $h,\Lambda$ and
+$w=\operatorname{arctanh}h$ are fixed independently of all degrees.
+For any fixed $q_{\rm geo}>1$, put
+
+$$
+\tau=\frac{q_{\rm geo}-1}{q_{\rm geo}+1},\qquad
+\kappa=\frac{\tau}{\log\Lambda}>0.
+$$
+
+One start $A_*$ works for every finite family of real signed profiles
+on $[A_j-w,A_j+w]$ with $A_1\ge A_*$,
+$A_{j+1}\ge q_{\rm geo}A_j$ and local separator degree at most
+$\lfloor\kappa A_j\rfloor$. The conclusion below pays all their
+interactions. This complements (W60), whose same local degree cap is
+fixed across the family, and (W61), whose prescribed fixed gap retains
+a local node cap. It is a `repo-derived` paper application without a
+literature-priority or Lean-verification claim.
+
+### A fixed complex neighborhood controls the full separated kernel
+
+There are fixed $r,A_0,D_0,C>0$ such that the actual normalized
+continuation satisfies
+
+$$
+\boxed{\sup_{|u|,|v|\le r}|R(A+u,B+v)|
+ \le C(1+|A-B|)e^{-|A-B|}
+\quad(A,B\ge A_0,\ |A-B|\ge D_0).}
+\tag{W62}
+$$
+
+Here $A,B$ are real, the offsets are complex, and diagonal square roots
+continue their positive-real values. This is not obtained by assuming
+uniformity over the derivative orders in (W52).
+
+To prove it, take $B\ge A+D_0$, $a=A+u$, $b=B+v$ and use (W52)'s
+exact forward expression
+
+$$
+\begin{aligned}
+\mathcal U(a,b)&=\frac{L_0(a,b)}{\Phi(a)\Phi(b)}\\
+ &=\frac14\int_0^\infty
+ [(a+b+2t)e^{F_+}-(b-a+2t)e^{F_-}]\,dt,\\
+F_+&=g(a+t)-g(a)+g(b+t)-g(b),\\
+F_-&=g(a-t)-g(a)+g(b+t)-g(b).
+\end{aligned}
+$$
+
+The even holomorphic logarithm $g$ and its right-tail derivative in
+(W47) give $\Re g'(s+iy)\le-ce^{2s}$ for $s\ge T$, uniformly
+on a smaller closed strip. Oddness of $g'$ gives
+$-\Re g'(s+iy)\le0$ for $s\le-T$ after increasing $T$; the
+remaining compact strip is bounded. Consequently, for high $A$,
+
+$$
+-\Re g'(s+iy)\le C_1e^{2A}
+\qquad(s\le A+r,\ |y|\le r).
+$$
+
+Horizontal integration bounds
+$\Re[g(a-t)-g(a)]\le C_1e^{2A}t$ and
+$\Re[g(b+t)-g(b)]\le-c_1e^{2B}t$ for every $t\ge0$.
+Choose $D_0$ with $C_1e^{-2D_0}\le c_1/2$.
+Then $\Re F_-\le-(c_1/2)e^{2B}t$ on the entire half-line,
+including $\Re(a-t)<0$. The two right-tail increments in $F_+$
+give the same or stronger bound. Hence these complex forward integrals
+are locally uniformly convergent and
+
+$$
+|\mathcal U(a,b)|\le C_2(A+B+1)e^{-2B}.
+$$
+
+Iterated identity theorems identify the formula with the already owned
+continuation, because it agrees on positive real positions. No reflected
+exterior or theta term has been deleted.
+
+For normalization, write $z=A+u$ and reuse the exact diagonal identity
+
+$$
+d_*(z)=\frac{e^{2z}J(z)}{z\Phi(z)^2}
+ =\frac{A}{8\pi z}M_A(u,u).
+$$
+
+By (W46), $M_A(u,u)=1+O(A^{-1})$ on the fixed disc, so $d_*$
+is close to $1/(8\pi)$ there. Its positive-real square-root branch
+is holomorphic and consistent on overlapping high discs. Therefore
+
+$$
+\mathcal N(z)=\frac{\Phi(z)}{\sqrt{J(z)}}
+ =\frac{e^z}{\sqrt z\sqrt{d_*(z)}},\qquad
+|\mathcal N(A+u)|\le C_3e^A/\sqrt A.
+$$
+
+Since $R(a,b)=\mathcal N(a)\mathcal N(b)\mathcal U(a,b)$,
+its modulus is at most
+$C(A+B+1)e^{A-B}/\sqrt{AB}$.
+For $A\ge1$, $(A+B+1)/\sqrt{AB}\le3+B-A$.
+Symmetry covers $A\ge B+D_0$ and proves (W62).
+
+### Pay different local degrees in the original Hardy metric
+
+Write $\varrho$ for the fixed complex Hardy-disc radius denoted $R$
+in (W55), with $h=\varrho/4$ and $q_0=2/\varrho$.
+Its $\operatorname{arctanh}$ image lies in (W62)'s offset disc.
+For each finite real physical measure $\mu_j$, let $\nu_j$ be its
+exact positive transport from (W58). Require
+
+$$
+\epsilon_jp_j\nu_j\ge0,\qquad
+p_j(z)=\prod_{l=1}^{r_j}(z-s_{j,l}),\qquad
+s_{j,l}\in[-h,h],\quad \epsilon_j\in\{-1,1\}.
+$$
+
+Include $r_j=0$; repeated roots and atoms at roots are allowed.
+Put $a_{j,k}=\int z^k\,d\nu_j(z)$ and
+$Q_j=Q_H(\nu_j)=\sum_{k\ge0}a_{j,k}^2$.
+The exact normalizer from (W59),
+
+$$
+c_A(z)=\cosh(u)\sqrt{M_A(u,u)}
+ =\sqrt{J(A+u)}d_A(u),\qquad u=\operatorname{arctanh}z,
+$$
+
+is holomorphic and uniformly bounded on this fixed disc by (W46).
+Thus (W62) bounds the complete transported cross kernel
+
+$$
+c_{A_i}(z)c_{A_j}(v)
+R(A_i+\operatorname{arctanh}z,A_j+\operatorname{arctanh}v)
+$$
+
+on the bidisc by $C_4(1+d_{ij})e^{-d_{ij}}$,
+$d_{ij}=|A_i-A_j|\ge D_0$. Its Cauchy coefficients are bounded
+by this number times $\varrho^{-k-l}$.
+The sign-polynomial radius comparison already proved before (W55)
+and Cauchy--Schwarz give
+
+$$
+\sum_{k\ge0}\varrho^{-k}|a_{j,k}|
+ \le\sqrt{4/3}\left(\sum_{k\ge0}q_0^{2k}a_{j,k}^2\right)^{1/2}
+ \le2\sqrt3\,\Lambda^{r_j/2}\sqrt{Q_j}.
+$$
+
+The cross series is absolutely convergent on the supports, so finite
+total variation justifies its integration. With $K=12C_4$, independent
+of all degrees and centers, the full physical bilinear form satisfies
+
+$$
+\boxed{|B_{L_0}(\mu_i,\mu_j)|
+ \le K(1+d_{ij})e^{-d_{ij}}
+ \Lambda^{(r_i+r_j)/2}\sqrt{Q_iQ_j}.}
+\tag{W63}
+$$
+
+No root separation, local density, derivative factorial or total-
+variation substitute enters this constant. The metric is the same
+$Q_j$ that pays the actual local positive form.
+
+### Geometric spacing absorbs linearly growing sign counts
+
+For $i<j$, the center condition gives
+$d_{ij}\ge\tau(A_i+A_j)$. If
+$r_j\le\lfloor\kappa A_j\rfloor$, then
+$\Lambda^{(r_i+r_j)/2}\le e^{d_{ij}/2}$.
+Thus (W63) costs at most
+$K(1+d_{ij})e^{-d_{ij}/2}\sqrt{Q_iQ_j}$.
+
+Choose $A_*\ge\max(A_0,A_1)$, covering the starts in (W62) and
+(W58), and so large that, with $D=(q_{\rm geo}-1)A_*$ and $q_D=e^{-D/2}$,
+
+$$
+D\ge\max(D_0,1,2w+1),\qquad
+2K\left[\frac{q_D}{1-q_D}
+ +\frac{Dq_D}{(1-q_D)^2}\right]\le\frac14.
+$$
+
+Every successive center gap is at least $D$, so the $n$th next center
+on either side has distance at least $nD$.
+The function $(1+d)e^{-d/2}$ decreases for $d\ge1$; hence the
+display bounds the entire cross row sum independently of the number
+of windows. Also $\kappa\le1/\log\Lambda$, so (W58) supplies
+each local credit $Q_{L_0}(\mu_j)\ge Q_j/2$.
+The same symmetric row estimate as in (W60) pays all interactions and
+leaves
+
+$$
+\boxed{Q_{L_0}\!\left(\sum_{j=1}^N\mu_j\right)
+ \ge\frac14\sum_{j=1}^NQ_H(\nu_j)>0}
+\tag{W64}
+$$
+
+unless all profiles vanish. Strictness uses the same compact moment
+uniqueness as (W58). This one $A_*$ and the one slope $\kappa$ work
+for every finite $N$, arbitrary local sample counts and densities, and
+the displayed different local degrees. They do not depend on the
+maximum degree in the family. In particular, the permitted local sign
+counts can be unbounded along the geometric windows.
+
+Taking $q_{\rm geo}=\varphi^3$ gives $\tau=\varphi^{-1}$ and
+$\kappa=1/(\varphi\log\Lambda)$. This specifies an allowed
+spacing of physical windows; it supplies no identification with all
+prime configurations or Robin integers. The growing complexity is
+paid by growing gaps. Arbitrary-density small-gap positivity,
+unrestricted complex-measure positivity and all-order positivity on
+one fixed window remain unproved, as do the original strict Robin
+upper and RH. This is not a diagonal choice of fixed-degree thresholds:
+the additional actual input is (W62), whose fixed complex neighborhood
+pays the explicit degree factors in (W63).
