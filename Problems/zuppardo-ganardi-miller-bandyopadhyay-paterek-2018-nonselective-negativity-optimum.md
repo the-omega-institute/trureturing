@@ -52,19 +52,21 @@ The theorem would not settle the question if the module's measurement differed f
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Entanglement/NonselectiveNegativityGainOptimum.lean` (414 lines).
+The canonical source is `D5/S3/Quantum/Entanglement/NonselectiveNegativityGainOptimum.lean` (412 lines).
 - **Definitions.** It defines `measured` and `claim`, and proves `result : claim`.
 - **Reuse.** It reuses:
   - the rank-one density of `PureStateHandshake`;
   - the negativity of `NegativityReductionInclusionRefutation`;
   - the trace-norm lemmas of `FiniteTraceDistance`;
-  - the trace-norm/Hilbert–Schmidt bound `traceNorm_mul_le_hsSq` of `TavakoliMorelliIncompleteEAM`. This owner is made public at that theorem by removing `private`, and is re-pinned.
+  - the trace-norm/Hilbert–Schmidt bound `traceNorm_mul_le_hsSq` of `TavakoliMorelliIncompleteEAM`. This owner is made public at that theorem by removing `private`, and is re-pinned;
+  - the partial-transpose covariance `partialTransposeB_kronecker_conj` of `KickedIsingNegativityRefutation`, extracted there from a local fact of its `result` with the same statement and proof, and re-pinned.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
-- **Escape registrations** (both `declared_validated`):
+- **Escape registrations** (all `declared_validated`):
   - `Reg/D5/S3/Quantum/Entanglement/NonselectiveNegativityGainOptimum.lean` (`result`);
-  - `Reg/D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM.lean` (`traceNorm_mul_le_hsSq`).
+  - `Reg/D5/S3/Quantum/Entanglement/TavakoliMorelliIncompleteEAM.lean` (`traceNorm_mul_le_hsSq`);
+  - `Reg/D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.lean` (`partialTransposeB_kronecker_conj`).
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/NonselectiveNegativityGainOptimum.lean.json`, statement `sha256:03ab0cd99fd717e1a280cd11f1e8bb453d3ad502f5f19fe289723158d2c50f69`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/NonselectiveNegativityGainOptimum.lean.json`, statement `sha256:8a8a0bbee91a0db7c470231dd2a8e0a8fbf4d1ea632a6352cba3ac9d6adbe5da`.
 
 Declaration statements:
 - `result`: `sha256:d15d2b1b270580c6f761f92e449227bdbf9887f85aee1a3b3356367b6acd50e6`;

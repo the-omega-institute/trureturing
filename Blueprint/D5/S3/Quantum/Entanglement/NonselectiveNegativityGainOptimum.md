@@ -30,7 +30,7 @@ $$(claim) \Leftrightarrow (\forall (\psi: ((\operatorname{Fin}\left(2\right) \ti
 
 *Commentary.*
 
-For every unit two-qubit vector ψ, every unitary U satisfies N(measured(U, ψψ†)) ≤ N(ψψ†)/2 + 1/4, and some unitary U attains equality. Here N denotes the negativity defined above. Section II.E obtains this value within the family of measurement bases in Eq. (28), through Eq. (33), and asks whether it is optimal over all measurement bases. The two clauses state that global bound and its attainment.
+For every unit two-qubit vector ψ, every unitary U satisfies N(measured(U, ψψ†)) ≤ N(ψψ†)/2 + 1/4, and some unitary U attains equality. Here N denotes the negativity defined above. Section I.E obtains this value within the family of measurement bases in Eq. (28), through Eq. (33), and asks whether it is optimal over all measurement bases. The two clauses state that global bound and its attainment.
 
 **Theorem 1.3 (The sharp bound and an attaining measurement).**
 
@@ -52,7 +52,7 @@ Let ρ = ψψ† for a unit vector and let σ = measured(U, ρ) = Σ_j p_j P_j, 
 
 Partial transposition permutes the matrix entries, so it preserves the Frobenius norm. In dimension four the Hilbert–Schmidt Hölder inequality gives ‖Y‖₁ ≤ 2‖Y‖_F, hence ‖X^Γ‖₁ ≤ 2. The triangle inequality applied to 2σ^Γ = ρ^Γ + X^Γ yields 2‖σ^Γ‖₁ ≤ ‖ρ^Γ‖₁ + 2. Substitution into the definition of negativity gives N(σ) ≤ N(ρ)/2 + 1/4.
 
-For attainment, the Schmidt decomposition gives local coordinates ψ₀ = a|00⟩ + b|11⟩ with a, b nonnegative and a² + b² = 1. A real orthogonal measurement basis in the span of |00⟩ and |11⟩, completed by |01⟩ and |10⟩, gives the half-pure, half-Bell state σ₀ = (ψ₀ψ₀† + ΦΦ†)/2, where Φ = (|00⟩ + |11⟩)/√2. Its partially transposed eigenvalues are a²/2 + 1/4, b²/2 + 1/4, ab/2 + 1/4, and −(ab/2 + 1/4). Consequently N(σ₀) = ab/2 + 1/4 = N(ψ₀ψ₀†)/2 + 1/4. Local unitaries transport this measurement back to ψ and preserve negativity. This attaining state is the construction of Theorem 3; together with the bound it establishes the global optimality asked in Section II.E.
+For attainment, the Schmidt decomposition gives local coordinates ψ₀ = a|00⟩ + b|11⟩ with a, b nonnegative and a² + b² = 1. A real orthogonal measurement basis in the span of |00⟩ and |11⟩, completed by |01⟩ and |10⟩, gives the half-pure, half-Bell state σ₀ = (ψ₀ψ₀† + ΦΦ†)/2, where Φ = (|00⟩ + |11⟩)/√2. Its partially transposed eigenvalues are a²/2 + 1/4, b²/2 + 1/4, ab/2 + 1/4, and −(ab/2 + 1/4). Consequently N(σ₀) = ab/2 + 1/4 = N(ψ₀ψ₀†)/2 + 1/4. Local unitaries transport this measurement back to ψ and preserve negativity. This attaining state is the construction of Theorem 3; together with the bound it establishes the global optimality asked in Section I.E.
 
 ## References
 
