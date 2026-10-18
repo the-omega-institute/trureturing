@@ -1,4 +1,4 @@
-import D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciLiteralSource
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout

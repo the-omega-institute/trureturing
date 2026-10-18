@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Coding/FibonacciLiteralSource
+/- GID: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciLiteralSource
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciLiteralSource
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciLiteralSource
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
