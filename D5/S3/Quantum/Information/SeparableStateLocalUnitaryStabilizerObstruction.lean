@@ -48,12 +48,14 @@ D5/S3/Quantum/FiniteDimensional.qubitZ
   sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
 -/
 
+import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Information.SignedPauliSumNormRefutation
 import D5.S3.Quantum.Magic.WignerDistanceMinimum
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
+import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 open Matrix
 open D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry (productVector)
 open scoped ComplexOrder Kronecker BigOperators
@@ -279,7 +281,7 @@ private theorem joint_idempotent (P Q : (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2
   simp only [smul_mul_smul, smul_smul, Matrix.add_mul, Matrix.mul_add,
     Matrix.one_mul, Matrix.mul_one, hP,hQ,← hc,hPPP,hPQQ,hQPQ,hPPQ,hPQPQ]
   module
-private theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
+theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
   cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two]
 private theorem pauli_hermitian (p : Pauli) : (pauliMatrix p)ᴴ=pauliMatrix p := by
@@ -378,17 +380,8 @@ private theorem PauliProductProjector_vector {ψ : (Fin 2 × Fin 2 → ℂ)} (hn
   exact ⟨z • eigenVector p (if ep then 1 else 0),eigenVector q (if eq then 1 else 0),
     by rw [tensor_smul_left];exact hz⟩
 private theorem quadratic_projector {n : Type*} [Fintype n] (z ψ : n → ℂ) : star z ⬝ᵥ (rankOneDensity ψ *ᵥ z) = (Complex.normSq (star z ⬝ᵥ ψ) : ℂ) := by
-  simp only [rankOneDensity,Matrix.mulVec,dotProduct,Matrix.vecMulVec_apply,Pi.star_apply]
-  rw [← Complex.mul_conj]
-  simp only [map_sum,map_mul]
-  rw [Finset.sum_mul]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [Finset.mul_sum, Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro j hj
-  simp only [← Complex.star_def, star_star]
-  ring
+  simpa only [rankOneDensity] using
+    D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.BlockSpectral.rankOneQuadratic z ψ
 theorem ensemble_kernel {n ι : Type*} [Fintype n] [Fintype ι] (ψ : ι → n → ℂ) (w : ι → ℝ) (hw : ∀ i,0 ≤ w i) (z : n → ℂ) (hzero : star z ⬝ᵥ ((∑ i,w i • rankOneDensity (ψ i)) *ᵥ z)=0) : ∀ i,0 < w i → star z ⬝ᵥ ψ i = 0 := by
   have he : ∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i)=0 := by
     have hC : ((∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i) : ℝ) : ℂ)=0 := by
@@ -502,7 +495,7 @@ private theorem unit_projector_ray {n : Type*} [Fintype n] {ψ χ : n → ℂ} (
     rw [hz,unitVector,unitVector_smul,hχ,mul_one] at hψ
     exact hψ
   rw [hz,projector_smul,hn,one_smul]
-private theorem pauli_projector_trace (p : Pauli) (hp : p ≠ .I) (ep : Bool) : (spectral p (if ep then 1 else 0)).trace=1 := by
+theorem pauli_projector_trace (p : Pauli) (hp : p ≠ .I) (ep : Bool) : (spectral p (if ep then 1 else 0)).trace=1 := by
   cases p <;> cases ep <;>
     norm_num [spectral,pauliMatrix,qubitX,qubitZ,Matrix.trace,Matrix.diag,
       Matrix.mul_apply,Fin.sum_univ_two] at *
@@ -515,18 +508,6 @@ private theorem product_marginal (a b : (Fin 2 → ℂ)) (hb : unitVector b) : p
   rw [projector_tensor]
   change partialTraceRight (Matrix.kronecker (rankOneDensity a) (rankOneDensity b))=_
   rw [partialTraceRight_kronecker,trace_projector,hb,one_smul]
-private theorem trace_projector_overlap {n : Type*} [Fintype n] (a b : n → ℂ) : (rankOneDensity a * rankOneDensity b).trace=(Complex.normSq (star a ⬝ᵥ b) : ℂ) := by
-  simp only [Matrix.trace,Matrix.diag,Matrix.mul_apply,rankOneDensity,
-    Matrix.vecMulVec_apply,Pi.star_apply]
-  rw [Complex.normSq_eq_conj_mul_self]
-  simp only [dotProduct,Pi.star_apply,map_sum,map_mul,← Complex.star_def,star_star,
-    Finset.sum_mul,Finset.mul_sum]
-  conv_rhs => rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro i hi
-  apply Finset.sum_congr rfl
-  intro j hj
-  ring
 private theorem unitary_unit (A : Matrix.unitaryGroup (Fin 2) ℂ) {a : (Fin 2 → ℂ)} (ha : unitVector a) : unitVector ((A : (Matrix (Fin 2) (Fin 2) ℂ))*ᵥ a) := by
   unfold unitVector at *
   rw [unitary_preserves_overlap _ (Matrix.mem_unitaryGroup_iff'.mp A.property)]
@@ -535,6 +516,18 @@ private theorem local_product_projector (UA UB : Matrix.unitaryGroup (Fin 2) ℂ
   rw [localAction,D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.unitaryEvolution,
     Matrix.star_eq_conjTranspose,← projector_conjugation,localMatrix,kronecker_mul_tensor]
 private theorem local_pauli_overlap {c s : ℝ} (hcs : c^2+s^2=1) (UA UB : Matrix.unitaryGroup (Fin 2) ℂ) (hu : PauliProductProjector (localAction UA UB (rankOneDensity (productVector ![1, 0] ![1, 0])))) (hv : PauliProductProjector (localAction UA UB (rankOneDensity (productVector (b c s) (b c s))))) : c^2=0 ∨ c^2=1/2 ∨ c^2=1 := by
+  let toKet (v : Fin 2 → ℂ) (hv : unitVector v) : Ket (Fin 2) := ⟨v, by
+    have h := congrArg Complex.re hv
+    simpa only [unitVector, dotProduct, Pi.star_apply, Complex.star_def,
+      ← Complex.normSq_eq_conj_mul_self, Complex.re_sum, Complex.ofReal_re,
+      Complex.one_re, Complex.normSq_eq_norm_sq] using h⟩
+  have hOverlap (a b : Fin 2 → ℂ) (ha : unitVector a) (hb : unitVector b) :
+      (rankOneDensity a * rankOneDensity b).trace =
+        (Complex.normSq (star a ⬝ᵥ b) : ℂ) := by
+    simpa only [D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj_eq_outer,
+      toKet, rankOneDensity, Complex.normSq_eq_norm_sq] using
+      D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj_overlap
+        (toKet a ha) (toKet b hb)
   obtain ⟨pa,hpa,ep,he⟩ := pauli_product_marginal hu
   obtain ⟨pb,hpb,eq,hf⟩ := pauli_product_marginal hv
   have hspectrum := pauli_overlap_spectrum pa pb hpa hpb ep eq
@@ -542,7 +535,8 @@ private theorem local_pauli_overlap {c s : ℝ} (hcs : c^2+s^2=1) (UA UB : Matri
   rw [show (productVector ![1, 0] ![1, 0])=productVector ![1, 0] ![1, 0] from rfl,show productVector (b c s) (b c s)=productVector (b c s) (b c s) from rfl,
     local_product_projector,local_product_projector,
     product_marginal _ _ (unitary_unit UB unit_e0),
-    product_marginal _ _ (unitary_unit UB (unit_b hcs)),trace_projector_overlap,
+    product_marginal _ _ (unitary_unit UB (unit_b hcs)),
+    hOverlap _ _ (unitary_unit UA unit_e0) (unitary_unit UA (unit_b hcs)),
     unitary_preserves_overlap _ (Matrix.mem_unitaryGroup_iff'.mp UA.property)] at hspectrum
   have ho : star ![1, 0] ⬝ᵥ b c s=(c : ℂ) := by
     simp [b,dotProduct,Fin.sum_univ_two]
@@ -962,7 +956,5 @@ theorem result : claim := by
   refine ⟨rho (1/2) (3/5) (4/5),?_⟩
   apply family_result
   norm_num [FamilyParameters]
-#print axioms family_result
-#print axioms result
 end
 end D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction

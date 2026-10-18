@@ -61,7 +61,7 @@ private theorem basis_dot : star basis ⬝ᵥ basis = (1 : ℂ) := by
   classical
   simp [basis, dotProduct, Pi.single_apply]
 
-private theorem norm_of_dot_eq_one {I : Type} [Fintype I] (v : I → ℂ)
+theorem norm_of_dot_eq_one {I : Type} [Fintype I] (v : I → ℂ)
     (hv : star v ⬝ᵥ v = (1 : ℂ)) : ∑ i, ‖v i‖ ^ 2 = (1 : ℝ) := by
   have h := congrArg Complex.re hv
   rw [dotProduct, Complex.re_sum] at h
@@ -74,7 +74,7 @@ private theorem norm_of_dot_eq_one {I : Type} [Fintype I] (v : I → ℂ)
         Complex.ofReal_re]
     _ = 1 := h
 
-private theorem separableCone_partialTranspose_posSemidef {m n : ℕ}
+theorem separableCone_partialTranspose_posSemidef {m n : ℕ}
     {W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ}
     (hW : separableCone W) : (partialTranspose W).PosSemidef := by
   rcases hW with ⟨k, A, B, hAB, rfl⟩

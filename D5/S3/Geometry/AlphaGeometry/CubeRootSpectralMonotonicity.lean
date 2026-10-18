@@ -488,7 +488,7 @@ theorem lambdaRatio_perm {n : ℕ} (l : Fin n → ℝ) (p : Equiv.Perm (Fin n)) 
   have hsum (k : ℕ) : (∑ i, (l (p i)^(1/3 : ℝ))^k) = ∑ i, (l i^(1/3 : ℝ))^k := Equiv.sum_comp p (fun i => (l i^(1/3 : ℝ))^k)
   rw [hsum 1, hsum 2, hsum 4, hsum 5, hsum 6]
 
-private def pairLine {n : ℕ} (l : Fin n → ℝ) (i j : Fin n) (t : ℝ) : Fin n → ℝ :=
+def pairLine {n : ℕ} (l : Fin n → ℝ) (i j : Fin n) (t : ℝ) : Fin n → ℝ :=
   l + t • (Pi.single j 1-Pi.single i 1)
 
 private theorem pairLine_reindex {m : ℕ} (l : Fin (m+2) → ℝ) (i j : Fin (m+2)) (hij : i ≠ j)
@@ -511,7 +511,7 @@ private theorem pairLine_reindex {m : ℕ} (l : Fin (m+2) → ℝ) (i j : Fin (m
         sub_eq_add_neg]
       simpa only [one_div] using (cube_cubeRoot _ (hl _).le).symm
 
-private theorem mixPair_eq_pairLine {n : ℕ} (l : Fin n → ℝ) (i j : Fin n) (hij : i ≠ j) (t : ℝ) :
+theorem mixPair_eq_pairLine {n : ℕ} (l : Fin n → ℝ) (i j : Fin n) (hij : i ≠ j) (t : ℝ) :
     ((1-t) • l+t • (l ∘ Equiv.swap i j)) = pairLine l i j (t*(l i-l j)) := by
   ext k
   by_cases hki : k=i

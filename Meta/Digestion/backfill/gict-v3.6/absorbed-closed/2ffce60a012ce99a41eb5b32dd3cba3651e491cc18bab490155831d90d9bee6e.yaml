@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2ffce60a012ce99a41eb5b32dd3cba3651e491cc18bab490155831d90d9bee6e
-  normalized_sha256: sha256:2ffce60a012ce99a41eb5b32dd3cba3651e491cc18bab490155831d90d9bee6e
-cas_ref: sha256:2ffce60a012ce99a41eb5b32dd3cba3651e491cc18bab490155831d90d9bee6e
-coverage_gids:
-  - gid: D5/S3/DivergenceSupport/Garbling/DeterministicGarbling.deterministic_forgetting_kl_loss_nonnegative
-    target_statement_id: sha256:4025db8a1fbf462751f2df1202cc19e24ab1ebed33b0746c9397dac9c3307d40
-receipts:
-  unresolved_subitems: []

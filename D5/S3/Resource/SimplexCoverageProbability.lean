@@ -9,6 +9,9 @@
 import D5.S3.Resource.SimplexCoverageWords
 import D5.S3.Resource.MinimumRetrievalTime
 
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -63,13 +66,14 @@ theorem uniformSamples_recovered_top {K V Index : Type*}
     rw [cylinder_eq, uniformSamples, Measure.infinitePi_pi]
     · calc
         (∏ draw ∈ Finset.range time,
-          (PMF.uniformOfFintype Index).toMeasure (coordinates draw)) =
+          (uniformPmf Index).toMeasure (coordinates draw)) =
             ∏ _ ∈ Finset.range time, (Fintype.card Index : ℝ≥0∞)⁻¹ := by
           apply Finset.prod_congr rfl
           intro draw membership
           have bound := Finset.mem_range.mp membership
           simp only [coordinates, dif_pos bound]
-          rw [PMF.toMeasure_uniformOfFintype_apply _ (measurableSet_singleton _)]
+          rw [PMF.toMeasure_apply_eq_toOuterMeasure_apply _ (measurableSet_singleton _),
+            uniformPmf_toOuterMeasure_apply]
           simp
         _ = (Fintype.card Index : ℝ≥0∞)⁻¹ ^ time := by simp
     · intro draw _

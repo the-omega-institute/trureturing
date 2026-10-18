@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Exact actual seam coordinates and seeds for the five surviving J2 words. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SurvivingModel
 set_option autoImplicit false
 

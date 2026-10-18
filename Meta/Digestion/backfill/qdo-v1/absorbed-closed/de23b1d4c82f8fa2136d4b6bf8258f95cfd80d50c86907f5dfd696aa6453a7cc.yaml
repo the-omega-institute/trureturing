@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:de23b1d4c82f8fa2136d4b6bf8258f95cfd80d50c86907f5dfd696aa6453a7cc
-  normalized_sha256: sha256:de23b1d4c82f8fa2136d4b6bf8258f95cfd80d50c86907f5dfd696aa6453a7cc
-cas_ref: sha256:de23b1d4c82f8fa2136d4b6bf8258f95cfd80d50c86907f5dfd696aa6453a7cc
-coverage_gids:
-  - gid: D5/S3/QuantumStates/ReadoutFiberCompactConvex.readout_fiber_compact_convex
-    target_statement_id: sha256:6171d31efd3d908a8c65f35dad14a85d93a697b56d99e6db4a92bd1b4f6d5a6a
-receipts:
-  unresolved_subitems: []

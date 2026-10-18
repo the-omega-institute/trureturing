@@ -283,8 +283,8 @@ private theorem actual_witness_tables {S Θ : Type*} [MeasurableSpace S] [Measur
   let F : S → Catalog stop L := fun s => ⟨witnessTable D rho phi s, hclass s⟩
   have hcoord (b) : Measurable (fun s => witnessTable D rho phi s b) := by
     exact Measurable.ite hD (hrho.comp (hphi b)) measurable_const
-  have hF : Measurable F := (measurable_pi_lambda _ hcoord).subtype_mk
-  have : IsProbabilityMeasure (mu.map F) := Measure.isProbabilityMeasure_map hF.aemeasurable
+  have hF : Measurable F := (Measurable.of_eval hcoord).subtype_mk
+  have : IsProbabilityMeasure (mu.map F) := inferInstance
   let w := (mu.map F).toPMF
   have mass : mu (Dᶜ) = mu (Hᶜ) := by
     have same : mu D = mu H := by

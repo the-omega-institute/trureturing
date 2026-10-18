@@ -6,6 +6,7 @@
    utility: none
    digest: Conditional hockey-stick ratios admit an orthogonal reduction independent of gamma. -/
 
+import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
 import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import D5.S3.Quantum.Information.OrthogonalRecordEntropy
@@ -29,18 +30,8 @@ set_option linter.unusedFintypeInType false in
 theorem posSemidef_blockDiagonal {ι : Type*} [Fintype ι] [DecidableEq ι]
     {κ : ι → Type*} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
     (M : ∀ i, Matrix (κ i) (κ i) ℂ) (hM : ∀ i, (M i).PosSemidef) :
-    (Matrix.blockDiagonal' M).PosSemidef := by
-  have h : ∀ i, ∃ B : Matrix (κ i) (κ i) ℂ, M i = star B * B :=
-    fun i => CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (hM i).nonneg
-  choose B hB using h
-  have he : Matrix.blockDiagonal' M =
-      (Matrix.blockDiagonal' B).conjTranspose * Matrix.blockDiagonal' B := by
-    rw [Matrix.blockDiagonal'_conjTranspose, ← Matrix.blockDiagonal'_mul]
-    congr 1
-    funext i
-    exact hB i
-  rw [he]
-  exact Matrix.posSemidef_conjTranspose_mul_self _
+    (Matrix.blockDiagonal' M).PosSemidef :=
+  D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace.positiveBlockDiagonal M hM
 
 theorem partialTraceRight_smul {S R A : Type*} [DistribSMul S ℂ] [Fintype A]
     (c : S) (X : Matrix (R × A) (R × A) ℂ) :
@@ -162,9 +153,9 @@ private theorem dsum_psd {n : Type u} {m : Type v} [Fintype n] [DecidableEq n]
     cases i <;> cases j <;>
       simp [M, f, Matrix.submatrix_apply, Matrix.blockDiagonal'_apply']
   letI : ∀ b : Bool, Fintype (bif b then ULift.{u} m else ULift.{v} n) :=
-    fun b => by cases b <;> dsimp <;> infer_instance
+    fun b => by cases b <;> dsimp [cond] <;> infer_instance
   letI : ∀ b : Bool, DecidableEq (bif b then ULift.{u} m else ULift.{v} n) :=
-    fun b => by cases b <;> dsimp <;> infer_instance
+    fun b => by cases b <;> dsimp [cond] <;> infer_instance
   rw [heq]
   exact (posSemidef_blockDiagonal M hM).submatrix _
 

@@ -97,8 +97,10 @@ proof_shape: chosenApproximant_spec: bind-only; escape_witness: none; consumer: 
 proof_shape: result: content; escape_witness: real_minimizers_separated; consumer: none; Direct frozen dependencies: F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13.
 -/
 
+import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.NormCompression.UpperBranchReduction
 import D5.S3.Resource.LogDet.PathSpectralClassical
+import Mathlib.Analysis.CStarAlgebra.Matrix
 
 noncomputable section
 namespace D5.S3.Quantum.NormCompression.StrictSpectralPolyaRefutation
@@ -206,8 +208,7 @@ private theorem entry_le_sv0 {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℂ) (i : F
   have hv : ‖v‖ = 1 := OrthonormalBasis.norm_eq_one _ _
   have ha : Matrix.toEuclideanLin A v = WithLp.toLp 2 (fun k => A k j) := by
     ext k
-    simp [v, EuclideanSpace.basisFun_apply, Matrix.toEuclideanLin_apply,
-      Matrix.mulVec, dotProduct]
+    simp [v, EuclideanSpace.basisFun_apply, Matrix.mulVec_single_one]
   rw [hv, mul_one, ha] at hb
   exact (PiLp.norm_apply_le (WithLp.toLp 2 (fun k => A k j)) i).trans hb
 
@@ -409,34 +410,9 @@ private theorem exists_cp_approximant {p : ℝ} (hp : 1 < p) : ∃ B : Matrix (F
 
 open scoped BigOperators Matrix
 open Polynomial D5.S3.Quantum.NormCompression.UpperBranchReduction
+open D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral.Scalar
 
 private def block (d h s t : ℝ) : Matrix (Fin 3) (Fin 3) ℂ := !![d, 0, s; 0, h, 0; s, 0, t]
-private def top (d s t : ℝ) : ℝ := (d + t + Real.sqrt ((d - t) ^ 2 + 4 * s ^ 2)) / 2
-private def bottom (d s t : ℝ) : ℝ := (d + t - Real.sqrt ((d - t) ^ 2 + 4 * s ^ 2)) / 2
-
-private theorem eigen_sum (d s t : ℝ) : top d s t + bottom d s t = d + t := by
-  unfold top bottom
-  ring
-
-private theorem eigen_product (d s t : ℝ) : top d s t * bottom d s t = d * t - s ^ 2 := by
-  have hsqrt := Real.sq_sqrt (show 0 ≤ (d - t) ^ 2 + 4 * s ^ 2 by positivity)
-  unfold top bottom
-  nlinarith
-
-private theorem top_ge (d s t : ℝ) : d ≤ top d s t ∧ t ≤ top d s t := by
-  have hsqrt := Real.sqrt_le_sqrt (show (d - t) ^ 2 ≤ (d - t) ^ 2 + 4 * s ^ 2 by nlinarith [sq_nonneg s])
-  rw [Real.sqrt_sq_eq_abs] at hsqrt
-  have habs := abs_le.mp hsqrt
-  unfold top
-  constructor <;> linarith
-
-private theorem top_gap (d s t : ℝ) : (top d s t - d) * (top d s t - t) = s ^ 2 := by
-  have he := eigen_product d s t
-  have hs := eigen_sum d s t
-  have hb : bottom d s t = d + t - top d s t := by linarith
-  rw [hb] at he
-  nlinarith
-
 private theorem gram_charpoly (d h s t a b : ℝ) (hab : a + b = d + t) (hp : a * b = d * t - s ^ 2) :
     ((block d h s t)ᴴ * block d h s t).charpoly =
       (X - C ((a ^ 2 : ℝ) : ℂ)) * (X - C ((h ^ 2 : ℝ) : ℂ)) * (X - C ((b ^ 2 : ℝ) : ℂ)) := by
@@ -485,9 +461,9 @@ private theorem residual_real_eq_block (s t : ℝ) : R (s : ℂ) (t : ℂ) = blo
 
 private theorem residual_real_schattenPow {p : ℝ} (hp : 0 < p) (s t : ℝ) :
     schattenPow p (R (s : ℂ) (t : ℂ)) =
-      |top (1 + s) s t| ^ p + |1 - 2 * s| ^ p + |bottom (1 + s) s t| ^ p := by
+      |topRoot (1 + s) s t| ^ p + |1 - 2 * s| ^ p + |bottomRoot (1 + s) s t| ^ p := by
   rw [residual_real_eq_block]
-  exact block_schattenPow hp _ _ _ _ _ _ (eigen_sum _ _ _) (eigen_product _ _ _)
+  exact block_schattenPow hp _ _ _ _ _ _ (topRoot_sum _ _ _) (topRoot_product _ _ _)
 
 open scoped BigOperators Matrix InnerProductSpace ComplexOrder MatrixOrder
 open Polynomial D5.S3.Quantum.NormCompression.UpperBranchReduction
@@ -550,7 +526,7 @@ private theorem diagonal_power_bound {n : ℕ} {p : ℝ} (hp : 2 ≤ p)
   have he : Matrix.toEuclideanLin A ((EuclideanSpace.basisFun (Fin n) ℂ) i) =
       WithLp.toLp 2 (fun k => A k i) := by
     ext k
-    simp [EuclideanSpace.basisFun_apply, Matrix.toEuclideanLin_apply, Matrix.mulVec, dotProduct]
+    simp [EuclideanSpace.basisFun_apply, Matrix.mulVec_single_one]
   rw [he]
   exact PiLp.norm_apply_le (WithLp.toLp 2 (fun k => A k i)) i
 
@@ -632,33 +608,33 @@ private theorem abs_bernoulli {p x : ℝ} (hp : 1 ≤ p) : 1 + p*x ≤ |1+x|^p :
     exact (by linarith : 1+p*x ≤ 0).trans (Real.rpow_nonneg (abs_nonneg _) _)
 
 private theorem top_competitor_bounds {s : ℝ} (hs : 0 ≤ s) (hs1 : s ≤ 1/10) :
-    1+s ≤ top (1+s) s (-1/2) ∧
-    top (1+s) s (-1/2) ≤ 1+s+(2/3)*s^2 ∧
-    |bottom (1+s) s (-1/2)| ≤ 51/100 := by
-  have hge := top_ge (1+s) s (-1/2)
-  have he := top_gap (1+s) s (-1/2)
-  have hsum := eigen_sum (1+s) s (-1/2)
-  have hdelta : 0 ≤ top (1+s) s (-1/2) - (1+s) := by linarith
-  have hbound : top (1+s) s (-1/2) - (1+s) ≤ (2/3)*s^2 := by
+    1+s ≤ topRoot (1+s) s (-1/2) ∧
+    topRoot (1+s) s (-1/2) ≤ 1+s+(2/3)*s^2 ∧
+    |bottomRoot (1+s) s (-1/2)| ≤ 51/100 := by
+  have hge := topRoot_bounds (1+s) s (-1/2)
+  have he := topRoot_determinant (1+s) s (-1/2)
+  have hsum := topRoot_sum (1+s) s (-1/2)
+  have hdelta : 0 ≤ topRoot (1+s) s (-1/2) - (1+s) := by linarith
+  have hbound : topRoot (1+s) s (-1/2) - (1+s) ≤ (2/3)*s^2 := by
     nlinarith
-  have hb : bottom (1+s) s (-1/2) ≤ 0 := by linarith
+  have hb : bottomRoot (1+s) s (-1/2) ≤ 0 := by linarith
   rw [abs_of_nonpos hb]
   have hsq : s^2 ≤ 1/100 := by nlinarith
   exact ⟨hge.1, by linarith, by linarith⟩
 
 private theorem top_comparison_gap {s t : ℝ} (hs : 0 ≤ s)
-    (hL : top (1+s) s t ≤ 11/10) (ht : -1/4 ≤ t) :
-    s^2/21 ≤ top (1+s) s t - top (1+s) s (-1/2) := by
-  have hge := top_ge (1+s) s t
-  have hge' := top_ge (1+s) s (-1/2)
-  have he := top_gap (1+s) s t
-  have he' := top_gap (1+s) s (-1/2)
-  have hdelta : 0 ≤ top (1+s) s t - (1+s) := by linarith
-  have hdelta' : 0 ≤ top (1+s) s (-1/2) - (1+s) := by linarith
-  have ha : top (1+s) s t - t ≤ 27/20 := by linarith
-  have hb : 3/2 ≤ top (1+s) s (-1/2) + 1/2 := by linarith
-  have hlower : (20/27)*s^2 ≤ top (1+s) s t - (1+s) := by nlinarith
-  have hupper : top (1+s) s (-1/2) - (1+s) ≤ (2/3)*s^2 := by nlinarith
+    (hL : topRoot (1+s) s t ≤ 11/10) (ht : -1/4 ≤ t) :
+    s^2/21 ≤ topRoot (1+s) s t - topRoot (1+s) s (-1/2) := by
+  have hge := topRoot_bounds (1+s) s t
+  have hge' := topRoot_bounds (1+s) s (-1/2)
+  have he := topRoot_determinant (1+s) s t
+  have he' := topRoot_determinant (1+s) s (-1/2)
+  have hdelta : 0 ≤ topRoot (1+s) s t - (1+s) := by linarith
+  have hdelta' : 0 ≤ topRoot (1+s) s (-1/2) - (1+s) := by linarith
+  have ha : topRoot (1+s) s t - t ≤ 27/20 := by linarith
+  have hb : 3/2 ≤ topRoot (1+s) s (-1/2) + 1/2 := by linarith
+  have hlower : (20/27)*s^2 ≤ topRoot (1+s) s t - (1+s) := by nlinarith
+  have hupper : topRoot (1+s) s (-1/2) - (1+s) ≤ (2/3)*s^2 := by nlinarith
   nlinarith [sq_nonneg s]
 
 private theorem rpow_difference_bound {p a b : ℝ} (hp : 1 ≤ p) (hb : 1 ≤ b) (hab : b ≤ a) :
@@ -723,13 +699,13 @@ private theorem competitor_power_bound {p : ℝ} (hp : 2 ≤ p) :
     field_simp
     nlinarith
   have hb := top_competitor_bounds hs hs1
-  have htop : 0 ≤ top (1+sstar p) (sstar p) (-1/2) := by linarith
+  have htop : 0 ≤ topRoot (1+sstar p) (sstar p) (-1/2) := by linarith
   have hmid : 0 ≤ 1-2*sstar p := by linarith
   unfold envelope
   rw [residual_real_schattenPow hp0, abs_of_nonneg htop, abs_of_nonneg hmid]
   have hmidEq : 1-2*sstar p = 1+(-1/4)/p := by unfold sstar; field_simp; ring
   rw [hmidEq]
-  have hlead := Real.rpow_le_rpow htop (show top (1+sstar p) (sstar p) (-1/2) ≤ 1+(1/7)/p by linarith) hp0.le
+  have hlead := Real.rpow_le_rpow htop (show topRoot (1+sstar p) (sstar p) (-1/2) ≤ 1+(1/7)/p by linarith) hp0.le
   have htail := Real.rpow_le_rpow (abs_nonneg _) hb.2.2 hp0.le
   linarith
 
@@ -772,14 +748,14 @@ private theorem real_minimizers_separated :
     by_contra! h
     have hps : p*s ≤ 0 := mul_nonpos_of_nonneg_of_nonpos hp0.le h
     linarith
-  have hge := top_ge (1+s) s t
-  have hL0 : 0 ≤ top (1+s) s t := by linarith
-  have hLpow : top (1+s) s t ^ p ≤ schattenPow p (R (s : ℂ) (t : ℂ)) := by
+  have hge := topRoot_bounds (1+s) s t
+  have hL0 : 0 ≤ topRoot (1+s) s t := by linarith
+  have hLpow : topRoot (1+s) s t ^ p ≤ schattenPow p (R (s : ℂ) (t : ℂ)) := by
     rw [residual_real_schattenPow hp0, abs_of_nonneg hL0]
     have hh := Real.rpow_nonneg (abs_nonneg (1-2*s)) p
-    have hb := Real.rpow_nonneg (abs_nonneg (bottom (1+s) s t)) p
+    have hb := Real.rpow_nonneg (abs_nonneg (bottomRoot (1+s) s t)) p
     linarith
-  have hL : top (1+s) s t ≤ 11/10 := by
+  have hL : topRoot (1+s) s t ≤ 11/10 := by
     by_contra! h
     have hb := Real.rpow_le_rpow (by norm_num : (0 : ℝ) ≤ 11/10) h.le hp0.le
     linarith
@@ -787,16 +763,16 @@ private theorem real_minimizers_separated :
   by_contra! ht
   have hgap := top_comparison_gap hs.le hL ht
   have hc := top_competitor_bounds hs.le hs1
-  have hLc0 : 0 ≤ top (1+s) s (-1/2) := by linarith
-  have horder : top (1+s) s (-1/2) ≤ top (1+s) s t := by nlinarith [sq_nonneg s]
+  have hLc0 : 0 ≤ topRoot (1+s) s (-1/2) := by linarith
+  have horder : topRoot (1+s) s (-1/2) ≤ topRoot (1+s) s t := by nlinarith [sq_nonneg s]
   have hdiff := rpow_difference_bound (by linarith : 1 ≤ p)
-    (by linarith : 1 ≤ top (1+s) s (-1/2)) horder
+    (by linarith : 1 ≤ topRoot (1+s) s (-1/2)) horder
   have hmgap := mul_le_mul_of_nonneg_left hgap hp0.le
   have hm := hmin s (-1/2)
   rw [residual_real_schattenPow hp0, residual_real_schattenPow hp0,
     abs_of_nonneg hL0, abs_of_nonneg hLc0] at hm
   have htail := Real.rpow_le_rpow (abs_nonneg _) hc.2.2 hp0.le
-  have hb := Real.rpow_nonneg (abs_nonneg (bottom (1+s) s t)) p
+  have hb := Real.rpow_nonneg (abs_nonneg (bottomRoot (1+s) s t)) p
   have hineq : p*s^2/21 ≤ (51/100 : ℝ)^p := by nlinarith
   have hmineq := mul_le_mul_of_nonneg_left hineq (show 0 ≤ 21*p by positivity)
   have hps2 : (p*s)^2 ≤ 21*p*(51/100 : ℝ)^p := by nlinarith

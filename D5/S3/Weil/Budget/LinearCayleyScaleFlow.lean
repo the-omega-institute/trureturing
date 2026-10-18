@@ -37,7 +37,7 @@ noncomputable def cayleyCharacteristic (seed : Complex) (tau : Real) : Complex :
 noncomputable def diskArtanh (w : Complex) : Complex :=
   (Complex.log (1 + w) - Complex.log (1 - w)) / 2
 
-private theorem real_tanh_hasDerivAt (x : Real) :
+theorem real_tanh_hasDerivAt (x : Real) :
     HasDerivAt Real.tanh (1 - Real.tanh x ^ 2) x := by
   have hcosh : Real.cosh x ≠ 0 := ne_of_gt (Real.cosh_pos x)
   have hquotient := (Real.hasDerivAt_sinh x).div (Real.hasDerivAt_cosh x) hcosh

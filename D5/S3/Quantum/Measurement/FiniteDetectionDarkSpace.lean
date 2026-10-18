@@ -91,6 +91,12 @@ theorem dark_space_eq_survival_defect_kernel {d : ℕ} {ι : Type*} [Fintype ι]
           have := Finset.mem_range.mp hk
           omega) x, smul_zero]
 
-#print axioms dark_space_eq_survival_defect_kernel
 
+open scoped BigOperators Matrix ComplexOrder MatrixOrder in
+theorem positiveBlockDiagonal {τ : Type*} [Fintype τ] [DecidableEq τ]
+    {κ : τ → Type*} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
+(M : ∀ i, Matrix (κ i) (κ i) ℂ) (hM : ∀ i,(M i).PosSemidef) : (Matrix.blockDiagonal' M).PosSemidef := by {
+  have h : ∀ i,∃ B : Matrix (κ i) (κ i) ℂ, M i=star B*B := fun i => CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (hM i).nonneg; choose B hB using h;
+  have he : Matrix.blockDiagonal' M = (Matrix.blockDiagonal' B)ᴴ*Matrix.blockDiagonal' B := by { rw [Matrix.blockDiagonal'_conjTranspose, ← Matrix.blockDiagonal'_mul]; congr 1; funext i; exact hB i };
+  rw [he]; exact Matrix.posSemidef_conjTranspose_mul_self _ }
 end D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace

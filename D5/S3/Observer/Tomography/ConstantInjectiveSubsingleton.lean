@@ -13,7 +13,7 @@
      supplied map. No exact theorem with both source premises was found.
 -/
 
-import Mathlib.Logic.Unique
+import Mathlib.Basic.Unique
 
 namespace D5.S3.Observer.Tomography.ConstantInjectiveSubsingleton
 

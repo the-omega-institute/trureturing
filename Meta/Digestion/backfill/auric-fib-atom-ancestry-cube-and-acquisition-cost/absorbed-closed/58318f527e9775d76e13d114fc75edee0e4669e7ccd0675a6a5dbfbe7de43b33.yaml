@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:58318f527e9775d76e13d114fc75edee0e4669e7ccd0675a6a5dbfbe7de43b33
+  normalized_sha256: sha256:58318f527e9775d76e13d114fc75edee0e4669e7ccd0675a6a5dbfbe7de43b33
+cas_ref: sha256:58318f527e9775d76e13d114fc75edee0e4669e7ccd0675a6a5dbfbe7de43b33
+coverage_gids:
+  - gid: D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments.parity_conditioned_moments
+    target_statement_id: sha256:ed62d76fc6e827a0d18046b242595731953b80a695e773091de995a23517a93c
+  - gid: D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments.parity_conditioned_probability_form
+    target_statement_id: sha256:c285eee20f6df615e7c27112e9c47c8bb823a21cafb67dd8294791599f89e9c3
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestryDefectCube.native_area_cube
+    target_statement_id: sha256:e1da4929b9f9397d45d60b1264ab847776ee8a0284f46a8d210bb98b5b8540a8
+receipts:
+  unresolved_subitems: []

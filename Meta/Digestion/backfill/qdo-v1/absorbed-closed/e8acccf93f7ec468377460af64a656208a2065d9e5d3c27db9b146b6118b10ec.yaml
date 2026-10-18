@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e8acccf93f7ec468377460af64a656208a2065d9e5d3c27db9b146b6118b10ec
-  normalized_sha256: sha256:e8acccf93f7ec468377460af64a656208a2065d9e5d3c27db9b146b6118b10ec
-cas_ref: sha256:e8acccf93f7ec468377460af64a656208a2065d9e5d3c27db9b146b6118b10ec
-coverage_gids:
-  - gid: D5/S3/Quantum/Measurement/BasisMeasurementProjection.basis_measurement_is_orthogonal_projection
-    target_statement_id: sha256:a5457d5b540ea5af3b21af467147380cc60d834f9334d20ce359a218210fd5e8
-receipts:
-  unresolved_subitems: []

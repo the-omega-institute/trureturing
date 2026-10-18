@@ -44,6 +44,12 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
                 + "chargedCoefficient is s_a times the tensor product of that actual endomorphism with groundAction(a). "
                 + "charged_native_expansion identifies it with the finite Polynomial.support sum. "
                 + "This is finiteness of the internal coefficient sum, not a claim that the entire Laurent series has finite support.")),
+            Paragraph(Text("The full half-Fock character is obtained on this same actual ground module. For arbitrary D and hu:IsUnit D.G.det, put H=(D.G inverse).map(Int.castRingHom C), so H is exactly the mapped integral inverse, and the nonsingular-inverse identities give H*gramComplex(D)=gramComplex(D)*H=1. For an exponent d on Fin(D.rank) times N, define oddEnergy(d)=sum_(i,n) d(i,n)*(2*n+1), and define halfEigenvalue(N)=D.rank/16+N/2. The supplied native monomial law says L(D,H,0) sends the monomial d to halfEigenvalue(oddEnergy(d)) times that monomial; the label halfEigenvalue is injective. There is no replacement Gram matrix, positivity premise or change to the vacuum shift.")),
+            Paragraph(Text("Apply D5/S1/Eigenstructure/DiagonalTensorEigenspace.gradedEigenspaceEquiv with K=C, I the full exponent type (Fin(D.rank) times N)->finitely-supported N, M the native oscillator polynomial algebra, b=basisMonomials, A=L(D,H,0), degree=oddEnergy, value=halfEigenvalue, and T=ActualGround(D,hu). The tensor extension is the existing tensorL(D,T,H,0). Thus its whole eigenspace at D.rank/16+N/2 is linearly equivalent to finitely supported ActualGround(D,hu)-valued coefficients indexed by all exponents of oddEnergy N. This identifies every eigenvector through its coefficients; it does not merely list monomial eigenvectors. The tensor theorem also allows zero or infinite-dimensional ground spaces and infinitely many basis vectors.")),
+            Paragraph(Text("OddEnergy is exactly colouredEnergy(Fin(D.rank)) in D5/S3/Combinatorics/Partitions/ColouredOddOccupation: the existing omega(i,n) is 2*n+1. Its colouredOddFiberEquivSigma identifies the same exponent fibre with a dependent sum over e:Fin(D.rank)->N with sum e=N, whose fibre is the product of odd-part partitions of e(i). The odd-part inverse sends j to j/2. Transport to the finite finsupp antidiagonal proves the exponent fibre genuinely finite. Since the actual ground is finite-dimensional, the full degree-N eigenspace is finite-dimensional and its dimension is card(oddEnergy fibre N)*finrank(ActualGround(D,hu)). The supplied actual twisted-ground theorem gives finrank(ActualGround(D,hu))=2^(D.rank/2).")),
+            Paragraph(Text("Define the normalized character chi_D,hu(X) by giving degree N coefficient equal to the complex cast of that full eigenspace dimension, and define F_D(X) by giving degree N coefficient card(oddEnergy fibre N). Coefficientwise dimension transport yields chi_D,hu=C(finrank(ActualGround(D,hu)))*F_D. The exact finite antidiagonal cardinal formula and PowerSeries.coeff_prod identify F_D with the D.rank-th power of the odd-part partition series. The canonical hasProd_colouredFiberSeries theorem, specialized to C and Fin(D.rank), proves HasProd of n -> ((1-X^(2*n+1)) inverse)^D.rank with target F_D. This proves explicit Multipliable for that family; only then its tprod equals F_D. Consequently chi_D,hu=C(2^(D.rank/2))*tprod_n ((1-X^(2*n+1)) inverse)^D.rank.")),
+            Paragraph(Text("The coefficient at N=0 is exactly the actual-ground dimension because the zero-energy occupation is unique. With no colours the entire oscillator series is one, and a rank-zero D has chi_D,hu=1 at every degree, not merely constant coefficient one. Even the indefinite hyperbolic Gram matrix [[0,1],[1,0]] is allowed: its determinant is -1, its quadratic form takes both signs, and its actual ground and degree-zero eigenspace have dimension two. The generic tensor coefficient equivalence remains valid for a zero ground or an infinite-dimensional ground; finite-dimensionality of the latter is not inferred from a default finrank value.")),
+            Paragraph(Text("Here X counts twice the oscillator energy: N records the offset N/2 from rank/16. The normalized series has no fractional vacuum prefactor. The product uses PowerSeries.WithPiTopology, the formal coefficient topology; no substitution of a numerical X, ordinary analytic convergence, eta identity, modular transformation or physical completion follows from it.")),
             Describe.Lean(
                 DescribeId.Create("charged-term-support"),
                 DeclarationHandle.Create(Prefix + "term_support"),
@@ -163,25 +169,76 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
                         + "ground action and the original scalar. No current commutator or charged action law is assumed. "
                         + "This current covariance is distinct from energy covariance and charged-field pair locality."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The native universal half_creation_coefficient_transport remains the exact source for the next "
+            Paragraph(Text("The corrected all-state application in "),
+                Ref("D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection"),
+                Text(" uses this actual T_D and chargedField, with its original normalization and ground action. "
+                + "Its state-field map Ytw is injective for every D and hu:IsUnit D.G.det. "
+                + "The argument below uses the nonnegative current residue identity of the constructed fields; "
+                + "kernel stability is a consequence, not a hypothesis, and source simplicity is not assumed.")),
+            Paragraph(Text("Let K=ker(Ytw), and write J_i(n)=neutralMode D i n on the ordinary source. "
+                + "For b in K, set B=vectorFrequencyBound D b, so J_i(n)b=0 for n>B by "),
+                Ref("D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration"),
+                Text(". For every d>=0, the actual nonnegative current residue equals "
+                + "sum_{n=d}^B choose(1/2,n-d) I_(1+gamma)(Ytw(J_i(n)b))[[ell+d-n]]x. "
+                + "Its other side is the ordinary d-th product of the actual current with I_gamma(Ytw(b)), "
+                + "hence zero. Descending extraction in d removes the terms n>d; the diagonal coefficient is "
+                + "choose(1/2,0)=1. Taking ell=0 and gamma=-e-3 reads native exponent e, for every integer e. "
+                + "Thus Ytw(J_i(n)b)=0 for every n>=0, including the zero modes. The arbitrary integerization "
+                + "label here tests all native coefficients and adds no parity premise on b.")),
+            Paragraph(Text("Suppose K is nonzero and choose a nonzero b in it. The zero currents act diagonally: "
+                + "(J_i(0)b)(a)=B(e_i,a)b(a). Form the finite-dimensional invariant envelope "
+                + "V=span{[a,b(a)]:a in b.support} and T=K intersect V. The commuting zero currents restrict "
+                + "to T. The simultaneous generalized-eigenspace theorem over C gives a nonzero common "
+                + "generalized eigenvector there. On each nonzero charge coordinate its weights must equal "
+                + "B(e_i,a); scalar cancellation in the generalized-eigenvector equations proves this directly. "
+                + "Since the integral Gram matrix is invertible under hu, these weights separate charges. "
+                + "The vector is therefore [a,p] with p nonzero. Only V and T are finite-dimensional; neither "
+                + "the full carrier nor its charge sectors acquire that hypothesis.")),
+            Paragraph(Text("In this sector put L={p:[a,p] in K}. Positive source modes give "
+                + "J_i(k+1)[a,p]=(k+1)[a,sum_j G_ij partial_(j,k)p]. The scalar k+1 is nonzero over C. "
+                + "Let H be the integral inverse Gram matrix mapped into C, so H gramComplex(D)=1. "
+                + "Then partial_(j,k)p=sum_i H_ji (sum_l G_il partial_(l,k)p), which belongs to L by kernel "
+                + "stability. The source mode normalization is k+1; it is not the target half-Fock frequency. "
+                + "The existing actual current formulas in "), Ref("D5/S3/VertexAlgebra/LatticeSugawaraCurrents"),
+                Text(" supply the weighted derivatives, and the minimum-degree and zero-partial rigidity "
+                + "results of "), Ref("D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity"),
+                Text(" apply to L without any finite-dimensionality assumption. A nonzero element of least "
+                + "total degree has every partial zero, hence is a nonzero constant. Rescaling shows [a,1] in K.")),
+            Paragraph(Text("Take the actual ground vector g(t)=1. It is nonzero by evaluation at t=0, "
+                + "including when D.rank=0. Since Ytw([a,1])=chargedField(a), its coefficient at "
+                + "e=-B(a,a) on 1 tensor g is exactly 2^(-B(a,a)) (1 tensor groundAction(a)g). "
+                + "charged_ground_leading makes this nonzero: the scalar is nonzero, the actual group action "
+                + "is invertible, and the tensor coordinate at the unit monomial detects the ground vector. "
+                + "This contradicts [a,1] in K, so K=0 and Ytw is injective. The argument uses no arbitrary "
+                + "Nontrivial parameter, positive rank, positive norm, positivity or unitary structure. "
+                + "Indefinite unimodular forms are included; singular Gram matrices are outside this "
+                + "faithfulness telescope, even though their finite Corr construction is defined.")),
+            Paragraph(Text("Faithfulness here means that equality of all native endomorphism coefficients "
+                + "of Ytw(u) and Ytw(w) forces u=w. It is not surjectivity onto all Laurent fields, "
+                + "simplicity of a completed VOA, positive-energy grading or a physical realization. "
+                + "This combines the classical twisted ground coefficient with current residues and ordinary "
+                + "polynomial rigidity; it makes no literature-novelty claim.")),
+            Paragraph(Text("The native universal half_creation_coefficient_transport is the exact source for "
                 + "charged coefficient products: translating C_b[n] gives kappa_g(d) C_b[n-d], "
                 + "where kappa_g is the coefficient of ((1-s)/(1+s))^g and g=B(a,b). "
                 + "Both cover branches must be retained. Their pole bounds are p=max(0,-g), q=max(0,g), "
                 + "and the physical two-step order is abs(g); positive g can have an opposite-cover pole. "
-                + "No one-sided delta identity, pair-locality or twisted Jacobi conclusion is asserted.")),
-            Paragraph(Text("The precise termwise native cover-energy application remains a mathematical endpoint. "
-                + "For H satisfying BOTH H*gramComplex(D)=1 and gramComplex(D)*H=1, use the actual half-Fock L0. "
-                + "If the input polynomial is C_b[n], the degree-d summand is "
-                + "T_d=kappa_g(d) C_b[n-d] C_a[e+q_a+d]. Universal transport gives this equality from the actual translation, "
-                + "not from an assumed field commutator. The native creation coefficient grading makes the two nonzero factors "
-                + "homogeneous of weights (n-d).toNat and (e+q_a+d).toNat. If either integer index is negative the term is zero. "
-                + "Otherwise their sum of weights is n+e+q_a. The exact remaining application is "
-                + "L0(T_d)=(D.rank/16+(n+e+q_a)/2) T_d, for all integer n and e, using "
-                + "the actual L_zero_monomial_coeff supplier and finite monomial decomposition. "
-                + "This termwise identity remains open pending its exact Lean application under the two stated inverse-Gram hypotheses. "
-                + "The ground shift remains D.rank/16 and physical z=t^2. Lifting the termwise identity to a complete "
-                + "charged tensor coefficient covariance is a distinct remaining endpoint.")),
-            Paragraph(Text("Energy covariance, full charged products and two-branch locality remain distinct obligations. "
+                + "This coefficient transport statement alone supplies no one-sided delta identity, "
+                + "pair-locality or twisted Jacobi conclusion.")),
+            Paragraph(Text("The original charged energy-covariance theorem is proved in "),
+                Ref("D5/S3/VertexAlgebra/LatticeHalfFockChargedLZero"),
+                Text(". For every D, hu:IsUnit D.G.det, charge a, integer e and v:ActualTensor D hu, "
+                + "the original commutator L0(A_a[e]v)-A_a[e](L0(v)) equals ((e+B(a,a))/2) A_a[e]v. "
+                + "L0 uses the integral inverse Gram matrix mapped into C; both inverse laws follow from hu. "
+                + "Weighted substitution gives signed translated coefficient weight N-d, and the original "
+                + "creation index e+q_a+d gives total weight N+e+q_a. Existing finite support and the actual "
+                + "L_zero_monomial_coeff then give the full polynomial and tensor statement, including the "
+                + "former C_b[n] termwise application. Negative creation indices give literal zero. "
+                + "The scalar 2^(-q_a), original groundAction, ground shift D.rank/16 and physical z=t^2 "
+                + "are retained. Rank zero and indefinite Gram data are included; no metric or positivity is assumed. "
+                + "Full conformal twisted-module structure and the further VOA/CFT programme still require additional identities.")),
+            Paragraph(Text("Full Virasoro covariance, including the nonzero modes, and a full conformal twisted-module structure require further identities "
+                + "beyond the local product and faithfulness application. "
                 + "The actual native spectrum keeps ground shift D.rank/16 and variable z=t^2. "
                 + "Leech realization, orbifold extension, Monster symmetry, full VOA and CFT, anomalies, fusion, "
                 + "string theory and AdS/CFT remain open. The classical construction and these native supplier applications "

@@ -714,15 +714,16 @@ instance curveUniform_nullSingleton : NullSingletonClass curveUniform := ⟨fun 
 private def curveMargin (s : ActivePhase) : Measure (RegularDescriptor s) :=
   curveUniform.map (curveDescriptor s)
 
-private instance curveMargin_probability (s : ActivePhase) : IsProbabilityMeasure (curveMargin s) :=
-  Measure.isProbabilityMeasure_map (continuous_descriptor_family.1 s).aemeasurable
+private instance curveMargin_probability (s : ActivePhase) : IsProbabilityMeasure (curveMargin s) := by
+  unfold curveMargin
+  infer_instance
 
 private def curveGraph (s t : ActivePhase) : Measure (RegularDescriptor s × RegularDescriptor t) :=
   curveUniform.map (fun x => (curveDescriptor s x,curveDescriptor t x))
 
-private instance curveGraph_probability (s t : ActivePhase) : IsProbabilityMeasure (curveGraph s t) :=
-  Measure.isProbabilityMeasure_map ((continuous_descriptor_family.1 s).prodMk
-    (continuous_descriptor_family.1 t)).aemeasurable
+private instance curveGraph_probability (s t : ActivePhase) : IsProbabilityMeasure (curveGraph s t) := by
+  unfold curveGraph
+  infer_instance
 
 private theorem curve_graph_fst (s t : ActivePhase) : (curveGraph s t).fst = curveMargin s := by
   rw [Measure.fst,curveGraph,Measure.map_map measurable_fst

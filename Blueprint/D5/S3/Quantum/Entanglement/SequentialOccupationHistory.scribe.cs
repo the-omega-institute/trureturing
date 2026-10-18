@@ -24,6 +24,12 @@ internal sealed class SequentialOccupationHistoryDocument : IScribeDocumentDefin
                 + "natural numbers, and numerator and denominator are included in the reals "
                 + "before division. The nonnegative real square root is then included in C. "
                 + "Dagger denotes conjugate transpose, and 1 denotes the identity matrix.")),
+            Describe.Lean(DescribeId.Create("occupation-sector-head"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/SequentialOccupationHistory.sector_head"),
+                H("The first symbol separates a normalized occupation vector"),
+                StatementSource.FromAuthor(Disp(SectorHead())),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/raveh2024dicke")),
+                Blocks(Paragraph(Text("A normalized occupation amplitude factors into the square root of the first-symbol frequency and the amplitude for the remaining occupation. The amplitude vanishes when the first symbol is absent."))), DescribeRole.Theorem),
             Theorem("occupation-extension", "extension_exists_iff", "Legal extensions are exactly positive remaining counts",
                 Discrete(All("a", Multi, All("t", N, All("b", B(t), All("i", Id("A"),
                     Iff(Exists("c", B(Add(t, D(1))),
@@ -222,6 +228,42 @@ internal sealed class SequentialOccupationHistoryDocument : IScribeDocumentDefin
                 + "No time-homogeneous prediction-memory claim, or identification with dimension "
                 + "sixteen from the different prediction model, follows. These are known Dicke-state "
                 + "constructions from Raveh and Nepomechie, with no novelty claim.")))));
+
+    private static Formula SectorHead()
+    {
+        Formula alpha = Id("A"), r = Id("r"), nn = Id("n"), ww = Id("w");
+        Formula wzero = new Formula.Apply(ww, [D(0)]);
+        Formula tail = QualifiedHead("Fin", "tail", ww);
+        Formula erased = QualifiedHead("Multiset", "erase", r, wzero);
+        Formula frequency = new Formula.Fraction(
+            Parenthesized(Seq(QualifiedHead("Multiset", "count", wzero, r), Colon,
+                Seq(Mathbb, Grp(Id("R"))))),
+            Parenthesized(Seq(Parenthesized(Seq(Add(nn, D(1)), Colon, N)), Colon, Seq(Mathbb, Grp(Id("R"))))));
+        Formula coefficient = Parenthesized(Seq(QualifiedHead("Real", "sqrt", frequency), Colon, C));
+        Formula sector(Formula length, Formula occupation, Formula word) =>
+            QualifiedHead("D5.S3.Quantum.Entanglement.OccupancyWordSectors", "sectorVector",
+                length, occupation, word);
+        Formula rhs = Seq(Operatorname, Grp(Id("if")), Sp, Parenthesized(Member(wzero, r)),
+            Sp, Operatorname, Grp(Id("then")), Sp,
+            Mul(coefficient, sector(nn, erased, tail)), Sp,
+            Operatorname, Grp(Id("else")), Sp, D(0));
+        return All("A", Id("Type"), Seq(
+            OpenBracket, Call("Fintype", alpha), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", alpha), CloseBracket, Sp,
+            All("r", Call("Multiset", alpha), All("n", N,
+                Imp(Eq(QualifiedHead("Multiset", "card", r), Add(nn, D(1))),
+                    All("w", new Formula.TypeArrow(Call("Fin", Add(nn, D(1))), alpha),
+                        Eq(sector(Add(nn, D(1)), r, ww), rhs)))))));
+    }
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula QualifiedHead(string owner, string name, params Formula[] args)
+    {
+        Formula[] parts = (owner + "." + name).Split('.').Select(part =>
+            (Formula)Seq(Operatorname, Grp(Id(part)))).ToArray();
+        Formula head = Seq(parts.SelectMany((part, index) =>
+            index == 0 ? new[] { part } : new[] { Dot, part }).ToArray());
+        return new Formula.Apply(head, [.. args]);
+    }
 
     private static DocumentBlock Theorem(string id, string name, string title, Formula formula, string text,
         DescribeRole role = DescribeRole.Theorem) =>

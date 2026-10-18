@@ -118,7 +118,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
+            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\" \"$$REANCHOR_OLD_REPORT\"",
             Recipe(makefile, "mathlib-reanchor"));
         // The four targets that reach the command line keep the verb in the Makefile and stay one
         // recipe line: the dispatch table above allows at most one line per target, and
@@ -249,7 +249,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C tools xi-quantization-test ", helpRecipe, StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
         Assert.Contains("TEST_PROJECT ?= $(HERE)/StrataLint.sln", makefile, StringComparison.Ordinal);
-        Assert.Contains("scripts/dotnet-test.sh \"$(SELECTED_TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh\" \"$(SELECTED_TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
         Assert.Contains("$(if $(TEST_FILTER),--filter \"$(TEST_FILTER)\",)", testRecipe, StringComparison.Ordinal);
         foreach (var selected in OperatingSystem.IsWindows() ? Array.Empty<bool>() : new[] { false, true })
         {
@@ -262,7 +262,7 @@ public sealed partial class MakeWorkflowTests
                     : new[] { "TEST_FILTER=" }],
                 root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
             Assert.True(dispatch.ExitCode == 0, Encoding.UTF8.GetString(dispatch.StandardError));
-            var expected = $"/bin/bash {root}/tools/scripts/dotnet-test.sh \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
+            var expected = $"/bin/bash \"{root}/tools/scripts/dotnet-test.sh\" \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
                 + (selected ? $" --filter \"{filter}\"" : "");
             Assert.Equal(expected, Encoding.UTF8.GetString(dispatch.StandardOutput).Trim());
         }

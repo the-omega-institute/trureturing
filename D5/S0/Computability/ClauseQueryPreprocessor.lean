@@ -25,6 +25,10 @@ cleanup.
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
+/-- The literal count of a native clause, preserving the list-facing width API. -/
+abbrev Std.Sat.CNF.Clause.length {α : Type*} (c : Std.Sat.CNF.Clause α) : Nat :=
+  c.literals.length
+
 namespace PredictiveThermodynamic
 
 open Turing StateTransition
@@ -201,17 +205,17 @@ def unaryLiteral {n : Nat} (literal : Fin n × Bool) : List Bool :=
   [true, true, literal.2] ++ List.replicate literal.1.val true ++ [false]
 
 def unaryClause {n : Nat} (c : Std.Sat.CNF.Clause (Fin n)) : List Bool :=
-  [false, true] ++ (c.flatMap unaryLiteral) ++ [true, false]
+  [false, true] ++ (c.literals.flatMap unaryLiteral) ++ [true, false]
 
 def sourceWord {n : Nat} (F : UnaryFormula n) : List Bool :=
   List.replicate n true ++ [false] ++ F.flatMap unaryClause ++ [false, false]
 
 /-- The valid raw source word 0011000: zero variables and one empty clause. -/
-def dummySource : List Bool := sourceWord (n := 0) ([[]] : UnaryFormula 0)
+def dummySource : List Bool := sourceWord (n := 0) ([.empty] : UnaryFormula 0)
 
 def queryClause {n : Nat} (c : Std.Sat.CNF.Clause (Fin n)) : List Bool :=
   [false, true] ++ List.replicate (n + 1) true ++ [false] ++
-    (c.flatMap unaryLiteral) ++ [true, false]
+    (c.literals.flatMap unaryLiteral) ++ [true, false]
 
 def queryWord {n : Nat} (F : UnaryFormula n) : List Bool :=
   [true, true] ++ List.replicate n true ++ [false, false, false, false, true] ++
@@ -383,15 +387,17 @@ private def clearHeaderRun (st : PreControl) (q : List Bool) (n : Nat) :
 private def clauseRun {n : Nat} (c : Std.Sat.CNF.Clause (Fin n))
     (st : PreControl) (input q : List Bool) (width : st.literals.val + c.length ≤ 3) :
     EvalsToInTime preMachine.step
-      (preCfg .clauseOne st (c.flatMap unaryLiteral ++ [true, false] ++ input)
+      (preCfg .clauseOne st (c.literals.flatMap unaryLiteral ++ [true, false] ++ input)
         (List.replicate n true) [] q [])
       (some (preCfg .formulaZero (⟨none, none, 0⟩ : PreControl) input (List.replicate n true) []
-        ([false, true] ++ (c.flatMap unaryLiteral).reverse ++ q) []))
-      (2 * (c.flatMap unaryLiteral).length + 2) := by
+        ([false, true] ++ (c.literals.flatMap unaryLiteral).reverse ++ q) []))
+      (2 * (c.literals.flatMap unaryLiteral).length + 2) := by
+  change st.literals.val + c.literals.length ≤ 3 at width
+  generalize c.literals = literals at width ⊢
   let single : ∀ (a : preMachine.Cfg) (b : Option preMachine.Cfg),
       preMachine.step a = b → EvalsToInTime preMachine.step a b 1 :=
     fun a b h => { steps := 1, evals_in_steps := h, steps_le_m := by decide }
-  induction c generalizing st q with
+  induction literals generalizing st q with
   | nil =>
     have hs : preMachine.step
         (preCfg .clauseOne st (true :: false :: input) (List.replicate n true) [] q []) =
@@ -545,7 +551,7 @@ private def formulaRun {n : Nat} (F : UnaryFormula n) (q : List Bool)
     simpa using EvalsToInTime.trans preMachine.step 1 1 _ _ _ a b
   | cons c F ih =>
     let rest := F.flatMap unaryClause ++ [false, false]
-    let body := c.flatMap unaryLiteral ++ [true, false] ++ rest
+    let body := c.literals.flatMap unaryLiteral ++ [true, false] ++ rest
     let coef := false :: (List.replicate n true ++ true :: true :: false :: q)
     have h0 : preMachine.step
         (preCfg .formulaZero (⟨none, none, 0⟩ : PreControl) (false :: true :: body) (List.replicate n true) [] q []) =
@@ -562,21 +568,21 @@ private def formulaRun {n : Nat} (F : UnaryFormula n) (q : List Bool)
     have copy := coefficientRun (⟨none, none, 0⟩ : PreControl) body (true :: true :: false :: q) n 0
     simp only [Nat.add_zero] at copy
     have localClause := clauseRun c (⟨none, none, 0⟩ : PreControl) rest coef (by simpa using width c (by simp))
-    have tail := ih ([false, true] ++ (c.flatMap unaryLiteral).reverse ++ coef)
+    have tail := ih ([false, true] ++ (c.literals.flatMap unaryLiteral).reverse ++ coef)
       (fun d hd => width d (by simp [hd]))
     have r4 := EvalsToInTime.trans preMachine.step
-      (2 * (c.flatMap unaryLiteral).length + 2) (2 * (F.flatMap queryClause).length + 2)
+      (2 * (c.literals.flatMap unaryLiteral).length + 2) (2 * (F.flatMap queryClause).length + 2)
       _ _ _ localClause tail
     have r3 := EvalsToInTime.trans preMachine.step (2 * n + 2)
-      ((2 * (F.flatMap queryClause).length + 2) + (2 * (c.flatMap unaryLiteral).length + 2))
+      ((2 * (F.flatMap queryClause).length + 2) + (2 * (c.literals.flatMap unaryLiteral).length + 2))
       _ _ _ copy r4
     have r2 := EvalsToInTime.trans preMachine.step 1
-      (((2 * (F.flatMap queryClause).length + 2) + (2 * (c.flatMap unaryLiteral).length + 2)) +
+      (((2 * (F.flatMap queryClause).length + 2) + (2 * (c.literals.flatMap unaryLiteral).length + 2)) +
         (2 * n + 2)) _ _ _ b r3
     have run := EvalsToInTime.trans preMachine.step 1
-      ((((2 * (F.flatMap queryClause).length + 2) + (2 * (c.flatMap unaryLiteral).length + 2)) +
+      ((((2 * (F.flatMap queryClause).length + 2) + (2 * (c.literals.flatMap unaryLiteral).length + 2)) +
         (2 * n + 2)) + 1) _ _ _ a r2
-    have words : [false, true] ++ (c.flatMap unaryLiteral).reverse ++ coef =
+    have words : [false, true] ++ (c.literals.flatMap unaryLiteral).reverse ++ coef =
         (queryClause c).reverse ++ q := by
       simp [coef, queryClause, List.reverse_append, List.replicate_succ,
         List.append_assoc]

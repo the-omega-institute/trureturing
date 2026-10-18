@@ -9,6 +9,7 @@
 import Mathlib.Algebra.Polynomial.Inductions
 import Mathlib.Data.Nat.Digits.Defs
 import Mathlib.Data.Nat.MaxPowDiv
+import Mathlib.Data.Nat.PadicValNat
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
