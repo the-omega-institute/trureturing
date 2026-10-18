@@ -11,6 +11,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 public import Mathlib.Analysis.SpecialFunctions.Complex.Log
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
@@ -311,7 +312,107 @@ private lemma amp_normSq_lower (n : ℕ) (hn : 3 ≤ n) (t : ℝ)
   have hisq := Complex.im_sq_le_normSq (amp n t)
   nlinarith
 
+private def profile (n : ℕ) (t : ℝ) : ℝ := Complex.normSq (amp n t) - (n - 1)
+
+private lemma continuous_profile (n : ℕ) : Continuous (profile n) := by
+  unfold profile
+  apply Continuous.sub _ continuous_const
+  apply Complex.continuous_normSq.comp
+  unfold amp mode phase
+  fun_prop
+
+private lemma profile_product_lower (n m : ℕ) (hn : 3 ≤ n) (hm : 3 ≤ m) (t : ℝ) :
+    Complex.normSq (amp n t) * Complex.normSq (amp m t) -
+      ((n - 1 : ℝ) * (m : ℝ) ^ 2 + (m - 1 : ℝ) * (n : ℝ) ^ 2) ≤
+        profile n t * profile m t := by
+  have hn0 : (0 : ℝ) ≤ n - 1 := by
+    have hnR : (3 : ℝ) ≤ n := by exact_mod_cast hn
+    linarith
+  have hm0 : (0 : ℝ) ≤ m - 1 := by
+    have hmR : (3 : ℝ) ≤ m := by exact_mod_cast hm
+    linarith
+  have hnm := mul_le_mul_of_nonneg_left (amp_normSq_upper m t) hn0
+  have hmn := mul_le_mul_of_nonneg_left (amp_normSq_upper n t) hm0
+  have hpos := mul_nonneg hn0 hm0
+  unfold profile
+  nlinarith only [hnm, hmn, hpos]
+
+private lemma integral_lower (n m : ℕ) (hn : 3 ≤ n) (hm : 3 ≤ m) :
+    (n : ℝ) ^ 2 * (m : ℝ) ^ 2 / 131072 -
+      (n - 1 : ℝ) * (m : ℝ) ^ 2 - (m - 1 : ℝ) * (n : ℝ) ^ 2 ≤
+        ∫ t in (0 : ℝ)..1, profile n t * profile m t := by
+  let C : ℝ := (n - 1 : ℝ) * (m : ℝ) ^ 2 + (m - 1 : ℝ) * (n : ℝ) ^ 2
+  let f := fun t => profile n t * profile m t
+  have hf : Continuous f := (continuous_profile n).mul (continuous_profile m)
+  have hlow (t : ℝ) : -C ≤ f t := by
+    have hp := profile_product_lower n m hn hm t
+    have hz := mul_nonneg (Complex.normSq_nonneg (amp n t))
+      (Complex.normSq_nonneg (amp m t))
+    dsimp [f, C]
+    linarith
+  have hhigh (t : ℝ) (ht : t ∈ Set.Icc (1 / 2 : ℝ) 1) :
+      (n : ℝ) ^ 2 * (m : ℝ) ^ 2 / 65536 - C ≤ f t := by
+    have hp := profile_product_lower n m hn hm t
+    have hnlow := amp_normSq_lower n hn t ht.1 ht.2
+    have hmlow := amp_normSq_lower m hm t ht.1 ht.2
+    have hprod := mul_le_mul hnlow hmlow (by positivity)
+      (Complex.normSq_nonneg (amp n t))
+    dsimp [f, C]
+    nlinarith only [hp, hprod]
+  have hfirst := intervalIntegral.integral_mono_on (μ := MeasureTheory.volume)
+    (a := 0) (b := 1 / 2)
+    (by norm_num) (intervalIntegrable_const (c := -C))
+    (hf.intervalIntegrable _ _) (fun t _ => hlow t)
+  have hsecond := intervalIntegral.integral_mono_on (μ := MeasureTheory.volume)
+    (a := 1 / 2) (b := 1)
+    (by norm_num)
+    (intervalIntegrable_const (c := (n : ℝ) ^ 2 * (m : ℝ) ^ 2 / 65536 - C))
+    (hf.intervalIntegrable _ _) hhigh
+  have hsplit := intervalIntegral.integral_add_adjacent_intervals
+    (μ := MeasureTheory.volume)
+    (hf.intervalIntegrable 0 (1 / 2)) (hf.intervalIntegrable (1 / 2) 1)
+  simp only [intervalIntegral.integral_const, smul_eq_mul] at hfirst hsecond
+  change _ ≤ ∫ t in (0 : ℝ)..1, f t
+  dsimp [C] at hfirst hsecond
+  linarith only [hfirst, hsecond, hsplit]
+
+private lemma log_bound (x : ℝ) (hx : 0 < x) (hmax : x ≤ 10000000003) :
+    Real.log x < 24 := by
+  calc
+    Real.log x ≤ Real.log ((2 : ℝ) ^ 34) :=
+      Real.log_le_log hx (hmax.trans (by norm_num))
+    _ = 34 * Real.log 2 := by rw [Real.log_pow]; norm_num
+    _ < 24 := by linarith only [Real.log_two_lt_d9]
+
 theorem result : ¬ claim := by
-  sorry
+  intro h
+  have ho1 : Odd 10000000003 := ⟨5000000001, by norm_num⟩
+  have ho2 : Odd 10000000001 := ⟨5000000000, by norm_num⟩
+  have hc := h 10000000003 10000000001 ho1 ho2 (by norm_num)
+    (by norm_num) 1 1 (by norm_num) (by norm_num) 1 (by norm_num)
+  have hi := integral_lower 10000000003 10000000001 (by norm_num) (by norm_num)
+  have hw (t : ℝ) : walkTerm 10000000003 1 t * walkTerm 10000000001 1 t =
+      ((profile 10000000003 t * profile 10000000001 t : ℝ) : ℂ) := by
+    rw [walk_identity _ ho1 (by norm_num), walk_identity _ ho2 (by norm_num)]
+    exact (Complex.ofReal_mul _ _).symm
+  change ‖∫ t in (0 : ℝ)..1, walkTerm 10000000003 1 t * walkTerm 10000000001 1 t‖ ≤ _ at hc
+  simp_rw [hw] at hc
+  rw [intervalIntegral.integral_ofReal, Complex.norm_real, Real.norm_eq_abs] at hc
+  have hl1 := log_bound 10000000003 (by norm_num) (by norm_num)
+  have hl2 := log_bound 10000000001 (by norm_num) (by norm_num)
+  have hpos1 : 0 ≤ Real.log 10000000003 := Real.log_nonneg (by norm_num)
+  have hpos2 : 0 ≤ Real.log 10000000001 := Real.log_nonneg (by norm_num)
+  have hsq1 : Real.log 10000000003 ^ 2 ≤ 24 ^ 2 := by nlinarith
+  have hsq2 : Real.log 10000000001 ^ 2 ≤ 24 ^ 2 := by nlinarith
+  have habs := le_abs_self (∫ t in (0 : ℝ)..1,
+    profile 10000000003 t * profile 10000000001 t)
+  have hnum :
+      32 * (10000000003 : ℝ) * (10000000001 * 24) ^ 2 +
+        32 * 10000000001 * (10000000003 * 24) ^ 2 <
+      (10000000003 : ℝ) ^ 2 * 10000000001 ^ 2 / 131072 -
+        (10000000003 - 1) * 10000000001 ^ 2 - (10000000001 - 1) * 10000000003 ^ 2 := by
+    norm_num
+  norm_num only [Nat.cast_ofNat] at hc hi
+  nlinarith only [hc, hi, habs, hsq1, hsq2, hnum]
 
 end D5.S3.Quantum.Dynamics.LatticeWalkCrossIntegralRefutation
