@@ -137,20 +137,17 @@ private theorem one_bad : ¬ oneLaw bad.{u} := by
   equalVertex := inferInstance
   graph := square
 
-private def vacuum : Configuration square.{u} := ⟨∅, by simp⟩
-
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   cases i
-  refine ⟨fixtureParameters, 0, Matrix.single vacuum vacuum 1, ?_⟩
+  obtain ⟨ρ, σ, _, _, _, _, _, _, v, hb⟩ :=
+    physical_single_setting_lower square.{u} square_connected
+      (fun x => x.isLeft) square_proper (fun _ => 1) (by simp)
+      (.inl ⟨0⟩) (.inr ⟨0⟩) (by rw [square_left]; norm_num)
+      (by rw [square_right]; norm_num) (by rw [square_left, square_right]; decide)
+  refine ⟨fixtureParameters, ρ, σ, ?_⟩
   intro h
-  have hh := congrFun h (.inl ⟨0⟩)
-  dsimp only [actual, realize, fixtureParameters] at hh
-  simp only [Matrix.zero_mul, Matrix.trace_zero, Complex.zero_re] at hh
-  change (0 : ℝ) = (Matrix.trace (Matrix.single vacuum vacuum 1 *
-    blockade square (.inl ⟨0⟩))).re at hh
-  rw [Matrix.trace_single_mul] at hh
-  norm_num [blockade, clear, vacuum, Matrix.diagonal_apply] at hh
+  exact hb (congrFun h v)
 
 def zeroFamily : Registration zeroArena.{u} (type_of% (@physical_zero_setting_lower.{u})) where
   actual := actual

@@ -57,7 +57,7 @@ internal sealed class StrictBornFibersDocument : IScribeDocumentDefinition
                     + "coordinate to their changed joint endpoint mass.")),
                 Paragraph(Text(
                     "This concerns repeated preparation of one unknown initial state and occupation "
-                    + "plus second-derivative data. The conclusion provides actual Born sources "
+                    + "plus double-commutator acceleration data. The conclusion provides actual Born sources "
                     + "with an unresolved joint endpoint task. It does not assert a native Fibonacci "
                     + "continuation, equality of higher derivatives, or a finite-sampling error bound."))),
             DescribeRole.Theorem))));

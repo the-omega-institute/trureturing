@@ -27,7 +27,7 @@ internal sealed class DiagonalResidualDocument : IScribeDocumentDefinition
                     + "the signed sum of the blocking means weighted by the squared drives "
                     + "vanishes.")),
                 Paragraph(Text(
-                    "For a neighborhood N, assign minus one to the cardinality of S to "
+                    "For a neighborhood N, assign (-1) raised to the cardinality of S to "
                     + "each subconfiguration S of N and assign zero elsewhere. This measure "
                     + "has zero mass and zero single-site means. Its blocking moment at v "
                     + "is one exactly when N is contained in the open neighborhood of v.")),

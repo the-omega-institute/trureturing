@@ -39,7 +39,24 @@ internal sealed class BornFiveModeDocument : IScribeDocumentDefinition
                     + "the same occupation mean in the two states. Their blocker at v "
                     + "differs. The endpoint pair is independent because its vertices "
                     + "have the same color. This ambiguity is for zero driving settings; "
-                    + "it asserts no equality of the acceleration readouts."))),
+                    + "it asserts no equality of the acceleration readouts.")),
+                Paragraph(Text(
+                    "For the AURIC single-window convention [null,2,5,25,3], read this "
+                    + "law in the order [p(0),p(1),p(3),p(4),p(2)]. These names denote "
+                    + "local occupancy patterns. The actual joint mass p(4) is kappa, "
+                    + "and the determinant of the bottom two-by-two table is "
+                    + "p(0)*p(4)-p(1)*p(3)=(1-Z)*kappa-X*Y. The source therefore "
+                    + "supplies the same single-window pyramid coordinates without a "
+                    + "claim about a Fibonacci reader, a shared seam, or a multi-window law.")),
+                Paragraph(Text(
+                    "The source analysis contract uses this same Born-law occurrence "
+                    + "and reconstructs the complete theorem. Its selected task is the "
+                    + "whole five-vector, with a zero-observation initial layer and "
+                    + "one layer revealing that vector. The density-matrix family has "
+                    + "no supplied complete finite presentation, source binding, or "
+                    + "certified FIB adapter. Finite capture counts and rates are therefore "
+                    + "unavailable from that contract; its typed source bridge does not "
+                    + "assert their acquisition."))),
             DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
