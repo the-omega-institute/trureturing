@@ -13,6 +13,8 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Rat.Cast.Order
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Data.Int.Interval
+import Mathlib.Data.Finset.Prod
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 
@@ -422,6 +424,51 @@ private theorem geodesic_mem (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × 
       have ha := abs_nonneg (u.1 - w.1)
       have hb := abs_nonneg (u.2 - w.2)
       omega) u w rfl (by omega) hwi
+
+private theorem rectangle_bound (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) (v : ℤ × ℤ) (hv : v ∈ I) (i : ℤ)
+    (hi : 0 ≤ i) (hil : i < ℓ) (hvi : ground ℓ v = |v.1 - i| + |v.2 + i|) :
+    (|v.1 - i| + 1) * (|v.2 + i| + 1) ≤ (I.card : ℤ) := by
+  let r := (Finset.Icc (min i v.1) (max i v.1)).product
+    (Finset.Icc (min (-i) v.2) (max (-i) v.2))
+  have hs : r ⊆ I := by
+    intro u hu
+    obtain ⟨hx, hy⟩ := Finset.mem_product.mp hu
+    obtain ⟨hxa, hxb⟩ := Finset.mem_Icc.mp hx
+    obtain ⟨hya, hyb⟩ := Finset.mem_Icc.mp hy
+    have segment (a b c : ℤ) (ha : min a c ≤ b) (hb : b ≤ max a c) :
+        |b - a| + |b - c| = |c - a| := by
+      simp only [abs_eq_max_neg] at *
+      omega
+    have hdx := segment i u.1 v.1 hxa hxb
+    have hdy := segment (-i) u.2 v.2 hya hyb
+    simp only [sub_neg_eq_add] at hdy
+    have hg := (ground_nearest ℓ hℓ u).1 i hi hil
+    have hl := ground_lipschitz ℓ hℓ v u
+    rw [abs_sub_comm v.1 u.1, abs_sub_comm v.2 u.2] at hl
+    apply geodesic_mem ℓ hℓ I hI u v (by omega) hv
+  have hc : (r.card : ℤ) ≤ I.card := by exact_mod_cast Finset.card_le_card hs
+  have he : (r.card : ℤ) = (|v.1 - i| + 1) * (|v.2 + i| + 1) := by
+    dsimp only [r]
+    rw [Finset.product_eq_sprod, Finset.card_product, Nat.cast_mul,
+      Int.card_Icc_of_le (a := min i v.1) (b := max i v.1) (by omega),
+      Int.card_Icc_of_le (a := min (-i) v.2) (b := max (-i) v.2) (by omega)]
+    have hx : max i v.1 + 1 - min i v.1 = |v.1 - i| + 1 := by
+      simp only [abs_eq_max_neg]
+      omega
+    have hy : max (-i) v.2 + 1 - min (-i) v.2 = |v.2 + i| + 1 := by
+      simp only [abs_eq_max_neg]
+      omega
+    rw [hx, hy]
+  omega
+
+private theorem rank_bound (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (ℤ × ℤ))
+    (hI : IsDownset ℓ I) (v : ℤ × ℤ) (hv : v ∈ I) : ground ℓ v < I.card := by
+  obtain ⟨_, i, hi, hil, hvi⟩ := ground_nearest ℓ hℓ v
+  have hb := rectangle_bound ℓ hℓ I hI v hv i hi hil hvi
+  have hx := abs_nonneg (v.1 - i)
+  have hy := abs_nonneg (v.2 + i)
+  nlinarith [mul_nonneg hx hy]
 
 private theorem downset_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} : ℤ) =
