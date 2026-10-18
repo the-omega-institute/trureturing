@@ -16,6 +16,14 @@ internal sealed class FourierLDOILOCCRefutationDocument : IScribeDocumentDefinit
         "Johnston and Russo ask whether their lower bound for the uniform Fourier LDOI ensemble is tight. In local dimension three a finite tree of complete local Kraus instruments has success probability 1/2, exceeding the proposed value 4/9. This refutes the universal tightness assertion.",
         H("The Fourier LDOI LOCC lower bound is not tight"),
         Blocks(
+            Node("c", "The balanced two-coordinate amplitude",
+                EqTo(F.Id("c"), Pow(Seq(Sqrt, Grp(D(2))), new Formula.Negate(D(1)))),
+                "The real amplitude c is the reciprocal of the positive square root of two.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("c_sq", "The squared balanced amplitude",
+                EqTo(Mul(F.Id("c"), F.Id("c")), Frac(D(1), D(2))),
+                "Two equal coordinates of amplitude c have total squared modulus one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("fourier", "Normalized Fourier entries", FourierFormula(),
                 "Example 17, p. 18: \"Let n ≥ 3 and consider an orthonormal LDOI basis arising from Definition 6 with A = (1/√2)1ₙ (the all-ones matrix scaled by 1/√2) and U equal to the n-dimensional Fourier matrix.\" The entries use zero-based Fin n indices and the positive exponential convention. The square root is real; the exponent and the divisor are complex.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -60,7 +68,7 @@ internal sealed class FourierLDOILOCCRefutationDocument : IScribeDocumentDefinit
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("jr-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+            DescribeId.Create("jr-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, resolution);
 
