@@ -41,12 +41,12 @@ private theorem complete_height (φ : Bool) (k : ℕ) (L : ℤ) :
   | succ k ih => simp only [completePathTree, ReadTree.height, ih, max_self]
 
 private theorem complete_count (φ : Bool) (k : ℕ) (L : ℤ) :
-    (completePathTree φ k L).readCount = 2 ^ k - 1 := by
+    (completePathTree φ k L).potentialReadCount = 2 ^ k - 1 := by
   induction k generalizing L with
   | zero => rfl
   | succ k ih =>
     have hpos : 0 < 2 ^ k := pow_pos (by decide) _
-    simp only [completePathTree, ReadTree.readCount, ih, pow_succ]
+    simp only [completePathTree, ReadTree.potentialReadCount, ih, pow_succ]
     omega
 
 private theorem complete_run (φ : Bool) (k : ℕ) (L : ℤ) (x : ℤ → Bool) :
@@ -146,23 +146,23 @@ private theorem complete_signature_remote (j : Bool) (k : ℕ) (hk : 1 ≤ k)
     dsimp only [b]
     omega
   have old_minus (i : Fin M) :
-      slotIndex j (!j) W (some (p i, false)) = j.toInt + 1 + i.val := by
-    rw [slotIndex, hp]
+      signatureSlotIndex j (!j) W (some (p i, false)) = j.toInt + 1 + i.val := by
+    rw [signatureSlotIndex, hp]
     have h₁ : (2 * (j.toInt + 1 + (i.val : ℤ)) + (!j).toInt - (!j).toInt) % 2 = 0 := by omega
     have h₂ : (2 * (j.toInt + 1 + (i.val : ℤ)) + (!j).toInt - (!j).toInt) / 2 =
         j.toInt + 1 + i.val := by omega
     simp only [ite_eq_left h₁, h₂, Bool.toInt_false, add_zero]
   have old_plus (i : Fin M) :
-      slotIndex j (!j) W (some (p i, true)) = j.toInt + 1 + i.val + 1 := by
-    rw [slotIndex, hp]
+      signatureSlotIndex j (!j) W (some (p i, true)) = j.toInt + 1 + i.val + 1 := by
+    rw [signatureSlotIndex, hp]
     have h₁ : (2 * (j.toInt + 1 + (i.val : ℤ)) + (!j).toInt - (!j).toInt) % 2 = 0 := by omega
     have h₂ : (2 * (j.toInt + 1 + (i.val : ℤ)) + (!j).toInt - (!j).toInt) / 2 =
         j.toInt + 1 + i.val := by omega
     simp only [ite_eq_left h₁, h₂, Bool.toInt_true]
-  have new_minus (i : Fin M) : slotIndex j (!j) T' (some (p i, false)) = b i := by
-    simp only [slotIndex, ht, ite_eq_left (active i), Bool.toInt_false, add_zero, b]
-  have new_plus (i : Fin M) : slotIndex j (!j) T' (some (p i, true)) = b i + 1 := by
-    simp only [slotIndex, ht, ite_eq_left (active i), Bool.toInt_true, b]
+  have new_minus (i : Fin M) : signatureSlotIndex j (!j) T' (some (p i, false)) = b i := by
+    simp only [signatureSlotIndex, ht, ite_eq_left (active i), Bool.toInt_false, add_zero, b]
+  have new_plus (i : Fin M) : signatureSlotIndex j (!j) T' (some (p i, true)) = b i + 1 := by
+    simp only [signatureSlotIndex, ht, ite_eq_left (active i), Bool.toInt_true, b]
   have chain (i : ℕ) (hi : i + 1 < M) :
       b ⟨i + 1, hi⟩ = b ⟨i, by omega⟩ + 1 := by
     have he := (hsig.2 (!j) (some (p ⟨i, by omega⟩, true))
@@ -183,13 +183,13 @@ private theorem complete_signature_remote (j : Bool) (k : ℕ) (hk : 1 ≤ k)
     intro he
     have h := (hsig.2 (!j) none (some (p i, false))).mpr
       (by rw [new_minus]; exact target.trans he)
-    rw [show slotIndex j (!j) W none = j.toInt by exact target, old_minus] at h
+    rw [show signatureSlotIndex j (!j) W none = j.toInt by exact target, old_minus] at h
     omega
   have no_plus (i : Fin M) : j.toInt ≠ b i + 1 := by
     intro he
     have h := (hsig.2 (!j) none (some (p i, true))).mpr
       (by rw [new_plus]; exact target.trans he)
-    rw [show slotIndex j (!j) W none = j.toInt by exact target, old_plus] at h
+    rw [show signatureSlotIndex j (!j) W none = j.toInt by exact target, old_plus] at h
     omega
   have detached : j.toInt ∉ pathVertices b₀ M := by
     intro hq
@@ -245,7 +245,7 @@ law also has a lawful representative reading only the target, with all k calls p
 theorem exact_signature_radius_with_law_zero_witness (j : Bool) (k : ℕ) (hk : 1 ≤ k) :
     signatureRadius j k = 2 ^ (k + 1) - 1 ∧
     let W := completePathTree (!j) k (j.toInt + 1)
-    W.height = k ∧ W.readCount = 2 ^ k - 1 ∧
+    W.height = k ∧ W.potentialReadCount = 2 ^ k - 1 ∧
     (∀ T' : ReadTree, SameSignature j W T' →
       ∃ t ∈ T'.addresses, ((2 ^ (k + 1) - 1 : ℕ) : ℤ) ≤ |t - j.toInt|) ∧
     (repeatTargetTree j k).height = k ∧

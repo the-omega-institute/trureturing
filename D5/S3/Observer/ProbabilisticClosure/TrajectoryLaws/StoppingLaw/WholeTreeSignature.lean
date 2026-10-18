@@ -70,9 +70,88 @@ theorem addressAt_skeleton (T : ReadTree) (p : ReadPosition) :
 
 end ReadTree
 
+namespace ReadTree
+
+/-- Count occurrences, including repeated addresses and mutually incompatible branches. -/
+def potentialReadCount : ReadTree → ℕ
+  | .leaf _ => 0
+  | .read _ z o => z.potentialReadCount + o.potentialReadCount + 1
+
+/-- Relabel every occurrence while preserving the ordered tree and all terminals. -/
+def relabelPotentialAddresses (f : ℤ → ℤ) : ReadTree → ReadTree
+  | .leaf a => .leaf a
+  | .read t z o => .read (f t) (z.relabelPotentialAddresses f) (o.relabelPotentialAddresses f)
+
+theorem relabel_height (f : ℤ → ℤ) (T : ReadTree) :
+    (T.relabelPotentialAddresses f).height = T.height := by
+  induction T with
+  | leaf _ => rfl
+  | read t z o hz ho => simp only [relabelPotentialAddresses, height, hz, ho]
+
+theorem relabel_addresses (f : ℤ → ℤ) (T : ReadTree) :
+    (T.relabelPotentialAddresses f).addresses = T.addresses.image f := by
+  induction T with
+  | leaf _ => simp [relabelPotentialAddresses, addresses]
+  | read t z o hz ho => simp only [relabelPotentialAddresses, addresses, hz, ho,
+      Finset.image_insert, Finset.image_union]
+
+theorem addressAt_relabel (f : ℤ → ℤ) (T : ReadTree) (p : ReadPosition) :
+    (T.relabelPotentialAddresses f).addressAt p = (T.addressAt p).map f := by
+  induction T generalizing p with
+  | leaf _ => rfl
+  | read t z o hz ho =>
+    cases p with
+    | nil => rfl
+    | cons b p => cases b <;> simp only [relabelPotentialAddresses, addressAt, hz, ho]
+
+theorem addressAt_in_addresses (T : ReadTree) (p : ReadPosition) (t : ℤ)
+    (h : T.addressAt p = some t) : t ∈ T.addresses := by
+  induction T generalizing p with
+  | leaf _ => simp [addressAt] at h
+  | read a z o hz ho =>
+    cases p with
+    | nil => have : a = t := Option.some.inj h; subst t; exact Finset.mem_insert_self _ _
+    | cons b p =>
+      cases b
+      · exact Finset.mem_insert_of_mem (Finset.mem_union_left _ (hz p h))
+      · exact Finset.mem_insert_of_mem (Finset.mem_union_right _ (ho p h))
+
+theorem addresses_card_le_readCount (T : ReadTree) : T.addresses.card ≤ T.potentialReadCount := by
+  induction T with
+  | leaf _ => simp [addresses, potentialReadCount]
+  | read t z o hz ho =>
+    have h₁ := Finset.card_insert_le t (z.addresses ∪ o.addresses)
+    have h₂ := Finset.card_union_le z.addresses o.addresses
+    change (insert t (z.addresses ∪ o.addresses)).card ≤ z.potentialReadCount + o.potentialReadCount + 1
+    omega
+
+theorem readCount_height_bound (T : ReadTree) : T.potentialReadCount + 1 ≤ 2 ^ T.height := by
+  induction T with
+  | leaf _ => simp [potentialReadCount, height]
+  | read t z o hz ho =>
+    have hz' : 2 ^ z.height ≤ 2 ^ max z.height o.height :=
+      Nat.pow_le_pow_right (by decide) (le_max_left _ _)
+    have ho' : 2 ^ o.height ≤ 2 ^ max z.height o.height :=
+      Nat.pow_le_pow_right (by decide) (le_max_right _ _)
+    simp only [potentialReadCount, height, pow_succ]
+    omega
+
+theorem skeleton_relabel (f : ℤ → ℤ) (T : ReadTree)
+    (hf : ∀ t ∈ T.addresses, f t % 2 = t % 2) :
+    (T.relabelPotentialAddresses f).paritySkeleton = T.paritySkeleton := by
+  induction T with
+  | leaf _ => rfl
+  | read t z o hz ho =>
+    have ht := hf t (Finset.mem_insert_self _ _)
+    have hZ := hz (fun a ha => hf a (Finset.mem_insert_of_mem (Finset.mem_union_left _ ha)))
+    have hO := ho (fun a ha => hf a (Finset.mem_insert_of_mem (Finset.mem_union_right _ ha)))
+    simp only [relabelPotentialAddresses, paritySkeleton, ht, hZ, hO]
+
+end ReadTree
+
 /-- Inactive or absent positions contribute redundant target slots. This total
 indexing has the same equality data as restricting to active read positions. -/
-def slotIndex (j φ : Bool) (T : ReadTree) : OrientedSlot → ℤ
+def signatureSlotIndex (j φ : Bool) (T : ReadTree) : OrientedSlot → ℤ
   | none => targetIndex j φ
   | some (p, side) => match T.addressAt p with
     | none => targetIndex j φ
@@ -83,13 +162,13 @@ def slotIndex (j φ : Bool) (T : ReadTree) : OrientedSlot → ℤ
 def SameSignature (j : Bool) (T T' : ReadTree) : Prop :=
   T.paritySkeleton = T'.paritySkeleton ∧
     ∀ φ : Bool, ∀ a b : OrientedSlot,
-      (slotIndex j φ T a = slotIndex j φ T b ↔ slotIndex j φ T' a = slotIndex j φ T' b)
+      (signatureSlotIndex j φ T a = signatureSlotIndex j φ T b ↔ signatureSlotIndex j φ T' a = signatureSlotIndex j φ T' b)
 
 private theorem finite_slot_range (j φ : Bool) (T : ReadTree) :
-    (Set.range (slotIndex j φ T)).Finite := by
+    (Set.range (signatureSlotIndex j φ T)).Finite := by
   let slots : Finset OrientedSlot := insert none
     ((T.readPositions.product Finset.univ).image some)
-  apply (slots.image (slotIndex j φ T)).finite_toSet.subset
+  apply (slots.image (signatureSlotIndex j φ T)).finite_toSet.subset
   rintro z ⟨s, rfl⟩
   cases s with
   | none => exact Finset.mem_image.mpr ⟨none, Finset.mem_insert_self _ _, rfl⟩
@@ -98,7 +177,7 @@ private theorem finite_slot_range (j φ : Bool) (T : ReadTree) :
     cases ht : T.addressAt p with
     | none =>
       refine Finset.mem_image.mpr ⟨none, Finset.mem_insert_self _ _, ?_⟩
-      simp only [slotIndex, ht]
+      simp only [signatureSlotIndex, ht]
     | some t =>
       exact Finset.mem_image.mpr ⟨some (p, side), Finset.mem_insert_of_mem
         (Finset.mem_image.mpr ⟨(p, side), Finset.mem_product.mpr
@@ -149,7 +228,7 @@ private theorem skeleton_execution_transport (T T' : ReadTree)
 
 private theorem signature_observation_transport (j : Bool) (T T' : ReadTree)
     (h : SameSignature j T T') (φ : Bool) (σ : Equiv.Perm ℤ)
-    (hσ : ∀ s, σ (slotIndex j φ T s) = slotIndex j φ T' s) (S : Spins) :
+    (hσ : ∀ s, σ (signatureSlotIndex j φ T s) = signatureSlotIndex j φ T' s) (S : Spins) :
     observation j φ T (fun i => S (σ i)) = observation j φ T' S := by
   have htarget : σ (targetIndex j φ) = targetIndex j φ := hσ none
   have hrun := skeleton_execution_transport T T' h.1
@@ -162,7 +241,7 @@ private theorem signature_observation_transport (j : Bool) (T T' : ReadTree)
       · have active' : (t' - φ.toInt) % 2 = 0 := by omega
         have hm := hσ (some (p, false))
         have hp := hσ (some (p, true))
-        simp only [slotIndex, ht, ht', ite_eq_left active, ite_eq_left active',
+        simp only [signatureSlotIndex, ht, ht', ite_eq_left active, ite_eq_left active',
           Bool.toInt_false, Bool.toInt_true, add_zero] at hm hp
         simp only [visible, ite_eq_left active, ite_eq_left active', hm, hp]
       · have active' : (t' - φ.toInt) % 2 ≠ 0 := by omega
@@ -190,7 +269,7 @@ theorem same_signature_observation_law (j : Bool) (T T' : ReadTree)
   have conditional (φ : Bool) :
       (spinLaw β).map (observation j φ T) = (spinLaw β).map (observation j φ T') := by
     obtain ⟨σ, hσ⟩ := permutation_of_same_fibers
-      (slotIndex j φ T) (slotIndex j φ T') (finite_slot_range j φ T) (h.2 φ)
+      (signatureSlotIndex j φ T) (signatureSlotIndex j φ T') (finite_slot_range j φ T) (h.2 φ)
     have hm : Measurable (fun S : Spins => fun i => S (σ i)) := by fun_prop
     have hobs : Measurable (observation j φ T) :=
       (measurable_observation j T).comp (measurable_const.prodMk measurable_id)
