@@ -1,99 +1,90 @@
 ---
 name: autonomous-research
-description: Run one bounded autonomous frontier research round in trureturing, from AI deep reasoning that generates candidate results through preregistration, independent proof and information escape checks, settlement and continuation. Use for autonomous theory discovery and research without a supplied result.
+description: Use deep AI reasoning to produce frontier mathematics, formalize it, audit proof and AURIC FIB information escape, and record the next precise boundary.
 ---
 
-# Autonomous Research Round
+# Frontier research and audit improvement
 
-## Scope and authority
+This skill has no authority of its own. `CLAUDE.md`, the applicable specification, and live compiler/judge
+output prevail. It has two loops: research, then evidence-based audit improvement. A theory volume or
+digestion queue is never a topic queue or prerequisite.
 
-This file packages a frontier generation, filtering and continuation workflow; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
+## Research loop
 
-Complete one bounded round: reconcile existing work, generate candidate results by deep reasoning, preregister, independently verify through the existing owners, settle and leave the next round's handoff. Invoke `make -C tools autonomous-research-round`, the one-round entry supplied by the U2 harness layer. That target is not provided by this skill-only base; autonomous execution requires that layer. Its responsibility is stage and seat dispatch, budget/deadline and checkpoint reconciliation, existing make/check routes, settlement and handoff, without caller instructions at each step. If the target is absent, report that named capability gap for dependent execution; independent preparation may continue, but do not claim an automatic round ran. The host supplies repeated invocation through `/goal` or scheduled tasks; this skill supplies no persistent runtime. Its research-hit policy adds neither an admission state nor a human-review gate and does not change `CLAUDE.md` §§3.2–3.3. A valuable application or surprising answer does not authorize an otherwise inadmissible new declaration.
+1. Ask GPT Pro or another available AI to reason deeply and directly propose a result with
+   `python3 tools/scripts/agent/nyx/nyx.py ask <brief-file> <output-file>`. The brief includes
+   `https://github.com/the-omega-institute/trureturing` and `深入思考与推理, 如数学推理按照正式定义定理证明推理`.
+   The domain is open: seek something not previously seen that is worth doing, rather than selecting a topic.
+2. Require definitions, the complete quantified statement, all assumptions, proof/derivation and gaps,
+   proved/assumed/empirical premises, frozen dependencies (`GID`, `statement_id`), affected consumers,
+   and a proposed non-binding fact with its live path. The oracle proposes and reasons; it never verifies.
+3. Require an ordinary escape-registration draft and an AURIC `Application` for the same theorem occurrence:
+   full dependent telescope; actual source, parameter/state/output families; source and specialization/
+   reconstruction bridges; old/added readouts; task and layer order; and evidence obligations. Fix a
+   nontrivial information objective and a capture or boundary route. AI prose remains unverified.
+4. Before directed proof, search repository declarations (including private ones), pinned Mathlib, then
+   admissible third-party Lean libraries. Compare assumptions, quantifiers and consumers; reuse an exact or
+   stronger result instead of wrapping or reproving it. Already terminated units are reused. A changed event,
+   witness or information target needs a fresh preregistered unit preserving the old settlement.
+5. Before any directed probe, computation, solver attempt or Lean implementation, record the candidate,
+   assumptions, proposed live path, admission/use basis, P/I objectives, domain, readouts, task, layers,
+   success/refutation/stopping criteria and deadline in the unit issue. Keep generator, predictor, solver and
+   independent evaluator separate. Prediction seats see only event and assumptions/quantifiers; obtain a
+   Codex prediction and attempt an attributable non-GPT-family prediction, recording capability gaps honestly.
+6. Follow `tools/scripts/agent/research_readouts/README.md`: one unchanged `research-prereg-v1` comment with
+   exactly `event`, `deadline`, `scoring_rule`, `surprise_threshold`, `predictions`; use UTC, binary Brier
+   version 1, valid numeric probabilities, and `[]` for missing predictions. Across body/comments allow at
+   most one preregistration and one terminal block. Before writing GitHub, check complete comments for the same
+   comment. Keep candidate details outside the strict block.
+7. Follow `skills/codex-formalize/SKILL.md` directly for D5 Lean, Blueprint Scribe, Reg, `Application`,
+   and normal formalization delivery. Use `make lean-report-scoped LEAN_TARGETS="<nonempty dotted modules>"`.
+   Kernel checks, accepted axiom closure and current source binding decide truth; formalization may fail, and
+   its concrete diagnostics go back to the reasoning side. The formalization lane obeys “形式化不改判官”.
+8. A research hit requires **P∧I for the same result**, independently evidenced. P requires an independent
+   §3.2 `proof_shape: content` judgment, a non-binding witness on the reduced live path, and §3.3 admission/
+   use obligations. Instantiation, projection, premise substitution, normalization, aliases and dead helpers
+   are bind-only; the witness survives reduction and is neither a restatement nor dispensable. §3.9 remains separate.
+9. I requires a source-faithful compiled `Application` and compiler-report `fib_analysis` through the existing
+   material/source custody chain, establishing the fixed task objective. Capture proves strict old-kernel
+   refinement with lawful same-fiber states whose distinction changes the task. Boundary proves a nontrivial
+   limitation, sufficiency, task constancy/nonconstancy on a fiber, or association/continuation residual bound.
+   P and I are reported separately; neither is a score or admission state.
+10. Bind source, readout, task and layer fields to one implementation and occurrence; preserve full telescope,
+    specialization, reconstruction, Lean terms, axiom closure and compiler/source evidence. Run identity,
+    duplicate and unrelated-coordinate controls on that source/task. Report actual readings and scope,
+    including `unknown`, `unavailable`, `not-applicable`, zeros and precise acquisition gaps; tautological,
+    repetitive or task-irrelevant controls yield no result. `make -C tools auric-fib-analysis` checks tables only.
+11. For a FIB-capable occurrence, report layers separately: microscopic atom, seam, guard, reply, state/kernel,
+    continuation residual, initial/collapsed layers and final unresolved pairs; macroscopic five-mode law and
+    pyramid `x/y/z`, `X/Y/Z`, `w`, `κ/Δ`, `J_f`, and the specified continuation or micro-escape relation.
+    Keep source law, sample and native continuation distinct. Native coordinates require a real source/reader/
+    continuation bridge. Existing examples are `Reg/D5/S0/Diagonal/PigeonholeFiber.lean`,
+    `Reg/D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean`, and
+    `Reg/D5/S3/Estimation/DataProcessing/FiniteHistoryConditionalExpectation.lean`, consumed by
+    `tools/lean-inspector/fib_analysis.py`; arbitrary theorems do not inherit FIB meaning.
+12. Perform §3.7 literature due diligence through §5.11 routes before novelty claims. Inspect readable originals,
+    versions and theorem conditions with an executable carrier; oracle summaries are leads. Use only scoped `literature-attested`, `repo-derived` or `suspected-novel` labels, and keep unread sources as explicit gaps.
+13. Settle at the registered deadline or stopping condition, separating proved/refuted mathematics, invalid
+    attempts, unresolved obstacles, P, I and delivery. Append at most one unchanged `research-terminal-v1`
+   comment using the README's exact keys (`event`, `execution_started_at`, `status`, `settled_at`, `evidence`,
+   `shape_evidence`); status is `proved`, `refuted`, `invalid` or `unresolved`, and invalid/unresolved use
+   null settlement. Evidence entries are exact `url`/verbatim nonempty `excerpt` references; shape evidence
+   is the evaluator's exact `proof_shape: content` or `proof_shape: bind-only`, or null. Then run
+   `make -s -C tools research-readouts ISSUES="<issue numbers>" AS_OF="<UTC cutoff>"`.
+    Missing predictions are not surprise; unresolved is not false; Brier/readout values are not value, ranking, calibration or
+    sufficiency. Leave separate evidence/gaps, controls, literature, boundary and an exact successor in the unit issue; retain
+    only formal results, needed sources and conclusions under §2.10.
 
-Read `CLAUDE.md`, `agents/CONTEXT.md` and the applicable owner below before execution. Use the current goal and actual harness capabilities, rather than inheriting a template's goal or claiming a tool result from its documentation.
+## Audit improvement loop
 
-## 1. Observe and bound the round
-
-Fix the round's time/resource budget, deadline and stopping conditions before generation. For a continuing research line, bound this round's contribution without replacing the line's preregistered success and stopping criteria with an hourly deadline.
-
-Observe the current branch, immutable base, working changes, in-flight PRs and CI, open preregistration issues, `Problems/` dossiers, `Library/`, existing `D5/` results and relevant research-line obstacles for recovery, reuse and duplicate checks. These observations are context for generation, not a queue from which to select topics. Use `git status --short`, `git rev-parse HEAD`, `gh pr list --state open`, `gh issue list --state open --search 'Preregister in:title'`, and the selected PR's `gh pr checks <number>` as applicable. Check query limits/pagination before claiming an exhaustive screen. Unavailable queries are named missing readings, not empty work queues. Respect other worktrees and live workers under `CLAUDE.md` §§5.11, 6.1.
-
-On entry, including in a new session, inspect the existing preregistration issues and research-line records within the current goal and authorization: recover unsettled units first, then reconcile registered successors before fresh generation. Include closed issues when discovering successors: use `gh issue list --state all --search 'Research unit in:title'` and `gh issue list --state all --search 'Preregister in:title'` as applicable, read relevant issue bodies and all comments with `gh issue view <number> --comments`, and follow their result and research-line links. A successor supplies prior results and an exact unresolved boundary to §2's generator; it is not an accepted assignment or a topic-selection stage. Failed or incomplete reads do not establish that any of these sources is empty. Record each missing reading or capability and its dependent candidates/sources and work under §5.9 in the existing preregistration issue or research-line record, or the round report if neither exists; block only dependent work and continue independent generation or verification within the same round budget and deadline. A gap stops the round only when all remaining work that could advance within the stated bounded scope depends on it; report the scope, dependency and unresolved candidates as incomplete work, distinct from idle. The fixed deadline, resource limit and registered stopping conditions still apply.
-
-Before resuming an unsettled unit, reconcile its preregistration and comments with the actual branch/base and working changes, linked PR state and head, CI for that head, registered deadline/resource limits and stopping conditions, and available authorization/capabilities. Check for existing solver/evaluator results and live workers before taking over. Resume only the remaining work under the original criteria; reuse completed work whose evidence and inputs remain current, and do not reset predictions, execution start or deadline. If the deadline or a stopping trigger has already been reached, settle from existing evidence under §5 rather than starting the attempt again. Missing evidence remains unresolved; it is not a negative mathematical answer.
-
-Determine whether a unit has ended from its terminal or owning route's settlement evidence, not merely the issue's open/closed flag. An ended unit, including an invalid or unresolved terminal, is not resumed or solved again and receives no second terminal or altered prediction. If the result is settled but its required reporting is incomplete, finish only that reporting without duplicating an existing terminal. Continuing an ended question requires a fresh preregistration citing the old result and preserving its conclusion and boundaries.
-
-Reuse prior results first. Search repository declarations, including private ones, then pinned Mathlib, then admissible third-party Lean libraries in the order of §3.1; check literature and in-flight work for duplicates and stronger results. Compare statements, assumptions, quantifiers and actual consumers, not just names or import counts. Do not assign implementation for an already solved target or create a wrapper to count it as new work.
-
-## 2. Generate results against two independent evidence columns
-
-Dispatch GPT Pro or another available AI to reason deeply at the frontier and directly propose mathematical results, rather than search for topics to assign. Do not draw research topics from atoms, `search-atoms`, digestion queues or the digestion ledger of existing theory volumes. Atom lookup belongs only to downstream formalization/coverage after a result has been generated. Supply existing results, literature and unresolved boundaries as context for reuse and reasoning, not as a replacement topic queue. Every GPT Pro brief follows `CLAUDE.md` §5.11, including the repository URL and the exact instruction 「深入思考与推理, 如数学推理按照正式定义定理证明推理」.
-
-Require candidate definitions, a complete quantified theorem or construction with parameters and assumptions, a proof/derivation and explicit remaining gaps, the proposed non-binding fact and its live role, direct known dependencies and affected statements/consumers. Require drafts for both ordinary escape registration and the AURIC `Application`: actual source, original theorem occurrence, parameter/state/output families, readouts, task, layers, source/specialization/reconstruction bridges and the evidence obligations for requested readings. The generator remains responsible for the full mathematical proposal even when it cannot execute Lean. Its proof and contract drafts are proposals, not verification. For physical claims, distinguish model consequences from empirical truth and identify proved, assumed and external premises.
-
-Define a research hit by two separately evidenced columns on the **same new result**, following `CLAUDE.md` §§3.2–3.3, 3.9 and `docs/develop/spec/auric_fib_atom_escape_audit_spec.md` §§1, 4, 5, 9:
-
-| Column | Required evidence |
-| --- | --- |
-| **P — proof content** | An independent evaluator establishes `proof_shape: content` and a §3.2 escape witness on the reduced live proof path, with normal admission and §3.3 use obligations satisfied. Bind-only helpers need real consumers under the existing exception and supply no escape content. Ordinary registration and its actual verdict remain governed by §3.9, including disclosure of any unfinished audit under its linked-issue exception. |
-| **I — task information** | A source-faithful, compiled `Application` analysis contract and a preregistered nontrivial information objective for its fixed actual task, established by one of the two routes below. The source bridges and task relevance must be proved; a positive count or a decodable contract alone does not establish I. |
-
-- **Capture route:** prove genuine unique capture by an added readout, or strict refinement of the old joint kernel, and prove how the captured distinction affects the registered task. Witness states belong to the same lawful source/parameter fiber; an extra coordinate that separates states without affecting that task is insufficient.
-- **Boundary route:** prove a nontrivial limitation or sufficiency result for the registered task: lawful realizations with identical old readouts and different task answers, a task's constancy or nonconstancy on observation fibers, or a proved association/continuation residual bound. Preserve the stated domain, quantifiers and task correspondence. This route can establish I without positive unique capture; a restatement of definitions is insufficient for P.
-
-Bind the `Application` to the original compiled occurrence and complete dependent telescope, not a convenient true substitute. All source, readout, task and layer fields must refer to the same actual implementation; state explicit specialization and reconstruction maps. Verified correspondence requires this client's Lean proof terms, accepted axiom closure and current compiler/source binding evidence; compiling an interface alone is insufficient. Keep states/histories, source laws and readout catalogs distinct. Request finite counts/rates or FIB coordinates only with their additional source, finite-presentation, reflection and law evidence under the AURIC specification; qualitative kernels and source contracts do not require those optional acquisitions. Ordinary proof registration and information analysis are independent: neither validates the other or changes its verdict.
-
-Before directed proof, fix the domain, old/added readouts, task, layer order, information objective and chosen route. Do not change them after observing outcomes to claim a hit; a changed target or witness needs a fresh preregistration preserving the old settlement. Report P and I separately, with evidence or named gaps. These are research evidence columns, not new repository admission states. Do not impose `δ=0` or either `ε` endpoint as a rejection gate: zero unique capture does not imply absent proof content, and exact finite `ε=0` describes injectivity, not novelty. Do not sum proof escape, information gain, surprise, cost or research value into a total, ranking proxy or new value function.
-
-Check three controls on the same lawful source and task: **identity readout** can remove all collisions by returning the state but that tautology is not new content; **duplicate readout** preserves the joint kernel and has no unique capture; **unrelated coordinate** may refine a kernel while leaving the task unaffected. Report their actual readings and scope, including zero or unavailable readings, and do not settle any of these effects as a new research result. Do not enlarge the source or change the task to manufacture a favorable control. A control that cannot be lawfully instantiated has that specific gap, not an invented value.
-
-For claims about declaration-level consumers, use `make -s -C tools compiled-dependencies` with the fixed revision and explicit finite module domain in `tools/scripts/agent/research_readouts/README.md`. Preserve acquisition/completeness and the distinction between type/constructor, raw value and module-import edges. Missing data is unmeasured, not zero; private intermediates carry paths without adding public users. Raw value occurrence is not §3.2's reduced live-path test, indispensability, an escape witness or research value; a finite query establishes no whole-D5 ordering.
-
-## 3. Preregister before directed proof; isolate predictions
-
-After exploratory generation and before any directed mathematical probe, solver attempt, computation or Lean implementation, preregister the quantified binary event, assumptions, proposed non-binding fact and its intended live path, P/I obligations and the fixed information objective from §2. Fix success, refutation and stopping criteria, exact deadline/resource limits, affected statements, intended proof shape and admission/use basis, literature scope and seat ownership in the existing preregistration issue or research-line record. Generated proof drafts do not count as independent settlement; an already settled result is reused, not repackaged as a new prediction experiment. A probe that might settle the event also requires this prior registration. No post-hoc witness or prediction is accepted.
-
-Give prediction seats **only the event and its assumptions/quantifiers**, with no generated proof, proposed witness, contract solution, probe result or solver output. Obtain and freeze their probabilities before directed execution; prediction seats do not solve or validate the unit. Keep generator, predictor, solver and independent evaluator roles separated; no seat evaluates its own proposal or implementation. Oracle seats may generate, reason or predict but never run verification, judge proof shape/fidelity or supply validation results. Codex executes downstream Lean/kernel, axiom-closure, registration, Application and required-check verification. Try a genuinely different available model family for generation or prediction, measure actual availability and report actual families; absence is a named limitation, not a diversity claim or a reason to misassign validation to an oracle.
-
-For machine-recomputable predictions, use the unchanged preregistration-comment block in `tools/scripts/agent/research_readouts/README.md`: fix the event, seat/model-family probabilities, binary Brier rule/version, surprise threshold and deadline before substantive execution. The registration stamp comes from the carrier, not a later payload edit. Keep P/I objectives, source/readout/task/layer contracts, controls, continuity links and successor text outside the strict `research-prereg-v1` and `research-terminal-v1` JSON blocks; use those blocks unchanged, without extra fields or edits to prior blocks. Changed events or witnesses require fresh preregistration before further directed work, never an overwritten prediction or settlement.
-
-Then run budgeted reuse/binding/normalization probes through §4. A failed cheap probe is only a bounded observation, not proof of difficulty or content. Route known or wholly bind-only internal results to reuse without filler Lean or a harder variant manufactured to pass a screen. High predictor confidence does not determine proof shape or reject content. After two consecutive bind-only targets outside the external named-problem exception, change representation under §3.2 before new generation. An external named problem still needs §3.6's verbatim source, full statement, tier and scoped literature readings before any probe; internal descendants cannot inherit `open-problem-resolution` from their parent. That existing exception can permit delivery with bind-only shape, but does not establish P or a two-column research hit.
-
-Before formal novelty language or delivery, perform §3.7 literature due diligence using codex network search, Claude Code `WebSearch`/`WebFetch` or GPT Pro search for legally readable original sources. Follow §5.11's alternate reading routes; Firecrawl is optional. An executable carrier or orchestrator must obtain and inspect the original text, version and theorem conditions; an oracle summary is a search lead, not verification. Keep the minimal scoped findings and source evidence in their existing owner. Use `literature-attested` for known results and `repo-derived` for repository derivations; use `suspected-novel` only after serious scoped search found no prior result and source checks were completed. An unread source remains a specific unverified gap; no global originality claim follows from a search miss.
-
-Advance at most one active unit per round. A registered successor cites its source unit/result and exact unresolved statement, and must satisfy current reuse, preregistration, P/I, admission and use rules; its predecessor's judgment does not transfer. If completed generation/filtering yields no eligible new result, report idle with the bounded scope and dispositions; do not create filler Lean or an idle-state file. Incomplete reads/capabilities follow §1's dependent-work rule and are not a completed empty screen.
-
-## 4. Route through the existing owner
-
-| Work | Owner and entry |
-| --- | --- |
-| Repository-first reasoning, exact applications, premise bridges and ordinary explanation | `skills/formal-thinking-and-answer/SKILL.md`; use its evidence and retention rules. |
-| New admissible Lean/Scribe content, downstream atom lookup, freezing and coverage | `skills/codex-formalize/SKILL.md`; it owns the canonical make doors and does not require a theory volume first. Atom lookup checks overlap/coverage, never supplies this round's research topic. |
-| A generated result addressing an external named open problem | `CLAUDE.md` §3.6 and `tools/scripts/agent/openproblem/README.md`: first-tier problems use probe, Stage A, pre-freeze form/mirror checks, Stage B and independent three-seat review. Reuse `tools/scripts/agent/openproblem/prereg-readings.sh` for OEIS readings when appropriate; read its actual arguments and outputs. This route does not replace direct generation with a search-for-topics phase. |
-| Computational frontier, core problem, incomplete family/proof route, or an internal candidate requiring sustained research | The §3.6 research line: obstacle record, sublemma DAG, preregistered success/refutation/stop conditions, reasoning/literature support and codex sublemma execution. Each formal delivery uses the existing formalization route. Internal candidates need their own §3.2 admission basis and §3.3 use justification. |
-| Already solved or wholly bind-only internal target | Reuse the existing result without a new Lean wrapper. `codex-formalize` owns any low-cost canonical coverage/settlement needed under §1.2; do not keep researching to perfect bookkeeping. |
-| A genuinely needed theory exposition or externally authored theory ingestion | `skills/theory-volume-template/SKILL.md` or `skills/codex-theory-ingest/SKILL.md`, respectively, only when their scope applies. Neither is a prerequisite for formalization. |
-
-The openproblem operational documentation and templates remain subordinate to current `CLAUDE.md`. Its `tools/scripts/agent/openproblem/gen_review.py` requires an oracle validation seat, so do not invoke it for review. Use the current §5.11 sshx layout with all validation, including form/fidelity, architecture, quality and tests, on codex-cli; oracle only reasons. Do not run a downstream path that regenerates an oracle review assignment. Check other pipeline helpers' actual contracts before using them; do not inherit a fixed GoalArtifact from `tools/scripts/agent/openproblem/templates/impl-base-brief.md`. Reuse applicable stages with the actual unit's target and authority intact, without copying or rewriting the pipeline here.
-
-Run within existing worktree, publication and machine-check contracts. This skill does not expand authorization for other branches, external writes or private experiment storage. A real authorization/capability gap is reported specifically; no additional human-review gate is introduced.
-
-## 5. Settle and reason forward
-
-At the deadline or a registered stopping trigger, settle the unit using the preregistered criteria and the existing local-settlement vocabulary of §2.7. Separate proved/refuted claims, invalid attempts and unresolved obstacles; an incomplete run does not prove either answer. Report P and I independently for the same result; neither an admitted result with missing I nor information gain without P is a two-column research hit. An unresolved long-line substep keeps its line's broader criteria. Record actual checks and their scope; local success is not remote required-CI success, and publication is not merged delivery. The controller performs settlement and handoff within the invocation; a crash leaves only the minimal untracked recovery checkpoint for reconciliation under §1, not a reset attempt or a claim of settlement.
-
-Then perform §3.6's post-settlement reasoning in an existing external problem dossier's `## Triage`, marking each statement proved, computed or unresolved. `Problems/` accepts only questions explicitly posed by external literature authors, with a resolvable bibkey and matching DOI/URL under spec §11.20.3. Keep internal candidates' results and boundaries in their existing research-line or formal-result owner; do not create an internal `Problems/` dossier or a second store. A refutation should explain the failed mechanism, missing condition, surviving weaker forms and effects on dependent claims. A proof should identify its mechanism or invariant, potential generality, tightness and neighboring applications, and the effects on dependent claims. Keep this as mathematical results and boundaries, not a session narrative.
-
-For every non-idle round, retain the necessary mathematical conclusions, unresolved boundaries and an exact successor candidate in the unit's original preregistration issue or existing research-line record. Include links to the source result/evidence, the fully quantified successor statement and assumptions, and the checks still needed; if no successor was identified, state why, including any missing readings. Keep formal results in their existing owner and link them rather than duplicating them. New candidates require their own preregistration, P/I evidence and admission/use basis; proposing one does not start another round. This existing carrier gives the next invocation its recovery and reasoning context; it is not a digestion/topic queue. Do not add a candidate store, global index or latest pointer. For idle rounds, report the bounded generation scope, dispositions and next useful reasoning direction or its absence without inventing a mathematical settlement, dossier edit or main-repository state file. Distinguish completed filtering with no eligible result from incomplete work due to failed reads or missing capabilities; report the latter as a named gap, not an empty queue.
-
-## 6. Evidence limits and retained output
-
-For prediction scores and five-mode readings, use `make -s -C tools research-readouts ISSUES="<issue numbers>" AS_OF="<UTC cutoff>"` or the stdin snapshot route in `tools/scripts/agent/research_readouts/README.md`. The implementation is `tools/scripts/agent/research_readouts/readouts.py`. Append its unchanged terminal block with the recorded execution start and existing settlement/§3.2 evidence; let the tool recompute scores and modes. Report all five counts, X/Y/Z, denominators, scoring/mode coverage and missingness. A missing prediction never yields y; an unresolved answer is never scored as false. Distinguish structural zeros under z=1 from measured surprise, and do not backfill historical probabilities. The arithmetic checks references and recorded timing; the owning evaluator still checks mathematical fidelity, live-path shape and seat independence. Brier scores measure prediction error, not research value or mathematical information. This command supplies neither residual sufficiency (`residual_sufficiency`) nor a value function f; do not infer them, calculate E[f] or a ranking, or automatically adjust source quotas. Task sufficiency requires its own source-faithful proof using existing results where applicable; missing evidence stays a named gap. A qualitative discrimination judgment does not establish calibration.
-
-Consume `Application` readings from the normal compiler report's `fib_analysis` partition through the existing material/source custody chain in AURIC spec §9. Keep source, domain, task, layers and acquisition evidence with each reading. The independent JSON entry `make -C tools auric-fib-analysis` computes supplied-table arithmetic only; it authenticates neither the source nor an Application and cannot establish I. Report structural kernels, unique capture and the layer spectrum as acquired, keeping initial/collapsed layers and final unresolved pairs. Use native FIB coordinates/residuals only with their actual native source/reader/continuation bridge; arbitrary new theorems do not inherit the `native_execution` adapter. Classify each missing reading by the specification's existing `unknown`, `unavailable` or `not-applicable` acquisition explanations, with the precise reason, never as zero or a new admission verdict. Request finite rates only for a certified complete finite arena with N>1; dependent/infinite domains may retain qualitative structure. Content work does not change Inspector or judges to obtain a preferred reading.
-
-Retain only formal results, necessary source/literature evidence, conclusions and unresolved boundaries in their existing owners under §2.10. Experimental programs, data and reports belong to the private experiments repository under its actual write authorization. Do not add probe programs, question-card stores, aggregate scoreboards, review transcripts, command streams or receipt copies to the main repository. Do not commit aggregates (§4.5); compute legitimate summaries on demand. The session's ephemeral working notes are not deliverables.
-
-Report the generated/resumed unit or idle outcome, what was solved or remains unresolved under the registered tests, P and I with their separate evidence and limits, control and literature findings, affected existing results, where any retained result landed, and the next handoff or its absence. Distinguish research progress, verified mathematical truth and delivery state; a bounded successful round proves neither perpetual scientific success nor global originality.
+14. After each unit, record evidence-backed audit improvement candidates in the existing issue: missing escape or
+    FIB readings and causes (fixed adapters, absent bridges, unavailable readers), non-machine semantic steps such
+    as proof shape, trivially inflated readings, and specification/implementation mismatches. Keep P and FIB readouts
+    separate; never invent a total score, threshold or admission gate.
+15. When the same concrete deficiency recurs, improve its adapter, source bridge, readout, analyzer or judge in an
+    independent tools/judge lane under `CLAUDE.md` §§8.12 and 8.14. The research/formalization lane does not
+    modify `tools/**`, `.github/**` or judge surfaces; it reports exact evidence and continues with the boundary.
+    Do not add machinery for hypothetical inputs.
+16. If the deficiency is in this procedure, revise this skill from recorded evidence. If it requires an owner-
+    authorized rule change, record the concrete case for the normal `CLAUDE.md` or specification review path. Every
+    improvement states the observed failure, smallest change, test reading and remaining unknown, and never rewrites a prior settlement.
