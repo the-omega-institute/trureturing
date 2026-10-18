@@ -1746,3 +1746,283 @@ The original fibre-block contraction constraints are preserved. These transforma
 The attaining pair in §107.4 and both exact-rank families in §107.5 already satisfy simultaneous cyclic symmetry. They therefore establish the minimum and infima for the larger class of this corollary. \(\square\)
 
 The averaging in (107.27) is justified because the other Gram is fixed and invariant. Independent cyclic averaging of two varying Grams need not preserve their product or improve the complete error. No reduction of an arbitrary pair to the class of Corollary 107.2 is asserted. The general residual alternatives of Theorem 106.5 and the unrestricted global quarter optimum remain unresolved.
+
+## 108. Original-channel bounds from one group-translation-invariant Gram
+
+### 108.1. Original group action and statement
+
+Let $\Gamma$ be an abelian group of order eight, written additively, and choose an element $h$ of order two. Label the original eight coordinates by $\Gamma$ so that the original fibres are precisely the pairs $\{x,x+h\}$. Retain the two original local CPTP maps, the fixed correlated encodings and the unhalved arbitrary-reference error $\delta(A,B)$ of §107.1. The target coefficient matrix has diagonal entries one, partner entries zero and entries one half between different original fibres. The correct-output forward Grams $G,H$ satisfy $0\le G_{ff},H_{ff}\le I_2$, including arbitrary original leakage.
+
+For $a\in\Gamma$, write $P_a|x\rangle=|x+a\rangle$. Translation invariance of a Gram means $`P_aGP_a^*=G`$ for every $a\in\Gamma$. The specified action on the original fibres is part of the hypothesis.
+
+**Theorem 108.1.** If either correct-output Gram is translation-invariant, then
+
+$$
+ \delta(A,B)\ge\sqrt2-1.
+ \tag{108.1}
+$$
+
+The same conclusion holds after reciprocal diagonal unitary phases and a common original-fibre-preserving coordinate relabeling. If $\Gamma=(\mathbb Z/2\mathbb Z)^3$, the bound strengthens to $\delta(A,B)\ge1/2$.
+
+The constant $\sqrt2-1$ is sharp over the union of these abelian classes. It is sharp separately for $\Gamma=\mathbb Z/8\mathbb Z$, $h=4$, and for $\Gamma=\mathbb Z/4\mathbb Z\times\mathbb Z/2\mathbb Z$, $h=(2,0)$, with calibrated physical rank-$(3,3)$ attainers. No sharpness assertion is made for the elementary-abelian action or for the action with $h=(0,1)$ in $\mathbb Z/4\mathbb Z\times\mathbb Z/2\mathbb Z$.
+
+### 108.2. Character coordinates and the original complete norm
+
+**Proof.** Begin with two calibrated, translation-invariant Grams. Let $\widehat\Gamma$ be the character group, written additively, and let $0$ denote its trivial character. Define
+
+$$
+ (C_\chi)_{xy}=\chi(y-x),\qquad P_\chi=C_\chi/8.
+ \tag{108.2}
+$$
+
+Character orthogonality makes the $P_\chi$ mutually orthogonal rank-one projections summing to the identity. Translation-invariant matrix entries depend only on $y-x$, so these character vectors diagonalize every such matrix. Consequently a translation-invariant positive semidefinite Gram has a unique expansion $G=\sum_\chi g_\chi C_\chi$ with $g_\chi\ge0$.
+
+The two sets
+
+$$
+ E=\{\chi:\chi(h)=1\},\qquad O=\{\chi:\chi(h)=-1\}
+ \tag{108.3}
+$$
+
+have four elements each, and $O$ is a coset of the subgroup $E$. Calibration is equivalent to
+
+$$
+ \sum_{\chi\in E}g_\chi=\sum_{\chi\in O}g_\chi=\tfrac12.
+ \tag{108.4}
+$$
+
+Indeed the total sum is the diagonal coefficient and the difference of these sums is the partner coefficient. Write the coefficients of $H$ as $b_\chi$. Since $C_\chi\odot C_\psi=C_{\chi+\psi}$, the coefficients of $K=G\odot H$ are the convolution $`c=g*b`$, with total mass one half on each of $E,O$.
+
+Let $J_{\rm all}$ denote the all-ones matrix. The target satisfies $T=(J_{\rm all}+I-P_h)/2$. Its character coefficients are $t_0=1/2$, $t_\chi=0$ for $\chi\in E\setminus\{0\}$, and $t_\chi=1/8$ for $\chi\in O$. Thus the eigenvalues of $L=T-K$ are $\ell_\chi=8(t_\chi-c_\chi)$, with sum zero separately in each parity sector.
+
+The exact original calibrated complete norm is
+
+$$
+ \begin{aligned}
+ F(G,H)&=\max\{E_0,O_0\},\\
+ E_0&=2\sum_{\chi\in E}|t_\chi-c_\chi|,
+ &O_0&=2\sum_{\chi\in O}|t_\chi-c_\chi|.
+ \end{aligned}
+ \tag{108.5}
+$$
+
+To verify the normalization, use the complete fibre-block formula (107.7). The original densities $(I+P_h)/8$ and $(I-P_h)/8$ have eigenvalue $1/4$ on their respective character sectors. Taking $W$ equal to one quarter of the corresponding positive spectral projection gives $E_0$ and $O_0$, because each sector's eigenvalue sum is zero. Conversely, $Z=|L|$ dominates $L$ and $-L$. Every original fibre block of $Z$ is $\left(\begin{smallmatrix}d&b\\b&d\end{smallmatrix}\right)$, since character values at $h$ are real signs; its eigenvalues are exactly $E_0,O_0$. Hence $Z_{ff}\le\max(E_0,O_0)I_2$, giving the matching majorant. This proves (108.5) for the original channel norm, including arbitrary references and operator inputs.
+
+### 108.3. Coincident or distinct dominant character locations
+
+Choose $\omega\in O$ and index four probability distributions by $E$:
+
+$$
+ p_x=2g_x,\quad q_x=2g_{\omega+x},\quad
+ r_x=2b_x,\quad s_x=2b_{-\omega+x}.
+ \tag{108.6}
+$$
+
+Set $A=\sum_xp_xr_{-x}$ and $B=\sum_xq_xs_{-x}$. Then $c_0=(A+B)/4$, and (108.5) gives $E_0=2-A-B$. If $E_0\ge1/2$, both conclusions follow. Otherwise $A,B>1/2$.
+
+For two probability distributions with inner product $a>1/2$, each unique maximum exceeds one half. Those maxima occur at the same position: if their positions differ and their heights are $m,n$, splitting the sum at the first position bounds it by $m(1-n)+(1-m)n<1/2$. At a common peak, $a\le mn+(1-m)(1-n)$. Therefore $(m+n-1)^2\ge(2m-1)(2n-1)\ge2a-1$, and $m+n\ge1+\sqrt{2a-1}$.
+
+Apply this to $(p_x,r_{-x})$ and $(q_x,s_{-x})$. Their peaks occur at $u,-u,v,-v$, respectively. Writing the four peak heights as $m_p,m_r,m_q,m_s$, we obtain
+
+$$
+ m_p+m_r\ge1+\sqrt{2A-1},\qquad
+ m_q+m_s\ge1+\sqrt{2B-1}.
+ \tag{108.7}
+$$
+
+The dominant $`p*s`$ contribution lies at $\chi_1=-\omega+u-v$, and the dominant $`q*r`$ contribution lies at $\chi_2=\omega+v-u=-\chi_1$. Put $S=\{\chi_1,\chi_2\}\subset O$. These locations may coincide; their contributions still add. Hence
+
+$$
+ \sum_{\chi\in S}c_\chi\ge\tfrac14(m_pm_s+m_qm_r),
+ \qquad O_0\ge m_pm_s+m_qm_r-\tfrac{|S|}{2}.
+ \tag{108.8}
+$$
+
+For the second inequality, the vectors $(c_\chi)_{\chi\in O}$ and $(1/8)_{\chi\in O}$ have equal total mass. Their $\ell^1$ distance is at least twice the excess on any subset; (108.5) supplies the additional factor two.
+
+Since $|S|\le2$ and $xy\ge x+y-1$ on $[0,1]^2$,
+
+$$
+ O_0\ge\sqrt{2A-1}+\sqrt{2B-1}-1
+       \ge\sqrt{1-2E_0}.
+ \tag{108.9}
+$$
+
+For the last step, put $X=2A-1$, $Y=2B-1$. These lie in $(0,1]$, satisfy $X+Y=2-2E_0$ and $XY\ge X+Y-1$, and therefore satisfy $\sqrt X+\sqrt Y\ge1+\sqrt{X+Y-1}$ by squaring nonnegative quantities. The increasing function $E_0$ and decreasing function $\sqrt{1-2E_0}$ meet at $E_0=\sqrt2-1$. This proves (108.1), including $E_0=0$ and the separately treated branch $E_0\ge1/2$.
+
+If $\Gamma=(\mathbb Z/2\mathbb Z)^3$, every character has order at most two. Thus $\chi_1=\chi_2$ and $|S|=1$. The same calculation improves (108.9) to
+
+$$
+ O_0\ge\tfrac12+\sqrt{1-2E_0}>\tfrac12
+       \quad\text{when }E_0<\tfrac12.
+ \tag{108.10}
+$$
+
+The other branch already has $E_0\ge1/2$, proving the additional elementary-abelian bound.
+
+### 108.4. One-party invariance, leakage and sharpness
+
+Suppose now that the calibrated Gram $G$ alone is invariant. Each translation permutes the four original fibres, fixes $T$ and bijects the full fixed witness domain in (107.7). Averaging only the other Gram gives
+
+$$
+ \overline H=\tfrac18\sum_{a\in\Gamma}P_aHP_a^*,
+ \qquad
+ F(G,\overline H)\le\tfrac18\sum_{a\in\Gamma}F(G,P_aHP_a^*)=F(G,H).
+ \tag{108.11}
+$$
+
+The inequality follows from convexity with $G$ fixed, and the equality from its invariance and witness-domain covariance. The average is positive semidefinite, calibrated and translation-invariant. Thus §§108.2–108.3 apply. Interchanging the parties covers the other possibility. The averaging may change rank.
+
+For arbitrary original leakage, complete both Grams by adding their positive semidefinite original fibre-block deficits, as in (107.23). An invariant $G$ has the same block $\left(\begin{smallmatrix}d&c\\c&d\end{smallmatrix}\right)$ on every fibre, with $c$ real. Its completion adds $(1-d)I-cP_h$, which is still invariant. The other completion needs no symmetry. The original product blocks satisfy $G_{ff}\odot H_{ff}\le I_2$, so $L-\widetilde L$ is positive semidefinite and fibre-block diagonal. The original tagged-reference bound of RT III §91 therefore gives $\delta\ge\mathcal B(L)\ge\mathcal B(\widetilde L)=F(\widetilde G,\widetilde H)$. Apply (108.11) to the completed pair. Reciprocal diagonal phases cancel in the full product, while a common fibre-preserving relabeling simultaneously reindexes $K,T$ and the witness domain. The actual original-channel operations in §107.7 prove the optional phase and relabeling statement with the same error.
+
+The cyclic attainer of §107.4 proves the first sharpness assertion. For the second, take $\Gamma=\mathbb Z/4\mathbb Z\times\mathbb Z/2\mathbb Z$, $h=(2,0)$, and identify its characters with pairs $(a,b)$, evaluated by $\chi_{a,b}(x,y)=i^{ax}(-1)^{by}$. Put $\chi=(1,0)$, $\psi=(1,1)$, and $m=1/\sqrt2$. Define
+
+$$
+ \begin{aligned}
+ G&=\tfrac12C_0+\tfrac m2C_\chi+\tfrac{1-m}{2}C_\psi,\\
+ H&=\tfrac12C_0+\tfrac m2C_{-\chi}+\tfrac{1-m}{2}C_{-\psi}.
+ \end{aligned}
+ \tag{108.12}
+$$
+
+The four odd characters $\chi,\psi,-\chi,-\psi$ are distinct. Both Grams are calibrated of rank three. The character records $(\sqrt{g_\eta}\eta(x))_\eta$, together with the correct output-fibre labels, give original Stinespring isometries because partner records are orthogonal. Here $A=1$, $B=m^2+(1-m)^2$, so $E_0=2m(1-m)=\sqrt2-1$. The odd coefficients at $\chi,-\chi$ are $m/4$, and those at $\psi,-\psi$ are $(1-m)/4$. Thus $O_0=2m-1=\sqrt2-1$. Equation (108.5) proves exact original complete-norm attainment. $\square$
+
+The character diagonalization and convex symmetry reduction are standard intermediate tools. The spectral-majorant technique is credited in §107.2 to Regula, Takagi and Gu; the original fibre normalization and probability estimate used here have been proved explicitly. No independent averaging of two varying Grams is justified by (108.11). These translation hypotheses remain substantive, and neither the general residual alternatives of Theorem 106.5 nor the unrestricted global quarter optimum are resolved.
+
+### 108.5. Central partner actions of the two nonabelian groups
+
+Let $\Gamma$ now be the dihedral group $D_8$ of order eight or the quaternion group $Q_8$, and let $z$ be its central involution. Label the original coordinates by $\Gamma$, with original fibres $\{x,xz\}$, and write $P_a|x\rangle=|ax\rangle$. Left-translation invariance means $`P_aGP_a^*=G`$ for all $a$, equivalently $G_{xy}=g(x^{-1}y)$. All channel, encoding, leakage and norm conventions of §108.1 are retained.
+
+**Theorem 108.2.** If either correct-output Gram is left-translation-invariant for either of these central partner actions, then
+
+$$
+ \delta(A,B)\ge\tfrac12.
+ \tag{108.13}
+$$
+
+The conclusion also holds after the reciprocal phase changes and original-fibre-preserving relabelings of §107.7. For each group the bound is sharp, with an explicit calibrated physical rank-$(3,3)$ attainer. Its infimum is also $1/2$ in each corresponding calibrated exact-rank class $(7,4)$ and $(7,5)$ with full-support first kernel.
+
+The central-partner condition is substantive. In particular the theorem does not assert the same bound for $D_8$ when a noncentral reflection defines the original partner operation.
+
+### 108.6. Representation coefficients and a coherent original-input bound
+
+**Proof.** First assume both Grams are calibrated and invariant. Use the following faithful two-dimensional unitary representation $U$. For $Q_8$, take the eight matrices $\{\pm I,\pm iX,\pm iY,\pm iZ\}$, with $X,Y,Z$ the Pauli matrices. For $D_8$, use
+
+$$
+ U(r)=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
+ \qquad U(s)=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+ \qquad r^4=s^2=e,\quad srs=r^{-1}.
+ \tag{108.14}
+$$
+
+In both cases $U(z)=-I$. The four one-dimensional characters are the real sign characters of $\Gamma/\{e,z\}\cong(\mathbb Z/2\mathbb Z)^2$; denote their set by $E$. Directly from the eight displayed matrices,
+
+$$
+ \sum_{x\in\Gamma}\overline{\chi(x)}\psi(x)=8\delta_{\chi\psi},
+ \qquad
+ \sum_{x\in\Gamma}\overline{U(x)_{ij}}U(x)_{kl}
+       =4\delta_{ik}\delta_{jl}.
+ \tag{108.15}
+$$
+
+Mixed character/matrix-entry sums vanish: the characters are even under $x\mapsto xz$, and the matrix entries are odd. These eight orthogonal functions span all functions on $\Gamma$, giving the regular representation's decomposition into the four characters and two copies of $U$.
+
+Every invariant positive semidefinite Gram consequently has
+
+$$
+ g(x)=\sum_{\chi\in E}a_\chi\chi(x)+\operatorname{Tr}(MU(x)),
+ \qquad a_\chi\ge0,\quad M\succeq0.
+ \tag{108.16}
+$$
+
+Here is a direct positivity justification. Choose records $v_x=G^{1/2}|x\rangle$. Invariance makes left translation unitary on their span and sends $v_e$ to $v_x$. Resolve $v_e$ into the four character spaces and the $U$-multiplicity space from (108.15). The squared norms in the character spaces give $a_\chi$. The partial trace of the odd vector's positive outer product over the multiplicity space is $M$, whose matrix coefficient is the last term of (108.16). Conversely every such expression is a sum of Gram kernels. Equivalently, the normalized character and matrix-entry basis puts $G$ into blocks $8a_\chi$ and two copies of $4M^{\mathsf T}$. Thus
+
+$$
+ \operatorname{rank}G=|\{\chi:a_\chi>0\}|+2\operatorname{rank}M,
+ \qquad
+ \sum_{\chi\in E}a_\chi=\operatorname{Tr}M=\tfrac12.
+ \tag{108.17}
+$$
+
+The last two equalities are exactly $g(e)=1$, $g(z)=0$. Write the second Gram function as $b(x)=\sum_\chi b_\chi\chi(x)+\operatorname{Tr}(NU(x))$, with the same nonnegativity and half-mass constraints.
+
+The original product coefficient function is $k(x)=g(x)b(x)$. Its trivial-character coefficient is
+
+$$
+ c_0=\tfrac18\sum_xg(x)b(x)
+     =\sum_\chi a_\chi b_\chi+
+           \operatorname{Tr}[(M\otimes N)\Pi],
+ \qquad \Pi=\tfrac18\sum_xU(x)\otimes U(x).
+ \tag{108.18}
+$$
+
+The mixed even/odd terms vanish. The four characters are real and self-inverse, so their pairing in (108.18) has exactly the displayed indices. The tensor term is the ordinary trace identity for the actual Hadamard product.
+
+The group average $\Pi$ is the orthogonal projection onto the invariant vectors of $U\otimes U$. Its trace is one: $\operatorname{Tr}U(x)$ is zero except at $e,z$, where it is $2,-2$, and therefore $\operatorname{Tr}\Pi=(4+4)/8=1$. For $D_8$ its invariant unit vector is $(|00\rangle+|11\rangle)/\sqrt2$, since $U$ is real orthogonal. For $Q_8$ it is $(|01\rangle-|10\rangle)/\sqrt2$, since $U$ is special unitary. Both are maximally entangled.
+
+For any two density matrices $\tau,\sigma$, the expectation of $\Pi$ in $\tau\otimes\sigma$ is at most $1/2$. For pure product vectors this is Cauchy–Schwarz applied to either displayed invariant vector; decomposing the two densities into pure states proves the general case by linearity. Apply this with $\tau=2M$, $\sigma=2N$. Equation (108.18) gives
+
+$$
+ c_0\le\Bigl(\sum_\chi a_\chi\Bigr)
+             \Bigl(\sum_\chi b_\chi\Bigr)+\tfrac18
+       =\tfrac38.
+ \tag{108.19}
+$$
+
+Let $C_0$ be the all-ones matrix, and let $R_z|x\rangle=|xz\rangle$. The row sums of $K$ and $T$ are $8c_0$ and four, so the uniform vector is an eigenvector of $L=T-K$ with eigenvalue $\lambda_0=4-8c_0\ge1$. The original fibre-block density and witness
+
+$$
+ \rho=(I+R_z)/8,\qquad W=C_0/32
+ \tag{108.20}
+$$
+
+satisfy $\operatorname{Tr}\rho=1$ and $0\le W\le\rho$: $\rho$ has eigenvalue $1/4$ on the $z$-even space, containing the uniform vector. Formula (107.7) now gives
+
+$$
+ F(G,H)\ge2\operatorname{Tr}(LW)=\lambda_0/2\ge\tfrac12.
+ \tag{108.21}
+$$
+
+This has the original unhalved normalization. The density is realized by the no-reference uniform coherent input; the feasible witness extracts a lower bound from that output. No norm formula for a differently normalized irreducibly covariant channel is used.
+
+### 108.7. Physical attainers and exact-rank infima
+
+For $Q_8$, choose $v=|0\rangle$, $w=|1\rangle$. For $D_8$, choose $v=(|0\rangle+i|1\rangle)/\sqrt2$, $w=(|0\rangle-i|1\rangle)/\sqrt2$. In each case $v,w$ are orthonormal. Define records in $\mathbb C\oplus\mathbb C^2$ by
+
+$$
+ a_x=\frac{1\oplus U(x)v}{\sqrt2},\qquad
+ b_x=\frac{1\oplus U(x)w}{\sqrt2}.
+ \tag{108.22}
+$$
+
+They are unit vectors and their partner records are orthogonal because $U(z)=-I$. The maps $|x\rangle\mapsto|x\{e,z\}\rangle\otimes a_x$, and similarly for $b_x$, are therefore original Stinespring isometries with the fixed correlated encodings. The record span is three-dimensional: its even constant component is independent of the odd orbit, and the irreducible $U$ orbit spans two dimensions. Both local Kraus ranks are exactly three.
+
+Put $`f_v(x)=v^*U(x)v`$, $`f_w(x)=w^*U(x)w`$. Their sum is $\operatorname{Tr}U(x)$. For $Q_8$, their product is the indicator of $\{\pm I,\pm iZ\}$; for $D_8$, it is the indicator of the rotation subgroup. Consequently a nontrivial even sign character $\chi$ satisfies
+
+$$
+ f_v(x)f_w(x)=\frac{1+\chi(x)}2,\qquad
+ \operatorname{Tr}U(x)=2\mathbf1_{x=e}-2\mathbf1_{x=z}.
+ \tag{108.23}
+$$
+
+Since $g=(1+f_v)/2$ and $b=(1+f_w)/2$, direct multiplication gives
+
+$$
+ k(x)=\tfrac38+\tfrac18\chi(x)+\tfrac14\operatorname{Tr}U(x),
+ \qquad L=\tfrac18(C_0-C_\chi),
+ \tag{108.24}
+$$
+
+where $(C_\chi)_{xy}=\chi(x^{-1}y)$. The eigenvalues of $L$ are $+1,-1$ and six zeros. Its absolute value $Z=(C_0+C_\chi)/8$ has every original fibre block equal to the all-ones two-by-two matrix divided by four, with eigenvalues $1/2,0$. Thus $Z\succeq\pm L$ and $Z_{ff}\preceq I_2/2$, providing the complete-norm majorant matching (108.21). The physical error is exactly one half.
+
+For the rank infima, choose an auxiliary first Gram in (108.16) with $a_\chi=1/6$ on three even characters including the trivial character, zero on the fourth, and $M=I_2/4$. Mix it with the first attaining Gram using any weight $0<\varepsilon<1$. Equation (108.17) gives rank seven, with the omitted character as its unique full-support kernel. For the auxiliary second Gram, keep $N=|w\rangle\langle w|/2$, and choose either two even weights $1/4$ or three even weights $1/6$, including the trivial character. Mixing with the second attaining Gram gives rank four or five, respectively. All these Grams are calibrated and physically realizable. As $\varepsilon\to0$, continuity of the complete norm gives error tending to $1/2$; (108.21) supplies the matching lower bound. No common-stress or local-minimum property is asserted for the approximants.
+
+### 108.8. Original leakage, one-party symmetry and the remaining boundary
+
+For a calibrated pair with only $G$ invariant, average $H$ over the eight left translations. Each translation permutes the original coset fibres, fixes $T$ and bijects the complete fixed witness domain. The separate-convexity argument of (108.11) is valid without commutativity of the group and yields $F(G,\overline H)\le F(G,H)$. The average is calibrated and invariant, so (108.21) applies. Interchanging the two parties covers the other case.
+
+For leaking original channels, complete their Grams by the fibre deficits. An invariant $G$ has the common block $\left(\begin{smallmatrix}d&c\\c&d\end{smallmatrix}\right)$, with $c$ real because $z=z^{-1}$. Its completion adds $(1-d)I-cR_z$, which commutes with every left translation. No symmetry of the other completion is needed. The product-block inequality (107.24) again gives $L-\widetilde L\succeq0$; the tagged-reference theorem gives $\delta\ge\mathcal B(L)\ge F(\widetilde G,\widetilde H)$. The calibrated average and (108.21) prove (108.13). Reciprocal phases and common original-fibre relabelings are implemented exactly as in §107.7. The calibrated attainers belong to the larger leaking class, proving sharpness there. This completes Theorem 108.2. $\square$
+
+The finite representation decomposition and maximally entangled product overlap are standard intermediate facts, with the exact instances needed here proved above. For finite-group channel context and the explicit quaternion representation and character table, see Mozrzymas, Studziński and Datta, *Structure of irreducibly covariant quantum channels for finite groups*, [arXiv:1610.05657v2](https://arxiv.org/abs/1610.05657v2), §§4 and 8.2, and the [source note](../../../Library/QuantumChannels/mozrzymas2017irreduciblycovariant.md). Their channels are covariant under an irreducible representation, rather than the original regular eight-coordinate product setting here; no differently normalized channel-norm theorem is imported. The spectral-majorant attribution in §107.2 also applies.
+
+In $D_8$, a noncentral reflection can define original coset fibres preserved by left translations, but the parity decomposition used in (108.17) then fails: the two-dimensional representation can itself admit orthogonal partner records. That case is not covered by Theorem 108.2. Neither theorem in this section reduces arbitrary original pairs to a translation-invariant class. The unrestricted residual rank alternatives and the global quarter optimum remain open.
