@@ -840,12 +840,16 @@ theorem seven_rate_endpoint_certificates (r : Fin 7 → ℝ) (hr : ∀ i, 0 < r 
     (∀ t, 0 ≤ t → p t 1 * p t 2 / p t 0 ≤
       r 0 * r 1 * t ^ 2 *
         Real.exp (-(min (r 4) (outgoing r) + min (r 5) (outgoing r) - outgoing r) * t)) ∧
+    (∀ t, 0 ≤ t →
+      p t 1 ≤ r 0 * t * Real.exp (-min (r 4) (outgoing r) * t) ∧
+      p t 2 ≤ r 1 * t * Real.exp (-min (r 5) (outgoing r) * t) ∧
+      p t 4 ≤ r 2 * t * Real.exp (-min (r 6) (outgoing r) * t)) ∧
     HasDerivAt (fun t => delta (p t)) (r 3) 0 ∧
     (∀ h, 0 < h →
       min (baseRates h 4) (outgoing (baseRates h)) +
         min (baseRates h 5) (outgoing (baseRates h)) - outgoing (baseRates h) = 1 / 4 ∧
       ∀ q, ForwardLaw h q → GeneralForwardLaw (baseRates h) q) := by
-  refine ⟨general_N r p hp, ?_, ?_, ?_⟩
+  refine ⟨general_N r p hp, ?_, ?_, ?_, ?_⟩
   · intro t ht
     have ha := incoming_bound r p hp 1 (r 0) (r 4) (hr 0).le
       (by simpa [initial] using congrFun hp.start 1)
@@ -869,6 +873,17 @@ theorem seven_rate_endpoint_certificates (r : Fin 7 → ℝ) (hr : ∀ i, 0 < r 
         rw [← Real.exp_add, ← Real.exp_add]
         congr 2 <;> ring
       _ = _ := by ring
+  · intro t ht
+    refine ⟨?_, ?_, ?_⟩
+    · exact incoming_bound r p hp 1 (r 0) (r 4) (hr 0).le
+        (by simpa [initial] using congrFun hp.start 1)
+        (fun s hs => by simpa [generalForward] using hp.equation s hs 1) t ht
+    · exact incoming_bound r p hp 2 (r 1) (r 5) (hr 1).le
+        (by simpa [initial] using congrFun hp.start 2)
+        (fun s hs => by simpa [generalForward] using hp.equation s hs 2) t ht
+    · exact incoming_bound r p hp 4 (r 2) (r 6) (hr 2).le
+        (by simpa [initial] using congrFun hp.start 4)
+        (fun s hs => by simpa [generalForward] using hp.equation s hs 4) t ht
   · have hn := hp.equation 0 le_rfl 0
     have ha := hp.equation 0 le_rfl 1
     have hb := hp.equation 0 le_rfl 2

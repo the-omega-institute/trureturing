@@ -204,7 +204,11 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
         Formula embedding = All("h", R, Imp(Lt(D(0), h), And(Eq(baseM,
             new Formula.Fraction(D(1), D(4))),
             All("q", Trajectory, Imp(Call("ForwardLaw", h, q), Call("GeneralForwardLaw", baseRates, q))))));
-        Formula body = And(first, And(tail, And(slope, embedding)));
+        Formula branches = All("t", R, Imp(Le(D(0), t), And(
+            Le(MassAt(1), Mul(Mul(Rate(0), t), Call("exp", Mul(neg(Call("min", Rate(4), l)), t)))),
+            And(Le(MassAt(2), Mul(Mul(Rate(1), t), Call("exp", Mul(neg(Call("min", Rate(5), l)), t)))),
+                Le(MassAt(4), Mul(Mul(Rate(2), t), Call("exp", Mul(neg(Call("min", Rate(6), l)), t))))))));
+        Formula body = And(first, And(tail, And(branches, And(slope, embedding))));
         Formula positive = All("i", Call("Fin", D(7)), Lt(D(0), Seq(r, Open, i, Close)));
         return All("r", Arrow(Call("Fin", D(7)), R), Imp(positive, All("p", Trajectory,
             Imp(Call("GeneralForwardLaw", r, p), body))));

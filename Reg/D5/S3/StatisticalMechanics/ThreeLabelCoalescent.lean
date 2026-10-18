@@ -82,7 +82,7 @@ def determinantActual : Realization determinantSignature :=
 def determinantRejected : Realization determinantSignature :=
   realize determinantSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
-private theorem determinantDependence : ObservationalDependence determinantSignature determinantActual := by
+theorem determinantDependence : ObservationalDependence determinantSignature determinantActual := by
   intro i
   refine ⟨(fun t => ![1, 0, 0, t, 0]), 0, 1, ?_⟩
   norm_num [determinantActual, realize, delta]
@@ -172,31 +172,36 @@ def endpointArena : Arena where
     (∀ t, 0 ≤ t → p t 1 * p t 2 / p t 0 ≤
       r 0 * r 1 * t ^ 2 *
         Real.exp (-(min (r 4) (outgoing r) + min (r 5) (outgoing r) - outgoing r) * t)) ∧
+    (∀ t, 0 ≤ t →
+      p t 1 ≤ r 0 * t * Real.exp (-min (r 4) (outgoing r) * t) ∧
+      p t 2 ≤ r 1 * t * Real.exp (-min (r 5) (outgoing r) * t) ∧
+      p t 4 ≤ r 2 * t * Real.exp (-min (r 6) (outgoing r) * t)) ∧
     HasDerivAt (fun t => delta (p t)) (r 3) 0 ∧
     (∀ h, 0 < h →
       min (baseRates h 4) (outgoing (baseRates h)) +
         min (baseRates h 5) (outgoing (baseRates h)) - outgoing (baseRates h) = 1 / 4 ∧
       ∀ q, ForwardLaw h q → GeneralForwardLaw (baseRates h) q)
 
+theorem unitGeneral : GeneralForwardLaw (baseRates 1) (explicit 1) := by
+  have hq := (positive_probability_solution 1 (by norm_num)).1
+  refine ⟨hq.start, ?_, ?_, ?_⟩
+  · intro t ht i
+    convert hq.equation t ht i using 1
+    fin_cases i <;> norm_num [generalForward, forward, baseRates, outgoing, ell] <;> ring
+  · intro t ht i
+    rcases eq_or_lt_of_le ht with he | he
+    · rw [← he, hq.start]; fin_cases i <;> norm_num [initial]
+    · exact ((positive_probability_solution 1 (by norm_num)).2 _ hq t he).2.2.1 i |>.le
+  · intro t ht
+    rcases eq_or_lt_of_le ht with he | he
+    · rw [← he, hq.start]; norm_num [initial, Fin.sum_univ_succ]
+    · exact ((positive_probability_solution 1 (by norm_num)).2 _ hq t he).2.1
+
 private theorem endpointRejectedLaw : ¬ endpointArena.Law endpointRejected := by
   intro hl
-  have hq := (positive_probability_solution 1 (by norm_num)).1
-  have hgeneral : GeneralForwardLaw (baseRates 1) (explicit 1) := by
-    refine ⟨hq.start, ?_, ?_, ?_⟩
-    · intro t ht i
-      convert hq.equation t ht i using 1
-      fin_cases i <;> norm_num [generalForward, forward, baseRates, outgoing, ell] <;> ring
-    · intro t ht i
-      rcases eq_or_lt_of_le ht with he | he
-      · rw [← he, hq.start]; fin_cases i <;> norm_num [initial]
-      · exact ((positive_probability_solution 1 (by norm_num)).2 _ hq t he).2.2.1 i |>.le
-    · intro t ht
-      rcases eq_or_lt_of_le ht with he | he
-      · rw [← he, hq.start]; norm_num [initial, Fin.sum_univ_succ]
-      · exact ((positive_probability_solution 1 (by norm_num)).2 _ hq t he).2.1
   have hpos : ∀ i, 0 < baseRates 1 i := by
     intro i; fin_cases i <;> norm_num [baseRates, ell]
-  have hz := (hl (baseRates 1) hpos (explicit 1) hgeneral).1 0 le_rfl
+  have hz := (hl (baseRates 1) hpos (explicit 1) unitGeneral).1 0 le_rfl
   norm_num [endpointRejected, realize] at hz
 
 private theorem endpointDependence : ObservationalDependence endpointSignature endpointActual := by
