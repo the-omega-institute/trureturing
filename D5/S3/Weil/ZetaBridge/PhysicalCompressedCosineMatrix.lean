@@ -4,8 +4,7 @@
    mirror-E: none(waiver:physical-Ioc-compression-and-finite-prime-form)
    anchors: []
    utility: none
-   digest: Exact Ioc zero-extension cosine compression and finite complex prime-power quadratic form.
--/
+   digest: Exact Ioc zero-extension cosine compression and finite complex prime-power quadratic form. -/
 
 import D5.S3.Weil.ZetaBridge.PrimeJumpDecomposition
 import D5.S3.Weil.ZetaBridge.WeilMellinPrimeIntertwining
