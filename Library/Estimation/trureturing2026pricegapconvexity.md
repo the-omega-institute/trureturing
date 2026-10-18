@@ -11392,3 +11392,187 @@ expression still needs its strict upper below an available lower margin
 on a common cofinal family. No favorable windows, real-parameter CR43
 extension, WRC scope extension, strict all-integer Robin inequality or RH
 proof follows.
+
+## A published reverse Opial inequality gives an explicit full-source margin
+
+Keep EDH1--EDH6's entire original conditional source, every originally
+fixed $1-\Theta<\eta<1/2$, including allowed $\Theta=1$, every full
+window and maximizing tie, and the original mesh and coarse ceiling.
+Put $b=1-aQ_\eta\in(0,1)$. The analytic supplier below is an existing
+published theorem. The additional project content is its full-source
+interface, which permits clocks outside every fixed compact scale and
+uses capacity only at original prime labels. This is a paper application,
+without a new generic inequality, literature-priority claim or Lean/kernel
+verification.
+
+### Import the existing inequality with its actual parameters
+
+P. R. Beesack and K. M. Das, *Extensions of Opial's inequality*,
+Pacific Journal of Mathematics **26**(2) (1968), 215--232,
+[primary publisher PDF](https://msp.org/pjm/1968/26-2/pjm-v26-n2-p02-s.pdf),
+Theorem 3, printed pp.222--223, gives the lower inequality (22); its
+constant $K_1$ is defined by (7), printed p.216. Take their exponents
+$p=1$, $q=-2$, weights $r(z)=z^2$, $s(z)=1$, interval $[0,h]$ and
+$y(z)=\int_0^z f(v)\,dv$. For measurable $0<c\le f\le C<\infty$,
+the primitive is absolutely continuous, its derivative is positive
+almost everywhere, and all required weight and negative-power integrals
+are finite. Formula (7) gives $K_1=4(4h)^{-1}=1/h$. Direct application,
+without reproving that theorem, therefore supplies
+
+$$
+\int_0^h\frac{\int_0^z f(v)\,dv}{f(z)^2}\,dz
+\ge\frac1h\int_0^h\frac{z^2}{f(z)}\,dz.
+\tag{OSP1}
+$$
+
+The cited theorem does not itself supply a statement about original
+prime tags, source-selected cores or escaping clock scales.
+
+### Prefix and suffix moments localize the interior of the actual source
+
+It suffices to consider any cofinal sequence of original windows and tie
+assignments with $\mathcal G_{X,\mathcal T}/(M_XL_X)\le K$ for some
+fixed finite $K$. Any sequence violating a proposed fixed lower margin
+would have this property. Define
+
+$$
+x_i=t_i/\ell_X,\quad h_i=\delta_i/\ell_X,\quad
+u_i=\sqrt{B_i/X},\quad u_X(x)=\sqrt{\mathcal B_X(\ell_Xx)/X},
+\qquad P_X^\pm=\sum_{i<m}h_i u_i^{\pm1}.
+$$
+
+EDH3 and $G_a(B_i)\ge\mathcal R_i$ give
+$\alpha P_X^++\beta P_X^-\le(K+o(1))L_X/\ell_X$.
+Thus both moments are bounded by one fixed $C_K$. N2 orders all active
+cores at distinct parameters, including arbitrary original tie tags.
+For a real parameter $x$, preceding tags have $u_i\le u_X(x)$, while
+strictly later tags have $u_i\ge u_X(x)$. Their actual outgoing weights
+therefore imply
+
+$$
+\frac{x-t_0/\ell_X}{P_X^-}
+\le u_X(x)\le
+\frac{P_X^+}{t_m/\ell_X-x-\varepsilon_X^{\rm lab}/\ell_X}.
+\tag{OSP2}
+$$
+
+The upper inequality is used only when its denominator is positive.
+The same comparisons hold for every other active choice at that real
+parameter; they use tags at strictly different parameters. Fix
+$0<\theta<1/2$, and put
+$a_\theta=1+\theta$, $b_\theta=2-\theta$,
+$I_\theta=[a_\theta,b_\theta]$ and $h_\theta=1-2\theta$.
+Because the original endpoints tend to 1 and 2 after normalization,
+OSP2 gives $0<c_{K,\theta}\le u_X\le C_{K,\theta}<\infty$
+on this entire interior interval, uniformly in every active tie.
+This is a consequence of the bounded-response sequence, not a global
+assumption $B\asymp X$ or a change to the original source ceiling.
+
+### Pay the source-to-integral interface before using the theorem
+
+Only at original labels $x_i\in I_\theta$, reuse EDH2 and JM5--JM6's
+localized capacity suppliers, with all their strict cuts. They give
+
+$$
+\frac{\mathcal R_i}{M_X}
+\ge\frac d2u_i+\frac d8\frac{b x_i}{u_i}-o(1).
+$$
+
+For the changing height, EDH1's nonnegative integral may be restricted
+to $[t_i,\ell_Xb_\theta]$. On this compact range,
+$\log B/\log X\to1$ and $A/B\to1$ uniformly. Here
+$\ell_X/X\to0$ because the original fixed $\eta>0$, and
+$\ell_X/(M_X\sqrt X)=d/8$. Consequently
+
+$$
+\frac{s_{B_i}\Delta V(t_i)}{M_X}
+\ge\frac d8u_i\int_{x_i}^{b_\theta}u_X(v)^{-2}\,dv-o(1).
+\tag{OSP3}
+$$
+
+No capacity estimate has been used at an unsampled real parameter.
+To integrate these original tagged bounds, reuse CQ2's published
+arbitrary-partition bounded-variation supplier with the new readouts.
+The monotone function $u_X$ and its reciprocal have uniformly bounded
+variation on $I_\theta$. The function
+$F_X(x)=\int_x^{b_\theta}u_X(v)^{-2}\,dv$ is uniformly bounded and
+Lipschitz there. The product variation bound therefore controls
+$u_XF_X$ and $x/u_X$ by constants depending only on $K,\theta$ and
+fixed source parameters. Inserting any original tagged $u_i$ between
+its one-sided monotone limits preserves these variation bounds; the
+combined readout itself need not be monotone. Both boundary fragments
+cost $O(\varepsilon_X^{\rm lab}/\ell_X)$, and the interior quadrature
+error tends to zero uniformly in all ties.
+
+All original responses are positive by EDH3 and its compact refinement.
+Dropping outside tags for this lower comparison and using
+$L_X/\ell_X\to1$ thus gives
+
+$$
+\begin{aligned}
+\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}
+\ge{}&\frac d2\int_{I_\theta}u_X(x)\,dx
++\frac d8b\int_{I_\theta}\frac{x}{u_X(x)}\,dx\\
+&+\frac d8\int_{a_\theta\le r<v\le b_\theta}
+\frac{u_X(r)}{u_X(v)^2}\,dr\,dv-o(1).
+\end{aligned}
+\tag{OSP4}
+$$
+
+This is an auxiliary interior integral cutoff. The final target still
+uses the full original window, label list and outgoing weights. The
+complete future in $G_a$ remains; only the positive envelope-height
+integral and already positive outside responses were restricted.
+No pointwise sign for the future arithmetic error is asserted.
+
+### Apply the supplier and then remove the analytic cutoff
+
+Apply OSP1 to $f(z)=u_X(a_\theta+z)$ on $[0,h_\theta]$.
+OSP2 supplies all its function hypotheses, without taking a limit of
+$u_X$. Its right side is
+$h_\theta^{-1}\int_{I_\theta}(x-a_\theta)^2/u_X(x)\,dx$.
+The same pointwise AM--GM inequality used in JM then gives from OSP4
+
+$$
+\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}
+\ge\frac d2\int_{1+\theta}^{2-\theta}
+\sqrt{b x+\frac{(x-1-\theta)^2}{1-2\theta}}\,dx-o(1).
+$$
+
+First take the source lower limit with $\theta$ fixed, and then let
+$\theta\downarrow0$. The displayed scalar integrands are bounded for
+small $\theta$ and converge almost everywhere. Bounded convergence
+therefore proves the explicit full-source margin
+
+$$
+\boxed{
+R_{\rm Op}:=\frac d2\int_1^2\sqrt{b x+(x-1)^2}\,dx,\qquad
+\liminf\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}\ge R_{\rm Op}.}
+\tag{OSP5}
+$$
+
+The result is uniform on all original full windows and tie assignments:
+any violating cofinal sequence would be a bounded-response sequence to
+which the argument applies. HC2 and CQ5 give the same lower limit for
+every original admissible-height head and $\mathcal J_X$, with an
+arbitrarily small fixed loss at the eventual-bound level.
+
+Rationalizing the scalar square-root difference and integrating
+$(x-1)^2$ gives the explicit further estimate
+
+$$
+\boxed{
+R_{\rm Op}\ge R_{\rm stat}
++\frac{d}{6(\sqrt{2b+1}+\sqrt{2b})}>R_{\rm stat}.}
+\tag{OSP6}
+$$
+
+For the original $0<b<1$, the displayed increment exceeds $d/24$,
+whereas EDH4 gives $g_{\rm env}\le d/(128\sqrt2)<d/24$.
+OSP5 therefore improves EDH6 without its auxiliary $C_0,r,R$ constants
+in the final margin. No exact infimum or attainability for the complete
+variational functional is asserted. The published inequality supplies
+the analytic input; OSP2--OSP5 supply its source-specific application.
+Neither supplies a second credit, a full-real capacity extension or the
+missing strict upper of the complete same-source boundary-minus-credit
+expression. That upper, strict all-integer Robin and RH remain unproved.
