@@ -4,7 +4,7 @@
 
 Same-seed stopping-law rigidity and sharp actual-read bounds
 
-The probability space is the original source law times an arbitrary probability measure nu on an arbitrary measurable seed space U. No atomlessness, standard Borel assumption or extra randomizer is required. The full joint law retains the unchanged seed together with the hidden endpoint, output, return indicator and paid count. A source-independent input observation has no seed argument.
+The probability space is the original source law times an arbitrary probability measure nu on an arbitrary measurable seed space U. No atomlessness, standard Borel assumption or extra randomizer is required. The full joint law retains the unchanged seed together with the hidden endpoint, output, return indicator and paid count. A seed-independent input observation has no seed argument.
 
 The witness stoppingRule(j,k) reads j+2i+1 for i from one through k, returns a1 at the first one reply and returns a0 after k zero replies. Its addresses and decisions depend on neither the bias nor the seed. Write W for this original-rule witness and T(n)=(1-p)^n+p^n.
 
