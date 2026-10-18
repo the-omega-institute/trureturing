@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Logarithmic divided differences and finite three-point entropy directions.
--/
+   digest: Logarithmic divided differences and finite three-point entropy directions. -/
 
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import D5.S3.Quantum.Schatten.PowerMajorization
