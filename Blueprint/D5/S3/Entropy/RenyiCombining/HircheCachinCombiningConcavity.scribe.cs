@@ -132,6 +132,6 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
         Par(Seq(N("alphaHat"), Colon, Sp, RealType())), Comma, Sp,
         And(Rel(D(1), FormulaRelationOperator.LessThan, N("alphaHat")),
             And(Rel(N("alphaHat"), FormulaRelationOperator.LessThan,
-                new Formula.Fraction(D(1,3,8,6,3), D(1,0,0,0,0))), And(ConvexBody(), ConcaveBody()))));
+                new Formula.Fraction(D(1,3,8,6,3), D(1,0,0,0,0))), And(Par(ConvexBody()), Par(ConcaveBody())))));
 
 }

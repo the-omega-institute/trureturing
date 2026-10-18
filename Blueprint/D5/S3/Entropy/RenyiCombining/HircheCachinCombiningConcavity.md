@@ -1,14 +1,16 @@
-# Hirche's Binary Renyi Combining Concavity for Orders at Least Two
+# Hirche's Binary Renyi Information Combining Conjecture
 
 ## Abstract
 
-Binary Renyi information combining is concave in each entropy coordinate at every real order at least two.
+Hirche Conjecture IV.18 holds with threshold five quarters, including the Shannon order and all entropy endpoints.
 
-The source assertion is the alpha-at-least-two concavity clause of C. Hirche, Renyi Bounds on Information Combining, ISIT 2020, arXiv:2004.14408v1, Conjecture IV.18. The logarithm is natural, so the entropy interval is [0,log 2]. The parameter alpha is real; it is not restricted to integers. The formal claim fixes any second entropy coordinate in the entire closed interval and proves concavity in the first coordinate.
+The source assertion is the whole of Conjecture IV.18 of C. Hirche, Renyi Bounds on Information Combining, ISIT 2020, arXiv:2004.14408v1, Conjecture IV.18. The logarithm is natural, so the entropy interval is [0,log 2]. The parameter alpha is real; it is not restricted to integers. The formal claim fixes any second entropy coordinate in the entire closed interval and proves convexity for 0 < alpha < 5/4 and concavity for alpha >= 2. The threshold witness is alphaHat = 5/4.
+
+Conjecture IV.18 states: There exists a value 1 < α̂ < 1.3863, such that hα(hα⁻¹(x) ∗ hα⁻¹(y)) is convex for 0 < α < α̂ and concave for α ≥ 2.
 
 **Definition 1.1 (Binary Renyi entropy).**
 
-$$\forall (alpha: \mathbb{R}), \forall (p: \mathbb{R}), \operatorname{h}\left(alpha, p\right) = \frac{\operatorname{log}\left((p)^{alpha} + (1 - p)^{alpha}\right)}{1 - alpha}$$
+$$\forall (alpha: \mathbb{R}), \forall (p: \mathbb{R}), \operatorname{h}\left(alpha, p\right) = \operatorname{ite}\left(alpha = 1, \operatorname{binEntropy}\left(p\right), \frac{\operatorname{log}\left((p)^{alpha} + (1 - p)^{alpha}\right)}{1 - alpha}\right)$$
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h` (`✓ std3`).
 
@@ -16,7 +18,7 @@ $$\forall (alpha: \mathbb{R}), \forall (p: \mathbb{R}), \operatorname{h}\left(al
 
 *Commentary.*
 
-Both variable powers use Real.rpow. On the probability branch [0,1/2], for alpha >= 2, the power sum is positive and h is continuous and strictly increasing, with values zero at zero and log 2 at one half. The displayed total real definition also exists outside the parameter and probability domain of the theorem.
+At alpha = 1 the definition uses Real.binEntropy in natural-log units; otherwise both variable powers use Real.rpow. On the probability branch [0,1/2], for every alpha > 0, the power sum is positive and h is continuous and strictly increasing, with values zero at zero and log 2 at one half. The displayed total real definition also exists outside the parameter and probability domain of the theorem.
 
 **Definition 1.2 (The specified inverse branch).**
 
@@ -28,7 +30,7 @@ $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \operatorname{hInv}\left
 
 *Commentary.*
 
-This is Function.invFunOn applied to h alpha on the closed interval [0,1/2]. For alpha >= 2, that restriction is a continuous strictly increasing bijection onto [0,log 2]. Consequently, for x in the entropy interval, hInv(alpha,x) belongs to [0,1/2] and h(alpha,hInv(alpha,x))=x. The inverse is continuous on the entropy interval. No inverse identity outside that interval is claimed.
+This is Function.invFunOn applied to h alpha on the closed interval [0,1/2]. For alpha > 0, that restriction is a continuous strictly increasing bijection onto [0,log 2]. Consequently, for x in the entropy interval, hInv(alpha,x) belongs to [0,1/2] and h(alpha,hInv(alpha,x))=x. The inverse is continuous on the entropy interval. No inverse identity outside that interval is claimed.
 
 **Definition 1.3 (Binary convolution).**
 
@@ -54,9 +56,9 @@ $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \forall (y: \mathbb{R}),
 
 G evaluates the binary entropy after convolving the two specified inverse-branch probabilities.
 
-**Definition 1.5 (The alpha-at-least-two concavity clause).**
+**Definition 1.5 (The complete threshold conjecture).**
 
-$$claim = \forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)$$
+$$claim = \exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \frac{13863}{10000} \land \left((\forall (alpha: \mathbb{R}), (0 < alpha) \Rightarrow \left((alpha < alphaHat) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)\right)) \land (\forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right))\right)\right)$$
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim` (`✓ std3`).
 
@@ -64,17 +66,13 @@ $$claim = \forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \ma
 
 *Commentary.*
 
-The quantifiers range over every real alpha >= 2 and every y in the closed entropy interval. ConcaveOn is Mathlib's full two-point concavity inequality on the closed convex set, including both x endpoints.
+The existential threshold is strictly between one and 13863/10000. The convex clause quantifies over all positive real orders below it, and the concave clause over all real orders at least two. Both clauses use Mathlib's full two-point inequality on the closed entropy interval, including both endpoints.
 
-**Theorem 1.6 (Concavity for every real alpha at least two).**
+**Theorem 1.6 (Convexity through the Shannon order).**
 
-$$\forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)$$
+$$\forall (alpha: \mathbb{R}), (0 < alpha) \Rightarrow \left((alpha \le 1) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/hirche-2020-cachin-renyi-concavity-alpha-ge-two` (proved) by `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hirche-2020-cachin-renyi-concavity-alpha-ge-two","declaration_gid":"D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result","resolution_kind":"proved"} -->
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.convexOn_G_of_le_one` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -82,7 +80,25 @@ $$\forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R})
 
 *Commentary.*
 
-For every real alpha >= 2 and y in [0,log 2], the function x maps to G(alpha,x,y) is concave on [0,log 2]. Symmetry of binary convolution also gives the corresponding second-coordinate statement as a mathematical consequence; the Lean result has exactly the displayed first-coordinate claim.
+For 0 < alpha < 1 the negative-parameter certificate makes F antitone in r and hence elasticity monotone in the bias t. At alpha = 1 the separate Shannon certificate differentiates Real.binEntropy and uses -psi'(t)=artanh(t). In both cases the slope ratio decreases with t, so its composition with the decreasing inverse bias is monotone in the entropy coordinate. Continuity and the constant/identity boundary cases give ConvexOn on the full closed interval.
+
+**Theorem 1.7 (Hirche Conjecture IV.18 with threshold five quarters).**
+
+$$\exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \frac{13863}{10000} \land \left((\forall (alpha: \mathbb{R}), (0 < alpha) \Rightarrow \left((alpha < alphaHat) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)\right)) \land (\forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right))\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/hirche-2020-cachin-renyi-information-combining-convexity` (proved) by `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hirche-2020-cachin-renyi-information-combining-convexity","declaration_gid":"D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result","resolution_kind":"proved"} -->
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
+
+*Commentary.*
+
+The witness 5/4 lies strictly between 1 and 1.3863. For every y in [0,log 2], x maps to G(alpha,x,y) is convex for every 0 < alpha < 5/4 and concave for every alpha >= 2. Symmetry of binary convolution also gives the corresponding second-coordinate statement as a mathematical consequence; the Lean result has exactly the displayed first-coordinate claim.
 
 Set psi(t)=h(alpha,(1-t)/2) and f(t)=-psi'(t) for 0<t<1. The function f is positive, and psi decreases continuously from log 2 to zero on [0,1]. The inverse bias is t(x)=1-2hInv(alpha,x), so psi(t(x))=x. Binary convolution gives G(alpha,x,y)=psi(v t(x)), where v=t(y) belongs to [0,1].
 
@@ -90,14 +106,18 @@ For n=alpha-1 and r=(1-t)/(1+t), the certificate transform T=(1-r^n)/(1+r^n) giv
 
 Fix 0<v<1. Differentiation gives the entropy-coordinate derivative R(t)=v f(vt)/f(t). Its t derivative is v f(vt)[E(vt)-E(t)]/[t f(t)], which is nonnegative because vt<=t and E is nonincreasing. The inverse bias decreases with x. Thus the derivative of x maps to psi(v t(x)) is antitone in x, and Mathlib's derivative criterion yields concavity on the closed interval using continuity there. Only interior inverse derivatives are used.
 
-At v=0 the transported function is constant, and at v=1 it is the identity. These two cases include the endpoint values of y. The proof therefore covers both closed-coordinate boundaries without endpoint inverse derivatives. The assertion does not include the other order ranges in Conjecture IV.18.
+At v=0 the transported function is constant, and at v=1 it is the identity. These two cases include the endpoint values of y. The proof therefore covers both closed-coordinate boundaries without endpoint inverse derivatives. For 0 < alpha < 1 the negative-n certificate gives the opposite elasticity sign. At alpha = 1 the binary Shannon entropy derivative is minus artanh(t), with strictly increasing elasticity t/((1-t^2)artanh(t)). For 1 < alpha <= 5/4, put n=alpha-1 and C(z)=n sqrt(z) coth(n artanh(sqrt(z))), D(z)=C(z)+nz. The desingularized even analytic quotient supplies the initial first and second derivative signs. The Riccati identity and its differentiated equation preclude a first zero of C'', and imply D'<0. Thus 1-2zD'/D is strictly increasing. This reverses the slope-ratio sign and yields closed-interval convexity.
 
 ## References
 
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.G`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim`
+- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.convexOn_G_of_le_one`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star`
+- Dependency: [D5/S3/Entropy/RenyiCombining/CachinConvexCertificate](CachinConvexCertificate.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinElasticityMonotone](CachinElasticityMonotone.md)
+- Dependency: [D5/S3/Entropy/RenyiCombining/CachinNegativeBranch](CachinNegativeBranch.md)
+- Dependency: [D5/S3/Entropy/RenyiCombining/CachinShannonBranch](CachinShannonBranch.md)
