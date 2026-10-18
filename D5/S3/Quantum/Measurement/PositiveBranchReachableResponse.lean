@@ -7,6 +7,7 @@
    digest: Positive Kraus orbits span precisely the original reachable support. -/
 
 import D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
+import D5.S3.Quantum.Measurement.IncoherentCone
 import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Weil.ZetaLinear.RankTrace
@@ -748,10 +749,14 @@ private theorem psd_norm_le_trace (A : Matrix n n ℂ) (hA : A.PosSemidef) :
   have ht := (Complex.nonneg_iff.mp hA.trace_nonneg).1
   have hdiag (i : n) : 0 ≤ (A i i).re ∧ (A i i).re ≤ A.trace.re := by
     refine ⟨(Complex.nonneg_iff.mp (hA.diag_nonneg (i := i))).1, ?_⟩
-    simp only [Matrix.trace, Matrix.diag_apply, Complex.re_sum]
-    exact Finset.single_le_sum
-      (fun j _ => (Complex.nonneg_iff.mp (hA.diag_nonneg (i := j))).1)
-      (Finset.mem_univ i)
+    let e := Fintype.equivFin n
+    have htr : (A.submatrix e.symm e.symm).trace = A.trace := by
+      simpa only [Matrix.trace, Matrix.diag_apply, Matrix.submatrix_apply] using
+        e.symm.sum_comp (fun j => A j j)
+    have h := D5.S3.Quantum.Measurement.IncoherentCone.psd_diag_le_trace
+      (hA.submatrix e.symm) (e i)
+    simpa only [RHLinalg.rtrace, Matrix.submatrix_apply, Equiv.symm_apply_apply,
+      htr, RCLike.re_eq_complex_re] using h
   have hentry (i j : n) : ‖A i j‖ ≤ A.trace.re := by
     have hb := D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hA i j
     rw [Complex.normSq_eq_norm_sq] at hb
