@@ -33,10 +33,12 @@ abbrev arena : Arena where
       (M * partialTranspose (_root_.Matrix.vecMulVec v (star v))).trace
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := h (A := Fin 1) (B := Fin 1) (fun _ _ => 1) (fun _ => 1)
-  norm_num [rejected, realize, partialTranspose, dotProduct, mulVec,
-    Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.vecMulVec_apply,
-    Fintype.sum_prod_type, Fin.sum_univ_succ] at he
+  have he : (0 : ℂ) = 1 := by
+    simpa [rejected, realize, partialTranspose, dotProduct, mulVec,
+      Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.vecMulVec_apply,
+      Matrix.zero_apply, Pi.zero_apply, Fintype.sum_prod_type, Fin.sum_univ_succ] using
+      (h (A := Fin 1) (B := Fin 1) (fun _ _ => 1) (fun _ => 1))
+  exact zero_ne_one he
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨Fin 1,Fin 1⟩, 0, (fun _ _ => 1), ?_⟩
