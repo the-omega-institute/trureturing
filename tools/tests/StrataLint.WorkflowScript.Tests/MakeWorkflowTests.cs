@@ -88,6 +88,9 @@ public sealed partial class MakeWorkflowTests
 
     private static readonly string[] ToolsTargets =
     [
+        "autonomous-research-round",
+        "autonomous-research-round-test",
+        "autonomous-research-probe",
         "auric-fib-analysis-build",
         "auric-fib-analysis",
         "auric-fib-analysis-test",
