@@ -666,7 +666,7 @@ private theorem gamma_finite_block_floor {c m : ℕ} (hc : 2 ≤ c)
     have hg : 0 < gammaRate j := gammaRate_pos j
     have hhalf : (1 / 2 : ℝ) ≤ gammaRate j := by
       unfold gammaRate
-      linarith [Nat.cast_nonneg j]
+      linarith [Nat.cast_nonneg (α := ℝ) j]
     have hg3 : gammaRate j ≤ 3 * w := by
       unfold gammaRate
       linarith

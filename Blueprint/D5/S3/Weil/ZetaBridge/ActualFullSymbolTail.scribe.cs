@@ -119,7 +119,7 @@ internal sealed class ActualFullSymbolTailDocument : IScribeDocumentDefinition
                             Call("LessEqual", Call("mul", D(2), F.Id("A")), Call("add", N, D(1))),
                             Call("Positive", F.Id("q")),
                             Call("LessEqual", Call("div", Call("mul", D(2), Call("square", Call("norm", F.Id("beta"))), F.Id("D0")), F.Id("q")), Call("add", N, D(1))),
-                            Call("LessEqual", Call("div", Call("mul", D(256), Call("square", Call("arithmeticBoundaryBudget", c)),
+                            Call("LessEqual", Call("div", Call("mul", D(2, 5, 6), Call("square", Call("arithmeticBoundaryBudget", c)),
                                 Call("square", Call("weightedHeadMass", F.Id("S"), F.Id("v")))), Call("mul", D(3), F.Id("q"))), Call("square", N))),
                         Rightarrow,
                         Call("And",
