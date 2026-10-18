@@ -11222,3 +11222,173 @@ a two-sided absolute comparison of $\mathcal I_X^H$ and $B_\tau$, or
 establish the strict upper for the complete boundary-minus-credit.
 The original nonlocal FH first-prime test, all-integer Robin inequality
 and RH remain unproved. No uniformity as $\eta\uparrow1/2$ is asserted.
+
+## The actual envelope descent strictly raises the full-window lower margin
+
+Keep JM1--JM7's complete original conditional source, every originally
+fixed $1-\Theta<\eta<1/2$, including $\Theta=1$ when allowed, and all
+original full windows, outgoing weights and maximizing ties. Put
+$\tau=1-\eta$, $Q=Q_\eta$, $b=1-aQ>0$ and
+$R_\eta=(d/2)\sqrt b$. Reuse N2's finite actual integer-core envelope,
+CR17--CR19, APC1, HC2 and CQ5. The existing capacity suppliers are used
+only at original prime labels, with JM5--JM6's unchanged strict cuts.
+This is a `repo-derived` paper application, with no new generic inequality,
+prime theorem, literature-priority claim or Lean/kernel verification.
+
+### Retain the changing height in the same own-core pressure account
+
+Write $B(t)=\mathcal B_X(t)$, $A(t)=B(t)+t$ and
+$s_B=\sqrt B\log B$. N2's finite envelope calculus gives
+
+$$
+\Delta V(t):=V_X(t)-V_X(t_m)
+=\int_t^{t_m}\lambda(A(v))\,dv\ge0,
+\qquad \lambda(x)=\frac1{x\log x}.
+\tag{EDH1}
+$$
+
+The derivative formula holds off the finite switch set; choosing another
+active tie at those points leaves the integral unchanged. At an original
+tag $t_i$, let $B_i=\log U_i$ be any original maximizing core, and put
+$h_m=V_X(t_m)-\gamma$ and $D_t(B)=f(B+t)-f(B)$ as in CR18. The exact
+own-core account used in CR19 yields
+
+$$
+\begin{aligned}
+\mathcal R_i&:=G_a(B_i)-s_{B_i}\Delta V(t_i)\\
+&=s_{B_i}[h_m+D_{t_i}(B_i)+R_{\rm pp}(B_i)+d_{B_i}(U_i)]
+-\frac{aE(B_i)}{\sqrt{B_i}}.
+\end{aligned}
+\tag{EDH2}
+$$
+
+Here $F(U_i)=V_X(t_i)+D_{t_i}(B_i)$, and both displayed reserves are
+the original nonnegative ones. APC1 gives
+$h_m\ge(d/2)X^{-\eta}-c_m$ with $c_m\le e^{-\ell_X}$.
+Removing the changing height has not removed the terminal height or lag.
+
+Fix $C_0>8/5$ with $aC_0<1$, and set
+$\alpha=d\tau/8$ and $\beta=d(1-aC_0)/16>0$.
+CR17, the original-tag capacity bound and the same price comparison as
+CR18 give, for $z_i=B_i/X$,
+
+$$
+\frac{\mathcal R_i}{M_X}
+\ge\alpha\sqrt{z_i}+\frac\beta{\sqrt{z_i}}-o(1).
+\tag{EDH3}
+$$
+
+Indeed eventually $h_m\ge(d/4)X^{-\eta}$,
+$\log B_i/\log X\ge\tau/2$ and
+$s_{B_i}D_{t_i}(B_i)=(1+o(1))t_i/\sqrt{B_i}$; after subtracting the
+capacity term the latter coefficient is at least $(1-aC_0)/2$.
+The fixed capacity allowance divided by $M_X$ tends to zero. All errors
+are uniform over original labels and ties.
+
+A bounded normalized residual is therefore in a fixed compact positive
+range of $B_i/X$. On that range reuse JM5--JM6's localized capacity
+and $\log B_i/\log X\to1$. The same AM--GM argument gives
+$\mathcal R_i/M_X\ge R_\eta\sqrt{t_i/\ell_X}-o(1)$ there.
+Any violating sequence would have bounded residual, so EDH3 localizes it
+and proves this estimate uniformly on the whole original family.
+In particular $G_a(B_i)\ge\mathcal R_i>0$ eventually.
+
+The full-window facts $L_X\sim\ell_X$, $t_0\ge\ell_X$ and
+$t_m\le2\ell_X$ imply $t_0/\ell_X\to1$, $t_m/\ell_X\to2$.
+The paid label mesh gives the ordinary scalar left-sum limit
+
+$$
+\frac1{L_X}\sum_{i<m}\delta_i\sqrt{t_i/\ell_X}
+\longrightarrow c_{\rm av}:=\frac23(2\sqrt2-1).
+$$
+
+Set $R_{\rm stat}=c_{\rm av}R_\eta$. This static averaging alone does
+not account for the additional height in EDH2.
+
+### The same ordered trajectory supplies a positive dynamic contribution
+
+Choose fixed constants
+
+$$
+\begin{gathered}
+K=2R_{\rm stat},\qquad
+r=\min\{1/2,(\beta/(4K))^2\},\qquad
+R=\max\{2,(4K/\alpha)^2\},\\
+g_{\rm env}=\frac{d\sqrt r}{64R}>0,\qquad
+\delta_{\rm env}=\frac12\min\{R_{\rm stat},g_{\rm env}\}>0.
+\end{gathered}
+\tag{EDH4}
+$$
+
+The fixed $R$ here is a compact-localization constant, not a replacement
+for the original source ceiling $R_X$. If
+$\mathcal G_{X,\mathcal T}/(M_XL_X)\le K$, EDH3 bounds the residual
+below by $2KM_X$ outside $rX\le B_i\le RX$ beyond a common start.
+Positivity of every original response then implies that tags inside this
+range carry at least $L_X/2$ of the outgoing weight.
+
+By N2's ordering for every choice of ties these tags form a consecutive
+block $k,\ldots,l$. On the open interval $(t_k,t_l)$ every real active
+core lies between the two tagged cores, hence in $[rX,RX]$. This suffices
+almost everywhere for the integral; no constraint on other tied cores
+at either endpoint is asserted. Dropping only the last outgoing
+good interval leaves length
+$T_{\rm good}=t_l-t_k\ge L_X/2-\varepsilon_X^{\rm lab}$.
+The case $k=l$ is impossible eventually by this inequality and the mesh.
+For $k\le i<l$, EDH1 consequently gives
+$\Delta V(t_i)\ge(t_l-t_i)\lambda(RX+t_m)$.
+The exact finite triangular-sum identity now yields
+
+$$
+\begin{aligned}
+\sum_{i<m}\delta_i s_{B_i}\Delta V(t_i)
+&\ge\sqrt{rX}\log(rX)\lambda(RX+t_m)
+ \sum_{i=k}^{l-1}\delta_i(t_l-t_i)\\
+&\ge\left[\frac{\sqrt r}{R\sqrt X}+o(X^{-1/2})\right]
+\frac{T_{\rm good}^2}{2}.
+\end{aligned}
+$$
+
+Since $L_X/(M_X\sqrt X)\to d/8$, this proves the additional estimate
+
+$$
+\boxed{
+\frac1{M_XL_X}\sum_{i<m}\delta_i s_{B_i}\Delta V(t_i)
+\ge g_{\rm env}-o(1)
+\quad\text{whenever }\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}\le K.}
+\tag{EDH5}
+$$
+
+Both factors in this ordered pair estimate belong to the same actual
+envelope. There is no global assumption $B_i\asymp X$, independent
+selection of clocks or new real-parameter capacity estimate. Only a
+nonnegative part of the changing height was bounded below; the complete
+future and all original terms remain in $G_a$.
+
+Combining EDH5 with the uniform residual lower sum, and including the
+alternative $\mathcal G_{X,\mathcal T}/(M_XL_X)>K$, gives
+
+$$
+\boxed{
+\liminf\frac{\mathcal G_{X,\mathcal T}}{M_XL_X}
+\ge R_{\rm stat}+\min\{R_{\rm stat},g_{\rm env}\}
+=R_{\rm stat}+2\delta_{\rm env}>R_{\rm stat}>R_\eta.}
+\tag{EDH6}
+$$
+
+The lower limit is uniform over all original qualifying full windows and
+tie assignments. HC2 and CQ5 have $o(M_XL_X)$ errors, so beyond one
+common source start the same eventual lower bound
+$(R_{\rm stat}+\delta_{\rm env})M_XL_X$ holds for each original
+compensated sum, every admissible-height head and $\mathcal J_X$.
+The strict extra gain therefore comes from the actual changing envelope,
+beyond the complete static averaged margin.
+
+BV1--BV3 bound variation of the source price $\lambda(A)$; EDH5 bounds
+the integrated envelope height in the own-core pressure. These accounts
+share a source and are not independent copies of a reserve. No credit is
+spent again here. The full same-source boundary-minus-one-use-credit
+expression still needs its strict upper below an available lower margin
+on a common cofinal family. No favorable windows, real-parameter CR43
+extension, WRC scope extension, strict all-integer Robin inequality or RH
+proof follows.
