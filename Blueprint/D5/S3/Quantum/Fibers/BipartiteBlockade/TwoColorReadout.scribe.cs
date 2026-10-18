@@ -31,8 +31,8 @@ internal sealed class TwoColorReadoutDocument : IScribeDocumentDefinition
                     + "positive semidefinite trace-one density matrix. It requires a nonzero "
                     + "drive at the recovered site. Positive drives retain positivity under "
                     + "the color scaling. Both experiments refer to the same matrix state. "
-                    + "The inverse is a consumed algebraic consequence of the general identity, "
-                    + "not an independent sharp lower-bound result."))),
+                    + "The inverse follows algebraically from the general identity. Sharp lower "
+                    + "bounds additionally require actual indistinguishable density matrices."))),
             DescribeRole.Theorem))));
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name, params Formula[] args)
