@@ -9,14 +9,8 @@
 module
 
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-public import Mathlib.Analysis.SpecialFunctions.Complex.Log
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 /-! The cross-integral estimate of Dhamapurkar and Deng, arXiv:2309.16352, Eq. (15). -/
 
