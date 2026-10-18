@@ -46,7 +46,7 @@
     "scratch/briefs/impl-op-w1-sample.stageA.md": "4763a73df1a2d3eb96cd767a73e9695f1b9331c34738bd5f4a29a6a57450fded"
   },
   "implb_head.py": {
-    "scratch/briefs/implb-sample-r1.head.md": "f68fc98dc5a87b41e82f034bcfa64164eed88d5e6a5e11368ba44644fb3560cb"
+    "scratch/briefs/implb-sample-r1.head.md": "4e79d8da1119aeee33724575a2b21d80dfcbe5335db70f4b02ed09b84ce79866"
   },
   "lane_brief.py": {
     "scratch/briefs/impl-op-w1-sample.md": "c2d867afd8bfc0ae4c756f57fc2f6cec972057640d6bf3699078f41b8a1ed8c8"
@@ -72,7 +72,7 @@
     "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
   },
   "rework_brief.py": {
-    "scratch/briefs/rework-sample.md": "865d9a67e38c027e4c1a73f924a096854dda29a61c3a70dc3b08024762e75a3a"
+    "scratch/briefs/rework-sample.md": "b2221c890753779b8a999ece118d060625f78327a41f298b5a271adf6186b0dc"
   },
   "stageb_prep.sh": {
     "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "819c6e2ebebda133a8cd01b2e5ebaa14736c8675536cc298b151059a2be34ce5"
@@ -100,6 +100,6 @@
     "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "d4572b6acab504e20cfb77bd1a8abaec3909d583a69a2ca429ed25fd42c1e2a9"
   },
   "rework_brief.py:defaults": {
-    "scratch/briefs/rework-sample.md": "865d9a67e38c027e4c1a73f924a096854dda29a61c3a70dc3b08024762e75a3a"
+    "scratch/briefs/rework-sample.md": "b2221c890753779b8a999ece118d060625f78327a41f298b5a271adf6186b0dc"
   }
 }

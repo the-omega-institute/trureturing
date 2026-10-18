@@ -16,12 +16,33 @@ HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent
 DATA = HERE / 'testdata'
 
+REGISTRATION_CI_READING = (
+    'Report whether each Reg registration decodes at the delivered head from the scoped report, '
+    'and read its `DTR-*` finding from the required CI `current` job of the pushed head '
+    '(`gh run view <run-id> --log --job <current-job-id>`, the `DTR-` lines; report the run id '
+    'and job id); until that reading exists the registration is pending. '
+    'Never write `declared_validated` without that CI reading.')
+
 
 def assert_dtr_source(text):
     for instruction in re.split(r'\n\s*\n|\n(?=\s*(?:[-*]|\d+\.)\s)', text):
-        assert not (re.search(r'\bDTR\b', instruction) and
-                    re.search(r'\bmake\s+lean-report(?:-scoped)?(?![\w-])', instruction)), \
-            'DTR findings require the pushed delivery head CI current job reading'
+        # Decoding and CI validation may share a bullet, but have distinct sources.
+        for clause in re.split(r'(?<=[.;])\s+|\s+and\s+(?=(?:read|report)\b)',
+                               instruction, flags=re.I):
+            status = re.search(r'\b(?:DTR|declared_validated)\b|Reg registration state', clause)
+            report = re.search(r'\b(?:the\s+(?:scoped\s+)?report|scoped report|Lean report|report command)\b'
+                               r'|`[^`\n]*\breport[\w-]*[^`\n]*`'
+                               r'|\bmake\s+lean-report(?:-scoped)?(?![\w-])', clause, re.I)
+            assert not (status and report), \
+                'DTR findings and declared_validated require the pushed delivery head CI current job reading'
+
+
+def assert_unsafe_dtr_source(text):
+    try:
+        assert_dtr_source(text)
+    except AssertionError:
+        return
+    raise AssertionError('unsafe DTR source accepted: ' + text)
 
 
 def assert_scoped_builds(text, *, binding=False, all_commands=False):
@@ -54,18 +75,21 @@ def build_scope_regressions():
     ci_source = ('Read `DTR-Declared` from the pushed delivery head required CI '
                  '`current` job using `gh run view <run-id> --log --job <current-job-id>`.')
     assert_dtr_source(ci_source)
+    assert_dtr_source(REGISTRATION_CI_READING)
     assert_dtr_source('Run `make lean-report-scoped LEAN_TARGETS="D5.Sample"`.')
     assert_dtr_source('- Run `make lean-report-scoped LEAN_TARGETS="D5.Sample"`.\n- ' + ci_source)
-    for command in ('make lean-report-scoped LEAN_TARGETS="D5.Sample"', 'make lean-report'):
+    for command in ('make lean-report-scoped LEAN_TARGETS="D5.Sample"', 'make lean-report',
+                    'python3 report.py', 'custom-report --target D5.Sample'):
         for text in (f'Read the DTR finding for the target in `{command}`.',
                      f'For example `DTR-Unregistered` from `{command}`.',
-                     f'Read `{command}`\nfor the target\'s `DTR-Declared` finding.'):
-            try:
-                assert_dtr_source(text)
-            except AssertionError:
-                pass
-            else:
-                raise AssertionError('unsafe DTR source accepted: ' + text)
+                     f'Read `{command}`\nfor the target\'s `DTR-Declared` finding.',
+                     f'Write `declared_validated` from `{command}`.'):
+            assert_unsafe_dtr_source(text)
+    for text in ('Read the `DTR-*` finding from the scoped report.',
+                 'Write `declared_validated` from the scoped report.',
+                 'Report the Reg registration state at the delivered head from the scoped report (decoded or not). '
+                 'Never write `declared_validated` without the reading.'):
+        assert_unsafe_dtr_source(text)
     assert_scoped_builds(BUILD_SCOPE, binding=True, all_commands=True)
     for text in ('', BUILD_SCOPE.replace('binding;', 'optional;'),
                  *(BUILD_SCOPE + '\n' + command for command in (
@@ -291,12 +315,24 @@ def case(tool, variant=None):
                     'impl-op-w1-sample.stageB.md')
             text = (root / 'scratch/briefs' / path).read_text()
             assert_scoped_builds(text, binding=True)
+            assert_dtr_source(text)
             if tool.stem in ('gen_stage_briefs', 'stages'):
                 stage_a = (root / 'scratch/briefs/impl-op-w1-sample.stageA.md').read_text()
                 assert_scoped_builds(stage_a)
             if tool.stem == 'implb_head':
                 from common import BUILD_SCOPE
                 assert BUILD_SCOPE + '\n\n- **SDK host.**' in text
+                assert REGISTRATION_CI_READING in text
+                for source in ('the scoped report', '`make lean-report-scoped LEAN_TARGETS="D5.Sample"`',
+                               '`python3 report.py`', '`custom-report --target D5.Sample`'):
+                    for unsafe in (f'Read the `DTR-*` finding from {source}.',
+                                   f'Write `declared_validated` from {source}.'):
+                        assert_unsafe_dtr_source(text.replace(REGISTRATION_CI_READING, unsafe))
+            if tool.stem == 'rework_brief':
+                audit = (TOOLS / 'templates/blocks/escape-audit-block.md').read_text()
+                assert text.count(audit) == 1, 'missing or repeated escape-audit block'
+                assert '"pending CI reading"; never write `declared_validated` without the CI reading.' in text
+                assert 'required CI `current` job: run `gh run view <run-id> --log --job <current-job-id>`' in text
         if variant == 'defaults':
             print('BRIEF_DEFAULTS tool='+tool.name+' exit='+str(result.returncode))
         outputs=collect(root,before)
