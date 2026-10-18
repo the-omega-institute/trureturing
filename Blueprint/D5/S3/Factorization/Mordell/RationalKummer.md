@@ -207,3 +207,4 @@ These descent statements do not determine a full two-Selmer group, a Cassels pai
 - Truth anchor: `D5/S3/Factorization/Mordell/RationalKummer.kummer`
 - Truth anchor: `D5/S3/Factorization/Mordell/RationalKummer.kummer_zero_iff_double`
 - Truth anchor: `D5/S3/Factorization/Mordell/RationalKummer.root`
+- Dependency: [D5/S3/Factorization/Mordell/FieldKummer](FieldKummer.md)

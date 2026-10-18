@@ -3402,3 +3402,503 @@ Every datum, its interval, source, signed vector, analytic margins, $a$ and $B$ 
 The exact inverse-shear reconstruction remains (37.7); original raw wavefunctions and unit-source kernels have their different Jacobian factors in (1.9). All actual-state conclusions concern every normalized complex choice on every prescribed sequence. The early positive vector and the fixed canonical parities do not restrict the actual competitor class. Physical spatial dimension, physical $SO(3)$, operational state preparation and resource clocks require additional correspondences and are not selected by these analytic alternatives.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 39. Quantitative estimates at zero absolute heat finite part
+
+**Definition 39.1 (fixed frame and quantitative scales).** Fix precisely one datum satisfying Definition 32.1, including its analytic window and $C_{\rm resp}=C_4=0$, and assume additionally $\mathfrak m_d=0$. Retain all notation of (32.3)–(32.8), (33.1), (24.24) and (24.40). In particular $G_s=\sum_{i=0}^4s^ig_i$, $N_0=VG_0$, $N_s=F_sH_s$, $L_s=H_sF_s$, and $L_su_s=\ell_su_s$, with the normalization in (24.3). Write
+
+$$
+\omega=1+|r|,\qquad R(\xi)=1+\mathfrak d(\xi),\qquad
+\mathfrak d(\xi)=d_E(0,\xi),\qquad q=\frac{41}{8}.
+\tag{39.1}
+$$
+
+First fix a safe radius $\ell>0$ so that $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$. The constants in the following estimates may depend on this fixed datum and radius. Set $L=\ell/s$, $T=s^{-2}$. The symbols $\delta$ and $\epsilon$ below are time integration split points; the estimates are uniform in their indicated ranges. They do not change the datum, either original face, a spectral probe, or a competitor domain.
+
+The source is exactly (32.2), with all three jointly realized rational components. Measures, the unit raw source, the factors $j_0s^7$ and the field-only $j_0^{-1}$ are (32.4); all real frequencies and the complete complex domains are those of Definition 32.1. The $B$ heat clock and its $\lambda$ shift are independent of $a$. A spectral constant denoted $H>0$ below is distinct from the fixed probability parameter in $d$, and is always fixed separately before $s\downarrow0$.
+
+The quantitative statements in §§39–44 are `repo-derived` consequences for this original-source conditional problem. The compact endpoint regularity used below is the `literature-attested` scope of Colin de Verdière–Hillairet–Trélat, [Theorem A and Corollary 1.1, pp. 901–904](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), with the hypotheses identified in Definition 38.1. The global integrations will be proved using the original P76, L41 and finite-bridge estimates, separately from that local regularity.
+
+**Lemma 39.2 (endpoint estimates with integrable tests).** There are fixed constants $C,\delta_0>0$ such that, for $0<v\le1$, the zero-extended original kernel satisfies
+
+$$
+\left|K_d(v;Y_s\eta,Y_s\xi)-K_d(v;o,o)\right|
+\le Cv^{-7/2}\min\left\{1,\frac{s}{\sqrt v}
+                  (\mathfrak d(\eta)+\mathfrak d(\xi))\right\}.
+\tag{39.2}
+$$
+
+For the input-height-zero relative coefficient kernel $k_j$ in J (30.3), $0\le j\le4$, the corresponding bound is
+
+$$
+|k_j(t;\eta^{-1}\xi)-k_j(t;0)|
+\le Ct^{(j-7)/2}\min\left\{1,
+          \frac{\mathfrak d(\eta)+\mathfrak d(\xi)}{\sqrt t}\right\}.
+\tag{39.3}
+$$
+
+The tests $p^2$ and $|g_0|\otimes|g_0|$ have finite first homogeneous moments.
+
+Proof. Put $u=\sqrt v$. The exact chart relations are
+$\Xi_s=\Xi_u\delta_{s/u}$ and
+$\mathscr L_u\delta_{s/u}=\delta_{s/u}\mathscr L_s$; hence
+$Y_s=Y_u\delta_{s/u}$. On a fixed sufficiently small compact set of rescaled endpoints, the local heat theorem just cited bounds the first endpoint derivatives of
+$j_0u^7K_d(u^2;Y_u\eta',Y_u\xi')$ uniformly as $u\downarrow0$. Its $C^\infty$ conclusion includes these $C^1$ bounds. The smooth determinant-one shear and the bounded clock factor preserve them. For $u$ bounded away from zero, positive-time interior regularity gives the same bound on a smaller fixed compact set.
+
+A homogeneous gauge equivalent to $\mathfrak d$ has coordinates of weights $(1,1,2,3)$. On a small gauge ball, ordinary coordinate displacement is bounded by a constant times gauge displacement. The mean value inequality therefore proves (39.2) when both scaled endpoints are in that ball. If either is outside it, the minimum in (39.2) is bounded below by a fixed positive constant. P Proposition 76.1's global both-endpoint bound then proves the assertion there. This also covers an endpoint outside the native domain, where its kernel is zero: such an endpoint cannot lie in the fixed interior ball. Local Dirichlet heat localization requires a common interior neighborhood, not identical whole-space and killed operator domains.
+
+At time one the relative $n=0$ kernels have the global supremum bound of J Lemma 30.2 and bounded derivatives near the identity. The latter follow from the same smooth local coefficients, or directly from the finite Gaussian bridge coefficients. Scaling (33.8), followed by the group quasi-triangle inequality, gives (39.3). Input-height terms of degrees $n\ge1$ are not included in this bounded relative kernel and will be estimated separately. Finally (24.4) gives $p^2,|g_0|\le CR^{-10}$. Homogeneous volume has degree seven, so their first homogeneous moments, and consequently the first moments of the product test, are finite. $\square$
+
+## 40. Uniform quantitative seed matching
+
+**Theorem 40.1 (seed rate on the full endpoint spaces).** With $\alpha_s,\beta_s$ as in (33.1),
+
+$$
+|\alpha_s-s^5Z_d|+
+ |\beta_s-j_0a_0^2s^5Z_d|\le C_ds^{41/8}.
+\tag{40.1}
+$$
+
+More precisely, for every $s^2<\delta<\delta_0<1$ and sufficiently small $s$, uniformly over those split points,
+
+$$
+\begin{aligned}
+&|\alpha_s-s^5Z_d|+|\beta_s-j_0a_0^2s^5Z_d|\\
+&\quad\le Cs^5\left\{\sqrt\delta+\Psi_\ell(\delta)
+               +s\delta^{-3}+s(1+|\log s|)\right\},
+\end{aligned}
+\tag{40.2}
+$$
+
+where $\Psi_\ell$ is (33.3).
+
+Proof. Split at $D=\delta/s^2$, keeping the safe strip fixed during differentiation. The sixth finite derivative estimate (33.5), multiplied by $s^6$, is bounded uniformly by
+
+$$
+C\{s^5\sqrt\delta+s^6(1+|\log s|)\}.
+\tag{40.3}
+$$
+
+Indeed $1<D<T$ and $\log(2+D)\le C(1+|\log s|)$. Odd fifth scalar derivatives vanish on this symmetric estimating strip for both tests. They are not discarded on the original nonsymmetric interval by a parity assumption on an actual state.
+
+Restore the full kernels on the short interval as in the proof of Theorem 33.1, retaining the exit event. The $n=0$ field and relative-return deleted paths cost $Cs^5\Psi_\ell(\delta)$: the bound is $Ct^{(j-7)/2}e^{-cL^2/t}$ at degree $j$, including the native degree zero, and substitution $v=s^2t$ gives precisely that expression. The outer seed input has supremum $O(L^{-10})$ and mass $O(L^{-3})$; J (31.7), (31.9) bound its native/safe and retained coefficient returns, after their factors, by $Cs^8$. These are full-output bounds.
+
+For inner inputs of height degree $n\ge1$, (33.6) before taking a limit gives the uniform bound
+
+$$
+Cs^5\sum_{n=1}^4s^nM_n(L),\qquad
+M_1,M_2\le C,\quad M_3\le C(1+\log L),\quad M_4\le CL.
+\tag{40.4}
+$$
+
+It is at most $Cs^6(1+|\log s|)$. The original covariance comparison remains valid after a path leaves the safe strip by the fixed denominator margins. Safe paths cannot end beyond either original face. Thus these estimates include every deleted input, output and face contribution, not just outputs on a compact set.
+
+For the native middle interval $v\in[\delta,1]$, apply (39.2) in the two exact expressions (33.7). Their endpoint tests have finite first moments, so their differences from the exact source diagonal are at most
+
+$$
+Cs^6\int_\delta^1v^{-4}dv\le Cs^6\delta^{-3}.
+\tag{40.5}
+$$
+
+For each canonical $n=0$ tail, (39.3) similarly gives
+
+$$
+Cs^6\int_\delta^\infty v^{(j-8)/2}dv
+\le Cs^6\delta^{-3},\qquad0\le j\le4.
+\tag{40.6}
+$$
+
+Here the factor $s^j$ and the exact heat rescaling have both been included. All five integrals converge at infinity. Odd diagonal coefficients are zero; the even diagonal integrals are exactly the three quantities in (33.9), with their original clock terms and $j_0$ factors.
+
+For $n\ge1$ retain the entire ordered kernel (33.11). After division by $s^5$ its bound is
+
+$$
+Cs^{7/p_n-7+n}\,
+ \delta^{(j-n)/2-7/(2p_n)+1},\qquad
+(p_1,p_2,p_3,p_4)=(1,1,7/6,7/5),\quad n\le j\le4.
+\tag{40.7}
+$$
+
+For $n=1,2$, the most negative $\delta$ exponent is $-5/2$; for $n=3,4$ it is respectively $-2,-3/2$. The corresponding powers of $s$ are $1,2,2,2$. Thus the sum of (40.7) is at most $Cs\delta^{-3}$. This accounts for every nonzero input-height degree without an absolute fourth $L^1$ height moment.
+
+Combining (40.3)–(40.7) identifies the two scalars with $s^5B_d(\delta)$ and $j_0a_0^2s^5B_d(\delta)$ up to the displayed errors. Theorem 32.3 gives $|B_d(\delta)-Z_d|\le C\sqrt\delta$, proving (40.2). That inequality is uniform on the whole stated range. It therefore permits the substitution $\delta=s^{1/4}$. Since $\Psi_\ell(\delta)$ is bounded by every positive power of $\delta$ as $\delta\downarrow0$, its terms are bounded by $Cs^{1/8}$ after division by $s^5$; so are $\sqrt\delta$, $s\delta^{-3}=s^{1/4}$ and $s(1+|\log s|)$. This proves (40.1). $\square$
+
+## 41. Bounded products and the complete finite-row rate
+
+**Lemma 41.1 (product convergence with a rate).** The bounded reconstruction products satisfy
+
+$$
+\|N_s-N_0\|_{2\to2}\le C_ds^{4/7}.
+\tag{41.1}
+$$
+
+Consequently $s^4\|(N_s-N_0)g_4\|_2=O(s^{32/7})$ using only the existing fixed $L^2$ charge $g_4$.
+
+Proof. The field memberships used here are $V,rV\in L^2$, $V\in L^\infty$ and $\sup_{|r|>L/4}V\le CL^{-5}$, from (24.4) and the canonical field bounds. Below time one, contraction and (24.6) bound $(F_s-V)Q_s(t)$ by $Cs$. Above time one the row/column $L^2$ heat estimate gives
+
+$$
+\|M_{F_s-V}Q_s(t)\|_{2\to2}
+\le\|M_{F_s-V}Q_s(t)\|_{\rm HS}
+\le C\|F_s-V\|_2t^{-7/4}.
+\tag{41.2}
+$$
+
+Its integral is $O(s)$. Thus it remains to estimate $V(H_s-G_0)$ as a product. Here $VG_0$ means the operator-norm convergent integral $\int_0^\infty VP_tdt$, $P_t=e^{-t\mathcal E}$: contraction controls the lower end and the Hilbert–Schmidt estimate $C\|V\|_2t^{-7/4}$ controls the upper end. Compact testing and adjointness identify it with $N_0$. No unweighted $G_0$ on arbitrary $L^2$ is used.
+
+On output heights $|r|>L/4$, the native, safe and canonical finite-time products have norm at most $CTL^{-5}=O(s^3)$. On inner output heights, reverse the symmetric heat kernel and retain the event of leaving the safe strip. J (31.6) gives the row supremum $Ct^{-7/2}e^{-cL^2/t}$, while its row mass is bounded. Interpolation gives row $L^2$ norm $Ct^{-7/4}e^{-c'L^2/t}$. Multiplication by $V\in L^2$ and integration in $t$ therefore cost
+
+$$
+C\|V\|_2\int_0^Tt^{-7/4}e^{-c'L^2/t}dt
+\le CL^{-3/2}=O(s^{3/2}).
+\tag{41.3}
+$$
+
+This handles original/safe and canonical/safe deletions, including all input phases and zero-extended outputs. The canonical time tail above $T$ has norm $CT^{-3/4}=O(s^{3/2})$ after multiplication by $V$.
+
+For the inner safe comparison, the first derivative has the row bound
+
+$$
+\|\partial_\theta q_\theta^L(t;\xi,\cdot)\|_2
+ \le Ct^{-7/4}(|r_\xi|+\sqrt t),
+\qquad0\le\theta\le s,\quad0<t\le T.
+\tag{41.4}
+$$
+
+To derive it, differentiate the same common bridge as in (24.9). At first order its positive majorant has row $L^1$ norm $C(|r_\xi|+\sqrt t)$ and row supremum $Ct^{-7/2}(|r_\xi|+\sqrt t)$. The determinant-one $D_A$ change in (24.10) preserves phase volume; the inverse-determinant and supremum moments in (24.12), P (107.5) give these two bounds with the safe indicator retained. Their geometric mean gives (41.4). By symmetry one may use the output height in it. This proves the asserted row bound rather than inferring it from an arbitrary-input threshold derivative.
+
+For $0<\epsilon<1$, integrate (41.4) on $[\epsilon,T]$ after multiplication by $V$. The Hilbert–Schmidt bound is
+
+$$
+Cs\int_\epsilon^Tt^{-7/4}
+       (\|rV\|_2+\sqrt t\|V\|_2)dt
+\le Cs\epsilon^{-3/4}.
+\tag{41.5}
+$$
+
+On $(0,\epsilon)$ contraction costs $C\epsilon$. Equations (41.2)–(41.5) give, uniformly in that range,
+
+$$
+\|N_s-N_0\|\le C\{s+\epsilon+s\epsilon^{-3/4}
+                                      +s^{3/2}+s^3\}.
+\tag{41.6}
+$$
+
+Set $\epsilon=s^{4/7}$ in this uniform inequality to obtain (41.1). The same proof with extra safe killing gives a uniform bound for the safe joint product; all constants are independent of the time split. $\square$
+
+**Lemma 41.2 (full finite-row norm).** The exact finite-row error of (24.40) satisfies
+
+$$
+\|E_s^{\rm row}\|_2\le C_ds^{33/8}.
+\tag{41.7}
+$$
+
+Proof. J Theorem 33.2 already gives this rate for the seed, with the smaller error $Cs^5(1+|\log s|)$. For $i=1,2,3$, the inner safe return Taylor products have norm $O(s^{5-i})$ by the integrable derivative lists (24.34). After the exterior factor $s^i$ they cost $O(s^5)$. Their original-path deletions, coefficient-path deletions and coefficient time tails have the explicit higher powers (24.35)–(24.36). For $i=1$ these give $O(s^6)$ after the exterior factor; for $i=2$ they give $O(s^7)$; for $i=3$ the least power is $s^{41/6}$. These estimates cover the entire output space.
+
+It remains to replace the old outer-input norm loss. Write $w_i=6-i$ and $g_i^{\rm out}=\mathbf1_{|r|>L/4}g_i$. By (24.29), $\|g_i^{\rm out}\|_2\le CL^{-w_i}$. The actual and safe joint products are uniformly bounded by Lemma 41.1 and its safe proof. Their outer-input contributions after $s^i$ are therefore $O(s^iL^{-w_i})=O(s^6)$, with no factor $T$.
+
+For every retained coefficient product $s^{i+k+j}V_kG_jg_i^{\rm out}$, $k+j\le4-i$, put $j=n+m$. On times below one use bounded $V_k$, return output $L^2$ and $\|r^ng_i^{\rm out}\|_2\le CL^{n-w_i}$. Integration of $t^{m/2}$ gives total order at least $s^{i+k+m+w_i}$, hence at least $s^6$.
+
+For long times $V,V_1\in L^2$ are paired with output $L^\infty$; $V_2,V_3\in L^4$ are paired with output $L^4$. J (30.4)'s time power for input exponent $p$ and output exponent $b$ is $m/2-(7/2)(1/p-1/b)$. The following choices cover all relative degrees that occur:
+
+$$
+\begin{array}{c|c|c|c}
+b&m&p&\text{time power}\\ \hline
+\infty&0,1&2&-7/4,-5/4\\
+\infty&2&3/2&-4/3\\
+\infty&3&7/6&-3/2\\
+4&0&6/5&-49/24\\
+4&0&3/2&-35/24\\
+4&1&7/6&-13/8
+\end{array}
+\tag{41.8}
+$$
+
+All powers are strictly below $-1$. For $g_1,g_2$, interpolate $L^1$ with $\omega^{w_i}L^2$: for $\vartheta=2(1-1/p)$,
+
+$$
+\omega^{w_i\vartheta}g_i\in L^p,\qquad
+\|r^ng_i^{\rm out}\|_p\le CL^{-(w_i\vartheta-n)}
+\quad(n\le w_i\vartheta).
+\tag{41.9}
+$$
+
+Thus the total power is $i+k+m+w_i\vartheta$. For $g_3$, only $m=0,1$ with $p=2$ is needed and its weighted $L^2$ bound suffices. To make the complete index coverage explicit, the minimum powers over $0\le n\le j$ for each retained group of products are
+
+$$
+\begin{array}{c|c|c|c}
+i&k&j&\text{minimum power}\\ \hline
+1&0&0,1,2&6\\
+1&0&3&38/7\\
+1&1&0,1,2&7\\
+1&2&0&14/3\\
+1&2&1&38/7\\
+1&3&0&17/3\\
+2&0&0,1,2&6\\
+2&1&0,1&7\\
+2&2&0&16/3\\
+3&0&0,1&6\\
+3&1&0&7
+\end{array}
+\tag{41.10}
+$$
+
+The entries are lower bounds when a group contains several $j$'s. In the $V_2G_1g_1$ entry, use $p=3/2$ for $n=1,m=0$ and $p=7/6$ for $n=0,m=1$; in $V_2G_0g_i$, use $p=6/5$. For $V G_3g_1$, the successive $m=0,1,2,3$ choices are exactly the first three lines of (41.8). All height inequalities in (41.9) hold for these choices. In particular the least powers for $i=1,2,3$ are $14/3,16/3,6$, respectively, all larger than $33/8$.
+
+Finally the ordered field cross remainders retain the norms in J §§39, 46: for $g_1$, the $j=0$ product uses $G_0g_1\in L^2$ and a supremum remainder $O(s^4)$, while $j=1,2,3$ use $L^4$ returns with field remainders $O(s^3),O(s^2),O(s)$. Their total orders after $s^{1+j}$ are at least $s^5$. For $g_2$, the three $L^4$ remainders are $s^3,s^2,s$, and for $g_3$ they are $s^2,s$; after $s^{i+j}$ these again cost $O(s^5)$. These are full ordered products, so no separate $L^2$ membership for a high field coefficient is asserted. Lemma 41.1 gives the remaining $g_4$ row as $O(s^{32/7})$. Adding the seed, all three lower rows and this last row proves (41.7). $\square$
+
+## 42. Quantitative tested charges and the early principal value
+
+**Lemma 42.1 (tested lower charges).** For the errors in (24.24),
+
+$$
+\begin{aligned}
+\sum_{i=1}^3s^i|\langle p,E_{i,s}\rangle|
+ &\le C\{s^{31/6}+s^{21/4}+s^6(1+|\log s|)\},\\
+s^4|\langle p,(N_s-N_0)g_4\rangle|&\le Cs^{11/2}.
+\end{aligned}
+\tag{42.1}
+$$
+
+Proof. Put $k_i=5-i$. In the ordered return term (24.26), Taylor expand the inner input through degree $k_i$, keeping its degree-$k_i$ coefficient, and bound the next derivative of order $6-i$. The required input exponents, indexed in order by $n=0,\ldots,6-i$, are
+
+$$
+\begin{array}{c|c|c}
+i&(p_n)&\text{large-time powers}\\ \hline
+1&(1,1,7/6,7/5,7/4,2)&(-1,-3/2,-3/2,-3/2,-3/2,-7/4)\\
+2&(1,7/6,7/5,7/4,2)&(-3/2,-3/2,-3/2,-3/2,-7/4)\\
+3&(6/5,18/13,18/11,2)&(-17/12,-55/36,-59/36,-7/4)
+\end{array}
+\tag{42.2}
+$$
+
+These memberships follow from J (38.1), (43.4), (44.3), (45.3) and the retained weighted $L^2$ norms. The time powers are $(6-i-n)/2-7/(2p_n)$. At short times use the available weighted $L^2$ norms and integrable nonnegative half powers. The sole logarithm is the first entry for $i=1$; every other long-time exponent is strictly below $-1$. After $s^i$, Taylor's remainder is consequently $O(s^6(1+|\log s|))$.
+
+The added coefficient has total degree $i+k_i=5$. Replace its test $F_sp$ by $Vp$; their $L^1+L^2$ difference is $O(s)$ by (24.6). The derivative list (24.34) bounds this coefficient in $L^2$ below time one and $L^\infty$ above it, so that replacement costs $O(s^6)$. Its complete canonical scalar with test $Vp$ is zero by reflection: $g_i$ has parity $(-1)^i$ and $\mathsf Q_{k_i}$ has parity $(-1)^{k_i}$. This uses only canonical fixed-test parity.
+
+We spell out restoration of the additional degree, beyond the old retained degrees. The latter have outer coefficient scalar bound $O(s^{31/6})$ in (24.33), and native/safe outer scalar bound $O(s^6)$ in (24.30). For the new coefficient transpose its complete symmetric endpoint kernel onto $Vp=\mu g_0$. The finite-time $L^2$ bound is
+
+$$
+\left\|\int_0^T\mathsf Q_{k_i}(t)(Vp)dt\right\|_2
+ \le C(1+T^{k_i/2-3/4}).
+\tag{42.3}
+$$
+
+For $t\ge1$ its $n=0$ term uses $Vp\in L^1$ and output $L^2$, with power $k_i/2-7/4$. For $n\ge1$ use the seed memberships in (33.10); their integrated powers are no larger. For $t<1$ the weighted $L^2$ seed moments give a finite bound. Therefore its outer scalar, after $s^{i+k_i}=s^5$, is at most
+
+$$
+Cs^5L^{-(6-i)}(1+T^{k_i/2-3/4})=O(s^{15/2}).
+\tag{42.4}
+$$
+
+For its inner coefficient exits and its time tail use the order-$k_i$ sublists of (42.2), omitting the final entry. Formula (24.36), with the exterior $s^i$, gives powers $i+7/p_n-2+n$. For $i=1$ these are $6,7,7,7,7$; for $i=2$ all are $7$; for $i=3$ they are $41/6,127/18,131/18$. Every time power is strictly integrable and every resulting power is at least six. The exit event remains in the positive majorant before integration. This covers the extra retained coefficient on all output points and restores its whole canonical time interval. Thus there is no unquantified tail modulus in this scalar restoration.
+
+For the field part of (24.26), keep its first omitted coefficient as in Theorem 34.1. Every such scalar has total degree five and vanishes by reflection. The exceptional $(i,j)=(1,0)$ uses the degree-four supremum remainder $O(s^5(1+|\log s|))$ and costs $O(s^6(1+|\log s|))$ after $s^i$. The other eight entries of (24.38) use $L^4$ returns: when the added field degree is three, J Lemma 32.1 gives $O(s^{13/4})$ and the exterior degree is two, giving $O(s^{21/4})$; at added degrees two and one the remainders $O(s^3),O(s^2)$ give order at least six. This proves the first line of (42.1).
+
+For the final charge refine (34.4) to
+
+$$
+(L_s-K_{\rm rec})p=sD_1p+O_{L^2}(s^{3/2}),\qquad
+D_1p=G_0(V_1p)+\mu G_1g_0.
+\tag{42.5}
+$$
+
+For the seed-return term, the second strip derivative on $g_0$ has time-integrated $L^2$ bound $C(1+T^{1/4})$: the $n=0$ large-time power is $-3/4$, the $n=1$ power $-5/4$, and the $n=2$ power $-7/4$. Multiplication by $s^2$ gives $O(s^{3/2})$. Native/strip and degree-zero/one coefficient restorations are the $O(s^{3/2})$ column $L^2$ bounds in the proof of Lemma 24.4 and (34.4).
+
+For the field input, J Lemma 32.1 gives $\|F_s-V-sV_1\|_2=O(s^{3/2})$, and its supremum norm is $O(s^2)$. Multiplication by $p$ and (24.14) give the same $L^2$ return error. It remains to bound $H_s(V_1p)-G_0(V_1p)$ by $Cs$. Its first strip derivative is time integrable since $V_1p,rV_1p\in L^1$; here use $V_1\in L^2$, $p,rp\in L^2$. Its short-time weighted $L^2$ bounds hold because $\omega^4V_1$ is bounded. That same weight bounds its outer-input error by $CTL^{-4}=O(s^2)$; its native deletion and canonical time tail cost $O(s^{3/2})$. This proves (42.5).
+
+The normalized charge $g_4$ is even, as proved in Theorem 34.1, whereas $D_1p$ is odd. By adjointness, with only $g_4\in L^2$,
+
+$$
+s^4\langle p,(N_s-N_0)g_4\rangle
+=s^4\langle(L_s-K_{\rm rec})p,g_4\rangle
+=O(s^{11/2}).
+\tag{42.6}
+$$
+
+This proves the second assertion. $\square$
+
+**Theorem 42.2 (quantitative early principal matching).** Under Definition 39.1,
+
+$$
+\ell_s=C_*+\mathscr A Z_ds^5+O_d(s^{41/8}).
+\tag{42.7}
+$$
+
+Proof. In the seed ordered identity (24.26), its return scalar is $\mu\beta_s$ up to $O(s^6(1+|\log s|))$ by (24.27)–(24.28). Its degree-zero field scalar is $(C_*/\mu)\alpha_s$. Theorem 40.1 therefore makes their sum
+
+$$
+\left(\frac{C_*}{\mu}+\mu j_0a_0^2\right)Z_ds^5
+       +O(s^{41/8})=\mathscr A Z_ds^5+O(s^{41/8}).
+\tag{42.8}
+$$
+
+For seed field terms $j=1,2,3,4$, retain the first omitted coefficients $V_4,V_3,V_2,V_1$. Their integrable degree-five scalars vanish by reflection. The return norms are respectively $L^2,L^4,L^4,L^\infty$, as in the proof of Theorem 34.2. After their factors, the quantitative field remainders give $O(s^6(1+|\log s|))$, $O(s^{21/4})$, $O(s^6)$ and $O(s^{11/2})$. In the last case use the degree-one $L^2$ field remainder $O(s^{3/2})$. All these exponents exceed $41/8$.
+
+Lemma 42.1 treats every other fixed-test charge. Lemma 41.2 and (24.13) give the moving-test error
+
+$$
+|\langle E_s^{\rm row},u_s-p\rangle|
+ \le Cs^{33/8}s=Cs^{41/8}.
+\tag{42.9}
+$$
+
+Insert these bounds into the exact finite-vector scalar (24.42). Its denominator is $1+O(s)$, so its effect on the displayed $s^5$ term is $O(s^6)$. This proves (42.7). $\square$
+
+## 43. Quantitative late collapse and the full principal norm
+
+**Lemma 43.1 (late two-endpoint collapse).** The function
+
+$$
+W^{\rm late}(Y,Z)=\int_1^\infty K_d(t;Y,Z)dt
+\tag{43.1}
+$$
+
+is globally bounded and jointly smooth in a fixed interior neighborhood of $(o,o)$. It satisfies
+
+$$
+|W^{\rm late}(Y_s\eta,Y_s\xi)-W^{\rm late}(o,o)|
+\le C\min\{1,s(\mathfrak d(\eta)+\mathfrak d(\xi))\}.
+\tag{43.2}
+$$
+
+In the notation (35.5)–(35.6), for each fixed $H>0$, $h=Hs^q$, $b=h/s^2$,
+
+$$
+\begin{aligned}
+x&=Vp+O_{L^1\cap L^2}(s),&m&=\mu+O(s),\\
+d_s&=W_{1,d}(o)s^5+O(s^6),\\
+\langle x,L^hx\rangle
+ &=j_0A_p^2W_{1,d}(o)s^5+O(s^6)+O(s^5\sqrt b).
+\end{aligned}
+\tag{43.3}
+$$
+
+Proof. L Lemma 41.2 bounds $K_d(t;Y,Z)$ by $Ct^{-3/2}$ for $t\ge1$, uniformly in both endpoints; hence (43.1) is bounded. On the interior product space its distribution identity is
+
+$$
+(S_Y+S_Z)W^{\rm late}=2K_d(1;Y,Z).
+\tag{43.4}
+$$
+
+Compact testing justifies integration of the heat equation, and the boundary term at infinity vanishes by the same large-time bound. The sum of the two original bracket-generating systems on the product is bracket generating there. Local hypoelliptic regularity for this sum of squares, with its smooth constant potential $-2\lambda$, makes (43.1) jointly smooth. Thus a local mean value estimate gives (43.2) inside a fixed neighborhood; outside it use the global bound and the positive lower bound of the minimum. This argument requires no large-time endpoint derivative estimate.
+
+By (24.6), (24.13), bounded multiplication and Cauchy–Schwarz, $x-Vp=O(s)$ in $L^1\cap L^2$, $m-\mu=O(s)$ and $\|u_s^2-p^2\|_1=O(s)$. Apply (43.2) to $p^2$ for $d_s$ and to $Vp\otimes Vp$ for the late quadratic scalar. Their first homogeneous moments are finite by (24.4). Replacing either moving $x$ by $Vp$ costs $O(s)$ under the bounded late kernel. The exact kernel scaling is (35.9), so it retains its factor $j_0s^5$.
+
+Finally damping that kernel changes its normalized supremum by at most
+
+$$
+C\int_1^\infty\min(1,bt)t^{-3/2}dt\le C\sqrt b
+\quad(0<b<1).
+\tag{43.5}
+$$
+
+Combining the endpoint, moving-input and damping errors proves (43.3). Each $H$ is fixed; the constants in the undamped $O(s^6)$ errors are independent of it. $\square$
+
+**Theorem 43.2 (full-principal enclosure independent of the fixed probe constant).** There is a finite constant $B_d$, independent of the separately fixed $H>0$, such that
+
+$$
+\limsup_{s\downarrow0}s^{-41/8}
+ \left\{k_d(Hs^{41/8})-C_*+\beta_*Hs^{41/8}\right\}
+\le B_d.
+\tag{43.6}
+$$
+
+This is the norm $k_d$ of the full original positive compact operator (35.1), including the infinite-time field and return.
+
+Proof. Fix $H>0$ and put $h=Hs^{41/8}$. P (104.2) gives norm convergence of the bounded reconstruction product to $K_{\rm rec}$ at this probe: in particular $s^2h^{-1/4}\to0$ and $s^4h^{-1/2}\to0$. The compact spectral neighborhood and bounded product factorization in the proof of Theorem 35.1 therefore apply unchanged. They give a bounded simple top and fixed separation of the remainder of the full selfadjoint compact spectrum. This is separation for the reconstruction, not a positive critical-Hamiltonian threshold gap.
+
+Keep exactly $x,y,m,d_s,z,D,L^h$ in (35.5)–(35.6) and its full quotient (35.13). The damping proof (36.4)–(36.6) applies at the present probe. Its majorants are $Ct$ below time one and $Ct^{-5/2}$ above it, independent of $h$, and $h\to0$, $T\to\infty$. It gives on this fixed input
+
+$$
+\langle x,Dx\rangle=C_*^2h+o_{d,H}(h).
+\tag{43.7}
+$$
+
+Theorem 42.2 and Lemma 43.1 evaluate the remaining early and late scalar terms in the quotient. Subtracting $\ell_s$ from (35.13) leaves
+$\ell_sd_s+\langle x,L^hx\rangle$ before the damping and smaller cross/self terms. Division by $m+d_s=\mu+O(s)$ therefore gives
+
+$$
+\begin{aligned}
+\ell_s+\frac{\ell_sd_s+\langle x,L^hx\rangle}{m+d_s}
+ &=C_*+\mathscr A\{Z_d+W_{1,d}(o)\}s^5
+       +O_d(s^q)+O(s^5\sqrt b)\\
+ &=C_*+O_d(s^q)+O(s^5\sqrt b).
+\end{aligned}
+\tag{43.8}
+$$
+
+The last equality uses exactly $\mathfrak m_d=Z_d+W_{1,d}(o)=0$. The constant in $O_d(s^q)$ is independent of $H$. Changes in its $s^5$ scalar denominators cost $O(s^6)$.
+
+For completeness every remaining term of (35.11)–(35.12), and the late damping error in (43.3), has the following order at this probe:
+
+$$
+\begin{array}{c|c}
+\text{term}&\text{bound}\\ \hline
+\langle y,R_s(h)y\rangle& O_H(s^{103/16})\\
+\langle x,L^hy\rangle& O_H(s^{183/32})\\
+\langle y,Dx\rangle& O_H(s^{77/8})\\
+s^5\sqrt{h/s^2}&O_H(s^{105/16})
+\end{array}
+\tag{43.9}
+$$
+
+Every exponent is greater than $q=41/8$. Dividing (43.7) by $m+d_s$ gives $\beta_*Hs^q+o_{d,H}(s^q)$; its denominator error $O_H(s^{q+1})$ is smaller. Consequently the exact full quotient satisfies
+
+$$
+\mathcal Q_s\le C_*+B_ds^q-\beta_*Hs^q+o_{d,H}(s^q)
+\tag{43.10}
+$$
+
+for one finite $B_d$ independent of $H$.
+
+The weighted full residual (35.18) is
+
+$$
+O_H(s^{37/4}+s^8+s^{103/16})=o_{d,H}(s^q).
+\tag{43.11}
+$$
+
+Here $\mathcal Q_s\to C_*$ and the rest of the spectrum stays below $C_*-3\zeta$. The selfadjoint variance inequality (35.19) upgrades (43.10) to the full principal value, with additional error bounded by (43.11). This proves (43.6). Thus a quotient upper estimate has been transferred by an explicit residual and spectral separation to the full norm. $\square$
+
+## 44. The actual energy bound on the entire original complex domain
+
+**Theorem 44.1 (zero finite part and the actual infimum).** For every fixed datum satisfying exactly Definition 32.1 and $\mathfrak m_d=0$, there are finite constants $C_d,s_d>0$ such that
+
+$$
+-C_ds^{25/8}\le E_s<0\qquad(0<s<s_d).
+\tag{44.1}
+$$
+
+The lower bound is for the actual variational infimum (1.7) on its complete complex form domain. It therefore holds for every actual normalized complex ground-state choice, without a parity, support or reality restriction.
+
+Proof. After fixing the datum, choose one finite constant
+
+$$
+H_0>\frac{\max(B_d,0)+1}{\beta_*}
+\tag{44.2}
+$$
+
+and keep it fixed before $s\downarrow0$. Theorem 43.2 gives $k_d(H_0s^q)<C_*$ for all sufficiently small $s$. For every $f$ in the entire transported complex form domain, (37.4) is the exact identity
+
+$$
+q_s^c[\mathcal T_s^{-1}f]+ah\|f\|_2^2
+ =a\|(C_s+h)^{1/2}f\|_2^2-\chi_c\|U_s^{1/2}f\|_2^2,
+\qquad h=H_0s^q.
+\tag{44.3}
+$$
+
+Since $C_s\ge0$ and $h>0$, its positive square root maps that full domain onto $L^2(\Omega_s)$. The bounded factor satisfies
+
+$$
+\|U_s^{1/2}(C_s+h)^{-1/2}\|^2
+ =\|U_s^{1/2}(C_s+h)^{-1}U_s^{1/2}\|
+ =k_d(h)\le C_*=a/\chi_c.
+\tag{44.4}
+$$
+
+Thus the right side of (44.3) is nonnegative for every such complex $f$. Taking its infimum over all unit vectors gives $\epsilon_c(s)\ge-aH_0s^q$. The exact original rescaling in (32.5), $\epsilon_c(s)=s^2E_s$, proves the lower bound with $C_d=aH_0$ and $q-2=25/8$. The strict upper bound is the inherited original negative attainment at each positive coupling; it is not needed in the lower-bound argument. $\square$
+
+**Definition 44.2 (scope of the zero-stratum estimate).** Theorem 44.1 is conditional on the original analytic applicability conditions of Definition 32.1 and its three vanishing coefficients. It neither asserts nor excludes occurrence of such a datum. It gives no sign evaluation, exact energy asymptotic or actual scale/profile selection on that stratum. The original unitary, shear, rational source, two Dirichlet faces, raw source measure, full real-frequency set and entire complex domains remain unchanged. The constants are for each separately fixed original datum; no uniform source-to-face or pole-margin limit is asserted. The only substitutions $\delta=s^{1/4}$ and $\epsilon=s^{4/7}$ were made in the uniform inequalities (40.2), (41.6). The final $H_0$ is one finite fixed spectral constant, with no $H(s)$ or $M(s)$. Physical dimension, state preparation and operational resource clocks require additional correspondences beyond these inequalities.
+
+## 追加锚（本行以下为增补区）

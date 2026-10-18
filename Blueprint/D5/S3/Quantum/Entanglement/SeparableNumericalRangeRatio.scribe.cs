@@ -23,6 +23,9 @@ internal sealed class SeparableNumericalRangeRatioDocument : IScribeDocumentDefi
             Node("claim", "The conjecture", ClaimFormula(),
                 "One half is the least value of vol L_Sep(A) / vol L(A) over Hermitian two-qubit matrices A with vol L(A) not zero, where vol is Lebesgue measure on the real line, L(A) is the numerical range over all two-qubit density matrices (IsDensity: positive semidefinite with trace 1) and L_Sep(A) the numerical range over separable states. For scalar A both ranges are points, so the ratio is defined exactly when A is not scalar. The least value is attained, so it is the minimum of the paper's Definition 2 for n = 2, d = 2 and k = 1.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("factorization", "Zero determinant gives a product vector", FactorizationFormula(),
+                "For any complex two-qubit coefficient array u, the equality u(0,0) u(1,1) = u(0,1) u(1,0) implies that u(i,j) = a(i) b(j) for two complex vectors a and b. The factorization includes zero arrays and all zero-pivot cases. Consequently, the outer product of u with its conjugate is a Kronecker product of two positive semidefinite outer products.",
+                "zero_determinant_factorization", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The minimal ratio is one half", Disp(F.Id("claim")),
                 "In the magic basis a two-qubit vector u is a product vector exactly when the sum of the squares of its four coordinates vanishes. After a phase, a unit vector z has z^T z = C with 0 <= C <= 1. For a real unit vector r orthogonal to the real part of z, the vectors z + i t r with t = -eta +- sqrt(eta^2 + C), eta = (Im z) . r, are product vectors, and a convex combination of their projectors equals zz^* + C rr^T; so zz^* + C rr^T is separable. For two unit vectors u and v, two orthonormal real vectors r and s orthogonal to the real parts of both give one separable noise N = (rr^T + ss^T)/2 with trace 1, and with c = max(C_u, C_v) the matrices (P_u + cN)/(1 + c) and (P_v + cN)/(1 + c) are separable states whose difference is (P_u - P_v)/(1 + c). Hence the expectation values of A at two pure states differ by at most 2 times the length of L_Sep(A); by the spectral decomposition of states the same holds for any two states, so vol L(A) <= 2 vol L_Sep(A), using that L_Sep(A) is an interval. For the Bell projector, L(A) contains [0, 1] and every product state has expectation (1/2) times the sum over a, b of sigma_ab tau_ab, which lies in [0, 1/2]; so the ratio is at most 1/2, and therefore equal to 1/2.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -78,6 +81,26 @@ internal sealed class SeparableNumericalRangeRatioDocument : IScribeDocumentDefi
         Formula value = Call(F.Id("Re"), Trace(Seq(rho, Sp, a)));
         return Disp(Seq(Forall, Sp, x, Sp, Subseteq, Sp, Mat(), Comma, Sp,
             All(a, Mat(), Equal(Call(F.Id("numericalRange"), x, a), SetOf(value, rho, x)))));
+    }
+
+    private static Formula FactorizationFormula()
+    {
+        Formula u = F.Id("u"), a = F.Id("a"), b = F.Id("b");
+        Formula i = F.Id("i"), j = F.Id("j");
+        Formula fin = Call(F.Id("Fin"), D(2));
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula vector = Seq(fin, Sp, To, Sp, complex);
+        Formula array = Seq(Parenthesized(Seq(fin, Times, fin)), Sp, To, Sp, complex);
+        Formula Entry(byte row, byte column) =>
+            Call(u, Parenthesized(Seq(D(row), Comma, D(column))));
+        Formula determinant = Equal(Seq(Entry(0, 0), Sp, Entry(1, 1)),
+            Seq(Entry(0, 1), Sp, Entry(1, 0)));
+        Formula factors = All(i, fin, All(j, fin,
+            Equal(Call(u, Parenthesized(Seq(i, Comma, j))), Seq(Call(a, i), Sp, Call(b, j)))));
+        Formula exists = Seq(Exists, Sp, a, Sp, Colon, Sp, vector, Comma, Sp,
+            Exists, Sp, b, Sp, Colon, Sp, vector, Comma, Sp, factors);
+        return Disp(All(u, array, new Formula.Logic(determinant,
+            FormulaLogicOperator.Implies, exists)));
     }
 
     private static Formula ClaimFormula()
