@@ -205,6 +205,16 @@ def run(tool):
             original=(root/'head.md').read_text()
             rejected(11)
             assert (root/'head.md').read_text()==original
+        elif tool.stem=='implb_head':
+            import importlib.util
+            import shlex
+            spec=importlib.util.spec_from_file_location('implb_fixture',tool)
+            module=importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            path=root/'repository with spaces/briefgen/purge_stale_fib.py'
+            assert shlex.split(module.purge_command(path))[:2]==['python3',str(path)]
+            (root/'scratch/lanes/sample.json').unlink()
+            rejected(11)
         elif tool.stem=='rework_brief':
             for i in (1,2): (root/f'scratch/lanes/rework-sample-r{i}.json').write_text('{}')
             rejected(13)
