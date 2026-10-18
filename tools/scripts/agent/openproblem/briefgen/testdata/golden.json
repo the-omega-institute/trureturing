@@ -1,0 +1,105 @@
+{
+  "add_base_blocks.py": {
+    "brief.md": "7a6da218c5f1ab8608fa13cebc3b787af1cb58683ba0f90e16ddf186bb03ce0d"
+  },
+  "ci_body_final.py": {
+    "capture.md": "0f6ead52e5a142022c18ad19ba620110e7d5732b7049a0accab4e9d125720a05",
+    "state/ci-body-12345.md": "0f6ead52e5a142022c18ad19ba620110e7d5732b7049a0accab4e9d125720a05"
+  },
+  "codex_search.py:deep": {
+    "scratch/briefs/codex-search-a-r1.md": "95b86488735c17b1c501bdb7ad62c7dab80bcb7325fac7cdd0447207b4df5a69"
+  },
+  "codex_search.py:quick": {
+    "scratch/briefs/codex-search-a-r1.md": "7206a3b3ec92ab0c52ab0c50a96078c3c3525913f03750a2cef5f5ace3df1bbd"
+  },
+  "continuation_head.py": {
+    "out.md": "617d544f0679680fec2edb19b4f00633f6107de4c7f01978bca574b6174e818f"
+  },
+  "exclusions_compact.py": {
+    "scratch/briefs/search-exclusions-compact.md": "70ea1a17aed008fefe9a66880acb1432b2e09301ea1803fb08d3f9a32816434f"
+  },
+  "fill_mirror_fixes.py": {
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "34c9314557800d29dae1574f62777109b84790e829287b2dc531573b51241172"
+  },
+  "fix_door_base.py": {
+    "door.md": "d59b12050418815a227420040306700c4a4b948cf43ebc1c265f801b1fed678b"
+  },
+  "fix_review.py": {
+    "review.md": "4ec69af323441cd4f655c2581ffba29e8d0a047a190a314a8dd49775bbb205a7"
+  },
+  "gen_review.py": {
+    "scratch/briefs/review-sample-quality.md": "481698e3e3d389a79ac5ccfc54b45e7b05a58aaaeb4788665ed0a695b24a4ff9",
+    "scratch/briefs/review-sample-architecture.md": "67751ed0019f07611b375b2eacf055d7c499dad541e69a369c1ec9ecaefae0ec",
+    "scratch/briefs/review-sample-tests.md": "af9465a967a0bf0be05f37f0b3c6ac75ebe71e5de4b684b977c515c8dda8bb57"
+  },
+  "gen_review.py:codex3": {
+    "scratch/briefs/review-sample-quality.md": "2c5eca6c61752b8ab505c82b1b12737bb4400b1ae3346eba1d089afbdb9d0e37",
+    "scratch/briefs/review-sample-quality-r1.md": "a2313a28867a91c2a7abf62e771ebb076a9dc14017227601d92f5c040cd22cfb",
+    "scratch/briefs/review-sample-architecture.md": "f201a9e998f1978c36f27a07d3eca681d71200c27845d6c5848563937efc968d",
+    "scratch/briefs/review-sample-tests-r1.md": "68abea5689e19106a3d0a88225700ab79415014e6cedd8b3947c56b7c868bd6a",
+    "scratch/briefs/review-sample-architecture-r1.md": "62c534d00ce3b62d5edf7cbcec68d6d482850f4f63ec043c944d366211564eb7",
+    "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
+  },
+  "gen_stage_briefs.py": {
+    "scratch/briefs/mirror-check-sample.md": "79b13c12c24e75cdea877a86630dd9165e4c85ae9b7cce8df785b1f965e6f71f",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "7866700a267a2ffd6fe10146070bdf0fe3a0cac01ccc8122ba1ede516aaeab96",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "75049fe3b2a6cacbf6985a9a957857c5b7ac048cd2bacc0ae17247b501e017dc"
+  },
+  "implb_head.py": {
+    "scratch/briefs/implb-sample-r1.head.md": "4f59afbbfdfa1edea58865e907038d735e9903c067305cb55149884c328d63c9"
+  },
+  "lane_brief.py": {
+    "scratch/briefs/impl-op-w1-sample.md": "3b03969187aa34d8b65b4dbfb3bc0aeb8852391768ece6048996c33029ffe9a5"
+  },
+  "postb3.sh": {
+    "scratch/briefs/review-sample-quality.md": "c796fba1f88936bd7539c2939651949db8d82f674691be2b5666240d2929a012",
+    "scratch/briefs/review-sample-quality-r1.md": "56939f592db17f595f47c5874c51b8d739c530bf4fe25a585f8d7225c369efd9",
+    "scratch/briefs/review-sample-architecture.md": "bed5e111085d7ff6c563e00026da8b267d95b38c5ef1a723b088f05132a79d72",
+    "scratch/briefs/review-sample-tests-r1.md": "1604925a26791b03b53aa63e5e357ef9a0749ce2cf529cfa2ea37f83f409963f",
+    "scratch/briefs/review-sample-architecture-r1.md": "d909f2fd0fbba22b8dd37ab159ce594346068e9af60c8f20622475ac2eb76b90",
+    "scratch/briefs/review-sample-tests.md": "734f2afc0d1fff42243bc40364f0c7f312cb3f94bbf5b54b377a3b27157258d5"
+  },
+  "rehead.py": {
+    "head.md": "d0772a68a087c8eb6320551e59210074ef58b5f11e5266d920608bb76fbd9c27",
+    "out.md": "cf7fad04fcbcff7eaabf117062b1cd3909bdb792123235ad99e537cf0339bd47"
+  },
+  "render-search-brief.sh": {
+    "out.md": "899a13b578e688a26efb472fa18690da9ec85d134d3f7ef7648965832441d014"
+  },
+  "review.sh": {
+    "scratch/briefs/review-sample-quality.md": "27e734129688220a8277c4b33b6361dc8556caeb3161be459b211196529bb547",
+    "scratch/briefs/review-sample-architecture.md": "7b69da2a357bc00a762d7790d96bc2ce42ca0a6aaa2683b88f07e0ab09ed381f",
+    "scratch/briefs/review-sample-tests.md": "9eb243524d846ce3d84badd5a8dcfee50aa62499a28c51838da817184a91e3f7"
+  },
+  "rework_brief.py": {
+    "scratch/briefs/rework-sample.md": "ff5f07ce3b9f50dd8c32485aabc11c39d97da52fbd52e460efb676f0733c1afb"
+  },
+  "stageb_prep.sh": {
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "022d8254b75d7bc1628f15bbe31d7e9ee16368ad385a1ccb37f360c0705801ca"
+  },
+  "stages.sh": {
+    "scratch/briefs/mirror-check-sample.md": "e224976e48c8d7f48dbd305b6ea73d6ceb3f52308e71e089dda30ca72886131f",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "f1224759512101f29988fe1fed2c77f97f1dd712f4561f130e3053cc7b817191",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "c6c0c9782a802ba74f4514b476d0ee4ec4956dc007d5845fac708bd3a4c0e7b0",
+    "scratch/briefs/impl-op-w1-sample.md": "3b03969187aa34d8b65b4dbfb3bc0aeb8852391768ece6048996c33029ffe9a5"
+  },
+  "standing_append.py": {
+    "capture.md": "e032d4e10774a54af596dd9562af2ac8d8be6c3da007f7744899a749a907f67a"
+  },
+  "gen_stage_briefs.py:defaults": {
+    "scratch/briefs/mirror-check-sample.md": "e224976e48c8d7f48dbd305b6ea73d6ceb3f52308e71e089dda30ca72886131f",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "6eb10049ff582faef5270f6e38677cc3035a4f59c5e47178d19bcb7592390da8",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "dfca632457a3acc2ce15f5041ce1443931f965adaa0e3e8766af463dc1a8bb0b",
+    "scratch/briefs/impl-op-w1-sample.md": "a059723ab038115344cb060fb4e49948680eca5a15ce90a468cb12a84bd3ee04"
+  },
+  "fill_mirror_fixes.py:defaults": {
+    "scratch/briefs/mirror-check-sample.md": "e224976e48c8d7f48dbd305b6ea73d6ceb3f52308e71e089dda30ca72886131f",
+    "scratch/briefs/impl-op-w1-sample.stageB.md": "6eb10049ff582faef5270f6e38677cc3035a4f59c5e47178d19bcb7592390da8",
+    "scratch/briefs/impl-op-w1-sample.stageA.md": "dfca632457a3acc2ce15f5041ce1443931f965adaa0e3e8766af463dc1a8bb0b",
+    "scratch/briefs/impl-op-w1-sample.md": "a059723ab038115344cb060fb4e49948680eca5a15ce90a468cb12a84bd3ee04",
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "11e106d9827ae9b4ef0f2fdbb3e62a01873d99e4debab42006d0053a578a37e9"
+  },
+  "rework_brief.py:defaults": {
+    "scratch/briefs/rework-sample.md": "ff5f07ce3b9f50dd8c32485aabc11c39d97da52fbd52e460efb676f0733c1afb"
+  }
+}

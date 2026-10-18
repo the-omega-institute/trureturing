@@ -1,0 +1,11 @@
+{
+  "rehead": {
+    "head": "At 1111111111111111111111111111111111111111. The independent pre-freeze mirror checked that head and approved it.\n",
+    "rest": "Synthetic remaining procedure.\n",
+    "expected": "At 2222222222222222222222222222222222222222. The independent pre-freeze mirror (fixture) approves head `2222222222222222222222222222222222222222`.\nSynthetic remaining procedure.\n"
+  },
+  "exclusions": {
+    "source": "- Synthetic enumeration question — open\n- arXiv:2601.01234 and 2601.01234\n- A123456\n",
+    "expected": "Exclude (already preregistered, settled, triaged or held in this repository; do not propose again). Also check the repository's public open-problems page. arXiv identifiers: 2601.01234.\n\nOEIS sequences: A123456.\n\nItems without an arXiv identifier: Synthetic enumeration question.\n"
+  }
+}
