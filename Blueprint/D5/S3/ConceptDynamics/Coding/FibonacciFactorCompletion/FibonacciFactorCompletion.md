@@ -179,12 +179,12 @@ The finite configuration lower bound uses full actual supply, safety and positio
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion.canonical_synchronous_common_stem`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion.original_complete_storage_liminf`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion.prefix_path_endpoint`
-- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](DecoderOperationTrace.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral](FibonacciFactorCompletion/Bilateral.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/CanonicalGeometry](FibonacciFactorCompletion/CanonicalGeometry.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply](FibonacciFactorCompletion/ClosedSupply.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Completion](FibonacciFactorCompletion/Completion.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedSources](FibonacciFactorCompletion/FixedSources.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations](FibonacciFactorCompletion/Operations.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply](FibonacciFactorCompletion/StrictSupply.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry](FibonacciFactorCompletion/TailGeometry.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](../DecoderOperationTrace.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral](Bilateral.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/CanonicalGeometry](CanonicalGeometry.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ClosedSupply](ClosedSupply.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Completion](Completion.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedSources](FixedSources.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Operations](Operations.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/StrictSupply](StrictSupply.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/TailGeometry](TailGeometry.md)
