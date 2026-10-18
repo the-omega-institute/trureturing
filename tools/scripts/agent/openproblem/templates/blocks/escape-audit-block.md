@@ -7,12 +7,13 @@ Each newly authored public D5 `theorem`/`lemma` in the delivery is an audit targ
 - Write `Reg/D5/<the module's mirrored path>.lean`, using a typed `Contract.Registration` whose `readout` applies an already-enrolled template.
 - Search `Reg/Support/**`, for example `PointwiseEqualityRegistrations`, `PointwiseOrderRegistrations`, `GuardedEqualityRegistrations`, `IffRegistrations`, `ExistentialWitnessRegistrationTemplates` and `DependentFamily`, and the existing `Reg/D5/**` mirrors for a template that lawfully reads the theorem's statement.
 - Follow `skills/codex-formalize/SKILL.md` "Escape-audit delivery" and spec A5.5/A5.6.
-- Compile the Reg module through `make lean`.
-- Read the DTR finding for the target in `make gate`; `DTR-Declared` means complete.
+- Compile the Reg module through `make lean LEAN_TARGETS="<the delivered modules and every frozen module you re-pin, dotted>"`.
+- Before the push, record the registration as "pending CI reading"; never write `declared_validated` without the CI reading.
+- After pushing the delivery head, read the DTR finding for each audit target from its required CI `current` job: run `gh run view <run-id> --log --job <current-job-id>` and search the `DTR-` lines. Report each finding with the run id and job id; `DTR-Declared` means complete.
 
 **If registration is missing, invalid or blocked** (no lawful template, failed E1–E8 or bridge checks, or missing evidence):
 - Open one issue for this delivery, or reuse the lane's existing one: `gh issue create --title "Escape audit unfinished: <module>" --body-file …`.
-- Name each audit target, the concrete template gap or failure verdict with its readings (for example `DTR-Unregistered` from `make gate`), and the missing evidence.
+- Name each audit target, the concrete template gap or failure verdict with its readings (for example `DTR-Unregistered` from the required CI `current` job for the pushed delivery head, with its run id and job id), and the missing evidence.
 - Link the issue in the module comment (one line), the dossier and the PR body, and state that the escape audit is unfinished.
 - Continue the delivery.
 
@@ -20,7 +21,7 @@ Each newly authored public D5 `theorem`/`lemma` in the delivery is an audit targ
 - modify the judge (`tools/**`, inspector, judge Interface/Impl packages);
 - force a wrong template;
 - weaken a theorem or add bind-only wrappers;
-- claim `declared_validated` without the compiled evidence.
+- claim `declared_validated` without the compiled evidence and the CI reading.
 
 Report registration as complete or unfinished with its linked issue; never write "paused".
 

@@ -75,6 +75,10 @@ def run(tool):
             assert data['target_md'] == (root / 'scratch/lanes/sample.target.md').read_text()
             assert 'Synthetic question' in data['title'] and 'Problems/sample.md' in data['target_md']
             assert str(root / 'proof.lean') in data['target_md']
+            assert ('Re-pin it, and run the binding "Frozen importers of published owners" block. '
+                    'Each published owner `theorem`/`lemma` is a new public theorem for the §3.9 '
+                    'escape audit: attempt its Reg registration, or list it by full name in the '
+                    'unfinished-audit issue and name it in the PR body.') in data['target_md']
     cases = ([('LEAN_BLOCK', 13), ('COMPILE_LINE', 13), ('SHA_', 13), ('``', 13), ('`  `', 13),
               ('duplicate', 14), ('missing-draft', 11), ('missing-title', 11),
               ('search-fail', 16), ('create-fail', 16), ('invalid-map', 13), ('lock', 14),

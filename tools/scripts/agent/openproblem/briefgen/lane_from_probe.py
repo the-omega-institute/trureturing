@@ -65,7 +65,7 @@ Preregistration: GitHub issue **#{issue}**. It holds the verbatim source, the st
   - Every module stays within 1000 lines, 600 s and 9 GB; measure each one.
   - Imports are precise, and each module imports where it consumes.
   - Helpers are private and consumed, or public only where another delivered module consumes them. Report `proof_shape` per declaration, with consumers.
-  - Where the plan publishes a frozen private owner, keep its statement and proof. Re-pin it, and run the binding "Frozen importers of published owners" block.
+  - Where the plan publishes a frozen private owner, keep its statement and proof. Re-pin it, and run the binding "Frozen importers of published owners" block. Each published owner `theorem`/`lemma` is a new public theorem for the §3.9 escape audit: attempt its Reg registration, or list it by full name in the unfinished-audit issue and name it in the PR body.
 
 **Escape audit.** Every new public theorem is an audit target, except a refutation `result` named by `utility basis=refutes`. For each target, attempt Reg registration, or list it in one unfinished-audit issue linked from the module comments, the dossier and the PR body.
 
