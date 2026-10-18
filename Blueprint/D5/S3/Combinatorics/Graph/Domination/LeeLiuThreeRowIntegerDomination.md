@@ -68,7 +68,7 @@ The column with natural index k is extended by zero outside indices 1 through n.
 
 **Definition 1.6 (The middle-column inequalities).**
 
-$$\forall (m : \mathbb{N}), \forall (a : (\operatorname{Fin}\left(m\right)) \to \mathbb{N}), \forall (b : (\operatorname{Fin}\left(m\right)) \to \mathbb{N}), \forall (c : (\operatorname{Fin}\left(m\right)) \to \mathbb{N}), (\operatorname{ColumnA}\left(m, a, b, c\right)) \Leftrightarrow (\forall (i : \operatorname{Fin}\left(m\right)), 2 \le b\left(i\right) + \sum_{k \in \operatorname{SimpleGraph}.\operatorname{neighborFinset}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(m\right), i\right)} b\left(k\right) + a\left(i\right) + c\left(i\right))$$
+$$\forall (m : \mathbb{N}), \forall (a : (\operatorname{Fin}\left(m\right)) \to \mathbb{N}), \forall (b : (\operatorname{Fin}\left(m\right)) \to \mathbb{N}), \forall (c : (\operatorname{Fin}\left(m\right)) \to \mathbb{N}), (\operatorname{ColumnA}\left(m, a, b, c\right)) \Leftrightarrow (\forall (i : \operatorname{Fin}\left(m\right)), 2 \le b\left(i\right) + (\sum_{k \in \operatorname{SimpleGraph}.\operatorname{neighborFinset}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(m\right), i\right)} b\left(k\right)) + a\left(i\right) + c\left(i\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.ColumnA` (`✓ std3`).
 
@@ -100,6 +100,10 @@ $$\forall (n : \mathbb{N}), (1 \le n) \Rightarrow (\operatorname{gamma2}\left(3,
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lee-liu-2025-integer-two-domination-three-row` (proved) by `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lee-liu-2025-integer-two-domination-three-row","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jia-Ying Lee; Chia-An Liu (2025). *The integer {2}-domination number of grids*. DOI: [10.48550/arXiv.2502.00134](https://doi.org/10.48550/arXiv.2502.00134). URL: <https://arxiv.org/abs/2502.00134>.
@@ -118,4 +122,5 @@ A column is encoded by a number in Fin 27. For columns a,b,c the domination cond
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.grid`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.pad`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result`
+- Dependency: [D5/S1/Digit/MaxDigitSumBase](../../../../S1/Digit/MaxDigitSumBase.md)
 - Dependency: [D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap](../../../StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.md)

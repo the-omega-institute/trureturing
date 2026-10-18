@@ -37,7 +37,10 @@ internal sealed class LeeLiuThreeRowIntegerDominationDocument : IScribeDocumentD
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The exact value for every positive width", Disp(ClaimBody()),
                 "A column is encoded by a number in Fin 27. For columns a,b,c the domination condition depends only on those three columns. An integer table R on pairs of columns defines Φ(a,b) = 2s(a)+2s(b)+R(a,b), where s is the column weight. Its initial inequality is Φ(0,b) ≤ 2s(b)−3; every admissible step satisfies Φ(b,c) ≤ Φ(a,b)+2s(c)−3; every terminal pair satisfies 1 ≤ Φ(a,b). Summing gives 1 ≤ 2W−3n, so W ≥ ⌊3n/2⌋+1. The construction of Theorem 2.4 puts (1,1,1) in even columns and (0,1,0) in column 1 and in the last column when n is odd; other columns are zero. For n=1 use (0,2,0). Its weight is exactly ⌊3n/2⌋+1. Together these bounds prove the displayed equality for every n ≥ 1, including the values computed in Remark 2.6.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lee-liu-2025-integer-two-domination-three-row"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
