@@ -37,9 +37,10 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
                             "For a complex square matrix m and direction X, logDeriv m X is " +
                             "the matrix-valued Bochner integral over positive real t of " +
                             "(m + t I)^(-1) X (m + t I)^(-1). The notation D ln in the source " +
-                            "paper denotes this integral. This formal statement does not claim " +
-                            "that logDeriv is the Frechet derivative of mathlib's Matrix.log; " +
-                            "that identification remains outside the available mathlib API."))),
+                            "paper denotes this integral. The declaration does not assert that " +
+                            "logDeriv is the Frechet derivative of Matrix.log; the pinned " +
+                            "Mathlib API exposes the matrix logarithm through CFC.log and " +
+                            "supplies no theorem identifying that derivative with this integral."))),
                     DescribeRole.Definition),
                                 Describe.Lean(
                     DescribeId.Create("positive-definite-log-derivative-has-direction-trace"),
