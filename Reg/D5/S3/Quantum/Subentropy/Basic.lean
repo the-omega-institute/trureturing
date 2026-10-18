@@ -177,8 +177,12 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+def emptyAnchor : ∀ (e : signature.{u,v}.Anchor) (p : signature.{u,v}.Params),
+    signature.{u,v}.State p :=
+  fun e => nomatch e
+
 def actual : Realization signature.{u,v} :=
-  realize signature (fun _ _ V => V.conjTranspose) (fun e => nomatch e)
+  realize signature (fun _ _ V => V.conjTranspose) emptyAnchor
 
 def badAdjoint {ι : Type u} {κ : Type v} (V : Matrix ι κ ℂ) : Matrix κ ι ℂ := by
   classical
@@ -186,7 +190,7 @@ def badAdjoint {ι : Type u} {κ : Type v} (V : Matrix ι κ ℂ) : Matrix κ ι
     if j = Classical.choice (show Nonempty κ from ⟨j⟩) then 2 * star (V i j) else 0
 
 def rejected : Realization signature.{u,v} :=
-  realize signature (fun _ _ V => badAdjoint V) (fun e => nomatch e)
+  realize signature (fun _ _ V => badAdjoint V) emptyAnchor
 
 private theorem dependence : ObservationalDependence signature.{u,v} actual := by
   intro i
@@ -327,7 +331,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ V => V.conjTranspose) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ V => V.conjTranspose) emptyAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -402,7 +406,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ V => V.conjTranspose) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ V => V.conjTranspose) emptyAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -437,13 +441,17 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+def emptyAnchor : ∀ (e : signature.{u}.Anchor) (p : signature.{u}.Params),
+    signature.{u}.State p :=
+  fun e => nomatch e
+
 def actual : Realization signature.{u} :=
   realize signature (fun _ p f => f (vecMulVec p.2 (star p.2)))
-    (fun e => nomatch e)
+    emptyAnchor
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ p f => f (vecMulVec p.2 (star p.2)) + 1)
-    (fun e => nomatch e)
+    emptyAnchor
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -490,7 +498,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p f => f (vecMulVec p.2 (star p.2))) (fun e => nomatch e))
+    (fun _ p f => f (vecMulVec p.2 (star p.2))) emptyAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
