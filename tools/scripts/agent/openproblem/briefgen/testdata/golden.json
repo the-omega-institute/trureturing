@@ -43,7 +43,7 @@
   "gen_stage_briefs.py": {
     "scratch/briefs/impl-op-w1-sample.stageA.md": "121daa08ec170ef12e45591af09bd2c9433e8d308e68d269f2c688feba4299c5",
     "scratch/briefs/impl-op-w1-sample.stageB.md": "101d4f659c76571e9a2bd9d1b58ef51b9913fced8971227abb12674b824cbf0f",
-    "scratch/briefs/mirror-check-sample.md": "1e9b84dca3f1279f9b1008fb418bace4d31d3be2a97d04e5078439229f2dc9df"
+    "scratch/briefs/mirror-check-sample.md": "b9feec3d9005af3c1b181ce3f5ec5eedd854e4de7cd5c843b5c139f36df987eb"
   },
   "implb_head.py": {
     "scratch/briefs/implb-sample-r1.head.md": "2c8a0b651ed9d0fe4c8766d8932764ffe3f1c6860c41bcaf78ad42f1598bf8b6"
@@ -81,7 +81,7 @@
     "scratch/briefs/impl-op-w1-sample.md": "b35e0572cd498eedfcb489b650ac1aeb73250b0b5be083035e88c1ca1635396b",
     "scratch/briefs/impl-op-w1-sample.stageA.md": "d1f14f8d9e4e771ece6e552da61528b86f93b1cdcef6b5b1e1753b32ae41696f",
     "scratch/briefs/impl-op-w1-sample.stageB.md": "4ec8766c630662f5456a0f67c54715224616bc565d73fbb09ba15c8dbff2664b",
-    "scratch/briefs/mirror-check-sample.md": "e22a89f150b29094ea1965b7b01809b65f20a720dc96d256b5760aaf1c9e4139"
+    "scratch/briefs/mirror-check-sample.md": "951687c5649b7cd6d9398ee0b456309a557d25422151415881d2b5dd27f45db6"
   },
   "standing_append.py": {
     "capture.md": "e032d4e10774a54af596dd9562af2ac8d8be6c3da007f7744899a749a907f67a"
