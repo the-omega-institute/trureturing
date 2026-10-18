@@ -15,7 +15,7 @@ import Mathlib.Tactic
 import D5.S3.FluidDynamics.Fourier.PeriodicAllenCahnDecay
 
 /-! The functions use Lebesgue integration against a density on the real line.
-The uniqueness condition in the proposed inequality is part of the claim. -/
+The standing curvature and uniqueness conditions are part of the claim. -/
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -40,7 +40,9 @@ def K (f : ℝ → ℝ) (q t : ℝ) : ℝ :=
   (∫ w, Real.log ((Real.exp (t * w) + q - 1) / q) * f w) / moment f 1 -
     (q - 1) / (2 * q) * t * F0 f q t - t / q
 
-/-- The general lower inequality in equation (84), with uniqueness explicit. -/
+/-- The general lower inequality in equation (84), with uniqueness and the standing assumption
+"Assume that 𝓕₀''(t) is first positive and then negative, so that 𝓕₀(t) has a unique inflection
+point t_* > 0" from Section 1 explicit. -/
 def claim : Prop :=
   ∀ (q : ℝ), 2 < q → ∀ f : ℝ → ℝ,
     Integrable f →
@@ -48,6 +50,9 @@ def claim : Prop :=
     (∀ w, w ≤ 0 → f w = 0) →
     (∫ w, f w) = 1 →
     Integrable (fun w => w ^ 4 * f w) →
+    (∃ s : ℝ, 0 < s ∧
+      (∀ t, 0 < t → t < s → 0 < iteratedDeriv 2 (F0 f q) t) ∧
+      (∀ t, s < t → iteratedDeriv 2 (F0 f q) t < 0)) →
     (∃! t : ℝ, 0 < t ∧ K f q t = 0) →
     ∀ t : ℝ, 0 < t → K f q t = 0 →
       2 * (moment f 3 / moment f 4) * Real.log (q - 1) < t
@@ -628,6 +633,42 @@ private lemma F2_tail_negative {t : ℝ} (ht : 7 / 10 ≤ t) : averaged g2 3 t <
     nlinarith [hw.1]
   exact mul_neg_of_pos_of_neg (pow_pos hw0 _) (g2_negative hx)
 
+private lemma F2_sign_change :
+    ∃ s : ℝ, 0 < s ∧ s ≤ 9 / 50 ∧ averaged g2 3 s = 0 ∧
+      (∀ t, 0 < t → t < s → 0 < averaged g2 3 t) ∧
+      (∀ t, s < t → averaged g2 3 t < 0) := by
+  have hc : Continuous (averaged g2 3) :=
+    continuous_iff_continuousAt.2 fun t => (F2_deriv t).continuousAt
+  obtain ⟨s, hs, hzero⟩ := intermediate_value_Icc' (by norm_num : (0 : ℝ) ≤ 9 / 50)
+    hc.continuousOn ⟨(F2_middle_negative (9 / 50) (by norm_num)).le, F2_at_zero.le⟩
+  have hs0 : 0 < s := by
+    have hne : s ≠ 0 := by intro h; subst s; linarith [F2_at_zero]
+    exact lt_of_le_of_ne hs.1 (Ne.symm hne)
+  refine ⟨s, hs0, hs.2, hzero, ?_, ?_⟩
+  · intro t ht hts
+    have h := F2_strictAnti ⟨ht.le, (hts.trans_le hs.2).le⟩ hs hts
+    rwa [hzero] at h
+  · intro t hst
+    by_cases ht : t ≤ 9 / 50
+    · have h := F2_strictAnti hs ⟨(hs0.trans hst).le, ht⟩ hst
+      rwa [hzero] at h
+    · by_cases htm : t ≤ 7 / 10
+      · exact F2_middle_negative t ⟨(lt_of_not_ge ht).le, htm⟩
+      · exact F2_tail_negative (lt_of_not_ge htm).le
+
+private lemma density_curvature :
+    ∃ s : ℝ, 0 < s ∧
+      (∀ t, 0 < t → t < s → 0 < iteratedDeriv 2 (F0 density 3) t) ∧
+      (∀ t, s < t → iteratedDeriv 2 (F0 density 3) t < 0) := by
+  have hfirst : deriv (F0 density 3) = averaged g1 2 :=
+    funext fun t => (F0_deriv t).deriv
+  have hsecond (t : ℝ) : iteratedDeriv 2 (F0 density 3) t = averaged g2 3 t := by
+    rw [iteratedDeriv_succ (n := 1), iteratedDeriv_one, hfirst]
+    exact (averaged_deriv g1 g2 g1_continuous g2_continuous g1_deriv 2 t).deriv
+  obtain ⟨s, hs, _, _, hpos, hneg⟩ := F2_sign_change
+  exact ⟨s, hs, fun t ht hts => (hsecond t).symm ▸ hpos t ht hts,
+    fun t hst => (hsecond t).symm ▸ hneg t hst⟩
+
 private lemma F2_zero_unique :
     ∀ x y : ℝ, 0 < x → 0 < y → averaged g2 3 x = 0 → averaged g2 3 y = 0 → x = y := by
   have hsmall (x : ℝ) (hx : 0 < x) (hzero : averaged g2 3 x = 0) : x < 9 / 50 := by
@@ -840,22 +881,14 @@ private lemma test_below_bound :
 private lemma density_small_zero :
     ∃ t : ℝ, 0 < t ∧ K density 3 t = 0 ∧
       t ≤ 2 * (moment density 3 / moment density 4) * Real.log (3 - 1) := by
-  have hc : Continuous (averaged g2 3) :=
-    continuous_iff_continuousAt.2 fun t => (F2_deriv t).continuousAt
-  obtain ⟨a, ha, hazero⟩ := intermediate_value_Icc' (by norm_num : (0 : ℝ) ≤ 9 / 50)
-    hc.continuousOn ⟨(F2_middle_negative (9 / 50) (by norm_num)).le, F2_at_zero.le⟩
-  have ha0 : 0 < a := by
-    have hne : a ≠ 0 := by intro h; subst a; linarith [F2_at_zero]
-    exact lt_of_le_of_ne ha.1 (Ne.symm hne)
+  obtain ⟨a, ha0, _, _, hbefore, _⟩ := F2_sign_change
   let d : ℝ := min (a / 2) (6931 / 100000)
   have hd0 : 0 < d := lt_min (by positivity) (by norm_num)
   have hda : d < a := (min_le_left _ _).trans_lt (by linarith)
   have hdT : d < 6931 / 50000 := (min_le_right _ _).trans_lt (by norm_num)
   have hpos : ∀ t ∈ Ioo 0 d, 0 < averaged g2 3 t := by
     intro t ht
-    have hta : t < a := ht.2.trans hda
-    have h := F2_strictAnti ⟨ht.1.le, (hta.trans_le ha.2).le⟩ ha hta
-    rwa [hazero] at h
+    exact hbefore t ht.1 (ht.2.trans hda)
   have hpanti : StrictAntiOn Kp (Icc 0 d) := by
     apply strictAntiOn_of_deriv_neg (convex_Icc _ _)
       (continuous_iff_continuousAt.2 (fun t => (Kp_deriv t).continuousAt)).continuousOn
@@ -889,7 +922,7 @@ theorem result : ¬ claim := by
   intro hc
   obtain ⟨t, ht, hKt, hbound⟩ := density_small_zero
   have h := hc 3 (by norm_num) density density_integrable density_nonneg density_zero
-    density_mass density_fourth_integrable density_unique_zero t ht hKt
+    density_mass density_fourth_integrable density_curvature density_unique_zero t ht hKt
   exact (not_lt_of_ge hbound) h
 
 end D5.S3.StatisticalMechanics.AnnealedPottsMomentBoundRefutation

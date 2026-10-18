@@ -17,7 +17,8 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
                     + "and the proposed inequality concerns q > 2. The functions F0 and K are the "
                     + "size-biased order parameter and criticality function of Section 1, equations (1) "
                     + "and (6), in Janssen's analysis of the annealed Potts model. The claim below is "
-                    + "the general moment lower inequality in equation (84), with the unique-positive-zero condition explicit.")),
+                    + "the general moment lower inequality in equation (84), with the standing curvature assumption "
+                    + "and unique-positive-zero condition explicit.")),
             Node("moment", "Moments of a density", MomentFormula(),
                 "The argument f is a real-valued function on the real line, and n is a natural number. "
                     + "The displayed definition is total; the claim supplies integrability conditions.",
@@ -30,7 +31,9 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
                     + "after eliminating the stationarity parameter.", DescribeRole.Definition),
             Node("claim", "The proposed universal lower inequality", ClaimFormula(),
                 "The hypotheses require an integrable nonnegative density, zero for w <= 0, of total mass one, "
-                    + "and with integrable fourth-moment integrand. They also require exactly one positive zero of K. "
+                    + "and with integrable fourth-moment integrand. The standing assumption requires a positive s "
+                    + "such that F0''(t) > 0 for 0 < t < s and F0''(t) < 0 for t > s. "
+                    + "They also require exactly one positive zero of K. "
                     + "The conclusion demands the strict moment lower inequality at every positive zero. "
                     + "The existential clause below includes the universal equality condition expressing uniqueness.",
                 DescribeRole.Definition),
@@ -45,7 +48,9 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
                     + "of F0 is the size-normalized expectation of W^3 g''(tW). This expectation strictly decreases "
                     + "on [0, 9/50], is positive at zero, and is negative for t >= 9/50. On [9/50, 7/10] "
                     + "the negative sign follows from 26 rational interval bounds for the exponential; beyond 7/10 "
-                    + "both blocks have tW > log(2). The identities K'(t) = (F0(t) - t F0'(t))/3 and "
+                    + "both blocks have tW > log(2). Continuity and strict decrease give a positive crossing s, "
+                    + "with F0'' positive on (0, s) and negative on (s, infinity), as the standing assumption requires. "
+                    + "The identities K'(t) = (F0(t) - t F0'(t))/3 and "
                     + "K''(t) = -t F0''(t)/3, together with Rolle's theorem, give at most one positive zero of K. "
                     + "Near zero K is negative. Rational exponential and logarithm bounds, with a symmetric integral "
                     + "error estimate for the blocks, give K(6931/50000) > 0. The intermediate value theorem "
@@ -112,6 +117,11 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
 
     private static Formula ClaimFormula()
     {
+        Formula curvatureAtT = Call("iteratedDeriv", D(2), Call("F0", V("f"), V("q")), V("t"));
+        Formula curvature = Some("s", Real(), And(Less(D(0), V("s")),
+            And(All("t", Real(), Imp(Less(D(0), V("t")),
+                    Imp(Less(V("t"), V("s")), Less(D(0), curvatureAtT)))),
+                All("t", Real(), Imp(Less(V("s"), V("t")), Less(curvatureAtT, D(0)))))));
         Formula uniqueness = Some("u", Real(), And(PositiveZero("u"),
             All("s", Real(), Imp(PositiveZero("s"), Equal(V("s"), V("u"))))));
         Formula bound = All("t", Real(), Imp(Less(D(0), V("t")),
@@ -125,6 +135,7 @@ internal sealed class AnnealedPottsMomentBoundRefutationDocument : IScribeDocume
             All("w", Real(), Imp(Le(V("w"), D(0)), Equal(App(V("f"), V("w")), D(0)))),
             Equal(Integral("w", App(V("f"), V("w"))), D(1)),
             Call("Integrable", Lam("w", Mul(Pow(V("w"), D(4)), App(V("f"), V("w"))))),
+            curvature,
             uniqueness,
         ];
         for (int i = hypotheses.Length - 1; i >= 0; i--) bound = Imp(hypotheses[i], bound);
