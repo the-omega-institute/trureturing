@@ -410,8 +410,8 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_antitone))
       funext c m
       cases i <;> cases j
       · exact (hj rfl).elim
-      · simp [actual, intervention, realize]
-      · simp [actual, intervention, realize]
+      · simp [actual, intervention, realize] <;> rfl
+      · simp [actual, intervention, realize] <;> rfl
       · exact (hj rfl).elim
     · intro e
       exact nomatch e

@@ -8,6 +8,7 @@ import D5.S3.Weil.ZetaBridge.PhysicalCosineTailProjection
 import D5.S3.Weil.ZetaGamma.PeriodicEnergyTransport
 import Mathlib.Analysis.InnerProductSpace.Projection.Submodule
 import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
+import Mathlib.MeasureTheory.Group.Measure
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -52,15 +53,16 @@ def zeroIsometry (a : ℝ) : WindowL2 a →ₗᵢ[ℂ] LineL2 where
     have h := (ae_eq_restrict_iff_indicator_ae_eq measurableSet_Ioc).mp (Lp.coeFn_add u v)
     filter_upwards [zeroClass_ae a (u + v), zeroClass_ae a u, zeroClass_ae a v,
       Lp.coeFn_add (zeroClass a u) (zeroClass a v), h] with x huv hu hv hadd hi
-    rw [huv, hadd, hu, hv]
-    simpa only [zeroExtension, window, Set.indicator_add] using hi
+    rw [huv, hadd, Pi.add_apply, hu, hv]
+    simpa only [zeroExtension, window, Set.indicator_add, Pi.add_apply] using hi
   map_smul' c u := by
     apply Lp.ext
     have h := (ae_eq_restrict_iff_indicator_ae_eq measurableSet_Ioc).mp (Lp.coeFn_smul c u)
     filter_upwards [zeroClass_ae a (c • u), zeroClass_ae a u,
       Lp.coeFn_smul c (zeroClass a u), h] with x hcu hu hsm hi
-    rw [hcu, hsm, hu]
-    simpa only [zeroExtension, window, Set.indicator_smul] using hi
+    simp only [RingHom.id_apply]
+    rw [hcu, hsm, Pi.smul_apply, hu]
+    simpa only [zeroExtension, window, Set.indicator_smul, Pi.smul_apply] using hi
   norm_map' u := by
     rw [Lp.norm_toLp]
     change (eLpNorm ((window a).indicator u) 2 volume).toReal = ‖u‖
@@ -72,11 +74,11 @@ lemma zeroIsometry_ae (a : ℝ) (u : WindowL2 a) :
 
 /-- Whole-line reflection is complex linear, not conjugate linear. -/
 def lineReflection : LineL2 →ₗᵢ[ℂ] LineL2 :=
-  Lp.compMeasurePreservingₗᵢ ℂ Neg.neg (measurePreserving_neg (volume : Measure ℝ))
+  Lp.compMeasurePreservingₗᵢ ℂ Neg.neg (Measure.measurePreserving_neg (volume : Measure ℝ))
 
 private lemma reflection_ae (f : LineL2) :
     lineReflection f =ᵐ[volume] fun x => f (-x) :=
-  Lp.coeFn_compMeasurePreserving f (measurePreserving_neg (volume : Measure ℝ))
+  Lp.coeFn_compMeasurePreserving f (Measure.measurePreserving_neg (volume : Measure ℝ))
 
 /-- The full original AE-even sector, defined before and without Fourier modes. -/
 def originalEven (a : ℝ) : Submodule ℂ (WindowL2 a) :=
@@ -92,7 +94,7 @@ instance originalEven_complete (a : ℝ) : CompleteSpace (originalEven a) :=
 theorem mem_originalEven_iff (a : ℝ) (u : WindowL2 a) :
     u ∈ originalEven a ↔
       (fun x : ℝ => zeroExtension a u (-x)) =ᵐ[volume] zeroExtension a u := by
-  have hneg := (measurePreserving_neg (volume : Measure ℝ)).quasiMeasurePreserving.ae_eq_comp
+  have hneg := (Measure.measurePreserving_neg (volume : Measure ℝ)).quasiMeasurePreserving.ae_eq_comp
     (zeroIsometry_ae a u)
   have hR : lineReflection (zeroIsometry a u) =ᵐ[volume]
       (fun x : ℝ => zeroExtension a u (-x)) := (reflection_ae _).trans hneg
@@ -108,18 +110,25 @@ theorem originalEven_representative (a : ℝ) (u : WindowL2 a) (f : ℝ → ℂ)
       (fun x : ℝ => zeroExtension a f (-x)) =ᵐ[volume] zeroExtension a f := by
   have hz : zeroExtension a u =ᵐ[volume] zeroExtension a f :=
     (ae_eq_restrict_iff_indicator_ae_eq measurableSet_Ioc).mp huf
-  have hn := (measurePreserving_neg (volume : Measure ℝ)).quasiMeasurePreserving.ae_eq_comp hz
+  have hn := (Measure.measurePreserving_neg (volume : Measure ℝ)).quasiMeasurePreserving.ae_eq_comp hz
   rw [mem_originalEven_iff]
   exact ⟨fun h => hn.symm.trans (h.trans hz), fun h => hn.trans (h.trans hz.symm)⟩
 
 /-- Reflection of Ioc is Ico; its two exceptional endpoints are null. -/
 lemma window_reflection_ae (a : ℝ) :
     ∀ᵐ x : ℝ ∂volume, (-x ∈ window a ↔ x ∈ window a) := by
-  have h₁ : ∀ᵐ x : ℝ ∂volume, x ≠ a := by simp
-  have h₂ : ∀ᵐ x : ℝ ∂volume, x ≠ -a := by simp
+  have h₁ : ∀ᵐ x : ℝ ∂volume, x ≠ a := Measure.ae_ne volume a
+  have h₂ : ∀ᵐ x : ℝ ∂volume, x ≠ -a := Measure.ae_ne volume (-a)
   filter_upwards [h₁, h₂] with x hx₁ hx₂
   simp only [window, mem_Ioc]
-  constructor <;> intro h <;> constructor <;> linarith
+  constructor
+  · rintro ⟨hleft, hright⟩
+    have hlow : -a ≤ x := by linarith
+    have hstrict : -a < x := lt_of_le_of_ne hlow hx₂.symm
+    exact ⟨hstrict, by linarith⟩
+  · rintro ⟨hleft, hright⟩
+    have hstrict : x < a := lt_of_le_of_ne hright hx₁
+    exact ⟨by linarith, by linarith⟩
 
 lemma zeroExtension_even_of_even (a : ℝ) (f : ℝ → ℂ)
     (hf : ∀ x, f (-x) = f x) :
