@@ -45,7 +45,7 @@ internal sealed class UniformIntegralsDocument : IScribeDocumentDefinition
     private static Formula Less(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Integrable(Formula body) => Call("IntegrableOn",
-        Seq(LambdaLower, T, Colon, Real, Mapsto, body), Call("Ioi", D(0)));
+        Seq(LambdaLower, Sp, T, Colon, Real, Mapsto, body), Call("Ioi", D(0)));
     private static Formula ReciprocalStatement()
     {
         Formula a = F.Id("a"), b = F.Id("b");
