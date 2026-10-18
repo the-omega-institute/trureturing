@@ -546,6 +546,7 @@ private def EndVertex (ℓ : ℕ) (v : ℤ × ℤ) : Prop :=
   v = ((ℓ : ℤ), 2 - (ℓ : ℤ)) ∨ v = ((ℓ : ℤ) - 2, -(ℓ : ℤ))
 
 set_option maxHeartbeats 2000000 in
+-- The twenty-two offset cases normalize absolute values and endpoint inequalities.
 private theorem vertex_classification (ℓ : ℕ) (hℓ : 3 ≤ ℓ)
     (I : Finset (ℤ × ℤ)) (hI : IsDownset ℓ I) (hcard : I.card = 5)
     (v : ℤ × ℤ) (hv : v ∈ I) : ground ℓ v ≤ 1 ∨ EndVertex ℓ v := by
@@ -677,10 +678,63 @@ private noncomputable def finiteEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
   left_inv I := by apply Subtype.ext; rfl
   right_inv J := by apply Subtype.ext; apply Subtype.ext; rfl
 
+private abbrev Choices (n k : ℕ) := ↥((Finset.univ : Finset (Fin n)).powersetCard k)
+private abbrev Patterns (ℓ : ℕ) :=
+  Choices ℓ 5 ⊕
+  (Fin (ℓ - 1) × Fin 2 × Choices (ℓ - 2) 2) ⊕
+  (Fin 4 × Choices (ℓ - 1) 3) ⊕
+  (Fin 2 × Choices (ℓ - 1) 2) ⊕
+  (Fin (ℓ - 1) × Fin (ℓ - 2)) ⊕
+  (Fin (ℓ - 2) × Fin 4) ⊕
+  (Fin 2 × Fin (ℓ - 2) × Fin 4) ⊕
+  (Fin 2 × Fin (ℓ - 2) × Fin 4) ⊕
+  (Fin (ℓ - 2) × Fin 4) ⊕
+  Fin 12 ⊕ Fin 4 ⊕ (Fin 2 × Fin (ℓ + 1)) ⊕ Fin 4 ⊕
+  (Fin 4 × Fin ℓ) ⊕ Fin 2 ⊕ (Fin 4 × Choices (ℓ - 1) 2) ⊕
+  (Fin 4 × Fin (ℓ + 3))
+private theorem patterns_card (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    (Nat.card (Patterns ℓ) : ℤ) =
+      (ℓ.choose 5 : ℤ) + 10 * ℓ.choose 3 - 2 * ℓ.choose 2 + 36 * ℓ - 14 := by
+  have hsub1 : (ℓ - 1 : ℕ) + 1 = ℓ := by omega
+  have hsub2 : (ℓ - 2 : ℕ) + 1 = ℓ - 1 := by omega
+  have hsub3 : (ℓ - 1 : ℕ) - 1 = ℓ - 2 := by omega
+  have ha := Nat.add_one_mul_choose_eq (ℓ - 2) 2
+  rw [hsub2] at ha
+  have hb := Nat.choose_succ_right_eq (ℓ - 1) 1
+  rw [Nat.choose_one_right, hsub3] at hb
+  have hc := Nat.choose_succ_succ (ℓ - 1) 2
+  have hd := Nat.choose_succ_succ (ℓ - 1) 1
+  change (ℓ - 1 + 1).choose 3 = (ℓ - 1).choose 2 + (ℓ - 1).choose 3 at hc
+  change (ℓ - 1 + 1).choose 2 = (ℓ - 1).choose 1 + (ℓ - 1).choose 2 at hd
+  rw [hsub1] at hc hd
+  rw [Nat.choose_one_right] at hd
+  have haZ : ((ℓ - 1 : ℕ) : ℤ) * ((ℓ - 2).choose 2 : ℤ) =
+      ((ℓ - 1).choose 3 : ℤ) * 3 := by exact_mod_cast ha
+  have hbZ : ((ℓ - 1).choose 2 : ℤ) * 2 =
+      ((ℓ - 1 : ℕ) : ℤ) * ((ℓ - 2 : ℕ) : ℤ) := by exact_mod_cast hb
+  have hcZ : (ℓ.choose 3 : ℤ) = ((ℓ - 1).choose 2 : ℤ) + (ℓ - 1).choose 3 := by
+    exact_mod_cast hc
+  have hdZ : (ℓ.choose 2 : ℤ) = ((ℓ - 1 : ℕ) : ℤ) + (ℓ - 1).choose 2 := by
+    exact_mod_cast hd
+  have hs1 : ((ℓ - 1 : ℕ) : ℤ) = (ℓ : ℤ) - 1 := by omega
+  have hs2 : ((ℓ - 2 : ℕ) : ℤ) = (ℓ : ℤ) - 2 := by omega
+  unfold Patterns Choices
+  simp only [Nat.card_eq_fintype_card, Fintype.card_sum, Fintype.card_prod,
+    Fintype.card_fin, Fintype.card_coe, Finset.card_powersetCard, Finset.card_univ,
+    Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one]
+  rw [hs1, hs2]
+  rw [hs1] at haZ hbZ hdZ
+  rw [hs2] at hbZ
+  nlinarith
+private noncomputable def patternEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val} ≃ Patterns ℓ := by
+  sorry
+
 private theorem finite_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val} : ℤ) =
       (ℓ.choose 5 : ℤ) + 10 * ℓ.choose 3 - 2 * ℓ.choose 2 + 36 * ℓ - 14 := by
-  sorry
+  rw [Nat.card_congr (patternEquiv ℓ hℓ)]
+  exact patterns_card ℓ hℓ
 
 private theorem downset_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} : ℤ) =
