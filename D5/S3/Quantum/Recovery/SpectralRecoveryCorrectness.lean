@@ -55,14 +55,27 @@ def spectralRecoveryAction (E : s → Matrix n d ℂ) (v : d) (X : Matrix n n �
   (∑ a, (E a)ᴴ * W * X * W * E a) +
     Matrix.trace ((1 - spectralSupport Q) * X) • Matrix.single v v 1
 
-/-- Existence of any actual finite Kraus inverse makes the computed spectral candidate exact. -/
-theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1)
+/-- The actual observable and spectral identities used by the computed recovery
+and by the pointwise tensor geometry. The proof is shared in its original owner. -/
+theorem kraus_left_inverse_spectral_relations (E : s → Matrix n d ℂ)
     (A : t → Matrix d n ℂ) (hA : (∑ b, (A b)ᴴ * A b) = 1)
     (hleft : ∀ X : Matrix d d ℂ,
       (∑ b, A b * (∑ a, E a * X * (E a)ᴴ) * (A b)ᴴ) = X)
-    (v : d) (X : Matrix d d ℂ) :
-    spectralRecoveryAction E v (∑ a, E a * X * (E a)ᴴ) = X := by
+    (v : d) :
+    let Q := ∑ a, E a * (E a)ᴴ
+    let P := spectralSupport Q
+    let W := spectralInverseSqrt Q
+    let Y := fun T : Matrix d d ℂ => leftInverseObservable A T
+    let NX := fun T : Matrix d d ℂ => ∑ a, E a * T * (E a)ᴴ
+    (∀ (T : Matrix d d ℂ) (a : s), Y T * E a = E a * T) ∧
+    (∀ (T : Matrix d d ℂ) (a : s), (E a)ᴴ * Y T = T * (E a)ᴴ) ∧
+    (∀ T : Matrix d d ℂ, Q * Y T = NX T) ∧
+    (∀ T : Matrix d d ℂ, Y T * Q = NX T) ∧
+    (∀ T : Matrix d d ℂ, W * Y T = Y T * W) ∧
+    W * Q * W = P ∧
+    (∀ T : Matrix d d ℂ, W * NX T * W = P * Y T) ∧
+    (∀ a : s, P * E a = E a) ∧
+    (∀ T : Matrix d d ℂ, P * NX T = NX T) := by
   let Q := ∑ a, E a * (E a)ᴴ
   let P := spectralSupport Q
   let W := spectralInverseSqrt Q
@@ -145,6 +158,23 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
   have hPE (a : s) : P * E a = E a := spectral_support_on_kraus E a
   have hPN (T : Matrix d d ℂ) : P * (NX T) = (NX T) := by
     simp only [NX, Matrix.mul_sum, ← Matrix.mul_assoc, hPE]
+  exact ⟨hYE, hEY, hQY, hYQ, hWY, hSandwich, hWN, hPE, hPN⟩
+
+/-- Existence of any actual finite Kraus inverse makes the computed spectral candidate exact. -/
+theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
+    (hTP : (∑ a, (E a)ᴴ * E a) = 1)
+    (A : t → Matrix d n ℂ) (hA : (∑ b, (A b)ᴴ * A b) = 1)
+    (hleft : ∀ X : Matrix d d ℂ,
+      (∑ b, A b * (∑ a, E a * X * (E a)ᴴ) * (A b)ᴴ) = X)
+    (v : d) (X : Matrix d d ℂ) :
+    spectralRecoveryAction E v (∑ a, E a * X * (E a)ᴴ) = X := by
+  let Q := ∑ a, E a * (E a)ᴴ
+  let P := spectralSupport Q
+  let W := spectralInverseSqrt Q
+  let Y := fun T : Matrix d d ℂ => leftInverseObservable A T
+  let NX := fun T : Matrix d d ℂ => ∑ a, E a * T * (E a)ᴴ
+  obtain ⟨hYE, hEY, hQY, hYQ, hWY, hSandwich, hWN, hPE, hPN⟩ :=
+    kraus_left_inverse_spectral_relations E A hA hleft v
   have hz (T : Matrix d d ℂ) : (1 - P) * (NX T) = 0 := by
     rw [Matrix.sub_mul, Matrix.one_mul, (hPN T), sub_self]
   have hterm (a : s) : (E a)ᴴ * W * (NX X) * W * E a = ((E a)ᴴ * E a) * X := by

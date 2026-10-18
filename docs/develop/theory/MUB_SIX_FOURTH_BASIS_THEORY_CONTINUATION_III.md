@@ -2624,3 +2624,5 @@ at the center or endpoints is imported from this proof. A noncanonical
 orthogonal triple containing two aligned rays must therefore place those
 two rays at different singleton positions. The latter case, and triples
 with fewer aligned rays, remain unresolved by this result.
+
+后续的全参数有限例外分类见[理论续卷 IV](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_IV.md)。
