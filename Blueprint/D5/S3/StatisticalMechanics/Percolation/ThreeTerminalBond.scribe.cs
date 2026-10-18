@@ -41,6 +41,11 @@ internal sealed class ThreeTerminalBondDocument : IScribeDocumentDefinition
                     + "the sum of weight theta omega over all omega:E -> Bool is one. "
                     + "Expand the product of theta(e)+(1-theta(e)) over all edges. "
                     + "Nonnegativity additionally requires theta(e) in [0,1]."),
+            Node("sum_cube_succ", "A first-coordinate split", DescribeRole.Theorem,
+                "For every natural n and every real function f on Fin(n+1) -> Bool, "
+                    + "the sum of f over that configuration cube equals the sum over "
+                    + "x:Bool and omega:Fin(n)->Bool of f(Fin.cons x omega). "
+                    + "The bijection splits the first edge state from the remaining edges."),
             Node("law", "Connectivity pushforward", DescribeRole.Definition,
                 "For finite decidable vertex and edge types, endpoints ends, terminals a,b,c, "
                     + "rates theta and mode s, law ends a b c theta s is the sum of "

@@ -209,7 +209,7 @@ def lawAnalysis : AuricFib.Contract.Application (@star_law) where
   evidence := .typed {
     source := lawAnalysisSource
     plan := { task := (), initial := [], additions := [[()]] }
-    acquisition := .unavailable "Real edge-rate family; no native Fibonacci reader/reply bridge" }
+    acquisition := .unavailable "Finite presentation and raw binding unacquired; native Fibonacci reader/reply bridge absent" }
 
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
@@ -351,3 +351,65 @@ def register_weight_sum : Contract.Registration (@weight_sum.{u})
   options := #[]
 end
 end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.WeightSum
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+abbrev Parameters := (n : ℕ) × ((Fin (n+1) → Bool) → ℝ)
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  Parameters (fun p => Fin (p.1+1) → Bool) (fun _ => ℝ)
+def actual : Realization signature := realize _ (fun _ p => p.2) (fun e => nomatch e)
+def zero : Realization signature := realize _ (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) (f : (Fin (n+1) → Bool) → ℝ),
+    (∑ ω, R.readout () ⟨n,f⟩ ω) = ∑ x : Bool, ∑ ω : Fin n → Bool, f (Fin.cons x ω)
+private theorem rejected : ¬ arena.Law zero := by
+  intro h
+  have hh := h 0 (fun _ => 1)
+  norm_num [zero,realize,Fintype.sum_bool] at hh
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨0,fun ω => if ω 0 then 1 else 0⟩,(fun _ => true),(fun _ => false),?_⟩
+  norm_num [actual,realize]
+def registration : Registration arena (type_of% @sum_cube_succ) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨sum_cube_succ,zero,rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ actual zero rejected
+  dependence := dependence
+def register_sum_cube_succ : Contract.Registration (@sum_cube_succ)
+    (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube.register_sum_cube_succ
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p => p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","fn","arg","arg","body","fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.Cube

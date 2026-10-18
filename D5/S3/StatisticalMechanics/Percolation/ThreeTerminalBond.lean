@@ -83,7 +83,8 @@ private lemma law_probability {V E : Type*} [Fintype V] [DecidableEq V]
     rw [Finset.sum_comm]
     simpa using weight_sum θ
 
-private lemma sum_cube_succ (n : ℕ) (f : (Fin (n + 1) → Bool) → ℝ) :
+/-- Split the Bernoulli configuration cube by its first coordinate. -/
+theorem sum_cube_succ (n : ℕ) (f : (Fin (n + 1) → Bool) → ℝ) :
     (∑ ω, f ω) = ∑ x : Bool, ∑ ω : Fin n → Bool, f (Fin.cons x ω) := by
   rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp]
   exact Fintype.sum_prod_type _
@@ -191,6 +192,10 @@ theorem star_sharpness (ε : ℝ) (hε : 0 < ε) :
     have ht3 : 0 ≤ t*(t*t) := by positivity
     nlinarith
 
+
+/-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.sum_cube_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms sum_cube_succ
 
 /-- info: 'D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.weight_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
