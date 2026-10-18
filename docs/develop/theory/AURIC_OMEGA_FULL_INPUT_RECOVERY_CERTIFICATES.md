@@ -2475,3 +2475,436 @@ The exact equivalence (R.135) does not equate pointwise lifts with the sufficien
 The unchanged original task in Definition 22.2 is to prove $\delta_N\geq1-\sqrt{1-\beta}$ for every actual original real-Kraus encoder, or exhibit an actual original-class encoder and one complex CPTP recovery with a rigorous strictly smaller unhalved full-reference diamond upper certificate. Neither alternative is settled by these families or the finite sufficient system. Their status is ordinary conditional finite-dimensional mathematics, not a kernel result. Physical uses still require the actual encoder, supplied inputs, common source-fiber membership, finite-history transport and native-word joint legality of the phase-gain volume; these mathematical frames, witnesses and certificates supply no native operations, input preparation, encoder/decoder apparatus or hardware resources. The larger complex encoder class remains separate.
 
 ## 追加锚（本行以下为增补区）
+
+## 31. Complete weighted rank-two plane coordinates
+
+**Definition 31.1 (the weighted joint-coordinate problem).** Retain the original real class and all complex recovery and finite-reference conventions of Definitions 1.1 and 23.1. Throughout Sections 31–35, $0<\beta\leq1/2$, $a=1-\beta$, $U=h^\perp$, and $Q,J$ are exactly (R.99). The normalized pairs are those of (R.108). For rank two, the full-column factor in (R.109) has two columns. The allowed coordinate transformations are a common real orthogonal output matrix $O_{\rm out}$ with $O_{\rm out}QO_{\rm out}^T=Q$, $O_{\rm out}J=JO_{\rm out}$, and a real Kraus matrix $O_K\in O(2)$. They act on both column matrices as
+
+$$
+(A,T)\longmapsto(O_{\rm out}AO_K,O_{\rm out}TO_K).
+\tag{R.143}
+$$
+
+For $c=\cos\theta$, $s=\sin\theta$, define in the original output order $(b_1,g_1,b_2,g_2,h)$
+
+$$
+\begin{gathered}
+v_1=c b_1+s g_2,\qquad v_2=s g_1+c b_2,\\
+A_{\beta,\theta}=Q^{1/2}(v_1,v_2)
+=\begin{pmatrix}
+\sqrt a c&0\\0&\sqrt a s\\0&\sqrt\beta c\\
+\sqrt\beta s&0\\0&0
+\end{pmatrix},\qquad 0\leq\theta\leq\pi/4.
+\end{gathered}
+\tag{R.144}
+$$
+
+**Theorem 31.2 (complete weighted plane orbits and their plane-witness region).** Every rank-two $B$ satisfying the $B$ conditions of (R.108) has, on $U$,
+
+$$
+P=Q^{-1/2}BQ^{-1/2}=P^T=P^2,\qquad
+\operatorname{rank}P=2,\qquad
+J\operatorname{ran}P=(\operatorname{ran}P)^\perp.
+\tag{R.145}
+$$
+
+Conversely every such Lagrangian projection gives an admissible $B=Q^{1/2}PQ^{1/2}$. Under (R.143), every two-column factor of $B$ takes the form (R.144). For $0<\beta<1/2$ the angle in $[0,\pi/4]$ is unique. At $\beta=1/2$ the output stabilizer enlarges and every plane permits $\theta=0$. There is no additional plane-orientation parameter; uniqueness here concerns the plane orbit, not a representative of the joint pair $(A,T)$.
+
+For $B_{\beta,\theta}=A_{\beta,\theta}A_{\beta,\theta}^T$,
+
+$$
+\begin{gathered}
+\operatorname{spec}B_{\beta,\theta}
+=\{ac^2+\beta s^2,\ as^2+\beta c^2,\ 0,0,0\},\\
+c_{\rm pl}(\beta,\theta)
+=\sqrt{1-(1-2\beta)^2\sin^2(2\theta)},\\
+c_{\rm pl}\leq\sqrt a
+\quad\Longleftrightarrow\quad
+(1-2\beta)^2\sin^2(2\theta)\geq\beta.
+\end{gathered}
+\tag{R.146}
+$$
+
+An angle satisfying the last inequality exists exactly for $0<\beta\leq1/4$. For unequal weights and $\theta>0$, $B_{\beta,\theta}$ is not unitarily conjugate to the canonical $B$ of (R.116).
+
+**Proof.** All inverse powers of $Q$ in this argument are on $U$, where $Q$ is positive and commutes with $J$. The phase identity gives $P\succeq0$ and $P+JPJ^T=I_U$. Hence $P\preceq I_U$ and $\operatorname{Tr}P=2$. There are exactly two positive eigenvalues, both at most one, with sum two; both are one. The identity $JPJ^T=I_U-P$ now identifies the two orthogonal projection ranges and proves (R.145). Substitution proves the converse. This whitening is an algebraic classification only; it is not a trace-norm or recovery transformation.
+
+Identify the auxiliary real space $U$ with $\mathbb C^2$ by $x\mapsto(x_{b_1}+ix_{g_1},x_{b_2}+ix_{g_2})$, so $J$ acts as multiplication by $i$. This does not change the quantum output space $\mathbb C^5$. A real orthonormal basis of $L=\operatorname{ran}P$ gives a complex matrix $W$. Its real Gram matrix is $I_2$ and its imaginary Gram matrix vanishes by $JL=L^\perp$, so $W^\dagger W=I_2$. The symmetric unitary matrix $S=WW^T$ determines the unoriented plane: if $W_1W_1^T=W_2W_2^T$, then $W_2^\dagger W_1$ is both unitary and complex orthogonal, hence real orthogonal. This is the standard $U(2)/O(2)$ representation, used here within the weighted classification; see [P. Albers, U. Frauenfelder and J. P. Solomon, *A Γ-structure on Lagrangian Grassmannians*, arXiv:1209.4505v2, Section 1, PDF pp.1–2](https://arxiv.org/pdf/1209.4505v2). No odd-dimension Γ-structure theorem is used.
+
+For $a>\beta$, the $Q,J$-preserving output group on $U$ is precisely the diagonal auxiliary torus $D=\operatorname{diag}(e^{i\phi_1},e^{i\phi_2})$. Write
+
+$$
+S=\begin{pmatrix}\alpha&\zeta\\\zeta&\gamma\end{pmatrix},\qquad
+|\alpha|=|\gamma|=d,\quad |\zeta|=e,\quad d^2+e^2=1.
+$$
+
+Its transformation is $S\mapsto DSD$. If $d,e>0$, choose the two phases to make both diagonal entries equal to $d>0$. Row orthogonality then says $d(\zeta'+\overline{\zeta'})=0$, so the off-diagonal entry is purely imaginary. A remaining diagonal sign makes it $ie$. If $e=0$, eliminate the two diagonal phases; if $d=0$, choose the sum of the two phases to make the off-diagonal entry $i$. Thus in all cases
+
+$$
+DSD=\begin{pmatrix}\cos2\theta&i\sin2\theta\\
+i\sin2\theta&\cos2\theta\end{pmatrix}
+=W_\theta W_\theta^T,\qquad
+W_\theta=\begin{pmatrix}c&is\\is&c\end{pmatrix}.
+\tag{R.147}
+$$
+
+The invariant $|S_{12}|=\sin2\theta$ fixes a unique $\theta\in[0,\pi/4]$. Equality of the symmetric unitary matrices gives $DW=W_\theta O$ for some $O\in O(2)$. Its determinant may be negative, so orientation reversal is included. If $AA^T=B$ with two independent columns, then $(Q^{-1/2}A)(Q^{-1/2}A)^T=P$, and therefore the columns of $Q^{-1/2}A$ are a real orthonormal basis of $L$. Since the output transformations commute with $Q^{1/2}$, the same reduction gives (R.144) for $A$, using the right Kraus factor $O^T$.
+
+At $a=\beta=1/2$, the stabilizer on $U$ is the entire auxiliary $U(2)$; applying $W^\dagger$ sends $W$ to $I_2$, giving $\theta=0$. The independent sign on $h$ supplies no plane coordinate. Both endpoints of the angle interval are included above; the coincident positive eigenvalues at $\theta=\pi/4$ require no division by their difference. Beta zero is outside this whitening argument.
+
+The two columns in (R.144) have disjoint supports and squared lengths $ac^2+\beta s^2$, $as^2+\beta c^2$, giving the spectrum. In the orthogonal blocks $(b_1,g_2)$ and $(g_1,b_2)$, $B-JBJ^T$ is
+
+$$
+\begin{pmatrix}a\cos2\theta&\sqrt{a\beta}\sin2\theta\\
+\sqrt{a\beta}\sin2\theta&-\beta\cos2\theta\end{pmatrix}
+\oplus
+\begin{pmatrix}-a\cos2\theta&\sqrt{a\beta}\sin2\theta\\
+\sqrt{a\beta}\sin2\theta&\beta\cos2\theta\end{pmatrix}.
+$$
+
+Each determinant is $-a\beta<0$, and the two blocks have opposite spectra. The eigenvalue difference of either block is $\sqrt{(a-\beta)^2\cos^2(2\theta)+4a\beta}$; taking the half trace norm proves (R.146). The angle condition can be met exactly when $(1-2\beta)^2\geq\beta$, equivalently $(1-\beta)(1-4\beta)\geq0$. At $\beta=1/4$ only $\theta=\pi/4$ attains it. For $a>\beta$ and $\theta>0$, the larger positive eigenvalue is strictly below $a$ and the smaller strictly above $\beta$, proving the nonconjugacy assertion. The spectral calculation extends the already-owned instance (R.121)–(R.122); the additional assertion is its coverage of every rank-two plane. The witness itself is still (R.105). $\square$
+
+## 32. Complete third-column coordinates and common recovery transport
+
+**Theorem 32.1 (the full joint sphere, its converse and its actual transformation).** For every $(\beta,\theta)$ in (R.144), put $A=A_{\beta,\theta}$. The entire third-column domain is
+
+$$
+\mathcal T_{\beta,\theta}
+=\{T\in\mathbb R^{5\times2}:\langle A,T\rangle_F
+=\langle JA,T\rangle_F=0,\ \|T\|_F=1\}\cong S^7.
+\tag{R.148}
+$$
+
+For each such $T$, use both actual Kraus matrices
+
+$$
+K_\alpha=(A_\alpha,JA_\alpha,T_\alpha),\quad \alpha=0,1,
+\qquad N_{\beta,\theta,T}(Z)=\sum_{\alpha=0}^1K_\alpha ZK_\alpha^T.
+\tag{R.149}
+$$
+
+They realize the normalized pair $(B_{\beta,\theta},C_{\rm out})$ with $C_{\rm out}=AT^T$, $q=1$ and $\operatorname{rank}C_{\rm out}=\operatorname{rank}T$. Conversely every rank-two pair of (R.108) is represented in this way after a transformation (R.143). The sphere is a complete parametrization, with possible repetitions under remaining stabilizers; it imposes neither condition of (R.120).
+
+To display every active and outside component, let
+
+$$
+Y=\begin{pmatrix}
+T_{b_1,0}+iT_{g_1,0}&T_{b_1,1}+iT_{g_1,1}\\
+T_{b_2,0}+iT_{g_2,0}&T_{b_2,1}+iT_{g_2,1}
+\end{pmatrix},\qquad \nu=(T_{h,0},T_{h,1})\in\mathbb R^2.
+$$
+
+The sphere conditions are exactly
+
+$$
+\sqrt a cY_{11}-i\sqrt a sY_{12}
+-i\sqrt\beta sY_{21}+\sqrt\beta cY_{22}=0,
+\qquad \|Y\|_F^2+\|\nu\|_2^2=1.
+\tag{R.150}
+$$
+
+The four $Y$ entries remain arbitrary complex coordinates subject to this one complex equation.
+
+For the same common transformation of $A,T$ in (R.143), the resulting channel $N'$ obeys, for every $d\geq1$ and $Z\in M_3\otimes M_d$,
+
+$$
+\begin{gathered}
+N'=\operatorname{Ad}_{O_{\rm out}}\circ N,\\
+(N'\otimes\mathrm{id}_d)(Z)
+=(O_{\rm out}\otimes I_d)(N\otimes\mathrm{id}_d)(Z)
+ (O_{\rm out}^T\otimes I_d),\\
+R'=R\circ\operatorname{Ad}_{O_{\rm out}^T},\qquad R'N'=RN.
+\end{gathered}
+\tag{R.151}
+$$
+
+The last line bijects all complex CPTP recoveries on the entire output, with inverse $R=R'\circ\operatorname{Ad}_{O_{\rm out}}$. Trace norms on all complex inputs and references, all recovery diamond errors, and the input space $\mathcal H_0$ are preserved.
+
+**Proof.** The matrices $A,JA$ have Frobenius norm one and Frobenius inner product zero. The last fact follows termwise from $x^TJx=0$. Thus the two real linear conditions in (R.148) are independent in $\mathbb R^{10}$; their common kernel has dimension eight and its unit sphere is $S^7$. Expanding (R.150), its real and imaginary parts are respectively $\langle A,T\rangle_F$ and $\langle JA,T\rangle_F$. This proves the claimed coordinate equivalence without deleting any active-$U$ or $h$ component.
+
+The first two columns in (R.149) already have summed squared norms one and zero cross inner product. The two remaining TP cross entries and third squared norm are precisely (R.148). Hence (R.149) is TP, and its actual Kraus representation is CP on the whole complex matrix algebra. Its phase outputs are $(Q\pm iJQ)/2$ by (R.103). This is the realization (R.109), specialized to the complete coordinates rather than a new general realization theorem.
+
+Explicitly, $A$ has full column rank, so $A^TB^+A=I_2$. Consequently
+
+$$
+\begin{gathered}
+C_{\rm out}=AT^T,\qquad
+C_{\rm out}^TB^+C_{\rm out}=TT^T,\qquad
+q=\|T\|_F^2=1,\qquad
+\operatorname{rank}C_{\rm out}=\operatorname{rank}T.
+\end{gathered}
+\tag{R.152}
+$$
+
+For the converse, first use (R.109) and Theorem 31.2 to put a rank-two feasible pair in the frame (R.144). In that frame the unique third-column factor is
+
+$$
+T=C_{\rm out}^TB^+A,\qquad
+AT^T=BB^+C_{\rm out}=C_{\rm out},\qquad
+TT^T=C_{\rm out}^TB^+C_{\rm out}.
+\tag{R.153}
+$$
+
+The range, trace and normalization conditions of (R.108) give both orthogonality equations and the unit norm in (R.148). The identity $A^TB^+A=I_2$ also recovers $T$ from $AT^T$, proving uniqueness for fixed $A$. All pseudoinverses act on the actual support of the singular $5\times5$ matrix $B$. This is the exact pseudoinverse converse already owned by (R.109), with no invertibility assumption on $B$.
+
+Right multiplication by $O_K$ mixes the entire two-Kraus list with the same real orthogonal coefficients, so its sum is unchanged on every complex matrix. Since $O_{\rm out}J=JO_{\rm out}$, left multiplication acts on all three columns of each Kraus matrix, giving (R.151). Real orthogonal output matrices are also complex unitaries; tensoring with $I_d$ proves the full-reference norm assertions. The displayed recovery correspondence and its inverse are compositions with unitary channels and hence remain complex CPTP on the entire output. There is no input transformation, so every individual $X\in\mathcal H_0$ is retained. Moreover $O_{\rm out}$ preserves $Q,J$, and hence preserves the actual phase-output matrices $(Q\pm iJQ)/2$. These facts, rather than whitening, transport the norms and recoveries. $\square$
+
+## 33. A strict failure of the selected kernel-orthogonalization plane
+
+**Theorem 33.1 (an actual hard-region channel and its complete phase minimum).** At $a=\beta=1/2$, put $f=\sqrt{2/31}$ and define
+
+$$
+\begin{aligned}
+K_0&=\left(b_1/\sqrt2,\ g_1/\sqrt2,
+ f(b_1+\tfrac32b_2+3h)\right),\\
+K_1&=\left(b_2/\sqrt2,\ g_2/\sqrt2,
+ f(-\tfrac32b_1-b_2)\right).
+\end{aligned}
+\tag{R.154}
+$$
+
+This is an actual real two-Kraus CPTP channel $N_*$. It has $q=1$, $\operatorname{rank}B=\operatorname{rank}C_{\rm out}=2$, $\|C_{\rm out}\|_F^2=1/2$ and $c_{\rm pl}=1>\sqrt a$. The combined map $\mathcal F(u,v)=K_0u+K_1v$ has rank five. Its unique kernel line is generated by
+
+$$
+u=|0\rangle,\qquad
+v=\tfrac23|0\rangle+\tfrac{\sqrt{31}}3|2\rangle,
+\qquad K_0u+K_1v=0,\quad u^Tv=\tfrac23.
+\tag{R.155}
+$$
+
+Orthogonalizing $v$ against $u$ gives the direction $|2\rangle$. On the entire resulting real coherence plane, the minimum nonzero contraction ratio is
+
+$$
+\begin{aligned}
+\min_{\phi\in\mathbb R}
+\frac{\|N_*(e^{i\phi}E_{02}+e^{-i\phi}E_{20})\|_1}{2}
+=\frac{1+\sqrt{10}}{\sqrt{31}}
+>\frac1{\sqrt2}.
+\end{aligned}
+\tag{R.156}
+$$
+
+Thus choosing any complex phase after this kernel orthogonalization does not reach the required threshold.
+
+**Proof.** Here $A=(b_1,b_2)/\sqrt2=A_{1/2,0}$. The $02$ TP entry is $f/\sqrt2-f/\sqrt2=0$, and the $12$ entry is zero. The third squared norm is
+
+$$
+f^2(1+9/4+9+9/4+1)=1.
+$$
+
+The other TP entries follow from the displayed first two columns. Their phase relation is $B+JBJ^T=I_U/2$, proving actual class membership. On $(b_1,b_2,h)$ the only nonzero part of $C_{\rm out}$ is
+
+$$
+C_{\rm out}=\frac1{\sqrt{31}}
+\begin{pmatrix}1&3/2&3\\-3/2&-1&0\\0&0&0\end{pmatrix}.
+\tag{R.157}
+$$
+
+Its upper $2\times2$ determinant is $5/124\ne0$ and its squared Frobenius norm is $1/2$. Equation (R.152) gives $q=1$; the canonical $B$ gives $c_{\rm pl}=1$. The independent first columns also make the two Kraus matrices independent. The four vectors $b_1,g_1,b_2,g_2$ are in the range of $\mathcal F$, and the nonzero $h$ component of $t_0$ adds a fifth direction. Thus the real kernel has dimension one, as does its complexification. Direct substitution verifies (R.155), so this is its whole kernel line.
+
+Subtracting $(u^Tv)u/\|u\|^2$ from $v$ leaves $(\sqrt{31}/3)|2\rangle$. Equivalently the two Hermitian matrices
+
+$$
+uv^T+vu^T-\frac{2u^Tv}{\|u\|^2}uu^T,
+\qquad i(uv^T-vu^T)
+$$
+
+span exactly $\operatorname{span}_{\mathbb R}\{E_{02}+E_{20},i(E_{02}-E_{20})\}\subseteq\mathcal H_0$. Every nonzero member is a nonzero real scale of one phase input in (R.156), which has trace norm two.
+
+For $c_\phi=\cos\phi$, $s_\phi=\sin\phi$, both actual Kraus terms give, on $(b_1,b_2,h)$,
+
+$$
+N_*(e^{i\phi}E_{02}+e^{-i\phi}E_{20})
+=\frac{Y_\phi}{\sqrt{31}},\qquad
+Y_\phi=\begin{pmatrix}
+2c_\phi&3is_\phi&3e^{i\phi}\\
+-3is_\phi&-2c_\phi&0\\
+3e^{-i\phi}&0&0
+\end{pmatrix}.
+\tag{R.158}
+$$
+
+The two other output directions are zero. Expansion gives
+
+$$
+\begin{gathered}
+\operatorname{Tr}Y_\phi=0,\qquad
+\tfrac12\operatorname{Tr}Y_\phi^2=18-5c_\phi^2,\qquad
+\det Y_\phi=18c_\phi,\\
+p_c(\lambda)=\det(\lambda I-Y_\phi)
+=\lambda^3-(18-5c^2)\lambda-18c,\qquad c=c_\phi.
+\end{gathered}
+\tag{R.159}
+$$
+
+Put $r=1+\sqrt{10}$. For $0\leq c\leq1$, $p_c(r)$ is convex in $c$ and
+
+$$
+p_1(r)=0,\qquad p_0(r)=r(2\sqrt{10}-7)<0.
+$$
+
+It therefore lies below its endpoint chord and is nonpositive. Since $p_c$ is monic, it has a real root at least $r$, so $\lambda_{\max}(Y_\phi)\geq r$. For $c<0$, $p_{-c}(-\lambda)=-p_c(\lambda)$ reverses the spectrum, leaving its operator norm unchanged. The traceless Hermitian $3\times3$ norm identity used in Theorem 28.1 gives $\|Y_\phi\|_1=2\|Y_\phi\|_{\rm op}\geq2r$. At $\phi=0$ its eigenvalues are $1+\sqrt{10},1-\sqrt{10},-2$, so this lower bound is attained. Finally $(1+\sqrt{10})^2/31>1/2$ is equivalent to $4\sqrt{10}>9$. This proves the strict all-phase minimum, including every nonzero real linear combination in the coherence plane. $\square$
+
+**Definition 33.2 (the precise failed construction).** In the displayed Kraus coordinates, select the kernel pair $(u,v)$ with $u_2=0$, replace $v$ by $w=v-(u^Tv)u/\|u\|^2$, normalize $u,w$, and vary $e^{i\phi}|\widehat u\rangle\langle\widehat w|+e^{-i\phi}|\widehat w\rangle\langle\widehat u|$. Theorem 33.1 rules out universality of this construction. The factorization (R.92) required orthogonal logical factors; (R.155) does not supply them. Orthogonalizing changes the real output by the diagonal term $-2(u^Tv)N_*(uu^T)/\|u\|^2$, whose cost cannot be removed by phase choice in this example. No assertion about other kernel coordinate choices or the other directions of $\mathcal H_0$ follows. This failure is neither a counterexample to G nor an encoder/recovery pair improving the original diamond target.
+
+## 34. Analytic continuation to genuinely noncanonical planes
+
+**Theorem 34.1 (a complete two-parameter strict-failure family).** Let $T_*$ be the third-column matrix of (R.154). For every $(\beta,\theta)\in\mathcal D=(0,1/2]\times[0,\pi/4]$, take $A=A_{\beta,\theta}$ and put
+
+$$
+\begin{gathered}
+\alpha=\langle A,T_*\rangle_F
+=f(\sqrt a-\sqrt\beta)\cos\theta,\\
+\zeta=\langle JA,T_*\rangle_F
+=\tfrac{3f}{2}(\sqrt a-\sqrt\beta)\sin\theta,\\
+\widetilde T=T_*-\alpha A-\zeta JA,\qquad
+n=\|\widetilde T\|_F,\qquad T_{\beta,\theta}=\widetilde T/n.
+\end{gathered}
+\tag{R.160}
+$$
+
+This is defined on all of $\mathcal D$ and satisfies
+
+$$
+\begin{gathered}
+n^2=1-f^2(\sqrt a-\sqrt\beta)^2
+ (\cos^2\theta+\tfrac94\sin^2\theta)\geq\tfrac{53}{62}>0,\\
+T_{\beta,\theta}\in\mathcal T_{\beta,\theta},\qquad
+h^TT_{\beta,\theta}=(3f/n,0).
+\end{gathered}
+\tag{R.161}
+$$
+
+Use (R.149) with this $T$ to define $N_{\beta,\theta}$. Every member is an actual normalized two-Kraus CPTP channel, with rank $B=2$, $q=1$, and a combined Kraus map of rank five. Its kernel has a unique real representative with $u_2=0$, $v_2=1$, and this representative depends continuously on $(\beta,\theta)$.
+
+There is an $\varepsilon>0$ such that, for all
+
+$$
+\tfrac12-\varepsilon<\beta\leq\tfrac12,\qquad
+0\leq\theta<\varepsilon,\qquad (\beta,\theta)\in\mathcal D,
+\tag{R.162}
+$$
+
+the selected $u$ and $w=v-(u^Tv)u/\|u\|^2$ are nonzero, $\operatorname{rank}T=\operatorname{rank}C_{\rm out}=2$, $c_{\rm pl}>\sqrt a$, and
+
+$$
+\begin{gathered}
+\widehat u=u/\|u\|,\quad \widehat w=w/\|w\|,\quad
+X_\phi=e^{i\phi}|\widehat u\rangle\langle\widehat w|
+       +e^{-i\phi}|\widehat w\rangle\langle\widehat u|\in\mathcal H_0,\\
+\gamma(\beta,\theta):=\min_{\phi\in[0,2\pi]}
+ \tfrac12\|N_{\beta,\theta}(X_\phi)\|_1
+>\sqrt{1-\beta}.
+\end{gathered}
+\tag{R.163}
+$$
+
+In particular this relatively open failure neighborhood contains points with $\beta<1/2$, $0<\theta<\pi/4$, whose $B$ is not unitarily conjugate to canonical $B$.
+
+**Proof.** Multiplication of the displayed $A,T_*$ gives the two coefficients in (R.160), including the positive sign of $\zeta$. Since $A,JA$ are Frobenius orthonormal, subtracting those two components is the orthogonal projection onto their common perpendicular. Pythagoras gives the exact $n^2$. Here $(\sqrt a-\sqrt\beta)^2\leq1$ and $\cos^2\theta+(9/4)\sin^2\theta\leq9/4$, so the subtracted term is at most $9/62$. Normalizing the projection proves all three equations defining (R.148), and $A,JA$ have zero $h$ row, proving the last equation of (R.161). Theorem 32.1 now supplies the actual full TP sum, phase outputs and normalized common pair for every parameter, rather than merely a limiting block datum.
+
+The active first and second columns form, in the order $(b_1,g_1,b_2,g_2)$,
+
+$$
+M_{\beta,\theta}=[A_0,JA_0,A_1,JA_1]|_U
+=\begin{pmatrix}
+\sqrt a c&0&0&-\sqrt a s\\
+0&\sqrt a c&\sqrt a s&0\\
+0&-\sqrt\beta s&\sqrt\beta c&0\\
+\sqrt\beta s&0&0&\sqrt\beta c
+\end{pmatrix},\qquad \det M_{\beta,\theta}=a\beta>0.
+\tag{R.164}
+$$
+
+These columns span $U$ and $T_0$ has nonzero $h$ component, so the combined map has rank five on all of $\mathcal D$. Its $h$ equation forces $u_2=0$. A nonzero kernel vector cannot also have $v_2=0$, since (R.164) would make all four other coordinates zero. Hence scale uniquely to $v_2=1$. The remaining coordinates are explicitly
+
+$$
+\begin{pmatrix}u_0\\u_1\\v_0\\v_1\end{pmatrix}
+=-M_{\beta,\theta}^{-1}(T_{\beta,\theta,1}|_U),\qquad
+u=(u_0,u_1,0)^T,\quad v=(v_0,v_1,1)^T.
+\tag{R.165}
+$$
+
+All entries in (R.160), (R.164) and (R.165) are continuous, indeed real analytic wherever the positive square roots are defined. At $(\beta,\theta)=(1/2,0)$ the scaled pair is
+
+$$
+u=\tfrac3{\sqrt{31}}|0\rangle,\qquad
+v=\tfrac2{\sqrt{31}}|0\rangle+|2\rangle,\qquad w=|2\rangle.
+$$
+
+Thus $u\ne0$ locally. Because $u_2=0$ and $v_2=1$, orthogonalization leaves $w_2=1$, so $w\ne0$ wherever $u\ne0$. Normalization is consequently continuous nearby. The vectors $\widehat u,\widehat w$ are real orthonormal and $\widehat u_2=0$, which gives $X_{\phi,22}=0$, trace zero and input eigenvalues $1,-1,0$. This proves its membership in the full complex Hermitian $\mathcal H_0$ and its norm two.
+
+On a sufficiently small closed parameter neighborhood of the base point and the compact phase circle, $g(\beta,\theta,\phi)=\tfrac12\|N_{\beta,\theta}(X_\phi)\|_1$ is jointly continuous and hence uniformly continuous. In particular
+
+$$
+|\min_\phi g(p,\phi)-\min_\phi g(p_0,\phi)|
+\leq\max_\phi|g(p,\phi)-g(p_0,\phi)|\longrightarrow0
+\quad(p\longrightarrow p_0).
+$$
+
+Thus $\gamma$ is continuous. Theorem 33.1 gives the strictly positive base margin $\gamma(1/2,0)-1/\sqrt2=(1+\sqrt{10})/\sqrt{31}-1/\sqrt2$. Continuity of this margin after subtracting $\sqrt{1-\beta}$ proves (R.163) throughout a relatively open neighborhood. At the base, $T$ has rank two and $c_{\rm pl}=1>1/\sqrt2$; a nonzero minor and this strict plane inequality persist on a smaller neighborhood. Choose $\varepsilon<\min(1/2,\pi/4)$ so (R.162) lies inside it. The spectral assertion for its interior points follows from (R.146). This proves the two-parameter neighborhood analytically. It makes no global assertion about selecting kernel gauges for arbitrary $T\in\mathcal T_{\beta,\theta}$, or about contracting directions outside the selected plane. $\square$
+
+## 35. The complete remaining inequality and its sufficient routes
+
+**Assumption 35.1 (G on the complete rank-two joint domain).** With $B=B_{\beta,\theta}$ and $C_{\rm out}=A_{\beta,\theta}T^T$, the rank-two part of Assumption 23.5 is exactly
+
+$$
+\begin{gathered}
+\forall\,0<\beta\leq1/2,\quad
+\forall\,\theta\in[0,\pi/4],\quad
+\forall\,T\in\mathcal T_{\beta,\theta},\\
+\exists\,0\ne X=
+\begin{pmatrix}\eta&z&w\\\bar z&-\eta&v\\\bar w&\bar v&0\end{pmatrix},
+\quad \eta\in\mathbb R,\quad z,w,v\in\mathbb C:\qquad
+\|\mathcal L_{B,C_{\rm out}}(X)\|_1
+\leq\sqrt{1-\beta}\,\|X\|_1.
+\end{gathered}
+\tag{R.166}
+$$
+
+At half beta, $\theta=0$ suffices by the common transformation (R.151); allowing other angles is redundant but equivalent. By (R.105), (R.146) and (R.152), the part still requiring an argument has $\operatorname{rank}T=2$ and $(1-2\beta)^2\sin^2(2\theta)<\beta$. All seven real coordinates $\eta,z,w,v$ remain. For $\beta>1/4$ every angle is in this strict plane region, although particular third columns can still admit the existing easy witnesses. Sections 31–34 do not establish (R.166); the failure in (R.156), (R.163) excludes only the specified plane selection.
+
+**Definition 35.2 (a sufficient common-space condition for this joint domain).** For the actual $N=N_{\beta,\theta,T}$, define
+
+$$
+\widehat\kappa_7(N)
+=\min_{\substack{W\subseteq\operatorname{Herm}_0(3)\\
+                 \dim_{\mathbb R}W=2}}
+ \max_{0\ne X\in W}\frac{\|N(X)\|_1}{\|X\|_1}.
+\tag{R.167}
+$$
+
+This uses the contraction-value convention of [R. Ibarrondo and M. Sanz, *Contraction and Expansion Values of Quantum Channels*, arXiv:2607.04950v1, Definition 2, (13); Lemma 4, (17)–(18)](https://arxiv.org/html/2607.04950v1). The index seven denotes codimension six in the eight-dimensional real space $\operatorname{Herm}_0(3)$, not an output dimension. The maximum is continuous in $W$ by compact unit-sphere parametrization in orthonormal local frames; compactness of the real Grassmannian gives the minimum. A sufficient class condition for (R.166) is
+
+$$
+\forall\beta,\theta,T\text{ in (R.166)},\qquad
+\widehat\kappa_7(N_{\beta,\theta,T})\leq\sqrt{1-\beta}.
+\tag{R.168}
+$$
+
+Indeed, for any such actual channel and any real two-dimensional $W$, $\dim(W\cap\mathcal H_0)\geq2+7-8=1$. Evaluating its maximum ratio on a nonzero intersection vector and then minimizing over $W$ yields $m_0(N)\leq\widehat\kappa_7(N)$. This standard intersection argument is consumed only as a sufficient route to the source-specific inequality (R.166). The two spanning vectors of $W$ need not individually have zero $22$ entry, but every linear combination must obey the contraction bound. Bounds on two separately chosen directions do not suffice. No uniform estimate (R.168) is established here; Theorem 33.1 prevents imposing its orthogonalized kernel coherence plane as a universal choice of $W$.
+
+**Proposition 35.3 (fixed-input calibration using the existing attained recovery).** Let $N_\beta$ and $R_\beta$ be exactly the encoder and whole-output decoder (P.11), (P.14), and put $p=(1+\sqrt a)/2$. Their squared entanglement fidelity at the maximally mixed input is
+
+$$
+F_e(I_3/3,R_\beta N_\beta)
+=p+\frac{1-p}{9}
+=\frac{5+4\sqrt a}{9},\qquad
+F_e(I_3/3,R_\beta N_\beta)-p
+=\frac{1-\sqrt a}{18}>0.
+\tag{R.169}
+$$
+
+Their worst-input squared fidelity is $p$, while their unhalved full-reference diamond error is still exactly $1-\sqrt a$ as in (P.15)–(P.16).
+
+**Proof.** Reuse (P.15), $R_\beta N_\beta=p\,\mathrm{id}+(1-p)\operatorname{Ad}_{Z_0}$ with $Z_0=\operatorname{diag}(1,1,-1)$. On a purification of any density $\rho$, its overlap with the pure identity target is $F_e(\rho)=p+(1-p)|\operatorname{Tr}(\rho Z_0)|^2$. At $I_3/3$, $\operatorname{Tr}(\rho Z_0)=1/3$, proving (R.169). The overlap is at least $p$ for every input and equals $p$ for $\rho=(E_{00}+E_{22})/2$. This also agrees with the matched optimal fidelity certificate of Theorem 8.1. The diamond equality and its full-reference upper bound are already (P.15), attained on $(|0\rangle+|2\rangle)/\sqrt2$. Thus (R.169) distinguishes fixed-input and worst-input fidelities without constructing a different recovery. $\square$
+
+**Definition 35.4 (unchanged recovery target and mathematical boundaries).** The common-state complementary identity (R.27) and the pure-target diamond bound (R.35) retain their unrestricted complex CPTP recovery quantifier. In their notation an alternative sufficient class estimate is $\max_\omega F(\Gamma,\mathcal C_\omega)^2\leq(1+\sqrt a)/2$, where one common environment state is tested against every input purification. Proposition 35.3 shows why fixing $I_3/3$ cannot replace that worst-input condition. Neither this uniform fidelity estimate nor (R.166) or (R.168) follows from complete joint coordinates. The exact pointwise dual is still (R.135); the linear and decomposable system (R.137)–(R.139) remains only sufficient and is not an equivalent selection theorem.
+
+The additional mathematical content in Sections 31–34 is the source-specific complete weighted plane/common-third-column correspondence and the actual strict failure family of the stated kernel method. The symmetric-unitary representation, orthogonal projection, finite-dimensional spectral arguments and compact phase minimization are standard ingredients within those proofs. The noncanonical spectral example (R.121)–(R.122), restricted witnesses (R.118), imaginary-only obstruction (R.131)–(R.133), common realization and pseudoinverse identities (R.108)–(R.109), inverse damping (R.110)–(R.112), exact dual (R.135)–(R.142), and attained recovery (P.11)–(P.16) retain their respective scopes. No global originality assertion is attached to these compositions.
+
+General normalized rank-three and rank-four pairs of (R.108) remain in G. The normalized comparison has at most four real Kraus terms, while the original encoder can have real Kraus rank up to nine. For $q>0$ only $\mathcal H_0$ witnesses transport by (R.111); the general-input discrepancy is exactly (R.112). At $q=0$ the existing zero-output witness requires no normalization. At $\beta=0$ the existing isometric endpoint attains the nonnegative recovery target, without extending (R.145) across the rank change.
+
+The original whole-domain alternative remains Definition 22.2: prove $\delta_N\geq1-\sqrt{1-\beta}$ for every actual original real-Kraus encoder and every complex CPTP recovery on the whole output with all finite complex references, or supply an actual original-class encoder and one such recovery with a rigorous strictly smaller full-reference diamond upper bound. Neither alternative is established by the selected-plane failure, its two-parameter continuation or the sufficient common-space formulation. The larger complex encoder class remains separate. The common transformations are mathematical coordinate correspondences; physical application still requires the actual encoder, supplied inputs, common source fiber, finite-history transport and native-word joint legality of the phase-gain volume. They supply no native operation, state preparation, encoder/decoder apparatus or hardware resource.
+
+## 追加锚（本行以下为增补区）
