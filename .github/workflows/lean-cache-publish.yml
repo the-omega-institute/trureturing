@@ -168,6 +168,7 @@ jobs:
       group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
       cancel-in-progress: true
     env:
+      LEAN_NUM_THREADS: '1'
       STRATALINT_CACHE_WRITES: 'true'
       STRATALINT_RUNNER_DIAGNOSTICS: ${{ inputs.runner_diagnostics }}
       PR_SOURCE: ${{ inputs.pr_source }}
