@@ -81,7 +81,29 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
                     + "give three distinct zeros of H' by Rolle's theorem. Because u and K are positive, "
                     + "these would be three distinct zeros of G. Strict convexity makes the middle value "
                     + "strictly smaller than the maximum of the two outer zero values, a contradiction. "
-                    + "This zero-count bound does not assert existence, simplicity or a critical parameter."))),
+                    + "The separate fold theorem supplies existence, simplicity and the critical parameter."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("TwoCrossings(h) means that there are real numbers a,b with 0<a<b, "
+                + "H(h,a)=H(h,b)=0 and nonzero time derivatives at both points, with H(h,t)>0 "
+                + "for 0<t<a, H(h,t)<0 for a<t<b, and H(h,t)>0 for t>b. "
+                + "These signs exclude every other positive zero. Since v is strictly positive, "
+                + "the determinant has exactly the same signs and zeros.")),
+            Describe.Lean(
+                DescribeId.Create("three-label-unique-fold"),
+                DeclarationHandle.Create(Prefix + "unique_fold_classification"),
+                H("The unique fold and the complete parameter classification"),
+                StatementSource.FromAuthor(Disp(FoldFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("H is strictly increasing in h at every positive time. "
+                    + "For h at most 1 its value at time 2 is negative, whereas for h at least 8 "
+                    + "it is positive at all positive times. Positivity near zero and at infinity "
+                    + "uniformly confines zeros for h in [1,8] to a compact time interval. "
+                    + "The maximum parameter in this compact zero locus gives a nonnegative law "
+                    + "with a stationary zero. Strict convexity of G bounds the number of roots, "
+                    + "forces two simple crossings below the threshold, and makes the critical "
+                    + "second derivative strictly positive. Parameter monotonicity gives strict "
+                    + "positivity above the threshold. This theorem concerns the specified one-parameter "
+                    + "family; stability under arbitrary perturbation of seven rates is not asserted."))),
                 DescribeRole.Theorem)
         )));
 
@@ -97,7 +119,7 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
     {
         Formula h = F.Id("h"), p = F.Id("p"), t = F.Id("t"), i = F.Id("i");
         Formula q = Seq(p, Open, t, Close);
-        Formula normalization = Eq(Seq(Sum, new Formula.Subscript(Seq(i, In, Call("Fin", D(5))))),
+        Formula normalization = Eq(Seq(new Formula.Subscript(Sum, Seq(i, InMacro, Sp, Call("Fin", D(5)))),
             Seq(p, Open, t, Comma, i, Close)), D(1));
         Formula positive = All("i", Call("Fin", D(5)), Lt(D(0), Seq(p, Open, t, Comma, i, Close)));
         Formula conclusion = And(Eq(q, Call("explicit", h, t)), And(normalization,
@@ -118,6 +140,24 @@ internal sealed class ThreeLabelCoalescentDocument : IScribeDocumentDefinition
         return All("h", R, Imp(Lt(D(0), h), All("p", Trajectory,
             Imp(Call("ForwardLaw", h, p), All("a", R, All("b", R,
                 All("c", R, Imp(premise, nonzero))))))));
+    }
+
+    private static Formula FoldFormula()
+    {
+        Formula hc = F.Id("hc"), tc = F.Id("tc"), h = F.Id("h"), t = F.Id("t");
+        Formula Deriv(Formula k, Formula s) => Call("deriv", Call("H", k), s);
+        Formula second = Call("deriv", Call("deriv", Call("H", hc)), tc);
+        Formula critical = And(Eq(Call("H", hc, tc), D(0)), And(Eq(Deriv(hc, tc), D(0)), Lt(D(0), second)));
+        Formula unique = All("h", R, All("t", R, Imp(Lt(D(0), h), Imp(Lt(D(0), t),
+            Imp(Eq(Call("H", h, t), D(0)), Imp(Eq(Deriv(h, t), D(0)), And(Eq(h, hc), Eq(t, tc))))))));
+        Formula low = All("h", R, Imp(Lt(D(0), h), Imp(Lt(h, hc), Call("TwoCrossings", h))));
+        Formula middle = All("t", R, Imp(Lt(D(0), t), Imp(
+            new Formula.Relation(t, FormulaRelationOperator.NotEqual, tc), Lt(D(0), Call("H", hc, t)))));
+        Formula high = All("h", R, Imp(Lt(hc, h), All("t", R, Imp(Lt(D(0), t), Lt(D(0), Call("H", h, t))))));
+        Formula body = And(And(Lt(D(1), hc), Lt(hc, D(8))), And(Lt(D(0), tc),
+            And(critical, And(unique, And(low, And(middle, high))))));
+        return new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("hc"), R,
+            new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("tc"), R, body));
     }
 
 }
