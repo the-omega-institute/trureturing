@@ -20,18 +20,6 @@ import Mathlib.Data.List.Basic
 namespace List
 open List
 variable {α : Type*}
-lemma exists_mem_split {l : List α} {x : α} (h : x ∈ l) :
-    ∃ l₁ l₂, l = l₁ ++ x :: l₂ := by
-  induction l with
-  | nil     => cases h
-  | cons y ys ih =>
-    simp only [List.mem_cons] at h
-    rcases h with rfl | h'
-    ·
-      exact ⟨[], ys, by simp only [List.nil_append]⟩
-    · rcases ih h' with ⟨l₁, l₂, rfl⟩
-      use y :: l₁, l₂
-      simp only [List.cons_append]
 variable {α : Type*} {l m : List α} {n : ℕ}
 variable {α : Type*} [DecidableEq α]
 def ContainsDup {α : Type*} [DecidableEq α] (l : List α) : Prop :=
@@ -48,28 +36,10 @@ lemma nodup_iff_not_contains_dup {α : Type*} [DecidableEq α] {l : List α} :
     specialize h x
     exact Nat.le_of_lt_succ (Nat.lt_of_not_le h)
 variable {α : Type*} [DecidableEq α]
-lemma idxOf_append_left {v : α} {l₁ l₂ : List α}
-    (hv : v ∈ l₁) :
-    List.idxOf v (l₁ ++ l₂) = List.idxOf v l₁ := by
-  induction l₁ with
-  | nil => cases hv
-  | cons x xs ih =>
-    by_cases h : v = x
-    · simp only [h, cons_append, idxOf_cons_self]
-    · have hvxs : v ∈ xs := by simpa [h] using hv
-      dsimp only [cons_append, idxOf]
-      rw [← cons_append]
-      simp only [cons_append, findIdx_cons]
-      congr! 1; exact congrFun (congrArg HAdd.hAdd (ih hvxs)) 1
 lemma ne_nil_of_head?_eq_some {α : Type*} {l : List α} {x : α} (h : l.head? = some x) : l ≠ [] := by
   by_contra heq
   rw [heq] at h
   simp only [head?_nil, reduceCtorEq] at h
-lemma idxOf_eq_idxOf_of_isPrefix {v : α} {l₁ l₂ : List α}
-    (hpref : List.IsPrefix l₁ l₂) (hv : v ∈ l₁) :
-    List.idxOf v l₂ = List.idxOf v l₁ := by
-  rcases hpref with ⟨t, rfl⟩
-  simpa using idxOf_append_left hv
 namespace Nat
 @[simp] lemma eq_of_le_zero {n : ℕ} (h : n ≤ 0) : n = 0 :=
   le_antisymm h (Nat.zero_le _)

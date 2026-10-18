@@ -12,4 +12,3 @@ The infimum of supported coordinate ratios is upper semicontinuous on the finite
 
 - Dependency: [D5/S3/Combinatorics/Graph/PerronFrobenius/MCMCSupplier/Auxiliary](../../../Auxiliary.md)
 - Dependency: [D5/S3/Combinatorics/Graph/PerronFrobenius/MCMCSupplier/LinearAlgebra/Matrix/PerronFrobenius/Lemmas](Lemmas.md)
-- Dependency: [D5/S3/Combinatorics/Graph/PerronFrobenius/MCMCSupplier/Topology/Compactness/ExtremeValueUSC](../../../Topology/Compactness/ExtremeValueUSC.md)

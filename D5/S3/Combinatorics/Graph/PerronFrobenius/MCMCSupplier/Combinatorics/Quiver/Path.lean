@@ -28,9 +28,6 @@ lemma path_decomposition_first_edge {a b : V} (p : Path a b) (h : p.length > 0) 
 end PathDecomposition
 section BoundaryEdges
 variable {V : Type*} [Quiver V]
-lemma cons_eq_comp_toPath {a b c : V} (p : Path a b) (e : b ⟶ c) :
-    p.cons e = p.comp e.toPath := by
-  rfl
 end BoundaryEdges
 end Quiver.Path
 namespace Quiver.Path
@@ -58,72 +55,6 @@ lemma length_replicate (n : ℕ) {a : V} (p : Path a a) :
 variable {V : Type*} [Quiver V]
 variable {V : Type*} [Quiver V]
 open List
-theorem exists_decomp_at_length {a b : V} (p : Path a b) {n : ℕ} (hn : n ≤ p.length) :
-    ∃ (c : V) (p₁ : Path a c) (p₂ : Path c b),
-      p = p₁.comp p₂ ∧ p₁.length = n := by
-  induction p generalizing n with
-  | nil =>
-      have h : n = 0 := by simp_all only [length_nil, nonpos_iff_eq_zero]
-      subst h
-      exact ⟨a, Path.nil, Path.nil, by simp only [comp_nil], rfl⟩
-  | cons p' e ih =>
-      rename_i c
-      rw [length_cons] at hn
-      rcases (Nat.le_succ_iff).1 hn with h | h
-      · rcases ih h with ⟨d, p₁, p₂, hp, hl⟩
-        refine ⟨d, p₁, p₂.cons e, ?_, hl⟩
-        simp only [hp, cons_eq_comp_toPath, comp_assoc]
-      · subst h
-        refine ⟨c, p'.cons e, Path.nil, ?_, ?_⟩
-        · simp only [cons_eq_comp_toPath, comp_nil]
-        · simp only [cons_eq_comp_toPath, length_comp, length_toPath, Nat.succ_eq_add_one]
-theorem exists_decomp_of_mem_vertices {a b v : V} (p : Path a b)
-  (h : v ∈ p.vertices) : ∃ (p₁ : Path a v) (p₂ : Path v b), p = p₁.comp p₂ := by
-  obtain ⟨l₁, l₂, hv⟩ := List.exists_mem_split h
-  have h_len : l₁.length ≤ p.length := by
-    have : p.vertices.length = p.length + 1 := vertices_length p
-    have : l₁.length < p.vertices.length := by
-      rw [hv, List.length_append, List.length_cons]
-      omega
-    omega
-  obtain ⟨c, p₁, p₂, hp, hl⟩ := exists_decomp_at_length p h_len
-  suffices hvc : v = c by
-    subst hvc
-    exact ⟨p₁, p₂, hp⟩
-  have h_verts : p.vertices = p₁.vertices.dropLast ++ p₂.vertices := by
-    rw [hp, vertices_comp]
-  have h_l1_len : l₁.length = p₁.vertices.dropLast.length := by
-    have : p₁.vertices.length = p₁.length + 1 := vertices_length p₁
-    simp only [List.length_dropLast, this, hl, add_tsub_cancel_right]
-  have h_l1_eq : l₁ = p₁.vertices.dropLast := by
-    have : l₁ ++ v :: l₂ = p₁.vertices.dropLast ++ p₂.vertices := by
-      rw [← hv, h_verts]
-    exact List.append_inj_left this h_l1_len
-  have h_v_l2 : v :: l₂ = p₂.vertices := by
-    have : l₁ ++ v :: l₂ = p₁.vertices.dropLast ++ p₂.vertices := by
-      rw [← hv, h_verts]
-    rw [h_l1_eq] at this
-    exact List.append_cancel_left this
-  have : p₂.vertices.head? = some c := by
-    cases p₂ with
-    | nil => simp only [vertices_nil, List.head?_cons]
-    | cons _ _ => exact vertices_head? _
-  rw [← h_v_l2] at this
-  simp only [List.head?_cons, Option.some.injEq] at this
-  exact this
-theorem split_at_vertex {a b : V} (p : Path a b) (i : ℕ)
-    (hi : i < p.vertices.length) :
-    ∃ (v : V) (p₁ : Path a v) (p₂ : Path v b),
-      p = p₁.comp p₂ ∧
-      p₁.length = i ∧
-      v = p.vertices.get ⟨i, hi⟩ := by
-  have hi_le_len : i ≤ p.length := by
-    rw [vertices_length] at hi
-    exact Nat.le_of_lt_succ hi
-  obtain ⟨v, p₁, p₂, hp, hlen⟩ := exists_decomp_at_length p hi_le_len
-  subst hp
-  refine ⟨v, p₁, p₂, rfl, hlen, ?_⟩
-  simp [hlen]
 end Quiver.Path
 namespace Quiver.Path
 open Quiver
@@ -144,49 +75,6 @@ lemma not_strictly_simple_iff_exists_repeated_vertex [DecidableEq V] {a b : V} {
   · rintro ⟨v, _, hv⟩
     exact ⟨v, hv⟩
 open List
-theorem exists_decomp_of_mem_vertices_prop
-    [DecidableEq V] {a b x : V} (p : Path a b) (hx : x ∈ p.vertices) :
-    ∃ (p₁ : Path a x) (p₂ : Path x b),
-      p = p₁.comp p₂ ∧ x ∉ p₂.vertices.tail := by
-  classical
-  induction p with
-  | nil =>
-      have hxa : x = a := by
-        simpa [vertices_nil, List.mem_singleton] using hx
-      subst hxa
-      exact ⟨Path.nil, Path.nil, by simp only [comp_nil],
-        by simp only [vertices_nil, tail_cons, not_mem_nil, not_false_eq_true]⟩
-  | cons pPrev e ih =>
-      have hx' : x ∈ pPrev.vertices ∨ x = (pPrev.cons e).end := by
-        simpa using (mem_vertices_cons pPrev e).1 hx
-      have h_case₁ :
-          x = (pPrev.cons e).end →
-          ∃ (p₁ : Path a x) (p₂ : Path x (pPrev.cons e).end),
-            pPrev.cons e = p₁.comp p₂ ∧
-            x ∉ p₂.vertices.tail := by
-        intro hxe; subst hxe
-        exact ⟨pPrev.cons e, Path.nil, by simp [comp_nil],
-          by simp [vertices_nil]⟩
-      have h_case₂ :
-          x ∈ pPrev.vertices → x ≠ (pPrev.cons e).end →
-          ∃ (p₁ : Path a x) (p₂ : Path x (pPrev.cons e).end),
-            pPrev.cons e = p₁.comp p₂ ∧
-            x ∉ p₂.vertices.tail := by
-        intro hxPrev hxe_ne
-        obtain ⟨q₁, q₂, h_prev, h_not_tail⟩ := ih hxPrev
-        let q₂' : Path x (pPrev.cons e).end := q₂.cons e
-        have h_no_tail : x ∉ q₂'.vertices.tail := by grind [vertices_cons, end_cons]
-        exact ⟨q₁, q₂', by simp [q₂', h_prev], h_no_tail⟩
-      cases hx' with
-      | inl h_in_prefix =>
-          by_cases h_eq_end : x = (pPrev.cons e).end
-          · rcases h_case₁ h_eq_end with ⟨p₁, p₂, h_eq, h_tail⟩
-            exact ⟨p₁, p₂, h_eq, h_tail⟩
-          · rcases h_case₂ h_in_prefix h_eq_end with ⟨p₁, p₂, h_eq, h_tail⟩
-            exact ⟨p₁, p₂, h_eq, h_tail⟩
-      | inr h_eq_end =>
-          rcases h_case₁ h_eq_end with ⟨p₁, p₂, h_eq, h_tail⟩
-          exact ⟨p₁, p₂, h_eq, h_tail⟩
 theorem isStrictlySimple_of_shortest [DecidableEq V]
     {a b : V} (p : Path a b)
     (h_min : ∀ q : Path a b, p.length ≤ q.length) :
@@ -196,7 +84,7 @@ theorem isStrictlySimple_of_shortest [DecidableEq V]
   obtain ⟨v, hv_in, hv_ge₂⟩ :=
     not_strictly_simple_iff_exists_repeated_vertex.mp h_dup
   obtain ⟨p₁, p₂, hp, hv_not_tail⟩ :=
-    exists_decomp_of_mem_vertices_prop p hv_in
+    p.exists_eq_comp_and_notMem_tail_of_mem_vertices hv_in
   have hv_in_p1_dropLast : v ∈ p₁.vertices.dropLast := by
     have h_count_p : p.vertices.count v =
         (p₁.vertices.dropLast ++ p₂.vertices).count v := by
@@ -237,7 +125,7 @@ theorem isStrictlySimple_of_shortest [DecidableEq V]
       linarith
     exact (List.count_pos_iff).1 (lt_of_lt_of_le Nat.zero_lt_one this)
   obtain ⟨q, c, h_p1_split⟩ :=
-    exists_decomp_of_mem_vertices p₁
+    p₁.exists_eq_comp_of_mem_vertices
       (List.mem_of_mem_dropLast hv_in_p1_dropLast)
   have hc_pos : c.length > 0 := by
     by_cases h_len_zero : c.length = 0
@@ -258,11 +146,11 @@ theorem isStrictlySimple_of_shortest [DecidableEq V]
           have h_prefix : (q.vertices.dropLast).IsPrefix q.vertices := by
             exact dropLast_prefix q.vertices
           have h_eq : List.idxOf v q.vertices = List.idxOf v q.vertices.dropLast :=
-            idxOf_eq_idxOf_of_isPrefix h_prefix h_mem
+            (h_prefix.idxOf_eq_of_mem h_mem).symm
           simpa [i, h_eq] using h_lt
         rw [List.length_dropLast, vertices_length] at h_idx_lt_dropLast_len
         exact h_idx_lt_dropLast_len
-      obtain ⟨split_v, shorter_q, _, h_comp_q, h_len_shorter, h_v_eq⟩ := split_at_vertex q i hi_verts
+      obtain ⟨split_v, shorter_q, _, h_comp_q, h_len_shorter, h_v_eq⟩ := q.exists_eq_comp_and_length_eq_of_lt_length i hi_verts
       have h_split_v_eq_v : split_v = v := by
         rw [h_v_eq]
         exact List.get_idxOf_of_mem (List.mem_of_mem_dropLast h_mem)

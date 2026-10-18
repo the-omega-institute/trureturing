@@ -14,7 +14,7 @@ import D5.S3.Combinatorics.Graph.PerronFrobenius.MCMCSupplier.LinearAlgebra.Matr
 import D5.S3.Combinatorics.Graph.PerronFrobenius.MCMCSupplier.Auxiliary
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Real.Archimedean
-import D5.S3.Combinatorics.Graph.PerronFrobenius.MCMCSupplier.Topology.Compactness.ExtremeValueUSC
+import Mathlib.Topology.Semicontinuity.Basic
 namespace Matrix
 section PerronFrobenius
 variable {n : Type*} [Fintype n] [Nonempty n] {A : Matrix n n ℝ}
@@ -124,7 +124,7 @@ theorem exists_maximizer (A : Matrix n n ℝ) :
   have h_nonempty : (stdSimplex ℝ n).Nonempty := stdSimplex_nonempty
   have h_usc : UpperSemicontinuousOn (collatzWielandtFn A) (stdSimplex ℝ n) :=
     upperSemicontinuousOn A
-  exact IsCompact.exists_max_on_usco h_compact h_nonempty h_usc
+  exact UpperSemicontinuousOn.exists_isMaxOn h_nonempty h_compact h_usc
 omit [Nonempty n] in
 lemma eq_iInf_of_nonempty (v : n → ℝ) (h : {i | 0 < v i}.toFinset.Nonempty) :
     collatzWielandtFn A v =
