@@ -493,3 +493,158 @@ theorem complex_prime_tail {c N : ℕ} (hc : 2 ≤ c) (hN : 0 < N) (β : ℂ) :
     exact mul_le_mul_of_nonneg_left hb (sq_nonneg _)
 
 end D5.S3.Weil.ZetaBridge.PrimeSymbolResonance
+
+
+/-!
+SOURCE_ONLY_UNCOMPILED continuation. The complete pinned owner above is an
+unchanged byte prefix. The universal bound below is a new source candidate;
+no elaboration, kernel, axiom, source-binding, Reg, Scribe or CI acceptance is
+asserted. Local estimates are genuinely consumed, retain arbitrary real signs,
+and do not remove higher prime powers or ordered resonant self-pairs.
+-/
+namespace D5.S3.Weil.ZetaBridge.PrimeSymbolResonance
+
+open scoped BigOperators
+open D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+open D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
+
+/-- An unmatched prime leaves a uniform positive defect in the full ordered
+resonance mass. The threshold and constant are exact; c remains arbitrary. -/
+theorem prime_symbol_mean_lower_bound {c : ℕ} (hc : 3 ≤ c) :
+    (Real.log (2 : ℝ)) ^ 2 / 4 ≤ mean c := by
+  classical
+  -- Both projections of the resonant edge set are injections. This estimate
+  -- permits arbitrary signs and counts a resonant self-pair exactly once.
+  have matching (s : Finset ℕ) (a : ℕ → ℝ) (d q₀ : ℕ)
+      (hpos : ∀ p ∈ s, 0 < p) (hnd : ¬ q₀ ∣ d) :
+      (∑ p ∈ s, ∑ q ∈ s, if p * q = d then a p * a q else 0) ≤
+        ∑ p ∈ s.erase q₀, a p ^ 2 := by
+    let E := (s ×ˢ s).filter (fun x : ℕ × ℕ => x.1 * x.2 = d)
+    have edge (x : ℕ × ℕ) (hx : x ∈ E) :
+        (x.1 ∈ s ∧ x.2 ∈ s) ∧ x.1 * x.2 = d := by
+      obtain ⟨hs, he⟩ := Finset.mem_filter.mp hx
+      exact ⟨Finset.mem_product.mp hs, he⟩
+    have first_inj : Set.InjOn (fun x : ℕ × ℕ => x.1) E := by
+      intro x hx y hy hxy
+      apply Prod.ext hxy
+      have hm : x.1 * x.2 = y.1 * y.2 :=
+        (edge x hx).2.trans (edge y hy).2.symm
+      rw [← hxy] at hm
+      exact mul_left_cancel₀ (ne_of_gt (hpos x.1 (edge x hx).1.1)) hm
+    have second_inj : Set.InjOn (fun x : ℕ × ℕ => x.2) E := by
+      intro x hx y hy hxy
+      apply Prod.ext _ hxy
+      have hm : x.1 * x.2 = y.1 * y.2 :=
+        (edge x hx).2.trans (edge y hy).2.symm
+      rw [← hxy] at hm
+      exact mul_right_cancel₀ (ne_of_gt (hpos x.2 (edge x hx).1.2)) hm
+    have first_mem : E.image (fun x : ℕ × ℕ => x.1) ⊆ s.erase q₀ := by
+      intro p hp
+      obtain ⟨x, hx, rfl⟩ := Finset.mem_image.mp hp
+      refine Finset.mem_erase.mpr ⟨?_, (edge x hx).1.1⟩
+      intro heq
+      apply hnd
+      refine ⟨x.2, ?_⟩
+      simpa [heq] using (edge x hx).2.symm
+    have second_mem : E.image (fun x : ℕ × ℕ => x.2) ⊆ s.erase q₀ := by
+      intro p hp
+      obtain ⟨x, hx, rfl⟩ := Finset.mem_image.mp hp
+      refine Finset.mem_erase.mpr ⟨?_, (edge x hx).1.2⟩
+      intro heq
+      apply hnd
+      refine ⟨x.1, ?_⟩
+      simpa [heq, Nat.mul_comm] using (edge x hx).2.symm
+    have hfirst : (∑ x ∈ E, a x.1 ^ 2) ≤ ∑ p ∈ s.erase q₀, a p ^ 2 := by
+      exact Finset.sum_le_sum_of_injOn (fun x : ℕ × ℕ => x.1)
+        first_inj first_mem (fun _ _ => le_rfl) (fun _ _ _ => sq_nonneg _)
+    have hsecond : (∑ x ∈ E, a x.2 ^ 2) ≤ ∑ p ∈ s.erase q₀, a p ^ 2 := by
+      exact Finset.sum_le_sum_of_injOn (fun x : ℕ × ℕ => x.2)
+        second_inj second_mem (fun _ _ => le_rfl) (fun _ _ _ => sq_nonneg _)
+    have hyoung : 2 * (∑ x ∈ E, a x.1 * a x.2) ≤
+        (∑ x ∈ E, a x.1 ^ 2) + (∑ x ∈ E, a x.2 ^ 2) := by
+      rw [Finset.mul_sum, ← Finset.sum_add_distrib]
+      exact Finset.sum_le_sum (fun x _ => by
+        nlinarith [sq_nonneg (a x.1 - a x.2)])
+    have hsum : (∑ p ∈ s, ∑ q ∈ s,
+        if p * q = d then a p * a q else 0) =
+        ∑ x ∈ E, a x.1 * a x.2 := by
+      rw [Finset.sum_filter, Finset.sum_product]
+    rw [hsum]
+    linarith
+  have defect {q : ℕ} (hq : q ∈ primeIndices c) (hnd : ¬ q ∣ c) :
+      primeWeight q ^ 2 / 2 ≤ mean c := by
+    have hm := matching (primeIndices c) primeWeight c q
+      (fun p hp => by
+        have := (Finset.mem_Ico.mp hp).1
+        omega) hnd
+    have he := Finset.sum_erase_add (primeIndices c)
+      (fun p => primeWeight p ^ 2) hq
+    change resonantMass c ≤ ∑ p ∈ (primeIndices c).erase q, primeWeight p ^ 2 at hm
+    change (∑ p ∈ (primeIndices c).erase q, primeWeight p ^ 2) +
+      primeWeight q ^ 2 = primeSquareMass c at he
+    unfold mean
+    linarith
+  have weight_square (p : ℕ) (hp : p.Prime) :
+      primeWeight p ^ 2 = (Real.log (p : ℝ)) ^ 2 / (p : ℝ) := by
+    rw [primeWeight, ArithmeticFunction.vonMangoldt_apply_prime hp, div_pow,
+      Real.sq_sqrt (Nat.cast_nonneg p)]
+  have hlog2 : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hweight2 : (Real.log (2 : ℝ)) ^ 2 / 4 ≤ primeWeight 2 ^ 2 / 2 := by
+    rw [weight_square 2 (by norm_num)]
+    norm_num [div_div]
+  have hweight3 : (Real.log (2 : ℝ)) ^ 2 / 4 ≤ primeWeight 3 ^ 2 / 2 := by
+    have hlog3 : 0 < Real.log (3 : ℝ) := Real.log_pos (by norm_num)
+    have hlog : 3 * Real.log (2 : ℝ) ≤ 2 * Real.log (3 : ℝ) := by
+      have hh := Real.log_le_log (by norm_num : 0 < (2 : ℝ) ^ 3)
+        (by norm_num : (2 : ℝ) ^ 3 ≤ (3 : ℝ) ^ 2)
+      simpa only [Real.log_pow, Nat.cast_ofNat] using hh
+    rw [weight_square 3 (by norm_num)]
+    norm_num only [Nat.cast_ofNat]
+    nlinarith [mul_nonneg (sub_nonneg.mpr hlog)
+      (show 0 ≤ 2 * Real.log (3 : ℝ) + 3 * Real.log (2 : ℝ) by positivity),
+      sq_nonneg (Real.log (2 : ℝ))]
+  have hweight5 : (Real.log (2 : ℝ)) ^ 2 / 4 ≤ primeWeight 5 ^ 2 / 2 := by
+    have hlog5 : 0 < Real.log (5 : ℝ) := Real.log_pos (by norm_num)
+    have hlog : 2 * Real.log (2 : ℝ) ≤ Real.log (5 : ℝ) := by
+      have hh := Real.log_le_log (by norm_num : 0 < (2 : ℝ) ^ 2)
+        (by norm_num : (2 : ℝ) ^ 2 ≤ 5)
+      simpa only [Real.log_pow, Nat.cast_ofNat] using hh
+    rw [weight_square 5 (by norm_num)]
+    norm_num only [Nat.cast_ofNat]
+    nlinarith [mul_nonneg (sub_nonneg.mpr hlog)
+      (show 0 ≤ Real.log (5 : ℝ) + 2 * Real.log (2 : ℝ) by positivity),
+      sq_nonneg (Real.log (2 : ℝ))]
+  have hmem2 : 2 ∈ primeIndices c := Finset.mem_Ico.mpr ⟨by decide, by omega⟩
+  by_cases h2 : 2 ∣ c
+  · by_cases h3 : 3 ∣ c
+    · by_cases h5 : 5 ∣ c
+      · have hsub : ({2, 3, 5} : Finset ℕ) ⊆ c.primeFactors := by
+          intro p hp
+          simp only [Finset.mem_insert, Finset.mem_singleton] at hp
+          rcases hp with rfl | rfl | rfl
+          · exact (by norm_num : Nat.Prime 2).mem_primeFactors h2 (by omega)
+          · exact (by norm_num : Nat.Prime 3).mem_primeFactors h3 (by omega)
+          · exact (by norm_num : Nat.Prime 5).mem_primeFactors h5 (by omega)
+        have hcard : 3 ≤ c.primeFactors.card := by
+          have hh := Finset.card_le_card hsub
+          simpa using hh
+        have hD : primeWeight 2 ^ 2 ≤ primeSquareMass c :=
+          Finset.single_le_sum (fun p _ => sq_nonneg (primeWeight p)) hmem2
+        calc
+          (Real.log (2 : ℝ)) ^ 2 / 4 ≤ primeWeight 2 ^ 2 / 2 := hweight2
+          _ ≤ primeSquareMass c / 2 := by linarith
+          _ = mean c := (mean_of_three_primeFactors (by omega) hcard).symm
+      · have hc5 : 5 < c := by
+          obtain ⟨a, ha⟩ := h2
+          obtain ⟨b, hb⟩ := h3
+          omega
+        exact hweight5.trans (defect (Finset.mem_Ico.mpr ⟨by decide, hc5⟩) h5)
+    · have hc3 : 3 < c := by
+        by_contra hh
+        have heq : c = 3 := by omega
+        subst c
+        norm_num at h2
+      exact hweight3.trans (defect (Finset.mem_Ico.mpr ⟨by decide, hc3⟩) h3)
+  · exact hweight2.trans (defect hmem2 h2)
+
+end D5.S3.Weil.ZetaBridge.PrimeSymbolResonance
