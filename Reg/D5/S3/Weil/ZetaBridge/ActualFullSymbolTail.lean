@@ -9,6 +9,7 @@ function is postulated as an original source operand.
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
 import Reg.Support.DependentFamily
+import Mathlib.Analysis.Real.Pi.Bounds
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -558,13 +559,14 @@ private theorem paired_coupling_column_tail_lower_rejected_law :
   intro hall
   have hlog : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
   have hlogle : Real.log (2 : ℝ) ≤ 1 := by
-    simpa using (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2))
+    simpa only [show (2 : ℝ) - 1 = 1 by norm_num] using
+      (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2))
   have hw1 : 1 ≤ frequency 2 ((1 : ℕ) : ℤ) := by
-    change 1 ≤ 2 * Real.pi * (1 : ℝ) / Real.log 2
+    norm_num [frequency, logLength]
     apply (le_div_iff₀ hlog).2
     nlinarith only [hlogle, Real.pi_gt_three]
   have hw2 : 1 ≤ frequency 2 ((1 + 1 : ℕ) : ℤ) := by
-    change 1 ≤ 2 * Real.pi * (2 : ℝ) / Real.log 2
+    norm_num [frequency, logLength]
     apply (le_div_iff₀ hlog).2
     nlinarith only [hlogle, Real.pi_gt_three]
   have hdelta : 0 < smoothFloor 2 :=

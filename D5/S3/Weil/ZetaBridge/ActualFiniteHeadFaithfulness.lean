@@ -71,7 +71,7 @@ private theorem coupling_column_recurrence
   classical
   unfold couplingColumn
   simp_rw [coupling_summand_recurrence c v m]
-  simp only [Finset.sum_sub_distrib, Finset.sum_div, Finset.mul_sum]
+  simp only [sub_div, Finset.sum_sub_distrib, Finset.sum_div, Finset.mul_sum]
 
 -- Positive q would force a strictly positive tail beyond the null cutoff.
 -- No positivity of q, radius or nonzero moment is assumed by this helper.
@@ -106,6 +106,7 @@ private theorem exterior_null_moments {c : ℕ} (hc : 2 ≤ c)
         _ ≤ ∑ k ∈ S, |(k : ℝ)| := Finset.sum_le_sum (fun k _ => by
           by_cases hkn : k = n
           · simp only [if_pos hkn]
+            exact le_rfl
           · simpa only [if_neg hkn] using (abs_nonneg (k : ℝ)))
     let U : ℝ :=
       2 * (Real.cosh (logLength c / 2) - 1) / (2 * Real.pi / logLength c)
