@@ -31,7 +31,7 @@ def validate_prereg(carrier, prereg):
         raise Stop('CARRIER_CONFLICT', str(error)) from error
 
 
-def check_commitment(carriers, prereg, registered_at, candidate_sha256):
+def check_commitment(carriers, prereg, registered_at, candidate_sha256, prereg_url):
     module = readout_module()
     try:
         records = [(kind, value, carrier) for carrier in carriers
@@ -42,9 +42,14 @@ def check_commitment(carriers, prereg, registered_at, candidate_sha256):
         if hashlib.sha256(carriers[0]['body'].encode()).hexdigest() != candidate_sha256:
             raise Stop('CARRIER_CONFLICT', 'candidate source/task/readout was edited')
         carrier = records[0][2]
-        if carrier['created_at'] != registered_at:
+        if (carrier['created_at'] != registered_at or carrier['html_url'] != prereg_url
+                or not re.fullmatch(re.escape(carriers[0]['html_url']) + r'#issuecomment-[1-9][0-9]*',
+                                    carrier['html_url'])):
             raise Stop('CARRIER_CONFLICT', 'registration identity changed')
         validate_prereg(carrier, prereg)
+        # Forward exactly the snapshot just checked, without a second, unbound read.
+        return dict(candidate=carriers[0], candidate_sha256=candidate_sha256,
+                    preregistration=carrier, prereg=prereg)
     except module.ContractError as error:
         raise Stop('CARRIER_CONFLICT', str(error)) from error
 
@@ -121,7 +126,7 @@ class Backend(Workers):
     def validate_prereg(self, carrier, prereg, timeout):
         validate_prereg(carrier, prereg)
 
-    def check_commitment(self, issue, prereg, registered_at, candidate_sha256, timeout):
+    def check_commitment(self, issue, prereg, registered_at, candidate_sha256, prereg_url, timeout):
         deadline = time.monotonic() + timeout
         number = self.number(issue)
         carrier = self.gh(API + '/issues/' + number, deadline - time.monotonic())
@@ -129,7 +134,8 @@ class Backend(Workers):
             raise Stop('CARRIER_IDENTITY', 'issue response does not match the requested carrier')
         comments = self.gh(API + '/issues/' + number + '/comments?per_page=100',
                            deadline - time.monotonic(), paginate=True)
-        check_commitment([carrier, *comments], prereg, registered_at, candidate_sha256)
+        return check_commitment([carrier, *comments], prereg, registered_at,
+                                candidate_sha256, prereg_url)
 
     def verify(self, modules, head, timeout):
         deadline = time.monotonic() + timeout

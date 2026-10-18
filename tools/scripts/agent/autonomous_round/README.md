@@ -14,13 +14,21 @@ Run `make -C tools autonomous-research-round ROUND_WAKE=<stable-host-invocation-
 | Candidate carrier | A normal issue containing result exposition and a stable action marker; the event is retained unchanged in the active unit. |
 | Isolated forecasts | Fresh `codex exec < promptfile` and Claude CLI processes receive only the quantified event. Claude has no tools, MCP servers or persistent session. The requested codex model and Claude's carrier-returned model determine attribution; seats are not counted as different families by name. |
 | Preregister | An unchanged comment with exactly the existing `research-prereg-v1` fields. The original REST creation timestamp is the commitment time. Complete issue/comments are checked again before execution. |
-| Solve | A fresh workspace-write codex process uses the current formalization skill and existing make doors; it returns actual D5/Reg modules or a named unresolved obstacle. It cannot change the event or publish results. |
+| Solve | A fresh workspace-write codex process receives the complete checked candidate and preregistration in its input, uses the current formalization skill and existing make doors, and returns actual D5/Reg modules or a named unresolved obstacle. It cannot change the event or publish results. |
 | Check | The controller executes `make lean-report-scoped LEAN_TARGETS=...` and `make gate BASE=<pinned-head>`; neither a worker assertion nor a partial check substitutes for exit 0. |
-| Evaluate | A separate read-only codex process evaluates the exact event, fidelity, §3.2 live proof shape, admission and §3.3 use. Oracle and Claude never validate. |
+| Evaluate | A separate read-only codex process receives the same checked source contract and evaluates the exact event, fidelity, §3.2 live proof shape, admission and §3.3 use. Oracle and Claude never validate. |
 | Settle | Normal result/evidence and successor exposition in an issue comment; an unchanged `research-terminal-v1` comment cites it. No additional fields enter either strict block. |
 | Read and hand off | `make -C tools research-readouts ISSUES=... AS_OF=...`. Unresolved units wait for the registered cutoff without sleeping. The next unit receives the predecessor issue, whose result contains the successor statement. |
 
 The controller does not publish PRs, merge, change the harness during research, consume a candidate database, or compute an information score. Normal content admission, actual Application/FIB evidence and downstream delivery remain necessary. A local mathematical settlement is not a research-hit or remote-CI claim. The compiled report retains its existing custody consumer; this entry does not introduce a standalone `fib_analysis` trust path.
+
+Before each solve/evaluate call, the controller reads the complete candidate issue and comments through its trusted REST adapter. It checks the candidate body digest, the fixed preregistration value, its exact comment URL and original creation timestamp, and unchanged metadata. The same checked snapshot becomes `commitment.candidate`, `commitment.preregistration` and `commitment.prereg` in the worker's stdin JSON. The candidate body carries the complete definitions, proof, fixed source/readout/task/layer and proposed witnesses; the preregistration body includes the original strict block. Workers need no network access to acquire these inputs. Forecast stdin remains exactly `{"event": ...}`. Missing or non-object carrier artifacts produce a named `WORKER_MALFORMED` Stop in the current call.
+
+## Carrier adapters and runner ownership
+
+The oracle adapter reuses `nyx.py ask`. Codex and Claude use direct CLI adapters: this entry owns role-specific stdin, JSON schemas, temporary artifact validation, sandbox/tool isolation and model attribution. `codex exec` supplies the fresh execution or prediction carrier; Claude CLI supplies an isolated forecast. The existing sshx codex runner owns sshx flight/attempt paths, stage briefs and `SshxResultEnvelope`/completion artifacts. This entry has its own bounded-round checkpoint and role-response contract and does not invoke that runner or claim its artifact protocol. Only the compatible carrier/broker and make interfaces are reused; the direct adapters connect the controller's serial roles without adding an sshx flight per seat.
+
+The finite supervisor owns the per-call process-group deadline and inherited single-seat lock, including controller death; the sshx codex runner does not own this timeout/cleanup boundary. The controller owns budget precharges, phase transitions and external-write reconciliation. Host continuation remains outside all these adapters. U1 skill integration, U3 same-result P/I consumption, U6 automatic content delivery and the U5 pilot require separate integration verification; a local rehearsal or bounded checkpoint does not establish those outcomes.
 
 ## Durable bounds and recovery
 
@@ -38,7 +46,7 @@ Each issue/comment write has an action identity derived from unit, purpose and e
 
 ## Tests and ownership
 
-`make -C tools autonomous-research-round-test` runs Python behavior tests against the production state machine, subprocess timeout primitive, transport construction, strict-block parser and local make rehearsal. `ResearchReadoutsScriptTests` invokes it in the existing `tests-workflow-script` CI unit. `Meta/ci-units.json` explicitly selects that unit for this directory. No workflow, required-check name, judge rule or admission state is added.
+`make -C tools autonomous-research-round-test` runs Python behavior tests against the production state machine, subprocess timeout primitive, transport construction, strict-block parser and local make rehearsal. `ROUND_TEST_CASE=list` emits the complete case inventory; an exact `ROUND_TEST_CASE=<id>` runs one listed case and rejects unknown names. `ResearchReadoutsScriptTests` enumerates and invokes each case through this same make door in the existing `tests-workflow-script` CI unit, under the unchanged script-process hang guard. Timed process faults and other cases each have independent execution evidence. `Meta/ci-units.json` explicitly selects that unit for this directory. No workflow, required-check name, judge rule or admission state is added.
 
 | Element | Requirement served; why the existing mechanism is insufficient |
 | --- | --- |

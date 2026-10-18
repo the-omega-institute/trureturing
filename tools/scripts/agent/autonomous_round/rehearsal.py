@@ -74,10 +74,10 @@ class Rehearsal:
         from backend import validate_prereg
         validate_prereg(carrier, prereg)
 
-    def check_commitment(self, issue, prereg, registered_at, candidate_sha256, timeout):
+    def check_commitment(self, issue, prereg, registered_at, candidate_sha256, prereg_url, timeout):
         from backend import check_commitment
-        check_commitment([x for x in self.carriers if x['html_url'].split('#')[0] == issue],
-                         prereg, registered_at, candidate_sha256)
+        return check_commitment([x for x in self.carriers if x['html_url'].split('#')[0] == issue],
+                                prereg, registered_at, candidate_sha256, prereg_url)
 
     def verify(self, modules, head, timeout):
         self.verifications += 1

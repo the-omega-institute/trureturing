@@ -29,6 +29,20 @@ def schema(role):
     return dict(type='object', properties=props, required=list(props), additionalProperties=False)
 
 
+def object_response(raw):
+    value = decode(raw)
+    if not isinstance(value, dict):
+        raise Stop('WORKER_MALFORMED', 'carrier response must be a JSON object')
+    return value
+
+
+def artifact(path):
+    try:
+        return object_response(path.read_text(encoding='utf-8'))
+    except (OSError, UnicodeError) as error:
+        raise Stop('WORKER_MALFORMED', 'missing or unreadable carrier artifact: ' + path.name) from error
+
+
 def prompt(role, payload):
     if role.startswith('predict_'):
         return ('Independent prediction. Only this event is disclosed. Do not access project files, '
@@ -53,7 +67,10 @@ def prompt(role, payload):
             'before isolated prediction and execution. The carrier cannot run Lean; supply complete '
             'mathematics for downstream codex to check. candidate is result exposition, not a diary.')
     elif role == 'solve':
-        task = ('Read the candidate issue and its unchanged preregistration. Apply the existing '
+        task = ('Use commitment.candidate.body and commitment.preregistration.body supplied below; '
+            'these are the controller-checked full candidate and unchanged preregistration, with '
+            'pinned carrier identities and candidate digest. No issue network access is needed. '
+            'The candidate fixes source/readout/task/layer and proposed witnesses. Apply the existing '
             'codex-formalize route, repository-first reuse, exact existing make doors, D5/Scribe/Reg '
             'and normal admission/use rules. No bind-only filler. Do not alter the fixed event, '
             'prediction, deadline, source/readout/task/layer. Formalize only this unit in this worktree. '
@@ -62,7 +79,10 @@ def prompt(role, payload):
             'The controller subsequently runs the scoped report and gate independently.')
     else:
         task = ('Independently evaluate the exact event and current formalization after successful '
-            'scoped report and normal gate. Read source, live proof paths, assumptions, literature '
+            'scoped report and normal gate. Use the supplied commitment.candidate.body and '
+            'commitment.preregistration.body as the checked, fixed source/readout/task/layer and '
+            'proposed-witness contract; do not reacquire it over the network. '
+            'Read source, live proof paths, assumptions, literature '
             'attribution, §3.2 escape/admission and §3.3 use; oracle is not validation. Distinguish '
             'P from I; report missing Application/FIB evidence explicitly, do not invent numeric '
             'fib_analysis. A proof of a different event is invalid. A compiler success alone does '
@@ -98,11 +118,12 @@ class Workers:
                 brief.write_text(message)
                 self.call([sys.executable, str(self.root / 'tools/scripts/agent/nyx/nyx.py'),
                            'ask', str(brief), str(output)], timeout)
-                status = decode(Path(str(output) + '.status.json').read_text())
-                model = (status.get('model') or {}).get('model_label')
+                status = artifact(Path(str(output) + '.status.json'))
+                attribution = status.get('model')
+                model = attribution.get('model_label') if isinstance(attribution, dict) else None
                 if not isinstance(model, str) or not model:
                     raise Stop('WORKER_MALFORMED', 'oracle attribution missing')
-                answer = dict(value=decode(output.read_text()), model=model, model_family='GPT')
+                answer = dict(value=artifact(output), model=model, model_family='GPT')
             elif role == 'predict_other':
                 raw = self.call(['claude', '--print', '--model', 'sonnet',
                     '--output-format', 'json', '--tools', '', '--no-session-persistence',
@@ -110,11 +131,15 @@ class Workers:
                     '{"mcpServers":{}}', '--setting-sources', '', '--system-prompt',
                     'Independent event prediction. Use only the event supplied on stdin.'],
                     timeout, message, scratch)
-                carrier = decode(raw)
-                models = list((carrier.get('modelUsage') or {}).keys())
+                carrier = object_response(raw)
+                usage = carrier.get('modelUsage')
+                if usage is not None and not isinstance(usage, dict):
+                    raise Stop('WORKER_MALFORMED', 'modelUsage must be a JSON object')
+                models = list(usage or {})
                 if carrier.get('is_error') or len(models) != 1 or not models[0].startswith('claude-'):
                     raise Stop('NON_GPT_UNAVAILABLE', 'no attributable Claude response')
-                answer = dict(value=decode(carrier.get('result')), model=models[0], model_family='Claude')
+                answer = dict(value=object_response(carrier.get('result')),
+                              model=models[0], model_family='Claude')
             else:
                 contract, output = scratch / 'schema.json', scratch / 'answer.json'
                 contract.write_text(json.dumps(schema(role)))
@@ -128,7 +153,7 @@ class Workers:
                 if role.startswith('predict_'):
                     argv += ['-c', 'project_doc_max_bytes=0']
                 self.call(argv, timeout, message, scratch if role.startswith('predict_') else self.root)
-                answer = dict(value=decode(output.read_text()), model='gpt-6', model_family='GPT')
+                answer = dict(value=artifact(output), model='gpt-6', model_family='GPT')
             if not isinstance(answer['value'], dict):
                 raise Stop('WORKER_MALFORMED', 'seat result must be a JSON object')
             return answer

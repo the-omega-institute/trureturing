@@ -14,6 +14,7 @@ from unittest.mock import patch
 from controller import Round
 from runtime import Limits, Stop, utc
 from rehearsal import Rehearsal
+from test_worker_inputs import MalformedWorkerTests, WorkerInputTests
 
 
 class RoundTests(unittest.TestCase):
@@ -405,10 +406,8 @@ class CarrierTests(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    shard = os.environ.get('RESEARCH_ROUND_TEST_SHARD')
-    if shard:
-        if shard not in ('0/4', '1/4', '2/4', '3/4'):
-            raise SystemExit('invalid test shard')
+    selection = os.environ.get('RESEARCH_ROUND_TEST_CASE')
+    if selection:
         def cases(suite):
             for item in suite:
                 if isinstance(item, unittest.TestSuite):
@@ -416,7 +415,13 @@ if __name__ == '__main__':
                 else:
                     yield item
         suite = unittest.defaultTestLoader.loadTestsFromModule(sys.modules[__name__])
-        selected = list(cases(suite))[int(shard[0])::4]
+        inventory = {case.id(): case for case in cases(suite)}
+        if selection == 'list':
+            print(json.dumps(sorted(inventory)))
+            raise SystemExit(0)
+        if selection not in inventory:
+            raise SystemExit('unknown test case: ' + selection)
+        selected = [inventory[selection]]
         result = unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(selected))
         raise SystemExit(0 if result.wasSuccessful() else 1)
     unittest.main(verbosity=2)

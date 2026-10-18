@@ -253,19 +253,21 @@ class Round:
             carrier = self.write('preregister', fence('prereg', unit['prereg']))
             self.io('validate_prereg', carrier, unit['prereg'])
             unit['registered_at'] = carrier['created_at']
+            unit['prereg_url'] = carrier['html_url']
             self.advance('solve')
         elif stage == 'solve':
             if self.clock() >= unit['deadline']:
                 raise Stop('UNIT_DEADLINE', 'no post-deadline execution')
+            commitment = self.check_commitment()
             if unit['execution_started_at'] is None:
-                self.check_commitment()
                 if utc(self.clock()) < unit['registered_at']:
                     raise Stop('CLOCK_PRECEDES_REGISTRATION')
                 unit['execution_started_at'] = utc(self.clock())
                 self.save()
             try:
                 answer = self.worker('solve', dict(issue=unit['issue'], head=unit['head'],
-                    event=unit['event'], deadline=utc(unit['deadline'])))['value']
+                    event=unit['event'], deadline=utc(unit['deadline']),
+                    commitment=commitment))['value']
                 if answer.get('status') not in ('ready', 'unresolved') or not text(answer.get('summary')):
                     raise Stop('WORKER_MALFORMED', 'solve result')
                 unit['solution'] = answer
@@ -290,10 +292,11 @@ class Round:
                 unit['inflight'] = None
                 self.unresolved(error.code)
         elif stage == 'evaluate':
-            self.check_commitment()
+            commitment = self.check_commitment()
             try:
                 answer = self.worker('evaluate', dict(issue=unit['issue'], event=unit['event'],
-                    solution=unit['solution'], checks='scoped Lean report and make gate exited 0'))['value']
+                    commitment=commitment, solution=unit['solution'],
+                    checks='scoped Lean report and make gate exited 0'))['value']
                 if (answer.get('status') not in ('proved', 'refuted', 'unresolved', 'invalid')
                         or answer.get('proof_shape') not in ('content', 'bind-only', None)
                         or not text(answer.get('summary')) or not text(answer.get('successor'))):
@@ -351,8 +354,8 @@ class Round:
 
     def check_commitment(self):
         unit = self.unit
-        self.io('check_commitment', unit['issue'], unit['prereg'], unit['registered_at'],
-                unit['candidate_sha256'])
+        return self.io('check_commitment', unit['issue'], unit['prereg'], unit['registered_at'],
+                       unit['candidate_sha256'], unit.get('prereg_url'))
 
     def close_boundary(self, error):
         unit = self.unit

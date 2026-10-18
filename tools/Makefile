@@ -169,7 +169,7 @@ autonomous-research-round: export RESEARCH_ROUND_WAKE := $(value ROUND_WAKE)
 
 autonomous-research-round-test:
 	@python3 -B "$(HERE)/scripts/agent/autonomous_round/test_round.py"
-autonomous-research-round-test: export RESEARCH_ROUND_TEST_SHARD := $(value ROUND_TEST_SHARD)
+autonomous-research-round-test: export RESEARCH_ROUND_TEST_CASE := $(value ROUND_TEST_CASE)
 
 autonomous-research-probe:
 	@python3 -B "$(HERE)/scripts/agent/autonomous_round/entry.py" --mode probe
