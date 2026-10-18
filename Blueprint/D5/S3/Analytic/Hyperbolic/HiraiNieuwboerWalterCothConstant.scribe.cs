@@ -13,8 +13,11 @@ internal sealed class HiraiNieuwboerWalterCothConstantDocument : IScribeDocument
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The optimal real coefficient in the Hirai–Nieuwboer–Walter hyperbolic cotangent inequality is one over the square root of two.",
         H("The optimal hyperbolic cotangent constant"), Blocks(
-            Paragraph(Text("Hirai–Nieuwboer–Walter, arXiv:2303.04771v2, §5, Lemma 5.13 and Remark 5.14: "
-                + "the optimal constant in "), Math(SourceInequality()),
+            Paragraph(Text("Hirai–Nieuwboer–Walter, arXiv:2303.04771v2, §5, Lemma 5.13 and Remark 5.14:")),
+            Paragraph(Text("“Lemma 5.13. The constant C = √2 is such that for all a, b ∈ ℝ, one has |coth((a − b)/2) (a coth(a/2) − b coth(b/2))| ≤ C √(ab(a − b) coth(a/2) coth(b/2) coth((a − b)/2)).”")),
+            Paragraph(Text("“Remark 5.14. We conjecture, based on numerical evidence, that the optimal constant in the above inequality is C = 1/√2.”")),
+            Paragraph(Text("The source proves the coefficient √2 and conjectures the optimal coefficient 1/√2. "
+                + "The repository resolves that conjecture: the optimal constant in "), Math(SourceInequality()),
                 Text(" is C = 1/√2. The inputs are distinct nonzero real numbers. "
                     + "The assertion comprises the uniform inequality and a strict counterexample for every smaller real coefficient.")),
             Node("cothR", "Real hyperbolic cotangent", All("x", Equal(Call("cothR", N("x")),

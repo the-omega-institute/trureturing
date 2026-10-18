@@ -241,10 +241,7 @@ private lemma upper (a b : ℝ) (ha : a ≠ 0) (hb : b ≠ 0) (hab : a ≠ b) :
 private lemma self_le_u_pos (t : ℝ) (ht : 0 < t) : t ≤ u t := by
   rw [u_eq (x := t) ht.ne', cothR]
   have hs := Real.sinh_pos_iff.mpr ht
-  have hc : Real.sinh t ≤ Real.cosh t := by
-    have he := Real.exp_pos (-t)
-    have heq := Real.cosh_sub_sinh t
-    linarith
+  have hc : Real.sinh t ≤ Real.cosh t := (Real.sinh_lt_cosh (x := t)).le
   have hh : 1 ≤ Real.cosh t / Real.sinh t := (le_div_iff₀ hs).mpr (by simpa using hc)
   nlinarith
 

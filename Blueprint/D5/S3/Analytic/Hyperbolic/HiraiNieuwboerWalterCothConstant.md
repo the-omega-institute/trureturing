@@ -4,7 +4,13 @@
 
 The optimal real coefficient in the Hirai–Nieuwboer–Walter hyperbolic cotangent inequality is one over the square root of two.
 
-Hirai–Nieuwboer–Walter, arXiv:2303.04771v2, §5, Lemma 5.13 and Remark 5.14: the optimal constant in $\operatorname{abs}\left(\operatorname{cothR}\left(\frac{a - b}{2}\right) \cdot \left(a \cdot \operatorname{cothR}\left(\frac{a}{2}\right) - b \cdot \operatorname{cothR}\left(\frac{b}{2}\right)\right)\right) \le C \cdot \operatorname{sqrt}\left(a \cdot b \cdot \left(a - b\right) \cdot \operatorname{cothR}\left(\frac{a}{2}\right) \cdot \operatorname{cothR}\left(\frac{b}{2}\right) \cdot \operatorname{cothR}\left(\frac{a - b}{2}\right)\right)$ is C = 1/√2. The inputs are distinct nonzero real numbers. The assertion comprises the uniform inequality and a strict counterexample for every smaller real coefficient.
+Hirai–Nieuwboer–Walter, arXiv:2303.04771v2, §5, Lemma 5.13 and Remark 5.14:
+
+“Lemma 5.13. The constant C = √2 is such that for all a, b ∈ ℝ, one has |coth((a − b)/2) (a coth(a/2) − b coth(b/2))| ≤ C √(ab(a − b) coth(a/2) coth(b/2) coth((a − b)/2)).”
+
+“Remark 5.14. We conjecture, based on numerical evidence, that the optimal constant in the above inequality is C = 1/√2.”
+
+The source proves the coefficient √2 and conjectures the optimal coefficient 1/√2. The repository resolves that conjecture: the optimal constant in $\operatorname{abs}\left(\operatorname{cothR}\left(\frac{a - b}{2}\right) \cdot \left(a \cdot \operatorname{cothR}\left(\frac{a}{2}\right) - b \cdot \operatorname{cothR}\left(\frac{b}{2}\right)\right)\right) \le C \cdot \operatorname{sqrt}\left(a \cdot b \cdot \left(a - b\right) \cdot \operatorname{cothR}\left(\frac{a}{2}\right) \cdot \operatorname{cothR}\left(\frac{b}{2}\right) \cdot \operatorname{cothR}\left(\frac{a - b}{2}\right)\right)$ is C = 1/√2. The inputs are distinct nonzero real numbers. The assertion comprises the uniform inequality and a strict counterexample for every smaller real coefficient.
 
 **Definition 1.1 (Real hyperbolic cotangent).**
 

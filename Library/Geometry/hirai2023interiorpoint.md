@@ -22,6 +22,15 @@ theory and applications*, arXiv:2303.04771v2.
 arXiv:2303.04771v2, §5, Lemma 5.13 and Remark 5.14.
 Source: https://arxiv.org/abs/2303.04771.
 
+DOI: 10.48550/arXiv.2303.04771.
+
+> "Lemma 5.13. The constant C = √2 is such that for all a, b ∈ ℝ, one has |coth((a − b)/2) (a coth(a/2) − b coth(b/2))| ≤ C √(ab(a − b) coth(a/2) coth(b/2) coth((a − b)/2))."
+
+> "Remark 5.14. We conjecture, based on numerical evidence, that the optimal constant in the above inequality is C = 1/√2."
+
+The source proves the coefficient $\sqrt2$ and conjectures that the optimal
+coefficient is $1/\sqrt2$.
+
 For nonzero real $a,b$ with $a\ne b$, the scalar estimate has the form
 
 $$
@@ -30,8 +39,8 @@ $$
 \le C\sqrt{ab(a-b)\coth\frac a2\coth\frac b2\coth\frac{a-b}{2}}.
 $$
 
-The optimal-coefficient assertion is $C=1/\sqrt2$: the estimate holds
-uniformly at this value, and every smaller real coefficient fails for some
+The repository resolves the source conjecture: the estimate holds uniformly
+at $C=1/\sqrt2$, and every smaller real coefficient fails for some
 permitted pair. The source definitions and assertion are attributed to the
 paper; the analytic proof and its Lean implementation are repository results.
 
