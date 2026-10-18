@@ -112,7 +112,8 @@ private lemma dicke_bridge (ψ : Fin 4 → ℂ)
 private lemma classical_entries :
     classicalBasis =
       !![(((2 + Real.sqrt 2) / 6 : ℝ) : ℂ), (((2 + Real.sqrt 2) / 6 : ℝ) : ℂ),
-           (((2 + Real.sqrt 2) / 6 : ℝ) : ℂ), ((Real.sqrt 3 * (2 - Real.sqrt 2) / 6 : ℝ) : ℂ);
+           (((2 + Real.sqrt 2) / 6 : ℝ) : ℂ),
+           ((Real.sqrt 3 * (2 - Real.sqrt 2) / 6 : ℝ) : ℂ);
          ((Real.sqrt 3 / 3 : ℝ) : ℂ), ⟨-Real.sqrt 3 / 6, 1 / 2⟩,
            ⟨-Real.sqrt 3 / 6, -1 / 2⟩, 0;
          ((Real.sqrt 3 / 3 : ℝ) : ℂ), ⟨-Real.sqrt 3 / 6, -1 / 2⟩,
@@ -539,12 +540,76 @@ set_option maxHeartbeats 1800000 in
 private lemma generator_bridge (a : Fin 3) :
     realBasisᴴ * ((-I : ℂ) • liftSpin (spinMatrix a)) * realBasis =
       (generator a).map Complex.ofReal := by
-  sorry
+  let r : ℂ := (Real.sqrt 3 : ℂ) / 2
+  have h4 : Real.sqrt 4 = 2 := by
+    exact (Real.sqrt_eq_iff_mul_self_eq_of_pos (by norm_num : (0 : ℝ) < 2)).mpr (by norm_num)
+  have hL : liftSpin (spinMatrix a) =
+      ![!![0, 1, 0, 0, 0, 0;
+           1, 0, r, r, 0, 0;
+           0, r, 0, 0, r, 0;
+           0, r, 0, 0, r, 0;
+           0, 0, r, r, 0, 1;
+           0, 0, 0, 0, 1, 0],
+        !![0, -I, 0, 0, 0, 0;
+           I, 0, -I * r, -I * r, 0, 0;
+           0, I * r, 0, 0, -I * r, 0;
+           0, I * r, 0, 0, -I * r, 0;
+           0, 0, I * r, I * r, 0, -I;
+           0, 0, 0, 0, I, 0],
+        !![2, 0, 0, 0, 0, 0;
+           0, 1, 0, 0, 0, 0;
+           0, 0, 0, 0, 0, 0;
+           0, 0, 0, 0, 0, 0;
+           0, 0, 0, 0, -1, 0;
+           0, 0, 0, 0, 0, -2]] a := by
+    fin_cases a <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+      apply Complex.ext <;>
+      norm_num [liftSpin, spinMatrix, pair, r, h4,
+        D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jplus,
+        D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jx,
+        D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jy,
+        D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.Jz,
+        Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im, Complex.normSq] <;>
+      ring
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  rw [hL]
+  fin_cases a <;> ext i j <;> fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+    norm_num [realBasis, generator, r, Matrix.mul_apply, Fin.sum_univ_succ,
+      Complex.mul_re, Complex.mul_im, Complex.star_def, map_ofNat,
+      Complex.div_re, Complex.div_im, Complex.inv_re, Complex.inv_im, Complex.normSq] <;>
+    ring_nf <;> norm_num [h2] <;> ring
 
+set_option maxHeartbeats 1200000 in
+-- The commutator entries combine the five traceless symmetric coordinates.
 private lemma commutator_coordinates (v w : Fin 6 → ℝ) :
     (∑ a : Fin 3, (v ⬝ᵥ (generator a *ᵥ w)) ^ 2) =
       2 * RHLinalg.frobSq (shape v * shape w - shape w * shape v) := by
-  sorry
+  let g : Fin 3 → ℝ :=
+    ![v 0 * w 3 - v 1 * w 2 + v 2 * w 1 - v 3 * w 0 -
+        Real.sqrt 3 * v 3 * w 4 + Real.sqrt 3 * v 4 * w 3,
+      -v 0 * w 2 - v 1 * w 3 + v 2 * w 0 - Real.sqrt 3 * v 2 * w 4 +
+        v 3 * w 1 + Real.sqrt 3 * v 4 * w 2,
+      2 * v 0 * w 1 - 2 * v 1 * w 0 + v 2 * w 3 - v 3 * w 2]
+  have hg (a : Fin 3) : v ⬝ᵥ (generator a *ᵥ w) = g a := by
+    fin_cases a <;>
+      norm_num [generator, g, dotProduct, Matrix.mulVec, Fin.sum_univ_succ] <;> ring
+  have h2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hc : shape v * shape w - shape w * shape v =
+      (!![0, -g 2 / 2, -g 1 / 2;
+          g 2 / 2, 0, g 0 / 2;
+          g 1 / 2, -g 0 / 2, 0]).map Complex.ofReal := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      norm_num [shape, g, Matrix.mul_apply, Fin.sum_univ_succ,
+        Complex.mul_re, Complex.mul_im, Complex.star_def,
+        Complex.div_re, Complex.div_im, Complex.inv_re, Complex.inv_im, Complex.normSq] <;>
+      ring_nf <;> norm_num [h2, h3] <;> ring
+  simp_rw [hg]
+  rw [hc]
+  norm_num [RHLinalg.frobSq, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ,
+    Complex.mul_re, Complex.mul_im, Complex.star_def]
+  ring
 
 private lemma lift_pair_entry (A : Matrix (Fin 4) (Fin 4) ℂ)
     (hA : A.trace = 0) (k : Fin 3) :
