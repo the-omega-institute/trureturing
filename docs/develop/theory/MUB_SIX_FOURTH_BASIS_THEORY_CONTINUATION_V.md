@@ -1714,3 +1714,518 @@ No assertion is made that the regenerated guard has fewer real zeros
 than an earlier one, or that the residual guard has no real punctured
 root. The remaining obligations are the actual retained reconstruction,
 power-basis and overlap guards. No exceptional fibre is removed by density.
+
+## 103. Original generic reconstruction units on the complete source algebra
+
+### 103.1. Statement and retained domain
+
+Use the actual paired-circulant family, original input convention and
+complete generic source algebra of §§87–102. In this note
+B=b² and R=3−B; the earlier original-equation symbol B is therefore
+written B+3 here. Let Jsrc=L(B)P48(B)P98(B), up to the harmless
+nonzero constants used in §98. Let Q8 be (100.11).
+
+**Theorem 103.1.** At every real 0<|b|<1 with Jsrc Q8!=0, the
+original scaled interpolation coefficients C,D,Yc and their coefficient
+conjugates are units in the full rank-twenty source algebra. The same holds
+for the original T and its conjugate. Together with the source,
+beta,barbeta,sigma and scalar-adjugate lift results, this proves that every
+original generic reconstruction-unit marking and every actual denominator
+in those reconstruction arrays is regular and nonzero as required on this
+domain. This includes the Q90 pivot fibres: no individual aY inverse is
+used when specializing there.
+
+The physical coefficients are G/kappa,C/kappa,D/kappa as in §87.1.
+The assertion concerns the scaled original quotient, with this convention
+unchanged. All six root orders and both channel choices remain available.
+Every physical strict test, especially 0<q<1 and delta<0, is retained.
+No ordinary or mixed overlap determinant is claimed nonzero here.
+
+### 103.2. Global polynomial numerators from original equations
+
+Set G=x+iy, alpha=3−ib−barG, beta=R+(3+ib)barG. Reconstruct
+A,D0,C0,sigma=A²+D0² from the original En by (87.5)–(87.6).
+Use the global linear identity aY*tau+muY=0 of (97.3). Define
+
+Cpol=[−(A+iD0)C0*aY+(D0−iA)muY−sigma R alpha aY/2]/(sigma beta),
+Dpol=[ (A−iD0)C0*aY−(D0+iA)muY−sigma R baralpha aY/2]/(sigma beta).
+
+These are exact polynomial divisions in Q(i)[b,x,y]. The quotients have
+2113 and 2258 nonzero terms, respectively, and degrees at most (28,14,14)
+in (b,x,y). In the aY unit chart, direct substitution into the original
+formulas gives C=Cpol/aY and D=Dpol/aY. This is an identity of rational
+functions, proved by exact polynomial multiplication; it makes no division
+by A or F8 and loses no leading stratum.
+
+Let h=2^16*3² and put CN=Cpol/h, DN=Dpol/h,
+VY=aY/[h(B+3)]. Thus C=CN/[(B+3)VY] and D=DN/[(B+3)VY].
+
+For the original T in (87.2), write
+
+L=R(b+i)+(−2b+i(B+3))barG,
+N=−2b−i(B+3)−(b−i)barG,
+Tpol=[3L−2i(B+3)barG]aY+3N Cpol
+     +[3barN−4i(B+3)]barDpol+2i(B+3)barCpol.
+
+The exact quotient TN=Tpol/[6 i h(B+3)] is a polynomial, and
+T=6i TN/VY. The construction uses only original equations and polynomial
+operations. In particular it does not invert Yc or assume Yc is a unit.
+
+### 103.3. Complete radial reconstruction
+
+Use K=k/b, a=1+BK², F0,Ds,Ns and t=Ns/Ds of (100.1), and substitute
+x=X,y=bKX. The first quotient uses F0 divided by its leading coefficient; the
+second uses (aX²−tX−R)/a, so both defining polynomials are monic. Their rank is twenty. The source
+proof gives the required a and Ds units, including nonreduced radial fibres.
+
+For any V=sum(j=0..n)Vj X^j, set P0=0,P1=1 and
+Pj=t P(j−1)+Ra P(j−2). Define
+
+LV=sum(j=1..n)Vj a^(n−j)Pj,
+CV=V0 a^(n−1)+R sum(j=1..n)Vj a^(n−j)P(j−1).
+
+The remainder of a^(n−1)V is LV X+CV, hence
+
+Res_X(aX²−tX−R,V)=[a CV²+t CV LV−R LV²]/a^(n−1).
+
+Every division used below is an exact polynomial division. Applying this
+formula with n=14 to CN,DN and n=15 to TN gives
+
+Res_X(radial,CN)=a^7 R^8 HC,
+Res_X(radial,DN)=a^6 R^8 HD,
+Res_X(radial,TN)=a^7 R^8 HT.
+
+Write HV=HV0+i b HV1, with HVj in Z[B,K,t]. Their complete definitions
+are the preceding original-polynomial and radial operations. The following
+term counts, contents and degree bounds provide reconstruction checks:
+
+C0:2104 terms, content1, degrees(27,14,14);
+C1:2038 terms, content6, degrees(25,14,14);
+D0:2532 terms, content1, degrees(28,16,14);
+D1:2484 terms, content2, degrees(27,16,14);
+T0:2513 terms, content1, degrees(28,16,15);
+T1:2536 terms, content1, degrees(27,16,15).
+
+The degree triples refer to(B,K,t), and the term counts are unchanged by
+removing the stated integer content. No stored coefficient list is needed
+to define any HV.
+
+### 103.4. Three ordered outer-resultant identities
+
+Put PC=Ds^14 HC(B,K,Ns/Ds), PD=Ds^14 HD(B,K,Ns/Ds),
+PT=Ds^15 HT(B,K,Ns/Ds). Define RC,RD,RT as the ordered resultants
+Res_K(F0,PV), retaining the declared symbolic degrees of both arguments.
+F0 has K-degree10 and b-degree36. The second-argument K-degrees,
+b-degree bounds, and resulting Sylvester b-degree bounds are:
+
+C:140,558,10620;
+D:142,560,10712;
+T:151,596,11396.
+
+The bound is 10*(second b-degree)+36*(second K-degree). It does not
+assume that specialized leading coefficients are nonzero at every parameter.
+
+Use the twelve base factors of (100.12), in this exact order:
+
+(B−3), B, (B+1), (B+3), L, Q2, P48, P98, Q6, Q8, Q10, Q90.
+
+The exponents in the three resultants are, respectively,
+
+RC:[174,142,74,677,14,14,14,28,2,1,1,2],
+RD:[179,151,81,675,14,14,14,28,2,1,1,2],
+RT:[187,159,87,713,15,16,15,30,2,1,1,2].
+
+Define the small factors
+
+P3=b³+5ib²−9b−21i,
+S4=9B⁴−68B³+118B²+60B+9,
+P14=U(B)+ib V(B),
+U=36B⁷+266B⁶+9B⁵+6975B⁴+2862B³−19440B²+1701B−729,
+V=−6B⁶−93B⁵−2697B⁴+8082B³+12636B²−8181B+243,
+P2=2b²−3ib−3,
+P3a=6b³−ib²+6b−3i,
+P4=3b⁴+4ib³−14b²−12ib+3,
+Q=23B²−78B−9.
+
+Using precisely the decic F(b,k) of (88.1), define the exact quotients
+J33=F(b,i)/[b(b²−3)] and J32bar=barJ33/[−432(b+i)].
+Their degrees are 33 and 32; the latter is monic over Q(i).
+Then the remaining factors, including every scalar, are
+
+RC:2^556*3^78 (b−i)^8 P3² S4 P14²,
+RD:2^572*3^90 J33² Q,
+RT:2^610*3^93 S_T,
+
+where S_T=b(B−1)²(b−i)^7 P2 P3a P3 P4 Q J32bar.
+Multiplying the twelve powered factors by the indicated remaining factor
+is the complete claimed identity. The right-side b-degrees are 9940,9998,
+10636, all within the proved bounds.
+
+The finite characteristic-zero certificate evaluates the original ordered
+integer resultants at b=i(j+2), for 0≤j≤10620,10712,11396 respectively.
+At these nodes the original K-degrees are exactly 10 and 140/142/151.
+The coefficient parity makes every specialized polynomial integral.
+Each exact original determinant is compared with the complete stated
+product. The numbers of distinct verified nodes are 10621,10713,11397,
+one more than each proved bound. The stated ordered determinant equals the displayed product at each of
+these nodes, by integer polynomial elimination. The degree bounds
+therefore prove the three identities over Q(i)[b]. A modular factorization
+or a smaller discovery sample is not used as a proof premise.
+
+### 103.5. Norm conversion, with all scalar factors
+
+Let RY be (100.12), Ra=Res_K(F0,a), Rs=Res_K(F0,Ds). The tower
+norm formulas give
+
+Nm(C)=RC/[(B+3)^20 RY],
+Nm(D)=RD/[(B+3)^20 RY Ra],
+Nm(T)=6^20 RT/[RY Rs Ra].
+
+Indeed the radial norms are their resultants divided by a^14,a^14,a^15.
+The remaining powers of a are−7,−8,−8. The outer leading coefficients
+cancel because140=14*9+7*2,142=14*9+8*2 and151=15*9+8*2.
+These are identities of multiplication determinants in a finite-free tower;
+no assumption of reduced fibres is required.
+
+Use Ra=2^6 B^5(B−3)^2(B+1)W32 and the exact ordered Rs formula
+(100.4). Cancelling the displayed factors gives
+
+Nm(C)=(B−3)^8(b−i)^8 P3² S4 P14² /
+      [(B+1)^4(B+3)Q8 Q10],
+
+Nm(D)=2^10*3^12(B−3)^11 B^4(B+1)^2 J33² Q /
+      [(B+3)^3 Q8 Q10 W32],
+
+Nm(T)=−2^42*3^34 B^4(B−3)^11(B+1)^3(B+3)^13 Q2 S_T /
+      [Q8 Q10 W32].
+
+The original E=barC*T−2i(B+3)Yc is identically zero in the source field.
+Both sides specialize regularly once the line lift,C,D and their bars do;
+no inverse of Yc occurs in that argument. Thus
+
+Nm(Yc)=Nm(barC)Nm(T)/[2^20(B+3)^20].
+
+Exact half-parameter checks modulo 97, with i=22, give
+Nm(C)=25,Nm(barC)=64,Nm(D)=80,Nm(T)=39,Nm(Yc)=39.
+These agree with the original half-algebra certificates and check scalar
+normalization only; the full identities were established in §103.4.
+
+### 103.6. Exact real nonvanishing and the pivot strata
+
+For 0<B<1, the Bernstein coefficients of S4 on [0,1] are
+(9,24,176/3,96,128), all positive. The real part of P3 is b(B−9).
+The ordered resultant of U,V in B is the nonzero integer
+
+210880036177211402657506969366919563393892352.
+
+The same nonzero resultant supplies an extended Euclidean identity
+uU+vV=1 over the rational numbers.
+Thus P14 cannot vanish for real b!=0. The imaginary parts of P2,P3a,P4
+are −3b,−(B+3),4b(B−3), respectively. Finally
+−Q=9+55B+23B(1−B)>0 on [0,1]. Every other displayed small linear or
+endpoint factor is nonzero in the real puncture.
+
+The source-circle identity is
+
+Res_K(F0,a)=B^4 F(b,i)F(b,−i),
+J33 barJ33=64(B+1)W32(B).
+
+It follows directly by evaluating a at K=±i/b and using
+F0(B,K)=b^−6 F(b,bK). The already proved source-circle unit therefore
+makes J33,J32bar and their bars nonzero on the retained real domain.
+The polynomial Q10 has no root on (0,1) by the exact Sturm result in §100.
+Q2 is positive there. Hence all four displayed norm expressions are
+regular and nonzero whenever Jsrc Q8!=0.
+
+The derivation temporarily used aY−1, but specialization does not.
+The scalar-adjugate line lift (100.15) is regular throughout Jsrc Q8!=0,
+including the Q90 roots. It agrees with the aY lift in Q(i)(b), so their
+finite-free multiplication determinants are the same rational functions.
+The displayed expressions have no Q90 denominator. Evaluating the regular
+scalar-adjugate lift at any such root therefore gives exactly the nonzero
+norm values asserted here. No density argument declares a pole harmless:
+regularity of every coordinate is supplied by the previously proved lift,
+and its actual determinant is evaluated by the rational identity.
+
+This proves C,D,T,Yc units and, by coefficient conjugation, their bars.
+The original formulas and scalar-adjugate lift have no A or F8 division,
+so the preceding reasoning retains all of those original strata as well.
+
+### 103.7. Consequence for reconstruction guards only
+
+The monic radial equation has unit constant coefficient−R/a, so X is a
+unit. Since G=X(1+ibK), barG=X(1−ibK), and the two linear factors
+multiply to the source-circle unit a, G and barG are units. Now
+
+q=C barC D barD/(Yc barYc),
+e=−Yc/(barC D), epsilon=bare
+
+are units too. Together with the beta,barbeta,sigma and source
+units, this accounts for every retained original generic reconstruction
+unit. Any adjugate inverse of such an element has a nonzero determinant
+at each retained real parameter, so all its scalar entries are regular.
+Their reduced scalar denominators cannot have a real zero there.
+The same applies to polynomially computed discarded norm markings and
+their retained denominators; none is secretly inverted again.
+
+This result concerns only the original reconstruction arrays, source
+involution and their required units. The old Y-power-basis change, the
+ordinary overlap rank certificate and the mixed determinant remain separate
+obligations unless replaced by the construction in §104.
+All 24 previously closed signed fibres retain their individual proofs.
+No conclusion that the residual guard is empty, or that the entire actual
+branch admits no quartet, is made here.
+
+## 104. An intrinsic norm for distinct-projective-mean orthogonality
+
+### 104.1. Canonical finite-free off-diagonal algebra
+
+Work over a localization S of Q(i)[b] on which all source and original
+reconstruction arrays used in §102 are regular and their required units
+remain units. Retain 0<|b|<1, Jsrc Q8!=0 and every other required scalar
+of that construction, except the Y-power basis and the old ordinary
+380-minor. The reconstruction-unit hypotheses in this paragraph are discharged by
+Theorem 103.1 on its stated domain. The construction below is also valid
+on any smaller localization where the same required units exist.
+
+Let f(K) be the monic normalization of F0(B,K) from (100.1), B=b².
+The source theorem makes f' a unit in S[K]/(f). Put
+
+Q(K,K')=[f(K')−f(K)]/(K'−K).
+
+This is a polynomial, monic of degree 9 in K'. The algebra
+
+Boff=S[K,K']/(f(K),Q(K,K'))
+
+is free of rank 90 with basis K^r K'^s,0≤r≤9,0≤s≤8.
+Its relation implies f(K')=0. Moreover K'−K is a unit in Boff:
+modulo K'−K the second relation is f'(K), already a unit. Equivalently,
+Q and K'−K generate the unit ideal over S[K]/(f), since their resultant
+in K' is, up to the harmless degree-nine sign, the unit f'(K).
+This argument retains nonreduced radial fibres; only the already required
+etaleness of the degree-ten source algebra is used.
+
+Put a(K)=1+BK² and t(K)=Ns(K)/Ds(K), using precisely (100.1).
+The source proves these inverses regular. Base change gives the same units
+at K'. Adjoin the two monic radial equations
+
+X²−t(K)X/a(K)−R/a(K)=0,
+X'²−t(K')X'/a(K')−R/a(K')=0.
+
+The resulting algebra O is free of rank 360. One fixed basis is
+K^r K'^s X^e X'^f, with 0≤r≤9,0≤s≤8 and e,f∈{0,1}, ordered as
+(left B20 index, right index in 1,K',...,K'^8,X',K'X',...,K'^8X').
+The defining construction of this algebra does not use an original
+Y-power basis or its inverse.
+
+### 104.2. Original overlap and full norm
+
+Reconstruct the original G,C,D,Yc,q,e and their bars in each factor by
+§102, with scaled original-input convention G=X(1+ibK) and physical
+coefficients G/kappa,C/kappa,D/kappa as in §87.1. All arrays here are
+base changes of the same original coefficients; no new candidate ray
+restriction or synchronous-root assumption is used.
+
+Evaluate the integral 508-term ordinary overlap polynomial of (79.8)–(79.9)
+in O, with exactly the nine arguments of §89.3. Call the result Noff.
+Define the rational function
+
+z_off(b)=det(M_Noff:O→O)
+
+in the fixed rank 360 basis. This full multiplication determinant is
+basis-independent. It is not an unspecified minor or a numerical search.
+
+The exact half-parameter multiplication determinant is
+
+z_off(1/2)=85 mod97, with i=22.
+
+The half source basis change is invertible. The certificate rebuilds it
+from the original G,barG and X=(G+barG)/2, K=Y/(bX).
+Its determinant is 27 modulo 97. It then uses the diagonal source idempotent
+
+E=Q(K,K')/f'(K)
+
+in the tensor square of the rank-twenty generic algebra. Write Q−f'(K)=(K'−K)H. Then
+Q(Q−f')=(f(K')−f(K))H=0, so E²=E directly in the tensor algebra.
+Under the source etale splitting, E is 1 on equal K and 0 on unequal K;
+therefore 1−E has rank 360, even when radial fibres are nonreduced.
+Its image is canonically O. The original overlap multiplication matrix preserves
+that image. Restriction to the explicitly specified monomial columns of
+1−E gives determinant 85. The multiplication matrix in the displayed monomial basis therefore
+provides the same determinant without a sampled-rank argument.
+The half data and the 508-term polynomial come from the earlier exact
+original half-algebra proof. No new irreducibility assumption is used.
+
+### 104.3. Physical implication
+
+Suppose two original generic common-flat rays are orthogonal at a regular
+real parameter and their projective means have K!=K'. Their original
+coordinate evaluations define a homomorphism O→C, because the decic
+relations and the divided-difference relation hold. Orthogonality of any
+relative root order makes Noff zero by the original product-of-six-overlaps
+identity. Consequently z_off must vanish. Hence z_off!=0 forces K=K'.
+
+Away from Q8 every generic ray has both channels three-distinct, by the
+physical collision classification. The punctured zero-mean lemma
+makes the ordinary upper-channel gauge available for each ray. Thus the
+preceding ordinary-overlap argument covers all original generic rays,
+without applying Theta to just one endpoint or losing a parity case.
+
+For a fixed physical K, the radial equation has precisely the two possible
+mean roots X and X'=-R/[a(K)X], with multiplicity retained algebraically.
+In the real physical domain a>0 and R>0, so its two real roots are distinct.
+If two points use the same root, uniqueness of the original line lift and
+original reconstruction makes all quotient coordinates equal. All six
+root orders therefore give precisely S3-related rays.
+For the opposite root,
+
+G'=X'(1+ibK)=−R/barG.
+
+This is exactly the mean action of Theta in (89.6). Original lift uniqueness
+and the already proved involution identify the full coefficient point;
+all root orders give S3Theta-related rays. Thus z_off!=0 implies every
+original generic orthogonal pair lies entirely in one S3–Theta union.
+The induced graph on that union is bipartite by §82.
+
+### 104.4. Mixed determinant and complete guarded consumer
+
+Construct the same mixed element of (90.14), using B20 for the generic
+factor and the original ten-dimensional aligned basis. Its full determinant
+is the identical rational function h_m of (90.15), by similarity over
+Q(i)(b); h_m(1/2)=57 mod97. The construction does not require the old
+Y-power change at a specialized parameter.
+
+Define a new guard by the finite operations of §102, retaining every source,
+aligned, original-unit, actual-denominator and physical-collision condition,
+but never constructing the old Y-power basis or its inverse and never
+constructing the old ordinary principal minor. Instead construct O,Noff,
+z_off and the intrinsic-basis mixed matrix. Mark their full determinants
+z_off,h_m nonzero; retain all actual reduced scalar denominators and the
+coefficient conjugates, with the same primitive integer normalization.
+This gives a nonzero polynomial, since all required half certificates,
+including 85 and 57, are nonzero.
+
+Off this guard, no generic pair can cross its orbit union; no mixed edge
+exists; and the all-aligned triple obstruction applies. Therefore
+there is no noncanonical orthogonal triple. The canonical basis uniqueness
+and fixed-pair no-quartet consumer then follows exactly as in §102. All 24
+previously closed fibres retain their separate proofs and may be removed
+with the same maximal-primary-factor procedure.
+
+No claim is made that this guard has fewer real zeros than the previous
+one. The new full determinant z_off and h_m remain unclassified functions.
+The combination with Theorem 103.1 is stated precisely in §105.
+
+## 105. The residual condition consists of two overlap norms
+
+### 105.1. Domain and earlier closed fibres
+
+Retain the actual family and the original input/output convention. Work on
+0<|b|<1. Let Z24 be precisely the union of the 24 signed parameter fibres
+individually closed in Sections 92–102: twelve source fibres, four channel
+collisions, four aligned coordinate exceptions, and four linear-pivot
+fibres. These are distinct finite sets with the previously established
+exact defining polynomials and root counts. No unclassified norm root is
+silently added to this list.
+
+The generic source factor is Jsrc=L(b²)P48(b²)P98(b²). The collision
+factor is Q8(b²) of (100.11). The two aligned exception polynomials are A10(b),A14(b), written
+Q10(b),Q14(b) in §96. This aligned Q10(b) is different from the
+positive degree-ten-in-B factor also called Q10 in (100.12). The linear
+pivot factor is Q180(b)=Q90(b²). Precisely, put
+
+J24(b)=Jsrc(b) Q8(b²) A10(b) A14(b) Q180(b),
+Z24={b real:0<|b|<1 and J24(b)=0}.
+
+This is exactly the polynomial and set of §102, with no alteration to
+its real roots or multiplicities.
+
+### 105.2. Regular original algebras
+
+At every real punctured parameter outside Z24, the source theorem gives
+the complete degree-ten source algebra and the finite-free rank-twenty
+radial algebra. The scalar-adjugate lift gives the unique original
+line coordinates; Theorem 103.1 gives C,D,T,Yc
+and their conjugates as units. The previously proved beta,barbeta,sigma,
+source-circle and radial constant units are retained. Hence every original
+generic reconstruction expression is regular, including q,e and epsilon.
+All physical tests, six root orders, and optional channel choices remain.
+
+The aligned clearance supplies the complete finite-free degree-ten aligned
+algebra with regular original phases outside its four already closed
+coordinate exceptions. Constant channels and the shared repeated pair
+remain in the aligned class. All original Cayley poles occur in the
+already closed exceptional fibres; none is omitted from the consumer.
+
+A reduced scalar denominator of a rational coordinate regular at a real
+parameter cannot vanish there: after cancellation in Q(i)[b], numerator
+and denominator are coprime, and over the local ring the coordinate's
+regularity forbids a denominator factor supported at that parameter.
+Thus every actual reconstruction denominator has its real punctured zeros
+among the earlier closed fibres. No separate unit marking from those
+constructions is needed in the residual parameter guard.
+
+### 105.3. Exactly two remaining overlap functions
+
+Use the monic divided-difference algebra O of rank 360 and its
+original ordinary overlap element Noff. Define
+
+ z_off(b)=det(M_Noff on O).
+
+Use the intrinsic rank-twenty generic basis and the original rank-ten
+aligned basis to define the original mixed element Nm of (90.14). Define
+
+ h_m(b)=det(M_Nm on the tensor product of the generic and aligned algebras).
+
+Both are rational functions defined entirely by the printed original
+reconstruction operations. No Y-power basis or inverse is used; no
+principal minor or sampled rank is retained. Their nonzero half witnesses
+are respectively 85 and 57 modulo 97, with i=22. These witness nonzero
+rational functions; they do not prove uniform real nonvanishing.
+
+Their full multiplication matrices are regular outside Z24, so their
+reduced scalar denominators have no punctured real zeros there. Write
+z_off=n_o/d_o and h_m=n_m/d_m in reduced Q(i)[b] form. Define
+
+ P(b)=n_o(b) bar(n_o(b)) n_m(b) bar(n_m(b)),
+
+then clear rational constants and take primitive integer content. P is an
+explicit nonzero real polynomial, defined by finite exact operations, even
+before its expanded coefficients are computed. This is the residual guard.
+The old reconstruction, power-basis and principal-minor factors are absent.
+Set Pres=P and repeatedly replace Pres by Pres/gcd(Pres,J24), using
+the monic gcd over Q[b], until this gcd is constant. Then normalize
+by clearing rational denominators and taking positive-leading primitive
+integer content. Each nonconstant step strictly decreases degree. The
+procedure removes every primary power supported on J24 and no other
+factor. A zero of P outside Z24 remains a zero of Pres. Conversely,
+Pres(b)≠0 implies either P(b)≠0 or J24(b)=0. These assertions hold
+even if J24 has repeated or reducible factors; they use neither a list
+of unknown norm roots nor an irreducibility assumption.
+
+### 105.4. Guarded pair and basis consequence
+
+**Theorem 105.1.** At any real 0<|b|<1 outside Z24 with P(b)≠0, any generic orthogonal pair has equal projective mean
+K, and hence its endpoints lie in the same S3–Theta orbit union. The
+induced graph of that union is bipartite. The mixed norm excludes every
+aligned/generic edge. The uniform all-aligned triple theorem handles the
+remaining case. Therefore no three noncanonical rays are orthogonal.
+Together with the single-canonical rigidity theorem, the only entire
+common-unbiased basis is the canonical basis, up to phases and permutations.
+For completeness, a unitary output basis B is unbiased to the fixed pair
+(I6,H0(b)) exactly when W=H0(b)^* B and H0(b)W=B are both flat,
+where * is the adjoint. Thus W is the original common-flat input basis.
+It must be Ccan(b)/sqrt(6), up to phases and column permutation; the
+output basis is H0(b)Ccan(b)/sqrt(6). Two additional bases in a quartet
+would both have that column-ray set, so their relative unitary would be
+monomial and could not be flat. This proves the fixed-pair conclusion.
+Each fibre in Z24 has the same triple, basis and fixed-pair conclusion
+by its independent earlier proof. Therefore the entire conclusion holds
+whenever Pres(b)≠0, with no separate J24 nonzero hypothesis.
+
+Every other real punctured zero of Pres remains an exception to this
+guard-based implication unless independently closed elsewhere. All
+earlier exact-fibre and neighborhood results retain their own scope.
+Nothing here proves Pres has no such zero, gives a numerical parameter radius,
+or resolves the entire actual branch. The center retains its separately proved quartet exclusion, complete
+ray census, and explicit noncanonical central basis.
