@@ -157,28 +157,5 @@ theorem entropyJensenGap_laws {S : Type*} [Fintype S] [Nonempty S] :
     ConvexOn ℝ {a : S → ℝ | ∀ s, 0 ≤ a s} entropyJensenGap :=
   ⟨gap_nonneg, ⟨fun c a _ => gap_mul c a, gap_convex⟩⟩
 
-/-- Joint convexity survives integration of finite entropy gaps. Integrability
-is explicit for the two input families and their chosen convex combination. -/
-private theorem entropyJensenGap_integral_convex {Ω S : Type*} [MeasurableSpace Ω]
-    [Fintype S] [Nonempty S] (μ : MeasureTheory.Measure Ω) (a b : Ω → S → ℝ)
-    (c d : ℝ) (hc : 0 ≤ c) (hd : 0 ≤ d) (hcd : c + d = 1)
-    (ha : ∀ᵐ z ∂μ, ∀ s, 0 ≤ a z s) (hb : ∀ᵐ z ∂μ, ∀ s, 0 ≤ b z s)
-    (hia : MeasureTheory.Integrable (fun z => entropyJensenGap (a z)) μ)
-    (hib : MeasureTheory.Integrable (fun z => entropyJensenGap (b z)) μ)
-    (him : MeasureTheory.Integrable
-      (fun z => entropyJensenGap (fun s => c * a z s + d * b z s)) μ) :
-    (∫ z, entropyJensenGap (fun s => c * a z s + d * b z s) ∂μ) ≤
-      c * (∫ z, entropyJensenGap (a z) ∂μ) + d * (∫ z, entropyJensenGap (b z) ∂μ) := by
-  have hbound : ∀ᵐ z ∂μ,
-      entropyJensenGap (fun s => c * a z s + d * b z s) ≤
-        c * entropyJensenGap (a z) + d * entropyJensenGap (b z) := by
-    filter_upwards [ha, hb] with z haz hbz
-    exact entropyJensenGap_laws.2.2.2 haz hbz hc hd hcd
-  have h := MeasureTheory.integral_mono_ae him ((hia.const_mul c).add (hib.const_mul d)) hbound
-  change (∫ z, entropyJensenGap (fun s => c * a z s + d * b z s) ∂μ) ≤
-    ∫ z, c * entropyJensenGap (a z) + d * entropyJensenGap (b z) ∂μ at h
-  rw [MeasureTheory.integral_add (hia.const_mul c) (hib.const_mul d),
-    MeasureTheory.integral_const_mul, MeasureTheory.integral_const_mul] at h
-  exact h
 
 end D5.S3.Quantum.Subentropy.EntropyJensenGap

@@ -32,7 +32,7 @@ For arbitrary positive blocks Y_x of total trace one, form the rectangular map V
 
 Change ρ locally into an eigenbasis of its A marginal. The positive diagonal blocks sum to its original B marginal, and their traces are exactly the A marginal's eigenvalues. Nonnegative pinching gap gives Q(ρ)≤Q(pinched ρ), the preceding classical-quantum bound gives the required upper bound, and unitary invariance identifies the classical eigenvalue subentropy with Q(ρ_A). All marginals arise from the same joint state.
 
-The functional is the frozen determinant-integral subentropy. The frozen StrongSubadditivityRefutation.SubentropyLike specification requires continuity on all finite density states, unitary invariance and the paper's distinct positive spectral formula. Its identification theorem subentropyLike_eq proves that every such family equals subentropy, including repeated and zero eigenvalues. Thus the canonical theorem applies to the paper's subentropy and to every family satisfying that specification; this delivery uses the canonical statement with that existing identification.
+The functional is the canonical determinant-integral subentropy. The StrongSubadditivityRefutation.SubentropyLike specification requires continuity on all finite density states, unitary invariance and the paper's distinct positive spectral formula. Its identification theorem subentropyLike_eq proves that every such family equals subentropy, including repeated and zero eigenvalues. Thus the canonical theorem applies to the paper's subentropy and to every family satisfying that specification.
 
 ## References
 

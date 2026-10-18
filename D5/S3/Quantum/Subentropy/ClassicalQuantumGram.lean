@@ -54,7 +54,8 @@ private theorem root_square (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
       p x • CStarMatrix.ofMatrix.symm (ρ x).1 := by
   exact CFC.sqrt_mul_sqrt_self _ ((density_posSemidef (ρ x)).smul (hp x)).nonneg
 
-private theorem row_mul_adjoint (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
+/-- The row Gram product is the unnormalized ensemble mixture. -/
+theorem row_mul_adjoint (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
     (ρ : X → DensityState B) :
     cqRowSqrt p ρ * (cqRowSqrt p ρ).conjTranspose =
       ∑ x, p x • CStarMatrix.ofMatrix.symm (ρ x).1 := by

@@ -38,39 +38,6 @@ def povmGramPiece (p : X → ℝ) (ρ : X → DensityState B)
     (M : X → Matrix B B ℂ) (x : X) : Matrix (X × B) (X × B) ℂ :=
   (cqRowSqrt p ρ).conjTranspose * M x * cqRowSqrt p ρ
 
-private theorem projector_laws :
-    (∀ x : X, (blockProjector (B := B) x).conjTranspose = blockProjector x ∧
-      blockProjector (B := B) x * blockProjector x = blockProjector x) ∧
-    (∀ x y : X, x ≠ y → blockProjector (B := B) x * blockProjector y = 0) ∧
-    ∑ x : X, blockProjector (B := B) x = 1 := by
-  constructor
-  · intro x
-    constructor
-    · change (Matrix.diagonal (fun i : X × B => if i.1 = x then (1 : ℂ) else 0)).conjTranspose = _
-      rw [Matrix.diagonal_conjTranspose]
-      congr 1
-      funext i
-      split_ifs with h <;> simp [h]
-    · change Matrix.diagonal (fun i : X × B => if i.1 = x then (1 : ℂ) else 0) *
-        Matrix.diagonal (fun i : X × B => if i.1 = x then (1 : ℂ) else 0) = _
-      rw [Matrix.diagonal_mul_diagonal]
-      congr 1
-      funext i
-      split_ifs with h <;> simp [h]
-  · constructor
-    · intro x y hxy
-      ext i j
-      simp only [blockProjector, Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply,
-        Matrix.zero_apply]
-      split_ifs with hij hix hiy
-      · exact (hxy (hix.symm.trans hiy)).elim
-      all_goals simp
-    · ext i j
-      by_cases hij : i = j
-      · subst j
-        simp [blockProjector, Matrix.sum_apply, Matrix.diagonal_apply]
-      · simp [blockProjector, Matrix.sum_apply, Matrix.diagonal_apply, hij]
-
 private theorem row_block_contraction (p : X → ℝ) (hp : ∀ x, 0 ≤ p x)
     (ρ : X → DensityState B) (x : X) :
     ((cqRowSqrt p ρ * blockProjector (B := B) x : Matrix B (X × B) ℂ) *
@@ -206,18 +173,10 @@ private theorem labelled_povm_pure_decomposition
         ∑ k, w k • Matrix.vecMulVec (v k) (star (v k)) ∧
       (∑ k, w k * ∑ b, Complex.normSq (v k (k.1,b))) =
         successProbability p ρ M := by
-  obtain ⟨hpsd, hsum, hcontract, hsuccess⟩ := povm_gram_decomposition p hp ρ M hM hsM
+  obtain ⟨hpsd, hsum, _, hsuccess⟩ := povm_gram_decomposition p hp ρ M hM hsM
   have htr : trace (∑ x, povmGramPiece p ρ M x) = 1 := by
     rw [hsum, Matrix.trace_mul_comm]
-    have hrow : cqRowSqrt p ρ * (cqRowSqrt p ρ).conjTranspose =
-        ∑ x, p x • CStarMatrix.ofMatrix.symm (ρ x).1 := by
-      calc
-        _ = ((cqRowSqrt p ρ * (∑ x, blockProjector (B := B) x) : Matrix B (X × B) ℂ) *
-            (cqRowSqrt p ρ).conjTranspose : Matrix B B ℂ) := by rw [projector_laws.2.2, Matrix.mul_one]
-        _ = _ := by
-          rw [Matrix.mul_sum, Matrix.sum_mul]
-          exact Finset.sum_congr rfl (fun x _ => hcontract x)
-    rw [hrow, Matrix.trace_sum]
+    rw [row_mul_adjoint p hp ρ, Matrix.trace_sum]
     simp only [Matrix.trace_smul, show ∀ x, trace
       (CStarMatrix.ofMatrix.symm (ρ x).1) = 1 from fun x => (ρ x).2.2,
       Complex.real_smul, mul_one, ← Complex.ofReal_sum, hs, Complex.ofReal_one]

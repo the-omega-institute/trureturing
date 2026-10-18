@@ -109,10 +109,57 @@ repeated and zero spectra.
 
 ## Triage
 
-**Proved statement:** for every finite ensemble,
-Q(X|B)<=1-p_guess<=-log p_guess. The stronger first bound implies the stated
-Conjecture 2. Zero probabilities, mixed or singular conditional states and
-degenerate spectra are included.
+**PROVED — settlement.** For every finite ensemble,
+$Q(X|B)\le1-p_{\rm guess}\le-\ln p_{\rm guess}$. Zero probabilities,
+mixed or singular conditional states and degenerate spectra are included.
+
+**PROVED — decisive mechanism.** The Gaussian representation turns the
+pinching gap into an integral of finite entropy Jensen gaps. Their joint
+convexity gives convexity of $C_\Delta(G)=Q(\Delta G)-Q(G)$.
+Rectangular Gram duality identifies the conditional subentropy of a c-q
+record with this same gap on $V^*V$, while $VV^*$ is the mixture.
+The argument retains one common state and its actual block weights.
+
+**PROVED — general pinching bound.** For every finite block pinching in the
+product-coordinate setting, every positive semidefinite trace-one $G$ obeys
+
+$$
+0\le C_\Delta(G)\le Q_{\rm cl}(p),
+\qquad p_x=\operatorname{Tr}(P_xG).
+$$
+
+The upper bound is proved by `Subadditivity.pinching_upper`: decompose $G$
+into normalized pure states, apply convexity of the pinching gap, identify
+each pure gap with classical subentropy of its block masses, and apply
+concavity to those masses. No bipartite marginal assumption is needed for
+this estimate. The corresponding unnormalized positive-block inequality
+also includes zero blocks without dividing by their traces.
+
+**PROVED — stronger conditional bound.** Label-preserving POVM Gram pieces
+give $Q(X|B)\le1-p_{\rm guess}\le-\ln p_{\rm guess}$ for every finite
+ensemble. The linear upper bound is stronger than the logarithmic bound in
+Conjecture 2. It follows by bounding against every POVM and passing to the
+supremum; neither a maximizing POVM nor pure conditional states are needed.
+Thus Conjecture 2 follows alongside bipartite subadditivity from the same
+convex-gap mechanism, rather than from an assumption of strong subadditivity.
+
+**PROVED — boundary by refutation.** Strong subadditivity fails, as established
+by the repository's
+[StrongSubadditivityRefutation](../D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.lean).
+The bipartite inequality therefore does not supply the strong-subadditivity
+step needed for a general multipartite conditional chain rule.
+
+**OPEN — sharpness.** Characterize equality in the pinching bound and in
+$Q(X|B)\le1-p_{\rm guess}$, and determine the best bound at a prescribed
+nontrivial guessing probability. The estimates above alone do not settle
+these optimality questions.
+
+**OPEN — multipartite extensions.** Determine which multipartite conditional
+inequalities survive under additional structural hypotheses and whether
+label-preserving Gram decompositions give sharper bounds with several
+classical registers. Any proposed extension must respect the existing
+strong-subadditivity counterexample. No new multipartite conditional claim
+is settled here.
 
 ## ASSUMED-UNVERIFIED
 

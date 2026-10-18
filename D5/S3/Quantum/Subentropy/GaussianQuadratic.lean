@@ -112,18 +112,5 @@ theorem quadratic_nonnegative {A : Matrix ι ι ℂ} (hA : A.PosSemidef)
     WithLp.ofLp_toLp, dotProduct_comm, RCLike.re_eq_complex_re] using
     hA.re_dotProduct_nonneg (WithLp.ofLp z)
 
-private theorem quadratic_orderInterval {A : Matrix ι ι ℂ}
-    (hA : A.PosSemidef) (hI : (1 - A).PosSemidef) (z : EuclideanSpace ℂ ι) :
-    0 ≤ gaussianQuadratic A z ∧ gaussianQuadratic A z ≤ ‖z‖^2 / 2 := by
-  refine ⟨quadratic_nonnegative hA z, ?_⟩
-  have hc := quadratic_nonnegative hI z
-  have heq : gaussianQuadratic (1 - A) z = ‖z‖^2 / 2 - gaussianQuadratic A z := by
-    unfold gaussianQuadratic
-    simp only [map_sub, Matrix.toEuclideanLin, Matrix.toLpLin_one, LinearMap.sub_apply,
-      LinearMap.id_apply, inner_sub_right, Complex.sub_re, inner_self_eq_norm_sq_to_K,
-      RCLike.ofReal_eq_complex_ofReal, ← Complex.ofReal_pow, Complex.ofReal_re]
-    ring
-  rw [heq] at hc
-  linarith
 
 end D5.S3.Quantum.Subentropy.GaussianQuadratic

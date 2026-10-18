@@ -18,7 +18,7 @@ Lean statement: `D5/S3/Quantum/Subentropy/POVMGram.blockProjector`
 
 *Commentary.*
 
-The diagonal projector retains precisely the coordinates carrying the specified classical label. Its internal laws establish self-adjointness, idempotence, pairwise orthogonality and completeness.
+The diagonal projector retains precisely the coordinates carrying the specified classical label. The projector retains the block used in the labelled contraction and trace identities.
 
 **Definition 1.2 (Labelled positive Gram piece).**
 
@@ -58,7 +58,7 @@ Conjecture 2. For a c-q state ρXB, the conditional subentropy Q(X|B) satisfies 
 
 For all finite ensembles with nonnegative weights summing to one, the canonical recordState and mixtureState satisfy Q(recordState)-Q(mixtureState)<=1-pGuess<=-log pGuess. Here pGuess is the supremum of the success-probability set of all positive semidefinite effects M_x summing to the identity, with success sum_x p_x Re Tr(M_x rho_x). Empty label or fragment types are excluded by ensemble normalization and the existence of a trace-one fragment state, without separate nonemptiness assumptions.
 
-The result uses the canonical determinant-integral subentropy. The frozen StrongSubadditivityRefutation.subentropyLike_eq identification proves that every continuous, unitarily invariant SubentropyLike family with the paper's simple positive-spectrum formula equals this canonical value on every density state, including repeated and zero eigenvalues. Substituting that identification in the record and mixture terms transfers the same inequality to every such family; no stronger spectral or positivity hypothesis is introduced.
+The result uses the canonical determinant-integral subentropy. The StrongSubadditivityRefutation.subentropyLike_eq identification proves that every continuous, unitarily invariant SubentropyLike family with the paper's simple positive-spectrum formula equals this canonical value on every density state, including repeated and zero eigenvalues. Substituting that identification in the record and mixture terms transfers the same inequality to every such family; no stronger spectral or positivity hypothesis is introduced.
 
 The proof writes the conditional quantity as the block-pinching gap of V*V and decomposes each labelled V* M_x V into normalized eigenvectors with nonnegative eigenvalue weights. Convexity of the actual matrixSubentropy pinching gap and the label-specific pure-state estimate bound the gap by one minus this POVM's success probability. The least-upper-bound property transfers the estimate to pGuess. Its strictly positive probability bound gives log pGuess<=pGuess-1. Singular fragment states, zero weights and degenerate spectra are included, and no maximizing measurement is required.
 

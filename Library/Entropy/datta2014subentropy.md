@@ -22,7 +22,13 @@ triage: anchor
 - URL: https://arxiv.org/abs/1310.1312
 - DOI: 10.1063/1.4882935 — **ASSUMED-UNVERIFIED**; supplied citation, not checked against an original arXiv abstract page or publisher record.
 - Spectral formula locator supplied by the mathematical route: arXiv:1310.1312v1, equation (1).
-- Bipartite subadditivity: Conjecture 1, as identified by the supplied route.
+- arXiv:1310.1312v1, §2.3.1, Conjecture 1:
+
+  > Conjecture 1. Subentropy is subadditive: Q(ρAB) ≤ Q(ρA) + Q(ρB).
+
+- arXiv:1310.1312v1, §2.5.1, Conjecture 2:
+
+  > Conjecture 2. For a c-q state ρXB, the conditional subentropy Q(X|B) satisfies the following bound: Q(X|B) ≤ Hmin(X|B) = − ln pguess(X|B).
 
 ## Mathematical scope
 
