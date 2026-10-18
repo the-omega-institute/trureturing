@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/AnnealedPottsMomentBoundRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/AnnealedPottsMomentBoundRefutation.claim; result=D5.S3.StatisticalMechanics.AnnealedPottsMomentBoundRefutation.result; claim=D5.S3.StatisticalMechanics.AnnealedPottsMomentBoundRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/AnnealedPottsMomentBoundRefutation.claim; result=D5/S3/StatisticalMechanics/AnnealedPottsMomentBoundRefutation.result; claim=D5/S3/StatisticalMechanics/AnnealedPottsMomentBoundRefutation.claim
    digest: A two-block density refutes the general annealed Potts moment lower bound. -/
 
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
