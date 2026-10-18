@@ -4,11 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Complete endpoint-preserving fixed-cut coherence and the literal positive U/V chain. -/
+   digest: Complete endpoint-preserving fixed-cut coherence. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedGroupChainPaths
-import D5.S3.ConceptDynamics.Coding.FixedPositivePartitionSseDistance
-import Mathlib.Data.Nat.Dist
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -569,145 +567,6 @@ theorem full_inverse_coherence {n m L d : ℕ} {A : GroupMat H n n} {B : GroupMa
     dsimp only
     rw [full_overlap phi chi psi ha,Equiv.apply_symm_apply]
 
-open FixedPositivePartitionSseDistance InvolutionUniformExchange
-def T (n t : ℕ) : Mat ℕ n n :=
-  Matrix.of fun i j => if i.val+1=j.val ∧ i.val<t-1 then 1 else 0
-def D (n t : ℕ) : Mat ℕ n n :=
-  Matrix.diagonal (fun i : Fin n => if i.val<t-1 then 1 else 0)
-private theorem D_entry (n t : ℕ) (i j : Fin n) :
-    D n t i j = if i=j ∧ i.val<t-1 then 1 else 0 := by
-  classical
-  by_cases h : i=j <;> simp [D,Matrix.diagonal_apply,h]
-private theorem DT (n t : ℕ) : D n t * T n t = T n t := by
-  classical
-  ext i j
-  simp only [D,Matrix.diagonal_mul,T,Matrix.of_apply]
-  split_ifs <;> omega
-private theorem TD (n t : ℕ) : T n t * D n t = T n (t-1) := by
-  classical
-  ext i j
-  simp only [D,Matrix.mul_diagonal,T,Matrix.of_apply]
-  split_ifs <;> omega
-def actualU (n t : ℕ) : GroupMat H n n := Matrix.of fun i j =>
-  toNat (Fintype.card H • uniform H + D n t i j •
-    (Fintype.card H • (1 : MonoidAlgebra ℤ H)-uniform H))
-def actualV (n t : ℕ) : GroupMat H n n := Matrix.of fun i j =>
-  toNat (Fintype.card H • uniform H + T n t i j •
-    (Fintype.card H • (1 : MonoidAlgebra ℤ H)-uniform H))
-def actualAt (n t : ℕ) : GroupMat H n n := Matrix.of fun i j =>
-  toNat ((Fintype.card H^3*n) • uniform H + (Fintype.card H*T n t i j) •
-    (Fintype.card H • (1 : MonoidAlgebra ℤ H)-uniform H))
-theorem prescribedProducts [Nontrivial H] (n t : ℕ) :
-    actualU (H:=H) n t * actualV n t = actualAt n t ∧
-      actualV (H:=H) n t * actualU n t = actualAt n (t-1) := by
-  classical
-  let q := Fintype.card H
-  let z : MonoidAlgebra ℤ H := q • 1 - uniform H
-  let UZ : Mat (MonoidAlgebra ℤ H) n n := Matrix.of fun i j => q • uniform H + D n t i j • z
-  let VZ : Mat (MonoidAlgebra ℤ H) n n := Matrix.of fun i j => q • uniform H + T n t i j • z
-  have lift_toNat (x : MonoidAlgebra ℤ H) (hx : ∀ g, 0 ≤ x.coeff g) :
-      liftNat H (toNat x)=x := by ext g; simp [liftNat,toNat,Int.toNat_of_nonneg (hx g)]
-  have toNat_lift (x : MonoidAlgebra ℕ H) : toNat (liftNat H x)=x := by
-    ext g; simp [liftNat,toNat]
-  have hU : (actualU (H:=H) n t).map (liftNat H)=UZ := by
-    apply Matrix.ext
-    intro i j
-    change liftNat H (toNat _) = _
-    apply lift_toNat
-    intro g
-    apply (uniform_perturbation_positive H _ _ g).le
-    rw [D_entry]; split_ifs <;> omega
-  have hV : (actualV (H:=H) n t).map (liftNat H)=VZ := by
-    apply Matrix.ext
-    intro i j
-    change liftNat H (toNat _) = _
-    apply lift_toNat
-    intro g
-    apply (uniform_perturbation_positive H _ _ g).le
-    simp only [T,Matrix.of_apply]; split_ifs <;> omega
-  have mulmap (X Y : GroupMat H n n) :
-      (X*Y).map (liftNat H)=X.map (liftNat H)*Y.map (liftNat H) := by
-    ext i j
-    simp [Matrix.mul_apply,map_sum,map_mul]
-  constructor
-  · have hz : (actualU (H:=H) n t * actualV n t).map (liftNat H) =
-        (Matrix.of fun i j => (q^3*n) • uniform H + (q*T n t i j) • z) := by
-      rw [mulmap,hU,hV]
-      have h := uniform_perturbation_product H n (D n t) (T n t)
-      apply Matrix.ext
-      intro i j
-      simpa only [UZ,VZ,q,z,DT,Matrix.of_apply] using congrFun (congrFun h i) j
-    have hh := congrArg (fun X : Mat (MonoidAlgebra ℤ H) n n => fun i j => toNat (X i j)) hz
-    apply Matrix.ext
-    intro i j
-    have hij := congrFun (congrFun hh i) j
-    simpa only [Matrix.map_apply,Matrix.of_apply,toNat_lift,actualAt,q,z] using hij
-  · have hz : (actualV (H:=H) n t * actualU n t).map (liftNat H) =
-        (Matrix.of fun i j => (q^3*n) • uniform H + (q*T n (t-1) i j) • z) := by
-      rw [mulmap,hV,hU]
-      have h := uniform_perturbation_product H n (T n t) (D n t)
-      apply Matrix.ext
-      intro i j
-      simpa only [UZ,VZ,q,z,TD,Matrix.of_apply] using congrFun (congrFun h i) j
-    have hh := congrArg (fun X : Mat (MonoidAlgebra ℤ H) n n => fun i j => toNat (X i j)) hz
-    apply Matrix.ext
-    intro i j
-    have hij := congrFun (congrFun hh i) j
-    simpa only [Matrix.map_apply,Matrix.of_apply,toNat_lift,actualAt,q,z] using hij
-def down [Nontrivial H] (n r : ℕ) : (k : ℕ) →
-    Chain H (actualAt (H:=H) n (r+k)) (actualAt n r) k
-  | 0 => .nil (actualAt n r)
-  | k+1 => .cons (actualU n (r+k+1)) (actualV n (r+k+1))
-      (by simpa only [Nat.add_assoc] using (prescribedProducts (H:=H) n (r+k+1)).1.symm)
-      (by simpa only [Nat.add_sub_cancel] using (prescribedProducts (H:=H) n (r+k+1)).2.symm)
-      (down n r k)
-def up [Nontrivial H] (n r : ℕ) : (k : ℕ) →
-    Chain H (actualAt (H:=H) n r) (actualAt n (r+k)) k
-  | 0 => .nil (actualAt n r)
-  | k+1 => by
-    have tail := up n (r+1) k
-    have hstart := (prescribedProducts (H:=H) n (r+1)).2.symm
-    have hend := (prescribedProducts (H:=H) n (r+1)).1.symm
-    exact (by simpa only [Nat.add_sub_cancel,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm] using
-      Chain.cons (actualV n (r+1)) (actualU n (r+1)) hstart hend tail)
-def prescribedChain [Nontrivial H] (n t r : ℕ) :
-    Chain H (actualAt (H:=H) n t) (actualAt n r) (Nat.dist t r) := by
-  by_cases h : t≤r
-  · have c := up (H:=H) n t (r-t)
-    simpa only [Nat.add_sub_of_le h,Nat.dist,Nat.sub_eq_zero_of_le h,Nat.zero_add] using c
-  · have h' : r≤t := by omega
-    have c := down (H:=H) n r (t-r)
-    simpa only [Nat.add_sub_of_le h',Nat.dist,Nat.sub_eq_zero_of_le h',Nat.add_zero] using c
-/-- Coefficients of the literal original endpoint, before any factorization. -/
-theorem actualAt_coefficient (n t : ℕ) (i j : Fin n) (g : H) :
-    (actualAt (H:=H) n t i j).coeff g =
-      (((Fintype.card H^3*n : ℕ) : ℤ) +
-        ((Fintype.card H*T n t i j : ℕ) : ℤ) *
-          ((Fintype.card H : ℤ) * (if (1:H)=g then 1 else 0) - 1)).toNat := by
-  classical
-  have huc : (uniform H).coeff g = 1 := by
-    simp [uniform,basis,MonoidAlgebra.coeff_sum]
-  have hsm (k : ℕ) (x : MonoidAlgebra ℤ H) :
-      (k • x).coeff g = (k : ℤ) * x.coeff g := by
-    rw [MonoidAlgebra.coeff_smul_apply]
-    exact nsmul_eq_mul k (x.coeff g)
-  change (((Fintype.card H^3*n) • uniform H + (Fintype.card H*T n t i j) •
-    (Fintype.card H • (1 : MonoidAlgebra ℤ H)-uniform H)).coeff g).toNat = _
-  congr 1
-  simp only [MonoidAlgebra.coeff_add,Finsupp.add_apply,hsm,MonoidAlgebra.coeff_sub,
-    Finsupp.sub_apply,huc,MonoidAlgebra.one_def,MonoidAlgebra.coeff_single,
-    Finsupp.single_apply,mul_one]
-open InertGroupBlockConjugacy
-private def suppressAugmentation : (ℚ × Reduced H) →ₙ+* (ℚ × Reduced H) where
-  toFun x := (0,x.2)
-  map_zero' := rfl
-  map_add' x y := by ext <;> simp
-  map_mul' x y := by ext <;> simp
-/-- The actual rational nonunital homomorphism removing the uniform summand. -/
-def rationalComplement (H : Type u) [Group H] [Fintype H] :
-    MonoidAlgebra ℚ H →ₙ+* MonoidAlgebra ℚ H :=
-  (augmentationSplit H).symm.toRingHom.toNonUnitalRingHom.comp
-    (suppressAugmentation.comp (augmentationSplit H).toRingHom.toNonUnitalRingHom)
 
 end
 end D5.S3.ConceptDynamics.Coding.CountedGroupChainPaths.FixedCutCoherence
