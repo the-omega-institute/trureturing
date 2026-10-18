@@ -82,6 +82,10 @@ $$\forall n \in \operatorname{Nat},\; (1 \le n) \Rightarrow (\forall lam \in \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hemmer-straub-westrem-2025-ev-character-identity` (proved) by `D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hemmer-straub-westrem-2025-ev-character-identity","declaration_gid":"D5/S3/Combinatorics/Partitions/HemmerStraubWestrem.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hemmer, David J.; Straub, Armin; Westrem, Karlee J. (2025). *New identities in the character table of symmetric groups involving Riordan numbers*. DOI: [10.37236/14401](https://doi.org/10.37236/14401). URL: <https://arxiv.org/abs/2509.02796v1>.

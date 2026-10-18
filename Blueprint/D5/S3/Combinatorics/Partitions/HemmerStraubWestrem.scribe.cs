@@ -26,13 +26,15 @@ internal sealed class HemmerStraubWestremDocument : IScribeDocumentDefinition
             Node("hsw-claim", "Conjecture 2.3", "claim", Disp(IffFormula(Call("claim"), ClaimBody())),
                 "Conjecture 2.3 (N = 1 version), page 3, states: “For any partition λ ⊢ n, we have ∑_{λ̃∈Ev(λ)} ∑_{µ∈R₃(2n)} (−1)^{ℓ(λ̃)} χ^µ_{λ̃} = ∑_{λ̃∈Ev(λ)} χ^{(n,n)}_{λ̃}. (2.4)” The encoding takes n ≥ 1 and lam : Nat.Partition n, lists its positive parts, and preserves multiplicities in both Ev sums. τ.length is the number of parts and ![n,n,0] pads the two-row partition by zero.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source())),
             Node("hsw-result", "The identity for every partition", "result", Disp(ClaimBody()),
-                "Both sides equal 2 to the number of parts times the difference between the coefficients of degrees n and n+1 in the product of X^(2a)+X^a+1 over the parts a. The alternating expansion uses p_a²−p_(2a) in three variables; the other expansion uses p_a²+p_(2a) at (X,1,0). The symmetric homogeneous coefficient detector identifies the first sum with that same difference. The argument applies to any ordered list of positive parts with positive sum, so no single-part-size or sorting hypothesis enters the coefficient argument. The identities for N ≥ 2, the closed form of Conjecture 6.1, and explicit bijective proofs remain separate questions.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()))),
+                "Both sides equal 2 to the number of parts times the difference between the coefficients of degrees n and n+1 in the product of X^(2a)+X^a+1 over the parts a. The alternating expansion uses p_a²−p_(2a) in three variables; the other expansion uses p_a²+p_(2a) at (X,1,0). The symmetric homogeneous coefficient detector identifies the first sum with that same difference. The argument applies to any ordered list of positive parts with positive sum, so no single-part-size or sorting hypothesis enters the coefficient argument. The identities for N ≥ 2, the closed form of Conjecture 6.1, and explicit bijective proofs remain separate questions.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hemmer-straub-westrem-2025-ev-character-identity"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
