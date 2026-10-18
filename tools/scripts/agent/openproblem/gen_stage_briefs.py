@@ -5,6 +5,17 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / 'briefgen'))
 from common import Context, entry, fail
 
+def render_mirror(template, lane, worktree, branch, module):
+    import re
+    values = {'__LANE__': lane, '__WORKTREE__': worktree,
+              '__BRANCH__': branch, '__MODULE__': module}
+    def replace(match):
+        token = match.group(0)
+        if token not in values:
+            fail(13, f'unknown mirror-check template token: {token}')
+        return values[token]
+    return re.sub(r'__[A-Z][A-Z0-9_]*__', replace, template)
+
 def legacy(argv):
     ctx = Context(argv[1])
     import sys, pathlib, re
@@ -43,8 +54,7 @@ def legacy(argv):
     B = B_head + B_intro + goal + layout + stepsB + env
     (sp / 'briefs' / f'impl-op-w1-{lane}.stageA.md').write_text(A)
     (sp / 'briefs' / f'impl-op-w1-{lane}.stageB.md').write_text(B)
-    mc = (here / 'templates' / 'mirror-check-template.md').read_text().replace('__LANE__', lane).replace('__WORKTREE__', wt).replace('__BRANCH__', branch).replace('__MODULE__', module)
-    assert '__' not in mc.replace('__init__', '')
+    mc = render_mirror((here / 'templates' / 'mirror-check-template.md').read_text(), lane, wt, branch, module)
     (sp / 'briefs' / f'mirror-check-{lane}.md').write_text(mc)
     print('stageA', len(A), 'stageB', len(B), 'mirror-check', len(mc))
 

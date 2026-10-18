@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Hermetic golden cases and rejection cases for each brief entry point."""
+import contextlib
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -81,7 +83,7 @@ def prepare(root):
     env = {key: value for key, value in os.environ.items()
            if not key.startswith(('OP_', 'BRIEF_FIXTURE_'))
            and key not in ('SSHX_HOME', 'REGEN', 'ORCH_NOTE', 'JF_FLIGHT', 'PYTHONPATH')}
-    env.update(PATH=str(root/'bin')+os.pathsep+os.environ['PATH'],OP_SCRATCH=str(scratch),OP_STATE=str(root/'state'),SSHX_HOME=str(root/'sshx'),OP_NAME_PREFIX='fixture-',OP_PROVENANCE_MD='Synthetic provenance.\n',OP_SEARCH_WORKTREE=str(root/'tree'),OP_SEARCH_OUTPUT_DIR=str(root/'search'),OP_CODEX_EXCLUSIONS=str(root/'excluded.md'),BRIEF_FIXTURE_ROOT=str(root),REGEN='0')
+    env.update(PATH=str(root/'bin')+os.pathsep+os.environ['PATH'],OP_SCRATCH=str(scratch),OP_STATE=str(root/'state'),SSHX_HOME=str(root/'sshx'),OP_NAME_PREFIX='fixture-',OP_PROVENANCE_MD='Synthetic provenance.\n',OP_SEARCH_WORKTREE=str(root/'tree'),OP_SEARCH_OUTPUT_DIR=str(root/'search'),OP_CODEX_EXCLUSIONS=str(root/'excluded.md'),BRIEF_FIXTURE_ROOT=str(root),REGEN='0',PYTHONWARNINGS='error::SyntaxWarning')
     return env
 
 
@@ -133,7 +135,7 @@ def collect(root, before):
 
 def case(tool, variant=None):
     with tempfile.TemporaryDirectory(prefix='brief fixtures ') as tmp:
-        root=Path(tmp)
+        root=Path(tmp)/'workspace __name__ __BRANCH__ with spaces' if tool.stem in ('gen_stage_briefs','stages') else Path(tmp)
         env=prepare(root)
         assert not any((root/'scratch/briefs'/name).exists()
                        for name in json.loads((DATA/'input.json').read_text())['blocks'])
@@ -146,6 +148,7 @@ def case(tool, variant=None):
         before={str(p):p.read_text() for p in root.rglob('*.md')}
         result=subprocess.run(command(tool,root,variant),cwd=root,env=env,capture_output=True,text=True)
         assert result.returncode==0,(tool,result.returncode,result.stdout[-1200:],result.stderr[-3000:])
+        assert 'SyntaxWarning' not in result.stderr,(tool,result.stderr)
         if variant == 'defaults':
             print('BRIEF_DEFAULTS tool='+tool.name+' exit='+str(result.returncode))
         outputs=collect(root,before)
@@ -156,7 +159,17 @@ def case(tool, variant=None):
 def run(tool):
     tool=tool.resolve()
     if tool.stem == 'common':
-        from common import Context, BriefError, name
+        from common import Context, BriefError, entry, name
+        for error in (AssertionError(), ValueError(' '), KeyError(), IndexError(), TypeError(), AttributeError(), ValueError('invalid field')):
+            def invalid(args):
+                raise error
+            diagnostic=io.StringIO()
+            with contextlib.redirect_stderr(diagnostic):
+                code=entry(invalid, argv=['brief-error'])
+            assert code==13,(type(error).__name__,code)
+            message=diagnostic.getvalue()
+            assert message.startswith(f'BRIEF_INVALID_INPUT {type(error).__name__}: '),message
+            assert (str(error).strip() or ' in invalid:') in message,message
         saved=dict(os.environ)
         try:
             with tempfile.TemporaryDirectory(prefix='context fixture ') as tmp:
@@ -203,6 +216,21 @@ def run(tool):
             assert sorted(p.name for p in directory.iterdir())==['current.zip']
         print('BRIEF_SELFTEST tool='+tool.name+' failed=0')
         return 0
+    if tool.stem == 'gen_stage_briefs':
+        import importlib.util
+        from common import BriefError
+        spec=importlib.util.spec_from_file_location('stage_fixture',tool)
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        assert module.render_mirror('__LANE__ __WORKTREE__ __BRANCH__ __MODULE__ __init__',
+                                    'sample', 'tree __BRANCH__ with __name__', 'lane/test', 'D5/Fixture') == \
+            'sample tree __BRANCH__ with __name__ lane/test D5/Fixture __init__'
+        try:
+            module.render_mirror('__UNKNOWN__', 'sample', 'tree', 'lane/test', 'D5/Fixture')
+        except BriefError as exc:
+            assert exc.code==13 and '__UNKNOWN__' in exc.message,(exc.code,exc.message)
+        else:
+            raise AssertionError('unknown mirror template token accepted')
     expected=json.loads((DATA/'golden.json').read_text())
     variants = (('codex3', None) if tool.stem == 'gen_review' else
                 ('deep', 'quick') if tool.stem == 'codex_search' else

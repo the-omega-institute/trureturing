@@ -7,6 +7,7 @@ import re
 import shutil
 import subprocess
 import sys
+import traceback
 
 HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent
@@ -117,7 +118,11 @@ def entry(main, argv=None, minimum=0, maximum=None, tool=None):
         print('BRIEF_INPUT_MISSING ' + str(exc), file=sys.stderr)
         return 11
     except (AssertionError, ValueError, KeyError, IndexError, TypeError, AttributeError) as exc:
-        print('BRIEF_INVALID_INPUT ' + str(exc), file=sys.stderr)
+        detail = str(exc).strip()
+        if not detail:
+            frame = traceback.extract_tb(exc.__traceback__)[-1]
+            detail = f'{Path(frame.filename).name}:{frame.lineno} in {frame.name}: {frame.line or "no exception message"}'
+        print(f'BRIEF_INVALID_INPUT {type(exc).__name__}: {detail}', file=sys.stderr)
         return 13
     except (OSError, subprocess.SubprocessError) as exc:
         print('BRIEF_IO_ERROR ' + str(exc), file=sys.stderr)
