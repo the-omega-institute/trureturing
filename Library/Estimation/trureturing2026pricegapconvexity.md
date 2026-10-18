@@ -9921,3 +9921,230 @@ in FHA5's remaining low-frequency mask. No sufficient signed upper
 estimate for that head or favorable cofinal window is supplied.
 All-integer Robin and RH remain unproved. The bounds are not claimed
 uniform as FHA1 approaches equality or the supplied parameters vary.
+
+
+## One common polynomial-height raw head retains the original response
+
+Keep FHA1's restriction on the originally supplied exponent and all of
+JM1--JM7's original conditional source:
+
+$$
+1-\Theta<\eta<\min\{1/2,\eta_D(\Theta)\},\qquad
+\eta_D(\Theta)=\frac{2-\min\{\Theta,7/10\}}3.
+$$
+
+Every original full window, maximizing tie, positive outgoing weight
+$\delta_i$, actual zero multiplicity and complete coefficient
+$c_{B_i,a}(\rho)$ remains. Write $M=M_X=X^\mu\log X$,
+$\mu=1/2-\eta>0$, $L=L_X$, $u=1-\eta$ and
+$h_X(B)=(d/2)X^{-\eta}\sqrt B\log B$,
+$\mathscr H_X=\sum_{i<m}\delta_i h_X(B_i)$.
+Define one common summation cut and the finite raw head
+
+$$
+\begin{aligned}
+T_X&=\max\{51,X^\eta\},\\
+\mathcal P_X
+&=2\operatorname{Re}
+ \sum_{\substack{0<\gamma\le T_X\\\beta>u}}
+ m_\rho\sum_{i<m}\delta_i c_{B_i,a}(\rho).
+\end{aligned}
+\tag{CPH1}
+$$
+
+The original legal $\tau_i\asymp\sqrt{B_i}$ are retained in the
+explicit formulas. The cut $T_X$ need not be below every $\tau_i$;
+it is not claimed CHJ-admissible. Both shortening and extension of
+the original masks are paid below before exchanging the finite sums.
+
+This is a `repo-derived` paper application of the same published
+Ingham, Guth--Maynard and Ford density inputs, the
+Vinogradov--Korobov zero-free region, and the existing coefficient
+and source-height accounts. Their proofs are reused, not reproved.
+There is no new density theorem, literature-priority claim or Lean
+verification.
+
+### Pay the right-part truncation at the common cut
+
+For each original core and legal height put
+
+$$
+r_X^{\rm cut}(B,\tau)
+=2\!\sum_{\substack{T_X<\gamma\le\tau\\\beta>u}}
+ m_\rho|c_{B,a}(\rho)|.
+$$
+
+If $u<v:=\min\{\Theta,\sigma_\circ\}$, reuse FHA2's fixed
+compact interval $[u,v]$, its density exponent $D(\sigma)$,
+$E(\sigma)=\sigma-1+D(\sigma)/2$ and positive gap $r_0$.
+The actual middle class has $u<\beta<\sigma_\circ$ and respects
+$\beta\le\Theta$; if empty its allowance is zero. On this compact
+interval,
+
+$$
+1-\sigma-\eta D(\sigma)\ge r_0,
+\qquad
+\mu-\max\{E(\sigma),0\}>r_0.
+$$
+
+The first follows from FHA2 since $\max(E,0)\ge E$; the second
+uses $D<1$. Choose one fixed finite bin partition, respecting the
+$7/10$ junction and actual endpoint masks, and a fixed density loss
+$\epsilon>0$. Choose their maximum width $\omega$ and loss small
+enough that $D_j+\epsilon<1$,
+$\omega+\eta\epsilon<r_0/2$,
+$\omega+\epsilon/2<r_0/2$ and $v+\omega<1$.
+DH3's full-coefficient and reciprocal-height bounds then give
+
+$$
+r_{X,j}^{\rm cut}(B,\tau)
+\ll B^{\sigma_j+\omega-1/2}
+ X^{\eta(D_j-1+\epsilon)}.
+$$
+
+For $B\le X$, division by $M$ bounds this by
+$C X^{\sigma_j-1+\eta D_j+\omega+\eta\epsilon}/\log X$.
+For $B>X$, division by $h_X(B)$ gives the same upper bound,
+since $\sigma_j+\omega-1<0$. Thus the fixed finite middle-bin
+sum is at most $CX^{-q}[M+h_X(B)]$ for some fixed $q>0$.
+No upper clock ceiling or $B\asymp X$ assumption is used.
+
+For the remaining right-part class $\beta\ge\sigma_\circ$,
+reuse NE2 and the finite actual-mask cap NE3. Its positive layer
+bound is NE4 with $T_X$ in place of the lower cut. Only the
+actual layers with $\sigma\le1-\nu_B$ occur. For $B\le X$,
+
+$$
+\frac{B^{\sigma-1/2}X^{-\eta\sigma}}M
+=\frac{(B/X)^{\sigma-1/2}}
+ {\log X}X^{-(1-\eta)(1-\sigma)}
+\le\frac{\exp[-(1-\eta)\nu_X\log X]}{\log X}.
+$$
+
+Here $\nu_B\ge\nu_X$ beyond one common start. NE2's logarithmic
+factor and the layer's $\log B$ cost are bounded by a fixed power
+of $\log X$, which this exponential absorbs. For $B>X$,
+
+$$
+\frac{B^{\sigma-1/2}X^{-\eta\sigma}}{h_X(B)}
+=\frac2{d\log B}
+ \exp[-(1-\sigma)(\log B-\eta\log X)]
+\le\frac2{d\log B}
+ \exp[-(1-\eta)\nu_B\log B].
+$$
+
+Again the exponential absorbs the fixed logarithmic costs,
+uniformly for $B\ge X$. An empty actual edge mask contributes
+zero. This proves, with some $e_X\to0$ depending only on the
+original fixed parameters,
+
+$$
+\sum_{i<m}\delta_i r_X^{\rm cut}(B_i,\tau_i)
+\le e_X[M_XL_X+\mathscr H_X].
+\tag{CPH2}
+$$
+
+The zero-free cap is used only for the actual finite mask below
+$\tau_i$. Infinite reciprocal-height tails remain positive upper
+bounds on its layers, without imposing that cap on other zeros.
+
+### Pay extensions above smaller original legal heights
+
+Define the disjoint extension allowance
+
+$$
+r_X^{\rm ext}(B,\tau)
+=2\!\sum_{\substack{\tau<\gamma\le T_X\\\beta>u}}
+ m_\rho|c_{B,a}(\rho)|.
+$$
+
+The original legal-height lower bound gives $\tau\ge\sqrt B/8$
+eventually. Thus a nonempty extension requires
+$B<64X^{2\eta}<X$ eventually. All original core clocks escape
+uniformly, so the same lower-height and density starts apply.
+
+On a nonempty compact middle class the same fixed bins give
+
+$$
+r_{X,j}^{\rm ext}(B,\tau)
+\ll B^{\sigma_j+\omega-1/2}
+       \tau^{D_j-1+\epsilon}
+\ll B^{E_j+\omega+\epsilon/2}.
+$$
+
+Since $B\le X$, its ratio to $M$ is at most
+$C X^{\max(E_j,0)+\omega+\epsilon/2-\mu}/\log X=o(1)$,
+by the second compact gap above. This also keeps the correct
+inequality direction when $E_j<0$.
+
+For the near-one extension, use NE2 at $\tau$ and the full layer
+integral only up to $1$. No finite-mask zero-free cap from the
+old height is imposed on the newly added zeros. Uniformly in
+$\sigma_\circ\le\sigma<1$,
+
+$$
+B^{\sigma-1/2}\tau^{-\sigma}
+\le 8^\sigma B^{-(1-\sigma)/2}\le8.
+$$
+
+The boundary layer and integral therefore cost
+$O_a((\log B)^{16})=O_a((\log X)^{16})=o(M)$, since $\mu>0$
+is fixed. Consequently
+
+$$
+\sum_{i<m}\delta_i r_X^{\rm ext}(B_i,\tau_i)
+=o(M_XL_X).
+\tag{CPH3}
+$$
+
+This extension is a finite sum of the original complete
+coefficients. It changes no explicit-formula height or error term.
+
+### Aggregate the same actual zero set before taking its sign
+
+LHA2 already pays the entire inclusive class $\beta\le u$ in
+the original heads. The remaining right-part head differs from
+CPH1 by precisely the cut and extension masks above. Each term is
+charged once. Positivity of the unchanged weights, HC2, CPH2 and
+CPH3 give
+
+$$
+|\mathcal P_X-\mathcal G_X|
+\le\left(\frac C{\log X}+e_X\right)
+ [M_XL_X+\mathscr H_X]+o(M_XL_X)+O_a(L_X).
+$$
+
+Reuse HIA3's $\mathscr H_X\le\mathcal G_X+O_a(L_X)$ and JM7's
+$\mathcal G_X\ge(R_\eta/2)M_XL_X$ eventually. It follows that
+
+$$
+\boxed{
+\frac{\mathcal P_X}{\mathcal G_X}\longrightarrow1,
+\qquad
+\forall\varepsilon_0>0\quad
+\mathcal P_X\ge(R_\eta-\varepsilon_0)M_XL_X
+\quad\text{eventually}.}
+\tag{CPH4}
+$$
+
+Uniformity retains every original full window, maximizing tie and
+admissible individual height assignment satisfying FHA1, including
+$\Theta=1$. The common raw head itself no longer depends on the
+height assignment. The error is source-relative; an absolute
+$o(M_XL_X)$ error for the whole comparison is not asserted.
+
+DH4's raw common head remains under its narrower DH1 hypotheses
+and clock ceiling, with its own absolute error. MT7's common head
+retains its smoothed coefficients and maximum-core-dependent cut.
+CPH1--CPH4 instead provide one raw polynomial-height actual zero
+set without a subunit zero-supremum or clock ceiling, paying the
+extensions when the cut exceeds some original heights. They do not
+replace DH4's stronger absolute comparison on its own scope.
+
+Every fixed actual zero with $\beta>1-\eta$ eventually belongs
+to this growing common set. The original outgoing weights and
+complete complex coefficients must be aggregated on that same
+set. No sufficient signed upper estimate for their aggregate,
+favorable cofinal window, all-integer Robin bound or RH proof is
+supplied. The remaining task is the signed common-head estimate,
+not another high-frequency or lower-real-part payment.
