@@ -1,3 +1,4 @@
+// UNCOMPILED source-only Scribe changes; no emission or C# validation has run.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -284,7 +285,7 @@ A separate estimate, valid for all nonnegative defects, is
 )),
             Paragraph(Text(
 """
-The second inequality uses H+D≤4-6w and w≥0.
+The second inequality uses H+D≤4-6w and w≥0. The reused homogeneous form total_energy_estimate retains arbitrary real u,w and DefectData u w h d with w>=0: E=w(H+D)+H2+D2<=(4u-6w)(4u-5w). It follows from H,D>=0, H2<=H^2, D2<=D^2 and H+D<=4u-6w. No PSD hypothesis is required. This homogeneous form is also used at a half-jump residual in ContinuousSpectrumAssembly; the N>=67 three-row theorem here is unchanged.
 """
 ))
             )),
@@ -616,7 +617,7 @@ the homogeneous bound is exactly sum l_i²≤T_N.
 )),
             Paragraph(Text(
 """
-The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the existing scalar envelope comparisons and exact integer optimizer, and the shared Euclidean norm-to-mass closure lemmas. The structural derivation was written independently before the external rectangular theorem was inspected; no external code is transplanted. The exact external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The full leading asymptotic does not give the exact finite target. This scalar theorem alone establishes neither the arbitrary complex 4 by n physical maximum for n at least 17 nor an attaining state. Any prospective additional physical range is 17 through 57, subject to the complete physical application, attainment and further literature checks; global uniqueness is not established.
+The analytic argument uses ordered nonnegative block energies, Mathlib convex and concave interval endpoint principles, the existing scalar envelope comparisons and exact integer optimizer, and the shared Euclidean norm-to-mass closure lemmas. The structural derivation was written independently before the external rectangular theorem was inspected; no external code is transplanted. The exact external theorem APPTReview.appt_rectangular_maximum_formula in mxym/math at immutable commit 479acd5d6269faf94433ad6b694c5b7979027c69, formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean:78 (https://github.com/mxym/math/blob/479acd5d6269faf94433ad6b694c5b7979027c69/formalizations/appt-high-dimensional-review/APPTReview/RectangularMaximum.lean#L78), states the rounded plateau physical maximum for m at least 3 and n at least m^3-m-2, hence for four rows n at least 58. Its single four-row cut differs from the jointly imposed rank-two, rank-three and rank-four inequalities used here. The full leading asymptotic does not give the exact finite target. This historical N>=67 three-row scalar theorem is unchanged. Its complete n>=17 physical application has historical compilation and accepted scoped closure evidence, as explained in the owning QuadbitQuintitMaximumPurity application narrative. The current n>=14 route instead uses actual_k1_l4_purity_bound in ContinuousSpectrumAssembly at N=4n>=56, the same actual APPT diagonal, its literal K1 and rank-four necessary row, and an explicit coordinate-projector attaining density. Official CI has compiled that complete application, while its current full axiom/report closure, supplier registrations and final official acceptance remain pending. Relative to the prior m=4,n>=58 result, the candidate universal upper-bound extension is now14 through57; the earlier17 through57 wording describes the historical route. The inner-polytope formulas, attainers and transition are published by Ahiable–Kothakonda–Winter. Neither scalar theorem alone constructs a physical density or proves an attained supremum; the complete application is explained in its existing owner. Further literature checks and global uniqueness remain pending.
 """
 ))
             ))
