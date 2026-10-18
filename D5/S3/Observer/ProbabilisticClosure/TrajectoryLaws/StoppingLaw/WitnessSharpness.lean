@@ -15,9 +15,6 @@ open scoped BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.StoppingLaw
 
-@[simp] theorem witness_height (j : Bool) (k : ℕ) : (witnessTree j k).height = k := by
-  simp [witnessTree, ReadTree.edgeComb]
-
 theorem witness_window (j : Bool) (k : ℕ) (hk : 1 ≤ k) :
     pathVertices (j.toInt + 1) k ⊆ lawWindow (witnessTree j k) := by
   apply SpinWindow.path_vertices_supported _ _ hk
@@ -44,6 +41,24 @@ theorem witness_address_bound (j : Bool) (k : ℕ) :
   rw [show j.toInt + 2 * ((i : ℤ) + 1) + 1 - j.toInt = 2 * ((i : ℤ) + 1) + 1 by ring,
     abs_of_nonneg (by omega)]
   omega
+
+/-- Every actual call is charged and remains within the original-clock radius. -/
+theorem witness_execution_bounds (j φ : Bool) (k : ℕ) (S : Spins) :
+    ((witnessTree j k).run (visible φ S)).paid ≤ k ∧
+      ∀ a ∈ ((witnessTree j k).run (visible φ S)).record,
+        |a.1 - j.toInt| ≤ (2 * k + 1 : ℕ) := by
+  constructor
+  · apply ReadTree.paid_cap
+    simp [witnessTree, ReadTree.edgeComb]
+  · intro a ha
+    have hc (ts : List ℤ) : (ReadTree.stopComb ts).addresses = ts.toFinset := by
+      induction ts with
+      | nil => simp [ReadTree.stopComb, ReadTree.addresses]
+      | cons t ts ih => simp [ReadTree.stopComb, ReadTree.addresses, ih]
+    have hm := ReadTree.record_addresses (witnessTree j k) (visible φ S) a ha
+    change a.1 ∈ (ReadTree.stopComb _).addresses at hm
+    rw [hc] at hm
+    exact witness_address_bound j k a.1 (List.mem_toFinset.mp hm)
 
 theorem witness_remote_active (j : Bool) (n : ℕ) :
     remoteEvent (witnessTree j (n + 1)) j (2 * (n + 1) + 1) (!j) =
