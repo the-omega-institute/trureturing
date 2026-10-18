@@ -204,7 +204,7 @@ private theorem step1_valid : ValidStep state1 operation1 := by
       (PreparedEJMCompleteMiniCut01088Bucket01.inequality_at e.val)
       (by decide : (0 : ℤ) ≤ 6987435)
     simpa only [operation1, factor, lift, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_add, add_assoc] using receipt
+      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_zero, mul_add, add_assoc] using receipt
 
 private theorem step2_valid : ValidStep state2 operation2 := by
   constructor
@@ -218,7 +218,7 @@ private theorem step2_valid : ValidStep state2 operation2 := by
       (PreparedEJMCompleteMiniCut01088Bucket02.inequality_at e.val)
       (by decide : (0 : ℤ) ≤ 6987435)
     simpa only [operation2, factor, lift, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_add, add_assoc] using receipt
+      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_zero, mul_add, add_assoc] using receipt
 
 private theorem step3_valid : ValidStep state3 operation3 := by
   constructor
@@ -246,7 +246,7 @@ private theorem step4_valid : ValidStep state4 operation4 := by
       (PreparedEJMCompleteMiniCut01088Bucket04.inequality_at e.val)
       (by decide : (0 : ℤ) ≤ 6987435)
     simpa only [operation4, factor, lift, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_add, add_assoc] using receipt
+      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_zero, mul_add, add_assoc] using receipt
 
 private theorem step5_valid : ValidStep state5 operation5 := by
   constructor
@@ -288,7 +288,7 @@ private theorem step7_valid : ValidStep state7 operation7 := by
       (PreparedEJMCompleteMiniCut01088Bucket07.inequality_at e.val)
       (by decide : (0 : ℤ) ≤ 6987435)
     simpa only [operation7, factor, lift, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_add, add_assoc] using receipt
+      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_zero, mul_add, add_assoc] using receipt
 
 private theorem step8_valid : ValidStep state8 operation8 := by
   constructor
@@ -330,7 +330,7 @@ private theorem step10_valid : ValidStep state10 operation10 := by
       (PreparedEJMCompleteMiniCut01088Bucket10.inequality_at e.val)
       (by decide : (0 : ℤ) ≤ 6987435)
     simpa only [operation10, factor, lift, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_add, add_assoc] using receipt
+      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_zero, mul_add, add_assoc] using receipt
 
 private theorem step11_valid : ValidStep state11 operation11 := by
   constructor
@@ -372,7 +372,7 @@ private theorem step13_valid : ValidStep state13 operation13 := by
       (PreparedEJMCompleteMiniCut01088Bucket13.inequality_at e.val)
       (by decide : (0 : ℤ) ≤ 6987435)
     simpa only [operation13, factor, lift, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_add, add_assoc] using receipt
+      List.sum_cons, List.sum_nil, zero_add, add_zero, mul_zero, mul_add, add_assoc] using receipt
 
 private theorem step14_valid : ValidStep state14 operation14 := by
   constructor
@@ -395,7 +395,7 @@ private theorem valid_program : ValidProgram initial operations := by
 private theorem component_sum (e : Assignment) :
     PreparedEJMCompleteMiniCut01088Group00.score e + PreparedEJMCompleteMiniCut01088Group01.score e + PreparedEJMCompleteMiniCut01088Group02.score e + PreparedEJMCompleteMiniCut01088Group03.score e + PreparedEJMCompleteMiniCut01088Group04.score e + PreparedEJMCompleteMiniCut01088Group05.score e + PreparedEJMCompleteMiniCut01088Group06.score e + PreparedEJMCompleteMiniCut01088Group07.score e + PreparedEJMCompleteMiniCut01088Group08.score e + PreparedEJMCompleteMiniCut01088Group09.score e + PreparedEJMCompleteMiniCut01088Group10.score e + PreparedEJMCompleteMiniCut01088Group11.score e + PreparedEJMCompleteMiniCut01088Group12.score e + PreparedEJMCompleteMiniCut01088Group13.score e + PreparedEJMCompleteMiniCut01088Group14.score e + PreparedEJMCompleteMiniCut01088Group15.score e + PreparedEJMCompleteMiniCut01088Group16.score e + PreparedEJMCompleteMiniCut01088Group17.score e = score F1 F2 e := by
   simp only [PreparedEJMCompleteMiniCut01088Group00.score, PreparedEJMCompleteMiniCut01088Group01.score, PreparedEJMCompleteMiniCut01088Group02.score, PreparedEJMCompleteMiniCut01088Group03.score, PreparedEJMCompleteMiniCut01088Group04.score, PreparedEJMCompleteMiniCut01088Group05.score, PreparedEJMCompleteMiniCut01088Group06.score, PreparedEJMCompleteMiniCut01088Group07.score, PreparedEJMCompleteMiniCut01088Group08.score, PreparedEJMCompleteMiniCut01088Group09.score, PreparedEJMCompleteMiniCut01088Group10.score, PreparedEJMCompleteMiniCut01088Group11.score, PreparedEJMCompleteMiniCut01088Group12.score, PreparedEJMCompleteMiniCut01088Group13.score, PreparedEJMCompleteMiniCut01088Group14.score, PreparedEJMCompleteMiniCut01088Group15.score, PreparedEJMCompleteMiniCut01088Group16.score, PreparedEJMCompleteMiniCut01088Group17.score, PreparedEJMCompleteMiniCut01088Factor00.score, PreparedEJMCompleteMiniCut01088Factor01.score, PreparedEJMCompleteMiniCut01088Factor02.score, PreparedEJMCompleteMiniCut01088Factor03.score, PreparedEJMCompleteMiniCut01088Factor04.score, PreparedEJMCompleteMiniCut01088Factor05.score, PreparedEJMCompleteMiniCut01088Factor06.score, PreparedEJMCompleteMiniCut01088Factor07.score, PreparedEJMCompleteMiniCut01088Factor08.score, PreparedEJMCompleteMiniCut01088Factor09.score, PreparedEJMCompleteMiniCut01088Factor10.score, PreparedEJMCompleteMiniCut01088Factor11.score, PreparedEJMCompleteMiniCut01088Factor12.score, PreparedEJMCompleteMiniCut01088Factor13.score, PreparedEJMCompleteMiniCut01088Factor14.score, PreparedEJMCompleteMiniCut01088Factor15.score, PreparedEJMCompleteMiniCut01088Factor16.score, PreparedEJMCompleteMiniCut01088Factor17.score, PreparedEJMCompleteMiniCut01088Factor18.score, PreparedEJMCompleteMiniCut01088Factor19.score, PreparedEJMCompleteMiniCut01088Factor20.score, PreparedEJMCompleteMiniCut01088Factor21.score, PreparedEJMCompleteMiniCut01088Factor22.score, PreparedEJMCompleteMiniCut01088Factor23.score, PreparedEJMCompleteMiniCut01088Factor24.score, PreparedEJMCompleteMiniCut01088Factor25.score, PreparedEJMCompleteMiniCut01088Factor26.score, PreparedEJMCompleteMiniCut01088Factor27.score, PreparedEJMCompleteMiniCut01088Factor28.score, PreparedEJMCompleteMiniCut01088Factor29.score, PreparedEJMCompleteMiniCut01088Factor30.score, PreparedEJMCompleteMiniCut01088Factor31.score,
-    EJMInflationScore.score, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
+    EJMInflationScore.score, Fin.sum_univ_succ, Fin.sum_univ_zero, Fin.reduceSucc, add_zero]
   ac_rfl
 
 private theorem initial_lower : ∀ e : Context, initial.value e ≤ score F1 F2 e.val := by

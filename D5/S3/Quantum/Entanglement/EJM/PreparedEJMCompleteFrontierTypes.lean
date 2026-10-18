@@ -119,7 +119,6 @@ theorem lookup_response (table : CutTable) : table.Responses →
       · have equality : row = cut := Option.some.inj chosen
         subst cut
         exact ready
-      · cases chosen
   | branch pivotDepth pivotCode left right ihLeft ihRight =>
       intro ready depth code cut chosen
       simp only [CutTable.lookup] at chosen
