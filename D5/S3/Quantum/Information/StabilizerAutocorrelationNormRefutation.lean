@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap
 import D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation
+import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
+import D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample
+import D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry
 import D5.S3.Arith.Lattices.Klartag.Walk.StepInputs2
 import D5.S3.Observer.MatrixUnitCertificate
 
@@ -76,7 +79,7 @@ def fourier : Matrix (Fin 5) (Fin 5) ℂ :=
 def psi : Fin 5 → ℂ := fun j => if j = 0 ∨ j = 1 then (Real.sqrt 2 : ℂ)⁻¹ else 0
 
 private def s : ℝ := Real.sqrt 5
-private def t : ℝ := Real.sin (2 * Real.pi / 5)
+private def t : ℝ := D5.S3.Quantum.Magic.QuquintCertificateData.radical / 4
 
 private lemma tau_eq : tau = omega ^ 3 := by
   unfold tau D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap.tau omega
@@ -95,45 +98,22 @@ private lemma tau_eq : tau = omega ^ 3 := by
 
 private lemma s_sq : s ^ 2 = 5 := by norm_num [s]
 
-private lemma omega_re : omega.re = (s - 1) / 4 := by
-  have he : omega = Complex.exp ((2 * Real.pi / 5 : ℝ) * Complex.I) := by
-    unfold omega D5.S3.Observer.WindowRegister.windowRoot
-    congr 1
-    push_cast
-    ring
-  rw [he]
-  simp only [Complex.exp_re, Complex.mul_re, Complex.ofReal_re, Complex.I_re,
-    Complex.ofReal_im, Complex.I_im, mul_zero, sub_zero, mul_one, Complex.mul_im,
-    add_zero, Real.exp_zero, one_mul]
-  have hc := Real.cos_two_mul (Real.pi / 5)
-  rw [Real.cos_pi_div_five] at hc
-  change Real.cos (2 * Real.pi / 5) = (s - 1) / 4
-  have harg : 2 * (Real.pi / 5) = 2 * Real.pi / 5 := by ring
-  rw [harg] at hc
-  dsimp [s] at *
-  nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)]
-
-private lemma omega_im : omega.im = t := by
-  have he : omega = Complex.exp ((2 * Real.pi / 5 : ℝ) * Complex.I) := by
-    unfold omega D5.S3.Observer.WindowRegister.windowRoot
-    congr 1
-    push_cast
-    ring
-  rw [he]
-  simp [Complex.exp_im, t]
-
 private lemma t_sq : t ^ 2 = (5 + s) / 8 := by
-  have h := Real.sin_sq_add_cos_sq (2 * Real.pi / 5)
-  have hc : Real.cos (2 * Real.pi / 5) = (s - 1) / 4 := by
-    rw [← omega_re]
-    simp [omega, D5.S3.Observer.WindowRegister.windowRoot, Complex.exp_re]
-  rw [hc] at h
-  change t ^ 2 + ((s - 1) / 4) ^ 2 = 1 at h
-  nlinarith [s_sq]
+  dsimp [t]
+  rw [div_pow, D5.S3.Quantum.Magic.QuquintCertificateData.radical_sq]
+  dsimp [s]
+  ring
 
 private lemma psi_normalized : (∑ i, Complex.normSq (psi i)) = 1 := by
-  norm_num [psi, Fin.sum_univ_succ, Complex.normSq, Complex.inv_re, Complex.inv_im]
-  nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
+  have hsum (z : ℂ) : (∑ i : Fin 5, Complex.normSq
+      (if i = 0 ∨ i = 1 then z else 0)) = 2 * Complex.normSq z := by
+    norm_num [Fin.sum_univ_succ]
+    ring
+  change (∑ i : Fin 5, Complex.normSq
+    (if i = 0 ∨ i = 1 then (Real.sqrt 2 : ℂ)⁻¹ else 0)) = 1
+  rw [hsum,
+    D5.S3.Quantum.QuantumChannels.TwirlingPhaseRetrievabilityCounterexample.scale_normSq]
+  norm_num
 
 private lemma power_reduce {a b : ℝ} (h : a ^ 2 = b) (n : ℕ) :
     a ^ n = b ^ (n / 2) * (if n % 2 = 0 then 1 else a) := by
@@ -169,9 +149,19 @@ private def rootTable : Fin 5 → ℂ :=
     ⟨-(s + 1) / 4, -(s - 1) / 2 * t⟩, ⟨(s - 1) / 4, -t⟩]
 
 private lemma root_table (k : Fin 5) : omega ^ k.val = rootTable k := by
+  change D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry.zeta ^ k.val = _
+  rw [D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry.zeta_powers]
+  have hr := D5.S3.Quantum.Magic.QuquintCertificateData.radical_sq
+  change D5.S3.Quantum.Magic.QuquintCertificateData.radical ^ 2 = 10 + 2 * s at hr
   fin_cases k <;> apply Complex.ext <;>
-    norm_num [rootTable, pow_succ, Complex.mul_re, Complex.mul_im, omega_re, omega_im] <;>
-    real_ring
+    norm_num [D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry.powerTable, rootTable, t]
+  all_goals first | (rw [pow_succ, hr]; ring) | (rw [hr]; ring) | ring
+
+private lemma omega_re : omega.re = (s - 1) / 4 := by
+  simpa [rootTable] using congrArg Complex.re (root_table 1)
+
+private lemma omega_im : omega.im = t := by
+  simpa [rootTable] using congrArg Complex.im (root_table 1)
 
 private lemma omega_mod (n : ℕ) : omega ^ (n % 5) = omega ^ n :=
   D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod n
@@ -198,19 +188,24 @@ private lemma shift_eq : shift = fun i j => if i = j + 1 then 1 else 0 := by
 private lemma displacement_entry (p q i j : Fin 5) :
     displacement p q i j =
       if i = j + p then omega ^ (3 * p.val * q.val + q.val * j.val) else 0 := by
-  have clock_eq : clock = diagonal fun j => omega ^ j.val := rfl
-  change (tau ^ (p.val * q.val) • (shift ^ p.val * clock ^ q.val)) i j = _
-  simp only [clock_eq, Matrix.diagonal_pow, Matrix.mul_diagonal,
-    Matrix.smul_apply, smul_eq_mul, shift_power, Pi.pow_apply, tau_eq]
-  split_ifs <;> simp only [zero_mul, mul_zero, one_mul]
-  rw [← pow_mul, ← pow_mul, ← pow_add]
+  have hentry : D5.S3.Quantum.Algebra.WeylDisplacement.displacement 5 p q i j =
+      if i.val = (j.val + p.val) % 5 then omega ^ (q.val * j.val) else 0 := by
+    exact D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap.displacement_entry
+      5 (show ZMod 5 from p) q i j
+  have hindex : i.val = (j.val + p.val) % 5 ↔ i = j + p := by
+    rw [← Fin.val_inj, Fin.val_add]
+  change (tau ^ (p.val * q.val) •
+    D5.S3.Quantum.Algebra.WeylDisplacement.displacement 5 p q) i j = _
+  simp only [Matrix.smul_apply, hentry, hindex, tau_eq]
+  split_ifs <;> simp only [smul_eq_mul, mul_zero]
+  rw [← pow_mul, ← pow_add]
   congr 1
   ring
 
 private lemma fourier_entry (i j : Fin 5) :
     fourier i j = (s / 5 : ℝ) * omega ^ ((i * j : Fin 5).val) := by
   have hi : (Real.sqrt 5 : ℂ)⁻¹ = (s / 5 : ℝ) := by
-    apply Complex.ext <;> norm_num [s, Complex.inv_re, Complex.inv_im, Complex.normSq]
+    exact_mod_cast (Real.sqrt_div_self (x := 5)).symm
   have hp : omega ^ ((i * j : Fin 5).val) =
       Complex.exp (2 * Real.pi * Complex.I * (i.val : ℂ) * (j.val : ℂ) / 5) := by
     rw [Fin.val_mul, omega_mod, omega, D5.S3.Observer.WindowRegister.windowRoot,
@@ -223,19 +218,16 @@ private lemma fourier_entry (i j : Fin 5) :
   rw [← hp, div_eq_mul_inv, hi]
   ring
 
-private def c : ℝ := Real.sqrt 2 / 2
-
-private lemma c_sq : c ^ 2 = 1 / 2 := by
-  dsimp [c]
-  nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
+private def c : ℝ := D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation.c
 
 private lemma c_power (n : ℕ) :
     c ^ n = (1 / 2 : ℝ) ^ (n / 2) * (if n % 2 = 0 then 1 else c) :=
-  power_reduce c_sq n
+  power_reduce (by simpa only [c, pow_two] using
+    D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation.c_sq) n
 
 private lemma psi_entry (j : Fin 5) : psi j = if j = 0 ∨ j = 1 then (c : ℂ) else 0 := by
-  fin_cases j <;> norm_num [psi, c, Complex.inv_re, Complex.inv_im, Complex.normSq,
-    Complex.ext_iff]
+  simp only [psi, c, D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation.c,
+    Complex.ofReal_inv]
 
 private def phi : Fin 5 → ℂ :=
   fun i => (c * s / 5 : ℝ) * (1 + omega ^ i.val)
@@ -244,33 +236,58 @@ private lemma fourier_psi : fourier *ᵥ psi = phi := by
   funext i
   fin_cases i <;> apply Complex.ext <;>
     norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, fourier_entry, psi_entry,
-      phi, omega_table, rootTable, omega_re, omega_im, Complex.mul_re, Complex.mul_im] <;> ring
+      phi, omega_table, omega_re, omega_im, rootTable, Complex.mul_re, Complex.mul_im] <;> ring
 
 private lemma fourier_clifford : IsClifford fourier := by
   have clock_eq : clock = diagonal fun j => omega ^ j.val := rfl
-  have hh : fourierᴴ * fourier = 1 := by
+  let W := D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity.fourierRows
+    5 5 (le_refl 5)
+  have hF : fourier = (Real.sqrt 5 : ℂ)⁻¹ • W := by
     ext i j
-    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      norm_num [fourier_entry, Matrix.mul_apply, Matrix.conjTranspose_apply,
-        Fin.sum_univ_succ, Matrix.one_apply, Complex.mul_re, Complex.mul_im,
-        omega_table, rootTable, omega_re, omega_im] <;> real_ring
+    have hi : (i.val : ZMod 5) = ZMod.finEquiv 5 i :=
+      ZMod.natCast_zmod_val (show ZMod 5 from i)
+    have hj : (j.val : ZMod 5) = ZMod.finEquiv 5 j :=
+      ZMod.natCast_zmod_val (show ZMod 5 from j)
+    have he : (ZMod.finEquiv 5 j) * (ZMod.finEquiv 5 i) =
+        (((i.val : ℤ) * (j.val : ℤ) : ℤ) : ZMod 5) := by
+      push_cast
+      rw [hi, hj]
+      ring
+    simp only [W, D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity.fourierRows,
+      Fin.castLE_refl, Matrix.smul_apply, smul_eq_mul, he, ZMod.stdAddChar_coe,
+      fourier, D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation.fourier]
+    push_cast
+    rw [div_eq_mul_inv, mul_comm]
+    congr 2
+    ring
   have hh' : fourier * fourierᴴ = 1 := by
-    exact _root_.mul_eq_one_comm.mp hh
+    have hs : (Real.sqrt 5 : ℂ) * Real.sqrt 5 = 5 := by
+      exact_mod_cast Real.mul_self_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+    rw [hF, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+      smul_smul, D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity.fourierRows_gram,
+      smul_smul, star_inv₀, Complex.star_def, Complex.conj_ofReal, ← mul_inv, hs]
+    norm_num
+  have hh : fourierᴴ * fourier = 1 := _root_.mul_eq_one_comm.mp hh'
   refine ⟨hh, hh', ?_, ?_⟩
-  · refine ⟨0, 1, 1, by norm_num, ?_⟩
-    ext i j
-    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      norm_num [fourier_entry, shift_eq, Matrix.mul_apply, Matrix.conjTranspose_apply,
-        Fin.sum_univ_succ, Matrix.smul_apply, smul_eq_mul, displacement_entry,
-        Complex.mul_re, Complex.mul_im, omega_table, rootTable, omega_re, omega_im] <;> real_ring
-  · refine ⟨4, 0, 1, by norm_num, ?_⟩
-    ext i j
-    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      norm_num [fourier_entry, clock_eq, Matrix.mul_apply, Matrix.diagonal_apply,
-        Matrix.conjTranspose_apply, Fin.sum_univ_succ, Matrix.smul_apply, smul_eq_mul,
-        displacement_entry, Complex.mul_re, Complex.mul_im, omega_table, rootTable,
-        omega_re, omega_im] <;>
-      real_ring
+  · have hFX : fourier * shift = clock * fourier := by
+      ext i j
+      rw [clock_eq, Matrix.diagonal_mul]
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        norm_num [fourier_entry, shift_eq, Matrix.mul_apply, Fin.sum_univ_succ,
+          Complex.mul_re, Complex.mul_im, omega_table, omega_re, omega_im, rootTable] <;> real_ring
+    have h01 : displacement 0 1 = clock := by
+      change tau ^ (0 * 1) • (shift ^ 0 * clock ^ 1) = clock
+      simp
+    refine ⟨0, 1, 1, by norm_num, ?_⟩
+    rw [hFX, Matrix.mul_assoc, hh', Matrix.mul_one, one_smul, h01]
+  · have hFZ : fourier * clock = displacement 4 0 * fourier := by
+      ext i j
+      rw [clock_eq, Matrix.mul_diagonal]
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        norm_num [fourier_entry, Matrix.mul_apply, Fin.sum_univ_succ, displacement_entry,
+          Complex.mul_re, Complex.mul_im, omega_table, omega_re, omega_im, rootTable] <;> real_ring
+    refine ⟨4, 0, 1, by norm_num, ?_⟩
+    rw [hFZ, Matrix.mul_assoc, hh', Matrix.mul_one, one_smul]
 
 private def inputProb : Option (Fin 5) → Fin 5 → ℝ
   | none => ![2/5, (3+s)/20, (3-s)/20, (3-s)/20, (3+s)/20]
@@ -301,7 +318,7 @@ private lemma probability_psi (m : Option (Fin 5)) (j : Fin 5) :
   fin_cases m <;> fin_cases j <;>
     norm_num [probability, projector, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
       Matrix.smul_apply, Finset.sum_apply, smul_eq_mul, displacement_entry,
-      psi_entry, inputProb, Fin.neg_def, omega_table, rootTable, omega_re, omega_im,
+      psi_entry, inputProb, Fin.neg_def, omega_table, omega_re, omega_im, rootTable,
       Complex.mul_re, Complex.mul_im] <;> certificate_ring
 
 private lemma probability_phi (m : Option (Fin 5)) (j : Fin 5) :
@@ -309,7 +326,7 @@ private lemma probability_phi (m : Option (Fin 5)) (j : Fin 5) :
   fin_cases m <;> fin_cases j <;>
     norm_num [probability, projector, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
       Matrix.smul_apply, Finset.sum_apply, smul_eq_mul, displacement_entry,
-      phi, outputProb, Fin.neg_def, omega_table, rootTable, omega_re, omega_im,
+      phi, outputProb, Fin.neg_def, omega_table, omega_re, omega_im, rootTable,
       Complex.mul_re, Complex.mul_im] <;> certificate_ring
 
 private def rowA : Fin 5 → ℝ := ![1/2, 1/4, 0, 0, 1/4]

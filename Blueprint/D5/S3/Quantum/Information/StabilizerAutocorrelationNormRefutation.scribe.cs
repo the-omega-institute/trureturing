@@ -81,7 +81,9 @@ internal sealed class StabilizerAutocorrelationNormRefutationDocument : IScribeD
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "The Fourier matrix satisfies F*F = FF* = 1, FXF* = D(0,1) = Z, "
+                        "Let W have entries stdAddChar(ji) for residues i,j modulo five. "
+                            + "The identity WW* = 5I and F = W/√5 give F*F = FF* = 1. "
+                            + "The entry relations FX = ZF and FZ = D(4,0)F then give FXF* = D(0,1) = Z, "
                             + "and FZF* = D(4,0) = X to the fourth power. "
                             + "Both phases are one, so F satisfies IsClifford. "
                             + "Its action on the chosen unit vector has coordinate (1 + ω to the power val(i))/√10 at i.")),
