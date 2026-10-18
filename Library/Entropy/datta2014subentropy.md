@@ -7,7 +7,8 @@ doi: 10.1063/1.4882935
 url: https://arxiv.org/abs/1310.1312
 claim: "Subentropy has a finite simple-spectrum formula with continuous extension to repeated and zero eigenvalues; Conjecture 1 asks for bipartite subadditivity."
 strata_touched:
-  - D5/S3/Quantum/Foundation/FiniteStateChannel
+  - D5/S3/Quantum/Subentropy/SpectralFormula
+  - D5/S3/Quantum/Subentropy/DensityKernel
 license: citation-only
 triage: anchor
 ---

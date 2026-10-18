@@ -7,7 +7,7 @@ doi: 10.1016/j.aop.2016.12.024
 url: https://arxiv.org/abs/1510.08859
 claim: "Section 7.1 asks whether subentropy satisfies strong subadditivity, Q(ρ_ABC) + Q(ρ_B) ≤ Q(ρ_AB) + Q(ρ_BC)."
 strata_touched:
-  - D5/S3/Quantum/Foundation/FiniteStateChannel
+  - D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation
 license: citation-only
 triage: anchor
 ---

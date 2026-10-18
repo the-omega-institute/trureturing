@@ -7,7 +7,8 @@ doi: 10.1103/PhysRevA.49.668
 url: https://doi.org/10.1103/PhysRevA.49.668
 claim: "Original subentropy attribution supplied for the finite spectral information quantity used in the repository's subentropy formalization."
 strata_touched:
-  - D5/S3/Quantum/Foundation/FiniteStateChannel
+  - D5/S3/Quantum/Subentropy/Basic
+  - D5/S3/Quantum/Subentropy/SpectralFormula
 license: citation-only
 triage: anchor
 ---
