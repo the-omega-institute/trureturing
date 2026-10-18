@@ -74,7 +74,10 @@ internal sealed class LatticeWalkCrossIntegralRefutationDocument : IScribeDocume
                             + "32·24²(n₁n₂² + n₂n₁²), which is strictly smaller than the "
                             + "integral lower bound above. The norm of the integral is at "
                             + "least its real value, contradicting Eq. (15)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dhamapurkar-deng-2023-lattice-walk-cross-integral-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
