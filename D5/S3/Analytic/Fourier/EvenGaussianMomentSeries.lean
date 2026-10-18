@@ -130,7 +130,6 @@ private theorem hasSum_even_moment_cosh {p : ℝ → ℝ} (hp : Continuous p) {C
   · ext k
     rw [mul_right_comm, hpow]
     simp [mul_comm, ← Complex.ofReal_pow]
-  · simp
 
 private theorem summable_abs_even_moment {p : ℝ → ℝ} (hp : Continuous p) {C : ℝ}
     (hbound : ∀ x : ℝ, |p x| ≤ C * Real.exp (-x ^ 2)) {R : ℝ} (hR : 0 ≤ R) :

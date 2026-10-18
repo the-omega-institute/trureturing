@@ -151,8 +151,6 @@ private theorem threeLevel_representative_not_positive :
   have hcoordinate := hpositive.2 (Finsupp.single (2 : Fin 3) 1)
   rw [linearPredictionRepresentative, threeLevel_projection] at hcoordinate
   norm_num [threeLevelDirection, Matrix.mul_apply, Fin.sum_univ_succ] at hcoordinate
-  rw [if_neg (show (2 : Fin 3) ≠ 0 by decide)] at hcoordinate
-  norm_num at hcoordinate
   exact (show ¬ ((1 : ℂ) / 6 ≤ 0) by
     rw [Complex.not_le_zero_iff]
     left

@@ -13,6 +13,8 @@ import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 noncomputable section
 
 namespace D5.S3.Quantum.QuantumChannels.QuantumCernyPureTargetRefutation

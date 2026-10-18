@@ -71,7 +71,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected.{u} := by
       (∀ b : ℝ,
         {h : List (ULift.{u} Unit) |
           rejected.{u}.readout () ⟨ULift.{u} Unit, fun _ _ => (1 : ℝ)⟩ h ≤ b}.Finite) :=
-    htfae.out 0 2
+    htfae.out 1 3
   have hfinite := hpath_iff_finite.mp hpath 0
   have huniv : (Set.univ : Set (List (ULift.{u} Unit))).Finite := by
     simpa [rejected, realize, pathClockSignature] using hfinite

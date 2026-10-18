@@ -194,7 +194,8 @@ private theorem parity_eq_owner {n : ℕ} (S : Finset (Fin n)) (x : Fin n → Bo
       (S.filter (fun l => x l = true)).card := by
     have he : ∀ l : Fin n, (decide (l ∈ S ∧ x l = true)).toNat =
         if l ∈ S ∧ x l = true then 1 else 0 := by
-      exact fun l => apply_ite Bool.toNat (l ∈ S ∧ x l = true) true false
+      intro l
+      by_cases h : l ∈ S ∧ x l = true <;> simp [h]
     simp only [he, sum_boole]
     apply congrArg Finset.card
     ext l

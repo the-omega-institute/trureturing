@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fd35d8065c050118d1e80befb8d8bac76d272a025c709ca92ee5e43e3983267a
-  normalized_sha256: sha256:fd35d8065c050118d1e80befb8d8bac76d272a025c709ca92ee5e43e3983267a
-cas_ref: sha256:fd35d8065c050118d1e80befb8d8bac76d272a025c709ca92ee5e43e3983267a
-coverage_gids:
-  - gid: D5/S3/Arith/FiniteWindowEscape.finite_window_escape_and_hidden_fiber
-    target_statement_id: sha256:973e7cc126a76ce84a712499b8db169609567e706702ff054af3a40de6d9b2c0
-receipts:
-  unresolved_subitems: []

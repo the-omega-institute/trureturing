@@ -110,8 +110,6 @@ lemma exactDerivedHomology_single (A : C) (n : ℤ) :
     DerivedCategory.singleFunctorIsoCompQ, Functor.map_comp,
     CochainComplex.singleFunctor, CochainComplex.singleFunctors,
     ← (DerivedCategory.homologyFunctorFactors D n).inv.naturality_assoc]
-  erw [← (DerivedCategory.homologyFunctor D n).map_comp_assoc,
-    Iso.inv_hom_id_app, CategoryTheory.Functor.map_id, Category.id_comp, Iso.inv_hom_id_app_assoc]
   simpa only [Functor.map_comp, Category.assoc] using congrArg (fun u =>
     F.map ((DerivedCategory.homologyFunctorFactors C n).hom.app
       ((HomologicalComplex.single C (.up ℤ) n).obj A)) ≫ u) hsingle

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Slice the Exceptional Base Q Route from Actual Joint Pieces. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.Walks.ActualJointRouteSlicing
 
 set_option autoImplicit false

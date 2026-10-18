@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 
 public sealed partial class ShowAtomTests
 {
-    private const string AdapterAtomizerId = AtomizerRegistry.PeriodicTreeId;
+    private const string AdapterAtomizerId = AtomizerRegistry.GenericId;
 
     [Fact]
     public void ShowAtomPrintsSortedCoverageGidsDerivedFromCoverageEdges()
@@ -84,7 +84,7 @@ public sealed partial class ShowAtomTests
         Assert.Equal(string.Empty, result.Error);
         Assert.Contains(
             $"SHOW_ATOM atom_id={atomId} source_id=content-source "
-                + $"source_path={sourcePath} atomizer={AtomizerRegistry.NoAtomizerId}\n",
+                + $"source_path={sourcePath} atomizer={AtomizerRegistry.GenericId}\n",
             result.Output,
             StringComparison.Ordinal);
         Assert.Contains(
@@ -469,9 +469,6 @@ public sealed partial class ShowAtomTests
         byte[] casBytes) => SnapshotWithLedger(
             ledger,
             [
-            RawRepositoryEntry.FromText(
-                TheoryAtomizerDataLoader.DataPath,
-                SyntheticAtomizerData),
             new RawRepositoryEntry(sourcePath, ImmutableArray.CreateRange(sourceBytes)),
             new RawRepositoryEntry(
                 DigestionCasStore.RootPath + casRef["sha256:".Length..],
@@ -485,9 +482,6 @@ public sealed partial class ShowAtomTests
         params (string Reference, byte[] Bytes)[] casObjects) => SnapshotWithLedger(
             ledger,
             [
-            RawRepositoryEntry.FromText(
-                TheoryAtomizerDataLoader.DataPath,
-                SyntheticAtomizerData),
             new RawRepositoryEntry(sourcePath, ImmutableArray.CreateRange(sourceBytes)),
             .. casObjects.Select(static item => new RawRepositoryEntry(
                 DigestionCasStore.RootPath + item.Reference["sha256:".Length..],
@@ -500,11 +494,11 @@ public sealed partial class ShowAtomTests
         string normalizedSha256) => Document(
             "content-source",
             sourcePath,
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             [Entry(
                 "content-source",
                 sourcePath,
-                AtomizerRegistry.NoAtomizerId,
+                AtomizerRegistry.GenericId,
                 BareAtomId(rawSha256),
                 new DigestionFingerprints(rawSha256, normalizedSha256))]);
 
@@ -556,7 +550,7 @@ public sealed partial class ShowAtomTests
                 atomizer,
                 [],
                 GenreRegistryProjection.Available(
-                    atomizer == AtomizerRegistry.NoAtomizerId
+                    atomizer == AtomizerRegistry.GenericId
                         ? GenreRegistryCheck.NoGenreRegistry
                         : GenreRegistryCheck.Collected([])),
                 entries),
@@ -606,49 +600,4 @@ public sealed partial class ShowAtomTests
         return RawRepositorySnapshot.Create(entries);
     }
 
-    private static string SyntheticAtomizerData => """
-        schema_version = 1
-
-        [[observer.claim_prefixes]]
-        prefix = "**Synthetic observer**"
-        locator = "theorem/synthetic-observer"
-
-        [[first.genres]]
-        token = "Synthetic"
-        kind = "theorem"
-
-        [[first.claim_prefixes]]
-        prefix = "**Synthetic claim**"
-        locator = "theorem/synthetic-claim"
-
-        [[first.constants]]
-        name = "SYNTHETIC_C"
-        locator = "constant/synthetic"
-
-        [[second.genres]]
-        token = "Synthetic"
-        kind = "theorem"
-
-        [[second.markers]]
-        role = "trace-note"
-        text = "Synthetic trace"
-
-        [[second.heading_prefixes]]
-        prefix = "Synthetic supplement "
-        locator = "metadata/supplement"
-
-        [[wm.headings]]
-        role = "title"
-        text = "Synthetic WM title"
-
-        [[wm.headings]]
-        role = "appendix"
-        text = "Synthetic WM appendix"
-
-        [[wm.headings]]
-        role = "audit"
-        text = "Synthetic WM audit"
-        """
-        .Replace("[[first.", "[[" + string.Concat("gi", "ct") + ".", StringComparison.Ordinal)
-        .Replace("[[second.", "[[" + string.Concat("pz", "g") + ".", StringComparison.Ordinal);
 }

@@ -28,7 +28,8 @@ internal static class FileMapProjectionWriter
         foreach (var entry in manifest.Entries)
         {
             var residence = entry.ResidenceViolation ? " | residence_violation=true" : string.Empty;
-            var node = $"[{entry.Pattern} | {KindName(entry.Kind)}{residence}]";
+            var exclusions = entry.Exclude.IsEmpty ? string.Empty : " except " + string.Join(", ", entry.Exclude);
+            var node = $"[{entry.Pattern}{exclusions} | {KindName(entry.Kind)}{residence}]";
             if (entry.Symlink is { } link)
                 builder.Append(node).Append(" --symlink(").Append(link.Kind).Append(")--> ")
                     .Append(link.Target).Append('\n');

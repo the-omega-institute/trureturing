@@ -14,13 +14,7 @@ internal static class DirectoryLedgerTestSupport
         RemoveLedger(result);
         foreach (var source in ledger.RequireDigestionSources())
         {
-            var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
-                ? source
-                : source with
-                {
-                    GenreRegistryProjection = GenreRegistryProjection.Available(
-                        GenreRegistryCheck.Collected([])),
-                };
+            var projectedSource = source;
             result[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"] =
                 Encoding.UTF8.GetString(BackfillInventoryWriter.WriteSourceMetadata(projectedSource).AsSpan());
             foreach (var entry in source.Entries)
@@ -46,13 +40,7 @@ internal static class DirectoryLedgerTestSupport
             .ToList();
         foreach (var source in ledger.RequireDigestionSources())
         {
-            var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
-                ? source
-                : source with
-                {
-                    GenreRegistryProjection = GenreRegistryProjection.Available(
-                        GenreRegistryCheck.Collected([])),
-                };
+            var projectedSource = source;
             entries.Add(new RawRepositoryEntry(
                 $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
                 BackfillInventoryWriter.WriteSourceMetadata(projectedSource)));
@@ -75,12 +63,12 @@ internal static class DirectoryLedgerTestSupport
         var raw = RawRepositorySnapshot.Create(files.Select(static pair =>
             RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(raw)).Snapshot;
+            SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot snapshot) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(snapshot)).Snapshot;
+            SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(snapshot))).Snapshot;
 
     internal static void ReplaceWithProjection(
         IDictionary<string, string> files,

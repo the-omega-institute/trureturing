@@ -157,7 +157,7 @@ private theorem centered_ratio (θ : Presentation H) (r : ℕ) (u v : Fin r → 
     change μ {z | window r z = (u,v)} ≠ 0
     exact fun h => hpos.ne' (by change (μ _).toReal = 0; rw [h]; rfl)
   change ((ProbabilityTheory.condDistrib (fun z : ℤ → Bool => z 0) (window r) μ (u,v)) {true}).toReal = _
-  rw [ProbabilityTheory.condDistrib_apply_of_ne_zero (measurable_pi_apply 0) (u,v) hn,
+  rw [ProbabilityTheory.condDistrib_apply_of_ne_zero hm (measurable_pi_apply 0) (u,v) hn,
     ENNReal.toReal_mul, ENNReal.toReal_inv,
     Measure.map_apply hm (measurableSet_singleton _),
     Measure.map_apply (hm.prodMk (measurable_pi_apply 0))

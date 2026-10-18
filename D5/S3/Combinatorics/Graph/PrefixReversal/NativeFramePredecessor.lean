@@ -9,6 +9,7 @@
    Move exactly the newly prepended selected label to the end of the
    predecessor base. Reapplying the native constructor returns the
    supplied frame, so induction is not restricted to generated frames. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 

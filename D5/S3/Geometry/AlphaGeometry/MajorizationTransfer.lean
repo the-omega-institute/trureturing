@@ -71,7 +71,7 @@ private theorem prefixSum_add (k : ℕ) (x y : Fin n → ℝ) :
     prefixSum k (x + y) = prefixSum k x + prefixSum k y := by
   simp [prefixSum, Finset.sum_add_distrib]
 
-private def transfer (q : Fin n → ℝ) (j l : Fin n) (δ : ℝ) : Fin n → ℝ :=
+def transfer (q : Fin n → ℝ) (j l : Fin n) (δ : ℝ) : Fin n → ℝ :=
   Function.update (Function.update q j (q j - δ)) l (q l + δ)
 
 def IsTTransform (y q : Fin n → ℝ) : Prop :=

@@ -27,6 +27,9 @@ lean_exe reportInspector where
 lean_exe inputDiscovery where
   root := `LeanInformationAudit.Contract.InputDiscovery
 
+lean_exe dependencyReadout where
+  root := `DependencyReadoutMain
+
 -- Resolve Lake's current package at runtime; copied config oleans contain no host root.
 private partial def repositoryDir (pkg : Package) : IO FilePath := do
   let rec ascend (dir : FilePath) : IO FilePath := do

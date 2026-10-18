@@ -11,6 +11,7 @@
    outer child, so its actual walks lift to the same current parent.
    Two marked selected orders with the same label set have one domain;
    these identities do not choose replacement cycles or endpoint states. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep

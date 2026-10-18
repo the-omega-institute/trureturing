@@ -9,7 +9,7 @@
 import D5.S3.Factorization.MordellTwoAdicNonTorsion
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.Tactic
-import D5.S3.Factorization.Mordell.SymmetricSquareAddition
+import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.AddSubMap
 import D5.S3.QuadraticForms.ParallelogramConstruction
 import D5.S3.Factorization.Mordell.CanonicalPointHeight
 import D5.S3.Factorization.Dedekind.GaloisScalarHeight
