@@ -192,7 +192,8 @@ private theorem negativity_local
   unfold negativity
   have hp (A : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
       partialTranspose A =
-        D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.partialTransposeB A := by
+        D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.partialTransposeB
+          A := by
     ext ⟨i, j⟩ ⟨k, l⟩
     rfl
   simp only [hp,
