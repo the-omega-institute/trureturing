@@ -675,3 +675,149 @@ reported second-level theorem, or establish a negative actual-theta
 minor. A proof for that input can still use its specific series and
 Jacobi identities. The original actual-theta cross estimate, full
 physical $K_0$ positivity, signed Robin upper and RH remain unproved.
+
+## The actual odd form on sufficiently separated large positions
+
+The complete actual theta input has more information than the two generic
+curvature hypotheses above. Reuse Csordas, Theorem 4.2(b), together with monotonicity of $K_C$,
+for strict log-concavity on the positive half-line. Evenness, smoothness and
+$K_C'(0)=0$ extend concavity to the whole real line. The normalization
+$\Phi(x)=2K_C(x/2)$ preserves it. For the tail, reuse
+[Planat--Solé, arXiv:2608.19160v1](https://arxiv.org/abs/2608.19160v1),
+Section 4, equations (4.2), (4.6)--(4.7):
+
+$$
+K_C(r)=\pi(2\pi e^{4r}-3)e^{5r-\pi e^{4r}}(1+\varepsilon),
+\qquad \varepsilon\ge0,
+$$
+
+with $L=4r$, $y=\pi e^L$ and reported uniform bounds
+
+$$
+|\varepsilon_L'|<1.5\cdot10^{-5},\qquad
+|\varepsilon_L''|<2.5\cdot10^{-4}\qquad(y\ge5.68).
+$$
+
+The source supplies the monotonic tail bounds and their rational
+certificate; its certificate is not independently rerun here. This paper
+application uses these reported derivative bounds, rather than deriving
+an all-order positivity conclusion from finite curvature. It makes no
+literature-priority or Lean/kernel-verification claim.
+
+In physical position $x$, $r=x/2$, $L=2x$, $y=\pi e^{2x}$.
+Writing $\ell(L)=\log(1+\varepsilon)$ and
+$p(x)=-\Phi'(x)/\Phi(x)$ gives
+
+$$
+\begin{aligned}
+p(x)&=2y-\frac92-\frac6{2y-3}-2\ell'(L),\\
+p'(x)&=4y+\frac{24y}{(2y-3)^2}-4\ell''(L).
+\end{aligned}
+$$
+
+The source bounds imply $|\ell'|<1.5\cdot10^{-5}$ and
+$|\ell''|<10^{-3}$. For $x\ge1$, $y>75/4$; the two displayed
+expressions give $y<p<2y$ and $p'>y$. Thus
+
+$$
+\boxed{e^{2x}\le p(x)\le10e^{2x},\qquad p'(x)\ge e^{2x}
+\quad(x\ge1).}
+\tag{W19}
+$$
+
+Set $L_0(a,b)=K_0(a,b)-K_0(a,-b)$ and $J(a)=L_0(a,a)$.
+For $a\ge256$, put $\delta=e^{-2a}/40$. Since $e^{2\delta}<2$,
+(W19) implies $\int_0^t p(a+s)\,ds\le1/2$ for $0\le t\le\delta$.
+Consequently the complete direct diagonal satisfies
+
+$$
+K_0(a,a)=\frac12\int_0^\infty(a+t)\Phi(a+t)^2\,dt
+\ge\frac{a}{80e}\Phi(a)^2e^{-2a}.
+$$
+
+The reflected diagonal must also be retained. Let $g=\log\Phi$.
+Global concavity gives $g(a-y)\le g(a)+p(a)y$ for every $y\ge0$,
+including $y>a$. Integrating $g''(a+t)=-p'(a+t)\le-e^{2a}$ gives
+
+$$
+g(a+y)\le g(a)-p(a)y-\tfrac12e^{2a}y^2.
+$$
+
+These inequalities bound the full reflected integral by
+
+$$
+K_0(a,-a)=\frac12\int_0^\infty y\Phi(a+y)\Phi(a-y)\,dy
+\le\frac12\Phi(a)^2e^{-2a}.
+$$
+
+Since $a\ge256>80e$, subtracting yields the actual diagonal bound
+
+$$
+\boxed{J(a)\ge\frac{a}{160e}\Phi(a)^2e^{-2a}
+\ge\frac{a}{480}\Phi(a)^2e^{-2a}\quad(a\ge256).}
+\tag{W20}
+$$
+
+For $b\ge a\ge256$, the exact fixed-limit representation is
+
+$$
+K_0(a,b)=\frac14\int_0^\infty(a+b+2t)\Phi(a+t)\Phi(b+t)\,dt.
+$$
+
+By (W19) its product is at most
+$\Phi(a)\Phi(b)e^{-e^{2b}t}$. Full integration and (W12) give
+
+$$
+0<L_0(a,b)\le K_0(a,b)
+\le\Phi(a)\Phi(b)\left(\frac{a+b}{4}e^{-2b}+\frac12e^{-4b}\right)
+\le\frac{a+b}{2}\Phi(a)\Phi(b)e^{-2b}.
+$$
+
+Normalize by the actual diagonal, and use symmetry. With $d=|a-b|$,
+
+$$
+\boxed{0<\frac{L_0(a,b)}{\sqrt{J(a)J(b)}}
+\le240\frac{a+b}{\sqrt{ab}}e^{-d}
+\le240\left(2+\frac d{256}\right)e^{-d}
+\quad(a,b\ge256).}
+\tag{W21}
+$$
+
+For the last inequality, if $b\ge a$, then
+$\sqrt{b/a}+\sqrt{a/b}\le b/a+1\le2+d/256$.
+Neither a theta tail nor a reflected exterior is truncated in these bounds.
+
+There is an all-size consumer on a restricted sample family. Take any
+$N\ge1$ and ordered real positions $256\le a_1<\cdots<a_N$ with
+$a_{i+1}-a_i\ge8$. The function $(2+d/256)e^{-d}$ decreases for
+$d\ge0$, so every off-diagonal row sum of the matrix normalized in
+(W21) is at most
+
+$$
+480\sum_{n\ge1}(2+n/32)q^n
+=480\left(\frac{2q}{1-q}+\frac{q}{32(1-q)^2}\right),
+\qquad q=e^{-8}.
+$$
+
+Since $e>5/2$, $q<(2/5)^8<1/1500$. Both $q/(1-q)$ and
+$q/(1-q)^2$ are less than $1/1400$. The row sum is therefore less
+than $480(2+1/32)/1400=39/56$. Applying the standard symmetric
+row-sum bound to this normalized matrix, followed by positive diagonal
+congruence, gives
+
+$$
+\boxed{\sum_{i,j=1}^N\overline{c_i}L_0(a_i,a_j)c_j
+\ge\frac{17}{56}\sum_{i=1}^N J(a_i)|c_i|^2
+\qquad(c\in\mathbb C^N).}
+\tag{W22}
+$$
+
+The constants are uniform in $N$ and in these positions. This is relative
+coercivity for actual odd-parity point samples; it is not a uniform
+unweighted lower eigenvalue bound, since $J(a)$ decays at infinity.
+The sample family is not dense in the full physical test space.
+Compact positions, nearby pairs, arbitrary signed smooth profiles and
+coupling to all omitted positions remain uncontrolled. Thus (W22)
+neither supplies full $K_0$ positivity nor the signed Robin upper
+estimate, and does not prove RH. The Jacobi orbit equations and the
+second-level theorem are not claimed to pay those remaining estimates.
