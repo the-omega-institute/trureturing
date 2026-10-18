@@ -367,7 +367,7 @@ namespace PartialTransposeKroneckerConj
 
 /-- Observe the partial transpose after local conjugation. -/
 abbrev signature : Signature where
-  Params := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ × Matrix (Fin 2) (Fin 2) ℂ
+  Params := Σ _ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ, Matrix (Fin 2) (Fin 2) ℂ
   State _ := Matrix (Fin 2) (Fin 2) ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -391,7 +391,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (U V : Matrix (Fin 2) (Fin 2) ℂ),
-    R.readout () (ρ, U) V =
+    R.readout () ⟨ρ, U⟩ V =
       (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ
 
 theorem rejected_law : ¬ arena.Law rejected := by
@@ -414,7 +414,7 @@ def source_registration : Registration arena (type_of% @partialTransposeB_kronec
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨(1, 1), 0, 1, ?_⟩
+    refine ⟨⟨1, 1⟩, 0, 1, ?_⟩
     intro he
     have hc := congrArg (fun M => M (0, 0) (0, 0)) he
     norm_num [actual, realize, Matrix.one_kronecker_one, partialTransposeB] at hc
