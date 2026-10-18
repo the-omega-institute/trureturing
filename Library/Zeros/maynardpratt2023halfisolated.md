@@ -53,3 +53,20 @@ $1/\gamma$ coefficient bound and the existing polynomial clock ceiling for fixed
 $\Theta<1$. It retains the non-half-isolated complement. Corollary 5 alone supplies no error uniform at $\Theta=1$. All unselected zeros remain in the complementary head, including ordinary
 half-isolated zeros that fail the stronger all-scale condition. Neither application
 supplies a signed Li head bound, all-integer Robin or RH. No new density theorem or literature-priority claim is made.
+
+
+## One local isolation scale and an explicit loss
+
+The [single-scale Robin application](../Estimation/trureturing2026pricegapconvexity.md#one-local-isolation-scale-suffices-under-the-sharper-original-clock-ceiling)
+uses Proposition 16 at one allowed $Y$ with $\log Y$ comparable to
+$\sqrt{(\log T)(\log\log T)}$. Integer powers of the existing detector, with their
+lower support, coefficient and detection losses retained, give the consumer's
+quantitative subset count
+$T^{2(1-\sigma)}\exp(C\sqrt{(\log T)(\log\log T)})$ on its stated compact
+real-part interval. The source's stronger VC2 clock ceiling pays that loss also
+at $\Theta=1$. This reuses the single-scale detector and classical mean square;
+it does not require Lemma 35's all-scale premise or Hypothesis $\mathcal F$.
+The count is derived in the consumer, rather than attributed to Corollary 5 for
+the whole half-isolated class. All zeros failing the specified witness condition
+remain in the complement, and neither the complete signed Robin bound nor RH
+is supplied.

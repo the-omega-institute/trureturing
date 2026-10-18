@@ -8862,3 +8862,179 @@ the chosen band, and zeros failing the all-scale condition remain in the exact
 complement. No assertion of membership, nonempty occupancy or favorable phase is
 inferred from the existence of this estimate. The full signed Robin joint comparison,
 all-integer Robin and RH remain unproved.
+
+
+## One local isolation scale suffices under the sharper original clock ceiling
+
+Keep SIH1 and SAH1's original complete coefficients, positive outgoing weights,
+every source window and maximizing tie, all multiplicities, and the individual legal
+upper heights. This `repo-derived` paper application uses the already retained VC2
+clock ceiling. It includes the original $\Theta=1$ case and replaces the preceding
+all-scale local isolation condition by an existential condition in a specified range.
+It does not estimate the whole ordinary half-isolated class or its complement.
+The analytical methods and detector are existing tools, without a priority or
+Lean-certification claim.
+
+### Keep the scale of the published detector quantitative
+
+For a sufficiently large dyadic $T$, put
+
+$$
+v_T=\sqrt{(\log T)(\log\log T)}.
+$$
+
+Let $\mathcal H_\circ(T)$ be the actual zeros with $\beta\ge1/2$ and
+$T\le\gamma<2T$ that are
+$Y$-half-isolated in Maynard--Pratt's Definition 8 for at least one $Y$ satisfying
+
+$$
+\tfrac12v_T\le\log Y\le2v_T.
+\tag{OSH1}
+$$
+
+Both ends lie inside Definition 9's allowed range at one sufficiently large fixed
+start, uniformly for these ordinates. Count every selected zero with its actual
+multiplicity. The [published Proposition 16](../Zeros/maynardpratt2023halfisolated.md)
+gives a common grid of at most $(\log T)^{152}$ values of $U$, with
+$Y\le U\le Y^2$, such that one of the polynomials
+
+$$
+P_U(s)=\sum_n\Lambda(n)w_0(n/U)n^{-s}
+$$
+
+satisfies $|P_U(\rho)|\ge c_0(\log T)^{-100}$ for each selected zero.
+The chosen detector lies in the restricted common grid
+
+$$
+\mathscr U_\circ(T)=\mathscr U(T)\cap
+ [\exp(v_T/2),\exp(4v_T)],
+$$
+
+where $\mathscr U(T)$ is Proposition 16's grid. Thus
+$v_T/2\le\log U\le4v_T$ for every grid value used below.
+This uses the unconditional single-scale proposition; neither
+Hypothesis $\mathcal F$ nor Lemma 35 is needed.
+
+For each $U\in\mathscr U_\circ(T)$ set
+
+$$
+k=\left\lfloor\frac{\log T}{\log(2U)}\right\rfloor,
+\quad Q_U=P_U^k=\sum_n b_U(n)n^{-s},
+\quad N=(2U)^k,\quad D=(U/2)^k.
+$$
+
+At the fixed start $k\ge1$, and
+
+$$
+\frac{T}{2U}<N\le T,\qquad
+D=N4^{-k}>\frac{T}{2U}4^{-k},\qquad
+k\log\log T\ll v_T.
+\tag{OSH2}
+$$
+
+The coefficients vanish outside $[D,N]$. To bound them without a growing-order
+divisor-square loss, directly use the classical identity
+$\sum_{d\mid n}\Lambda(d)=\log n$. Induction gives
+$\Lambda^{*k}(n)\le(\log n)^k$, where $*$ here is Dirichlet convolution.
+With $C_w=\max\{1,\|w_0\|_\infty\}$, this yields
+
+$$
+|b_U(n)|\le C_w^k\Lambda^{*k}(n)
+\le(C_w\log T)^k\quad(n\le N).
+$$
+
+The detection threshold for $Q_U$ is at least $\exp(-C v_T)$.
+Its coefficients, and their real-part derivatives' coefficients, are bounded by a
+fixed power of $N$ at the common start, because $\log N\sim\log T$ and
+$k\log\log T=O(v_T)=o(\log T)$.
+
+Apply the same published Lemma 27, multiplicity-aware local zero count,
+real-part transport and classical polynomial mean-square inequality already used
+in SAH4. The smoothing intervals have overlap $O((\log T)^3)$, including
+multiplicity. The real-part derivative adds a logarithmic factor only.
+The negligible error in Lemma 27 is smaller than half the detection threshold.
+Uniformly for $3/5\le\sigma\le3/4$, the mean square is bounded by a fixed
+logarithmic factor times
+
+$$
+(T+N)\sum_{n\ge D}|b_U(n)|^2n^{-2\sigma}
+\ll T(C_w\log T)^{2k}D^{1-2\sigma}
+\le T^{2(1-\sigma)}
+ \exp\!\bigl(C(\log U+k\log\log T)\bigr).
+$$
+
+The convergent sum $\sum_{n\ge D}n^{-2\sigma}\ll D^{1-2\sigma}$ is uniform on
+the displayed compact interval. OSH2, the detection threshold and the polynomial
+number of grid values therefore give the quantitative subset count
+
+$$
+\boxed{
+N_\circ(\sigma;T,2T)
+:=\sum_{\substack{\rho\in\mathcal H_\circ(T)\\\beta\ge\sigma}}m_\rho
+\ll T^{2(1-\sigma)}\exp(C_\circ v_T),
+\qquad 3/5\le\sigma\le3/4.}
+\tag{OSH3}
+$$
+
+This is a parameter application of the short detector and the existing mean-square
+argument. It is not attributed to Corollary 5 as a quantitative statement for every
+ordinary half-isolated zero.
+
+### Spend that loss using VC2 on the same actual cores
+
+Choose one fixed sufficiently large $T_\circ$ for the preceding application.
+With the unchanged $H_{B,X}=\max\{51,\sqrt B/M^{19/10}\}$ and
+$T_\rho=2^{\lfloor\log_2\gamma\rfloor}$, define
+
+$$
+\mathcal R_X^\circ
+=2\sum_{i<m}\delta_i
+\sum_{\substack{H_{B_i,X}<\gamma\le\tau_i,\ 3/5\le\beta\le3/4\\
+T_\rho\ge T_\circ,\ \rho\in\mathcal H_\circ(T_\rho)}}
+m_\rho|c_{B_i,a}(\rho)|.
+\tag{OSH4}
+$$
+
+Reuse the positive integral representation of $B^{\beta-1/2}$ in the payment
+following SAH4, and
+the complete original bound $|c_{B,a}(\rho)|\le(a+2)B^{\beta-1/2}/\gamma$.
+OSH3 then bounds one participating dyadic bin by
+$C_a\exp(C_\circ v_T)(1+\log B)M^{19/20}$.
+Indeed $T\ge H_{B,X}/2$ and $T\ll\sqrt B$, so the same maximum of
+$(\sqrt B/T)^{2\sigma-1}$ is at most $C M^{19/20}$.
+There are $O(1+\log B)$ bins, all finite at the original individual upper mask.
+
+The necessary loss payment uses the already retained stronger VC2, not CP1 alone:
+
+$$
+\log B_{\max,X}^{\rm end}
+\le K(\log X)^{5/3}(\log\log X)^{1/3},\qquad
+v_T\ll_K(\log X)^{5/6}(\log\log X)^{2/3}.
+$$
+
+Since the original $\eta<1/2$ is fixed,
+
+$$
+\exp(C_\circ v_T)(1+\log B)^2=M_X^{o(1)}.
+$$
+
+At one common source start this factor is at most $M_X^{1/40}$. Summing the
+original positive weights proves, including $\Theta=1$,
+
+$$
+\boxed{\mathcal R_X^\circ\ll M_X^{39/40}L_X=o(M_XL_X).}
+\tag{OSH5}
+$$
+
+After choosing a common fixed dyadic start, every SAH1 all-scale zero satisfies
+OSH1, so this pays at least that submultiset under VC2. OSH1 requires only one
+local scale, rather than isolation at all the residual scales used in SAH3.
+SIH2 already covers this class for fixed $\Theta<1$; the added application is the
+weaker local condition at $\Theta=1$. No occurrence of an extra actual zero is
+asserted. SAH2 remains independently valid under CP1's weaker clock ceiling.
+
+The cut remains below the already paid BH1 auxiliary slice as in SIH4. All zeros
+without a witness in OSH1's range, the low dyadic bins, lower frequencies and real
+parts outside the displayed band remain in the exact complement. Overlapping
+subsets do not produce additive reserves. The whole ordinary half-isolated class
+at $\Theta=1$, the original signed joint Robin comparison and RH remain unproved.
