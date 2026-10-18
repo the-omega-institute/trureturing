@@ -40,7 +40,7 @@ Write x, y, z for the negativities N of the AB, AC and A|BC cuts.
 1. **Separator over the family.** Write r² = a² + b² + c², u = b² + c² and k = d/r.
    - The Schmidt coefficients give z = 4dr + 2r².
    - A decomposition of the 3 × 3 block into positive semidefinite parts gives y ≤ 2a² + 4ad.
-   - A Gram identity gives x ≤ 2u(1 + 2d²/a²).
+   - For a > 0, a Gram identity gives x ≤ 2u(1 + 2d²/a²). The hypotheses of the next item force a > 0.
    - If z ≥ 14/11 and z − y ≤ 2/209, then 1/7 ≤ k ≤ 3, u ≤ 1/209 and a²/r² ≥ 18/19, which gives x ≤ 5(z − y).
 2. **The witness.** ψ = (5|000⟩ + 3|101⟩ + |202⟩ + t|110⟩ + 5t|220⟩)/√(35 + 26t²) at t = 1/100.
    - Its partial transposes split into explicit 1 × 1 and 2 × 2 blocks.
