@@ -6,6 +6,7 @@
    utility: none
    digest: Rational split-cubic descent coordinates and explicit rational halving. -/
 
+import D5.S3.Factorization.Mordell.FieldKummer
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.GroupTheory.QuotientGroup.Defs
 import Mathlib.Tactic.FinCases
@@ -29,14 +30,7 @@ private theorem equation_iff (D x y : ℚ) :
 
 /-- Nonzero twists are elliptic. -/
 theorem curve_is_elliptic (D : ℚ) (hD : D ≠ 0) : (curve D).IsElliptic := by
-  constructor
-  apply isUnit_iff_ne_zero.mpr
-  have hdisc : (curve D).Δ = 36000000 * D ^ 6 := by
-    simp [curve, WeierstrassCurve.Δ, WeierstrassCurve.b₂,
-      WeierstrassCurve.b₄, WeierstrassCurve.b₆, WeierstrassCurve.b₈]
-    ring
-  rw [hdisc]
-  exact mul_ne_zero (by norm_num) (pow_ne_zero _ hD)
+  exact FieldKummer.curve_is_elliptic ⟨ℚ,inferInstance,inferInstance,inferInstance⟩ D hD
 
 /-- The three ordered rational roots. -/
 def root (D : ℚ) (i : Fin 3) : ℚ := ![0, -5 * D, 15 * D] i
@@ -192,59 +186,30 @@ private theorem tangent_coefficients (A B u y : ℚ) (hy0 : y ≠ 0)
 theorem descentRep_add_square (D : ℚ) (hD : D ≠ 0) (i : Fin 3)
     (P Q : (curve D).Point) :
     IsSquare (descentRep D i P * descentRep D i Q * descentRep D i (P+Q)) := by
-  cases P with
-  | zero => simpa only [← Point.zero_def, zero_add, add_zero, descentRep, one_mul, mul_one] using IsSquare.mul_self (descentRep D i Q)
-  | some x y hP =>
-    cases Q with
-    | zero => simpa only [← Point.zero_def, zero_add, add_zero, descentRep, one_mul, mul_one] using IsSquare.mul_self (descentRep D i (.some x y hP))
-    | some z t hQ =>
-      by_cases hv : x = z ∧ y = (curve D).negY z t
-      · rw [Point.add_of_Y_eq hv.1 hv.2]
-        simpa [descentRep, hv.1] using IsSquare.mul_self (descentRep D i (.some z t hQ))
-      · have hsum := Point.add_some (h₁ := hP) (h₂ := hQ) hv
-        rw [hsum]
-        let e := root D i
-        let A := 3 * e-10 * D
-        let B := derivative D e
-        let l := (curve D).slope x z y t
-        have hxy := shifted_equation D x y i hP.1
-        have hzt := shifted_equation D z t i hQ.1
-        have hc : (x-e) * (z-e) + (x-e) * ((curve D).addX x z l-e) +
-            (z-e) * ((curve D).addX x z l-e) = B-2 * l * (y-l * (x-e)) ∧
-            (x-e) * (z-e) * ((curve D).addX x z l-e) = (y-l * (x-e)) ^ 2 := by
-          by_cases hxz : x = z
-          · subst z
-            have hyt : y = t := by
-              have := (equation_iff D x y).mp hP.1
-              have := (equation_iff D x t).mp hQ.1
-              have hn : y ≠ -t := by simpa [curve, negY] using hv
-              have hf : (y-t) * (y+t) = 0 := by nlinarith [hxy, hzt]
-              rcases mul_eq_zero.mp hf with hh | hh
-              · linarith
-              · exact (hn (by linarith)).elim
-            subst t
-            have hy0 : y ≠ 0 := by
-              intro hz; apply hv; simp [hz, curve, negY]
-            have H := tangent_coefficients A B (x-e) y hy0 hxy
-            have hl : l = (3 * (x-e) ^ 2+2 * A * (x-e)+B)/(2 * y) := by
-              dsimp [l]
-              rw [slope_of_Y_ne rfl (by simp only [curve, negY, zero_mul, sub_zero]; intro hz; apply hy0; linarith)]
-              dsimp [curve, negY, A, B, derivative]
-              congr 1 <;> ring
-            rw [hl]
-            convert H using 1 <;> dsimp [A, B, addX, curve] <;> ring
-          · have H := secant_coefficients A B (x-e) (z-e) y t
-                (by intro h; apply hxz; linarith) hxy hzt
-            have hl : l = (y-t)/((x-e)-(z-e)) := by
-              dsimp [l]
-              rw [slope_of_X_ne hxz]
-              congr 1 <;> ring
-            rw [hl]
-            convert H using 1 <;> dsimp [A, B, addX, curve] <;> ring
-        have H := rep_triple_square B (x-e) (z-e) ((curve D).addX x z l-e)
-          l (y-l * (x-e)) (derivative_ne_zero D hD i) hc.1 hc.2
-        simpa only [descentRep, rep, sub_eq_zero, e, B, l] using H
-
+  have hrep (A : (curve D).Point) : FieldKummer.descentRep D i A = descentRep D i A := by
+    cases A <;> rfl
+  have hsum : FieldKummer.descentRep D i
+      (@Point.add ℚ _ (FieldKummer.curve D) _ P Q) = descentRep D i (P+Q) := by
+    cases P with
+    | zero => cases Q <;> rfl
+    | some x y hP =>
+      cases Q with
+      | zero => rfl
+      | some z t hQ =>
+        by_cases hv : x = z ∧ y = (curve D).negY z t
+        · have hv' : x = z ∧ y = (FieldKummer.curve D).negY z t := by
+            simpa only [curve,FieldKummer.curve,negY] using hv
+          simp only [Point.add_def,Point.add,dif_pos hv,dif_pos hv']
+          rfl
+        · have hv' : ¬ (x = z ∧ y = (FieldKummer.curve D).negY z t) := by
+            simpa only [curve,FieldKummer.curve,negY] using hv
+          simp only [Point.add_def,Point.add,dif_neg hv,dif_neg hv']
+          rfl
+  have h := FieldKummer.descentRep_add_square ⟨ℚ,inferInstance,inferInstance,inferInstance⟩ D hD i P Q
+  change IsSquare (FieldKummer.descentRep D i P * FieldKummer.descentRep D i Q *
+    FieldKummer.descentRep D i (@Point.add ℚ _ (FieldKummer.curve D) _ P Q)) at h
+  rw [hsum,hrep,hrep] at h
+  exact h
 
 /-- Rational units modulo squares, using the standard power quotient. -/
 abbrev SquareClass := ℚˣ ⧸ (powMonoidHom 2 : ℚˣ →* ℚˣ).range
@@ -334,32 +299,9 @@ private theorem descentRep_some_values (D x y : ℚ) (hP : (curve D).Nonsingular
 /-- The three descent classes have product one, including all rational two-torsion points. -/
 theorem descentRep_product_square (D : ℚ) (hD : D ≠ 0) (P : (curve D).Point) :
     IsSquare (descentRep D 0 P * descentRep D 1 P * descentRep D 2 P) := by
-  cases P with
-  | zero => exact ⟨1, by norm_num [descentRep]⟩
-  | some x y h =>
-    obtain ⟨hval0, hval1, hval2⟩ := descentRep_some_values D x y h
-    rw [hval0, hval1, hval2]
-    by_cases h0 : x = 0
-    · subst x
-      have h1 : (0:ℚ) ≠ -5 * D := by intro hz; apply hD; linarith
-      have h2 : (0:ℚ) ≠ 15 * D := by intro hz; apply hD; linarith
-      refine ⟨75 * D ^ 2, ?_⟩
-      simp only [ite_true, if_pos rfl, if_neg h1, if_neg h2]
-      ring
-    by_cases h1 : x = -5 * D
-    · have h2 : x ≠ 15 * D := by intro hz; apply hD; rw [h1] at hz; linarith
-      refine ⟨100 * D ^ 2, ?_⟩
-      simp only [if_neg h0, if_pos h1, if_neg h2]
-      rw [h1]
-      ring
-    by_cases h2 : x = 15 * D
-    · refine ⟨300 * D ^ 2, ?_⟩
-      simp only [if_neg h0, if_neg h1, if_pos h2]
-      rw [h2]
-      ring
-    · refine ⟨y, ?_⟩
-      simp only [if_neg h0, if_neg h1, if_neg h2]
-      exact (by simpa only [pow_two] using ((equation_iff D x y).mp h.1).symm)
+  have hrep (i : Fin 3) : FieldKummer.descentRep D i P = descentRep D i P := by
+    cases P <;> rfl
+  simpa only [hrep] using FieldKummer.descentRep_product_square ⟨ℚ,inferInstance,inferInstance,inferInstance⟩ D hD P
 
 private theorem all_coordinate_zero_of_pair (D : ℚ) (hD : D ≠ 0)
     (P : (curve D).Point) (h : kummer D hD P = 0) :

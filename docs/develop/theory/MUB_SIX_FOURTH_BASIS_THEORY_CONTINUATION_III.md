@@ -1870,3 +1870,757 @@ the two remaining cosets, since their quotient is a three-cycle outside
 \(H\). Equation (82.4) therefore reaches all three opposite vertices.
 This proves \(K_{3,3}\) and completes the graph classification within
 one symmetry union.
+
+## 83. Uniform rigidity of an aligned ratio fiber
+
+### 83.1. Original coordinates and statement
+
+Keep the actual matrix of (81.1), now throughout \(0<|b|<1\):
+\[
+ \rho=3-b^2,\quad h=\sqrt{\frac{\rho}{1+b^2}},\quad
+ \kappa=(b-i)h,\quad
+ P=\frac{bh-3+i(h+b)}2,\quad Q=\frac{-bh-3+i(h-b)}2,
+\]
+\[
+ H_0(b)=\frac1{\sqrt6}
+ \begin{pmatrix}J+PI_3&J+QI_3\\J+\bar QI_3&-J-\bar PI_3\end{pmatrix}.
+                                                               \tag{83.1}
+\]
+Here \(J\) is the all-ones matrix. Inputs have unit-modulus entries,
+norm \(\sqrt6\), and are common-flat when their images under \(H_0\)
+also have unit-modulus entries. Unit rays are obtained by dividing by
+\(\sqrt6\). An aligned input has a common repeated pair in its two
+channels. After a phase and synchronous permutation it has the form
+\[
+ w=(1,1,z;g,g,gr),\qquad |z|=|r|=|g|=1.                 \tag{83.2}
+\]
+Constants and either singleton phase equal to \(-1\) are included.
+
+**Theorem 83.1.** For fixed \(0<|b|<1\), an aligned common-flat
+input in (83.2) is uniquely determined by \((g,z/r)\).
+
+This is a fiber statement, with no assumption about the number of rays.
+The same-position pair classification will follow in §84, and the
+all-aligned triple obstruction across different symmetry unions in §85.
+The generic-containing triple problem remains outside these conclusions.
+
+### 83.2. Original norm quadratics, including both projective poles
+
+Write \(\kappa g=p+it\), so \(p^2+t^2=\rho\), and use
+\[
+ \eta=\frac zr=\frac{1+ik}{1-ik},\qquad
+ r=\frac{1+iv}{1-iv},\qquad z=\eta r,
+ \qquad k,v\in\mathbb R\cup\{\infty\}.                \tag{83.3}
+\]
+The value \(\infty\) gives the phase \(-1\). The repeated and
+singleton upper and lower output numerators, before division by
+\(\sqrt6\), are
+\[
+\begin{aligned}
+ A_0&=2+z+P+g(2+r+Q),&
+ A_2&=2+(1+P)z+g[2+(1+Q)r],\\
+ C_0&=2+z+\bar Q-g(2+r+\bar P),&
+ C_2&=2+(1+\bar Q)z-g[2+(1+\bar P)r].
+\end{aligned}                                                    \tag{83.4}
+\]
+Put \(N_j=|A_j|^2-6\), \(L_j=|C_j|^2-6\).
+Define three quadratics \(T_i(k,v)=\sum_{n=0}^2M_{in}v^n\)
+by the following complete polynomial block. The symbols `*` and `^`
+mean multiplication and nonnegative integer powers.
+
+```text
+M00 = -k*(b + k*p - k - t)
+M01 = 2*(b*k^2 - k*p + k + t)
+M02 = b*k + k^2*p + k^2 - k*t + 2
+M10 = -b^3*k^2 - b^2*k^2*t + b^2*k*p + b^2*k - 2*b^2*t + b*k^2*p + 3*b*k^2 - 4*b*k*t - 3*b*p - 3*k*p - 3*k + 3*t
+M11 = -2*(b^3*k + b^2*k^2*p - b^2*k*t - b^2 - 2*b*k^2*t - 2*b*k*p - 3*b*k - k^2*p + k*t + 3)
+M12 = (b*k - 1)*(b^2*k - b*k*t - b*p + k*p - 3*k - t)
+M20 = -2*b^3*k^2 + 2*b^2*k*p - 2*b^2*k - 2*b^2*t - 5*b*k^2*p + 6*b*k^2 + 2*b*k*t - 3*b*p + 3*k^2*t + 6*k + 3*t
+M21 = -4*(b^3*k + b^2*k^2*p - b^2*k*t + b^2 - 3*b*k + k^2*p - k*t - 3)
+M22 = 2*b^3*k^2 - 2*b^2*k*p + 2*b^2*k + 2*b^2*t - 5*b*k^2*p - 6*b*k^2 + 2*b*k*t - 3*b*p + 3*k^2*t - 4*k*p - 6*k + 7*t
+```
+
+Direct expansion of (83.4), using \(h^2=\rho/(1+b^2)\) and
+\(p^2+t^2=\rho\), gives
+\[
+\begin{aligned}
+ N_0+L_0&=\frac{-4T_0}{(1+k^2)(1+v^2)},\\
+ (1+b^2)h(N_0-L_0)&=\frac{-4T_1}{(1+k^2)(1+v^2)},\\
+ (1+b^2)h(N_2-L_2)&=\frac{-4T_2}{(1+k^2)(1+v^2)}.
+\end{aligned}                                                    \tag{83.5}
+\]
+Unitarity also gives \(2(N_0+L_0)+(N_2+L_2)=0\).
+All denominators displayed in (83.5) are positive. Homogenize each
+\(T_i\) separately to degree two in \(k\) and in \(v\).
+The denominators become
+\((k_0^2+k_1^2)(v_0^2+v_1^2)\), so the identities extend to
+both projective poles, including simultaneous poles. Thus the original
+flatness conditions are equivalent to the three homogeneous equations
+\(T_i=0\), together with \(p^2+t^2=\rho\).
+
+Two distinct projective \(v\)-values at fixed \(k,p,t\) would be
+common roots of all three binary quadratics. Every nonzero quadratic
+would then be a multiple of the same product of two linear factors.
+Consequently the coefficient matrix \(M\) would have rank at most one.
+This argument allows identically zero rows and roots at infinity.
+
+### 83.3. A finite rank certificate and every exceptional ratio
+
+Order the row pairs and column pairs of \(M\) as \((01,02,12)\).
+List its nine two-by-two minors in row-pair-first lexicographic order
+as \(m_0,\ldots,m_8\), and put \(m_9=p^2+t^2+b^2-3\).
+Let \(A\) be their coefficient matrix in the six monomials
+\[
+ (1,p,t,p^2,pt,t^2).
+\]
+Rank at most one and the norm equation would imply
+\(A(1,p,t,p^2,pt,t^2)^{\mathsf T}=0\), so every six-row
+minor of \(A\) would vanish. All the following identities are
+ordinary polynomial determinants of the nine printed entries above.
+For a six-row list \(I\), write \(A[I]\) for those rows in that
+order, with all six columns. Define
+\[
+\begin{gathered}
+ V=(3b^2+1)k^2+4bk+b^2+3,\qquad
+ L=b(b^2-1)k+5b^2+3,\\
+ I_0=(0,1,2,3,4,6).
+\end{gathered}
+\]
+Expansion gives
+\[
+ \det A[I_0]=-768bk^3(b-k)(b^2-3)(b^2+3)(k^2+1)^7
+                       (bk-1)LV^2.                    \tag{83.6}
+\]
+The quadratic is positive because
+\[
+ V=(3b^2+1)\left(k+\frac{2b}{3b^2+1}\right)^2
+                   +\frac{3(b^2+1)^2}{3b^2+1}>0.
+\]
+Thus only four finite ratios need further treatment. The three
+nonzero ones have the following exact nonzero minors:
+
+| Ratio | Rows of \(A\) | Determinant |
+| --- | --- | --- |
+| \(k=b\) | \((9,1,2,3,4,6)\) | \(-1152b^3(b^2-1)(b^2-3)(b^2+1)^{10}(b^6+b^4+51b^2+27)\) |
+| \(k=1/b\) | \((0,5,2,3,4,6)\) | \(-24576(b^2-1)(b^2-3)(b^2+1)^7(3b^2+1)(b^4+10b^2+1)^2/b^{20}\) |
+| \(k=(5b^2+3)/[b(1-b^2)]\) | \((7,1,2,3,4,6)\) | \(6144(b^2-3)^2(b^2+1)^{13}(b^2+3)^2(3b^2+1)(5b^2+3)^2(b^4+22b^2+9)^8(b^4+54b^2+9)^2/[b^{21}(b^2-1)^{24}]\) |
+
+At \(k=0\), the minor of \(M\) in rows \(0,1\) and columns
+\(1,2\) is \(2[t^2+bpt+2\rho]\). On the norm circle,
+\[
+ t^2+bpt+2\rho=(t+bp/2)^2+2\rho-b^2p^2/4
+                      \geq\rho(2-b^2/4)>0.             \tag{83.7}
+\]
+At \(k=\infty\), use the leading \(k^2\) coefficient of each
+entry of \(M\). The corresponding determinant on rows \(I_0\)
+is the leading \(k^{24}\) coefficient of (83.6):
+\[
+ 768b^3(b^2-1)(b^2-3)(b^2+3)(3b^2+1)^2\ne0.            \tag{83.8}
+\]
+All failures of the generic minor have now been covered, for either sign
+of \(b\). The phase pole \(v=\infty\) was already retained by
+homogenization. Thus \(\operatorname{rank}M\geq2\) everywhere
+on the physical domain, proving Theorem 83.1.
+
+## 84. Complete aligned pair rigidity at a fixed singleton position
+
+### 84.1. Pair theorem and the remaining product branch
+
+**Theorem 84.1.** For every \(0<|b|<1\), two aligned common-flat
+rays with the same singleton position are orthogonal if and only if they
+are projective \(\Theta\) partners. This includes constants and all
+aligned phase poles.
+
+Take \(w\) as in (83.2) and
+\(w'=(1,1,Z;G,G,GR)\). Their unnormalized overlap vanishes exactly when
+\[
+ 2+\bar zZ+\bar gG(2+\bar rR)=0.                       \tag{84.1}
+\]
+Taking absolute values gives
+\(\operatorname{Re}(\bar zZ)=\operatorname{Re}(\bar rR)\).
+Two unit complex numbers with the same real part are equal or conjugate.
+In the equal case, \(2+\bar zZ\ne0\) gives \(G=-g\) and
+\(Z/R=z/r\). The dephased partner
+\[
+ \Theta w\sim(1,1,\bar r;-g,-g,-g\bar z)              \tag{84.2}
+\]
+has those same data. Theorem 83.1 identifies \(w'\) with it.
+In the conjugate case,
+\[
+ ZR=zr.                                                   \tag{84.3}
+\]
+The alternatives can overlap. We will exclude nonconstant equal-product
+orthogonal pairs without assuming that the product map is injective.
+Two possible interior collision fibers are retained explicitly below;
+no existence assertion for their possible common-flat lifts is needed.
+
+### 84.2. Complete preliminary charts and the strengthened finite minor
+
+In the finite phase chart put
+\[
+ z=\frac{1+iu}{1-iu},\quad r=\frac{1+iv}{1-iv},\quad
+ s=u+v,\quad D=u-v,\quad T=uv,\quad K=s^2=D^2+4T.
+\]
+The complete original-equation chart analysis of §75 gives the following
+facts, including its rank-deficient cases.
+
+- If \(s=0\), the only inputs have \(z=r=1\) and the two antipodal
+  canonical values of \(g\). The other finite candidate
+  \(u=b,v=-b\) violates \(p^2+t^2=\rho\).
+- The simultaneous phase poles \(z=r=-1\) are impossible: an original
+  norm-sum residual is \(-8\).
+- The upper pole \(z=-1\) has exactly
+  \[
+   v=b,\qquad t=\frac{b(5b^4+12b^2-1)}{1-b^4},\qquad
+   p=bt+3b^2+1.                                         \tag{84.4}
+  \]
+  It exists precisely at the one root in \((0,1)\) of
+  \[
+   f(B)=2B^5+33B^4+90B^3+4B-1,\qquad B=b^2.
+  \]
+  The lower pole is its \(\Theta\) partner. Their product Cayley
+  coordinates are respectively \(-1/b\) and \(1/b\).
+
+For finite nonconstant inputs, write \(p=sa,t=sc\). The first two
+affine equations of the aligned quotient of §75 are
+\[
+\begin{aligned}
+ P_0={}&K[Da-(T+1)c]+bD(1-T)-D^2-2T(T+1),\\
+ P_1={}&[bD^2-DT(b^2+1)+D(b^2-3)+b(T^2-2T-3)]a\\
+       &+[-b^2D^2-4bD+T^2-2b^2(T+1)+4T+3]c\\
+       &+(b^2-3)(T+1-bD).
+\end{aligned}                                                    \tag{84.5}
+\]
+Their coefficient determinant is
+\[
+ -Kb(Db-T+3)[D^2+(T+1)^2].                               \tag{84.6}
+\]
+Here \(K>0\), and the final bracket is positive for real finite
+\(u,v\). At the remaining possible zero \(T=bD+3\), the two
+augmented consistency minors are
+\[
+ -6D(b^2-3)[D^2+(bD+4)^2],\qquad
+ 6(b^2-3)(bD+4)[D^2+(bD+4)^2].                          \tag{84.7}
+\]
+They cannot both vanish: \(D=0\) and \(bD+4=0\) are incompatible,
+and the common sum of squares is positive. Thus (84.6) is nonzero at
+every finite nonconstant original solution. This strengthens the chart
+without assuming generic rank at exceptional parameters.
+
+### 84.3. Reconstructible product quartics and the norm polynomial
+
+This section uses \(j\) for the **product** coordinate, distinct from
+the ratio coordinate \(k\) in §83:
+\[
+ \eta=zr=\frac{1+ij}{1-ij},\qquad
+ r=\frac{1+iv}{1-iv},\qquad z=\eta\bar r.               \tag{84.8}
+\]
+For finite \(j,v\), set
+\[
+ k_1=j(1-v^2)-2v,\qquad k_0=1-v^2+2jv.
+\]
+Let \(T_i^{\rm hom}(k_1,k_0;v)\) be the degree-two homogenization
+in \(k\) of the printed polynomial \(T_i(k,v)\) in §83. Define
+\[
+ C_i=\frac{\sigma_i T_i^{\rm hom}(k_1,k_0;v)}{1+v^2},
+ \qquad (\sigma_0,\sigma_1,\sigma_2)=(-1,1,-1).          \tag{84.9}
+\]
+Each division is exact in \(\mathbb Q[b,j,v,p,t]\).
+The resulting \(C_i\) are quartic in \(v\) and affine in \(p,t\).
+This is a complete finite definition of the product polynomials; no
+unprinted coefficient list is an input. Original equations (83.5) give
+\[
+\begin{aligned}
+ N_0+L_0&=\frac{4C_0}{(1+j^2)(1+v^2)^2},\\
+ (1+b^2)h(N_0-L_0)&=\frac{-4C_1}{(1+j^2)(1+v^2)^2},\\
+ (1+b^2)h(N_2-L_2)&=\frac{4C_2}{(1+j^2)(1+v^2)^2}.
+\end{aligned}                                                    \tag{84.10}
+\]
+They retain phase poles by homogeneous continuation. Write
+\(C=\mathcal M(p,t)^{\mathsf T}+c\), and define
+\[
+ A_*=bjv^2-bj+2bv-2jv-v^2-3.
+\]
+The determinant of rows \(0,1\) of \(\mathcal M\) is
+\[
+ m=bj(1+j^2)(1+v^2)^3A_*.                               \tag{84.11}
+\]
+For \(j\ne0\), finite nonconstant original inputs with neither
+phase a pole have \(m\ne0\), by (84.6)–(84.7). Define the two
+rational functions \(p_*,t_*\) by Cramer's rule on those rows:
+\[
+ p_*=(\mathcal M_{01}c_1-\mathcal M_{11}c_0)/m,\qquad
+ t_*=(\mathcal M_{10}c_0-\mathcal M_{00}c_1)/m.           \tag{84.12}
+\]
+Here row and column subscripts of \(\mathcal M\) are zero-based.
+Define two polynomials by exact rational simplification:
+\[
+ F_6=-\frac{\det[\mathcal M\mid c]}{2(1+j^2)(1+v^2)^3},\qquad
+ N_8=\frac{b^2j^2(1+j^2)(1+v^2)^2A_*^2}{2}
+                          (p_*^2+t_*^2-\rho).          \tag{84.13}
+\]
+These expressions are polynomials with respective \(v\)-degrees
+six and eight and \(j\)-degrees four and six. Any original solution
+in this chart satisfies \(F_6=N_8=0\). Conversely is not asserted
+here; only this necessary condition and uniqueness of \(p,t\) at
+fixed \(b,j,v\) are used.
+
+### 84.4. The product resultant and all possible collision parameters
+
+Put \(\Pi(L,B)=\sum_{n=0}^5\pi_n(B)L^n\), with the following
+coefficients; \(H,E\) will be used in the discriminant. All entries
+are exact integer polynomials.
+
+```text
+pi0 = -36*B^11 - 664*B^10 - 3076*B^9 + 1376*B^8 + 37176*B^7 + 54000*B^6 - 65448*B^5 - 116640*B^4 + 55404*B^3 + 29160*B^2 + 8748*B
+pi1 = -180*B^11 - 2321*B^10 - 8514*B^9 + 4787*B^8 + 166448*B^7 + 409230*B^6 - 664668*B^5 - 2736018*B^4 - 1234764*B^3 - 143613*B^2 + 21870*B - 6561
+pi2 = -360*B^11 - 2644*B^10 - 8192*B^9 + 28460*B^8 - 24048*B^7 + 627032*B^6 + 1908576*B^5 - 5506632*B^4 - 5420520*B^3 - 150660*B^2 + 163296*B - 2916
+pi3 = -360*B^11 - 646*B^10 - 4252*B^9 + 49682*B^8 - 254656*B^7 + 318996*B^6 + 1815480*B^5 - 2230188*B^4 - 3156408*B^3 - 911502*B^2 + 169668*B + 9882
+pi4 = -180*B^11 + 676*B^10 - 2604*B^9 + 26252*B^8 - 104712*B^7 + 58280*B^6 + 341544*B^5 - 398504*B^4 - 35076*B^3 + 71412*B^2 + 40644*B + 2268
+pi5 = -36*B^11 + 335*B^10 - 1106*B^9 + 1619*B^8 - 3376*B^7 + 11086*B^6 - 14716*B^5 - 6994*B^4 + 39556*B^3 - 43549*B^2 + 21150*B - 3969
+H = 4424301*B^15 - 30779595*B^14 + 64332981*B^13 - 11332035*B^12 - 431591567*B^11 + 913951065*B^10 + 1554539977*B^9 - 1999932175*B^8 - 3801379737*B^7 - 1635354945*B^6 - 108073953*B^5 + 84468663*B^4 + 25993467*B^3 + 2177523*B^2 - 120285*B - 32805
+E = 16875*B^16 - 43200*B^15 - 116712*B^14 - 1410592*B^13 + 12465444*B^12 - 32830464*B^11 + 28837832*B^10 + 51887904*B^9 - 125776782*B^8 - 90873792*B^7 + 307606248*B^6 - 223490016*B^5 + 449323524*B^4 - 120092544*B^3 + 14644152*B^2 - 1889568*B + 177147
+```
+
+The following exact resultant identity follows from (84.9)–(84.13):
+\[
+\begin{aligned}
+ \operatorname{Res}_v(F_6,N_8)
+ ={}&-429981696b^8(b^2-3)^6(b^2+1)^6(1+j^2)^{18}j^6\\
+    &\quad\cdot(bj-1)^2(bj+1)^2V_*^2\Pi(j^2,b^2),\\
+ V_*={}&(b^2-5)^2j^4+2[(b^2-1)^2+8]j^2+(b^2+3)^2>0.
+\end{aligned}                                                    \tag{84.14}
+\]
+Here and below a resultant is the determinant of the ordinary Sylvester
+matrix. One finite characteristic-zero verification of (84.14) is to
+substitute \(j=0,1,\ldots,68\) on both sides and compute the
+resultants over \(\mathbb Q[b]\). All 69 identities are exact.
+Both sides have \(j\)-degree at most \(6\cdot6+8\cdot4=68\),
+so those identities determine the full polynomial equality. This is an
+interpolation identity, not an inference from numerical samples.
+
+Suppose \(j\ne0\), \(bj\ne\pm1\), and two distinct original
+aligned inputs have this product. Neither phase is a pole, and (84.11)
+is nonzero. The two \(v\)-values must therefore be distinct common
+roots of \(F_6,N_8\). Evaluation at them gives two independent
+left null vectors of the 14-by-14 Sylvester matrix. Its rank is at most
+12, so every cofactor is zero. Its determinant and its \(j\)-derivative
+both vanish, including at a drop of a leading polynomial coefficient.
+The prefactor in (84.14) is nonzero, hence
+\[
+ \Pi(j^2,b^2)=\Pi_L(j^2,b^2)=0.                          \tag{84.15}
+\]
+This multiplicity argument is essential: the resultant factorization
+alone does not count lifts of the product map.
+
+The leading \(L\) coefficient and discriminant are
+\[
+\begin{aligned}
+ \pi_5(B)&=-(B-1)^6(9B^2+22B+49)(4B^3-23B^2+18B+81),\\
+ \operatorname{Disc}_L\Pi
+ &=2^{56}B^3(B-1)^6(B-3)^3(B+1)(B+3)^8H(B)^2E(B).
+\end{aligned}                                                    \tag{84.16}
+\]
+The leading coefficient is nonzero for \(0<B<1\), since its final
+factor is at least 58. Exact Sturm division for the printed polynomials
+gives zero roots of \(E\), and two simple roots of \(H\), in
+\((0,1)\). Thus (84.15) retains precisely these two possible
+parameter fibers, subject to the special products treated next.
+
+### 84.5. Every special product and every phase pole
+
+Product \(\eta=1\), or \(j=0\), has \(s=0\) in the finite
+chart. The phase-pole alternatives in §84.2 do not have this product.
+Hence only the two constant canonical inputs remain, and they are
+exactly the orthogonal \(\Theta\) pair in (84.1).
+
+Product \(\eta=-1\), or \(j=\infty\), cannot have a phase
+pole either. Both phases are finite, \(T=1\), and \(v\ne0\).
+The leading homogeneous version of (84.11) is nonzero by (84.6)–(84.7).
+Take the coefficients of \(j^4\) in \(F_6\) and of \(j^6\)
+in \(N_8\), and divide them by \(1+v^2\) and \((1+v^2)^2\),
+respectively. These are exact divisions by positive factors, giving
+quartics \(F_\infty,N_\infty\) with resultant
+\[
+ \operatorname{Res}_v(F_\infty,N_\infty)
+             =26244b^8(b^2-1)^6(b^2-5)^4(b^2-3)^4\ne0. \tag{84.17}
+\]
+Thus no original input has product \(-1\).
+
+Define the four special polynomials by the exact formulas
+\[
+ F_+=b^4F_6|_{j=1/b},\quad N_+=b^6N_8|_{j=1/b},\qquad
+ F_-=\frac{b^4F_6|_{j=-1/b}}{v-b},\quad
+ N_-=\frac{b^6N_8|_{j=-1/b}}{(v-b)^2}.
+\]
+These are polynomials, and both displayed divisions are exact.
+The removed factors represent the already listed upper pole; every
+other finite original input must satisfy \(F_-=N_-=0\).
+The respective degrees are five and six in both signs. Put
+\[
+\begin{aligned}
+ W&=b^8+8b^6+6b^4+8b^2+25>0,\\
+ J_{10}(B)&=18B^{10}+107B^9-101B^8-552B^7-5452B^6+11014B^5\\
+ &\quad-16130B^4+43456B^3+25634B^2+11511B-3969.
+\end{aligned}
+\]
+Then
+\[
+\begin{aligned}
+ \operatorname{Res}_v(F_+,N_+)
+ &=21233664b^{12}(b^2-3)^4(b^2+1)^{23}W^2J_{10}(b^2),\\
+ \operatorname{Res}_v(F_-,N_-)
+ &=21233664b^{12}(b^2-3)^4(b^2+1)^{15}W^2J_{10}(b^2),\\
+ \gcd(J_{10},J_{10}')&=\gcd(J_{10},f)=1.
+\end{aligned}                                                    \tag{84.18}
+\]
+The last equalities are Euclidean gcd identities in \(\mathbb Q[B]\).
+Two distinct finite nonpole lifts at either special product would make
+the 11-by-11 Sylvester matrix have nullity at least two. Differentiate
+its determinant along \(b\), with \(j=\pm1/b\) already substituted.
+Since \(b\ne0\), (84.18) would force
+\(J_{10}(B)=J_{10}'(B)=0\), a contradiction. A pole and a finite
+nonpole lift would force \(f(B)=J_{10}(B)=0\), also impossible.
+Each pole itself is unique by (84.4). Thus either special product has
+at most one nonconstant input. The squared factors \(bj\pm1\) in
+(84.14) have been covered, not discarded.
+
+### 84.6. Complete rational enclosures at the two retained fibers
+
+A degree-one subresultant of \(\Pi,\Pi_L\) is
+\(a_1(B)L+a_0(B)\). It can be reconstructed by the ordinary
+subresultant polynomial remainder sequence in \(L\), taking its
+last degree-one member. Reducing its coefficients modulo \(H\)
+gives \(\gcd(a_1,H)=1\). Therefore every common root in (84.15)
+has
+\[
+ L=\lambda(B),\qquad
+ \lambda=\operatorname{rem}_H(-a_0a_1^{-1}),            \tag{84.19}
+\]
+where inverse and remainder are in \(\mathbb Q[B]/(H)\).
+For a direct rational reconstruction the complete representative is:
+
+```text
+lambda = 3575487365945788537139*B^14/63185374465228800000 - 115911984524574002407307*B^13/284334185093529600000 + 4716365731075265877343373*B^12/5118015331683532800000 - 458198675842667704242163*B^11/1279503832920883200000 - 150991604719907859004852451*B^10/27637282791091077120000 + 60107067013252372417369063*B^9/4606213798515179520000 + 2329465284340172320388342951*B^8/138186413955455385600000 - 521589993424150723141546543*B^7/17273301744431923200000 - 385310928633431758038277067*B^6/9212427597030359040000 - 14705257028378933433258731*B^5/1535404599505059840000 + 13387870183745756250887903*B^4/5118015331683532800000 + 29452593358685271498097*B^3/28433418509352960000 + 74579728603187404458257*B^2/568668370187059200000 - 40048282689457075039*B/6318537446522880000 - 15301279245840750541/12637074893045760000
+```
+
+There is no loss of a parameter fiber in this inversion. The following
+two rational intervals \(I_1,I_2\) each contain exactly one root of
+\(H\), by exact Sturm counts, and exhaust its roots in \((0,1)\).
+Their endpoints are printed separately to keep the rational numbers
+unambiguous.
+
+```text
+I1_lo = 46491110417433194301119411015223509038913078103636387620527/500000000000000000000000000000000000000000000000000000000000
+I1_hi = 18596444166973277720447764406089403615565231241454555048211/200000000000000000000000000000000000000000000000000000000000
+I2_lo = 63905364834466114959542710532943485165929995851372012464551/250000000000000000000000000000000000000000000000000000000000
+I2_hi = 51124291867572891967634168426354788132743996681097609971641/200000000000000000000000000000000000000000000000000000000000
+```
+
+It is enough to take \(b>0\) and \(j>0\), with
+\(b=\sqrt B\), \(j=\sqrt{\lambda(B)}\); the intervals below
+certify \(\lambda(B)>0\) in both fibers. For negative \(b\),
+conjugate \(z,r\) and replace \(g\) by \(-\bar g\).
+The original quartics transform under
+\[
+ (b,j,v,p,t)\longmapsto(-b,-j,-v,p,-t)
+\]
+by the signs \((1,-1,-1)\), and inner products conjugate. At fixed
+\(b\), applying \(\Theta\) to both inputs conjugates their
+product and changes \(j\) to \(-j\), preserving orthogonality.
+These two operations retain the singleton position and cover both signs.
+
+The complete lists of rational \(v\)-boxes are as follows. In each
+fiber every listed box has exactly one real root of \(F_6\), and
+their total equals the count on the whole real line.
+
+| Fiber | Box | Lower endpoint | Upper endpoint | Necessary \(N_8\) test |
+| --- | --- | --- | --- | --- |
+| 1 | 1 | \(-310405079061/500000000000\) | \(-620810158121/1000000000000\) | retained |
+| 1 | 2 | \(-41966905549/500000000000\) | \(-83933811097/1000000000000\) | retained |
+| 2 | 1 | \(-223673694227/12500000000\) | \(-17893895538159/1000000000000\) | retained |
+| 2 | 2 | \(-2160931417437/1000000000000\) | \(-540232854359/250000000000\) | \(N_8>8509962\) |
+| 2 | 3 | \(180224865923/1000000000000\) | \(45056216481/250000000000\) | retained |
+| 2 | 4 | \(197439810293/1000000000000\) | \(98719905147/500000000000\) | \(N_8>231\) |
+
+Here “retained” means only that the box has not been excluded; it does
+not assert an original common-flat lift. All interval bounds in this
+section are obtainable by the following fully specified rational rules.
+
+1. Use outward dyadic intervals with denominator \(D_*=2^{256}\).
+   A rational endpoint \(x\) is enclosed by
+   \(\lfloor D_*x\rfloor/D_*\) and
+   \(\lceil D_*x\rceil/D_*\). Addition and negation are exact on
+   this grid. For multiplication take the least and greatest of the four
+   endpoint products and round outward to the grid. Invert an interval
+   only when its endpoints have the same strict sign; invert its endpoints,
+   reorder, and round outward. For a positive interval \([a,b]\), use
+   \(\lfloor\sqrt{aD_*^2}\rfloor/D_*\) and
+   \((\lfloor\sqrt{bD_*^2}\rfloor+1)/D_*\) as square-root bounds.
+2. Expand the exact polynomials from (84.9)–(84.13) and the printed
+   \(\lambda\). Evaluate multivariate polynomials by sums of monomials,
+   forming successive powers by multiplication. Use reduced rational
+   numerator and denominator polynomials for \(p_*,t_*\).
+3. On each \(B\)-box enclose \(b=\sqrt B\),
+   \(\lambda(B)\), and \(j=\sqrt{\lambda(B)}\). Substitute
+   these intervals in the seven coefficients of \(F_6\) in ascending
+   powers of \(v\). Form the derivative and the Sturm sequence
+   \(F_6,F_6',-\operatorname{rem}(F_6,F_6'),\ldots\) by interval
+   polynomial long division. At each division cancel the highest term
+   algebraically, discard that coefficient, and retain outward intervals
+   for the lower coefficients. Every divisor leading coefficient excludes
+   zero; the sequence has degrees \(6,5,4,3,2,1,0\).
+4. Evaluate a polynomial at a finite rational endpoint by Horner's rule.
+   At \(+\infty\) use its leading-coefficient sign and at
+   \(-\infty\) multiply that sign by \((-1)^{\deg}\).
+   Every endpoint evaluation excludes zero. Thus the computed Sturm
+   variation differences are the exact root counts for the actual
+   algebraic \(B,b,j\), not just for an interval midpoint.
+5. Evaluate \(N_8,p_*,t_*\) on every root box by rule 2. Every Cramer
+   denominator excludes zero. The two discarded boxes have the strict
+   lower bounds printed in the table. The remaining boxes can each contain
+   at most one original input, by the one-root count and Cramer uniqueness.
+
+For completeness, the Sturm variation data produced by these rules are:
+
+| Fiber | At \(-\infty,+\infty\) | At the two endpoints of each box, in table order |
+| --- | --- | --- |
+| 1 | \(4,2\) | \((4,3),(3,2)\) |
+| 2 | \(5,1\) | \((5,4),(4,3),(3,2),(2,1)\) |
+
+For the two retained boxes in a fiber, use their corresponding interval
+values \(v,v',p_*,t_*,p_*',t_*'\), and define
+\[
+\begin{gathered}
+ r=\frac{1+iv}{1-iv},\quad r'=\frac{1+iv'}{1-iv'},\quad
+ \eta=\frac{1+ij}{1-ij},\quad z=\eta\bar r,\quad z'=\eta\bar r',\\
+ \bar gg'=\frac{(p_*-it_*)(p_*'+it_*')}{3-B}.
+\end{gathered}                                                    \tag{84.20}
+\]
+Complex interval operations here mean their two real-component formulas;
+for Cayley phases use \((1-v^2,2v)/(1+v^2)\).
+Direct substitution in (84.1) gives the rigorous rational bounds
+\[
+\begin{array}{c|c}
+ \text{fiber}&\operatorname{Re}\langle w,w'\rangle\\ \hline
+ 1&(21433/10000,\ 21434/10000)\\
+ 2&(16871/10000,\ 16872/10000).
+\end{array}                                                       \tag{84.21}
+\]
+In particular every possible distinct pair in these retained fibers has
+real overlap greater than \(3/2\), or greater than \(1/4\) after
+unit normalization. Existence of lifts is not inferred from interval
+containment of zero in \(N_8\); only an exclusion of zero overlap is
+needed. Equations (84.14)–(84.21) and all special charts therefore exclude
+every nonconstant equal-product orthogonal pair. Together with Theorem
+83.1 and (84.1)–(84.3), this proves Theorem 84.1 for the entire punctured
+branch and at any fixed singleton position.
+
+## 85. A whole-branch obstruction to all-aligned orthogonal triples
+
+### 85.1. A division-free positive mode-norm identity
+
+**Theorem 85.1.** For every \(0<|b|<1\), there is no orthogonal
+triple consisting entirely of aligned common-flat rays of \(H_0(b)\).
+Singleton positions and symmetry unions need not agree.
+
+Write an arbitrary aligned input with singleton position \(j\) as
+\[
+ w_j=a\otimes\mathbf1+d\otimes e_j,
+ \quad a=(a_0,a_1)^{\mathsf T},\quad
+ c=(c_0,c_1)^{\mathsf T},\quad d=c-a,\quad S=2a+c=3a+d. \tag{85.1}
+\]
+The tensor convention is channel-first. All four entries of \(a,c\)
+have modulus one, and \(\|w_j\|^2=6\). Equivalently,
+\[
+ w_j=(S/3)\otimes\mathbf1+d\otimes(e_j-\mathbf1/3).
+\]
+The two actual mode blocks are
+\[
+ U_0=\frac1{\sqrt6}\begin{pmatrix}3+P&3+Q\\3+\bar Q&-3-\bar P\end{pmatrix},
+ \qquad
+ U_1=\frac1{\sqrt6}\begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+                                                               \tag{85.2}
+\]
+They are unitary, and
+\[
+ U_0-U_1=\sqrt3\,K_2,\qquad
+ K_2=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+\]
+Consequently \(V=U_0^*U_1\) obeys
+\[
+ V+V^*=-I_2.                                               \tag{85.3}
+\]
+The repeated and singleton input spinors are \((S-d)/3\) and
+\((S+2d)/3\). Both have squared norm two. Subtract their norm equations
+to obtain \(\operatorname{Re}\langle S,d\rangle=-\|d\|^2/2\).
+The output is aligned at the same singleton position, with mode spinors
+\(U_0S,U_1d\); its original flatness similarly gives
+\[
+ \operatorname{Re}\langle S,d\rangle
+ =\operatorname{Re}\langle S,Vd\rangle=-\|d\|^2/2.      \tag{85.4}
+\]
+Using \(V^*=-I_2-V\) in (85.4) yields
+\(\operatorname{Re}\langle S,V^*d\rangle=\|d\|^2\).
+Thus the following identity is exact and division-free:
+\[
+ \boxed{\ \|S-V^*d\|^2=\|S\|^2-\|d\|^2\ \geq0.\ }   \tag{85.5}
+\]
+It includes \(d=0\) and every phase pole directly in original coordinates.
+
+Choose a synchronous transposition \(R\) that moves the singleton
+position. Expanding (85.1) gives
+\[
+ \langle w_j,Rw_j\rangle=(\|S\|^2-\|d\|^2)/3.           \tag{85.6}
+\]
+If equality held in (85.5), Theorem 81.1 would make \(w_j\) one of
+the four nonzero-Fourier canonical rays. Each has three distinct entries
+in each channel and is not aligned. Therefore every aligned input has
+\[
+ \|S\|^2>\|d\|^2.                                        \tag{85.7}
+\]
+For a constant input, \(d=0\) and \(\|S\|^2=18\), consistent
+with strictness. No phase difference, Cayley denominator, channel sum,
+or parameter polynomial was divided by in this argument.
+
+### 85.2. Three different singleton positions
+
+For aligned inputs \(w_i,w_k\) whose singleton positions differ,
+(85.1) gives
+\[
+ \langle w_i,w_k\rangle
+       =(\langle S_i,S_k\rangle-\langle d_i,d_k\rangle)/3. \tag{85.8}
+\]
+Suppose three such inputs have pairwise different singleton positions
+and are mutually orthogonal. Their three-by-three Gram matrices satisfy
+\[
+ G_S-G_d=\operatorname{diag}
+ (\|S_1\|^2-\|d_1\|^2,\|S_2\|^2-\|d_2\|^2,
+                          \|S_3\|^2-\|d_3\|^2)>0.       \tag{85.9}
+\]
+As \(G_d\) is positive semidefinite, \(G_S\) is positive definite.
+But its three spinors lie in \(\mathbb C^2\), so
+\(\operatorname{rank}G_S\leq2\), a contradiction.
+This excludes all three-distinct-position triples without classifying
+the individual cross-union edges.
+
+### 85.3. Repeated singleton positions and the full conclusion
+
+If two members \(w,w'\) of an aligned orthogonal triple have the
+same singleton position, Theorem 84.1 identifies \(w'\) with
+\(\Theta w\) projectively. If the third has that position too,
+the same theorem identifies it with \(w'\), impossible for an
+orthogonal triple. Suppose its position is different and write its
+spinors as \(T,e\), while \(w\) has spinors \(S,d\).
+The spinor antiunitary
+\[
+ \mathcal J(s_0,s_1)=(-\bar s_1,\bar s_0)
+\]
+acts synchronously on both mode spinors of \(\Theta w\). An
+irrelevant dephasing multiplies them by the same unit scalar.
+Orthogonality against both \(w\) and \(\Theta w\), using (85.8),
+gives
+\[
+ \langle S,T\rangle=\langle d,e\rangle,\qquad
+ \langle\mathcal JS,T\rangle=\langle\mathcal Jd,e\rangle. \tag{85.10}
+\]
+For any spinors \(x,y\), expansion in their two components gives
+\[
+ |\langle x,y\rangle|^2+|\langle\mathcal Jx,y\rangle|^2
+                          =\|x\|^2\|y\|^2.             \tag{85.11}
+\]
+Apply this to (85.10). It forces
+\[
+ \|S\|^2\|T\|^2=\|d\|^2\|e\|^2,
+\]
+contrary to the two strict inequalities (85.7). Constants admit any
+singleton label because \(d=0\); choose arbitrary labels and the
+same exhaustive dichotomy applies. This proves Theorem 85.1, including
+all aligned poles and both parameter signs.
+
+The theorem crosses different \(S_3/\Theta\) symmetry unions and
+holds on the full punctured domain; no local parameter radius is involved.
+Together with the complete chart coverage of §75, it shows that any
+noncanonical orthogonal triple on this domain must contain a ray with
+three distinct entries in at least one channel. It does not exclude
+those remaining triples or imply whole-branch basis uniqueness or a
+whole-branch no-quartet theorem.
+
+## 86. No arbitrary third ray above a noncanonical aligned Theta pair
+
+### 86.1. Exact completion statement
+
+Continue with the actual common-flat input convention and
+\(0<|b|<1\). Inputs have unit-modulus entries and norm \(\sqrt6\).
+
+**Theorem 86.1.** Let \(w\) be an aligned common-flat ray. If a
+common-flat ray \(q\) is orthogonal to both \(w\) and \(\Theta w\),
+then \(w\) is one of the two constant canonical rays, and \(q\) is
+one of the four nonzero-Fourier canonical rays. Conversely each of those
+four rays is orthogonal to the constant canonical \(\Theta\) pair.
+
+Thus a noncanonical aligned \(\Theta\) pair has no common-flat
+third ray orthogonal to both, even when the third ray has three distinct
+entries in a channel. In conjunction with Theorem 84.1, this excludes
+an arbitrary third ray above any noncanonical aligned orthogonal pair
+with the same singleton position. All aligned poles are included.
+
+### 86.2. A universal original-coordinate reflection identity
+
+Choose the repeated positions as \(1,2\), and group the channels
+into three two-component spinors. Write
+\[
+ w=(a,a,c),\qquad q=(u,v,z).                              \tag{86.1}
+\]
+This notation groups the entries by position: the original channel-first
+six-vector lists the first components of the three spinors, followed by
+their second components. Every entry of \(a,c,u,v,z\) has modulus
+one, so each of these spinors has squared norm two. Put
+\(\mathcal J(x_0,x_1)=(-\bar x_1,\bar x_0)\).
+Orthogonality to both \(w\) and \(\Theta w\) is exactly
+\[
+ \langle a,u+v\rangle+\langle c,z\rangle=0,\qquad
+ \langle\mathcal Ja,u+v\rangle+\langle\mathcal Jc,z\rangle=0.
+                                                               \tag{86.2}
+\]
+For arbitrary spinors \(x,y\), the two-component identity (85.11) is
+\[
+ |\langle x,y\rangle|^2+|\langle\mathcal Jx,y\rangle|^2
+                           =\|x\|^2\|y\|^2.
+\]
+Apply it to both equations in (86.2). This gives
+\[
+ \|a\|^2\|u+v\|^2=\|c\|^2\|z\|^2,
+ \qquad\text{hence}\qquad \|u+v\|^2=2.                 \tag{86.3}
+\]
+Let \(R\) synchronously exchange positions \(1,2\) and fix
+position \(3\). Original input flatness now gives
+\[
+\begin{aligned}
+ \langle q,Rq\rangle
+ &=\langle u,v\rangle+\langle v,u\rangle+\|z\|^2\\
+ &=\|u+v\|^2-\|u\|^2-\|v\|^2+\|z\|^2=0.
+\end{aligned}                                                    \tag{86.4}
+\]
+Only a nonzero numerical constant was divided by. No phase coordinate,
+channel mean or difference, or parameter polynomial was inverted.
+Consequently constants, all aligned phase poles, arbitrary common phases,
+and every synchronous permutation are covered by this identity.
+
+### 86.3. Canonical classification and the remaining mixed cases
+
+Since \(q\) is common-flat, (86.4) and Theorem 81.1 identify it with
+one of the four nonzero-Fourier canonical rays. Proposition 60.1 then
+identifies the common-flat ray \(w\), which is orthogonal to \(q\),
+as canonical too. The four nonzero-Fourier canonical rays have three
+distinct entries in each channel and cannot be aligned. Thus \(w\)
+is one of the two constant canonical rays. The operation \(\Theta\)
+exchanges those two rays; the four other canonical rays are orthogonal
+to both. This proves the theorem and its converse.
+
+The reflection identity itself is independent of \(b\), but its
+rigidity consumer here uses the stated punctured domain. No conclusion
+at the center or endpoints is imported from this proof. A noncanonical
+orthogonal triple containing two aligned rays must therefore place those
+two rays at different singleton positions. The latter case, and triples
+with fewer aligned rays, remain unresolved by this result.

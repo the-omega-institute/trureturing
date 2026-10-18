@@ -1263,6 +1263,8 @@
     "tools/scripts/lib/resource-observation-lib.sh",
     "tools/scripts/report/report-consumer.sh",
     "tools/scripts/report/report-supervisor.sh",
+    "tools/scripts/report/runner-diagnostics.py",
+    "tools/scripts/worktree/lean_pr_cache.py",
     "tools/tests/StrataLint.ReportSupervisor.Tests/*",
     ".editorconfig",
     ".globalconfig",
