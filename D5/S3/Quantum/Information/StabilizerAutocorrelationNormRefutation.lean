@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Magic.CepollaroPowerOfTwoZeroMagicGap
 import D5.S3.Quantum.Measurement.FourierLDOILOCCRefutation
 import D5.S3.Arith.Lattices.Klartag.Walk.StepInputs2
+import D5.S3.Observer.MatrixUnitCertificate
 
 /-!
 The native MUB spectral labels do not admit one common column permutation under every
@@ -91,10 +92,6 @@ private lemma tau_eq : tau = omega ^ 3 := by
       congr 1
       push_cast
       ring
-
-private lemma shift_eq : shift = fun i j => if i = j + 1 then 1 else 0 := by
-  ext i j
-  fin_cases i <;> fin_cases j <;> rfl
 
 private lemma s_sq : s ^ 2 = 5 := by norm_num [s]
 
@@ -186,8 +183,17 @@ private lemma omega_table (n : ℕ) :
 
 private lemma shift_power (p : Fin 5) (i j : Fin 5) :
     (shift ^ p.val) i j = if i = j + p then 1 else 0 := by
-  fin_cases p <;> fin_cases i <;> fin_cases j <;>
-    norm_num [shift_eq, pow_succ, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
+  have h (p i j : ZMod 5) :
+      (shift ^ p.val) i j = if i = j + p then 1 else 0 := by
+    simpa only [shift, ZMod.natCast_zmod_val, sub_eq_iff_eq_add'] using
+      (D5.S3.Observer.MatrixUnitCertificate.shift_matrix_pow_apply (M := 5) p.val i j)
+  exact h p i j
+
+private lemma shift_eq : shift = fun i j => if i = j + 1 then 1 else 0 := by
+  ext i j
+  have h := shift_power 1 i j
+  change (shift ^ 1) i j = _ at h
+  simpa only [pow_one] using h
 
 private lemma displacement_entry (p q i j : Fin 5) :
     displacement p q i j =
