@@ -39,7 +39,10 @@ def fullLaw (r : Realization signature) : Prop :=
     (∀ c : ℝ, 3*X+(μ.real {c})^3 ≤ 1 ∧
       (μ.real {c})^3/45 ≤ D+1/45 ∧
       (0 < μ.real {c} → -1/45 < D)) ∧
-    X = ∫ v, (μ.real (Iio v))^2 ∂μ
+    X = ∫ v, (μ.real (Iio v))^2 ∂μ ∧
+    (X = 0 ↔ ∃ c : ℝ, μ = Measure.dirac c) ∧
+    r.readout () μ 3 ≤ 2/15 ∧ X-1/5 ≤ r.readout () μ 3 ∧
+    (X = 1/3 ↔ D = -1/45) ∧ (X = 1/3 → NullSingletonClass μ)
 
 abbrev arena : Arena where
   signature := signature
@@ -72,7 +75,7 @@ def family : Registration arena (type_of% borel_iid_lower_surface) where
           Finset.prod_eq_zero (Finset.mem_univ i) (by simp [Measure.dirac_apply',hs,hi])
         rw [hz]
         simp [Measure.dirac_apply' _ (MeasurableSet.univ_pi hs),h]
-    norm_num [actual,realize,modeMass,source,hpi,mode,peak]
+    norm_num [actual,realize,modeMass,hpi,mode,peak]
 
 def selection : Contract.SourceSelection where
   owner := `D5.S3.Estimation.DataProcessing.BorelIidStrictPeakLower

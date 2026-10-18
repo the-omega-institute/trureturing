@@ -106,17 +106,14 @@ private theorem measurable_quantize (n : ℕ) : Measurable (quantize n) := by
   simp [quantize,Fin.val_ofNat,Nat.mod_eq_of_lt
     (Nat.lt_succ_of_le ((Finset.card_filter_le _ _).trans_eq (Finset.card_range n)))]
 
-/-- The actual five-fold product measure is specified before the mode readout. -/
-def source (μ : Measure ℝ) : Measure (Fin 5 → ℝ) := Measure.pi (fun _ => μ)
-
 /-- Borel strict-peak probabilities are pushforward masses of the original samples. -/
 def modeMass (μ : Measure ℝ) (s : Fin 5) : ℝ :=
-  ∫ v, if mode (v 0) (v 1) (v 2) (v 3) (v 4) = s then (1 : ℝ) else 0 ∂source μ
+  ∫ v, if mode (v 0) (v 1) (v 2) (v 3) (v 4) = s then (1 : ℝ) else 0 ∂(Measure.pi (fun _ : Fin 5 => μ))
 
 /-- The approximating law is induced from the same samples by finite quantization. -/
 def quantizedMass (μ : Measure ℝ) (n : ℕ) (s : Fin 5) : ℝ :=
   ∫ v, if mode (quantize n (v 0)) (quantize n (v 1)) (quantize n (v 2))
-    (quantize n (v 3)) (quantize n (v 4)) = s then (1 : ℝ) else 0 ∂source μ
+    (quantize n (v 3)) (quantize n (v 4)) = s then (1 : ℝ) else 0 ∂(Measure.pi (fun _ : Fin 5 => μ))
 
 private theorem measurable_real_mode :
     Measurable (fun v : Fin 5 → ℝ => mode (v 0) (v 1) (v 2) (v 3) (v 4)) := by
@@ -139,7 +136,7 @@ private theorem measurable_quantized_mode (n : ℕ) :
 
 private theorem quantized_tendsto (μ : Measure ℝ) [IsProbabilityMeasure μ] (s : Fin 5) :
     Tendsto (fun n => quantizedMass μ n s) atTop (𝓝 (modeMass μ s)) := by
-  letI : IsProbabilityMeasure (source μ) := by unfold source; infer_instance
+  letI : IsProbabilityMeasure ((Measure.pi (fun _ : Fin 5 => μ))) := by infer_instance
   apply tendsto_integral_of_dominated_convergence (fun _ => (1 : ℝ))
   · intro n
     exact (Measurable.ite ((measurable_quantized_mode n) (measurableSet_singleton s))
@@ -178,7 +175,7 @@ private theorem quantized_mode_finite (μ : Measure ℝ) [IsProbabilityMeasure �
     quantizedMass μ n s = modeLaw (fun a : Fin (n+1) =>
       (μ.map (quantize n)).real {a}) s := by
   let ν := μ.map (quantize n)
-  have hmap : (source μ).map (fun v i => quantize n (v i)) =
+  have hmap : ((Measure.pi (fun _ : Fin 5 => μ))).map (fun v i => quantize n (v i)) =
       Measure.pi (fun _ : Fin 5 => ν) :=
     Measure.pi_map_pi (fun _ => (measurable_quantize n).aemeasurable)
   have hmeas : Measurable (fun v : Fin 5 → ℝ => fun i => quantize n (v i)) :=
@@ -186,7 +183,7 @@ private theorem quantized_mode_finite (μ : Measure ℝ) [IsProbabilityMeasure �
   have hm : Measurable (fun v : Fin 5 → Fin (n+1) =>
       if mode (v 0) (v 1) (v 2) (v 3) (v 4) = s then (1 : ℝ) else 0) :=
     measurable_of_finite _
-  have ht := integral_map (μ := source μ) hmeas.aemeasurable hm.aestronglyMeasurable
+  have ht := integral_map (μ := (Measure.pi (fun _ : Fin 5 => μ))) hmeas.aemeasurable hm.aestronglyMeasurable
   rw [hmap,finite_integral] at ht
   exact ht.symm
 
@@ -303,6 +300,43 @@ private theorem borel_cdf_moment (μ : Measure ℝ) [IsProbabilityMeasure μ] :
   simp_rw [← quantized_cdf_moment μ] at ht
   exact tendsto_nhds_unique ((quantized_tendsto μ 1).add (quantized_tendsto μ 3)) ht
 
+private theorem borel_zero_iff_dirac (μ : Measure ℝ) [IsProbabilityMeasure μ] :
+    modeMass μ 1+modeMass μ 3 = 0 ↔ ∃ c : ℝ, μ = Measure.dirac c := by
+  have hm : Measurable (fun v : ℝ => μ.real (Iio v)) :=
+    (show Monotone (fun v : ℝ => μ.real (Iio v)) from
+      fun _ _ h => measureReal_mono (fun _ hw => lt_of_lt_of_le hw h)).measurable
+  constructor
+  · intro hx
+    have hint : Integrable (fun v : ℝ => (μ.real (Iio v))^2) μ := by
+      apply Integrable.of_mem_Icc 0 1 (hm.pow_const 2).aemeasurable
+      filter_upwards [] with v
+      have h0 : 0 ≤ μ.real (Iio v) := measureReal_nonneg
+      have h1 : μ.real (Iio v) ≤ 1 := by
+        simpa using (measureReal_mono (μ := μ) (subset_univ (Iio v)))
+      exact ⟨sq_nonneg _,by nlinarith [sq_nonneg (1-μ.real (Iio v))]⟩
+    have hz : (fun v : ℝ => (μ.real (Iio v))^2) =ᵐ[μ] 0 := by
+      apply (integral_eq_zero_iff_of_nonneg (fun _ => sq_nonneg _) hint).mp
+      rw [← borel_cdf_moment μ,hx]
+    have horder : ∀ᵐ v ∂μ, ∀ᵐ w ∂μ, v ≤ w := by
+      filter_upwards [hz] with v hv
+      have ha : μ.real (Iio v) = 0 := eq_zero_of_pow_eq_zero hv
+      have ha' : μ (Iio v) = 0 := (measureReal_eq_zero_iff).mp ha
+      rw [ae_iff]
+      simpa only [not_le,Iio] using ha'
+    have hswap : ∀ᵐ w ∂μ, ∀ᵐ v ∂μ, v ≤ w :=
+      (Measure.ae_ae_comm (measurableSet_le measurable_fst measurable_snd)).mp horder
+    have hconst : ∀ᵐ v ∂μ, ∀ᵐ w ∂μ, w = v := by
+      filter_upwards [horder,hswap] with v hv hw
+      filter_upwards [hv,hw] with w hvw hwv
+      exact le_antisymm hwv hvw
+    obtain ⟨c,hc⟩ := hconst.exists
+    refine ⟨c,?_⟩
+    have he : μ.map (id : ℝ → ℝ) = μ.map (fun _ : ℝ => c) := Measure.map_congr hc
+    simpa only [Measure.map_id,Measure.map_const,measure_univ,one_smul] using he
+  · rintro ⟨c,rfl⟩
+    rw [borel_cdf_moment]
+    simp [measureReal_def]
+
 private theorem quantized_facts (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
     (∀ s, 0 ≤ quantizedMass μ n s) ∧ (∑ s, quantizedMass μ n s) = 1 ∧
     quantizedMass μ n 2+quantizedMass μ n 3 = quantizedMass μ n 1+quantizedMass μ n 3 ∧
@@ -412,6 +446,19 @@ private theorem borel_atom_deficit (μ : Measure ℝ) [IsProbabilityMeasure μ] 
     ((((quantized_tendsto μ 1).add (quantized_tendsto μ 3)).const_mul 3).add_const _)
     (Eventually.of_forall fun n => quantized_atom_deficit μ n c)
 
+private theorem borel_saturation (μ : Measure ℝ) [IsProbabilityMeasure μ] :
+    modeMass μ 3 ≤ 2/15 ∧ modeMass μ 1+modeMass μ 3-1/5 ≤ modeMass μ 3 := by
+  have hn (n : ℕ) : quantizedMass μ n 3 ≤ 2/15 ∧
+      quantizedMass μ n 1+quantizedMass μ n 3-1/5 ≤ quantizedMass μ n 3 := by
+    obtain ⟨p,hp,hs,he,_⟩ := quantized_is_finite μ n
+    simp_rw [he]
+    exact (finite_iid_lower_surface p hp hs).2.2.2.2.2.2.2
+  refine ⟨le_of_tendsto (quantized_tendsto μ 3)
+    (Eventually.of_forall fun n => (hn n).1),?_⟩
+  exact le_of_tendsto_of_tendsto
+    (((quantized_tendsto μ 1).add (quantized_tendsto μ 3)).sub_const (1/5))
+    (quantized_tendsto μ 3) (Eventually.of_forall fun n => (hn n).2)
+
 private theorem quantized_correction (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
     ∃ s ∈ Icc (0 : ℝ) 1, s^3 = 1-3*(quantizedMass μ n 1+quantizedMass μ n 3) ∧
       s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤
@@ -474,7 +521,10 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     (∀ c : ℝ, 3*X+(μ.real {c})^3 ≤ 1 ∧
       (μ.real {c})^3/45 ≤ D+1/45 ∧
       (0 < μ.real {c} → -1/45 < D)) ∧
-    X = ∫ v, (μ.real (Iio v))^2 ∂μ := by
+    X = ∫ v, (μ.real (Iio v))^2 ∂μ ∧
+    (X = 0 ↔ ∃ c : ℝ, μ = Measure.dirac c) ∧
+    modeMass μ 3 ≤ 2/15 ∧ X-1/5 ≤ modeMass μ 3 ∧
+    (X = 1/3 ↔ D = -1/45) ∧ (X = 1/3 → NullSingletonClass μ) := by
   dsimp only
   have ht := quantized_tendsto μ
   have hx := (ht 1).add (ht 3)
@@ -508,7 +558,17 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     exact le_of_tendsto_of_tendsto (hx.neg.div_const 15) hd
       (Eventually.of_forall fun n => (quantized_facts μ n).2.2.2.2.2.2)
   have hcor := borel_correction μ
-  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_,?_,borel_cdf_moment μ⟩
+  have hsat := borel_saturation μ
+  have hdet : modeMass μ 0*modeMass μ 3-modeMass μ 1*modeMass μ 2 =
+      (1-(modeMass μ 1+modeMass μ 3))*modeMass μ 3-(modeMass μ 1+modeMass μ 3)^2 := by
+    have hp2 : modeMass μ 2 = modeMass μ 1 := by linarith
+    have hp0 : modeMass μ 0 = 1-3*modeMass μ 1-2*modeMass μ 3 := by
+      rw [Fin.sum_univ_five] at hm
+      linarith
+    rw [hp0,hp2]
+    ring
+  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_,?_,borel_cdf_moment μ,
+    borel_zero_iff_dirac μ,hsat.1,hsat.2,?_,?_⟩
   · intro hXpos hXlt
     obtain ⟨s,hs,hs3,hcorr,_⟩ := hcor
     have hs0 : 0 < s := by
@@ -536,6 +596,23 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     intro hc
     have hp3 : 0 < (μ.real {c})^3 := pow_pos hc 3
     linarith
+
+  · constructor
+    · intro hX
+      have hk : modeMass μ 3 = 2/15 := by linarith [hsat.1,hsat.2]
+      rw [hdet,hX,hk]
+      norm_num
+    · intro hD
+      linarith
+  · intro hX
+    constructor
+    intro c
+    have hd := borel_atom_deficit μ c
+    rw [hX] at hd
+    have hz3 : (μ.real {c})^3 = 0 := by
+      have hnonneg := pow_nonneg (measureReal_nonneg (μ := μ) (s := {c})) 3
+      linarith
+    exact (measureReal_eq_zero_iff).mp (eq_zero_of_pow_eq_zero hz3)
 
 #print axioms borel_iid_lower_surface
 

@@ -354,6 +354,42 @@ private theorem strict_first_moment (p : A → ℝ) (hp : ∀ i, 0 ≤ p i)
   rw [cap_integral] at hcadj
   linarith
 
+private theorem moment_saturation (p : A → ℝ) (hp : ∀ i, 0 ≤ p i)
+    (hs : ∑ i, p i = 1) :
+    (∫ u in (0 : ℝ)..1, tail p u^2) ≤ 2/15 ∧
+    (∫ u in (0 : ℝ)..1, tail p u)-1/5 ≤ (∫ u in (0 : ℝ)..1, tail p u^2) := by
+  have hc : Continuous cap := by unfold cap; fun_prop
+  have hc2 : Continuous (fun u => cap u^2) := hc.pow 2
+  have hpoly : (fun u : ℝ => cap u^2) =
+      fun u => (1/4 : ℝ) + (-1/2)*u^2 + (1/4)*u^4 := by
+    funext u; unfold cap; ring
+  have hi2 : (∫ u in (0 : ℝ)..1, cap u^2) = 2/15 := by
+    rw [hpoly,intervalIntegral.integral_add
+      ((intervalIntegrable_const).add ((by fun_prop : Continuous (fun u : ℝ => (-1/2)*u^2)).intervalIntegrable _ _))
+      ((by fun_prop : Continuous (fun u : ℝ => (1/4)*u^4)).intervalIntegrable _ _),
+      intervalIntegral.integral_add intervalIntegrable_const
+        ((by fun_prop : Continuous (fun u : ℝ => (-1/2)*u^2)).intervalIntegrable _ _)]
+    norm_num [intervalIntegral.integral_const_mul,integral_pow]
+  have hupper := intervalIntegral.integral_mono_on (by norm_num : (0 : ℝ) ≤ 1)
+    (tail_square_integrable p) (hc2.intervalIntegrable _ _)
+    (fun u hu => pow_le_pow_left₀ (tail_bounds p hp hs u hu).1
+      (tail_bounds p hp hs u hu).2 2)
+  rw [hi2] at hupper
+  refine ⟨hupper,?_⟩
+  have hcompare : (∫ u in (0 : ℝ)..1, cap u^2-tail p u^2) ≤
+      ∫ u in (0 : ℝ)..1, cap u-tail p u := by
+    apply intervalIntegral.integral_mono_on (by norm_num)
+      ((hc2.intervalIntegrable _ _).sub (tail_square_integrable p))
+      ((hc.intervalIntegrable _ _).sub (tail_integrable p))
+    intro u hu
+    obtain ⟨h0,hcG⟩ := tail_bounds p hp hs u hu
+    have hcap : cap u ≤ 1/2 := by unfold cap; nlinarith [sq_nonneg u]
+    nlinarith [mul_nonneg (sub_nonneg.mpr hcG)
+      (show 0 ≤ 1-cap u-tail p u by linarith)]
+  rw [intervalIntegral.integral_sub (hc2.intervalIntegrable _ _) (tail_square_integrable p),
+    intervalIntegral.integral_sub (hc.intervalIntegrable _ _) (tail_integrable p),hi2,cap_integral] at hcompare
+  linarith
+
 private theorem zero_peak_iff_dirac (p : A → ℝ) (hp : ∀ i, 0 ≤ p i)
     (hs : ∑ i, p i = 1) :
     (∑ i, p i*lowerMass p i ^ 2) = 0 ↔
@@ -409,7 +445,8 @@ theorem finite_iid_lower_surface (p : A → ℝ) (hp : ∀ i, 0 ≤ p i)
       s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤ D+X/15 ∧
       0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4)) ∧
     -X/15 ≤ D ∧ -1/45 < D ∧
-    (D = -X/15 ↔ ∃ i, p i = 1 ∧ ∀ j, j ≠ i → p j = 0) := by
+    (D = -X/15 ↔ ∃ i, p i = 1 ∧ ∀ j, j ≠ i → p j = 0) ∧
+    modeLaw p 3 ≤ 2/15 ∧ X-1/5 ≤ modeLaw p 3 := by
   dsimp only
   obtain ⟨_,hn,_,hx,_,_,hj,_,hd⟩ := iid_peak_source p hp hs
   have hfirst := tail_first_moment p hp hs
@@ -431,7 +468,9 @@ theorem finite_iid_lower_surface (p : A → ℝ) (hp : ∀ i, 0 ≤ p i)
       ∃ i, p i = 1 ∧ ∀ j, j ≠ i → p j = 0 := by
     rw [hx]
     exact zero_peak_iff_dirac p hp hs
-  refine ⟨hX0,hXlt,hdirac,⟨s,hs0,hs3,hcor,hcor0⟩,hlower,by linarith,?_⟩
+  have hsat := moment_saturation p hp hs
+  rw [hsecond,hmarg,← hj] at hsat
+  refine ⟨hX0,hXlt,hdirac,⟨s,hs0,hs3,hcor,hcor0⟩,hlower,by linarith,?_,hsat⟩
   rw [← hdirac]
   constructor
   · intro he

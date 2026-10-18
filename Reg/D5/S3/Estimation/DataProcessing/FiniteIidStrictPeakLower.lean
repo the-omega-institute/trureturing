@@ -22,7 +22,8 @@ def fullLaw (r : Realization signature.{u}) : Prop :=
       s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4) ≤ D+X/15 ∧
       0 ≤ s^3/45*(1-s)*(1+s+7*s^2-3*s^3-3*s^4)) ∧
     -X/15 ≤ D ∧ -1/45 < D ∧
-    (D = -X/15 ↔ ∃ i, p i = 1 ∧ ∀ j, j ≠ i → p j = 0)
+    (D = -X/15 ↔ ∃ i, p i = 1 ∧ ∀ j, j ≠ i → p j = 0) ∧
+    observedLaw r p 3 ≤ 2/15 ∧ X-1/5 ≤ observedLaw r p 3
 
 abbrev lowerArena : Arena where
   signature := signature.{u}

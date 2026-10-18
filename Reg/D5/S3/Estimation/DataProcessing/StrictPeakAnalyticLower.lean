@@ -92,7 +92,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","body","body","value","fn","fn","fn","arg"]
+      path := #["body","body","body","body","value","fn","fn","fn","arg","body","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -108,7 +108,7 @@ def analysisSource : Analysis.Source (@bounded_tail_lower_surface) :=
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body","body","body","body","value","fn","fn","fn","arg"]
+      path := #["body","body","body","body","value","fn","fn","fn","arg","body","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
