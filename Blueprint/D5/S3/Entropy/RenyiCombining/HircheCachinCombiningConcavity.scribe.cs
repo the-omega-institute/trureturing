@@ -54,18 +54,6 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                 "The existential threshold is strictly between one and 13863/10000. The convex clause quantifies over "
                 + "all positive real orders below it, and the concave clause over all real orders at least two. "
                 + "Both clauses use Mathlib's full two-point inequality on the closed entropy interval, including both endpoints."),
-            Node("convexOn_G_of_le_one", "Convexity through the Shannon order",
-                AllReal("alpha", Imp(Rel(D(0), FormulaRelationOperator.LessThan, N("alpha")),
-                    Imp(Rel(N("alpha"), FormulaRelationOperator.LessThanOrEqual, D(1)), AllReal("y",
-                        Imp(Rel(N("y"), FormulaRelationOperator.MemberOf, EntropyInterval()),
-                            Call("ConvexOn", RealType(), EntropyInterval(),
-                                Par(Seq(N("x"), Sp, Mapsto, Sp, Call("G", N("alpha"), N("x"), N("y")))))))))),
-                DescribeRole.Theorem,
-                "For 0 < alpha < 1 the negative-parameter certificate makes F antitone in r and hence elasticity "
-                + "monotone in the bias t. At alpha = 1 the separate Shannon certificate differentiates Real.binEntropy "
-                + "and uses -psi'(t)=artanh(t). In both cases the slope ratio decreases with t, so its composition with "
-                + "the decreasing inverse bias is monotone in the entropy coordinate. Continuity and the constant/identity "
-                + "boundary cases give ConvexOn on the full closed interval."),
             Node("result", "Hirche Conjecture IV.18 with threshold five quarters", ClaimBody(), DescribeRole.Theorem,
                 "The witness 5/4 lies strictly between 1 and 1.3863. For every y in [0,log 2], x maps to G(alpha,x,y) "
                 + "is convex for every 0 < alpha < 5/4 and concave for every alpha >= 2. "

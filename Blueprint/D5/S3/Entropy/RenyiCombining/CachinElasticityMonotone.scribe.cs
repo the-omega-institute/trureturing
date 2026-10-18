@@ -30,46 +30,12 @@ internal sealed class CachinElasticityMonotoneDocument : IScribeDocumentDefiniti
                     Subtract(Call("A", N("n"), N("r")), Call("B", N("n"), N("r"))),
                     Add(D(1), Call("B", N("n"), N("r"))))))), DescribeRole.Definition,
                 "F is the real-power expression for the elasticity of minus the derivative of binary Renyi entropy in bias coordinates."),
-            Node("J", "Real-power sign certificate", AllReal("n", AllReal("z", JFormula())),
-                DescribeRole.Definition, "The four-term auxiliary function controls the sign of A's derivative."),
             Paragraph(Text("The derivative certificate is J₁(n,z)=(n+1)(-1+n z^(n-1)-(n-1)z^n). "
                 + "It records the first derivative of J on positive bases.")),
-            Node("J_hasDerivAt", "Derivative of J", AllReal("n", AllReal("z",
-                Imp(Rel(D(0), FormulaRelationOperator.LessThan, N("z")),
-                    Call("HasDerivAt", Call("J", N("n")), Call("J1", N("n"), N("z")), N("z"))))),
-                DescribeRole.Theorem, "The real-power derivative identity requires only a positive base."),
-            Node("J1_hasDerivAt", "Second derivative of J", AllReal("n", AllReal("z",
-                Imp(Rel(D(0), FormulaRelationOperator.LessThan, N("z")),
-                    Call("HasDerivAt", Call("J1", N("n")),
-                        Multiply(Multiply(Multiply(N("n"), Subtract(Pow(N("n"), D(2)), D(1))),
-                            Pow(N("z"), Subtract(N("n"), D(2)))), Subtract(D(1), N("z"))), N("z"))))),
-                DescribeRole.Theorem, "The second derivative factors into a parameter sign and positive-base factors."),
-            Node("J_nonneg", "Nonnegativity of J from its curvature", AllReal("n", AllReal("z",
-                Imp(Rel(D(0), FormulaRelationOperator.LessThanOrEqual,
-                    Multiply(N("n"), Subtract(Pow(N("n"), D(2)), D(1)))),
-                    Imp(Rel(N("z"), FormulaRelationOperator.MemberOf, Interval("Ioo", D(0), D(1))),
-                        Rel(D(0), FormulaRelationOperator.LessThanOrEqual, Call("J", N("n"), N("z"))))))),
-                DescribeRole.Theorem, "J and its first derivative vanish at one. Nonnegative second derivative "
-                    + "therefore gives J >= 0. The condition includes both n >= 1 and -1 < n < 0."),
             Paragraph(Text("The explicit derivative expressions are A₁(n,r)=n r^(n-2) J(n,r^2)/(1-r^(2n))^2, "
                 + "B₁(n,r)=-2 T(n,r)/(1+r)^2-2n((1-r)/(1+r))r^(n-1)/(1+r^n)^2, "
                 + "and F₁(n,r)=A₁(n,r)/(1+B(n,r))-(1+A(n,r))B₁(n,r)/(1+B(n,r))^2. "
                 + "These functions separate the derivative signs used in the positive and negative order regimes.")),
-            Node("A_hasDerivAt", "Derivative of A for nonzero real n", DerivativeDomain("A", "A1", false),
-                DescribeRole.Theorem, "The denominator is nonzero for every nonzero n and 0 < r < 1. "
-                    + "Both positive and negative real parameters use the same derivative proof."),
-            Node("B_hasDerivAt", "Derivative of B", AllReal("n", AllReal("r",
-                Imp(Rel(N("r"), FormulaRelationOperator.MemberOf, Interval("Ioo", D(0), D(1))),
-                    Call("HasDerivAt", Call("B", N("n")), Call("B1", N("n"), N("r")), N("r"))))),
-                DescribeRole.Theorem, "The power-ratio derivative and product rule apply to every real n."),
-            Node("F_hasDerivAt", "Derivative of F", DerivativeDomain("F", "F1", true),
-                DescribeRole.Theorem, "The quotient rule applies when n is nonzero and 1+B is positive. "
-                    + "The positive- and negative-order consumers establish that sign separately."),
-            Node("T_pos", "Positivity of the power-ratio transform", WithDomain(
-                Rel(D(0), FormulaRelationOperator.LessThan, Call("T", N("n"), N("r")))),
-                DescribeRole.Theorem,
-                "For n at least one and 0 < r < 1, the nth power of r lies strictly between zero and one. "
-                + "Thus the numerator and denominator of T are both positive."),
             Node("T_hasDerivAt", "Derivative of the power-ratio transform", AllReal("n", AllReal("r",
                 Imp(Rel(D(0), FormulaRelationOperator.LessThan, N("r")),
                     Call("HasDerivAt", Call("T", N("n")), new Formula.Fraction(
@@ -90,6 +56,13 @@ internal sealed class CachinElasticityMonotoneDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem,
                 "For every real n at least one, F(n,r) is nondecreasing on (0,1). "
                 + "The proof in fact establishes a strictly positive derivative on that interval."),
+            Node("antitoneOn_F_neg", "Antitonicity at negative parameters",
+                AllReal("n", Imp(Seq(Rel(Negative(D(1)), FormulaRelationOperator.LessThan, N("n")),
+                    Sp, Land, Sp, Rel(N("n"), FormulaRelationOperator.LessThan, D(0))),
+                    Call("AntitoneOn", Call("F", N("n")), Interval("Ioo", D(0), D(1))))),
+                DescribeRole.Theorem,
+                "For -1 < n < 0, J remains nonnegative and the factor n reverses A's derivative sign. "
+                    + "Here A > 0, -1 < B < 0 and B' > 0, so F' < 0. This supplies the orders below one."),
             Paragraph(Text("The sign certificate is the four-term real-power function "), Math(JFormula()),
                 Text(". Its first derivative is (n+1)(-1+n z^(n-1)-(n-1)z^n), and its second derivative is "
                     + "n(n^2-1) z^(n-2)(1-z). The second derivative is nonnegative on (0,1). "
@@ -119,16 +92,6 @@ internal sealed class CachinElasticityMonotoneDocument : IScribeDocumentDefiniti
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(Par(value), exponent);
     private static Formula Negative(Formula value) => Seq(Minus, value);
     private static Formula Interval(string name, Formula left, Formula right) => Call(name, left, right);
-    private static Formula WithDomain(Formula body) => AllReal("n", AllReal("r",
-        Imp(Rel(D(1), FormulaRelationOperator.LessThanOrEqual, N("n")),
-            Imp(Rel(N("r"), FormulaRelationOperator.MemberOf, Interval("Ioo", D(0), D(1))), body))));
-    private static Formula DerivativeDomain(string function, string derivative, bool denominator) {
-        Formula conclusion = Call("HasDerivAt", Call(function, N("n")), Call(derivative, N("n"), N("r")), N("r"));
-        if (denominator) conclusion = Imp(Rel(D(0), FormulaRelationOperator.LessThan,
-            Add(D(1), Call("B", N("n"), N("r")))), conclusion);
-        return AllReal("n", AllReal("r", Imp(Rel(N("n"), FormulaRelationOperator.NotEqual, D(0)),
-            Imp(Rel(N("r"), FormulaRelationOperator.MemberOf, Interval("Ioo", D(0), D(1))), conclusion))));
-    }
     private static Formula TBody() => new Formula.Fraction(Subtract(D(1), Pow(N("r"), N("n"))),
         Add(D(1), Pow(N("r"), N("n"))));
     private static Formula ANumerator() => Multiply(Multiply(N("n"), Pow(N("r"), Subtract(N("n"), D(1)))),

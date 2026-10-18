@@ -68,21 +68,7 @@ $$claim = \exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \f
 
 The existential threshold is strictly between one and 13863/10000. The convex clause quantifies over all positive real orders below it, and the concave clause over all real orders at least two. Both clauses use Mathlib's full two-point inequality on the closed entropy interval, including both endpoints.
 
-**Theorem 1.6 (Convexity through the Shannon order).**
-
-$$\forall (alpha: \mathbb{R}), (0 < alpha) \Rightarrow \left((alpha \le 1) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.convexOn_G_of_le_one` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
-
-*Commentary.*
-
-For 0 < alpha < 1 the negative-parameter certificate makes F antitone in r and hence elasticity monotone in the bias t. At alpha = 1 the separate Shannon certificate differentiates Real.binEntropy and uses -psi'(t)=artanh(t). In both cases the slope ratio decreases with t, so its composition with the decreasing inverse bias is monotone in the entropy coordinate. Continuity and the constant/identity boundary cases give ConvexOn on the full closed interval.
-
-**Theorem 1.7 (Hirche Conjecture IV.18 with threshold five quarters).**
+**Theorem 1.6 (Hirche Conjecture IV.18 with threshold five quarters).**
 
 $$\exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \frac{13863}{10000} \land \left((\forall (alpha: \mathbb{R}), (0 < alpha) \Rightarrow \left((alpha < alphaHat) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConvexOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right)\right)) \land (\forall (alpha: \mathbb{R}), (2 \le alpha) \Rightarrow \forall (y: \mathbb{R}), (y \in \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right)) \Rightarrow \operatorname{ConcaveOn}\left(\mathbb{R}, \operatorname{Icc}\left(0, \operatorname{log}\left(2\right)\right), (x \mapsto \operatorname{G}\left(alpha, x, y\right))\right))\right)\right)$$
 
@@ -112,12 +98,9 @@ At v=0 the transported function is constant, and at v=1 it is the identity. Thes
 
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.G`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim`
-- Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.convexOn_G_of_le_one`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.result`
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star`
-- Dependency: [D5/S3/Entropy/RenyiCombining/CachinConvexCertificate](CachinConvexCertificate.md)
+- Dependency: [D5/S3/Entropy/RenyiCombining/CachinConvexBranch](CachinConvexBranch.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinElasticityMonotone](CachinElasticityMonotone.md)
-- Dependency: [D5/S3/Entropy/RenyiCombining/CachinNegativeBranch](CachinNegativeBranch.md)
-- Dependency: [D5/S3/Entropy/RenyiCombining/CachinShannonBranch](CachinShannonBranch.md)
