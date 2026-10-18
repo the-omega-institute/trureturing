@@ -3004,3 +3004,289 @@ Theorem 112.1 leaves at most one rank-one full-kernel fibre projection at a posi
 These are restrictions on calibrated full-domain local minima with a full-support rank-seven kernel. The calibrated representative reduction of [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) preserves the unrestricted optimum, not arbitrary leaking ranks or local-minimum hypotheses. The residual opposite-rank-four cases, exceptional rank-five cases, both-ranks-at-most-six representatives and the global quarter-optimum question remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 113. Curved radicals exclude a single rank-one fibre and the full rank-(7,5) class
+
+### 113.1. The original domain and the full curved quadratic
+
+Retain the eight original coordinates, their four two-coordinate fibres, the local channels from $\mathbb C^8$ to $\mathbb C^4$, and the fixed correlated encoding. For calibrated channels let
+
+$$
+\mathcal E=\{M=M^*\succeq0:M_{ff}=I_2\text{ for every original fibre }f\}.
+\tag{113.1}
+$$
+
+Write $T_{ff}=I_2$ and $T_{fg}=J_2/2$ for $f\ne g$. The exact unhalved arbitrary-reference error is
+
+$$
+\begin{aligned}
+F(G,H)&=\max 2\operatorname{Tr}[(T-G\odot H)W],\\
+\rho&=\bigoplus_f\rho_f\succeq0,\qquad
+\operatorname{Tr}\rho=1,\qquad0\preceq W\preceq\rho.
+\end{aligned}
+\tag{113.2}
+$$
+
+Throughout the exclusion arguments, assume that $(G,H)$ is a local minimum on the full domain $\mathcal E\times\mathcal E$, including nearby competitors of different ranks. Also assume
+
+$$
+\operatorname{rank}G=7,\qquad
+\ker G=\mathbb Ca,\quad a_i\ne0\text{ for every }i,\qquad
+0<F(G,H)<\frac12.
+\tag{113.3}
+$$
+
+The common-stress and quotient results of RT III §§92 and 95.3 give a fixed common complementary stress
+
+$$
+\begin{aligned}
+P_A&=\alpha aa^*,&
+P&=\alpha\operatorname{diag}(a)R\operatorname{diag}(\bar a),\\
+\alpha&>0,& R&\succeq0,\quad R_{ii}=1,\\
+G&=H\odot\bar R,&PH&=0.
+\end{aligned}
+\tag{113.4}
+$$
+
+Every cross-fibre entry of $G,H,R,P$ is nonzero: the original matrix-unit bound $|1/2-G_{ij}H_{ij}|\leq F<1/2$ gives this first for $G,H$, and (113.4) gives it for $R,P$. Also $P_{ii}=\alpha|a_i|^2>0$.
+
+Let $N$ be the orthogonal projection onto the entire $\ker H$, and let $U$ have full row rank with $`\operatorname{range}U^*=\ker H`$. The complete curved tangent space and its paired first-Gram direction are
+
+$$
+\begin{aligned}
+\mathcal T_H&=\{D=D^*:D_{ff}=0\text{ for every }f,\ NDN=0\},\\
+D_A&=-\bar R\odot D.
+\end{aligned}
+\tag{113.5}
+$$
+
+The zero fibre blocks make the definition of $D_A$ independent of the unused within-fibre ratios. By [RT III §98](ARITHMETIC_HOLOGRAPHIC_RT_III.md#98-curved-common-stress-tests-and-finite-principal-quotients), this gives an admissible paired tangent with zero full original product derivative. For the same fixed $G,H,a,P$, its necessary real quadratic is
+
+$$
+\begin{aligned}
+Q_{\mathrm{curv}}(D)
+ &=Q_P(D)+\alpha a^*D_AG^+D_Aa
+        +\operatorname{Tr}(PDH^+D)\geq0,\\
+Q_P(D)&=-\sum_{\substack{i,j\text{ in distinct}\\\text{original fibres}}}
+ \frac{\overline{P_{ij}}}{H_{ij}}D_{ij}^{2}.
+\end{aligned}
+\tag{113.6}
+$$
+
+The sum is ordered, the squares are complex entrywise squares, and the pseudoinverses are those of the full original Grams. The delivered curved theorem selects a common normer for each fixed direction and then proves that the whole form, including both costs, is a positive scalar multiple of one fixed normalized form. Thus (113.6) holds on all of $\mathcal T_H$ with the same $P$. No exchange of quadratic direction and witness maxima is used.
+
+### 113.2. Entire-kernel stars are radicals on the whole curved domain
+
+**Lemma 113.1.** Under (113.3), let nonzero $n,m\in\operatorname{range}H$ be supported on disjoint unions of original fibres. For every $z\in\mathbb C$, put
+
+$$
+S(z)=z\,nm^*+\bar z\,mn^*.
+\tag{113.7}
+$$
+
+Then the Hermitian matrix
+
+$$
+\mathcal A(S)_{ij}=
+ \frac{P_{ij}\overline{S_{ij}}}{\overline{H_{ij}}}
+ \quad\text{on cross-fibre entries},\qquad
+\mathcal A(S)_{ff}=0
+\tag{113.8}
+$$
+
+belongs to the real Hilbert–Schmidt annihilator of $\mathcal T_H$. Consequently, for each $z$ there are Hermitian matrices $\Lambda_z,Y_z$, with $\Lambda_z$ original-fibre-block diagonal, such that
+
+$$
+\mathcal A(S(z))=\Lambda_z+U^*Y_zU.
+\tag{113.9}
+$$
+
+**Proof.** Each star has zero entire original fibre blocks and annihilates $\ker H$. For any Hermitian $S$ with these two properties, $SP=PS=0$ and
+
+$$
+(D_A(S)a)_i
+ =-\frac{\sum_j\overline{P_{ij}}S_{ij}}{\alpha\bar a_i}
+ =-\frac{(SP)_{ii}}{\alpha\bar a_i}=0.
+\tag{113.10}
+$$
+
+The sum may include all $j$, since the original fibre-block entries of $S$ vanish. Both positive curvature costs in (113.6) are squared norms of real-linear maps. These maps vanish at $S$, so both costs and both their polarizations against every $D\in\mathcal T_H$ vanish.
+
+For the stars (113.7), $Q_P(S(z))=-2\operatorname{Re}(z^2c)$ for a fixed complex number $c$. Nonnegativity for all phases of $z$ forces $c=0$. A zero vector $S$ of a nonnegative real quadratic lies in its radical: applying the quadratic to $S+tD$ for both signs of real $t$ forces its polarization to vanish. Removing the two cost polarizations therefore gives
+
+$$
+B_P(S,D)
+ =-\operatorname{Re}\sum_{\substack{i,j\text{ in distinct}\\\text{original fibres}}}
+ \frac{\overline{P_{ij}}S_{ij}D_{ij}}{H_{ij}}
+ =-\operatorname{Tr}(\mathcal A(S)D)=0
+ \quad(D\in\mathcal T_H).
+\tag{113.11}
+$$
+
+The annihilator of the intersection of two finite-dimensional real linear kernels is the sum of the adjoint ranges. Applying this to the maps taking original fibre blocks and the compression $NDN$ gives
+
+$$
+\mathcal T_H^\perp
+ =\{\Lambda+Z:\Lambda=\Lambda^*\text{ original-fibre-block diagonal},\quad
+ Z=Z^*=NZN\}.
+\tag{113.12}
+$$
+
+Every Hermitian $Z$ supported on $\ker H$ is $`U^*YU`$ for a Hermitian $Y$. This proves (113.9). No independence of the constraints or uniqueness of the decomposition is required. The same $P$ is retained for every star. ∎
+
+### 113.3. One rank-one full-kernel fibre already gives a contradiction
+
+**Theorem 113.2.** Under (113.3), every original two-column block $U_f$ has rank two, for every opposite rank $\operatorname{rank}H$.
+
+**Proof.** Since $P$ is supported on $\ker H$ and $P_{ii}>0$, no $U_f$ has rank zero. Suppose $\operatorname{rank}U_f=1$. Choose unit vectors $m,n\in\mathbb C^2$ with $`\operatorname{range}U_f^*=\mathbb Cm`$ and $n\perp m$. Embedded on $f$, the vector $n$ satisfies $Un=0$ and therefore belongs to $\operatorname{range}H$. Both coordinates of $m$ are nonzero, because both diagonal entries of $P_{ff}$ are positive.
+
+Diagonal reciprocal phases allow the normalization
+
+$$
+m=(c,s)^T,\qquad n=(-s,c)^T,\qquad
+c,s>0,\quad c^2+s^2=1.
+\tag{113.13}
+$$
+
+Explicitly, for a diagonal unitary $E$ the transformations are $`H'=E^*HE`$, $`P'=E^*PE`$, $`G'=EGE^*`$, and $`a'=Ea`$. They preserve the full original product, identity fibre blocks, norm and quadratic summands. The irrelevant phase of $n$ is then chosen as in (113.13). No arbitrary unitary change inside a physical fibre is used.
+
+Let $C=f^c$. There is a vector $p$ on $C$ such that
+
+$$
+P_{fC}=mp^*,\qquad p_j\ne0\quad(j\in C).
+\tag{113.14}
+$$
+
+Indeed the range of the $f$ rows of the kernel-supported $P$ lies in $\mathbb Cm$, and its cross entries are nonzero. Set $x=H_{Cf}m$ and $y=H_{Cf}n$. Label the two coordinates of $f$ by $0,1$. Then
+
+$$
+H_{0j}=c\bar x_j-s\bar y_j,\qquad
+H_{1j}=s\bar x_j+c\bar y_j
+\quad(j\in C).
+\tag{113.15}
+$$
+
+For every $v\in\operatorname{range}H$ with $v_f=0$, use the star $`S=nv^*+vn^*`$. By Lemma 113.1, $\mathcal A(S)=\Lambda+Z$ with $Z=NZN$. Since $n\in\operatorname{range}H$, $Zn=0$, while $\Lambda n$ is supported on $f$. Thus $(\mathcal A(S)n)_j=0$ outside $f$. Directly from (113.8), this equation is
+
+$$
+0=\bar v_jp_j\sum_{i\in f}\frac{m_i n_i^2}{H_{ij}}
+ =\bar v_jp_j\frac{cs\bar x_j}{H_{0j}H_{1j}}.
+\tag{113.16}
+$$
+
+The identity used here is
+
+$$
+\frac{cs^2}{cX-sY}+\frac{sc^2}{sX+cY}
+ =\frac{csX}{(cX-sY)(sX+cY)}
+ \qquad(c^2+s^2=1),
+\tag{113.17}
+$$
+
+valid for arbitrary complex $X,Y$ with nonzero denominators. Those denominators and $p_j$ are nonzero here. Consequently,
+
+$$
+\exists v\in\operatorname{range}H:\ v_f=0,\ v_j\ne0
+ \quad\Longrightarrow\quad x_j=0.
+\tag{113.18}
+$$
+
+Take a full-row-rank record factor $`H=B^*B`$, with unit columns $h_j$. Let $\mathcal F=\operatorname{span}(h_0,h_1)$ and $\mathcal W=\operatorname{span}\{h_j:j\in C\}$. The projection of $\ker B$ onto the $f$ coordinates is precisely
+
+$$
+\{w\in\mathbb C^2:B_fw\in\mathcal W\}.
+\tag{113.19}
+$$
+
+Since $B_f$ is an isometry and that projection is $\mathbb Cm$, one obtains
+
+$$
+\mathcal F\cap\mathcal W=\mathbb Cu,\qquad
+u=B_fm,\quad\|u\|=1,\quad u\in\mathcal W.
+\tag{113.20}
+$$
+
+Every vector in $\operatorname{range}H$ is $`v=B^*w`$, and $v_f=0$ exactly when $w\perp\mathcal F$. Hence an outside record $h_j$ admits no such $v$ with $v_j\ne0$ exactly when $h_j\in\mathcal F$. Since $h_j\in\mathcal W$, this is equivalent to $h_j\in\mathbb Cu$. Otherwise (113.18) gives $`x_j=h_j^*u=0`$. Thus every outside record satisfies
+
+$$
+h_j\in\mathbb Cu\quad\text{or}\quad h_j\perp u.
+\tag{113.21}
+$$
+
+They cannot all be orthogonal to $u$, since their span contains $u$. Choose an outside record $h_j$ parallel to $u$, in a fibre $g\ne f$. A third original fibre $k\ne f,g$ has both records with nonzero inner product with $h_j$. By (113.21), both records of $k$ must therefore be parallel to $u$. This contradicts their original orthonormality $H_{kk}=I_2$. Hence rank one is impossible, and every $U_f$ has rank two. ∎
+
+### 113.4. Opposite orientations force a full kernel-normal matrix to vanish
+
+**Lemma 113.3.** Under (113.3), let $k=\dim\ker H<4$. Suppose a partition $A,B$ into two pairs of original fibres satisfies $\operatorname{rank}U_A=\operatorname{rank}U_B=k$. Then no such local minimum exists.
+
+**Proof.** Each $k\times4$ block has a nonzero null vector. Choose $n,m$ supported on $A,B$ respectively with $Un=Um=0$. They belong to $\operatorname{range}H$, so Lemma 113.1 applies. Combine its two equations for $z=1,i$:
+
+$$
+\begin{aligned}
+Z&=\mathcal A(S(1))+i\mathcal A(S(i))
+   =\Lambda+U^*YU,\\
+\Lambda&=\Lambda_1+i\Lambda_i,\qquad Y=Y_1+iY_i.
+\end{aligned}
+\tag{113.22}
+$$
+
+Here $Y$ need not be Hermitian. Conjugation in (113.8) gives exactly
+
+$$
+Z_{AB}=2C,\qquad Z_{BA}=0,\qquad
+C_{ij}=\frac{P_{ij}\bar n_i m_j}{\overline{H_{ij}}}
+\quad(i\in A,j\in B).
+\tag{113.23}
+$$
+
+All blocks inside $A\times A$ and $B\times B$ also vanish. Since $\Lambda$ is original-fibre-block diagonal, the reverse block of (113.22) yields $`U_B^*YU_A=0`$. Choose right inverses $R_A,R_B$ of the full-row-rank blocks. Then
+
+$$
+Y=R_B^*(U_B^*YU_A)R_A=0.
+\tag{113.24}
+$$
+
+Thus $Z=\Lambda$ has zero $A\times B$ block. But $n,m$ are nonzero, and every $P_{ij},H_{ij}$ across that partition is nonzero, so at least one entry of $C$ in (113.23) is nonzero. This is a contradiction.
+
+The two normal decompositions may differ, but both come from the same fixed $P$ and the same nonnegative curved quadratic. No independently selected witnesses are combined, and no positivity is asserted for the non-Hermitian $Y$. ∎
+
+### 113.5. Complete exclusion of the full-support rank-(7,5) local class
+
+**Theorem 113.4.** There is no local minimum of (113.2) on the full calibrated domain satisfying (113.3) and $\operatorname{rank}H=5$.
+
+**Proof.** Now $U$ has three rows. By Theorem 113.2, each $L_f=\operatorname{range}U_f$ is a two-dimensional complex plane in $\mathbb C^3$.
+
+Deleting any one original fibre leaves a full-row-rank kernel block:
+
+$$
+\operatorname{rank}U_{f^c}=3\qquad\text{for every }f.
+\tag{113.25}
+$$
+
+Otherwise there is a nonzero $w$ with $`U_{f^c}^*w=0`$. Since $`U^*`$ is injective, $`x=U^*w`$ is a nonzero kernel vector of $H$ supported on $f$. But
+
+$$
+x^*Hx=x_f^*H_{ff}x_f=\|x_f\|^2>0,
+\tag{113.26}
+$$
+
+contradicting $Hx=0$.
+
+Two distinct planes in $\mathbb C^3$ span the whole space. Thus a pair of fibre blocks has rank three exactly when its two planes differ. The four planes can be paired into two unequal pairs unless one plane occurs at least three times. Indeed the other equality-multiplicity patterns are $(1,1,1,1)$, $(2,1,1)$ and $(2,2)$. For four distinct planes take any pairing; for $(2,1,1)$ pair each copy of the repeated plane with a singleton; for $(2,2)$ pair across the two classes.
+
+Three equal planes contradict (113.25) on deleting the fourth fibre. Four equal planes contradict the full row rank of $U$. Hence one of the three admissible patterns applies and yields a partition $A,B$ with both ranks three. Lemma 113.3, with $k=3<4$, gives the contradiction. ∎
+
+Theorem 113.4 includes the exceptional locus left by Theorem 112.4 through a direct kernel-plane argument. It does not infer exclusion from density or perturb a minimum while assuming its minimality survives. The conclusion concerns positive subhalf local minima, not a half lower bound for arbitrary rank-$(7,5)$ competitors.
+
+### 113.6. A sharper attained-global-representative alternative
+
+**Corollary 113.5.** For the original unrestricted one-product channel problem, with the fixed correlated encoding and unhalved arbitrary-reference error, a hypothetical optimum below $1/4$ has a calibrated minimizing representative in at least one of these two classes:
+
+1. Both full Gram ranks are at most six.
+2. One full Gram has rank seven and an everywhere-nonzero spanning kernel vector, while the opposite full rank is at most four.
+
+**Proof.** The exact physical calibration reduction of [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels), as applied in Corollary 106.6, identifies the unrestricted physical infimum with the attained calibrated minimum. The established lower bound $\sqrt3-3/2>0$ makes the hypothetical subquarter value positive. Theorem 106.5 supplies a minimizing representative with both ranks at most six, or with one full-support rank-seven Gram and opposite rank at most five. In the latter case the global minimizer is also a full-domain local minimum, and its value lies in $(0,1/2)$. Theorem 113.4 excludes opposite rank five, proving the stated alternative. ∎
+
+Theorem 113.2 applies to every opposite rank but leaves the all-rank-two projection cases at other ranks unresolved. Neither class of Corollary 113.5 is excluded here. The representative conclusion does not preserve the ranks or local minimality of an arbitrary given leaking optimizer; it is an existence assertion after the exact physical reduction and rank descent. The unrestricted global interval remains $[\sqrt3-3/2,1/4]$, and the quarter-optimum question remains open.
+
+## 追加锚（本行以下为增补区）

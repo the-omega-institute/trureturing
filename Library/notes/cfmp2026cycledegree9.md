@@ -13,7 +13,7 @@ strata_touched: []
 
 The theorem and exact rational endpoint audit are in
 `docs/develop/theory/CFMP_CYCLE_DEGREE9.md` and
-`docs/develop/theory/verify_cycle9_box.py`.
+[verify_cycle9_box.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_cycle9_box.py).
 
 The shared cosh-length box is `[73/50,2]` on low edges and
 `[53/40,347/200]` on high edges. Zhao's six-variable cosine monotonicity
@@ -49,6 +49,6 @@ Primary references:
 
 Construction: https://github.com/the-omega-institute/trureturing/pull/12065
 
-A finite non-vacuity witness is now supplied by a six-sector Coxeter quotient, not by an N=24 pairing. Start with the unique symmetric hyper-ideal tetrahedron with low angle pi/4 and high angle 2*pi/9. Its S3 sector is the [4,9,3] doubly-truncated Coxeter orthoscheme Q. The finite K=<c,d> sector group has order 6; KQ is exactly one target tetrahedron: A facets orbit as 1 base hexagon, B facets as 3 side hexagons, U truncations as 3 peripheral triangles, and V truncations as 1 center triangle. In the Coxeter development, <a,b> has 8 sectors around a generic low edge with trivial K stabilizer, while <b,c> has 18 sectors around a high edge and K stabilizer <c> of order 2, giving target degrees 8 and 9. A torsion-free finite-index subgroup of the orientation-preserving parabolic subgroup gives a compact orientable quotient with geodesic boundary; collapsing boundary components yields a topological ideal triangulation. The local exact audit is docs/develop/theory/verify_cycle9_coxeter_local.py; it checks the [4,9,3] relations, maximal finite parabolics, K intersections, and all angle sums over F_17/rational arithmetic.
+A finite non-vacuity witness is now supplied by a six-sector Coxeter quotient, not by an N=24 pairing. Start with the unique symmetric hyper-ideal tetrahedron with low angle pi/4 and high angle 2*pi/9. Its S3 sector is the [4,9,3] doubly-truncated Coxeter orthoscheme Q. The finite K=<c,d> sector group has order 6; KQ is exactly one target tetrahedron: A facets orbit as 1 base hexagon, B facets as 3 side hexagons, U truncations as 3 peripheral triangles, and V truncations as 1 center triangle. In the Coxeter development, <a,b> has 8 sectors around a generic low edge with trivial K stabilizer, while <b,c> has 18 sectors around a high edge and K stabilizer <c> of order 2, giving target degrees 8 and 9. A torsion-free finite-index subgroup of the orientation-preserving parabolic subgroup gives a compact orientable quotient with geodesic boundary; collapsing boundary components yields a topological ideal triangulation. The local exact audit is [verify_cycle9_coxeter_local.py](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_cycle9_coxeter_local.py); it checks the [4,9,3] relations, maximal finite parabolics, K intersections, and all angle sums over F_17/rational arithmetic.
 
 Primary sources for this non-vacuity addition: Luo--Yang, arXiv:1404.5365v2, Proposition 4.1 and Proposition 4.4; Marshall, J. Austral. Math. Soc. 64 (1998), pp. 58--60 and 69--70; Felikson--Tumarkin, arXiv:math/0604248v3, introduction.

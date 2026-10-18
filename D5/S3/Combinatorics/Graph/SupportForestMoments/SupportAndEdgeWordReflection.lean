@@ -30,7 +30,8 @@ moment_reindex: proof_shape: bind-only; consumers: ShapiroQuarticInversionRefuta
 escape_witness: twoPoints_card; evalMoment_sound
 admission_basis: escape-witness
 Direct frozen dependencies: none (pinned Mathlib only).
-Information-escape registration is paused under CLAUDE.md §3.9.
+Escape audit unfinished for sum_fin_cons:
+https://github.com/the-omega-institute/trureturing/issues/17765.
 -/
 
 
@@ -356,7 +357,7 @@ private theorem natProd_sound {n : ℕ} (w : List (Fin n × Fin n)) (x : Fin n) 
     simp only [List.map_cons, natProd, List.prod_cons, Equiv.Perm.mul_apply]
     rw [ih, natSwap_sound]
 
-private theorem sum_fin_cons {m : ℕ} {α β : Type*} [Fintype α] [AddCommMonoid β]
+theorem sum_fin_cons {m : ℕ} {α β : Type*} [Fintype α] [AddCommMonoid β]
     (f : (Fin (m+1) → α) → β) :
     ∑ w, f w = ∑ a, ∑ w : Fin m → α, f (Fin.cons a w) := by
   rw [← (Fin.consEquiv fun _ : Fin (m+1) => α).sum_comp f, Fintype.sum_prod_type]
