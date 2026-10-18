@@ -55,8 +55,7 @@ private noncomputable def negMass (a b c : ℝ) : ℝ :=
 private theorem parts_bound (a b c : ℝ) :
     a ^ 2 + b ^ 2 + c ^ 2 ≤ (a + b + c + negMass a b c) ^ 2 +
       (negMass a b c) ^ 2 := by
-  have parts (z : ℝ) : z + max (-z) 0 = max z 0 ∧
-      z ^ 2 = (max z 0) ^ 2 + (max (-z) 0) ^ 2 := by
+  have parts (z : ℝ) : z ^ 2 = (max z 0) ^ 2 + (max (-z) 0) ^ 2 := by
     rcases le_total 0 z with hz | hz
     · simp [max_eq_left hz, max_eq_right (neg_nonpos.mpr hz)]
     · simp [max_eq_right hz, max_eq_left (neg_nonneg.mpr hz)]
@@ -73,11 +72,16 @@ private theorem parts_bound (a b c : ℝ) :
     (max (-a) 0 + max (-b) 0 + max (-c) 0) ^ 2 at hn
   have hsum : max a 0 + max b 0 + max c 0 =
       a + b + c + negMass a b c := by
-    rw [negMass.eq_1]
-    linarith [(parts a).1, (parts b).1, (parts c).1]
+    calc
+      _ = (max a 0 - max (-a) 0) + (max b 0 - max (-b) 0) +
+          (max c 0 - max (-c) 0) + negMass a b c := by rw [negMass.eq_1]; ring
+      _ = _ := by
+        change (posPart a - negPart a) + (posPart b - negPart b) +
+          (posPart c - negPart c) + negMass a b c = _
+        rw [posPart_sub_negPart, posPart_sub_negPart, posPart_sub_negPart]
   rw [hsum] at hp
   rw [negMass.eq_1] at *
-  linarith [(parts a).2, (parts b).2, (parts c).2]
+  linarith [parts a, parts b, parts c]
 
 /-- First and second column moments force negative mass when the off-diagonal radius exceeds `A`. -/
 private theorem column_bound (A R α a b c : ℝ) (hA : 0 ≤ A) (hR : 0 ≤ R)
@@ -247,7 +251,7 @@ theorem result : claim := by
   rw [hcancel] at hscaled
   rw [hcoherence]
   change (2 * s) / 2 * Real.sqrt (1 - (2 * s) / 2) ≤ _
-  have hhalf : (2 * s) / 2 = s := by ring
+  have hhalf : (2 * s) / 2 = s := mul_div_cancel_left₀ s (by norm_num)
   rw [hhalf]
   exact hscaled.trans hmagic
 
