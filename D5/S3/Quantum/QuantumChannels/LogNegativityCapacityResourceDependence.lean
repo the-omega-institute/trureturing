@@ -976,7 +976,7 @@ private theorem unassisted_norm_upper (a b : ℕ)
   change (partialTranspose (conditional Q σ)).PosSemidef at hQ
   change (partialTranspose (conditional P σ)).PosSemidef at hP
   rw [extend_pt_decomposition]
-  change traceNorm ((partialTranspose Phi⊗ₖpartialTranspose (conditional Q σ)+
+  change D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm ((partialTranspose Phi⊗ₖpartialTranspose (conditional Q σ)+
     F⊗ₖpartialTranspose (conditional P σ)).submatrix _ _) ≤ _
   rw [traceNorm_submatrix_equiv]
   rw [flagged_norm_exact _ _ hQ hP]
