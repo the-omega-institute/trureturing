@@ -14,14 +14,12 @@ universe u
 /-- All finite ordered alphabets and all their signed mass functions remain parameters. -/
 structure Parameters where
   Alphabet : Type u
-  finite : Fintype Alphabet
-  order : LinearOrder Alphabet
   mass : Alphabet → ℝ
 
-/-- The observation is a source-law coordinate, not a single-sample instrument. -/
+/-- The source mass instrument precedes the independent product and peak classifier. -/
 abbrev signature : Signature where
   Params := Parameters.{u}
-  State _ := Fin 5
+  State p := p.Alphabet
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -30,12 +28,12 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} := realize signature
-  (fun _ q s => @modeLaw q.Alphabet q.finite q.order q.mass s) (fun e => nomatch e)
+  (fun _ q s => q.mass s) (fun e => nomatch e)
 def rejected : Realization signature.{u} := realize signature (fun _ _ _ => (0 : ℝ))
   (fun e => nomatch e)
 
 def observedLaw (r : Realization signature.{u}) {A : Type u} [Fintype A] [LinearOrder A]
-    (p : A → ℝ) (s : Fin 5) : ℝ := r.readout () ⟨A,inferInstance,inferInstance,p⟩ s
+    (p : A → ℝ) (s : Fin 5) : ℝ := modeLaw (r.readout () ⟨A,p⟩) s
 
 def fullLaw (r : Realization signature.{u}) : Prop :=
   ∀ {A : Type u} [Fintype A] [LinearOrder A]
@@ -61,16 +59,13 @@ private theorem rejected_law : ¬ fullLaw rejected.{u} := by
   have hnorm : (∑ a : ULift.{u} Unit, (1 : ℝ)) = 1 := by simp
   have ht := h (fun _ : ULift.{u} Unit => (1 : ℝ)) (fun _ => by norm_num) hnorm
   have hm := ht.2.2.1
-  norm_num [observedLaw,rejected,realize] at hm
+  norm_num [observedLaw,rejected,realize,modeLaw,productAverage,average] at hm
 
 theorem actual_dependence : ObservationalDependence signature.{u} actual := by
-  intro i
-  let q : Parameters.{u} := ⟨ULift.{u} Unit,inferInstance,inferInstance,fun _ => 1⟩
-  refine ⟨q,0,1,?_⟩
-  have hlt (a b : ULift.{u} Unit) : ¬ a < b := by
-    rw [Subsingleton.elim a b]
-    exact lt_irrefl _
-  norm_num [actual,realize,q,modeLaw,productAverage,average,mode,peak,hlt]
+  intro _
+  let q : Parameters.{u} := ⟨ULift.{u} (Fin 2),fun a => if a.down = 0 then 0 else 1⟩
+  refine ⟨q,⟨0⟩,⟨1⟩,?_⟩
+  norm_num [actual,realize,q]
 
 def family : Registration arena.{u} (type_of% (@iid_peak_source.{u})) where
   actual := actual
@@ -83,18 +78,18 @@ def family : Registration arena.{u} (type_of% (@iid_peak_source.{u})) where
 def selection : Contract.SourceSelection where
   owner := `D5.S3.Estimation.DataProcessing.IidStrictPeakSource
   definition := none
-  coordinates := #[0,1,2,3]
+  coordinates := #[0,3]
   readouts := #[{
-    path := #["body","body","body","body","body","body","arg","fn","arg","body","arg"]
-    stateBinder := 6
-    functionOperand := false
+    path := #["body","body","body","body","body","body","arg","fn","arg","body","arg","fn","arg"]
+    stateBinder := 0
+    functionOperand := true
     stateOperand := none
     booleanPredicate := false}]
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@iid_peak_source.{u})
     (type_of% (realize signature.{u}
-      (fun _ q s => @modeLaw q.Alphabet q.finite q.order q.mass s) (fun e => nomatch e))) Unit Unit where
+      (fun _ q s => q.mass s) (fun e => nomatch e))) Unit Unit where
   unitName := `D5.S3.Estimation.DataProcessing.IidStrictPeakSource.iid_peak_source.__information_unit
   realizationName := `Reg.D5.S3.Estimation.DataProcessing.IidStrictPeakSource.family
   realizationSource := none
@@ -107,7 +102,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := {stage := .evidence,objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ q s => @modeLaw q.Alphabet q.finite q.order q.mass s) (fun e => nomatch e))
+    (fun _ q s => q.mass s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

@@ -35,7 +35,7 @@ private theorem rejected_law : ¬ fullLaw rejected.{u} := by
   have hd := ht.2.2.1
   have hx : observedLaw rejected (fun _ : ULift.{u} (Fin 2) => (1/2 : ℝ)) 1+
       observedLaw rejected (fun _ : ULift.{u} (Fin 2) => (1/2 : ℝ)) 3 = 0 := by
-    simp [observedLaw,rejected,realize]
+    simp [observedLaw,rejected,realize,modeLaw,productAverage,average]
   obtain ⟨i,hi,_⟩ := hd.mp hx
   norm_num at hi
 
@@ -50,9 +50,9 @@ def family : Registration lowerArena.{u} (type_of% (@finite_iid_lower_surface.{u
 def selection : Contract.SourceSelection where
   owner := `D5.S3.Estimation.DataProcessing.FiniteIidStrictPeakLower
   definition := none
-  coordinates := #[0,1,2,3]
+  coordinates := #[0,3]
   readouts := #[{
-    path := #["body","body","body","body","body","body","value","fn","arg","fn"]
+    path := #["body","body","body","body","body","body","value","fn","arg","fn","arg"]
     stateBinder := 0
     functionOperand := true
     stateOperand := none
@@ -61,7 +61,7 @@ def selection : Contract.SourceSelection where
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@finite_iid_lower_surface.{u})
     (type_of% (realize signature.{u}
-      (fun _ q s => @modeLaw q.Alphabet q.finite q.order q.mass s) (fun e => nomatch e))) Unit Unit where
+      (fun _ q s => q.mass s) (fun e => nomatch e))) Unit Unit where
   unitName := `D5.S3.Estimation.DataProcessing.FiniteIidStrictPeakLower.finite_iid_lower_surface.__information_unit
   realizationName := `Reg.D5.S3.Estimation.DataProcessing.FiniteIidStrictPeakLower.family
   realizationSource := none
@@ -74,7 +74,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := {stage := .evidence,objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ q s => @modeLaw q.Alphabet q.finite q.order q.mass s) (fun e => nomatch e))
+    (fun _ q s => q.mass s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
