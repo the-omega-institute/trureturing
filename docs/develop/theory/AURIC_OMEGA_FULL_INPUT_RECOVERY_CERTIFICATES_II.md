@@ -1968,3 +1968,578 @@ The original domain remains all actual original-real CPTP encoders $M_3\to M_5$,
 All claims above are finite-dimensional analytic mathematics. The proofs include arbitrary complex input densities and references where stated, support inverses zero on kernels, singular density and effect endpoints, and the full convention transport. They assert no empirical physical realization, native recovery-control capability, Lean/kernel verification, exhaustive literature result, global novelty or completion of the original all-class target.
 
 ## 追加锚（本行以下为增补区）
+
+## 76. The all-positive-beta common-projection statement
+
+**Definition 76.1 (one supported center and one conjugated defect).** Retain the capped root-fidelity maximum $H_a$ of (S.57)–(S.58), the common-projection system (S.59), and the spectral consumer (S.90)–(S.91). Set
+
+$$
+h=\frac1{\sqrt2},\qquad u=\sqrt a=\sqrt{1-\beta},\qquad
+T=\frac{1+u}{2},\qquad d=\frac{1-u}{2},\qquad v=\sqrt T,
+\qquad \beta=4dT,
+\qquad 0<\beta\leq\frac12.
+\tag{S.156}
+$$
+
+Thus $h\leq u<1$. Let $k\geq2$ be any fixed finite integer, and work on the exact center support:
+
+$$
+\begin{gathered}
+\omega=\operatorname{diag}(s,t,\lambda_3,\ldots,\lambda_k)>0,
+\quad s\geq t\geq\lambda_3\geq\cdots\geq\lambda_k>0,
+\quad\operatorname{Tr}\omega=1,\\
+Z=\begin{pmatrix}Z_0\\Z_1\\Z_2\end{pmatrix},\qquad
+Z_i:\mathbb C^{3k-5}\to\mathbb C^k,\qquad
+Z^\dagger Z=I_{3k-5},\\
+E=ZZ^\dagger,\qquad \widehat P=I-E,\qquad
+\operatorname{rank}E=3k-5,\qquad\operatorname{rank}\widehat P=5.
+\tag{S.157}
+\end{gathered}
+$$
+
+For $k=2$ there is no tail. In an actual application $E=\overline D$ is the conjugated defect of (S.55)–(S.60), not the unconjugated $D$. For each complex unit $\psi=(\psi_0,\psi_1)$ define
+
+$$
+\begin{gathered}
+Z_\psi=\psi_0Z_0+\psi_1Z_1,\qquad
+M_\psi=\omega-\sqrt\omega Z_\psi Z_\psi^\dagger\sqrt\omega,
+\qquad q_i=\operatorname{Tr}(\omega Z_iZ_i^\dagger),\\
+H_a(M_\psi)>v\quad\text{for every complex unit }\psi,
+\qquad q_2<d.
+\tag{S.158}
+\end{gathered}
+$$
+
+The last line is the hypothetical strict system to be excluded. The center, $E$, and its three blocks precede the entire sphere of tests. All statements below concern this one implementation of the projection geometry. The symbol $\varepsilon=T-s$ used below is a leading-eigenvalue deficit, distinct from the tail mass $1-s-t$ and from earlier family perturbation parameters.
+
+**Theorem 76.2 (all-positive-beta infeasibility).** For every $0<\beta\leq1/2$ and every fixed finite positive center rank $k\geq2$, no data of Definition 76.1 satisfy (S.158). Singular directional marginals, a singular common matrix $L$ in the reduction below, and singular leading two-by-two blocks are included. This is an exclusion of the strict relaxation itself. Its proof occupies Sections 77–79; the actual-channel consequence in Section 80 additionally assumes each named inherited interface.
+
+## 77. A trace band and a branch-complete common-vector bound
+
+**Proposition 77.1 (the supported trace band).** Under hypothetical feasibility (S.158),
+
+$$
+3T<\operatorname{Tr}[(I_3\otimes\omega)\widehat P]
+\leq3s+2t,\qquad
+s>3T-2>a.
+\tag{S.159}
+$$
+
+Moreover $s<T$, and therefore
+
+$$
+0<\varepsilon:=T-s<2d,\qquad
+\frac32\varepsilon<t\leq1-s=d+\varepsilon,\qquad s>a.
+\tag{S.160}
+$$
+
+Proof. By (S.57), $H_a(M)^2\leq\operatorname{Tr}M$. The two basis directions in (S.158) give $q_0,q_1<d$; the third budget already gives $q_2<d$. Since $\operatorname{Tr}[(I_3\otimes\omega)\widehat P]=3-q_0-q_1-q_2$, its value is greater than $3T$. The five leading eigenvalues of $I_3\otimes\omega$ are $s,s,s,t,t$, with multiplicities, so the exact rank-five allocation (S.22) proves the upper bound. Using $t\leq1-s$ gives $s>3T-2$. Finally
+
+$$
+3T-2-a=d(2u-1)>0.
+$$
+
+For $s<T$, use the existing positive-weight fidelity inequality (S.16) and capped trace maximum (S.17), directly in (S.58): for every $X>0$,
+
+$$
+H_a(M)\leq\frac12\bigl(m_X+\operatorname{Tr}(MX^{-1})\bigr),
+\qquad m_X=a\lambda_1(X)+\beta\lambda_2(X),
+\tag{S.161}
+$$
+
+where the two eigenvalues are decreasingly ordered. Choose $X=\operatorname{diag}(v/u,1/(2v),\ldots,1/(2v))$. These positive entries are in the displayed order since $2T/u=(1+u)/u>1$. They give $m_X=uv+\beta/(2v)=v$, and hence
+
+$$
+H_a(\omega)\leq\frac{3T-s}{2v}.
+$$
+
+The order monotonicity proved in (S.68)–(S.71) and $M_\psi\preceq\omega$ give $H_a(\omega)>v$, forcing $s<T$. Now (S.159) gives $t>3\varepsilon/2$ and $\varepsilon<T-(3T-2)=2d$. This proves (S.160). No actual marginal or positive semidefinite operand has been inverted. $\square$
+
+**Proposition 77.2 (one common vector and both cap branches).** Let $K_2$ be the span of two selected leading eigenvectors of the supported center. The common-vector construction (S.68)–(S.71) gives one unit vector and one complex matrix
+
+$$
+\begin{gathered}
+\eta=(\ell_0,\ell_1,b_{\rm vec})
+\in\operatorname{ran}E\cap(\mathbb C^3\otimes K_2),\qquad
+L=[\ell_0,\ell_1],\quad G=LL^\dagger,\quad\Omega=\operatorname{diag}(s,t),\\
+\operatorname{Tr}G+\|b_{\rm vec}\|^2=1,\qquad
+q_2\geq t(1-\operatorname{Tr}G),\\
+z=L\psi,\qquad\kappa=\|z\|^2\leq1,\qquad q=z^\dagger\Omega z,\\
+0\preceq M_\psi\preceq B_\psi
+:=\bigl(\Omega-\sqrt\Omega zz^\dagger\sqrt\Omega\bigr)
+\oplus\omega_{\rm tail}.
+\tag{S.162}
+\end{gathered}
+$$
+
+The same $\eta,L$ apply to every complex direction. If $r_{\rm tail}=1-s-t$ and $b=\operatorname{Tr}B_\psi=1-q$, then throughout (S.160),
+
+$$
+H_a(B_\psi)^2\leq
+\beta b+(a-\beta)s+
+2\sqrt{a\beta}\sqrt{st(1-\kappa)+sr_{\rm tail}}.
+\tag{S.163}
+$$
+
+Proof. The intersection dimension is at least $(3k-5)+6-3k=1$. Choose $\eta$ once in this intersection. The proof of (S.71) uses the transpose-row compression $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$, so that $C_\psi\eta=L\psi$ and $C_\psi EC_\psi^\dagger=Z_\psi Z_\psi^\dagger$. In particular the complex direction is not replaced by its conjugate. The row satisfies $C_\psi C_\psi^\dagger=I_k$, so $0\preceq C_\psi EC_\psi^\dagger\preceq I_k$. Since $E\succeq\eta\eta^\dagger$, positive compression and congruence give (S.162); the third compression gives its budget. For $k=2$, $\mathbb C^3\otimes K_2$ is the full six-dimensional supported space and $E$ has rank one. This proves the same construction on that boundary without compressing an unrelated larger projection. Positivity of the leading block follows from $\kappa\leq\operatorname{Tr}G\leq1$.
+
+Let $\mu\geq\nu\geq0$ be its two eigenvalues. The already computed trace and determinant in (S.69) give
+
+$$
+\mu+\nu=b-r_{\rm tail},\qquad
+\mu\nu=st(1-\kappa),\qquad \mu\leq s.
+$$
+
+Here $0\leq b\leq1$. If $b=0$, the left side of (S.163) is zero and its right side is nonnegative. Suppose $b>0$ and first $\mu\geq ab$. Since $a\geq1/2$, $\mu\geq b/2$; every tail eigenvalue is at most $r_{\rm tail}\leq b-\mu\leq\mu$. Thus $\mu$ is a largest eigenvalue of the whole $B_\psi$. The capped formula, including the equality boundary, reads
+
+$$
+H_a(B_\psi)^2
+=\beta b+(a-\beta)\mu+
+2\sqrt{a\beta}\sqrt{\mu(\nu+r_{\rm tail})}.
+$$
+
+Use $a-\beta\geq0$, $\mu\leq s$ and $\mu\nu=st(1-\kappa)$ to obtain (S.163).
+
+In the other case $\mu\leq ab$, the polynomial $x(b-r_{\rm tail}-x)$ is decreasing for $x\geq(b-r_{\rm tail})/2$. Both $\mu$ and $ab$ lie in this interval, in the stated order. Consequently
+
+$$
+\begin{aligned}
+\mu\nu&\geq ab(b-r_{\rm tail}-ab)
+=a\beta b^2-ab r_{\rm tail},\\
+\mu\nu+sr_{\rm tail}&\geq a\beta b^2+r_{\rm tail}(s-ab)
+\geq a\beta b^2.
+\end{aligned}
+$$
+
+The last sign uses $s\geq a$ and $b\leq1$. Thus the right side of (S.163) is at least
+
+$$
+\beta b+(a-\beta)s+2a\beta b
+=b+(a-\beta)(s-ab)\geq b\geq H_a(B_\psi)^2.
+$$
+
+This branch does not presume that the leading block contains the largest eigenvalue of $B_\psi$. The proof includes $a=\beta=1/2$, absent tails, $\kappa=1$, rank-one or zero leading blocks and the cap-branch equality. $\square$
+
+**Proposition 77.3 (the full complex sphere yields a strict matrix bound).** Under (S.158), define
+
+$$
+\begin{aligned}
+C_0&=T-\beta-(a-\beta)s
+=\beta u+(a-\beta)\varepsilon>0,\\
+\Delta&=4a\beta s(1-s)-C_0^2
+=(T-s)\bigl(s-T(2u-1)^2\bigr)
+=\varepsilon(2\beta u-\varepsilon).
+\end{aligned}
+\tag{S.164}
+$$
+
+Then $\Delta>0$ and
+
+$$
+q_2>f_\beta(s,t):=
+ t-\frac{\Delta}{2\beta}
+\left[\frac1{2as+C_0}+\frac{t}{s(2at+C_0)}\right].
+\tag{S.165}
+$$
+
+Proof. By monotonicity, (S.158) and (S.163),
+
+$$
+2\sqrt{a\beta}\sqrt{s(1-s)-st\kappa}>C_0+\beta q>0.
+$$
+
+Both sides are positive, so squaring and collecting terms is valid and gives
+
+$$
+4a\beta st\kappa+2\beta C_0q+\beta^2q^2<\Delta.
+\tag{S.166}
+$$
+
+In particular $\Delta>0$. Drop the nonnegative last term. Since the inequality holds for every complex unit $\psi$ for this one $L$, it is the Hermitian inequality
+
+$$
+\begin{gathered}
+L^\dagger\mathcal D L\prec\Delta I_2,\qquad
+\mathcal D=4a\beta st I_2+2\beta C_0\Omega\succ0,\\
+G\prec\Delta\mathcal D^{-1},\qquad
+\mathcal D=\operatorname{diag}
+\bigl(2\beta s(2at+C_0),\ 2\beta t(2as+C_0)\bigr).
+\tag{S.167}
+\end{gathered}
+$$
+
+Indeed, for $K=\mathcal D^{1/2}L$, the first inequality says $\|K\|_{\rm op}^2<\Delta$. Equality of the operator norms of $K$ and its adjoint gives $KK^\dagger\prec\Delta I_2$; congruence by $\mathcal D^{-1/2}$ proves the second. This argument needs no inverse of $L$. Every entry of $\mathcal D$ is strictly positive since $\beta,s,t,C_0>0$.
+
+Taking traces and using the same third budget in (S.162) gives
+
+$$
+\begin{aligned}
+q_2&\geq t(1-\operatorname{Tr}G)\\
+&>t-\frac{\Delta}{2\beta}
+\left[\frac{t}{s(2at+C_0)}+\frac1{2as+C_0}\right].
+\end{aligned}
+$$
+
+This proves (S.165), with its strict direction, also when $G$ is singular. $\square$
+
+## 78. A uniform coefficient inequality on the complete beta interval
+
+**Lemma 78.1 (the all-beta coefficient bound).** Throughout the hypothetical-feasibility region (S.160), (S.164), set
+
+$$
+A_u=\frac12+\frac{u}{1+u}.
+$$
+
+Then
+
+$$
+f_\beta(s,t)>t-A_u\varepsilon.
+\tag{S.168}
+$$
+
+Proof. Equations (S.164)–(S.165) give the exact expression
+
+$$
+\begin{aligned}
+f_\beta(s,t)&=t-\varepsilon\mathcal F,\\
+\mathcal F&=\left(u-\frac{\varepsilon}{2\beta}\right)
+\left[\frac1{u(1+u)-\varepsilon}
++\frac{t}{s(2at+C_0)}\right].
+\end{aligned}
+\tag{S.169}
+$$
+
+The prefactor is positive because $\Delta>0$. The first denominator equals $2as+C_0>0$. At fixed $s,u$, the derivative of the second summand in brackets with respect to $t$ is $C_0/[s(2at+C_0)^2]>0$. Replacing $t$ by its upper bound $1-s=d+\varepsilon$ is therefore an upper bound for $\mathcal F$.
+
+Normalize only at $\beta>0$, so $u<1$, and put
+
+$$
+\begin{gathered}
+\xi=\frac{\varepsilon}{1-u}\in(0,1),\qquad p=u(1+u),\qquad e=1-u,\\
+A=p-e\xi,\qquad
+B=(1+u-2e\xi)(2u+1)\bigl(u+(2u-1)\xi\bigr),\qquad
+C=2p-\xi.
+\tag{S.170}
+\end{gathered}
+$$
+
+All three are strictly positive on the larger closed rectangle $h\leq u\leq1$, $0\leq\xi\leq1$. In fact $A\geq u^2+2u-1>0$, the three factors of $B$ are respectively at least $3u-1>0$, $2u+1>0$ and $u>0$, and $C\geq2u>0$. Substitution of $s=T-(1-u)\xi$, $\beta=(1-u)(1+u)$ in the upper replacement gives
+
+$$
+\begin{aligned}
+\mathcal F&\leq\widehat F(u,\xi)
+=\frac{C}{2(1+u)}\left(\frac1A+\frac{1+2\xi}{B}\right),\\
+A_u-\widehat F(u,\xi)
+&=\frac{\mathscr D_u(\xi)}{2(1+u)AB},\\
+\mathscr D_u(\xi)&=(1+3u)AB-C\bigl[B+A(1+2\xi)\bigr].
+\end{aligned}
+\tag{S.171}
+$$
+
+Every denominator cleared here is positive. The numerator is a cubic in $\xi$, with the complete exact Bernstein expansion
+
+$$
+\begin{aligned}
+\mathscr D_u(\xi)
+&=\sum_{j=0}^3 b_j(u)\binom3j\xi^j(1-\xi)^{3-j},\\
+b_0&=(6u^2+u-3)p^2,\qquad
+b_1=\frac p3\pi_1(u),\qquad
+b_2=\frac13\pi_2(u),\qquad b_3=\pi_3(u),\\
+\pi_1(u)&=42u^4+25u^3-22u^2-17u+4,\\
+\pi_2(u)&=90u^6+111u^5-49u^4-70u^3-6u^2+15u-1,\\
+\pi_3(u)&=54u^6+81u^5-87u^4-26u^3+14u^2+9u-3.
+\end{aligned}
+\tag{S.172}
+$$
+
+The identity follows by expanding (S.171) in powers of $\xi$; the four power coefficients are $b_0$, $3(b_1-b_0)$, $3(b_0-2b_1+b_2)$ and $-b_0+3b_1-3b_2+b_3$, respectively. The signs of all four Bernstein coefficients admit the following exact proof over the whole rectangle.
+
+For $b_0$, $6u^2+u-3\geq u>0$. For the first two polynomials,
+
+$$
+\begin{aligned}
+\pi_1(h)&=\frac{7-9h}{2}>0,\\
+\pi_1'(u)&=u(168u^2-44)+75u^2-17
+\geq40u+\frac{41}{2}>0,\\
+\pi_2(h)&=\frac{31h-20}{4}>0,\\
+\pi_2'(u)&=u^3(540u^2-196)+u^2(555u^2-210)+15-12u\\
+&\geq74u^3+\frac{135}{2}u^2+3>0.
+\end{aligned}
+\tag{S.173}
+$$
+
+For the remaining polynomial,
+
+$$
+\begin{aligned}
+\pi_3(h)&=\frac{65h-44}{4}>0,\qquad
+\pi_3'(h)=\frac{285-260h}{4}>0,\\
+\pi_3''(h)&=654h-89>0,\\
+\pi_3^{(3)}(u)&=u(6480u^2-2088)+4860u^2-156
+\geq1152u+2274>0.
+\end{aligned}
+\tag{S.174}
+$$
+
+The derivative lower bounds use only $u^2\geq1/2$ and $u\leq1$. Every endpoint sign follows from $h^2=1/2$ and the positive-root comparisons $7/10<h<3/4$: for example $7-9h>1/4$, $31h-20>17/10$, $65h-44>3/2$, $285-260h>90$, and $654h-89>1844/5$. Thus $\pi_1,\pi_2$ stay positive; successively $\pi_3''$, $\pi_3'$ and $\pi_3$ stay positive too. Since $p>0$, every $b_j$ is strictly positive on $[h,1]$.
+
+The Bernstein basis functions are nonnegative on $[0,1]$ and sum to one. Equation (S.172) therefore proves $\mathscr D_u(\xi)>0$ throughout the closed rectangle, including its edges. Equation (S.171) gives $\mathcal F\leq\widehat F<A_u$. Since $\varepsilon>0$, (S.169) proves (S.168). This is a universal polynomial sign proof, without sampled signs. The polynomial statement includes $u=1$; the normalization and every application containing $1/\beta$ or $1/(1-u)$ use $\beta>0$. $\square$
+
+**Corollary 78.2 (the refined spectral interval).** Hypothetical feasibility requires
+
+$$
+\begin{gathered}
+t<d+A_u\varepsilon,\qquad
+\varepsilon<d(1+u)=\frac\beta2,\qquad
+uT<s<T.
+\tag{S.175}
+\end{gathered}
+$$
+
+Proof. Combine $q_2<d$, (S.165) and (S.168) to get the first inequality. Since $t>3\varepsilon/2$, it follows that $(3/2-A_u)\varepsilon<d$. The exact identity $3/2-A_u=1/(1+u)>0$ gives $\varepsilon<d(1+u)=\beta/2$. Subtracting this from $T$ gives $s>T-\beta/2=uT$, while $s<T$ is already known. $\square$
+
+## 79. Ordered spectral weights and the strict overlap contradiction
+
+**Proposition 79.1 (the exact five largest weights).** In the refined region (S.160), (S.175), define
+
+$$
+D_s=s+2t-T=2t-\varepsilon>0,\qquad
+x_{\rm w}=\sqrt{\frac{s}{a}},\qquad
+y_{\rm w}=\sqrt{\frac{D_s}{2\beta}},\qquad
+X=\operatorname{diag}(x_{\rm w},y_{\rm w},\ldots,y_{\rm w}),\qquad
+c=\frac1{y_{\rm w}}.
+\tag{S.176}
+$$
+
+Then $x_{\rm w}>y_{\rm w}>0$ and $s/x_{\rm w}>t/y_{\rm w}$. The five largest eigenvalues of $K_c=\operatorname{diag}(\omega X^{-1},\omega X^{-1},c\omega)$, with multiplicities, are exactly
+
+$$
+\frac{s}{y_{\rm w}},\quad
+\frac{s}{x_{\rm w}},\quad\frac{s}{x_{\rm w}},\quad
+\frac{t}{y_{\rm w}},\quad\frac{t}{y_{\rm w}}.
+\tag{S.177}
+$$
+
+Proof. First $t>3\varepsilon/2$ gives $D_s>2\varepsilon>0$. For the first ordering, use $t\leq1-s$ and $s>3T-2$ to obtain
+
+$$
+\begin{aligned}
+2\beta s-aD_s
+&\geq(2-a)s+aT-2a\\
+&>(2-a)(3T-2)+aT-2a\\
+&=(1-u)(u^2+2u-1)>0.
+\end{aligned}
+\tag{S.178}
+$$
+
+All factors are positive at $h\leq u<1$. Since $a,\beta>0$, this is exactly $x_{\rm w}>y_{\rm w}$ after squaring positive quantities.
+
+For the second ordering, positive-side squaring reduces it to
+
+$$
+\Phi_s(t):=as(2t-\varepsilon)-2\beta t^2>0.
+\tag{S.179}
+$$
+
+This is concave in $t$. The allowed $t$ lies between $3\varepsilon/2$ and $1-s$. At the lower endpoint,
+
+$$
+\Phi_s(3\varepsilon/2)
+=\varepsilon\left[2aT-\frac{9-5a}{2}\varepsilon\right]>0.
+\tag{S.180}
+$$
+
+Indeed $\varepsilon<\beta/2$, and $\beta(9-5a)<8aT$. To prove this last comparison, divide its difference by $1+u>0$: it is equivalent to $q_*(u)=9-9u-9u^2+5u^3<0$. Its value at $h$ is $(9-13h)/2<0$, and $q_*'(u)=15u^2-18u-9\leq-9-3u<0$ on $[h,1]$. This proves the strict sign in (S.180).
+
+At the upper endpoint put
+
+$$
+\begin{aligned}
+\Phi_{\rm top}(s)&:=\Phi_s(1-s)
+=as(2-s-T)-2\beta(1-s)^2,\\
+\Phi_{\rm top}(T)&=2dT(2u-1)>0,\\
+\Phi_{\rm top}(uT)&=dTQ(u),\qquad
+Q(u)=-u^4-u^3+6u^2+8u-8.
+\end{aligned}
+\tag{S.181}
+$$
+
+The function $\Phi_{\rm top}$ is concave in $s$, and (S.175) confines $s$ between $uT$ and $T$. Both endpoints are positive: $Q(h)=3(10h-7)/4>0$, and
+
+$$
+Q'(u)-(5u+8)=u(1-u)(4u+7)\geq0.
+$$
+
+Hence $Q>0$ on $[h,1]$. Concavity first in $s$ and then in $t$ proves (S.179) on the full required interval. There is no assumption on the tail beyond positivity and ordering.
+
+The leading center coordinate contributes $s/y_{\rm w}$ once and $s/x_{\rm w}$ twice to $K_c$. Each other coordinate contributes three copies of $\lambda_j/y_{\rm w}\leq t/y_{\rm w}$. The established strict comparisons put the first three above these; two copies belonging to $t$ complete the top five. Ties among the remaining coordinates are harmless. For $k=2$ this is a list of five among six eigenvalues, with the third copy of $t/y_{\rm w}$ outside the chosen five. This proves (S.177) also on the full-support rank-two boundary. $\square$
+
+**Theorem 79.2 (the two necessary inequalities have no overlap).** The strict system (S.158) is impossible for every parameter and center in Theorem 76.2.
+
+Proof. Reuse (S.91) directly for the relaxed capped fidelities. For completeness, the two basis tests and (S.161), with $A_\omega=\omega X^{-1}$, give
+
+$$
+\begin{aligned}
+\operatorname{Tr}[A_\omega(E_{00}+E_{11})]
+&<2(m_X+\operatorname{Tr}A_\omega-2v),\\
+2\operatorname{Tr}A_\omega+c-S_5(K_c)
+&\leq\operatorname{Tr}(K_cE)\\
+&<2(m_X+\operatorname{Tr}A_\omega-2v)+cd,\\
+J_c(X):=S_5(K_c)+2m_X-cT&>4v.
+\end{aligned}
+\tag{S.182}
+$$
+
+The lower bound is the exact rank-five allocation to this same $\widehat P=I-E$; the upper bound uses the same $q_2<d$. All these inequalities hold for one center and one conjugated defect. No separately attainable directionwise marginal is inserted into an actual implementation.
+
+At the positive weights of (S.176), the ordered list (S.177) gives $m_X=ax_{\rm w}+\beta y_{\rm w}$ and
+
+$$
+\begin{aligned}
+J_c(X)
+&=\frac{2s}{x_{\rm w}}+2ax_{\rm w}
++\frac{D_s}{y_{\rm w}}+2\beta y_{\rm w}\\
+&=4\sqrt{as}+2\sqrt{2\beta D_s}>4\sqrt T,\\
+t&>g_\beta(s):=\frac{T-s}{2}
++\frac{(\sqrt T-\sqrt{as})^2}{\beta}.
+\end{aligned}
+\tag{S.183}
+$$
+
+To obtain the last inequality, $s<T$ and $a\leq1$ give $as<T$. Thus the preceding strict comparison is $\sqrt{2\beta D_s}>2(\sqrt T-\sqrt{as})$, with both sides positive. Squaring and using $D_s=2t-\varepsilon$ proves exactly the stated bound; the reverse manipulations are valid as well.
+
+For the opposite comparison put $z=\sqrt{s/T}\in(0,1)$. Since $\varepsilon=T(1-z^2)>0$ and $d/T=(1-u)^2/\beta$, exact subtraction and cancellation of the positive $1-z$ give
+
+$$
+\begin{aligned}
+\frac{g_\beta(s)-d}{T-s}
+&=\frac12+\frac{(1-uz)^2-(1-u)^2}{\beta(1-z^2)}\\
+&=\frac12+\frac{u[2-u(1+z)]}{\beta(1+z)}\\
+&=A_u+\frac{u(1-z)}{\beta(1+z)}>A_u.
+\end{aligned}
+\tag{S.184}
+$$
+
+But (S.175) requires $t<d+A_u(T-s)$, whereas (S.183)–(S.184) require $t>g_\beta(s)>d+A_u(T-s)$. This contradiction proves Theorem 76.2.
+
+Every inversion was of an explicitly positive weight or the positive matrix $\mathcal D$; no inverse of $L$, a leading block or a marginal was used. All squarings compared positive sides, and all denominator clearings used the positive factors displayed above. The proof includes $\beta=1/2$ and applies separately to every arbitrarily small positive $\beta$, with no positive lower cutoff and no claimed uniform positive margin as $\beta\downarrow0$. The endpoint $u=1$ belongs to the polynomial lemma alone. The support dimension can be any fixed finite $k\geq2$; no limiting-rank argument is needed. $\square$
+
+## 80. The original actual-channel bound under every inherited interface
+
+**Definition 80.1 (the retained actual premises).** Let $N:M_3(\mathbb C)\to M_5(\mathbb C)$ be an actual original-real CPTP encoder of Definition 52.1, with actual phase-difference spectrum $(a,\beta,0,-\beta,-a)$ and $0<\beta\leq1/2$. Fix one actual real Kraus compression of minimal rank $r\leq9$, its isometry $V$ and its complement $\Gamma$ as in (S.2). Center support rank $k\leq r$ is a separate variable. The complete actual complementary-domain premises are those of (S.64)–(S.65), or equivalently (R.3)–(R.5) of [the first volume at the fixed published snapshot](https://github.com/the-omega-institute/trureturing/blob/40f9e7b52526d6fab4e139bb95e7bdbdda64f78c/docs/develop/theory/AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#1-the-complete-actual-real-frame-domain):
+
+$$
+\begin{gathered}
+J_p=\begin{pmatrix}
+\tau&0&C\\0&\bar\tau&\bar C\\C^\dagger&C^T&\sigma
+\end{pmatrix}\succeq0,\qquad
+\tau\succeq0,\quad\operatorname{spec}_{>0}\tau=(a,\beta),\\
+\sigma=\bar\sigma=\sigma^T,\qquad
+\operatorname{Tr}\tau=\operatorname{Tr}\sigma=1,\qquad\operatorname{Tr}C=0,\\
+\operatorname{ran}C\subseteq\operatorname{ran}\tau,\qquad
+S_{\rm res}=\sigma-C^\dagger\tau^+C-
+\overline{C^\dagger\tau^+C}\succeq0,\qquad
+\operatorname{rank}S_{\rm res}\leq1,\qquad\operatorname{rank}J_p\leq5.
+\tag{S.185}
+\end{gathered}
+$$
+
+Here $\tau^+$ acts on its actual support; singular $\tau$ requires the range condition. The bars refer to the fixed original real environment frame. A center-diagonalizing unitary transports every block and the original antiunitary together, as in Definition 52.2. It does not make these blocks jointly entrywise real, commuting, or supported on the same two-dimensional subspace. In particular (S.11) is a mixture of the two transported phase marginals for every complex phase-plane direction; that mixture need not have rank two. Every admissible third column remains present, including its active-output components and the full $C,\bar C,\sigma$ data.
+
+The conditional application assumes, with exactly their stated domains and conventions: the actual phase and supported common-projection interfaces (S.8)–(S.12), (S.55)–(S.60); the rectangular-contraction identity (S.6); the fixed-center compact-affine minimax identity (S.26); the unrestricted CPTP recovery/complement identity (S.7); and the pure-target unhalved-diamond lower interface (S.27). These premises include the actual domination of singular contracted marginals, the full paired-basis transpose, and one common range completion. The standard literature formulas cited below do not by themselves verify these repository-specific actual reductions.
+
+**Theorem 80.2 (conditional all-positive-beta actual consequence).** Under all the premises of Definition 80.1, every such actual $N$, with all admissible third columns and every actual minimal Kraus rank $r\leq9$, satisfies
+
+$$
+\begin{gathered}
+g_N=\max_{R:M_5\to M_3\ {\rm CPTP}}F(RN,\mathrm{id}_3),
+\qquad g_N^2\leq T,\\
+\delta_N=\inf_{R:M_5\to M_3\ {\rm CPTP}}
+\|RN-\mathrm{id}_3\|_\diamond
+\geq1-\sqrt{1-\beta}.
+\tag{S.186}
+\end{gathered}
+$$
+
+The recovery optimization is over all complex CPTP maps on the whole five-dimensional output. The norm is unhalved, with every finite complex reference allowed.
+
+Proof. Keep the actual $V$ fixed. For any center $\omega$ on its actual environment, take its exact support $S$ of rank $k$ and then any one complex rectangular contraction $U:\mathbb C^5\to\mathbb C^3\otimes\mathbb C^k$. Use $A_{\omega,U}$ and $r_\psi$ of (S.5).
+
+For $k=1$, actual domination (S.8) gives $\|x_\psi\|^2\leq a$ for each complex unit $\psi\in\mathcal C$, so $r_\psi\leq\sqrt a<v$. The strict last comparison follows from $T-a=(1-u)(2u+1)/2>0$. No rank-five projection is inserted into the three-dimensional supported target.
+
+For $k\geq2$, $3k\geq6$ and $\operatorname{rank}U\leq5$. Complete its range to one five-dimensional subspace and choose its projection $P$ with $PU=U$. This is a completion after taking the center support, not a compression of a previously chosen larger projection presumed to retain its rank; $P=UU^\dagger$ is not required. Fix $D=I-P$ and its conjugated defect $E=\overline D$. The transpose identities (S.10), (S.12), (S.60) and actual cap domination give the same $M_\psi$ with
+
+$$
+r_\psi\leq f(Q_\psi,M_\psi)\leq H_a(M_\psi)
+\quad(\psi\in\mathcal C,\ \|\psi\|=1).
+$$
+
+For the same $V,\omega,U,P$, the third-input overlap $r_2>v$ would imply $q_2<d$ by (S.21). Hence simultaneous strict inequalities $r_\psi>v$ for every complex phase direction and $r_2>v$ would produce precisely (S.158). Theorem 76.2 excludes it for each $k\geq2$, including the full-support $k=2$ construction. Consequently
+
+$$
+\forall\omega\ \forall U:\quad
+\min\left\{\min_{\substack{\psi\in\mathcal C\\\|\psi\|=1}}r_\psi,\ r_2\right\}
+\leq v.
+\tag{S.187}
+$$
+
+The center and contraction, then the projection and common $\eta,L$, precede the directional tests. A direction witnessing (S.187) may depend on the center and contraction. This order does not supply a common input witness before $U$, nor exchange a direction-dependent contraction for a common recovery.
+
+For each fixed center, input densities and the complex rectangular-contraction ball are nonempty compact convex sets in finite real coordinates. The pairing $\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})$ is continuous and affine in each variable. Apply exactly (S.6) and (S.26), with the center held fixed:
+
+$$
+\begin{aligned}
+\min_\rho F_\rho(\Gamma,\mathcal C_\omega)
+&=\min_\rho\max_U\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})\\
+&=\max_U\min_\rho\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})\\
+&=\max_U\lambda_{\min}(\operatorname{Herm}A_{\omega,U})\leq v.
+\end{aligned}
+\tag{S.188}
+$$
+
+The last step uses (S.187): a least eigenvalue is at most that restricted test minimum. Only after this per-center conclusion take the center maximum in (S.7), obtaining $g_N\leq v$. There is no exchange of the center maximum with an input minimum. The Uhlmann contraction and the center rank impose no Kraus-number restriction on the physical recovery.
+
+Finally, for each allowed recovery $R$ and qutrit density $\rho$, choose a purification $|\Psi_\rho\rangle$ and measure the output against its pure identity target. The probability deficit yields trace distance at least $2(1-F_e(\rho,RN))$. This purification supplies a witness inside the original supremum over all finite complex references. The assumed interface (S.27) and the recovery infimum give
+
+$$
+\begin{aligned}
+\|RN-\mathrm{id}_3\|_\diamond
+&\geq2\left(1-\min_\rho F_e(\rho,RN)\right)
+=2\left(1-F(RN,\mathrm{id}_3)^2\right),\\
+\delta_N&\geq2(1-g_N^2)\geq2(1-T)=1-\sqrt{1-\beta}.
+\end{aligned}
+\tag{S.189}
+$$
+
+This uses a one-sided pure-target lower bound, not an equality between optimized diamond and fidelity objectives. The subset of input tests used in (S.187) restricts neither the recovery class nor the reference supremum. All actual-domain conclusions remain conditional on every interface in Definition 80.1. $\square$
+
+## 81. Bounded literature attribution and transfer conditions
+
+**Definition 81.1 (reused intermediates and the source-specific composition).** The cap maximization and order comparison are reused from (S.57)–(S.63), (S.68)–(S.71); the exact rank-five and positive-weight consumer is (S.90)–(S.91). The new source-specific analytic content is the general-beta branch-complete estimate (S.163), its scalar necessity (S.165), the uniform coefficient inequality (S.168)–(S.174), and their exact ordered spectral overlap (S.175)–(S.184). This is a `repo-derived` composition extending the half-beta exclusion of Sections 64 and 66 to every $0<\beta\leq1/2$ and every fixed finite $k\geq2$. It asserts no new generic fidelity variational theorem, dimension-intersection principle, Ky Fan theorem, compact minimax theorem or Bernstein representation theorem.
+
+The following primary-source attributions are `literature-attested` only within their stated versions, formula conventions and hypotheses. They identify reused interfaces or alternative methods; no alternative row supplies a missing actual-class implication.
+
+| Primary source and exact locator | Formula conditions and transfer boundary |
+| --- | --- |
+| Watrous, *The Theory of Quantum Information*, Chapter 3 PDF, Theorem 3.19, (3.115), printed p. 148, [chapter](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf); PDF SHA256 `e91c1a2112676c0f0f6070f97a35099d5e6f392c5d971f7f9054b38c6dd6fe46`. | For arbitrary finite-dimensional PSD operands, root fidelity is the infimum of $[\operatorname{Tr}(QX)+\operatorname{Tr}(MX^{-1})]/2$ over $X\succ0$. Every such weight gives (S.161); operands may be singular. Only $X$ is inverted. |
+| Bény–Oreshkov, *Approximate simulation of quantum channels*, [arXiv:1103.0649v3](https://arxiv.org/html/1103.0649v3), (54)–(56), Corollary 5, (64)–(66); fixed-input (132)–(133). | The fidelity is root fidelity minimized over purified inputs, rectangular contractions allow unequal purification spaces, and Corollary 5 is unrestricted CPTP. Its (65)–(66) complete trace-nonincreasing maps without decreasing fidelity; the Kraus-bounded Theorem 3 alone is insufficient. For target $\mathrm{id}_3$, the scalar-trace complement has postprocessings exactly the constant environment densities. The fixed-input identity is a distinct interface and is not substituted for (S.7). |
+| Braunstein–Pati, *Quantum information cannot be completely hidden in correlations: implications for the black-hole information paradox*, [arXiv:gr-qc/0603046v1](https://arxiv.org/html/gr-qc/0603046v1), (2)–(4), (6)–(9). | The exact no-hiding construction has $Kd$ orthogonal complementary vectors. An exactly reversible qutrit with a fixed rank-two environment marginal therefore needs six output dimensions. The approximate premise is reference-inclusive decoupling; the sharp weighted five-dimensional obstruction does not follow from that statement alone. |
+| Ng–Mandayam, *A simple approach to approximate quantum error correction based on the transpose channel*, [arXiv:0909.0931v2](https://arxiv.org/html/0909.0931v2), Theorem 3 and Corollary 4, (8)–(10). | The comparison is dimension dependent and concerns optimal worst-case pure-code-state squared fidelity and transpose recovery. A sharp transfer here needs a quantitative transpose-loss estimate and a bridge to the reference-entangled worst-case convention. Neither is inferred from the comparison. |
+| Mandayam–Ng, *Towards a Unified Framework for Approximate Quantum Error Correction*, [arXiv:1202.5139v2](https://arxiv.org/html/1202.5139v2), Section II, (1)–(2), Theorem 2, (12)–(14). | A subsystem subspace $\mathcal H_A\otimes\mathcal H_B$ is already specified, and the theorem gives sufficient perturbative recovery conditions. A protected dimension-three factor and dimension-two gauge factor require six dimensions exactly; applying an approximate version inside dimension five needs a quantitative approximate-embedding argument and a converse. |
+| Renes, *Better bounds on optimal measurement and entanglement recovery, with applications to uncertainty and monogamy relations*, [arXiv:1707.01114v1](https://arxiv.org/html/1707.01114v1), Proposition 1, (9), and (13); Zheng–He–Lee–Jiang, *The Near-optimal Performance of Quantum Error Correction Codes*, [arXiv:2401.02022v2](https://arxiv.org/html/2401.02022v2), Theorem 1, (4)–(5). | Renes uses normalized $\sigma_B$ and Rényi parameter at least $1/2$ in (9), with squared maximally-entangled-target recovery fidelity. The second source gives $\widetilde F=d_L^{-2}\|\operatorname{Tr}_L\sqrt M\|_F^2$ and $(1-\widetilde F)/2\leq1-F_{\rm opt}\leq1-\widetilde F$ for maximally-mixed-input entanglement fidelity. These fixed-state methods require an additional inequality on the full actual QEC matrix retaining $C,\bar C,\sigma$ and rank five before a sharp application here. |
+| Wu–Grossi–Kürkçüoğlu–Zorzetti, *Universal Optimization and Tighter Fidelity Bounds for Approximate Quantum Error Correction*, [arXiv:2607.24968v2](https://arxiv.org/html/2607.24968v2), Theorem 1, (6), Corollary 2, (8). | Theorem 1 is an exact dual representation for optimal maximally-mixed-input entanglement fidelity. Corollary 2 requires $\langle i|E_k^\dagger E_l|j\rangle=0$ for every distinct logical $i,j$ and all Kraus indices $k,l$. The actual class permits nonzero third-column blocks $C,\bar C$, so that corollary has no automatic all-class application. |
+| Elimelech–Albert–Barg, *Universal recovery in approximate quantum error correction*, [arXiv:2608.28962v2](https://arxiv.org/html/2608.28962v2), Definition 2 and Theorem 4. | The family is controlled by a specified error set: Kraus expansions $A_m=\sum_k c_{mk}E_k$ have coefficient-matrix operator norm at most one. A common recovery guarantee for that family requires this control hypothesis. A converse from its leakage functional to the present five-output defect is an additional obligation. |
+
+Authentication of a standard formula or a bounded locator does not prove the repository-specific phase, support, transpose, domination or common-implementation premises in Definition 80.1. The listed attributions do not constitute an exhaustive literature survey or an independent proof of the alternative theorems and imply no global novelty claim. No new authentication of those primary sources is asserted by this exposition.
+
+## 82. Scope of the extension and the separate witness programmes
+
+**Definition 82.1 (consequences and remaining distinctions).** Theorem 76.2 supplies the all-center general-beta common-projection exclusion left unspecified in Section 67. Theorem 80.2 extends the conditional half-beta actual consequence of Theorem 66.2 over the full original positive-beta interval, under the explicitly retained interfaces. The scalar-only and specified matrix-extension obstructions of Sections 55–56 retain their exact scope: the present contradiction uses the full common-vector inequality as well as the spectral budget and does not assert an all-center standalone certificate (S.14).
+
+The normalized $Z_i$ equations reconstruct projection geometry only. This proof constructs neither an actual encoder from arbitrary relaxed data nor a common attaining family of directionwise maximizing marginals. It imposes no extra normal form, reality or commutativity on actual third columns, no bound on recovery Kraus number, no restriction of complex directions or references, and no center/input quantifier exchange. Rank-one actual centers are covered separately; center support rank two is covered in its own full six-dimensional supported geometry; every higher finite positive support is included without a tail-rank restriction.
+
+Sections 68–75 and their fixed-input sufficient routes (S.154)–(S.155) retain their stated mathematical boundaries. The all-beta projection contradiction does not construct a fixed-$\rho_\star$ dual $Y_N$, a density $\rho_N$ and dual meeting (S.155) for every encoder, or the separate $\sqrt a<\lambda<1$ constructive witness bridge. Uniform feasibility of those routes remains unproved here. In particular the per-center, per-contraction directional witness of (S.187) cannot be promoted to an input chosen before every recovery. A diamond lower bound alone does not establish either stronger sufficient witness programme or converse lifting.
+
+The actual conclusion is exactly the unchanged original-domain lower target: all original-real CPTP $M_3(\mathbb C)\to M_5(\mathbb C)$ with the stated spectrum, every $0<\beta\leq1/2$, all admissible third columns, actual minimal Kraus rank at most nine, all complex whole-output CPTP recoveries, all finite complex references, and the unhalved diamond norm, conditional on Definition 80.1. The analytic projection theorem has the larger finite-center-rank scope stated in Theorem 76.2. Neither result asserts a new matching construction, physical realization, kernel verification, exhaustive novelty or completion of the continuing research programme.
+
+## 追加锚（本行以下为增补区）
