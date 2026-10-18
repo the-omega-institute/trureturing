@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Zeros/CriticalPoints/BorceaNonunivalenceRadius
    mirror-E: none(waiver:open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Algebra.Polynomial.Roots]
+   anchors: [mathlib/module/Mathlib.Analysis.Complex.Polynomial.Basic]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Zeros/CriticalPoints/BorceaNonunivalenceRadius.conjecture; result=D5/S3/Zeros/CriticalPoints/BorceaNonunivalenceRadius.result; claim=D5/S3/Zeros/CriticalPoints/BorceaNonunivalenceRadius.conjecture
    digest: The root-moment nonunivalence radius conjecture is false. -/
 
