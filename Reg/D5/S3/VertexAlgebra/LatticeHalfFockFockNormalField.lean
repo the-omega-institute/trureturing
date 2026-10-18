@@ -1,6 +1,12 @@
-/- SOURCE ONLY: every certificate and selector below is UNCOMPILED.
-This is the source owner's faithful typed-contract attempt, not declared_validated
-or current binding evidence. No opaque log or peer implementation was read.
+/- SOURCE-stage history: initially uncompiled; the D5 mathematical proofs and these
+Reg typed proof terms have since compiled successfully. The completed scoped native report
+leaves all seven source registrations declared_unresolved, with zero declared_validated
+and no accepted source-binding/certificate evidence. Each meets the same
+source.dictionary_or_proof_coordinate boundary: hu is lexical proof coordinate 1.
+Existing issue https://github.com/the-omega-institute/trureturing/issues/17623 covers this
+owner/boundary in an older three-target snapshot; this disclosure covers all seven targets.
+These checks precede this documentation edit. Current-source rechecks, Scribe compilation/
+emission, freezing, required gates/CI, PR and dev synchronization remain separate.
 The finite-role template is the existing Reg.Support.DependentFamily enrollment.
 Original-source quantifiers and actual dependent target modules are retained.
 -/

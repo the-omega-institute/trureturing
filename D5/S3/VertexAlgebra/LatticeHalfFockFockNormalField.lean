@@ -6,7 +6,16 @@
    utility: none
    digest: Pointwise finite arbitrary-word normal fields and the actual finite-charge source extension. -/
 
-/- SOURCE candidate only: UNCOMPILED; no canonical admission claimed.
+/- SOURCE-stage history: initially prepared without compilation.
+The D5 mathematical proofs and mirrored Reg typed proof terms have since compiled.
+The completed scoped native report records only Classical.choice, Quot.sound and propext,
+with no sorryAx. All seven source registrations remain declared_unresolved; none is
+declared_validated or has accepted source-binding/certificate evidence. The shared boundary
+is source.dictionary_or_proof_coordinate: hu is selected as lexical proof coordinate 1.
+Existing issue https://github.com/the-omega-institute/trureturing/issues/17623 covers this
+owner/boundary in an older three-target snapshot; this disclosure covers all seven source theorems.
+These checks precede this documentation edit. Current-source rechecks, Scribe compilation/
+emission, freezing, required gates/CI, PR and dev synchronization remain separate.
 Exact accepted supplier extraction, SHA256
   da8469c7f1a7b7c8b9f6be6c48a7e83f9f5154d57c5309958d9806342273ecea.
 The actual dependent ActualGround/ActualTensor and original jet/mode conventions are retained.
