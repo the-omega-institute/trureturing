@@ -28,10 +28,7 @@ internal static class DigestionWorkingTree
         if (extra.Entries.Any(static entry => BackfillInventoryLoader.IsCanonicalPath(entry.Path)
                 || entry.Path == BackfillInventoryLoader.RelativePath))
             throw new InvalidOperationException("digestion input extension must not add ledger files");
-        var merged = RawRepositorySnapshot.Create(current.Raw.Entries
-            .Concat(extra.Entries)
-            .DistinctBy(static entry => entry.Path, StringComparer.Ordinal)
-            .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
+        var merged = DigestionQuerySelection.Merge(current.Raw, extra);
         var decoded = decode(merged);
         return (merged, decoded, current.Document);
     }

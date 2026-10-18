@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Preserve Protected a and Remaining b Edges Through Native Recursion. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveCycleStep
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 import D5.S3.Combinatorics.Graph.Walks.ActualRetainedEdges

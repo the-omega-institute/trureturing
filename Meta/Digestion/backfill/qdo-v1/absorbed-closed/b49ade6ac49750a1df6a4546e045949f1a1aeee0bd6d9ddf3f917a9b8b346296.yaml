@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b49ade6ac49750a1df6a4546e045949f1a1aeee0bd6d9ddf3f917a9b8b346296
-  normalized_sha256: sha256:b49ade6ac49750a1df6a4546e045949f1a1aeee0bd6d9ddf3f917a9b8b346296
-cas_ref: sha256:b49ade6ac49750a1df6a4546e045949f1a1aeee0bd6d9ddf3f917a9b8b346296
-coverage_gids:
-  - gid: D5/S3/Entropy/Observation/BudgetEfficiencyAssembly.budget_efficiency_assembly
-    target_statement_id: sha256:087254f393a99b22f70babc6e1bbc80363f3f174593905c2ba99907683b99640
-receipts:
-  unresolved_subitems: []

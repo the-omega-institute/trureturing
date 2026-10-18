@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Slice the special path already used by the actual parent. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStatePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQBoundarySlicing
 

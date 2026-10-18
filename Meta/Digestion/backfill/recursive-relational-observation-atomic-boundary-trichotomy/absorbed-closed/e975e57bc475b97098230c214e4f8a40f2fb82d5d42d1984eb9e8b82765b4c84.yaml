@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e975e57bc475b97098230c214e4f8a40f2fb82d5d42d1984eb9e8b82765b4c84
+  normalized_sha256: sha256:e975e57bc475b97098230c214e4f8a40f2fb82d5d42d1984eb9e8b82765b4c84
+cas_ref: sha256:e975e57bc475b97098230c214e4f8a40f2fb82d5d42d1984eb9e8b82765b4c84
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativeErasedSupportKernels.even_epoch_support_kernel
+    target_statement_id: sha256:6533caffbdd42e4e670f5b361b0efb11b3e31a3813752fce6675aae568c1f014
+receipts:
+  unresolved_subitems: []

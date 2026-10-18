@@ -8,7 +8,19 @@ A and B are cosine-length coordinates, with A>1 and B>4A+5. The six local positi
 
 For a six-vector x and target position q, use the existing FourCycleCurvature.frame to read the target, four neighbors and opposite coordinate in the original FourCycleEnvelopes.cosine. Thus the raw cosine is the original numerator divided by the two positive square roots. extendedAngle(x,q) is arccos(max(-1,min(rawCos(x,q),1))). AngleSum(A,B,S) abbreviates the sum of these extended angles over every q in S, with x(j)=B for j in S and A otherwise. card(S) denotes its finite cardinality.
 
-**Theorem 1.1 (The complete selected-edge sum exceeds one quarter pi per occurrence).**
+**Theorem 1.1 (Positive radicands on the full positive coordinate domain).**
+
+$$\forall x \in Real, y \in Real, z \in Real,\; \left(1 < x \land \left(1 < y \land 1 < z\right)\right) \Rightarrow 0 < rad\left(x, y, z\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/TwoLengthAngleSum.rad_positive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For three independent real coordinates greater than one, the original rad(x,y,z)=2xyz+x^2+y^2+z^2-1 is strictly positive. This is the denominator-positivity supplier used by the native six-coordinate classification and local budget.
+
+**Theorem 1.2 (The complete selected-edge sum exceeds one quarter pi per occurrence).**
 
 $$\forall A \in Real, B \in Real, S \in Finset\left(Fin\left(6\right)\right),\; \left(1 < A \land \left(add\left(mul\left(4, A\right), 5\right) < B \land 2 \le card\left(S\right)\right)\right) \Rightarrow div\left(mul\left(card\left(S\right), pi\right), 4\right) < AngleSum\left(A, B, S\right)$$
 
@@ -110,5 +122,6 @@ The derivative identity is a local statement on the stated genuine formula domai
 
 ## References
 
+- Truth anchor: `D5/S3/Geometry/Hyperideal/TwoLengthAngleSum.rad_positive`
 - Truth anchor: `D5/S3/Geometry/Hyperideal/TwoLengthAngleSum.two_length_angle_sum`
 - Dependency: [D5/S3/Geometry/Hyperideal/FourCycleCurvature](FourCycleCurvature.md)

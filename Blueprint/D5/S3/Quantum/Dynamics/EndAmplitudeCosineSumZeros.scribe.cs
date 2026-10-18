@@ -15,6 +15,9 @@ internal sealed class EndAmplitudeCosineSumZerosDocument : IScribeDocumentDefini
         "For natural numbers a < b < c with a and c odd, b even and gcd(a, b, c) = 1, the cosine sum N(t) = (b^2 - a^2)(c^2 - a^2)(c^2 - b^2) + b^2 c^2 (c^2 - b^2) cos(at) + a^2 c^2 (c^2 - a^2) cos(bt) + a^2 b^2 (b^2 - a^2) cos(ct) has a zero in the open interval (0, pi) if and only if a is not 1. For a = 1 it is positive on [0, pi); for a >= 3 it takes a negative value in (0, pi).",
         H("Zeros of the end amplitude numerator of a seven-site chain"),
         Blocks(
+            Node("sine-squares", "A full-period sine-square sum", SineSquareFormula(),
+                Paragraph(Text("For natural a > 0 and m with sin(pi m / a) nonzero, summing sin squared at the a residue angles m pi j / a gives a/2. The identity sin squared x = (1 - cos(2x))/2 reduces the sum to cosine cancellation over the full period. This identity also gives the cosine-square sum a/2 by sin squared x + cos squared x = 1.")),
+                "sum_sin_sq", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("numerator", "The amplitude numerator", NumeratorFormula(),
                 Paragraph(Text("The cosine sum N(a, b, c; t) attached to the seven frequencies 0, a, -a, b, -b, c, -c. For a chain of seven sites whose spectrum is a positive multiple of {0, a, -a, b, -b, c, -c}, with first-site spectral weights proportional to the reciprocals of the products of the gaps to the other frequencies, the first-site amplitude is a positive multiple of N at a rescaled time: clearing the denominators of 1/(a^2 b^2 c^2) + cos(at)/(a^2 (b^2 - a^2)(c^2 - a^2)) + cos(bt)/(b^2 (b^2 - a^2)(c^2 - b^2)) + cos(ct)/(c^2 (c^2 - a^2)(c^2 - b^2)) gives N. N is the bracket of Eq. (2.1) of Escobar, Garcia and Minenkova, arXiv:2507.18767, read at natural frequencies (x, y, z) = (a, b, c): that equation gives the first-site amplitude of the persymmetric seven-site chain with spectrum {0, x, -x, y, -y, z, -z} as the bracket divided by 2 y^2 (z^2 - x^2)(x^2 - y^2 + z^2). This module treats N as a function in its own right and does not formalise the chain.")),
                 "amplitudeNumerator", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -85,6 +88,18 @@ internal sealed class EndAmplitudeCosineSumZerosDocument : IScribeDocumentDefini
         AndAlso(Less(a, b), Less(b, c));
 
     private static Formula OpenInterval(Formula t) => AndAlso(Less(D(0), t), Less(t, Pi));
+
+    private static Formula SineSquareFormula()
+    {
+        Formula a = F.Id("a"), m = F.Id("m"), j = F.Id("j");
+        Formula angle = new Formula.Fraction(Mul(Pi, j), a);
+        Formula nonzero = NotEqual(Call("sin", new Formula.Fraction(Mul(Pi, m), a)), D(0));
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(j, Sp, InMacro, Sp, Call("range", a))),
+            Sp, Sq(Call("sin", Mul(m, angle))));
+        return Disp(All("a", Naturals(), All("m", Naturals(),
+            Implies(AndAlso(Less(D(0), a), nonzero),
+                Equal(sum, new Formula.Fraction(a, D(2)))))));
+    }
 
     private static Formula NumeratorFormula()
     {

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: The same literal J2 outer parent retains its protected-a and remaining-b edges and classifies every c edge. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSelectedCInvariant
 

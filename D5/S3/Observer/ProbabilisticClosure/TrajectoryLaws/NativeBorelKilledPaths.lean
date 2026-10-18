@@ -244,7 +244,7 @@ theorem common_flow_doob_survival (F : CommonFlow) :
   have hpath : IsProbabilityMeasure (killedTrajectory F (doob F G) hsub) := by
     letI := cemetery_markov (doob F G) hsub
     haveI : IsProbabilityMeasure (F.nuP.map (Sum.inl : PDescriptor → Cemetery)) :=
-      Measure.isProbabilityMeasure_map measurable_inl.aemeasurable
+      inferInstance
     unfold killedTrajectory
     infer_instance
   refine ⟨G, hsub, hmG, haG, cemetery_markov (doob F G) hsub, hpath,
@@ -423,8 +423,8 @@ set_option maxHeartbeats 800000 in
 private theorem cemetery_path_antitone (μ : Measure Cemetery) [IsProbabilityMeasure μ]
     (M : Kernel PDescriptor PDescriptor) (hsub : ∀ Q, M Q Set.univ ≤ 1) :
     ∀ᵐ x ∂cemeteryLaw μ M hsub, Antitone (fun n => x n ≠ Sum.inr ()) := by
+  dsimp only [cemeteryLaw]
   letI := cemetery_markov M hsub
-  change ∀ᵐ x ∂homogeneousLaw μ (cemetery M), Antitone (fun n => x n ≠ Sum.inr ())
   have hs (n : ℕ) : ∀ᵐ x ∂homogeneousLaw μ (cemetery M),
       x n = Sum.inr () → x (n + 1) = Sum.inr () := by
     have hk := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
@@ -468,7 +468,7 @@ private theorem cemetery_survival (μ : Measure PDescriptor) [IsProbabilityMeasu
   letI := cemetery_markov M hsub
   change homogeneousLaw (μ.map Sum.inl) (cemetery M) immortal = _
   haveI : IsProbabilityMeasure (μ.map (Sum.inl : PDescriptor → Cemetery)) :=
-    Measure.isProbabilityMeasure_map measurable_inl.aemeasurable
+    inferInstance
   have he (n : ℕ) : homogeneousLaw (μ.map Sum.inl) (cemetery M)
       {x | x n ≠ Sum.inr ()} = ∫⁻ Q, iterate M (fun _ => 1) n Q ∂μ := by
     have hset : MeasurableSet {x : ℕ → Cemetery | x n ≠ Sum.inr ()} :=
@@ -751,7 +751,7 @@ private theorem terminal_survival_mass (F : CommonFlow) (G : Set PDescriptor)
   letI := cemetery_markov (doob F G) hsub
   haveI : IsFiniteKernel (doob F G) := ⟨⟨1, by simp, hsub⟩⟩
   haveI : IsProbabilityMeasure (F.nuP.map (Sum.inl : PDescriptor → Cemetery)) :=
-    Measure.isProbabilityMeasure_map measurable_inl.aemeasurable
+    inferInstance
   have hs : Measurable (fun Q => q F Q / threeStepAverage F Q) :=
     (common_flow_q_limit F).1.div (h_measurable F)
   have hm : Measurable (iterate (doob F G)
@@ -815,7 +815,7 @@ theorem common_flow_immortal_identity (F : CommonFlow) :
   let κ := cemetery (doob F G)
   letI := cemetery_markov (doob F G) hsub
   haveI : IsProbabilityMeasure (F.nuP.map (Sum.inl : PDescriptor → Cemetery)) :=
-    Measure.isProbabilityMeasure_map measurable_inl.aemeasurable
+    inferInstance
   haveI : IsProbabilityMeasure μ :=
     inferInstanceAs (IsProbabilityMeasure (homogeneousLaw (F.nuP.map Sum.inl) κ))
   haveI : IsProbabilityMeasure (originalTrajectory F) :=
@@ -875,7 +875,7 @@ theorem common_flow_immortal_identity (F : CommonFlow) :
     rw [← Measure.restrict_congr_set he, Measure.restrict_singleton, hcs]
   have hid : μ.restrict immortal =
       ((originalTrajectory F).restrict {x | x 0 = a}).map includePath := by
-    rw [hx, hcr, Measure.map_smul, Measure.map_dirac]
+    rw [hx, hcr, Measure.map_smul _ hin.aemeasurable, Measure.map_dirac]
     rfl
   have hle : μ.restrict immortal ≤ (originalTrajectory F).map includePath := by
     rw [hid]

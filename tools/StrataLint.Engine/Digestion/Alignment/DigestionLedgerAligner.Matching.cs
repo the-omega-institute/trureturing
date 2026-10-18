@@ -69,8 +69,7 @@ internal static partial class DigestionLedgerAligner
     // the engineering project registry to discover build inputs.
     private static bool AtomizerInputsChanged(RawChangeSet changes) =>
         changes.Paths.Any(path =>
-            path.Value == TheoryAtomizerDataLoader.DataPath
-            || path.Value.StartsWith("tools/StrataLint.Engine/Digestion/", StringComparison.Ordinal));
+            path.Value.StartsWith("tools/StrataLint.Engine/Digestion/", StringComparison.Ordinal));
 
     private static bool SourceChanged(DigestionLedgerSource source, RawChangeSet changes)
     {

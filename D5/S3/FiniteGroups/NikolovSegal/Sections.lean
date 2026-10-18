@@ -45,7 +45,8 @@ theorem simple_involves_map_or_kernel [IsSimpleGroup A]
   let K : Subgroup H := q.ker.comap H.subtype
   have : K.Normal := Subgroup.normal_comap _
   have : (K.map f).Normal := Subgroup.Normal.map inferInstance f hf
-  rcases Subgroup.Normal.eq_bot_or_eq_top (inferInstance : (K.map f).Normal) with hbot | htop
+  rcases (show K.map f = ⊥ ∨ K.map f = ⊤ by
+    apply Subgroup.Normal.eq_bot_or_eq_top <;> infer_instance) with hbot | htop
   · left
     let r := q.subgroupMap H
     have hr : Function.Surjective r := q.subgroupMap_surjective H
@@ -84,7 +85,8 @@ theorem simple_involves_map_or_kernel [IsSimpleGroup A]
 theorem involves_card_dvd [Finite G] (h : Involves A G) :
     Nat.card A ∣ Nat.card G := by
   obtain ⟨H, f, hf⟩ := h
-  exact (Subgroup.card_dvd_of_surjective f hf).trans H.card_subgroup_dvd_card
+  exact (show Nat.card A ∣ Nat.card H by
+    apply Subgroup.card_dvd_of_surjective <;> assumption).trans H.card_subgroup_dvd_card
 
 theorem not_involves_of_prime_dvd {p : ℕ} [Finite G]
     (hA : p ∣ Nat.card A) (hG : ¬p ∣ Nat.card G) : ¬Involves A G := by

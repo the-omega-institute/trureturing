@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:55ab22e16167a68189fa7b5a63be6ed58c926ad4e425550bce209de09ee04a8d
-  normalized_sha256: sha256:55ab22e16167a68189fa7b5a63be6ed58c926ad4e425550bce209de09ee04a8d
-cas_ref: sha256:55ab22e16167a68189fa7b5a63be6ed58c926ad4e425550bce209de09ee04a8d
-coverage_gids:
-  - gid: D5/S3/Constants/InnerProducts/FractionalReciprocalInnerProduct.fractional_reciprocal_inner_product
-    target_statement_id: sha256:ac6cf06688054e855d310f833fee2adb9f4272d24fca38e5c6460474b4ff5796
-receipts:
-  unresolved_subitems: []

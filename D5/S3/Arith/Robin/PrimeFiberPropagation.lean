@@ -35,7 +35,7 @@ def EdgeTest (n m : ℕ) : Prop :=
   (divisorRatio (n * m) / divisorRatio n - 1) * Real.log (Real.log n) ≤
     Real.log (1 + Real.log m / Real.log n)
 
-private theorem divisorRatio_pos {n : ℕ} (hn : n ≠ 0) : 0 < divisorRatio n := by
+theorem divisorRatio_pos {n : ℕ} (hn : n ≠ 0) : 0 < divisorRatio n := by
   unfold divisorRatio
   have h1 : (0 : ℝ) < ArithmeticFunction.sigma 1 n := by
     exact_mod_cast ArithmeticFunction.sigma_pos_iff.mpr (Nat.pos_of_ne_zero hn)
@@ -101,8 +101,8 @@ private theorem sigma_mul_prime {q n : ℕ} (hq : q.Prime) (hn : n ≠ 0) :
   generalize n / q ^ a = m at hcop hdecomp ⊢
   subst hdecomp
   have hmul : q ^ a * m * q = q ^ (a + 1) * m := by ring
-  rw [hmul, ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime (hcop (a + 1)),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime (hcop a),
+  rw [hmul, (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime (hcop (a + 1)),
+    (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime (hcop a),
     sigma_prime_pow_succ hq a]
   ring
 

@@ -125,7 +125,7 @@ theorem g_has_deriv_at {t : ℝ} (ht : 1 < t) :
     dsimp [activationDensity]
     field_simp [ht0, hl0] <;> ring)
 
-private theorem density_integrable {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
+theorem density_integrable {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
     IntervalIntegrable activationDensity MeasureTheory.volume s t := by
   apply ContinuousOn.intervalIntegrable
   rw [Set.uIcc_of_le hst]
@@ -256,7 +256,7 @@ private theorem prefix_le {b x t : ℝ} (hx : 1 ≤ x) (ht : 1 < t) :
     _ = (s.card : ℝ)*Real.log t := by simp
     _ ≤ _ := mul_le_mul_of_nonneg_right hcard (Real.log_pos ht).le
 
-private theorem price_terms_integrable {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) :
+theorem price_terms_integrable {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) :
     IntervalIntegrable (fun t : ℝ => 1/t) MeasureTheory.volume a b ∧
     IntervalIntegrable (fun t : ℝ => t⁻¹/Real.log t) MeasureTheory.volume a b := by
   have h0 : ∀ t ∈ Set.Icc a b, t ≠ 0 := fun t ht => ne_of_gt (by linarith [ht.1])

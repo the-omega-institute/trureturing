@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5a4da9ab4e0c2b2cbada8fb6236fb440b40ac55952cee53a9e3a8a24c25fb043
-  normalized_sha256: sha256:5a4da9ab4e0c2b2cbada8fb6236fb440b40ac55952cee53a9e3a8a24c25fb043
-cas_ref: sha256:5a4da9ab4e0c2b2cbada8fb6236fb440b40ac55952cee53a9e3a8a24c25fb043
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/UnitaryNaturalSelector.no_unitary_natural_orthogonal_selector
-    target_statement_id: sha256:84c41108a0505538d8edddbc944f512ac2af0cbe242754ccb4859eed265f5eae
-receipts:
-  unresolved_subitems: []

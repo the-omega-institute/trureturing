@@ -37,7 +37,7 @@ def positiveKernel : ℕ → ℕ → ℕ → ℝ → ℝ
       (a + 1 : ℝ) * positiveKernel m (a + 1) b x +
         (b + 1 : ℝ) * positiveKernel m (a + 1) (b + 1) x
 
-private theorem positiveKernel_pos (m a b : ℕ) {x : ℝ} (hx : 1 < x) :
+theorem positiveKernel_pos (m a b : ℕ) {x : ℝ} (hx : 1 < x) :
     0 < positiveKernel m a b x := by
   induction m generalizing a b with
   | zero =>

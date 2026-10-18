@@ -363,5 +363,104 @@ def registration :
 
 end LocalLeft
 
+namespace PartialTransposeKroneckerConj
+
+/-- Observe the partial transpose after local conjugation. -/
+abbrev signature : Signature where
+  Params := Σ _ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ, Matrix (Fin 2) (Fin 2) ℂ
+  State _ := Matrix (Fin 2) (Fin 2) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+open _root_.D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
+  (partialTransposeB)
+
+def actual : Realization signature :=
+  realize signature
+    (fun _ p V => partialTransposeB ((p.2 ⊗ₖ V) * p.1 * (p.2 ⊗ₖ V)ᴴ))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (U V : Matrix (Fin 2) (Fin 2) ℂ),
+    R.readout () ⟨ρ, U⟩ V =
+      (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h 0 1 1
+  have hc := congrArg (fun M => M (0, 0) (0, 0)) he
+  norm_num [rejected, realize, partialTransposeB] at hc
+  change (1 : ℂ) = 0 at hc
+  exact one_ne_zero hc
+
+def source_registration : Registration arena (type_of% @partialTransposeB_kronecker_conj) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨partialTransposeB_kronecker_conj, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨1, 1⟩, 0, 1, ?_⟩
+    intro he
+    have hc := congrArg (fun M => M (0, 0) (0, 0)) he
+    norm_num [actual, realize, Matrix.one_kronecker_one, partialTransposeB] at hc
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@partialTransposeB_kronecker_conj) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.PartialTransposeKroneckerConj.unit
+  realizationName := Lean.Name.str
+    (Lean.Name.str `Reg.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+      "PartialTransposeKroneckerConj") "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p V => partialTransposeB ((p.2 ⊗ₖ V) * p.1 * (p.2 ⊗ₖ V)ᴴ))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end PartialTransposeKroneckerConj
+
 end
 end Reg.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation

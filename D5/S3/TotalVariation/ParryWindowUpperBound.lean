@@ -6,6 +6,7 @@
    utility: none
    digest: Fixed minimizer tables attain finite-window bounds under the actual Parry source. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.TotalVariation.ParryWordCollision
 import D5.S3.TotalVariation.ParryTwistedComparison
 import D5.S3.Combinatorics.FairWindowMinimizer

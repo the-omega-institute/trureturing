@@ -137,7 +137,7 @@ theorem terminal_sampling_uniform_law (maxTrue : ℕ) :
     let rebuild (tail : Tape) : Tape := fun i => if i < e then false else tail (i - e)
     let B : Set Tape := {tail | ∃ stop, sample maxTrue (rebuild tail) f q e = some (word, stop)}
     have rebuildMeas : Measurable rebuild := by
-      apply measurable_pi_lambda
+      apply Measurable.of_eval
       intro i
       by_cases hi : i < e
       · simpa [rebuild, hi] using (measurable_const : Measurable (fun _ : Tape => false))
@@ -378,17 +378,19 @@ theorem terminal_sampling_uniform_law (maxTrue : ℕ) :
           if runAdmissible maxTrue fuel h word then (completionCount maxTrue fuel h : ℝ≥0∞)⁻¹ else 0 := by
     classical
     have finiteFair : Measure.infinitePi (fun _ : Fin h => fairBit) =
-        (PMF.uniformOfFintype (Fin h → Bool)).toMeasure := by
+        (uniformPmf (Fin h → Bool)).toMeasure := by
       apply Measure.ext_of_singleton
       intro w
       rw [Measure.infinitePi_singleton_of_fintype]
-      simp [fairBit, Nat.cast_pow, ← ENNReal.inv_pow]
+      simp [fairBit, uniformPmf, Nat.cast_pow, ← ENNReal.inv_pow]
     have layerMass : (Measure.infinitePi (fun _ : Fin h => fairBit))
         {w | runAdmissible maxTrue fuel h w = true} =
           (completionCount maxTrue fuel h : ℝ≥0∞) / (2 ^ h : ℝ≥0∞) := by
-      rw [finiteFair, PMF.toMeasure_uniformOfFintype_apply _ (Set.toFinite _).measurableSet]
-      simp only [Fintype.card_fun, Fintype.card_bool, Fintype.card_fin, Nat.cast_pow, Nat.cast_ofNat]
-      rfl
+      rw [finiteFair, PMF.toMeasure_apply_fintype]
+      simp only [uniformPmf, PMF.ofFintype_apply, Set.indicator_apply]
+      rw [← Finset.sum_filter]
+      simp [completionCount, BoundedRunName, Fintype.card_subtype,
+        Fintype.card_fun, Fintype.card_bool, Fintype.card_fin, div_eq_mul_inv]
     rw [ProbabilityTheory.cond_apply (Set.toFinite _).measurableSet, layerMass]
     cases hl : runAdmissible maxTrue fuel h word with
     | false =>
@@ -408,7 +410,8 @@ theorem terminal_sampling_uniform_law (maxTrue : ℕ) :
         constructor
         · exact And.right
         · intro hw; subst w; exact ⟨hl, rfl⟩
-      have atom : (PMF.uniformOfFintype (Fin h → Bool)).toMeasure {word} = (2 ^ h : ℝ≥0∞)⁻¹ := by simp
+      have atom : (uniformPmf (Fin h → Bool)).toMeasure {word} = (2 ^ h : ℝ≥0∞)⁻¹ := by
+        simp [uniformPmf]
       rw [inter, finiteFair, atom]
       simp only [↓reduceIte]
       have Qne : (2 ^ h : ℝ≥0∞) ≠ 0 := by simp

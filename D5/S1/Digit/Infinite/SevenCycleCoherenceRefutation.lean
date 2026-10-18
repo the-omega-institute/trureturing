@@ -6,6 +6,7 @@
    utility: none
    digest: Finite future separation asserted as a necessary condition for actual SCC coherence. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 import D5.S1.Digit.Infinite.WindowCylinderPartition
 import D5.S1.Words.ReturnWords.CoherentReturnPathTemplates

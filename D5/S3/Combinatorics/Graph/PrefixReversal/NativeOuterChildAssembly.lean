@@ -8,6 +8,7 @@
 /- outer assembly candidate.
    Child paths are actual previous-cycle constructions. Complete parent
    coverage is derived from native_child_gap_partition, not a premise. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialBoundaryInstances
 import Mathlib.Data.List.Count
 

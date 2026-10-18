@@ -37,7 +37,6 @@ public sealed class PersistedDecompositionTests
         var f = CreatePersistedChain(AtomizerRegistry.GenericId,
             $"**Theorem 1.1** A.{newline}{newline}",
             $"**Second** B.{newline}");
-        Assert.False(AtomizerRegistry.EmitsClausePlans(AtomizerRegistry.GenericId));
 
         var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
@@ -47,13 +46,6 @@ public sealed class PersistedDecompositionTests
 
     [Theory]
     [InlineData(AtomizerRegistry.GenericId)]
-    [InlineData(AtomizerRegistry.PzgId)]
-    [InlineData(AtomizerRegistry.GictId)]
-    [InlineData(AtomizerRegistry.ConeId)]
-    [InlineData(AtomizerRegistry.ObserverId)]
-    [InlineData(AtomizerRegistry.PeriodicTreeId)]
-    [InlineData(AtomizerRegistry.WmId)]
-    [InlineData(DecomposeFixture.Dialect)]
     public void PersistedPreambleRemainsClaimZero(string atomizer)
     {
         AssertPersistedChain(atomizer,
@@ -65,7 +57,7 @@ public sealed class PersistedDecompositionTests
     [Fact]
     public void PersistedListKeepsPreambleAndClosingProseInChildren()
     {
-        AssertPersistedChain(AtomizerRegistry.PzgId,
+        AssertPersistedChain(AtomizerRegistry.GenericId,
             "**\u5b9a\u7406 1.1**\n\nPreamble.\n\n- first\n",
             "- second\n\nClosing remark.\n");
     }
@@ -111,7 +103,7 @@ public sealed class PersistedDecompositionTests
         var parent = Assert.Single(f.Document.RequireDigestionEntries(), entry => entry.AtomId == f.Parent.AtomId);
 
         var plan = DigestionDecomposition.Plan(parent, DecomposeFixture.Atom(text).RawBytes,
-            AtomizerRegistry.Require(atomizer).Atomize, f.Rules);
+            AtomizerRegistry.Require(atomizer).Atomize, f.Snapshot);
         Assert.Equal(persistedChildren.Length, plan.Children.Length);
         Assert.Equal(parent.Receipts.ChainAtoms.ToArray(),
             plan.Children.Select(child => child.Fingerprints.RawSha256[7..]).ToArray());

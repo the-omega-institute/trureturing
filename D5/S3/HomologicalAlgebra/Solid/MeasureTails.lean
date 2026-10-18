@@ -28,6 +28,7 @@ open IntProof
 
 local instance measureTail_proj_epi : Epi P_proj := inferInstanceAs (Epi (cokernel.π P_map))
 
+set_option synthInstance.maxHeartbeats 100000 in
 local instance measureTail_proj_tensor_epi (B : LightCondAb) : Epi (P_proj ▷ B) := by
   rw [← tensorCokerIsoInt_π_inv (C := B)]
   infer_instance

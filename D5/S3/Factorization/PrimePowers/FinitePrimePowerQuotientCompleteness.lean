@@ -150,7 +150,7 @@ theorem finite_prime_power_quotient_completeness_tfae
       (Group.isNilpotent_congr
         (MonoidHom.ofInjective embeddingInjective)).mpr inferInstance
   tfae_have 4 → 5 := by
-    exact (Group.isNilpotent_of_finite_tfae (G := G)).out 0 4 rfl rfl |>.mp
+    exact (Group.isNilpotent_of_finite_tfae (G := G)).out 1 5 rfl rfl |>.mp
   tfae_have 5 → 3 := by
     rintro ⟨sylowProduct⟩
     let Index :=

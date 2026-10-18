@@ -6,6 +6,7 @@
    utility: none
    digest: Fractional rows and ordered fills obey the distance envelope. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.Interpolation.TwoPointGridDominance
 
 open Set

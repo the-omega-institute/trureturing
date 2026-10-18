@@ -7,6 +7,7 @@
 
 import Mathlib.Data.ZMod.Basic
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 namespace D5.S3.ArithUnits.PrimeAdditiveGenerator
 

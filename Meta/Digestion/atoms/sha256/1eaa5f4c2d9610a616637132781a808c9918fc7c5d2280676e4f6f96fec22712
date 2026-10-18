@@ -1,0 +1,39 @@
+**定理 5.2（flag-block 的原律根和界）。** 在定义 5.1 的一个方向上，设该类有 $n$ 个隐藏态、平稳行 $\pi$。把该方向选定的 $m$ 个原始发射位只在证明中分组，令 $Q^v=M_v$，分组链的转移矩阵为 $A^m$。置
+
+$$
+\begin{aligned}
+p_k&=\frac{\sum_i\pi_iQ^{v_k}(i,k)}{\pi_k},\qquad
+q_k=\min_{i:(Q^{v_k}\mathbf1)(i)>0}\frac{Q^{v_k}(i,k)}{(Q^{v_k}\mathbf1)(i)},\\
+p_*&=\min_kp_k,\qquad q_* =\min_kq_k,\qquad
+r_* =\min_{i,h}\frac{\pi_i}{\pi_h},\\
+\alpha_1&=\exp\!\left(-\frac{p_*^2r_*^2}{2n^2}\right),\qquad
+\alpha_2=(1-q_*^2)^{p_*r_*/(2n)}.
+\end{aligned}
+\tag{5.2}
+$$
+
+则该方向的平方缺陷满足，对 $k=\lfloor j/m\rfloor$，
+
+$$
+e_d(j)\le\min\{1,\,2(\alpha_1^k+\alpha_2^k)\}.
+\tag{5.3}
+$$
+
+因而
+
+$$
+\begin{aligned}
+\sum_{j\ge R}\sqrt{e_d(j)}
+&\le\sqrt2\,m\left(
+\frac{\alpha_1^{\lfloor R/m\rfloor/2}}{1-\sqrt{\alpha_1}}
++\frac{\alpha_2^{\lfloor R/m\rfloor/2}}{1-\sqrt{\alpha_2}}\right),\\
+\sum_{j\ge R}e_d(j)
+&\le2m\left(
+\frac{\alpha_1^{\lfloor R/m\rfloor}}{1-\alpha_1}
++\frac{\alpha_2^{\lfloor R/m\rfloor}}{1-\alpha_2}\right),
+\end{aligned}
+\tag{5.4}
+$$
+
+其中 $0^0=1$。对左擦除取原始前向条件，对右擦除把同一论证施加于反向律；两者不能由单一方向的 flag 条件互推。
+

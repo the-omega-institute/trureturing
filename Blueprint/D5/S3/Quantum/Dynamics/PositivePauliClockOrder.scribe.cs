@@ -130,6 +130,10 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
                 "The normalized generator is skew-adjoint. No additional free structure evolution is inserted."),
             Theorem("controlled_clock_evolution", "Implemented controlled clock evolution", JointEvolution(),
                 "The joint operator is the source's controlled expression. Its excited-clock block acts by the actual structure propagator."),
+            Theorem("controlled_unitary", "Unitary controlled qubit matrices", ControlledUnitaryFormula(),
+                "For any two unitary complex qubit matrices Q and P, the controlled matrix is unitary. "
+                + "The matrix is block diagonal with blocks Q and P, with both pair coordinates swapped. "
+                + "Thus the first coordinate selects Q for 0 and P for 1, while the second coordinate carries their action."),
             Theorem("controlled_partial_trace", "Mixed controlled-block trace identity", MixedTrace(),
                 "Q, P and rho are arbitrary complex two-dimensional matrices. branch(Q,P,0) is Q and branch(Q,P,1) is P. "
                 + "The identity directly expands the mixed partial trace; no damping or Gram hypothesis is assumed."),
@@ -179,6 +183,38 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
                 + "and path-dependent models require separate exclusion. The coherent comparison consumes the actual implemented operators; "
                 + "isolated channel tables alone do not specify controlled implementations. The reference time is the calibrated protocol parameter. "
                 + "The response coefficients are clock-response operators, not a claimed complete quantum spacetime metric.")))));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula QualifiedName(string name)
+    {
+        var items = new List<Formula>();
+        foreach (var part in name.Split('.'))
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(Operatorname);
+            items.Add(Grp(F.Id(part)));
+        }
+        return Seq([.. items]);
+    }
+    private static Formula ControlledUnitaryFormula()
+    {
+        Formula q = F.Id("Q"), p = F.Id("P");
+        Formula bits = Call("Fin", D(2));
+        Formula pairs = Seq(bits, Sp, Times, Sp, bits);
+        Formula matrices = Call("Matrix", bits, bits, F.Id("Complex"));
+        Formula jointMatrices = Call("Matrix", pairs, pairs, F.Id("Complex"));
+        Formula diagonal = new Formula.Apply(QualifiedName("Matrix.blockDiagonal"),
+            [Seq(Bang, OpenBracket, q, Comma, Sp, p, CloseBracket)]);
+        Formula matrix = new Formula.Apply(QualifiedName("Matrix.submatrix"),
+            [diagonal, QualifiedName("Prod.swap"), QualifiedName("Prod.swap")]);
+        Formula Member(Formula value, Formula type) =>
+            new Formula.Relation(value, FormulaRelationOperator.MemberOf, Call("unitary", type));
+        Formula Imp(Formula left, Formula right) =>
+            new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+        return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("Q"), matrices,
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("P"), matrices,
+                Imp(Member(q, matrices), Imp(Member(p, matrices), Member(matrix, jointMatrices)))));
+    }
 
     private static Formula Coefficients() => And(
         Call("Hermitian",F.Id("A")),Call("Hermitian",F.Id("Bcoeff")),Call("Hermitian",F.Id("Ccoeff")),

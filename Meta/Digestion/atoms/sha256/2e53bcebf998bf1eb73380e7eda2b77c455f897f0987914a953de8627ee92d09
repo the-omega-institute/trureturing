@@ -1,0 +1,26 @@
+**命题 6.2（相位复制的无矩形词和滤波边界）。** 取可见两态律
+
+$$
+A^a=\begin{pmatrix}1-a&a\\1&0\end{pmatrix},\qquad
+\lambda^a=\left(\frac1{1+a},\frac a{1+a}\right),\qquad 0<a<1,
+\tag{6.6}
+$$
+
+并令隐藏态为 $(v,z)$，$z\in\{0,1\}$，每个原始发射位都翻转相位：
+
+$$
+M_x((v,z),(v',z'))=\mathbf1_{\{x=v\}}A^a(v,v')\mathbf1_{\{z'=1-z\}},\qquad
+\lambda(v,z)=\lambda^a(v)/2.
+\tag{6.7}
+$$
+
+该 $\Theta_4$ 生产者的可见律正是 (6.6) 的 $R^a$，其实际隐藏类不可约且周期二。若 $a/((1-a)^2+a)\in[1/4,1/2]$，它满足可见后验带，并且
+
+$$
+e_L(j)=e_R(j)=0\quad(j\ge1),\qquad
+e_L(0)=e_R(0)=\frac{a^3(1-a)}{(1+a)(1-a+a^2)}.
+\tag{6.8}
+$$
+
+因此 $A_P<\infty$，但不存在矩形词或 flag 词；隐藏滤波在不同初始相位之间可以永久不稳定，而输出擦除误差仍在一步后消失。
+

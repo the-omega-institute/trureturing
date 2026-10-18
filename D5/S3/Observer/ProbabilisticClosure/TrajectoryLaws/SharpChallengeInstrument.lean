@@ -7,8 +7,11 @@
    digest: A homogeneous challenge instrument separates fixed words from causal feedback. -/
 
 import D5.S3.TotalVariation.Metric
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Tactic.DeriveFintype
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 noncomputable section
 
@@ -57,12 +60,12 @@ abbrev Policy (A Y : Type) := ∀ t, Record A Y t → PMF A
 /-- One joint output/successor sample. The emitted and stored challenges are the same draw. -/
 def instrument {A : Type} [Fintype A] [Nonempty A] [DecidableEq A]
     (n : ℕ) (a : A) : State A n → PMF (Output A × State A n)
-  | .start z => (PMF.uniformOfFintype A).map fun r =>
+  | .start z => (uniformPmf A).map fun r =>
       (.challenge r, .awaiting z ⟨n, Nat.lt_succ_self n⟩ r)
   | .awaiting z k r =>
       if a = r then
         if hk : k.val = 0 then PMF.pure (.bit z, .done)
-        else (PMF.uniformOfFintype A).map fun s =>
+        else (uniformPmf A).map fun s =>
           (.challenge s, .awaiting z ⟨k.val - 1, by omega⟩ s)
       else PMF.pure (.failure, .fail)
   | .fail => PMF.pure (.failure, .fail)
@@ -281,9 +284,14 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
       induction j with
       | zero =>
         intro hj xh
-        simp [execute, fixedPolicy, PMF.pure_map, PMF.pure_bind, instrument,
-          PMF.map_comp, PMF.map_apply, tsum_fintype, liveRecord, failureMass,
-          PMF.uniformOfFintype_apply, Function.comp_def]
+        simp only [execute, fixedPolicy, PMF.pure_map, PMF.pure_bind, instrument,
+          PMF.map_comp]
+        rw [PMF.map_apply, tsum_fintype]
+        simp [uniformPmf, PMF.ofFintype_apply, liveRecord, failureMass, Function.comp_def]
+        all_goals
+          apply Finset.sum_congr rfl
+          intro r _
+          split_ifs <;> rfl
       | succ j ih =>
         intro hj xh
         have hj' : j ≤ n := by omega
@@ -298,9 +306,22 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
             else if q = (.fail, liveRecord a j r, a (j+1), .failure) then 1 else 0 := by
           by_cases hr : a (j+1) = r
           · subst r
-            simp [instrument, hk, PMF.map_comp, PMF.map_apply, tsum_fintype,
-              PMF.uniformOfFintype_apply, liveRecord, Function.comp_def, hcount]
-            congr 1
+            have hrow :
+                instrument n (a (j+1)) (.awaiting z ⟨n-j, by omega⟩ (a (j+1))) =
+                  (uniformPmf A).map (fun u =>
+                    (Output.challenge u, State.awaiting z ⟨n-(j+1), by omega⟩ u)) := by
+              simp [instrument, hk, hcount]
+            rw [hrow, PMF.map_comp, PMF.map_apply, tsum_fintype]
+            simp [uniformPmf, PMF.ofFintype_apply, liveRecord, Function.comp_def, hcount]
+            all_goals
+              apply Finset.sum_congr rfl
+              intro u _
+              exact congrArg
+                (fun d : Decidable (q =
+                    (State.awaiting z ⟨n-(j+1), by omega⟩ u,
+                      liveRecord a j (a (j+1)), a (j+1), Output.challenge u)) =>
+                  @ite ℝ≥0∞ _ d ((Fintype.card A : ℝ≥0∞)⁻¹) 0)
+                (Subsingleton.elim _ _)
           · simp [instrument, hr, PMF.pure_map, PMF.pure_apply]
         change ((execute (instrument n) (fixedPolicy a) (PMF.pure (.start z)) (j+1)).bind
           (fun sh => (PMF.pure (a (j+1))).bind fun b =>

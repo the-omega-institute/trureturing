@@ -184,7 +184,7 @@ internal static class LeanSourceTokenizer
     private static bool IsIdentifierPart(char value) =>
         IsIdentifierStart(value)
         || char.IsDigit(value)
-        || value is '\'' or '.'
+        || value is '\'' or '.' or '?' or '!'
         || char.GetUnicodeCategory(value) is
             UnicodeCategory.NonSpacingMark
             or UnicodeCategory.SpacingCombiningMark

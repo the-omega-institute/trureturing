@@ -123,8 +123,7 @@ public sealed class MarkdigBlockAstTests
 
         var document = AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            bytes,
-            TheoryAtomizerRules.None);
+            bytes);
 
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }

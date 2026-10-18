@@ -22,7 +22,7 @@ internal static class NonpropositionalTestSupport
         + "/" + entry.AtomId + ".yaml";
 
     internal static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
 
     internal static DigestionLedgerEntry Settled(DigestionLedgerEntry entry, string? receipt = null)
     {
@@ -39,5 +39,6 @@ internal static class NonpropositionalTestSupport
     internal static RawRepositorySnapshot WithCas(AtomContextFixture fixture) =>
         RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
             fixture.Atomized.Claims.Select(atom => new RawRepositoryEntry(
-                DigestionCasStore.RootPath + AtomContextFixture.Id(atom), atom.RawBytes))));
+                DigestionCasStore.RootPath + AtomContextFixture.Id(atom), atom.RawBytes)))
+            .GroupBy(static entry => entry.Path).Select(static group => group.First()));
 }

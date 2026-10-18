@@ -15,6 +15,15 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
             + "at Renyi order three, in arbitrary finite dimensions including singular marginals.",
         H("Order-three Renyi information combining"),
         Blocks(
+            Describe.Lean(DescribeId.Create("renyi-three-basis-projector-positive"),
+                DeclarationHandle.Create(Module + "unit_psd"), H("A basis projector is positive semidefinite"),
+                StatementSource.FromAuthor(Disp(All("i", Fin(Num(2)),
+                    App(Q("Matrix", "PosSemidef"), Typed(Single(F.Id("i")), Mat(Fin(Num(2)))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For each of the two basis indices, Matrix.single i i 1 is positive semidefinite. "
+                    + "Its Kronecker products give the two positive blocks in blk_psd. "
+                    + "The channel time-reversal argument also uses the basis projector at index zero."))),
+                DescribeRole.Theorem),
             Node("conditional-entropy", "condRenyiDown", "Sandwiched conditional Renyi entropy",
                 CondFormula(),
                 "Section IV, p. 4, defines the sandwiched conditional Renyi entropy by the "
@@ -45,23 +54,12 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                     + "the diagonal X2 index, leaving X1 + X2 and B. This is the marginal "
                     + "used on the left of Conjecture V.5.",
                 DescribeRole.Definition),
-            Node("binary-entropy", "hRenyi", "Binary Renyi entropy",
-                EntropyFormula(),
-                "Page 2, before Theorem I.1: \"In the following, we denote the binary Rényi entropy "
-                    + "as hα.\" The formula is the binary specialization of Renyi entropy "
-                    + "with natural logarithms. Real powers are explicit in its Lean definition.",
-                DescribeRole.Definition),
             Node("restricted-inverse", "hRenyiInv", "The binary-entropy inverse branch",
                 InverseFormula(),
                 "Function.invFunOn restricts the probability input to the closed interval "
                     + "[0, 1/2]. At alpha = 3, hRenyi maps this interval bijectively to "
                     + "[0, Real.log 2]. Consequently the entropy arguments of this inverse "
                     + "belong to [0, Real.log 2], and its returned probabilities lie in [0, 1/2].",
-                DescribeRole.Definition),
-            Node("binary-convolution", "bconv", "Binary convolution",
-                ConvolutionFormula(),
-                "The star in the source denotes binary convolution: the probability that "
-                    + "two independent binary variables have different values.",
                 DescribeRole.Definition),
             Node("source-claim", "claim", "The order-three equality clause",
                 ClaimFormula(),
@@ -191,27 +189,12 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
                 Eqn(App(Call("traceOutX2", t), Pair(z, j), Pair(w, k)), rhs))))))));
     }
 
-    private static Formula EntropyFormula()
-    {
-        Formula alpha = F.Id("alpha"), p = F.Id("p");
-        return Disp(All("alpha", RealType(), All("p", RealType(),
-            Eqn(Call("hRenyi", alpha, p), Times2(Divide(Num(1), Minus2(Num(1), alpha)),
-                LogOf(Plus2(Pow(p, alpha), Pow(Minus2(Num(1), p), alpha))))))));
-    }
-
     private static Formula InverseFormula()
     {
         Formula alpha = F.Id("alpha");
         return Disp(All("alpha", RealType(), Eqn(Call("hRenyiInv", alpha),
             App(Q("Function", "invFunOn"), Call("hRenyi", alpha),
                 App(Q("Set", "Icc"), Num(0), Divide(Num(1), Num(2)))))));
-    }
-
-    private static Formula ConvolutionFormula()
-    {
-        Formula p = F.Id("p"), q = F.Id("q");
-        return Disp(All("p", RealType(), All("q", RealType(), Eqn(Call("bconv", p, q),
-            Plus2(Times2(p, Minus2(Num(1), q)), Times2(Minus2(Num(1), p), q))))));
     }
 
     private static Formula Density(Formula s) => All("x", Fin(Num(2)),

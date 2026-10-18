@@ -9,6 +9,7 @@
    kernel checked and is not part of the narrow parent delivery.
    The goal is to derive the original P opening inventories from one
    retained RawSeedFor, not choose a replacement child witness. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory
