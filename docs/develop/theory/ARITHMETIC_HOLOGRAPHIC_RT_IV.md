@@ -1437,7 +1437,9 @@ G_{\tau_*}\odot H_{\tau_*}&=G\odot H,\\
 \]
 If the original pair is a global minimum, so is the endpoint. No endpoint local-minimum assertion is made for an arbitrary local minimum.
 
-**Proof.** Theorem 106.1 gives a positive interval of feasible \(\tau\) and \(D\ker G=0\). The feasible set of \(\tau\ge0\) is closed and convex. Since \(D\) is Hermitian, nonzero and has trace zero, it has a negative eigenvalue. A corresponding eigenvector \(x\) lies in \(K=(\ker G)^\perp\), because \(D\) annihilates \(\ker G\). Hence
+**Proof.** For \(|O|=1\), the first-Gram endpoint factorization is the single-record projection construction in the proof of [B. Lovitz, *On decomposable correlation matrices*, Theorem 1, equations (9)–(13), arXiv:1812.01449v1](https://arxiv.org/pdf/1812.01449v1); see the [source note](../../../Library/QuantumChannels/lovitz2019decomposable.md). The argument below treats all outside coordinates simultaneously and controls the opposite Gram's rank while preserving the original fibre constraints and exact product.
+
+Theorem 106.1 gives a positive interval of feasible \(\tau\) and \(D\ker G=0\). The feasible set of \(\tau\ge0\) is closed and convex. Since \(D\) is Hermitian, nonzero and has trace zero, it has a negative eigenvalue. A corresponding eigenvector \(x\) lies in \(K=(\ker G)^\perp\), because \(D\) annihilates \(\ker G\). Hence
 \[
 x^*(G+\tau D)x=x^*Gx+\tau x^*Dx<0
 \quad\text{for every sufficiently large }\tau.
