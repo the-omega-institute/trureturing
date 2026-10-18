@@ -21,4 +21,4 @@ ReachThrough(H,c) means some Record has a finite primitive run from physical ini
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_trace_bound`
-- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace](DecoderOperationTrace.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/DecoderOperationTrace/Basic](DecoderOperationTrace/Basic.md)

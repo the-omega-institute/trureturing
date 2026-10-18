@@ -4,7 +4,6 @@ using F = StrataLint.Scribe.FormulaDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding;
 internal sealed class DecoderOperationTraceDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/ConceptDynamics/Coding/DecoderOperationTrace.";
     private static Formula I(string n) => F.Id(n);
     private static Formula.BoundVariable B(string n, Formula t) => new(FormulaIdentifier.Create(n),t);
     private static Formula All(Formula body, params Formula.BoundVariable[] vars) =>
@@ -44,16 +43,6 @@ internal sealed class DecoderOperationTraceDocument : IScribeDocumentDefinition
             Equal(Output(t),Append(Output(s),w)),continuation),B("m",Nat),B("w",List(I("O"))))),
             B("C",I("Type")),B("I",I("Type")),B("O",I("Type")),B("action",ActionType),
             B("r",Fn(Nat,I("I"))),B("s",FrameType),B("t",FrameType),B("vertices",List(I("C")))));
-    }
-    private static Formula Cuts()
-    {
-        var cut=Call("Cut",I("action"),I("initial"),Call("front",I("r"),I("n")),I("t"));
-        return Disp(All(Imp(And(Call("Processing",I("action"),I("initial"),I("Record")),Live,
-            Call("Record",I("a"),I("r")),Call("InD",I("a"))),
-            Ex(And(cut,Run(I("r"),Initial,I("t"))),B("t",FrameType))),
-            B("C",I("Type")),B("I",I("Type")),B("O",I("Type")),B("action",ActionType),B("initial",I("C")),
-            B("Record",RecordType),B("InD",Fn(Fn(Nat,I("O")),I("Prop"))),
-            B("a",Fn(Nat,I("O"))),B("r",Fn(Nat,I("I"))),B("n",Nat)));
     }
     private static Formula Addresses()
     {
@@ -205,16 +194,13 @@ internal sealed class DecoderOperationTraceDocument : IScribeDocumentDefinition
             Paragraph(Text("A finite Run whose acquired count is positive contains a first acquisition. Its preceding retained prefix consists solely of internal operations and ends at the actual acquire state. Transfer to the empty available input gives a Drain from physical initialization. Every prefix vertex is retained; neither global computation bounds nor termination on unreachable states are required.")),
             Paragraph(Text("Safety and Liveness have exactly the all-Record finite-run and positionwise InD meanings displayed above. The two supplied actual records have different first source labels; only the first needs InD liveness. Its live first output cannot occur with zero acquisitions, since the same internal prefix transfers to the competitor and safety would equate their first labels. The acquired run therefore supplies finite startup. Processing then follows from that derived drain and the displayed drains after every actual successful acquisition. Post-acquisition finiteness is not inferred from safety alone. Original complete-readable-state and instruction correspondence remains a separate semantic assessment.")),
 
-            Describe.Lean(DescribeId.Create("decoder-operation-trace-replay"),DeclarationHandle.Create(Prefix+"trace_replay"),
+            Describe.Lean(DescribeId.Create("decoder-operation-trace-replay"),DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/DecoderReplay.trace_replay"),
                 H("Unread suffix replay with independent old output"),StatementSource.FromAuthor(Replay()),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Op has internal(next,batch), acquire(input to Option(next,batch)), and stopped. Step has only the two original internal and successful available acquisition rules. Frame consists of the original readable state and external acquired count and output word. action reads only the state. Trace retains its entire state vertex list and every finite edge batch. full(r)(q)=some(r(q)). Replay preserves that vertex list exactly, accumulates the actual acquisition and output increments, and changes neither state identity nor batches. Offset and old-output changes are external bookkeeping. Partial acquisition and unreachable loops remain allowed."))),DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("decoder-operation-actual-cut-exists"),DeclarationHandle.Create(Prefix+"actual_cut_exists"),
-                H("Position liveness supplies every actual D cut"),StatementSource.FromAuthor(Cuts()),AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Ready means acquire or stopped. A Cut is a finite trace over the available front(r,n), from the physical initial state with acquired zero and empty output, ending Ready at acquired n. No End event is supplied. Processing means a finite internal-only startup drain and a finite internal-only drain after every acquisition actually executed on any Record. It quantifies neither over unreachable states nor impossible acquisitions. Liveness means every position has a finite full-run witness for every Record in InD. Startup gives n=0. Deterministic path comparability and liveness beyond the current finite output force the next acquisition; its actual drain supplies the next cut. This is an explicit operational theorem. Universal correspondence to a prose machine definition, endpoint granularity require independent assessment; finite startup is derived from actual first-label competitors by processing_of_safe_live_pair."))),DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("decoder-operation-actual-address-equality"),DeclarationHandle.Create(Prefix+"actual_address_eq"),
+            Describe.Lean(DescribeId.Create("decoder-operation-actual-address-equality"),DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/DecoderReplay.actual_address_eq"),
                 H("Live actual addresses agree after equal-state replay"),StatementSource.FromAuthor(Addresses()),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Safety means that on every Record every emitted position in every finite primitive run equals its source address. Liveness is positionwise and restricted to InD. Equal cut states, equal cumulative words and one equal unread suffix imply address equality: choose a liveness witness beyond both the requested position and old output, compare actual paths, replay the continuation, and apply safety on both records. No replay or joint injection is a premise."))),DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("decoder-operation-peak-trace-bound"),DeclarationHandle.Create(Prefix+"peak_trace_bound"),
+            Describe.Lean(DescribeId.Create("decoder-operation-peak-trace-bound"),DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/DecoderPeak.peak_trace_bound"),
                 H("All readable vertices belong to the complete horizon peak"),StatementSource.FromAuthor(Vertices()),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("ReachThrough(H,c) means some Record has a finite primitive run from physical initialization ending at c with acquired count at most H. Peak is the WithTop Nat supremum of the lengths of the supplied original encodings over all such states. Every trace vertex has its actual prefix run, whose acquired count is no greater than the final count. Initialization, transient workspaces, acquisition states and completed endpoints are included. Infinite peaks are retained. The encoding and its original cost are supplied rather than replaced; no equality with a maximum over chosen cut states is asserted."))),DescribeRole.Theorem),
             Paragraph(Text("Literal Fibonacci sources and occurrence coordinates")),
