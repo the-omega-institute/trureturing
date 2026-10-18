@@ -70,3 +70,19 @@ The count is derived in the consumer, rather than attributed to Corollary 5 for
 the whole half-isolated class. All zeros failing the specified witness condition
 remain in the complement, and neither the complete signed Robin bound nor RH
 is supplied.
+
+
+## The original source height also pays the ordinary high-frequency class
+
+The [source-relative application](../Estimation/trureturing2026pricegapconvexity.md#the-ordinary-half-isolated-subhead-has-a-source-relative-allowance-at-supremum-one)
+uses Corollary 5 through the existing SIH3 reciprocal-height bound for
+all ordinary half-isolated zeros in the stated real-part and frequency
+mask. It retains the small power of the actual core before comparing
+it with the original unabridged positive height. This gives a vanishing
+relative allowance and preserves the same remaining-head lower margin
+also at $\Theta=1$, without a special witness scale or clock ceiling.
+It does not upgrade the count, assert an absolute $o(M_XL_X)$ allowance
+there, or control the complementary signed head. The argument uses the
+original source's joint lower account in addition to the published
+subset count; it is not attributed to Corollary 5 alone. No new density
+theorem, all-integer Robin, RH or Lean certification is supplied.

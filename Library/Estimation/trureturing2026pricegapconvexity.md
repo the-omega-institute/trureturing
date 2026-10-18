@@ -9038,3 +9038,162 @@ without a witness in OSH1's range, the low dyadic bins, lower frequencies and re
 parts outside the displayed band remain in the exact complement. Overlapping
 subsets do not produce additive reserves. The whole ordinary half-isolated class
 at $\Theta=1$, the original signed joint Robin comparison and RH remain unproved.
+
+
+## The ordinary half-isolated subhead has a source-relative allowance at supremum one
+
+Keep JM1--JM7's original conditional source, its fixed
+$\Theta\in(1/2,1]$, $1-\Theta<\eta<1/2$, $d>0$ and
+$0<a<5\kappa/8$. Keep every original full window, maximizing tie,
+positive outgoing weight and admissible individual height. Use exactly
+SIH1's actual ordinary half-isolated zeros, real-part interval
+$[3/5,3/4]$ and lower cut
+$H_{B,X}=\max\{51,\sqrt B/M_X^{19/10}\}$; no extra isolation-scale
+condition is imposed. This application uses the existing count SIH3,
+full coefficient bound, unabridged height JM1 and HC1--HC2. It does not
+assert SIH2's uniform absolute $o(M_XL_X)$ allowance at $\Theta=1$.
+
+### Keep the small power of the actual core before spending its height
+
+Write $M=M_X$, $\mu=1/2-\eta>0$, and, at one original core, put
+
+$$
+\begin{aligned}
+r_X^{\rm hi}(B,\tau)
+&=2\!\sum_{\substack{\rho\in\mathcal H,\ H_{B,X}<\gamma\le\tau\\
+                      3/5\le\beta\le3/4}}
+   m_\rho|c_{B,a}(\rho)|,\\
+h_X(B)&=\frac d2X^{-\eta}\sqrt B\log B,\qquad
+\mathscr H_X=\sum_{i<m}\delta_i h_X(B_i).
+\end{aligned}
+$$
+
+For every fixed $r>0$, SIH3 and the coefficient bound already used
+in SIH2 give, after a common source start,
+
+$$
+\boxed{r_X^{\rm hi}(B,\tau)\ll_{r,a} M^{19/20}B^r.}
+\tag{HIA1}
+$$
+
+Here it suffices to take $r<1/10$. Choose a fixed finite real-part
+partition with maximum width $\omega$ and a fixed count loss
+$\epsilon>0$ such that $\omega+\epsilon/2\le r$ and $\epsilon<1/10$.
+For $H_{B,X}=\sqrt B/M^{19/10}\ge51$, the pre-SC2 bound in SIH2 is
+
+$$
+C M^{(19/10)(2\sigma_j-1-\epsilon)}
+ B^{\sigma_{j+1}-\sigma_j+\epsilon/2}
+\le C M^{19/20}B^r.
+$$
+
+If $H_{B,X}=51$, its other already used bound is
+$C B^{1/4}\le C M^{19/20}$. Constants cover the bounded initial
+zero range. Multiplicities are retained as in SIH3. The positive sum
+may be extended past $\tau$ only for this upper estimate; the actual
+upper mask is unchanged. No moving-real-part density theorem,
+polynomial ceiling SC2 or logarithmic ceiling CP1/VC2 is used.
+
+Now fix $r=\mu/160$. Split the estimate at $B=X^2$, keeping both
+parts of the original source. If $B\le X^2$, HIA1 gives
+
+$$
+\frac{r_X^{\rm hi}(B,\tau)}M
+\ll X^{-3\mu/80}(\log X)^{-1/20}.
+$$
+
+If $B>X^2$, use $r<1/2$ and $\log B\ge2\log X$ to obtain
+
+$$
+\begin{aligned}
+\frac{r_X^{\rm hi}(B,\tau)}{h_X(B)}
+&\ll_{\eta,d,a}M^{19/20}X^\eta
+  \frac{B^{r-1/2}}{\log B}\\
+&\ll_{\eta,d,a}
+ X^{-1/2-3\mu/80}(\log X)^{-1/20}.
+\end{aligned}
+$$
+
+Consequently one fixed constant gives
+$e_X=C_{\eta,d,a}X^{-3\mu/80}(\log X)^{-1/20}\to0$, with
+
+$$
+\boxed{r_X^{\rm hi}(B,\tau)\le e_X\bigl(M_X+h_X(B)\bigr),\qquad
+\mathcal R_X^{\rm hi}
+\le e_X\bigl(M_XL_X+\mathscr H_X\bigr).}
+\tag{HIA2}
+$$
+
+These are uniform over all original cores, ties and legal heights,
+including $\Theta=1$. The allowance depends on the same source's
+retained positive height. No bound $\mathscr H_X=O(M_XL_X)$ is assumed,
+and HIA2 is not reported as an absolute $o(M_XL_X)$ estimate.
+
+### Remove exactly this subhead while retaining the full lower margin
+
+Choose one fixed $C>8/5$ with $aC<1$. JM1 and its uniform
+$\chi_{p,u}\to1$ give, beyond a common source start,
+
+$$
+G_a(B)\ge h_X(B)-aH_C,\qquad
+\mathscr H_X\le\mathcal G_X+aH_CL_X.
+\tag{HIA3}
+$$
+
+The remaining lag coefficient in JM1 is nonnegative at that start.
+Thus the height is spent only within the original joint response;
+it is not counted as another independent reserve.
+
+Define the removed real contribution using the same actual terms:
+
+$$
+q_X^{\rm hi}(B,\tau)
+=2\operatorname{Re}
+ \!\sum_{\substack{\rho\in\mathcal H,\ H_{B,X}<\gamma\le\tau\\
+                      3/5\le\beta\le3/4}}
+ m_\rho c_{B,a}(\rho),\qquad
+S_X^{\rm rem}(\boldsymbol\tau)
+=S_X(\boldsymbol\tau)-\sum_{i<m}\delta_iq_X^{\rm hi}(B_i,\tau_i).
+$$
+
+In particular $|q_X^{\rm hi}|\le r_X^{\rm hi}$. HIA2--HIA3 and the
+unchanged HC2 error give directly
+
+$$
+\begin{aligned}
+S_X^{\rm rem}(\boldsymbol\tau)
+&\ge\mathcal G_X-O_a(L_X)-\mathcal R_X^{\rm hi}\\
+&\ge(1-e_X)\mathcal G_X-e_XM_XL_X-O_a(L_X).
+\end{aligned}
+\tag{HIA4}
+$$
+
+The fixed constants in the last line may also depend on the original
+capacity supplier. Since $1-e_X>0$ eventually, JM7 can now be applied
+with its direction preserved. For every fixed requested
+$\varepsilon>0$, one common source start supplies
+
+$$
+\boxed{S_X^{\rm rem}(\boldsymbol\tau)
+\ge(R_\eta-\varepsilon)M_XL_X}
+\tag{HIA5}
+$$
+
+on every original qualifying full window, for every maximizing-tie
+assignment and every admissible individual height assignment. In fact
+JM7 also gives $\mathcal G_X\ge(R_\eta/2)M_XL_X$ eventually, so
+HIA2--HIA3 imply $\mathcal R_X^{\rm hi}/\mathcal G_X=O(e_X)$.
+The full ordinary half-isolated contribution in this high-frequency
+mask is a vanishing fraction of the same complete source response,
+even where its uniform absolute $o(M_XL_X)$ bound was not supplied.
+
+An upper estimate for this exact remaining head with any fixed
+constant below $R_\eta$, on the original cofinal full windows and with
+all original tie and height quantifiers, would contradict HIA5. No
+such estimate or favorable window is constructed here. All non-half-
+isolated zeros, frequencies below $H_{B,X}$ and real parts outside
+$[3/5,3/4]$ remain, with their original coefficients and masks.
+SIH2, SAH and OSH remain their separate absolute allowances; overlapping
+payments are not added as reserves. This is a source application of
+existing estimates, not a new density theorem, a literature-priority
+claim, a Lean verification or a proof of Robin or RH.
