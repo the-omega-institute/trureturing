@@ -36,8 +36,8 @@ Issue #18528 records the literature check before any Lean:
 ## Route
 
 Take $n_2 = 10^{10} + 1$, $n_1 = 10^{10} + 3$, $l_1 = l_2 = 1$ and $T = 1$, and write $A_n(t) = \sum_{j<n} e^{i(t/2)\cos(2\pi j/n)} w^j$.
-1. **The identity.** For odd n, $n_1(t) = |A_n(t)|^2 - (n - 1)$: the full double sum is $|A_n(t)|^2$, the diagonal contributes n and the antidiagonal $j + k = n$ contributes −1.
-2. **Early times.** For $0 < t \le 1$, $\operatorname{Im} A_n(t) \ge nt/8$, from $\sin u \ge u/2$ on $[0, 1/2]$ and $\sum_j \cos^2(2\pi j/n) = n/2$. So $|A_n(t)|^2 \ge n^2/256$ on $[1/2, 1]$.
+1. **The identity.** For odd n ≥ 3, $n_1(t) = |A_n(t)|^2 - (n - 1)$: the full double sum is $|A_n(t)|^2$, the diagonal contributes n and the antidiagonal $j + k = n$ contributes −1.
+2. **Early times.** For odd n ≥ 3 and $0 < t \le 1$, $\operatorname{Im} A_n(t) \ge nt/8$, from $\sin u \ge u/2$ on $[0, 1/2]$ and $\sum_j \cos^2(2\pi j/n) = n/2$. So $|A_n(t)|^2 \ge n^2/256$ on $[1/2, 1]$.
 3. **The integral.** With $0 \le |A_{n_i}|^2 \le n_i^2$, $\int_0^1 n_1 n_2 \ge n_1^2 n_2^2/131072 - (n_1 - 1)n_2^2 - (n_2 - 1)n_1^2 \approx 7.63 \cdot 10^{34}$.
 4. **The comparison.** $\log n_1 < 24$, so the right side of Eq. (15) is at most $\approx 3.69 \cdot 10^{34}$.
 
