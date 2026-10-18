@@ -255,6 +255,10 @@ Round 3 seat layout at this head: quality nyxid-oracle / ChatGPT Pro, architectu
 
 
 def selftest():
+    import json
+    from pathlib import Path
+    fixture = Path(__file__).resolve().parent / 'briefgen/testdata/input.json'
+    assert check(json.loads(fixture.read_text())['body'], 1) == []
     cases = []
     cases.append(("clean", GOOD, []))
     cases.append(("gap", GOOD.replace("| 1 | `aaa` | architecture | codex-cli | reject |\n", ""), ["MISSING-SEAT"]))
@@ -423,6 +427,48 @@ def main(argv):
     print(f"STANDING_CHECK findings={len(findings)}")
     return 1 if findings else 0
 
+
+
+def _append_invalid(message):
+    raise ValueError(message)
+
+def append_body(body, head, spec):
+    sp = spec
+    t = body
+    _bad = re.compile('\\b(asked|requested|requests|flagged|pointed out|complained|wanted|suggested|said|noted that|raised|all three seats|both seats|the seats? (?:asked|wanted))\\b', re.I)
+    for _s in sp['rows'] + [sp['tally'], sp['next']]:
+        _m = _bad.search(_s)
+        if _m:
+            _append_invalid(f'PROCESS_NARRATION {_m.group(0)!r} in: {_s[:160]}')
+    _adj = re.search('Disagreement adjudication:(.*)', sp['tally'], re.S)
+    if _adj:
+        _m = re.search('\\b(seat|seats|reject|rejects|rejected|approve|approves|approved|concern|concerns|read|reads|reviewer|reviewers)\\b', _adj.group(1), re.I)
+        if _m:
+            _append_invalid(f"ADJUDICATION_NARRATION {_m.group(0)!r}: state the operative result only, or 'none'")
+    _stale = re.search('[^.\\n]*\\b(?:Round \\d+[^.\\n]*\\b(?:pending|awaiting|in progress)|(?:review|reviews|merge)[^.\\n]*\\b(?:is|are) pending)[^.\\n]*\\.', t, re.I)
+    if _stale:
+        _append_invalid(f'STALE_STATUS sentence in body (remove it first): {_stale.group(0).strip()[:200]}')
+    _rn = re.match('Round (\\d+) tally', sp['tally'])
+    if _rn:
+        t = re.sub('^Round ' + _rn.group(1) + ' tally: 0 approve, 0 reject, 0 abstain[^\\n]*\\n\\n?', '', t, flags=re.M)
+    lines = t.split('\n')
+    idx = [i for i, l in enumerate(lines) if ROW.match(l)]
+    hdr = [i for i, l in enumerate(lines) if re.match('^\\|\\s*round\\s*\\|', l.strip())]
+    if idx:
+        ins = idx[-1] + 1
+    elif hdr:
+        ins = hdr[0] + 2
+    else:
+        _append_invalid('no standing table')
+    lines[ins:ins] = sp['rows']
+    t = '\n'.join(lines)
+    m = list(re.finditer('^Round \\d+ seat layout at [^\\n]*$', t, re.M))
+    if not m:
+        _append_invalid('no layout line')
+    L = m[-1]
+    nxt = sp['next'].replace('`HEAD`', '`' + head + '`')
+    t = t[:L.start()] + sp['tally'] + '\n\n' + nxt + t[L.end():]
+    return t
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

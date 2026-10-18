@@ -1,7 +1,7 @@
 # openproblem — 开放问题线的两阶段落地管线(器律⑨:器住仓库)
 
-CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后台作业逐席运行(器律⑥),判绿只认 result.json / status.json 与哨兵,不认退出码。
-运行目录约定:`OP_SCRATCH` = 本会话的 scratchpad(briefs/、results/、probes/ 三个子目录);python 工具以该目录为第一个参数或工作目录。
+CLAUDE.md §3.6 的操作面。长任务使用宿主作业句柄，检查结果以实际退出码为准；席位交付另须符合 result.json 与完成哨兵契约。
+运行目录由 `OP_SCRATCH` 显式提供；生成器可从任意工作目录调用。项目和主 checkout 路径由仓库与 Git worktree 注册信息定位。
 
 ## 流程(每条 lane)
 1. **搜题**(nyxid-oracle,ChatGPT Pro):搜题分深度轨与速度轨两轨混合(CLAUDE.md §3.6)。brief 由 `render-search-brief.sh SEAT_ID OUT [deep|quick] [WINDOW]` 生成:深度轨取 `templates/search-brief.md`,速度轨取 `templates/search-brief-quick.md` 并以 `WINDOW`(`YYMM` 或 `YYMM-YYMM`,缺省为上月与本月)换 `__WINDOW__`;`__SEAT_ID__` 换成本席 id,`__SHA__` 换成当前 `origin/dev` 的 40 位提交(raw.githubusercontent 单文件地址钉版用),`__OPEN_PREREGISTRATIONS__` 换成 open 状态的预登记 issue 列表。排重以仓库发布的已收录问题清单 https://the-omega-institute.github.io/trureturing-mdbook/open-problems.html 加上这份 issue 列表为准。深度轨 brief 只给仓库地址,让席位结合仓库已有的 Lean 结果、文献注、理论卷与已结算卷宗自选问题和搜法;不指定档案、领域、时间窗、预计结算时长或难度,并请席位按深度排序:多位作者陈述、引用或依赖,长期未决,结算需要证明或附机理与整族推广的反例;单个小情形的求值属浅层。速度轨 brief 指定 arXiv 月份窗口、数学物理优先,只收席位已亲手核对的精确小反例或可逐步写出的短证明,名题与需要研究线的候选归深度轨。GPT Pro 两轨轮流,codex 搜题席分属两轨。每个候选须带逐字出处、重要性、既有尝试、仓库适配依据、结算路线、**结算类型**(`small-case` / `family` / `proof`)、文献核对读数与**档位**(第一档新近小猜想 / 第二档计算前沿 / 第三档核心问题);两者都是对候选的标注,不是搜索范围。结算类型为 `family` 或 `proof` 而路线尚未完整的候选开研究线(CLAUDE.md §3.6),由 GPT Pro 深度研究补路线、codex 多席并行子引理;`small-case` 候选照常走两阶段管线。结果落 `results/rN.json`。
@@ -12,8 +12,41 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 6. **判形核对**(只读 codex 席,`templates/judgement-form-check-template.md`):逐声明判 §3.2 的 `content` / `bind-only`,并要求为每条 content 点名逃逸见证。与镜像核对同属**冻结之前**的只读阶段,理由相同:冻结后改 `.lean` 撞 SL-008,只能整条重做。两种最会藏的形状是「沿显然同构传输上游定理」与「把两元素 `decide` 当成内容」。同席顺带核对交付陈述与源句是否同强度(猜想说 `rank = 2`,只证 `∃ 两个生成元` 不算)。
 7. **镜像核对**(只读 codex 席,`templates/mirror-check-template.md` 十二项):括号/合取/绑定变量/强制转换/整除/关系节点/完备性(公开 def 也要镜像或 private)/取值核对/header/定义保真/产地(FromLiterature 须有带 DOI 或 arXiv 的 L 平面注)/import 最小化。
 8. **Stage B**(`fill_mirror_fixes.py` 把核对结果填进 Stage B brief):**发射次序先于一切**——带 `OpenProblemResolutionClaim` 的 lane,Stage A 只发射不含该节点、也没有 `Problems/` 卷宗的 Phase A 形态(`Library/` 注相反,`FromLiterature` 要求它在树上);冻结前那次 emit 带上结算元数据必 exit 2 `invalid-problem-resolution-source`,且没有任何冻结前状态能满足该校验。deposit 之后才还原两样、二次发射、折进一个 builder commit。然后先修镜像,改过镜像必做渲染检查(发射 md 无 `&&`/`||`/`==`;`make gate BASE=<40-hex-commit-sha>` 中点名本模块的 `markdown red` 行即停),再冻结:有 atom 的 `make deposit` + cover(锚 atom 也要 cover),无 atom 的 `make deposit-uncovered`、一个 builder commit、晚期去重、push、`make pr-open AUTO_MERGE=0`(等待评审后再开启自动合并)。
-9. **三席评审**(`gen_review.py`:tests/quality 走 codex,一席 nyxid 由 `od -An -N2 -tu2 /dev/urandom` 取 raw%2 抽签);正文冻结后再派复审;非阻断即 `op-sync-dev.sh`(合 dev、推、等三门)+ `gh pr merge --auto --merge`。
-10. **重做**:冻结后任何镜像/产地/import 修补都是全新 deposit(cover 收据绑定 Scribe 哈希);同一 lane 第三次非数学重做即停(第 20⁗ 条)。
+9. **三席评审**：`gen_review.py --codex3 LANE PR BRANCH WORKTREE ENVELOPE TARGET ROUND` 生成 architecture、quality、tests 三个 codex-cli 核验席的 brief。各轮在同一 worktree 串行运行，轮内互盲；不宣称模型多样性。
+10. **重做**:冻结后任何镜像/产地/import 修补都是全新 deposit(cover 收据绑定 Scribe 哈希);同一 lane 第三次非数学重做即停（CLAUDE.md §3.6 ④）。
+
+## Brief generators
+
+支持 macOS Bash 3.2、Python 3.9+、Git 和 POSIX 工具；联网的 review/search/CI 入口另需 `gh`，`postb3.sh` 还需 `make`。通过系统包管理器安装并将命令加入 `PATH`。所有入口支持 `--selftest`；测试使用 `briefgen/testdata/` 的合成输入、golden 摘要和本地 Git/GitHub/make 存根，不派席、不联网、不运行 Lean。
+
+公共配置为 `OP_SCRATCH`（必填的现有目录）、`OP_STATE`、`SSHX_HOME` 和 `OP_NAME_PREFIX`，默认值与下方 pipeline runtime 相同。输入检查使用退出码：10 用法、11 缺输入、12 缺工具或版本、13 输入内容无效、16 I/O 或外部命令失败。CI 未绿返回 1；review 的 4/6 分别保留 head 不符和 PR head 落后远端的判词。子命令非零退出码直接传出。
+
+| 入口 | 输入与用途 |
+| --- | --- |
+| `gen_stage_briefs.py --lane-spec LANE NYXID_SEAT` | 读取 `lanes/LANE.json`，生成实施基底、Stage A、Stage B 和 mirror brief；`NYXID_SEAT` 为兼容位置参数 `architecture` 或 `quality`，评审布局为三 codex。 |
+| `gen_stage_briefs.py SCRATCH LANE WORKTREE BRANCH MODULE [NYXID_SEAT]` | 保留从既有实施 brief 切分两阶段与镜像的接口。 |
+| `briefgen/lane_brief.py SCRATCH SPEC.json` | 独立从 lane JSON 生成实施基底。字段为 `lane,title,worktree,branch,module,gid,target_md,commit_subject,pr_title_hint`；module 为不带扩展名的单个路径。 |
+| `fill_mirror_fixes.py SCRATCH LANE RESULT.json` | 将 blocking/advisory findings 填入 Stage B 的唯一 `<<MIRROR_FIXES>>`。 |
+| `fill_mirror_fixes.py --prepare LANE NYXID_SEAT MIRROR_FLIGHT` | 完整 Stage B 准备，默认重新生成阶段；`REGEN=0` 使用现有 Stage B。`ORCH_NOTE` 指定覆盖说明文件，`JF_FLIGHT` 指定判形结果；结果取 `SSHX_HOME` 中数字最大的 attempt。 |
+| `briefgen/implb_head.py LANE` | 从单模块 lane JSON 生成 Stage B head；拒绝缺失 dossier、issue 或 settlement。 |
+| `briefgen/continuation_head.py LANE ISSUE SUFFIX MIRROR_FLIGHT WORKTREE OUT [OWNER…]` | 生成保留未提交交付的继续实施 head，包含镜像 findings 与自扫块。 |
+| `briefgen/rework_brief.py SPEC.json` | 生成 `rework-LANE.md`。spec 含 `lane,pr,head,worktree,branch,gid,module,fixes,standing_rows,tally_line,next_layout_line,next_round,commit_source,commit_builder`。已有两个 `lanes/rework-LANE*.json` 时拒绝第三次非数学重做；数学缺陷须显式填 `mathematical_defect`。 |
+| `briefgen/rehead.py HEAD REST OUT OLD_SHA NEW_SHA NOTE` | 核对两个完整 SHA 和唯一镜像 anchor，更新 head 并拼接 rest；缺输入时不修改 head。 |
+| `gen_review.py --codex3 LANE PR BRANCH WORKTREE ENVELOPE TARGET ROUND` | 复用原 review 模板和生成器，输出 `review-LANE-{architecture,quality,tests}-rROUND.md`；三个席均为 codex-cli，只读。 |
+| `gen_review.py --pipeline LANE PR BRANCH WORKTREE ENVELOPE TARGET NYXID_SEAT` | 保留旧布局的单轮拼装接口；原七位置参数接口也保留。PR head 必须与远端 head 对齐；只有干净且超前于 PR head 的 worktree 才可 `reset --keep`。 |
+| `briefgen/standing_append.py PR SPEC.json` | 复用 `standing-check.py` 的 standing parser，追加 `rows`、`tally`、`next`；拒绝过程叙述、叙事裁决和 stale pending 状态。 |
+| `briefgen/postb3.sh LANE PR` | 在 PR head 上等待 required check，读取实施 flight，再生成三 codex round-1 brief；输出 `READY`，不派席。 |
+| `briefgen/ci_body_final.py PR HEAD` | 核对 completed CI 的 required/current job，读取 current 原始日志，替换正文 CI 行；读取失败或 CI 未绿不编辑正文。 |
+| `briefgen/exclusions_compact.py [--preregistrations] [YYMM-YYMM]` | 压缩 `briefs/search-exclusions.md` 中的 arXiv、OEIS 和具名排除项；可并入 open 预登记 issue，按窗口补入 dev 的已有文献标识。 |
+| `render-search-brief.sh --codex LETTER ROUND [deep|quick] [WINDOW]` | 通过原 renderer 生成 codex 只读搜题 brief；实现为 `briefgen/codex_search.py`，与原深浅轨共用模板、dev SHA 和 open 预登记查询。 |
+| `add_base_blocks.py [--base SOURCE] FILE…` | 从唯一 tracked 基底模板补入 public-surface/import/provenance 三块；显式 SOURCE 支持已有基底。 |
+| `briefgen/purge_stale_fib.py WORKTREE [--delete]` | Stage B head 引用的缓存工具；仅列出或删除形态过期的模块报告 zip 及其 trace/hash，不改 Lean。 |
+
+`OP_PROVENANCE_MD` 是实施基底或 Stage B head 的调用者产地文本；工具不内置会话身份。搜题另须显式给 `OP_SEARCH_WORKTREE`、`OP_SEARCH_OUTPUT_DIR`；深度轨还需 `OP_CODEX_EXCLUSIONS` 指向排除项文字文件。`OP_NAME_PREFIX` 进入 codex 搜题 seat 名称。
+
+`templates/blocks/` 是通用块的 tracked 居所；`Context.block()` 优先读取调用者显式提供的 `OP_SCRATCH/briefs/同名文件`，其余读取 tracked 块。这个输入覆盖也支持与已有 brief 的逐字节兼容。含具体 lane、模块、issue 或会话的块由调用者提供，不作为通用模板；stage/rework 所需的 `reuse-sweep-block.md`、`opr-shape-block.md`、`mirror-reuse-block.md`、`stageb-body-rules-block.md`、`actions-cache-block.md` 属于该类。`briefgen/stages.sh`、`stageb_prep.sh`、`review.sh` 只组织 canonical 生成器和共享块，面向调用者使用表中的主入口。
+
+运行 `python3 briefgen/selftest.py --selftest` 可检查全部生成器；`python3 standing-check.py --selftest` 检查 standing parser。也可逐文件执行 `--selftest`。测试覆盖带空格的路径和不同工作目录；真实联网行为仍由对应 GitHub/make 命令返回值裁决。
 
 ## Pipeline runtime
 
@@ -56,12 +89,7 @@ selection/exclusion 生成器、lane 映射和复合 chain 的 STEP 元数据属
 - `op-ingest-new-noalign.sh WORKTREE NEW_BRANCH ADDENDUM SUBJ PRMSG PATTERN [VOLUME]` / `op-ingest-noalign.sh` / `op-addendum-ingest-v3.sh`:理论卷增订 ingest(前两者绕开 align)。
 - `op-governance-pr.sh WORKTREE BRANCH COMMIT_MSG PR_MSG [AUTO]`:governance 改动的提交/推送/开 PR。
 - `op-fold-anchor-cover.sh WORKTREE BRANCH ATOM SOURCE_ID`:把漏掉的锚 cover 折进 builder commit。
-- `standing-check.py PR [--round N | --closed]`:派下一轮评审前、或合并前,机器核对 PR 正文的评审 standing——每一轮是否都有三席行与 tally、有没有占位判词、下一轮布局是否点名正确的轮次、`tests` 有没有被派给 nyxid、nyxid 席在相邻两轮之间有没有换位。`--round N` 传「即将派的那一轮」:正文自身无法区分「跑过但没记」与「本来就到此为止」,这一项只有调用方知道。`--closed` 是合并前那一次:要求末轮无 reject 且不再有未闭合的轮次。`--selftest` 19 例。
-
-## 判据摘要(来自 2026-09-05 一日 40 余席的读数)
-- 产出由选题函数决定:唯一两个真解决出自把判据改为「近期论文明确写出且文献无证明」的那一轮。
-- 13 次重做零数学错误,全是镜像/产地/import;镜像核对先于冻结把重做成本从一次 deposit 降到一次只读席。
-- 负载门的瓶颈是 codex 席位数(本机 ≤ 8 席含其他会话),不是 CPU。
+- `standing-check.py PR [--round N | --closed]`:派下一轮评审前、或合并前,机器核对 PR 正文的评审 standing——每一轮是否都有三席行与 tally、有没有占位判词、下一轮布局是否点名正确的轮次、`tests` 有没有被派给 nyxid、nyxid 席在相邻两轮之间有没有换位。`--round N` 传「即将派的那一轮」:正文自身无法区分「跑过但没记」与「本来就到此为止」,这一项只有调用方知道。`--closed` 是合并前那一次:要求末轮无 reject 且不再有未闭合的轮次。`--selftest` 包含 fixture golden 和拒绝用例。
 
 ## 负载门、镜像核对与实施模板
 - `op-resume-seat.sh` 的负载门含**上游健康**条件:`CODEX_HEALTH_URL`(默认 codex 提供方 `/responses`)返回 502/503/000 时不放行;判席位死因看 `worker.stdout.log` 尾部,不看退出码。
