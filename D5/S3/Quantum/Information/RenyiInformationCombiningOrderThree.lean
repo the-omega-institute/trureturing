@@ -40,15 +40,11 @@ proof_shape: tau: bind-only; escape_witness: none
 proof_shape: traceOutX2: bind-only; escape_witness: none
   Direct frozen dependencies (traceOutX2): none
   consumers (traceOutX2): claim, xor_state, output_entropy_exp, result
-proof_shape: hRenyi: bind-only; escape_witness: none
-  Direct frozen dependencies (hRenyi): none
-  consumers (hRenyi): hRenyiInv, claim, hRenyi_three, hRenyi_three_exp, hRenyi_three_continuous, hRenyi_three_strictMonoOn, hRenyi_three_zero, hRenyi_three_half, hRenyi_three_image, hRenyiInv_three_spec, hRenyi_three_combining, scalar_readout, result
+proof_shape: hRenyi: moved to D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 proof_shape: hRenyiInv: bind-only; escape_witness: none
   Direct frozen dependencies (hRenyiInv): none
   consumers (hRenyiInv): claim, hRenyiInv_three_spec, scalar_readout, result
-proof_shape: bconv: bind-only; escape_witness: none
-  Direct frozen dependencies (bconv): none
-  consumers (bconv): claim, bconv_bias, hRenyi_three_combining, scalar_readout, result
+proof_shape: bconv: moved to D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 proof_shape: claim: bind-only; escape_witness: none
   Direct frozen dependencies (claim): F2, F4
   consumers (claim): result
@@ -124,9 +120,7 @@ proof_shape: hRenyi_three_image: bind-only; escape_witness: none
 proof_shape: hRenyiInv_three_spec: bind-only; escape_witness: none
   Direct frozen dependencies (hRenyiInv_three_spec): none
   consumers (hRenyiInv_three_spec): scalar_readout
-proof_shape: bconv_bias: bind-only; escape_witness: none
-  Direct frozen dependencies (bconv_bias): none
-  consumers (bconv_bias): hRenyi_three_combining
+proof_shape: bconv_bias: moved to D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 proof_shape: hRenyi_three_combining: bind-only; escape_witness: none
   Direct frozen dependencies (hRenyi_three_combining): none
   consumers (hRenyi_three_combining): scalar_readout
@@ -215,12 +209,14 @@ proof_shape: output_entropy_exp: bind-only; escape_witness: none
   consumers (result): none
 -/
 
+import D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 
 open Matrix
+open D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceLeft)
 open scoped Kronecker MatrixOrder Matrix.Norms.L2Operator BigOperators ComplexOrder
@@ -251,13 +247,8 @@ noncomputable def traceOutX2 (t : Matrix ((Fin 2 × Fin 2) × b) ((Fin 2 × Fin 
     Matrix (Fin 2 × b) (Fin 2 × b) ℂ :=
   fun (z, j) (z', j') => ∑ x2, t ((z, x2), j) ((z', x2), j')
 
-noncomputable def hRenyi (alpha p : ℝ) : ℝ :=
-  (1 / (1 - alpha)) * Real.log (p ^ alpha + (1 - p) ^ alpha)
-
 noncomputable def hRenyiInv (alpha : ℝ) : ℝ → ℝ :=
   Function.invFunOn (hRenyi alpha) (Set.Icc 0 (1/2))
-
-noncomputable def bconv (p q : ℝ) : ℝ := p * (1 - q) + (1 - p) * q
 
 noncomputable def claim : Prop :=
   ∀ (n1 n2 : ℕ) (s1 : Fin 2 → Matrix (Fin n1) (Fin n1) ℂ)
@@ -479,10 +470,6 @@ private lemma hRenyiInv_three_spec {H : ℝ} (hH : H ∈ Set.Icc 0 (Real.log 2))
     hRenyiInv 3 H ∈ Set.Icc 0 (1/2) ∧ hRenyi 3 (hRenyiInv 3 H) = H := by
   have him : H ∈ hRenyi 3 '' Set.Icc 0 (1/2) := by rw [hRenyi_three_image]; exact hH
   exact ⟨Function.invFunOn_mem him, Function.invFunOn_eq him⟩
-
-private lemma bconv_bias (p q : ℝ) : 1 - 2*bconv p q = (1 - 2*p)*(1 - 2*q) := by
-  unfold bconv
-  ring
 
 private lemma hRenyi_three_combining (p q : ℝ) :
     Real.exp (-2 * hRenyi 3 (bconv p q)) =
