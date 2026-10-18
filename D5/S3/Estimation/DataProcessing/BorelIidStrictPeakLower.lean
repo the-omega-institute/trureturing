@@ -173,6 +173,23 @@ private theorem finite_integral {A : Type*} [Fintype A] [LinearOrder A]
   simp only [modeLaw,productAverage,IidStrictPeakSource.average,Finset.mul_sum,mul_assoc,measureReal_def]
   try rfl
 
+private theorem quantized_mode_finite (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (n : ℕ) (s : Fin 5) :
+    quantizedMass μ n s = modeLaw (fun a : Fin (n+1) =>
+      (μ.map (quantize n)).real {a}) s := by
+  let ν := μ.map (quantize n)
+  have hmap : (source μ).map (fun v i => quantize n (v i)) =
+      Measure.pi (fun _ : Fin 5 => ν) :=
+    Measure.pi_map_pi (fun _ => (measurable_quantize n).aemeasurable)
+  have hmeas : Measurable (fun v : Fin 5 → ℝ => fun i => quantize n (v i)) :=
+    Measurable.of_eval fun i => (measurable_quantize n).comp (measurable_pi_apply i)
+  have hm : Measurable (fun v : Fin 5 → Fin (n+1) =>
+      if mode (v 0) (v 1) (v 2) (v 3) (v 4) = s then (1 : ℝ) else 0) :=
+    measurable_of_finite _
+  have ht := integral_map (μ := source μ) hmeas.aemeasurable hm.aestronglyMeasurable
+  rw [hmap,finite_integral] at ht
+  exact ht.symm
+
 private theorem quantized_is_finite (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
     ∃ p : Fin (n+1) → ℝ, (∀ a, 0 ≤ p a) ∧ (∑ a, p a = 1) ∧
       (∀ s, quantizedMass μ n s = modeLaw p s) ∧
@@ -183,17 +200,7 @@ private theorem quantized_is_finite (μ : Measure ℝ) [IsProbabilityMeasure μ]
   · have ht := integral_fintype (μ := ν) (integrable_const (1 : ℝ))
     simpa using ht.symm
   · intro s
-    have hmap : (source μ).map (fun v i => quantize n (v i)) =
-        Measure.pi (fun _ : Fin 5 => ν) :=
-      Measure.pi_map_pi (fun _ => (measurable_quantize n).aemeasurable)
-    have hmeas : Measurable (fun v : Fin 5 → ℝ => fun i => quantize n (v i)) :=
-      Measurable.of_eval fun i => (measurable_quantize n).comp (measurable_pi_apply i)
-    have hm : Measurable (fun v : Fin 5 → Fin (n+1) =>
-        if mode (v 0) (v 1) (v 2) (v 3) (v 4) = s then (1 : ℝ) else 0) :=
-      measurable_of_finite _
-    have ht := integral_map (μ := source μ) hmeas.aemeasurable hm.aestronglyMeasurable
-    rw [hmap,finite_integral] at ht
-    exact ht.symm
+    exact quantized_mode_finite μ n s
   · intro c
     have hsub : {c} ⊆ (quantize n) ⁻¹' {quantize n c} := by
       intro x hx
@@ -203,6 +210,98 @@ private theorem quantized_is_finite (μ : Measure ℝ) [IsProbabilityMeasure μ]
     have hm := measureReal_mono (μ := μ) hsub
     simpa only [ν,measureReal_def,Measure.map_apply (measurable_quantize n)
       (measurableSet_singleton (quantize n c))] using hm
+
+private def quantizedCdf (μ : Measure ℝ) (n : ℕ) (v : ℝ) : ℝ :=
+  μ.real {w | quantize n w < quantize n v}
+
+private theorem quantizedCdf_bounds (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (n : ℕ) (v : ℝ) : 0 ≤ quantizedCdf μ n v ∧ quantizedCdf μ n v ≤ 1 := by
+  refine ⟨measureReal_nonneg,?_⟩
+  have hm := measureReal_mono (μ := μ)
+    (subset_univ {w | quantize n w < quantize n v})
+  simpa [quantizedCdf] using hm
+
+private theorem measurable_quantizedCdf (μ : Measure ℝ) [IsProbabilityMeasure μ]
+    (n : ℕ) : Measurable (quantizedCdf μ n) := by
+  have hm : Monotone (quantizedCdf μ n) := by
+    intro x y hxy
+    exact measureReal_mono (μ := μ) (fun w hw =>
+      lt_of_lt_of_le hw (quantize_mono n hxy))
+  exact hm.measurable
+
+private theorem quantizedCdf_tendsto (μ : Measure ℝ) [IsProbabilityMeasure μ] (v : ℝ) :
+    Tendsto (fun n => quantizedCdf μ n v) atTop (𝓝 (μ.real (Iio v))) := by
+  have hmeas (n : ℕ) : MeasurableSet {w | quantize n w < quantize n v} :=
+    (measurable_quantize n) (measurableSet_Iio)
+  have he (n : ℕ) :
+      (∫ w, if quantize n w < quantize n v then (1 : ℝ) else 0 ∂μ) =
+        quantizedCdf μ n v := by
+    simpa only [quantizedCdf,indicator_apply,mem_setOf_eq,Pi.one_apply] using
+      (integral_indicator_one (μ := μ) (hmeas n))
+  have he' : (∫ w, if w<v then (1 : ℝ) else 0 ∂μ) = μ.real (Iio v) :=
+    integral_indicator_one measurableSet_Iio
+  have ht : Tendsto (fun n => ∫ w, if quantize n w < quantize n v then (1 : ℝ) else 0 ∂μ)
+      atTop (𝓝 (∫ w, if w<v then (1 : ℝ) else 0 ∂μ)) := by
+    apply tendsto_integral_of_dominated_convergence (fun _ => (1 : ℝ))
+    · intro n
+      exact (Measurable.ite (hmeas n) measurable_const measurable_const).aestronglyMeasurable
+    · exact integrable_const 1
+    · intro n
+      filter_upwards [] with w
+      split_ifs <;> norm_num
+    · filter_upwards [] with w
+      apply tendsto_const_nhds.congr'
+      filter_upwards [quantize_comparison w v] with n hn
+      simp only [hn]
+  simpa only [he,he'] using ht
+
+private theorem quantized_cdf_moment (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
+    quantizedMass μ n 1+quantizedMass μ n 3 =
+      ∫ v, quantizedCdf μ n v^2 ∂μ := by
+  let ν := μ.map (quantize n)
+  let p := fun a : Fin (n+1) => ν.real {a}
+  have hp : ∀ a, 0 ≤ p a := fun _ => measureReal_nonneg
+  have hs : ∑ a, p a = 1 := by
+    have ht := integral_fintype (μ := ν) (integrable_const (1 : ℝ))
+    simpa [p] using ht.symm
+  have hq (s : Fin 5) : quantizedMass μ n s = modeLaw p s :=
+    quantized_mode_finite μ n s
+  have hl (a : Fin (n+1)) : lowerMass p a = ν.real (Iio a) := by
+    have ht := integral_fintype (μ := ν)
+      (f := fun b => if b<a then (1 : ℝ) else 0) Integrable.of_finite
+    have he : (∫ b, if b<a then (1 : ℝ) else 0 ∂ν) = ν.real (Iio a) :=
+      by simpa only [indicator_apply,mem_Iio,Pi.one_apply] using
+        (integral_indicator_one (μ := ν) (measurableSet_Iio (a := a)))
+    rw [he] at ht
+    simpa [lowerMass,p,mul_ite] using ht.symm
+  have hc (v : ℝ) : lowerMass p (quantize n v) = quantizedCdf μ n v := by
+    rw [hl]
+    simp only [ν,measureReal_def,Measure.map_apply (measurable_quantize n) measurableSet_Iio]
+    rfl
+  rw [hq 1,hq 3,(iid_peak_source p hp hs).2.2.2.1]
+  have hm : Measurable (fun a : Fin (n+1) => lowerMass p a^2) := measurable_of_finite _
+  have ht := integral_map (μ := μ) (measurable_quantize n).aemeasurable hm.aestronglyMeasurable
+  rw [integral_fintype Integrable.of_finite] at ht
+  simp only [smul_eq_mul] at ht
+  simpa only [hc,p] using ht
+
+private theorem borel_cdf_moment (μ : Measure ℝ) [IsProbabilityMeasure μ] :
+    modeMass μ 1+modeMass μ 3 = ∫ v, (μ.real (Iio v))^2 ∂μ := by
+  have ht : Tendsto (fun n => ∫ v, quantizedCdf μ n v^2 ∂μ) atTop
+      (𝓝 (∫ v, (μ.real (Iio v))^2 ∂μ)) := by
+    apply tendsto_integral_of_dominated_convergence (fun _ => (1 : ℝ))
+    · intro n
+      exact ((measurable_quantizedCdf μ n).pow_const 2).aestronglyMeasurable
+    · exact integrable_const 1
+    · intro n
+      filter_upwards [] with v
+      obtain ⟨h0,h1⟩ := quantizedCdf_bounds μ n v
+      rw [Real.norm_eq_abs,abs_of_nonneg (sq_nonneg _)]
+      nlinarith [sq_nonneg (1-quantizedCdf μ n v)]
+    · filter_upwards [] with v
+      exact (quantizedCdf_tendsto μ v).pow 2
+  simp_rw [← quantized_cdf_moment μ] at ht
+  exact tendsto_nhds_unique ((quantized_tendsto μ 1).add (quantized_tendsto μ 3)) ht
 
 private theorem quantized_facts (μ : Measure ℝ) [IsProbabilityMeasure μ] (n : ℕ) :
     (∀ s, 0 ≤ quantizedMass μ n s) ∧ (∑ s, quantizedMass μ n s) = 1 ∧
@@ -374,7 +473,8 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     (0 < X → X < 1/3 → -X/15 < D) ∧
     (∀ c : ℝ, 3*X+(μ.real {c})^3 ≤ 1 ∧
       (μ.real {c})^3/45 ≤ D+1/45 ∧
-      (0 < μ.real {c} → -1/45 < D)) := by
+      (0 < μ.real {c} → -1/45 < D)) ∧
+    X = ∫ v, (μ.real (Iio v))^2 ∂μ := by
   dsimp only
   have ht := quantized_tendsto μ
   have hx := (ht 1).add (ht 3)
@@ -408,7 +508,7 @@ theorem borel_iid_lower_surface (μ : Measure ℝ) [IsProbabilityMeasure μ] :
     exact le_of_tendsto_of_tendsto (hx.neg.div_const 15) hd
       (Eventually.of_forall fun n => (quantized_facts μ n).2.2.2.2.2.2)
   have hcor := borel_correction μ
-  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_,?_⟩
+  refine ⟨ht,hn,hm,hy,hz,hx0,hx1,hl,by linarith,hcor,?_,?_,borel_cdf_moment μ⟩
   · intro hXpos hXlt
     obtain ⟨s,hs,hs3,hcorr,_⟩ := hcor
     have hs0 : 0 < s := by

@@ -38,7 +38,8 @@ def fullLaw (r : Realization signature) : Prop :=
     (0 < X → X < 1/3 → -X/15 < D) ∧
     (∀ c : ℝ, 3*X+(μ.real {c})^3 ≤ 1 ∧
       (μ.real {c})^3/45 ≤ D+1/45 ∧
-      (0 < μ.real {c} → -1/45 < D))
+      (0 < μ.real {c} → -1/45 < D)) ∧
+    X = ∫ v, (μ.real (Iio v))^2 ∂μ
 
 abbrev arena : Arena where
   signature := signature
