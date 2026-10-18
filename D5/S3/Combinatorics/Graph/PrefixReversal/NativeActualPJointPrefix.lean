@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Earn the Actual Native P Prefix and Retained Q Cuts. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedCutRetention
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 import D5.S3.Combinatorics.Graph.Walks.ActualPiecePrefix

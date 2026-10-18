@@ -11,7 +11,7 @@ internal static partial class IngestCommand
     private static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadSelectedSources(
         IRepositoryGateway repository, ImmutableArray<string> selectors)
     {
-        var paths = new HashSet<string>(StringComparer.Ordinal) { TheoryAtomizerDataLoader.DataPath };
+        var paths = new HashSet<string>(StringComparer.Ordinal) { FileMapLoader.RelativePath };
         RawRepositorySnapshot? metadata = null;
         foreach (var selector in selectors)
         {
@@ -29,7 +29,7 @@ internal static partial class IngestCommand
             else paths.Add(BackfillInventoryLoader.RootPath + DigestionIngestor.DeriveSourceId(selector) + "/source.toml");
             paths.Add(selector);
         }
-        var loaded = DigestionQuerySelection.Load(repository.ReadCurrent(paths.Select(DigestionQuerySelection.Literal).ToArray()));
+        var loaded = DigestionQuerySelection.Load(repository.ReadCurrent([.. paths.Select(DigestionQuerySelection.Literal), ":(glob)Meta/FILEMAP.*.toml"]));
         if (loaded.Document.RequireDigestionSources().IsEmpty) return loaded;
         return DigestionQuerySelection.Load(DigestionQuerySelection.Merge(loaded.Raw,
             repository.ReadCurrent(loaded.Document.RequireDigestionSources()
@@ -53,6 +53,7 @@ internal static partial class IngestCommand
             var registered = sources.FirstOrDefault(source => source.SourceId == selector || source.SourcePath == selector);
             if (registered is not null)
             {
+                DigestionSourceEligibility.Require(current, registered.SourcePath);
                 ids.Add(registered.SourceId);
                 continue;
             }
@@ -61,6 +62,7 @@ internal static partial class IngestCommand
                 || !current.TryGetFile(selector, out _))
                 throw SourceUsage($"unknown --source selector '{selector}'");
 
+            DigestionSourceEligibility.Require(current, selector);
             var id = DigestionIngestor.DeriveSourceId(selector);
             if (claims.TryGetValue(id, out var claimant) && claimant != selector)
                 throw SourceUsage($"--source selector '{selector}' collides with '{claimant}': {id}");

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f3f200d1e0c758550a29eee79c660a94e0f897167c1fce6e18768d835985b5b9
-  normalized_sha256: sha256:f3f200d1e0c758550a29eee79c660a94e0f897167c1fce6e18768d835985b5b9
-cas_ref: sha256:f3f200d1e0c758550a29eee79c660a94e0f897167c1fce6e18768d835985b5b9
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Prediction/FusionStateCardinality.fusion_state_cardinality_bounds
-    target_statement_id: sha256:b058bb0a7e588601b6e21507202e48eb5a1d023415a31a48f7acd4a2509195cb
-receipts:
-  unresolved_subitems: []

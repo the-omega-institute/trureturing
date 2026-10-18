@@ -34,6 +34,7 @@
       by dyadicConvolutionDensity_contDiff to identify the original density.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Fourier.DyadicTransformDecay
 import D5.S3.Fourier.DyadicConvolutionDensity
 import Mathlib.Analysis.Fourier.Inversion

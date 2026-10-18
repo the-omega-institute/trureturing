@@ -6,6 +6,7 @@
    utility: none
    digest: Weighted first and second residual budgets for the original primal theta tail. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Zeros.Jensen.OriginalPrimalTailResponse
 import D5.S3.Zeros.Jensen.SourceJensenPositiveExtension
 

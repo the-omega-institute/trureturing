@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:089ef697c71f649520cccc499d6d71e6567275ba342a64680903f71d25d50231
-  normalized_sha256: sha256:089ef697c71f649520cccc499d6d71e6567275ba342a64680903f71d25d50231
-cas_ref: sha256:089ef697c71f649520cccc499d6d71e6567275ba342a64680903f71d25d50231
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance.rotationSumPerm_pow_avoids_2143_iff
-    target_statement_id: sha256:2bd6930276bc5a8302c24e4d5c076b76b4968c26881d337698592ad31a23bbd3
-receipts:
-  unresolved_subitems: []

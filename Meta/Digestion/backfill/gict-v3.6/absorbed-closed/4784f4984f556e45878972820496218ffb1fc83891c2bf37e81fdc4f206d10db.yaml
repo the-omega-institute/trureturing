@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4784f4984f556e45878972820496218ffb1fc83891c2bf37e81fdc4f206d10db
-  normalized_sha256: sha256:4784f4984f556e45878972820496218ffb1fc83891c2bf37e81fdc4f206d10db
-cas_ref: sha256:4784f4984f556e45878972820496218ffb1fc83891c2bf37e81fdc4f206d10db
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Crossing/WindingOrbitZero.sandwich_orbit_has_unique_winding_zero
-    target_statement_id: sha256:c81f3a539a6bbd2498a33feec0426113493a4aeadc1765fc2d67b95ad5761393
-receipts:
-  unresolved_subitems: []

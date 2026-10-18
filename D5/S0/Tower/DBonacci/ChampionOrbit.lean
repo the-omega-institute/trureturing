@@ -416,9 +416,7 @@ theorem four_champion_gap_orbit (k : Nat) :
       have hmiddle := four_large_to_middle (2 * k + 6) hlarge
       constructor
       · convert hlarge using 1
-        omega
       · convert hmiddle using 1
-        omega
 
 theorem dbonacciSurvivor_eq_of_orbit_gap (d Q : Nat) (hd : 2 ≤ d)
     (x : Real) (label : Nat) (leftArm rightArm arm : Real)

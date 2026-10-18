@@ -1,0 +1,77 @@
+**Theorem 76.1 (primitive generator and simultaneous formal reduction).** Suppose $j\ge1$, $N=3^j$, and
+
+$$B_N=L_N^2+3=P^2Q^3$$
+
+for distinct primes $P,Q$. On $E_Q:Y^2=X(X+5Q)(X-15Q)$, let $G_0(Q)$ be the global rational subgroup of Definition 74.1, let $T_0=(0,0)$, and put
+
+$$R=(5QB_N,25Q^2 L_N(PQ)F_N),\qquad S=R+T_0.$$
+
+Then
+
+$$\boxed{G_0(Q)=\mathbb Z S.}$$
+
+In particular every point of $G_0(Q)$ reduces to infinity at both $Q$ and $P$. Reduction at $P$ is good. This asserts primitivity in the specified global subgroup, not a choice of generator of the full Mordell–Weil group modulo torsion.
+
+**Proof.** Section 74 supplies $P,Q>5$, $Q\ge19$, and the conditional conclusions that $G_0(Q)=G_1(Q)$ is torsion-free of rank one and that $S$ is non-torsion with
+
+$$X(S)=-\frac{15}{P^2Q^2},\qquad z(S)=\frac{X(S)}{5Q}=-\frac3{B_N}.$$
+
+Choose a generator $H$ of $G_0(Q)$ and its sign so that $S=[m]H$ with $m>0$.
+
+First $m$ is odd. For a real non-torsion point $U$, Section 74's duplication formula gives
+
+$$z(2U)=\frac{(z(U)^2+3)^2}{4z(U)(z(U)+1)(z(U)-3)}>0,$$
+
+because the denominator is $4Y(U)^2/(5Q)^3>0$. An even $m$ would therefore contradict $X(S)<0$. Set $K=H+T_0$. Since $m$ is odd and $T_0$ has order two,
+
+$$[m]K=[m]H+T_0=S+T_0=R.$$
+
+The point $K$ is non-torsion and integral. To see the latter, the displayed integral model has discriminant $2^8 3^2 5^6 Q^6$, whose valuation is less than twelve at every prime, so it is locally minimal everywhere. If a rational point on this model is nonintegral at a prime $\ell$, its $X$-coordinate has negative valuation and it belongs to the formal kernel. That kernel is a subgroup at every prime, including $2,3,5,Q$. Thus a nonintegral $K$ would make its nonzero multiple $[m]K=R$ nonintegral at the same prime, contradicting the displayed integer coordinates of $R$. No prime-to-$\ell$ assumption on $m$ is needed. These are the standard formal-kernel facts of Silverman, [VII.1–3](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf).
+
+For the split cubic, complete two-descent gives the squareclass homomorphism whose coordinates at a non-two-torsion point $U$ are $X(U)$, $X(U)+5Q$, and $X(U)-15Q$ modulo rational squares. See Silverman, [X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf), printed p.315 / PDF p.327; the third class follows from the curve equation. Odd multiplication preserves these classes. At $R$ they are $(5,Q,5Q)$, because
+
+$$X(R)=5(PQ^2)^2,\quad X(R)+5Q=Q(5F_N)^2,\quad X(R)-15Q=5Q L_N^2.$$
+
+Consequently
+
+$$X(K)=5a^2,\qquad X(K)+5Q=Qb^2,\qquad X(K)-15Q=5Qd^2$$
+
+for rational $a,b,d$. They are integers: each left side is integral, and each coefficient $5,Q,5Q$ is squarefree, so a reduced denominator would require an impossible square factor in that coefficient. The equality $5a^2+5Q=Qb^2$ gives $Q\mid a$. Write $a=Qc$. The remaining equalities yield
+
+$$X(K)=5Q^2c^2,\qquad d^2+3=Qc^2,\qquad b^2=5(Qc^2+1).$$
+
+Hence $5\mid b$; writing $b=5f$ gives $d^2+4=5f^2$. Here $c\ne0$ because $K$ is non-torsion, $d\ne0$ because $Qc^2=3$ is impossible, and $f\ne0$. Take $d,f$ positive by changing their signs.
+
+We recall the elementary integral negative-Pell classification, with its argument to fix the exact orbit: every positive solution of $d^2+4=5f^2$ is $(L_n,F_n)$ for an odd $n\ge1$. The two integers have the same parity. The solution with $d=1$ is $(1,1)$. If $d>1$, then $d\ge4$, and
+
+$$d'=\frac{3d-5f}{2},\qquad f'=\frac{3f-d}{2}$$
+
+are positive integers with $d'^2+4=5f'^2$ and $d'<d$. Positivity follows from $9d^2-25f^2=4d^2-20>0$ and $9f^2-d^2=4f^2+4>0$; strict decrease follows from $d<5f$. Descent ends at $(1,1)$. Its inverse multiplies $(d'+f'\sqrt5)/2$ by $\phi^2$, where $\phi=(1+\sqrt5)/2$, so $(d+f\sqrt5)/2=\phi^n$ for a positive odd $n$. This gives precisely the stated Lucas and Fibonacci coordinates.
+
+Thus $Q\mid L_n^2+3$. The odd-index identities
+
+$$L_{3n}=L_n(L_n^2+3),\qquad F_{6n}=F_{3n}L_{3n}$$
+
+imply $Q\mid F_{6n}$. The original exact rank is $\rho(Q)=2\cdot3^{j+1}=6N$, by TBN3 in [the golden-unit-lift dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md). Rank divisibility gives $6N\mid6n$, hence $N\mid n$ and $n\ge N$. In particular
+
+$$z(K)=\frac{X(K)}{5Q}=Qc^2=L_n^2+3\ge B_N.$$
+
+The original integral orbit is essential in this step; an arbitrary rational Pell solution does not supply an integer index $n$.
+
+Write $c_0=\log144/6$ and $u_0=\log24/6$. The uniform bounds proved in Section 74, and invariance of canonical height under torsion translation, give
+
+$$\widehat h(K)=\widehat h(H)\ge\tfrac12\log B_N-c_0,\qquad
+\widehat h(R)=\widehat h(S)\le\tfrac12\log B_N+u_0.$$
+
+Set $t=\tfrac12\log B_N$. Since $R=[m]K$,
+
+$$m^2(t-c_0)\le t+u_0.$$
+
+But $B_N\ge19>12$, so $t-c_0>0$ and
+
+$$8t=4\log B_N>4\log12>3\log12+\frac{\log24}{6}=9c_0+u_0,$$
+
+using $24<12^6$. Thus $9(t-c_0)>t+u_0$ and $m<3$. The positive odd integer $m$ must equal one. Hence $H=S$ and $G_0(Q)=\mathbb ZS$.
+
+The entire group already lies in $G_1(Q)$ by Section 74. At $P$, the discriminant is a unit because $P>5$ and $P\ne Q$, and $v_P(X(S))=-2$ gives $\operatorname{red}_P(S)=O$. Therefore every point of $G_0(Q)$ also reduces to infinity at $P$. ∎
+

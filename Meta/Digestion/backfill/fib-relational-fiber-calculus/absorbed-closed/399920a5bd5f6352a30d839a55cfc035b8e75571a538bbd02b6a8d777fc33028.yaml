@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:399920a5bd5f6352a30d839a55cfc035b8e75571a538bbd02b6a8d777fc33028
+  normalized_sha256: sha256:399920a5bd5f6352a30d839a55cfc035b8e75571a538bbd02b6a8d777fc33028
+cas_ref: sha256:399920a5bd5f6352a30d839a55cfc035b8e75571a538bbd02b6a8d777fc33028
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/NaturalSequenceCodec.natural_sequence_transport
+    target_statement_id: sha256:c5a35c07817fc7bb931b8afa00a09cb3235e4199a87cd060f4ede8bcf529551e
+receipts:
+  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:294bcabd4a75eb29ea22d0f93c089a1f1c7a4d0229e292cc53ae7a944298d00a
-  normalized_sha256: sha256:294bcabd4a75eb29ea22d0f93c089a1f1c7a4d0229e292cc53ae7a944298d00a
-cas_ref: sha256:294bcabd4a75eb29ea22d0f93c089a1f1c7a4d0229e292cc53ae7a944298d00a
-coverage_gids:
-  - gid: D5/S3/Quantum/GNSMatrix.gns_matrix_identity
-    target_statement_id: sha256:45f7835e6656bdb7dd6d391b5e4cf5aaa750499b97cc93101c6ececeb980f680
-receipts:
-  unresolved_subitems: []

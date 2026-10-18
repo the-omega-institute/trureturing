@@ -53,6 +53,10 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
             Node("trace_local_left", "The left partial trace under local conjugation", TraceLocalLeftFormula(),
                 "For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over a as conjugation by V whenever U adjoint times U equals the identity. The operator rho and the matrix V are arbitrary complex matrices of the displayed sizes.",
                 true, id: "trace-local-left"),
+            Node("partialTransposeB_kronecker_conj", "Partial transpose under local conjugation",
+                PartialTransposeKroneckerConjFormula(),
+                "For every complex two-qubit matrix rho and arbitrary complex two-by-two matrices U and V, partial transposition on the second factor carries conjugation by U tensor V to conjugation by U tensor the entrywise complex conjugate of V. No Hermitian or unitary hypothesis is required.",
+                true, id: "partial-transpose-kronecker-conj"),
             Node("result", "Refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The initial state is |+⟩|+⟩|r⟩|r⟩, where |r⟩ = (2|0⟩+|1⟩)/√5, encoded by θ = (π/2,π/2,2 arctan(1/2),2 arctan(1/2)). It is generic. Factoring the commuting kick exponentials and the diagonal Ising exponential gives U = −W^{⊗4}G, with W a single-qubit unitary and G the periodic product of controlled-Z gates. The local unitaries preserve both measures. Before their action, the reduced density matrix has spectrum {16/25,4/25,4/25,1/25}; its partial transpose has spectrum {23/50,17/50,17/50,−7/50}, and both marginals are 1/2 times the identity. Hence 2𝓔(1) = log(1024/625) and I_{A:B}^(1/2)(1) = log(100/81). Strict injectivity of the logarithm on positive reals and the unequal rational arguments contradict the asserted equality. These finite-chain values do not settle a thermodynamic-limit identity at early times.",
                 true, new OpenProblemResolutionClaim(
@@ -117,6 +121,21 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
             F.Id("PartialTraceMutualInformation"), Dot, F.Id("partialTraceRight")), matrix);
     private static Formula Kron(Formula left, Formula right) => QCall("Matrix", "kronecker", left, right);
     private static Formula Adjoint(Formula matrix) => QCall("Matrix", "conjTranspose", matrix);
+
+    private static Formula PartialTransposeKroneckerConjFormula()
+    {
+        Formula rho = F.Id("rho"), u = F.Id("U"), v = F.Id("V");
+        Formula local = Kron(u, v);
+        Formula conjugate = Kron(u, QCall("Matrix", "map", v, F.Id("star")));
+        Formula Pt(Formula matrix) => Apply(
+            Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Quantum"), Dot,
+                F.Id("Entanglement"), Dot, F.Id("StructuredNegativityCoincidenceRefutation"), Dot,
+                F.Id("partialTransposeB")), matrix);
+        return Disp(All("rho", MatrixType(Cartesian(Fin(Num(2)), Fin(Num(2)))),
+            All("U", MatrixType(Fin(Num(2))), All("V", MatrixType(Fin(Num(2))),
+                Eqn(Pt(Mul(Mul(local, rho), Adjoint(local))),
+                    Mul(Mul(conjugate, Pt(rho)), Adjoint(conjugate)))))));
+    }
 
     private static Formula TraceConjugateRightFormula()
     {

@@ -20,7 +20,7 @@ open scoped BigOperators
 
 variable {L : ℕ}
 
-private theorem deleting_owner_contradicts_count_minimality
+theorem deleting_owner_contradicts_count_minimality
     (F : OddDistinctCoveringSystem L)
     (hcountMin : ∀ {N : ℕ}, OddDistinctCoveringSystem N → L ≤ N)
     (r : Fin L)
@@ -51,7 +51,7 @@ private theorem deleting_owner_contradicts_count_minimality
         (by simp))
   exact (Nat.not_lt_of_ge hbound) hstrict
 
-private theorem owner_has_private_point
+theorem owner_has_private_point
     (F : OddDistinctCoveringSystem L)
     (hcountMin : ∀ {N : ℕ}, OddDistinctCoveringSystem N → L ≤ N)
     (r : Fin L) :

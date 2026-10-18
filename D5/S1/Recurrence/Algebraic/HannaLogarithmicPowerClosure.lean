@@ -35,7 +35,7 @@ Retire these inverse leaves when our adopted Mathlib Log.lean contains
 PowerSeries.subst_exp_log and PowerSeries.subst_log_exp_sub_one with equivalent types.
 -/
 private theorem eq_of_derivative_mul_one_add_X_eq_self {g : PowerSeries ℚ}
-    (hderiv : derivative ℚ g * (1 + X) = g) :
+    (hderiv : derivative (R := ℚ) g * (1 + X) = g) :
     g = constantCoeff g • (1 + X) := by
   let : Invertible (1 + X : PowerSeries ℚ) :=
     (isUnit_iff_constantCoeff.mpr (by simp)).invertible
@@ -43,7 +43,7 @@ private theorem eq_of_derivative_mul_one_add_X_eq_self {g : PowerSeries ℚ}
     have h := congrArg (constantCoeff (R := ℚ)) (mul_invOf_self (1 + X : PowerSeries ℚ))
     rw [map_mul] at h
     simpa using h
-  have hg : g * ⅟(1 + X) = derivative ℚ g := by
+  have hg : g * ⅟(1 + X) = derivative (R := ℚ) g := by
     conv_lhs => rw [← hderiv]
     rw [mul_assoc, mul_invOf_self, mul_one]
   have key : g * ⅟(1 + X) = C (constantCoeff g) := by
@@ -55,7 +55,7 @@ private theorem eq_of_derivative_mul_one_add_X_eq_self {g : PowerSeries ℚ}
   rw [smul_eq_C_mul, ← key, mul_assoc, invOf_mul_self, mul_one]
 
 theorem subst_exp_log : (exp ℚ).subst (log ℚ) = 1 + X := by
-  have hd : derivative ℚ ((exp ℚ).subst (log ℚ)) * (1 + X) =
+  have hd : derivative (R := ℚ) ((exp ℚ).subst (log ℚ)) * (1 + X) =
       (exp ℚ).subst (log ℚ) := by
     rw [derivative_subst (HasSubst.log), derivative_exp, mul_assoc,
       D5.S1.Recurrence.Periodic.ScaledLogColumnPeriodicity.log_derivative_mul, mul_one]

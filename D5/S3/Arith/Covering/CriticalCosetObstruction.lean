@@ -70,17 +70,17 @@ theorem affine_holes (offset : Fin 33 → F) (active : Finset (Fin 33)) :
     12 ≤ (fieldHoles offset active).card := by
   classical
   let : Fact (Nat.Prime 23) := ⟨by decide⟩
-  have hc : coeff topIndex (∏ i, normal i) = 1 := by
+  have hc : AddMonoidAlgebra.coeff (∏ i, normal i) topIndex = 1 := by
     unfold normal rows
     simp only [Fin.prod_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
       Fin.prod_univ_zero, mul_one]
     norm_num [map_intCast, map_ofNat]
-    conv_lhs => arg 2; ring_nf
+    conv_lhs => arg 1; ring_nf
     simp only [← map_ofNat C, X_pow_eq_monomial]
     have hcm (s : Bool →₀ ℕ) (r t : F) :
         monomial s r * C t = monomial s (r * t) := by
       rw [mul_comm, C_mul_monomial, mul_comm]
-    simp only [X, monomial_mul, hcm, coeff_add, coeff_monomial]
+    simp only [X, monomial_mul, hcm, MvPolynomial.coeff_add, coeff_monomial]
     norm_num [topIndex, Finsupp.ext_iff, Bool.forall_bool]
     decide +kernel
   let f (i : Fin 33) := normal i - C (offset i)
@@ -115,7 +115,7 @@ theorem affine_holes (offset : Fin 33 → F) (active : Finset (Fin 33)) :
   have ht : topIndex.degree = 33 := by simp [topIndex, map_add]
   have ht' : (topIndex.sum fun _ n => n) = 33 := by
     simpa only [Finsupp.degree_apply, Finsupp.sum] using ht
-  have hcoeff : coeff topIndex (∏ i, f i) = 1 := by
+  have hcoeff : AddMonoidAlgebra.coeff (∏ i, f i) topIndex = 1 := by
     dsimp [f]
     rw [Finset.prod_sub_ordered, coeff_sub, hc]
     have hz := coeff_eq_zero_of_totalDegree_lt

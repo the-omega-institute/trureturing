@@ -4278,3 +4278,573 @@ memory are distinct quantities. These paper theorems supply no
 physical acquisition, time, memory or realization conclusion.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Singleton interior supports and coherent boundary representatives
+
+**Definition 15.1 (the interior-singleton class).** Retain the whole
+model of Definitions 1.1–1.2 and Convention 1.3. Thus $n\ge6$,
+$3\le k\le n-2$, $K=k$, $L=n-k+1$, $G=KL$, and
+$c_i=s_i+4$ for distinct positive integers $s_1<\cdots<s_n$.
+One complete stationary graph is correct and terminates on every
+$\theta\in\{0,1\}^n$, with both $t_P(\theta)\le n$ and
+$J_P(\theta)\le W$ on that same input. Let $\mathfrak I$ be
+the class of these graphs satisfying only
+
+$$
+a_{h,z}=1\qquad
+(0\le h\le K-2,\quad 0\le z\le L-2).
+\tag{SI.134}
+$$
+
+These are exactly the cells whose zero and one children are both
+live. No support-uniqueness condition is imposed on $h=K-1$ or
+$z=L-1$, including their common corner. There is no uniqueness
+condition on hosts, and no order restriction on certified traffic.
+All installed unused states and all paid repeats remain counted.
+
+**Theorem 15.2 (coherent representatives from interior singletons).**
+For every $P\in\mathfrak I$ there are sets
+
+$$
+\varnothing=U_0\subsetneq U_1\subsetneq\cdots
+\subsetneq U_{n-1},\qquad |U_d|=d,
+\tag{SI.135}
+$$
+
+and actual live histories $H_{h,z}$ at every $(h,z)\in V$ whose
+supports are $U_{h+z}$. Their ending states define an injection
+
+$$
+\Phi:V\longrightarrow Q_{\mathrm{live}},\qquad
+\Phi(h,z)\in F_{h,z}.
+\tag{SI.136}
+$$
+
+Consequently the same installed graph satisfies
+
+$$
+|Q_{\mathrm{live}}|\ge G,\qquad D\le E,
+\qquad m\ge G+u.
+\tag{SI.137}
+$$
+
+Proof. Reuse Theorem 2.2 for actual nonempty cell families, live
+freshness and the fixed-successor sibling law (SI.8). Reuse the
+singleton-diagonal argument of Theorem 4.1 inside the smaller
+rectangle of (SI.134), as follows. Adjacent cells $(h,z)$ and
+$(h+1,z-1)$ on an interior diagonal have a live common parent
+$(h,z-1)$. Choose one actual history at that parent. Its separately
+actual zero and one children have the same support. Since the two
+child support families are singletons, their unique supports agree.
+The admissible interior hit counts on any diagonal form a nonempty
+integer interval. Adjacency therefore supplies one support $U_d$
+for its entire interior diagonal, for every $0\le d\le n-3$.
+
+At every such depth below $n-3$ there is an interior cell other
+than $(K-2,L-2)$; it has an interior child. An actual history there
+and (SI.8) give $U_{d+1}=U_d\cup\{i(q)\}$ with
+$i(q)\notin U_d$. This proves strict nesting and $|U_d|=d$
+through $n-3$. The only interior cell at depth $n-3$ is
+$(K-2,L-2)$, since $K+L=n+1$.
+
+We next supply representatives on the unrestricted boundary, rather
+than assert uniqueness of its supports. Consider $(h,L-1)$ of
+depth $d\le n-3$. Then $h\le K-3$. Choose an actual history
+at $(h,L-2)$. Its one-child $(h+1,L-2)$ is interior and has
+support $U_d$; its zero-child is the required boundary cell and
+has that same support. For a boundary cell $(K-1,z)$ of depth
+$d\le n-3$, use a history at $(K-2,z)$. Its zero-child
+$(K-2,z+1)$ is interior, so its one-child supplies the boundary
+representative with support $U_d$. These are actual sibling
+extensions of the chosen parent histories.
+
+There are two remaining diagonals. Choose one actual history at
+$C=(K-2,L-2)$, with ending state $q_C$ and support $U_{n-3}$.
+Both its children are live, and they are precisely
+$(K-1,L-2)$ and $(K-2,L-1)$, the two cells of depth $n-2$.
+Both have support
+$U_{n-2}=U_{n-3}\cup\{i(q_C)\}$. Extend either of these
+actual child histories by its sole live reply. This gives an actual
+history at the only depth-$(n-1)$ cell, $(K-1,L-1)$, with support
+$U_{n-1}=U_{n-2}\cup\{i(q')\}$. Freshness proves the last
+two strict inclusions. This completes (SI.135) and all chosen histories.
+
+At one depth their supports coincide, and different cells have
+different hit counts. [PCA, Theorem 35.1][PCA] excludes equal
+supports with unequal hits at one host. Across different depths the
+chosen supports are properly nested, so [PE, Lemma 4.1][PE] excludes
+a common host. These suppliers apply to the full-fiber lift of this
+same complete dual-cap Boolean graph, as in Section 2. Its selected
+histories are actual cube histories; no syntactic path has been
+declared actual. Thus the selected endpoints are distinct and give
+(SI.136). Finally Theorem 5.2 gives
+$|Q_{\mathrm{live}}|=G+E-D$ and $m=|Q_{\mathrm{live}}|+u$,
+which prove (SI.137). $\square$
+
+**Corollary 15.3 (internal ambiguity is necessary for a saving).**
+Every complete correct original graph with $m<G$ at both caps has
+a support-ambiguous cell satisfying
+
+$$
+1\le h\le K-2,\qquad 1\le z\le L-2.
+\tag{SI.138}
+$$
+
+Proof. Otherwise every interior cell has a singleton support family
+and Theorem 15.2 contradicts $m<G$. Theorem 2.2 gives singleton
+supports on both axes, so the ambiguous cell cannot lie there.
+This is a necessary condition; it is not sufficient for a saving.
+$\square$
+
+**Corollary 15.4 (the qualified Boolean minimum).** For every
+$n,k,A$ of Definition 15.1, the minimum running count in
+$\mathfrak I$, subject to both original caps on one graph, is $G$.
+The Boolean total installed minimum is $G+2$.
+
+Proof. The lower bound is Theorem 15.2. The supplied threshold
+grid of PCA Theorem 26.1 has $G$ running states, reads coordinates
+in their fixed order until a certificate, and satisfies both caps.
+Its support at $(h,z)$ is $\{1,\ldots,h+z\}$, so it belongs
+to $\mathfrak I$. Its two distinct output terminals give the total.
+$\square$
+
+The witnesses in Theorem 15.2 may have different completing inputs.
+Their nested supports provide a counting injection, not one common
+runtime history, a live-order normalization or an executable subgraph.
+Boundary support families can be multiple, and different cells can
+share other live hosts. A selected host may be certified on another
+history. Only genuinely never-live installed states contribute to $u$;
+$E,D$ remain incidences on this one graph, not separate state batches.
+
+## 16. The complete PE8 consumer and exclusions under every reblocking
+
+**Proposition 16.1 (supplied overloaded graphs in $\mathfrak I$).**
+For every $M\ge3$ and every original increasing position set $A$,
+the entire graph supplied by [PE, Theorem 8.1][PE], with
+$n=2M+2$, $k=M+1$ and $G=(M+1)(M+2)$, belongs to
+$\mathfrak I$. It has $G+M+2$ running states, attains both
+$n,W$ together, and has a state of mass $1+1/(M+1)>1$ in
+its terminal common-support gap $(M,n)$ of span $M+2$.
+It is outside Definition 11.6 and outside every representation in
+Definitions 12.1, 13.1, 14.1 and [IC, Definition 3.1][IC15].
+For $M\ge4$ it is also outside both terminal-exception classes
+$\mathfrak A_5,\mathfrak C_5$ of [TS, Definition 6.3][TS15].
+
+Proof. We use PE8's complete table, correctness, budgets and counts
+as supplied mathematics; their role here is applicability to (SI.134)
+and separation from the stated sufficient classes. For an explicit
+identification of the whole consumer, put
+
+$$
+I=(1,\ldots,M),\quad x=M+1,\quad y=M+2,
+\quad u_j=M+2+j,\quad U=(u_1,\ldots,u_M).
+\tag{SI.139}
+$$
+
+Install every $R_{h,z}$ with $0\le h\le M$, $0\le z\le M+1$
+except $R_{0,M+1}$, and distinct terminals $\mathsf0,\mathsf1$.
+The sole start is $R_{0,0}$. A generic retained row queries $h+z+1$;
+its zero successor is $R_{h,z+1}$ unless $z=M+1$, when it is
+$\mathsf0$, and its one successor is $R_{h+1,z}$ unless $h=M$,
+when it is $\mathsf1$. Override the two indicated rows and install
+all these new distinct running rows:
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R_{0,M}$ | $x$ | $V$ | $R_{1,M}$ |
+| $R_{M,0}$ | $y$ | $V$ | $\mathsf1$ |
+| $V$ | $u_1$ | $Z_2$ | $B_Y$ |
+| $Z_j$, $2\le j<M$ | $u_j$ | $Z_{j+1}$ | $J$ |
+| $Z_M$ | $u_M$ | $B_X$ | $J$ |
+| $B_X$ | $x$ | $\mathsf0$ | $\mathsf1$ |
+| $B_Y$ | $y$ | $J$ | $R_{2,M+1}$ |
+| $J$ | $1$ | $\mathsf0$ | $\mathsf1$ |
+
+The omitted row has no remaining predecessor. Every other retained
+row, including any unused row and the entire fallback AND tail, is
+still installed. This is exactly PE8 with its parameter renamed $M$.
+
+Before diversion a grid history exposes its ordinary initial segment.
+The only arrivals at $V$ are the two actual contexts
+
+$$
+\mathcal A:\ I=0^M,\ x=0,
+\qquad \mathcal B:\ I=1^M,\ y=0.
+\tag{SI.140}
+$$
+
+Their residuals are AND on $\{y\}\cup U$ and OR on $\{x\}\cup U$.
+If $u_1=0$, $\mathcal A$ is already certified negative. The
+$Z$ scan either finds its first one and enters $J$, or reaches
+$B_X$ after all $U$ are zero. On $\mathcal B$ a first $U$
+one certifies positive; $J$ reads the old bit $1$, zero on
+$\mathcal A$ and one on $\mathcal B$, and returns the correct
+output in both contexts. With all $U$ zero, $B_X$ reads old zero
+on $\mathcal A$ and the last pivotal OR bit on $\mathcal B$.
+
+If $u_1=1$, $\mathcal B$ is certified positive, while
+$\mathcal A$ remains live at $B_Y$. A zero there certifies
+$\mathcal A$ negative and enters $J$. A one is impossible on
+$\mathcal B$, whose old $y$ is zero. On $\mathcal A$ it enters
+$R_{2,M+1}$ with ordinary support $\{1,\ldots,M+3\}$,
+two ones and $M+1$ zeros. Its retained tail reads
+$u_2,\ldots,u_M$ until the AND task is resolved. Ordinary grid
+routes avoiding $V$ have their original meaning, including the
+direct positive exit from $R_{M,0}$. This exhausts all actual
+arrivals. All routes terminate through finite grid, scan or tail chains.
+
+Every live continuation of $\mathcal A$ after $V$ has $z=M+1$;
+every live continuation of $\mathcal B$ has $h=M$. In particular
+$Z_j,B_X$ can be live only on $\mathcal B$, $B_Y$ only on
+$\mathcal A$, and $J$ is never live. Certification cannot reverse.
+The only new grid return and its entire tail also have $z=M+1$.
+Thus no deviation supplies a nonordinary support at an interior
+cell $h\le M-1,z\le M$. Every actual live history at each such
+cell has support $\{1,\ldots,h+z\}$, proving (SI.134).
+
+For completeness the supplied PE8 bills on each of these same
+inputs are the following. They include every old-coordinate reread.
+Prefixes to $V$ cost $M+1$ queries and $C_I+c_x$ or $C_I+c_y$.
+With all $U$ zero, the complete bills are
+
+$$
+(t,J)_{\mathcal A}=(n,W+c_x-c_y),\qquad
+(t,J)_{\mathcal B}=(n,W).
+\tag{SI.141}
+$$
+
+With $u_1=0$ and first later one $u_j$, $2\le j\le M$, both
+query counts are $M+j+2\le n$ and the respective letter bills are
+
+$$
+C_I+c_x+C_{U_{\le j}}+c_1\le W,\qquad
+C_I+c_y+C_{U_{\le j}}+c_1\le W.
+\tag{SI.142}
+$$
+
+Here $U_{\le j}=\{u_1,\ldots,u_j\}$; the omitted $y$ or $x$
+pays for $c_1$, since $c_1<c_x<c_y$. With $u_1=1$ and
+$B_Y$ returning zero, both query counts are $M+4\le n$ and
+the respective bills are
+
+$$
+C_I+c_x+c_{u_1}+c_y+c_1\le W,\qquad
+C_I+2c_y+c_{u_1}+c_1\le W.
+\tag{SI.143}
+$$
+
+For the first inequality $c_{u_2}>c_1$ suffices. For the second,
+$c_1<c_x$ and $c_y<c_{u_2}$ give
+$c_y+c_1<c_x+C_{U\setminus\{u_1\}}$. If $B_Y$ returns
+one, only $\mathcal A$ occurs and its full tail reads distinct
+coordinates. Routes avoiding $V$ also read distinct coordinates.
+Hence every case satisfies both original caps. The actual input
+
+$$
+A^*:\ I=0^M,\ x=0,\ y=1,\ U=1^M
+\tag{SI.144}
+$$
+
+has order $I,x,u_1,y,u_2,\ldots,u_M$, reads all coordinates once,
+and attains $n,W$ together. The count is the supplied
+$(G-1)+(M+3)=G+M+2$ running states and two terminals.
+
+There are precisely two live prefixes at $V$, of counts
+$(0,M+1)$ and $(M,1)$. Definition 11.2 therefore gives
+
+$$
+\lambda(V)=\binom{M+1}{0}^{-1}+\binom{M+1}{M}^{-1}
+           =1+\frac1{M+1}>1.
+\tag{SI.145}
+$$
+
+Besides $A^*$ use the actual input
+$B^*:I=1^M,x=0,y=0,U=0^M$. Its order is
+$I,y,u_1,\ldots,u_M,x$. Both runs are live before every one
+of their $n$ queries. At every $M<d<n$, the support of $A^*$
+contains $x$ and that of $B^*$ does not. All live histories
+through depth $M$ have ordinary initial-segment support. Hence the
+common depths are exactly $0,1,\ldots,M$ and formal $n$. The
+only nonempty gap interior is $(M,n)$, of span $M+2$, ending
+after $e_*=M+2$. The state $V$ lies in this remaining late-long
+pool. Its two histories fail one directed conflict directly: the
+one set of $\mathcal A$ is empty, while the one set of
+$\mathcal B$ meets the zero set of $\mathcal A$ in $I$.
+Thus Definition 11.6's both-conflict premise fails, consistently
+with (SI.145). All SI11 counting, mass identities and collective
+accounting still apply to this graph.
+
+To exclude every stated order-class reblocking, use also
+$C^*:I=0^M,x=1,y=0,U=1^M$. This run is entirely live until
+its final query and has ordinary order $I,x,y,u_1,\ldots,u_M$.
+Each of Definitions 12.1, 13.1, 14.1 and IC Definition 3.1
+has two relevant properties: its completed fixed common-prefix
+assignment selects one entire permutation for all live queries;
+different modes have different first postprefix coordinates, since
+their nonempty early blocks are disjoint. These properties hold
+before any cost, transversal or attainable-weight condition is used.
+
+Consider any proposed representation, with prefix length $p$ and
+any choice of lists, block lengths, orders, mode names or selector.
+If $p<M$, the three full-live runs have the same first postprefix
+coordinate, so must select the same mode. That would prescribe
+the same complete order, contrary to their displayed orders. If
+$p>M$, their common prefix would include query $M+1$, but
+$A^*$ queries $x$ there and $B^*$ queries $y$. If $p=M$,
+the common prefix is necessarily $I$ in its displayed order.
+$A^*$ and $C^*$ have the identical assignment $I=0^M$, so
+select the same mode. Yet after their next query $x$, while both
+remain live, their next coordinates are $u_1$ and $y$ respectively.
+Again one selected permutation cannot describe both. This exhausts
+all prefix lengths and is unaffected by additional unused modes.
+
+For $M\ge4$, the remaining late pool has span $M+2\ge6$,
+so it is not the exceptional terminal span-five pool $I_5$ of
+TS Definition 6.3. It violates both that definition's
+$\mathcal L_*\subseteq\{I_5\}$ condition and the required
+both-conflict condition outside $I_5$. Thus it is outside both
+$\mathfrak A_5$ and $\mathfrak C_5$. The $M=3$ member has
+span five and supplies no such separation. $\square$
+
+The same graph has multiple support-ambiguous boundary cells.
+For example $(M,1)$ has both ordinary support
+$I\cup\{x\}$ and the $\mathcal B$ support $I\cup\{y\}$;
+$(M,2)$ has ordinary support $I\cup\{x,y\}$ and the
+$\mathcal B$ support $I\cup\{y,u_1\}$. Ordinary witnesses
+can take one zero and $M-1$ ones on $I$ to avoid both diversions.
+Thus neither the all-cell singleton premise of Theorem 4.1 nor
+the at-most-one-exception premise of Theorem 4.2 covers this consumer.
+At $V$, the hit difference and zero decrease in [CL, (CL.15)][CL15] are
+both $M$, whereas its two allowed margins are $K-M=L-(M+1)=1$.
+This overloaded pair is therefore outside that sufficient eligibility
+condition as well; its incidence still belongs to the collective target.
+Its supplied count is above grid by $M+2$ running states. It is
+an application of the weaker support theorem, not a new construction,
+an unrestricted optimum, or a strict-subgrid witness.
+
+## 17. Projection-qualified minima and the complete original native consumer
+
+**Convention 17.1 (unchanged full source and literal reader).** Use
+all finite nonempty ordered trees of Definition 1.1, with
+$\rho(\alpha)=\beta$, $\rho(\beta)=\langle\beta,\alpha\rangle$
+and homomorphic action on pairs. The domain is the entire fiber
+$\mathcal U_*$ of the perfect depth-three current row $R_*$,
+with exactly the six disequal classes
+
+$$
+\{LLL,LRL\}=a,\quad\{LLR\}=b_1,\quad\{LRR\}=b_2,
+\quad\{RLL,RRL\}=c,\quad\{RLR\}=b_3,\quad\{RRR\}=b_4.
+\tag{SI.146}
+$$
+
+Every actual inverse source, unbounded size, depth and shape, and
+every finite original-root address, including the empty word, remain
+in scope. Replies are alpha, beta, branch and absent. The whole
+predecessor target is $F(u)=R_{\{L,R\}^3}(u)$, including its
+ordered exterior, every reached occurrence, full canonical equality
+partition, repetitions, disequalities and strict-prefix blocking guards.
+The actual image inverse of WTF Definition 1.1 is a mathematical
+supplier, not an available controller operation.
+
+At the fixed literals $a_i=LLL L^{s_i}R$, branch gives indicator
+one and alpha, beta and absent give zero. Keep exactly (SI.2):
+code zero on $\Pi_1,\Pi_2$, one on $\Pi_3,\Pi_4$,
+threshold-$k$ of the indicators of $x_a$ on $Z_{b_3}$, and
+zero on every other zero profile. The exhaustive profiles and their
+whole outputs are those of WTF Definition 1.1. Required preparation
+output is literally $L_j=\widehat e_j$ for $j=\sigma_{A,k}(u)$,
+followed by the original complete $e_j$ on that same stationary source.
+
+More explicitly, retain $q_1=LL,q_2=LR,q_3=RL,q_4=RR$ and
+the original fixed order $(i_1,i_2)$ of $\{1,2\}$. The complete
+reader table of WTF Convention 1.3 is
+
+| Reader state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $e_0$ | $q_{i_1}R$ | $H_{i_1}$ | $H_0$ | $Q_2$ | $H_0$ |
+| $Q_2$ | $q_{i_2}R$ | $H_{i_2}$ | $H_0$ | $H_0$ | $H_0$ |
+| $e_1$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+Here $H_0$ bears the entire $R_0=R_*$. For $1\le j\le4$,
+$H_j$ bears the entire $R_j$: replace only the sibling holes
+$q_jL,q_jR$ by concrete beta at $q_j$, restrict the whole old
+partition canonically, and retain the remaining exterior, the other
+occurrence of the repeated partner and every surviving disequality
+and guard. These five distinct whole-row halts and three running
+states are the separately priced original eight-state reader; its
+fresh bounds are two queries and six letters. They are not folded
+into a preparation count or replaced by a different usable entry.
+
+Binding of the original update and register, acquired authenticated
+same-version row/code data, original-root permission, actual same-source
+export, access isolation, paid code-only handoff, lawful complete entry
+and stationary truthful continuity remain the separate supplied and
+priced services of WTF Assumption 1.5 and Convention 1.3. No archive
+or code reread, source copy, inverse port, selector, counter, phase,
+reset, clock, computed address or extra work/control register is added.
+
+**Theorem 17.2 (qualified native minimum and supplied PE8 lift).**
+Let an original preparer on all of Convention 17.1's domain have
+$H_P$ installed preparation states and both uniform caps
+$n+1,W+3$. If its particular projection of WTF Theorem 4.1
+belongs to $\mathfrak I$, with projected never-live count $u_P$,
+then
+
+$$
+H_P\ge G+4+r+u_P.
+\tag{SI.147}
+$$
+
+The minimum within this projection-qualified class is exactly
+$G+4+r$. For every $M\ge3$, Proposition 16.1's supplied complete
+PE8 graph has its full-fiber native lift with exactly $G+M+6+r$
+preparation states and both caps $n+1,W+3$, attained together
+on one actual source. Its particular projection has the same actual
+live histories as the consumer of Proposition 16.1, and belongs
+to $\mathfrak I$. The native table retains all installed rows.
+
+Proof. Reuse the exact simultaneous feasibility correspondence
+(SI.5) of WTF Theorem 4.1. Its particular projection retains reached
+selected states on the supplied actual cube, bypasses only the
+cube-constant chains, and fills unrealized edges without making
+them actual. It is complete and correct on every Boolean input,
+with $m\le H_P-4-r$ and both caps $n,W$ on each input.
+Theorem 15.2 applies by the displayed class hypothesis, giving
+$m\ge G+u_P$ and hence (SI.147). The $u_P$ here is solely
+the projected Boolean never-live count; it is not identified with
+a different native history index or a native unused-state count.
+
+The supplied grid belongs to $\mathfrak I$ by Corollary 15.4.
+Its supplied full-fiber lift has $G+4+r$ preparation states and
+both native caps. Its WTF projection is the original grid, proving
+the attained projection-class minimum. This does not establish
+membership for an arbitrary native competitor.
+
+For the explicit PE8 consumer, write $P_B$ for Proposition 16.1's
+Boolean table and $\widetilde P$ for its lift. Lift every
+coordinate-$i$ row, including unused retained rows, to its literal
+$a_i$. If its Boolean successors are $(\delta_0,\delta_1)$,
+install four successors
+
+$$
+(\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent})
+\longmapsto(\delta_0,\delta_0,\delta_1,\delta_0),
+\tag{SI.148}
+$$
+
+replacing $\mathsf0,\mathsf1$ by $L_0,L_1$. Add exactly two
+distinct profile rows, with sole native start $D$:
+
+| Native state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $L_1$ | $R_{0,0}$ | $T$ | $L_0$ |
+| $T$ | $RRR$ | $L_1$ | $L_0$ | $L_0$ | $L_0$ |
+
+Install all $r$ further mandated distinct latches. The two Boolean
+terminals have become the two original latches, not two additional
+states beyond them. Thus the running count $G+M+2$ gives
+$G+M+6+r$ preparation states. All installed states count even
+when unused; equal queried words do not identify different states.
+
+On every actual $Z_{b_3}$ source, $D$ returns beta. Its arbitrary
+finite branch image $x_a$ defines one static indicator vector.
+The all-address occurrence identity (WTF.10) makes every selected
+visit (SI.148) exactly its Boolean query on this same vector, including
+noncomb interiors and absent selected addresses. Consequently its
+actual complete preparation bills are exactly
+
+$$
+q_{\widetilde P}(u)=1+t_{P_B}(\theta(x_a)),\qquad
+\ell_{\widetilde P}(u)=3+J_{P_B}(\theta(x_a)).
+\tag{SI.149}
+$$
+
+Every repeat at $B_X,B_Y,J$ and every certified visit is included.
+The projection follows exactly those same selected histories; removing
+unused rows or filling unrealized edges changes none of them and hence
+none of their support families. It therefore lies in $\mathfrak I$.
+The Boolean all-input proof yields both native caps on each such source; it
+needs no independence assumption for arbitrary branch interiors.
+
+On the other ten profiles the front is exhaustive: alpha at $D$
+is $\Pi_3$ and returns one; branch at $D$ leads to $T$, whose
+alpha reply is $\Pi_4$ and returns one. The other profiles return
+zero and require zero. They cost at most two calls and six letters,
+dominated by $n+1,W+3$. All four successors, including unreachable
+absence edges at these profile roots, remain installed. Correctness
+and actual termination therefore hold on the entire original fiber,
+not just a cube promise.
+
+WTF Supplier 2.1 realizes the input $A^*$ of (SI.144) by an actual
+finite $u_{A^*}\in Z_{b_3}$ with the original repetitions and
+six-class disequalities. Its Boolean route pays $n,W$ together;
+(SI.149) gives $n+1,W+3$ together on that one source. The cube
+witnesses attainment and the projection; it does not restrict the
+upper's domain. On every source the latch is the prescribed
+$\widehat e_{\sigma_{A,k}(u)}$, and handoff enters literally the
+complete reader state in Convention 17.1. Its separate eight states
+and fresh bills return the entire original predecessor row.
+$\square$
+
+## 18. Mathematical dependence and the remaining internal-ambiguity problem
+
+**Convention 18.1 (mathematical dependencies).** Theorem 15.2's
+boundary-completion deduction uses the credited actual
+sibling law of Theorem 2.2, the diagonal mechanism of Theorem 4.1,
+PCA Theorem 35.1 and PE Lemma 4.1. Theorem 5.2 owns the exact
+incidence identity; PCA Theorem 26.1 owns the grid. PE Theorem 8.1
+owns the whole graph, its budgets, counts and simultaneous attainment.
+WTF Theorem 4.1 owns the projection, full-fiber lift and overhead;
+its Section 1 and the cited PCA/NBP suppliers own the complete
+source, pointwise code, profiles, entries and reader. Proposition 16.1
+adds their applicability to the weaker premise and its all-reblocking
+separation, without claiming those suppliers as new discoveries.
+
+The nonuniform Bollobás inequality used in Theorem 11.4 is the
+classical result stated in [O'Neill–Verstraëte, Theorem 1][OV].
+It needs every ordered cross intersection. [Scott–Wilmer, Theorem
+4.2 and Corollary 4.6][SW15] retain respectively both directed
+intersections or the specified skew size monotonicities. Weak
+intersection in [Király–Nagy–Pálvölgyi–Visontai, Definition 1.1][KN15]
+requires only one direction and permits larger abstract families.
+None supplies an unqualified actual-state capacity or a realization
+of an abstract family by this paid graph. Theorem 15.2 instead
+constructs actual representatives. Installed control, code length, exported alphabet,
+microsteps, elapsed time, acquisition and physical memory are
+distinct quantities under the stated service assumptions; the
+installed-state bounds imply no physical realization or total-cost law.
+
+**Definition 18.2 (the unrestricted residual obligation).** For
+arbitrary original graphs, without (SI.134), the collective target
+(SI.59), equivalently (SI.83) and [CL, (CL.34)][CL15], remains
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\mathrm{cut}}+u+
+\sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{SI.150}
+$$
+
+Theorem 15.2 proves $D\le E$ only in its displayed class.
+It gives no normalization into that class, no compensation of
+each late pool separately and no universal pointwise-capacity law.
+The alternative remains one complete correct strict-subgrid graph
+at both original caps. Equivalently [TC, Theorem 9.1][TC15]
+still needs installed shortage to force a nonnegative rational
+combination of actual length-$n$ suffix-excess rows of that same
+graph with a coordinatewise nonnegative, nonzero resultant.
+Its alternative and sparsity are supplied
+by TC Theorem 7.3; separately actual histories, zero-resultant
+combinations and shorter replays do not discharge this implication.
+Corollary 15.3 localizes a necessary ambiguity inside the two-live-reply
+rectangle but supplies no charge for its full successor domains.
+The unrestricted-budget $H_{\min}$ remains a separate open optimum.
+
+[IC15]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ATTAINABLE_WEIGHT_INTERVAL_COVER.md
+[TS15]: FIB_NATIVE_TERMINAL_SPAN_FIVE_STRICT_COMPENSATION.md
+[TC15]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_THRESHOLD_COST_CERTIFICATES.md
+[CL15]: RECURSIVE_RELATIONAL_OBSERVATION_COMMON_LIVE_CONES_AND_PRIVATE_DEMAND_CAPACITY.md
+[SW15]: https://people.maths.ox.ac.uk/scott/Papers/twofamilies.pdf
+[KN15]: https://doi.org/10.3233/FI-2012-695
+
+## 追加锚（本行以下为增补区）

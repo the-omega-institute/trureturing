@@ -122,6 +122,24 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     }
 
     [Fact]
+    public void ArchivedTheoryDocumentsHaveReaderOnlyCanonicalOwnership()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(RepositoryPolicyLoader.LoadRepository(root)).Policy;
+        var archive = Directory.GetFiles(Path.Combine(root, "docs/develop/archive/theory"));
+        Assert.Equal(10, archive.Length);
+        foreach (var file in archive)
+        {
+            var path = RepoPath.CreateKnown(Path.GetRelativePath(root, file).Replace('\\', '/'));
+            var entry = Assert.Single(policy.Manifest.Match(path.Value));
+            Assert.Equal(FileMapKind.Data, entry.Kind);
+            Assert.Equal(new[] { "reader" }, entry.ConsumedBy.ToArray());
+            Assert.False(policy.IsDigestionSource(path));
+            Assert.Null(RepositoryPathPolicy.Validate(path, policy));
+        }
+    }
+
+    [Fact]
     public void LibrarySplitBucketsAreClassifiedAsData()
     {
         var manifest = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());

@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: All twelve J2 ports lie in F2 and its same Hamilton cycle contains all six marked edges. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2MarkedPorts
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2CutLabels
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeF2NativeInventory

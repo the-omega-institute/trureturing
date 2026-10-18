@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4fe2109f74e8d72d6e4540ea1948690a8119c223c5caa7263b4067f803de505
+  normalized_sha256: sha256:f4fe2109f74e8d72d6e4540ea1948690a8119c223c5caa7263b4067f803de505
+cas_ref: sha256:f4fe2109f74e8d72d6e4540ea1948690a8119c223c5caa7263b4067f803de505
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的既有声明闭合本项。从同一实际联合律与独立乘积先验导出非对角 Sij=-Bij，未假设后验独立。Fintype.prod_sum 与 LinearMap.finrank_range_add_finrank_ker 给出重心及 rank ≤ m-1；Real.sq_sqrt 规范化正对角。Matrix.IsHermitian.spectral_theorem、Matrix.IsHermitian.trace_eq_sum_eigenvalues、Matrix.IsHermitian.rank_eq_card_non_zero_eigs、Matrix.trace_mul_cycle、Unitary.coe_star_mul_self 与 sq_sum_le_card_mul_sum_sq 使迹平方受秩与平方迹约束，扣除单位对角后得到全部有序 i≠j 项的源不等式。 本完整子句仓内无可用冻结 GID；仅使用纯上游结算路线，零新增 Lean 声明。
+    previous_atom_id: 1783667b4043c3d15c817b8ff17871293f96bb44bd99be2b119ba17304ed0728
+    next_atom_id: e7cd535b7bf244ac140df2869d8c29a814a501d76902df9b516a2c633736f876

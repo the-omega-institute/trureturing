@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Games/DivisorNimBoundSmall.refined_step`
 
 *Commentary.*
 
-Low-depth removals are bounded by B. Any higher-depth removal with nonzero value must change a unique minimum-depth heap. If its value exceeds B, counting its possible amounts in A bounds the current value by B plus the cardinality of A plus one.
+Low-depth removals are bounded by B. Any higher-depth removal with nonzero value must change a unique minimum-depth heap. If its value exceeds B, counting its possible amounts in A bounds the current value by B plus the cardinality of A plus one. For the generic zero pivot, let z be the unique depth-j heap, let every other heap have depth at least j+1, and let an odd number of the other heaps have depth exactly j+1. An actual legal removal from z leaving a positive depth-(j+1) remainder gives a zero follower: the new minimum count is the previous odd count plus one. Let E contain every legal removal amount d from z with depth(d) at least j. This count includes legal deletion; no positive-remainder restriction is imposed on E. The designated zero move belongs to E, so E is nonempty. Apply refined_step with the exceptional set E minus that designated amount. Every other high-depth pivot move is retained in this set, and the designated move is already bounded by B. If all lower-depth followers, across every selected heap, have value at most B, the bound is B plus the cardinality of E.
 
 **Theorem 1.2 (A paired minimum-depth remainder).**
 

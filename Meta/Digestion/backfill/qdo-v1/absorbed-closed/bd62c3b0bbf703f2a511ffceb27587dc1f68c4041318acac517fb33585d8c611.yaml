@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:bd62c3b0bbf703f2a511ffceb27587dc1f68c4041318acac517fb33585d8c611
-  normalized_sha256: sha256:bd62c3b0bbf703f2a511ffceb27587dc1f68c4041318acac517fb33585d8c611
-cas_ref: sha256:bd62c3b0bbf703f2a511ffceb27587dc1f68c4041318acac517fb33585d8c611
-coverage_gids:
-  - gid: D5/S3/Observer/Tomography/InnovationEnergyRecurrence.innovation_energy_recurrence
-    target_statement_id: sha256:2181937a5f6d7a81570ef5514cb0342185ce26b35456db2af40fa8dcc94be822
-receipts:
-  unresolved_subitems: []

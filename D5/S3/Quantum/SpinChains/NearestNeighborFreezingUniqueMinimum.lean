@@ -94,7 +94,7 @@ private theorem existence {N : ℕ} (hN : 3 ≤ N) :
       have hprod : ∏ i, |x i - x ((finRotate N) i)| ≤ (2 * ‖x‖) ^ N := by
         calc
           ∏ i, |x i - x ((finRotate N) i)| ≤ ∏ _i : Fin N, (2 * ‖x‖) := by
-            apply Finset.prod_le_prod
+            apply Finset.prod_le_prod₀
             · intro i hi; positivity
             · intro i hi
               calc

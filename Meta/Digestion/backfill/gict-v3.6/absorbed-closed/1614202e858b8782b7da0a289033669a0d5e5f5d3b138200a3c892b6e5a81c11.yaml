@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
-  normalized_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
-cas_ref: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
-coverage_gids:
-  - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
-    target_statement_id: sha256:735a861016365f26f28f0063689b6079ab4399735ba523f15a74c948737822b8
-receipts:
-  unresolved_subitems: []

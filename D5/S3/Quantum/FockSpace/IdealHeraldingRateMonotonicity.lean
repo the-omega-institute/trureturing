@@ -6,12 +6,14 @@
    utility: none
    digest: The ideal heralding rate strictly decreases from n = 5 to one quarter. -/
 
+import Batteries.Tactic.OpenPrivate
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.NumberTheory.Transcendental.Lindemann.AnalyticalPart
 
 open scoped Topology
 open MeasureTheory
+open private LindemannWeierstrass.integral_exp_mul_eval from Mathlib.NumberTheory.Transcendental.Lindemann.AnalyticalPart
 
 namespace D5.S3.Quantum.FockSpace.IdealHeraldingRateMonotonicity
 

@@ -138,6 +138,7 @@ private def ruleBound : Bool :=
 
 private theorem ruleBound_eq : ruleBound = true := by decide +kernel
 
+set_option maxHeartbeats 2000000 in
 theorem result : ¬ claim := by
   intro h
   -- the kernel-checked facts, read off the four row checks and the bound check

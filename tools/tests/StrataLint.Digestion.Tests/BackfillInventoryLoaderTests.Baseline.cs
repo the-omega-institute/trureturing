@@ -11,7 +11,7 @@ public sealed partial class BackfillInventoryLoaderTests
         var (closedPath, closedText) = Atom("delta-v0.1", "absorbed-closed", "delta-atom", "theorem/delta");
 
         var document = BackfillInventoryLoader.Load(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "pzg-v1"),
+            Source("delta-v0.1", "docs/delta.md", "generic-v1"),
             (openPath, openText),
             (closedPath, closedText)));
 

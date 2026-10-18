@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
-  normalized_sha256: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
-cas_ref: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
-coverage_gids:
-  - gid: D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package
-    target_statement_id: sha256:b6de95b778f368e80f476378436d5e85f3ba5c8a1ed0265e27114c0ab5e7dc2f
-receipts:
-  unresolved_subitems: []

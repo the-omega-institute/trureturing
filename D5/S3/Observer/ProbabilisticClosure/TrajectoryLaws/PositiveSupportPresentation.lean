@@ -137,7 +137,7 @@ theorem include_cylinders (θ : Presentation H)
     HasOriginalCylinders (J.map (includePath θ)) θ := by
   classical
   have hm : Measurable (includePath θ) := by
-    exact (measurable_pi_lambda _ fun t => measurable_subtype_coe.comp
+    exact (Measurable.of_eval fun t => measurable_subtype_coe.comp
       ((measurable_pi_apply t).comp measurable_fst)).prodMk measurable_snd
   intro t n h w
   have hmeas : MeasurableSet (MarkedPredictiveQuotient.cylinder t n h w) := by

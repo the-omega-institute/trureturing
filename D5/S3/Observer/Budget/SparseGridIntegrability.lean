@@ -296,7 +296,7 @@ private lemma allLaw_implies_linear (S : Grid) (h : AllLaw.{u} S) : LinearBound 
   let μ := atomicLaw t
   letI : IsProbabilityMeasure μ := atomic_probability t ht
   let ν := Measure.map (ULift.up : ℕ → ULift.{u} ℕ) μ
-  letI : IsProbabilityMeasure ν := Measure.isProbabilityMeasure_map measurable_up.aemeasurable
+  letI : IsProbabilityMeasure ν := inferInstance
   let T : ULift.{u} ℕ → ℕ := fun x => max x.down 1
   have hT : Measurable T := (measurable_of_countable (fun n : ℕ => max n 1)).comp measurable_down
   have hcongr : (fun n : ℕ => ((max n 1 : ℕ) : ℝ)) =ᵐ[μ] (fun n => (n : ℝ)) := by
@@ -636,7 +636,8 @@ theorem common_law_prefix_witness (S : Grid) (h : ratio S = ∞) :
     rw [first_zero_levels, if_neg (by omega)]
     simp
   · letI := atomic_probability t ht
-    exact Measure.isProbabilityMeasure_map (measurable_depthPath zero one).aemeasurable
+    change IsProbabilityMeasure (Measure.map (depthPath zero one) (atomicLaw t))
+    exact inferInstance
   · exact (prefix_moments S zero one hne t ht).2.trans hinfinite
 
 #print axioms sparse_grid_integrability

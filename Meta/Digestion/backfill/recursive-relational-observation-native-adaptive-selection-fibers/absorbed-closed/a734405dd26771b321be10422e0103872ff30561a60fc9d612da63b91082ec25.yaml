@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a734405dd26771b321be10422e0103872ff30561a60fc9d612da63b91082ec25
+  normalized_sha256: sha256:a734405dd26771b321be10422e0103872ff30561a60fc9d612da63b91082ec25
+cas_ref: sha256:a734405dd26771b321be10422e0103872ff30561a60fc9d612da63b91082ec25
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Acquisition/NativeSelectedRAEffective.selected_producer_contract
+    target_statement_id: sha256:0e2a37776f66de66fc131da70701bbdc01b03b8eb8aa0b852bb11b085ce0576c
+receipts:
+  unresolved_subitems: []

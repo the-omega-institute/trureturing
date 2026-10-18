@@ -5,24 +5,6 @@ namespace StrataLint.TestSupport;
 
 internal static class DigestionTestSupport
 {
-    private static readonly Lazy<TheoryAtomizerRules> CanonicalRules = new(() =>
-    {
-        return TheoryAtomizerDataLoader.Load(Snapshot((
-            TheoryAtomizerDataLoader.DataPath,
-            File.ReadAllBytes(Path.Combine(
-                TestRepositoryLayout.FindRoot(),
-                "Meta/Digestion/atomizers.toml")))));
-    });
-
-    internal static TheoryAtomizerRules Rules => CanonicalRules.Value;
-
-    internal static byte[] RulesBytes
-    {
-        get => File.ReadAllBytes(Path.Combine(
-            TestRepositoryLayout.FindRoot(),
-            "Meta/Digestion/atomizers.toml"));
-    }
-
     internal static BackfillInventoryDocument EmptyDocument(string atomizerId) =>
         Document(atomizerId, []);
 
@@ -79,22 +61,33 @@ internal static class DigestionTestSupport
         '\n',
         value.Split('\n').Select(line => new string(' ', spaces) + line));
 
+    // Synthetic repositories declare their input policy explicitly, just as production does.
+    internal static RawRepositorySnapshot WithSourcePolicy(RawRepositorySnapshot raw,
+        IEnumerable<string>? sourcePatterns = null)
+    {
+        if (raw.Entries.Any(entry => entry.Path == FileMapLoader.RelativePath)) return raw;
+        var files = (sourcePatterns ?? raw.Entries
+                .Where(entry => !entry.Path.StartsWith("Meta/", StringComparison.Ordinal))
+                .Select(entry => entry.Path)).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)
+            .Select(path => "{ pattern = " + System.Text.Json.JsonSerializer.Serialize(path)
+                + ", kind = \"data\", admission_plane = \"content\", produced_by = \"none\", consumed_by = [\"reader\"], "
+                + "verified_by = [\"SnapshotDecoder\"], artifact_id = \"none\", runtime_disposition = \"committed-source\", digestion_source = true }");
+        var policy = "schema_version = 6\nfiles = [\n" + string.Join(",\n", files)
+            + "\n]\n[evidence.artifact_kinds.md]\nprofile = \"opaque-text\"\nselectors = [\"result\"]\npath_selectors = [\"formal\"]\n[residence_policy]\ncase_id = \"TEST\"\ndesired = \"data-must-live-outside-tools\"\nknown_violation_count = 0\nstatus = \"closed\"\n";
+        return RawRepositorySnapshot.Create(raw.Entries.Add(RawRepositoryEntry.FromText(
+            FileMapLoader.RelativePath, policy)), raw.PathInventory);
+    }
+
     internal static RepositorySnapshot Snapshot(params (string Path, byte[] Bytes)[] files)
     {
         var materialized = files.ToList();
         if (materialized.All(static file => file.Path != EngineeringRegistrationFixture.Path))
             materialized.Add((EngineeringRegistrationFixture.Path,
                 System.Text.Encoding.UTF8.GetBytes(EngineeringRegistrationFixture.Manifest())));
-        if (materialized.All(static file => file.Path != TheoryAtomizerDataLoader.DataPath))
-        {
-            materialized.Add((
-                TheoryAtomizerDataLoader.DataPath,
-                RulesBytes));
-        }
         var raw = RawRepositorySnapshot.Create(materialized.Select(file => new RawRepositoryEntry(
             file.Path,
             ImmutableArray.CreateRange(file.Bytes))));
-        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
     }
 
     internal static RepositorySnapshot Snapshot(

@@ -215,7 +215,7 @@ theorem finite_support_posterior_moment {M q s : ℕ} {r : ℝ}
         rw [hFnext U B j hj hjB hBU' k hBk hn, prod_insert hjB]
         apply mul_le_mul_of_nonneg_left _ (hFnonneg U {j} (k + 1))
         apply (ih (U.erase j) k (subset_erase.mpr ⟨hBU', hjB⟩) hchild).trans
-        apply prod_le_prod
+        apply prod_le_prod₀
         · intro i _; exact hFnonneg _ _ _
         · intro i hi
           exact hFdecrease U i j (hBU' hi) hj (by intro h; exact hjB (h ▸ hi)) k hn
