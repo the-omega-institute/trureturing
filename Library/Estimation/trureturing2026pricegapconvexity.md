@@ -10733,3 +10733,106 @@ CE1 must not be substituted for a bound on that test. The original
 compensated $G_a$, DR baseline/exterior account and its strict upper
 obligation retain their stated scopes. No favorable cofinal sequence,
 all-integer Robin inequality or RH proof is supplied.
+
+
+## The proper-power pairing and stock boundary have a vanishing joint remainder
+
+Reuse CE1--CE6 on their entire original conditional RH-failure source:
+every original full window and active tie, every originally fixed
+$1-\Theta<\eta<1/2$, including $\Theta=1$, and the complete future
+$\mathsf H=s\int_x^\infty Ek$. Keep the original positive compensation
+parameter unchanged. The estimate below is a `repo-derived` application
+of the already used finite Stieltjes identity to the actual stock error;
+it asserts no new generic theorem, literature priority or Lean verification.
+
+### Keep the same stock and the same proper-power endpoint atoms
+
+Use exactly CE2's representative $D_X^*=\bigcup_j(r_j,z_j]$. By
+PG1 and PG9, $K$ is constant on every closed positive-length component,
+including its actual trace endpoints. On each such component put
+
+$$
+Q=K-\psi,\qquad \tau(x)=x-K(x),\qquad
+B_Q=\sum_j[Q\mathsf H]_{r_j}^{z_j},\qquad
+B_\tau=\sum_j[\tau\mathsf H]_{r_j}^{z_j}.
+$$
+
+At each actual trace endpoint, $\tau$ is the original real source
+parameter. In particular no endpoint value is replaced by a free clock
+or an independently selected trace. The same $C_D^{\rm pp}$ from CE2
+retains all proper-prime-power atoms in this explicit half-open set.
+
+On each component $Q$ is right-continuous and locally of bounded
+variation, with $dQ=-d\psi$. Since $\mathsf H$ is continuous and locally
+absolutely continuous, finite Stieltjes integration by parts and CE1 give
+
+$$
+\begin{aligned}
+B_Q
+&=\int_{D_X^*}\mathsf H\,dQ+
+  \int_{D_X}Q\mathsf H'\,dx\\
+&=-C_D^{\rm pp}+\int_{D_X}Q\mathsf H'\,dx.
+\end{aligned}
+$$
+
+Thus the exact joint identity, with the same endpoints on both sides, is
+
+$$
+\boxed{B_Q+C_D^{\rm pp}=\int_{D_X}Q\mathsf H'\,dx,
+\qquad B_D=B_\tau+B_Q.}
+\tag{SB1}
+$$
+
+### The original stock error controls this joint component
+
+The complete future derivative is
+$\mathsf H'=(s'/s)\mathsf H-skE$ almost everywhere. Reuse CE4's
+$Q(x)=O(\sqrt x)$, $E(A(t))=t+Q(A(t))$, $A/B\to1$ and
+$sk\ll x^{-3/2}$. For almost every $x=A(t)\in D_X$ these give
+
+$$
+|Q\mathsf H'|(A(t))
+\ll\frac{|\mathsf H(A(t))|}{\sqrt{B(t)}}
+   +\frac{t}{B(t)}+\frac1{\sqrt{B(t)}}.
+$$
+
+Use the same $b_X$, $\rho_X$ and
+$\epsilon_X^{\rm en}=\rho_X+b_X^{-1/2}\to0$ as CE3--CE5.
+The exact pushforward $A_\#dt=\mathbf1_{D_X}dx$ and the existing
+bounds $\int_{D_X}|\mathsf H|dx\sim S_H$ and
+$L_X\ll S_H/M_X$ now yield
+
+$$
+\boxed{\begin{aligned}
+|B_Q+C_D^{\rm pp}|
+&\ll b_X^{-1/2}S_H+\epsilon_X^{\rm en}L_X\\
+&\ll\left(b_X^{-1/2}+
+       \frac{\epsilon_X^{\rm en}}{M_X}\right)S_H=o(S_H).
+\end{aligned}}
+\tag{SB2}
+$$
+
+This is a bound on the previously retained proper-power and stock-boundary
+combination. Neither term is separately bounded or assigned a sign.
+Every proper-power endpoint atom and the infinite future of every
+$\mathsf H$ remain. No bound on $S_H/(M_XL_X)$ is imposed.
+
+Combining SB1--SB2 with CE2 and CE5 gives the consequence
+
+$$
+\boxed{\begin{aligned}
+|\mathcal I_X^H-B_\tau|
+&\ll\left(\epsilon_X^{\rm en}+b_X^{-1/2}+
+       \frac{\epsilon_X^{\rm en}}{M_X}\right)S_H=o(S_H),\\
+\frac{B_\tau}{\mathcal I_X^H}&\longrightarrow1.
+\end{aligned}}
+\tag{SB3}
+$$
+
+SB2 supplies the quantitative joint remainder; SB3 is its consequence,
+not an independent signed upper estimate or a new criterion. The actual
+lag boundary $B_\tau$ still requires a strict signed upper on the
+original qualifying source. These errors are relative to $S_H$, not
+absolute $o(M_XL_X)$. The original nonlocal FH first-prime test remains
+unpaid. No favorable cofinal sequence, equality with compensated $G_a$,
+strict all-integer Robin inequality or RH proof is supplied.
