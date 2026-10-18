@@ -22,6 +22,10 @@ $$\forall N \in \mathbb{N},\; \forall d \in \mathbb{N},\; 1 \le N \Rightarrow \l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/QuditPartialEstimationTradeoff.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mista-fiurasek-2006-qudit-partial-estimation` (proved) by `D5/S3/Quantum/Measurement/QuditPartialEstimationTradeoff.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mista-fiurasek-2006-qudit-partial-estimation","declaration_gid":"D5/S3/Quantum/Measurement/QuditPartialEstimationTradeoff.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ladislav Mišta Jr., Jaromír Fiurášek (2006). *Optimal partial estimation of quantum states from several copies*. DOI: [10.1103/PhysRevA.74.022316](https://doi.org/10.1103/PhysRevA.74.022316). URL: <https://arxiv.org/abs/quant-ph/0606112>.
