@@ -68,19 +68,102 @@ private theorem ground_nearest (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (v : ℤ × ℤ) :
       · refine ⟨v.1, by omega, hxl, ?_⟩
         unfold ground
         simp only [ite_eq_right hx, ite_eq_left hxl, sub_self, abs_zero, zero_add]
-        congr 1 <;> omega
+        congr 1
+        omega
       · refine ⟨(ℓ : ℤ) - 1, by omega, by omega, ?_⟩
         unfold ground
         simp only [ite_eq_right hx, ite_eq_right hxl]
         conv_lhs => rw [add_comm]
         congr 2 <;> omega
 
+private theorem edge_difference (h : ℤ × ℤ → ℤ)
+    (hh : ∀ v, |h v - h (v.1 + 1, v.2)| = 1 ∧
+      |h v - h (v.1, v.2 + 1)| = 1) (u v : ℤ × ℤ) (huv : Adjacent u v) :
+    |h u - h v| = 1 := by
+  rcases u with ⟨x, y⟩
+  rcases v with ⟨z, w⟩
+  have hc : (z = x + 1 ∧ w = y) ∨ (x = z + 1 ∧ y = w) ∨
+      (z = x ∧ w = y + 1) ∨ (x = z ∧ y = w + 1) := by
+    unfold Adjacent at huv
+    dsimp only at huv
+    simp only [abs_eq_max_neg] at huv
+    omega
+  rcases hc with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
+  · exact (hh (x, w)).1
+  · simpa only [abs_sub_comm] using (hh (z, y)).1
+  · exact (hh (z, y)).2
+  · simpa only [abs_sub_comm] using (hh (x, w)).2
+
+private theorem ground_edge (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (u v : ℤ × ℤ)
+    (huv : Adjacent u v) : |ground ℓ u - ground ℓ v| = 1 := by
+  rcases ground_nearest ℓ hℓ u with ⟨hu, i, hi, hil, hui⟩
+  rcases ground_nearest ℓ hℓ v with ⟨hv, j, hj, hjl, hvj⟩
+  have dist_step (a b c : ℤ) : |a - c| ≤ |b - c| + |a - b| := by
+    simpa only [add_comm] using abs_sub_le a b c
+  have add_step (a b c : ℤ) : |a + c| ≤ |b + c| + |a - b| := by
+    simpa only [sub_neg_eq_add] using dist_step a b (-c)
+  have h1 := hu j hj hjl
+  have h2 := hv i hi hil
+  have h3 := dist_step u.1 v.1 j
+  have h4 := add_step u.2 v.2 j
+  have h5 := dist_step v.1 u.1 i
+  have h6 := add_step v.2 u.2 i
+  have pu : ground ℓ u % 2 = (u.1 + u.2) % 2 := by
+    rw [hui]
+    simp only [abs_eq_max_neg]
+    omega
+  have pv : ground ℓ v % 2 = (v.1 + v.2) % 2 := by
+    rw [hvj]
+    simp only [abs_eq_max_neg]
+    omega
+  unfold Adjacent at huv
+  rw [abs_sub_comm v.1 u.1] at h5
+  rw [abs_sub_comm v.2 u.2] at h6
+  have hb : ground ℓ u ≤ ground ℓ v + 1 ∧ ground ℓ v ≤ ground ℓ u + 1 := by
+    omega
+  clear hu hv h1 h2 h3 h4 h5 h6 hui hvj
+  simp only [abs_eq_max_neg] at huv ⊢
+  omega
+
 private theorem ground_edges (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (v : ℤ × ℤ) :
     |ground ℓ v - ground ℓ (v.1 + 1, v.2)| = 1 ∧
     |ground ℓ v - ground ℓ (v.1, v.2 + 1)| = 1 := by
-  unfold ground
-  dsimp only
-  split_ifs <;> simp only [abs_eq_max_neg] <;> omega
+  constructor <;> apply ground_edge ℓ hℓ <;>
+    unfold Adjacent <;> dsimp only <;> simp only [abs_eq_max_neg] <;> omega
+
+private theorem height_even (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (h : ℤ × ℤ → ℤ)
+    (hh : IsHeight ℓ h) (v : ℤ × ℤ) : (h v - ground ℓ v) % 2 = 0 := by
+  obtain ⟨b, hb⟩ := (hh.1.image Prod.fst).exists_notMem
+  have hb0 : h (b, v.2) = ground ℓ (b, v.2) := by
+    by_contra hn
+    exact hb ⟨(b, v.2), hn, rfl⟩
+  have step (x : ℤ) :
+      (h (x + 1, v.2) - ground ℓ (x + 1, v.2)) % 2 =
+        (h (x, v.2) - ground ℓ (x, v.2)) % 2 := by
+    have ha := (hh.2.2 (x, v.2)).1
+    have hg := (ground_edges ℓ hℓ (x, v.2)).1
+    simp only [abs_eq_max_neg] at ha hg
+    omega
+  have all (x : ℤ) :
+      (h (b + x, v.2) - ground ℓ (b + x, v.2)) % 2 = 0 := by
+    induction x using Int.induction_on with
+    | zero => simp only [add_zero, hb0, sub_self, Int.zero_emod]
+    | succ n ih =>
+      have hs := step (b + n)
+      have he : b + (↑n + 1) = b + ↑n + 1 := by omega
+      rw [he]
+      omega
+    | pred n ih =>
+      have hs := step (b + (-↑n - 1))
+      have he : b + (-↑n - 1) + 1 = b + -↑n := by omega
+      rw [he] at hs
+      omega
+  have hf := all (v.1 - b)
+  have he : b + (v.1 - b) = v.1 := by omega
+  rwa [he] at hf
+
+private def IsDownset (ℓ : ℕ) (I : Finset (ℤ × ℤ)) : Prop :=
+  ∀ u v, Adjacent u v → ground ℓ u + 1 = ground ℓ v → v ∈ I → u ∈ I
 
 theorem result : claim := by
   sorry
