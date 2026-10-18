@@ -1,0 +1,107 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/Frontier/Cuts/Part000/PreparedEJMCompleteFrontierResponses002
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/Frontier/Cuts/Part000/PreparedEJMCompleteFrontierResponses002
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; premises=D5/S3/Quantum/Entanglement/EJM/Frontier/Cuts/Part000/PreparedEJMCompleteFrontierResponses002.tableChunk002_responses
+   digest: Every literal leaf of this original table subtree receives its own canonical bad-event response. -/
+
+/- Generated prepared source. Not compiled or kernel accepted.
+All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Cuts.Part000.PreparedEJMCompleteFrontierData002
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw000
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw001
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw003
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw006
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw007
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw008
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw009
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw014
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw015
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw016
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw021
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw025
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw029
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw030
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw031
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw032
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw033
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw035
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw039
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw041
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw042
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw043
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw044
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw045
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw049
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw050
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw052
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw057
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw061
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw065
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw070
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw075
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw077
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw081
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw084
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw087
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw091
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part000.PreparedEJMCompleteFrontierRaw095
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw099
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw102
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw106
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw110
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw114
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw118
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw121
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw125
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw129
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw133
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw134
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw135
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw137
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw138
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw140
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw143
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw146
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw151
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw154
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw158
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw159
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw162
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw163
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw166
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw169
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw172
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw176
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw178
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw181
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw183
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw186
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part001.PreparedEJMCompleteFrontierRaw189
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw192
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw194
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw197
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw198
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw199
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw200
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw203
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw205
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw206
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw209
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw211
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw214
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw216
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part002.PreparedEJMCompleteFrontierRaw219
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw411
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw412
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxHeartbeats 100000000
+set_option maxRecDepth 65536
+namespace D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
+open D5.S0.Certificates
+open EJMOriginalReplayAssembly (coordinate prefixCache prefixPartial)
+theorem tableChunk002_responses : tableChunk002.Responses :=
+  ⟨⟨⟨⟨⟨⟨⟨⟨response_cut_52637, response_cut_52638⟩, ⟨response_cut_52647, response_cut_52648⟩⟩, ⟨⟨response_cut_52649, response_cut_52650⟩, ⟨response_cut_52651, response_cut_52652⟩⟩⟩, ⟨⟨⟨response_cut_52653, response_cut_52654⟩, ⟨response_cut_52655, response_cut_52656⟩⟩, ⟨⟨response_cut_52658, response_cut_52663⟩, ⟨response_cut_52664, response_cut_52665⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_52670, response_cut_52671⟩, ⟨response_cut_52672, response_cut_52677⟩⟩, ⟨⟨response_cut_52678, response_cut_52680⟩, ⟨response_cut_52685, response_cut_52686⟩⟩⟩, ⟨⟨⟨response_cut_52688, response_cut_52693⟩, ⟨response_cut_52694, response_cut_52701⟩⟩, ⟨⟨response_cut_52702, response_cut_52703⟩, ⟨response_cut_52709, response_cut_52710⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_52711, response_cut_52717⟩, ⟨response_cut_52718, response_cut_52719⟩⟩, ⟨⟨response_cut_52724, response_cut_52725⟩, ⟨response_cut_52726, response_cut_52732⟩⟩⟩, ⟨⟨⟨response_cut_52733, response_cut_52734⟩, ⟨response_cut_52739, response_cut_52740⟩⟩, ⟨⟨response_cut_52741, response_cut_52742⟩, ⟨response_cut_52743, response_cut_52744⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_52745, response_cut_52747⟩, ⟨response_cut_52748, response_cut_52749⟩⟩, ⟨⟨response_cut_52750, response_cut_52753⟩, ⟨response_cut_52754, response_cut_52755⟩⟩⟩, ⟨⟨⟨response_cut_52756, response_cut_52757⟩, ⟨response_cut_52758, response_cut_52759⟩⟩, ⟨⟨response_cut_52760, response_cut_52761⟩, ⟨response_cut_52762, response_cut_52763⟩⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨⟨response_cut_52764, response_cut_52765⟩, ⟨response_cut_52766, response_cut_52767⟩⟩, ⟨⟨response_cut_52768, response_cut_52773⟩, ⟨response_cut_52774, response_cut_52775⟩⟩⟩, ⟨⟨⟨response_cut_52777, response_cut_52778⟩, ⟨response_cut_52779, response_cut_52780⟩⟩, ⟨⟨response_cut_52781, response_cut_52782⟩, ⟨response_cut_52783, response_cut_52784⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_52785, response_cut_52786⟩, ⟨response_cut_52787, response_cut_52788⟩⟩, ⟨⟨response_cut_52789, response_cut_52790⟩, ⟨response_cut_52791, response_cut_52792⟩⟩⟩, ⟨⟨⟨response_cut_52793, response_cut_52794⟩, ⟨response_cut_52795, response_cut_52796⟩⟩, ⟨⟨response_cut_52801, response_cut_52802⟩, ⟨response_cut_52803, response_cut_52806⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_52807, response_cut_52808⟩, ⟨response_cut_52809, response_cut_52824⟩⟩, ⟨⟨response_cut_52825, response_cut_52826⟩, ⟨response_cut_52827, response_cut_52830⟩⟩⟩, ⟨⟨⟨response_cut_52831, response_cut_52832⟩, ⟨response_cut_52833, response_cut_00032⟩⟩, ⟨⟨response_cut_00033, response_cut_00034⟩, ⟨response_cut_00039, response_cut_00040⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_00208, response_cut_00209⟩, ⟨response_cut_00248, response_cut_00249⟩⟩, ⟨⟨response_cut_00250, response_cut_00255⟩, ⟨response_cut_00389, response_cut_00456⟩⟩⟩, ⟨⟨⟨response_cut_00483, response_cut_00484⟩, ⟨response_cut_00839, response_cut_00840⟩⟩, ⟨⟨response_cut_00904, response_cut_00971⟩, ⟨response_cut_00998, response_cut_00999⟩⟩⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨⟨⟨response_cut_01148, response_cut_01266⟩, ⟨response_cut_01911, response_cut_02031⟩⟩, ⟨⟨response_cut_02101, response_cut_02128⟩, ⟨response_cut_02129, response_cut_02809⟩⟩⟩, ⟨⟨⟨response_cut_03259, response_cut_03260⟩, ⟨response_cut_03815, response_cut_03816⟩⟩, ⟨⟨response_cut_03828, response_cut_03960⟩, ⟨response_cut_03961, response_cut_03985⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_03986, response_cut_03987⟩, ⟨response_cut_03995, response_cut_04217⟩⟩, ⟨⟨response_cut_04275, response_cut_04276⟩, ⟨response_cut_04516, response_cut_05092⟩⟩⟩, ⟨⟨⟨response_cut_05317, response_cut_05378⟩, ⟨response_cut_05383, response_cut_05471⟩⟩, ⟨⟨response_cut_05550, response_cut_05712⟩, ⟨response_cut_05785, response_cut_06291⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_06292, response_cut_06420⟩, ⟨response_cut_06511, response_cut_06682⟩⟩, ⟨⟨response_cut_06758, response_cut_07319⟩, ⟨response_cut_07870, response_cut_08423⟩⟩⟩, ⟨⟨⟨response_cut_09012, response_cut_09601⟩, ⟨response_cut_09936, response_cut_10396⟩⟩, ⟨⟨response_cut_10813, response_cut_10814⟩, ⟨response_cut_11256, response_cut_11719⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_12230, response_cut_12708⟩, ⟨response_cut_13180, response_cut_13643⟩⟩, ⟨⟨response_cut_14148, response_cut_14623⟩, ⟨response_cut_15122, response_cut_15603⟩⟩⟩, ⟨⟨⟨response_cut_16126, response_cut_16594⟩, ⟨response_cut_16595, response_cut_17105⟩⟩, ⟨⟨response_cut_17106, response_cut_17177⟩, ⟨response_cut_17178, response_cut_17208⟩⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨⟨response_cut_17209, response_cut_17210⟩, ⟨response_cut_17215, response_cut_17340⟩⟩, ⟨⟨response_cut_17341, response_cut_17377⟩, ⟨response_cut_17378, response_cut_17379⟩⟩⟩, ⟨⟨⟨response_cut_17384, response_cut_17546⟩, ⟨response_cut_17592, response_cut_17593⟩⟩, ⟨⟨response_cut_17712, response_cut_17764⟩, ⟨response_cut_17935, response_cut_17972⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_17983, response_cut_17984⟩, ⟨response_cut_17985, response_cut_18386⟩⟩, ⟨⟨response_cut_18793, response_cut_19364⟩, ⟨response_cut_19827, response_cut_20236⟩⟩⟩, ⟨⟨⟨response_cut_20332, response_cut_20375⟩, ⟨response_cut_20380, response_cut_20761⟩⟩, ⟨⟨response_cut_20899, response_cut_20945⟩, ⟨response_cut_20950, response_cut_21325⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_21713, response_cut_22122⟩, ⟨response_cut_22531, response_cut_22841⟩⟩, ⟨⟨response_cut_23202, response_cut_23529⟩, ⟨response_cut_23530, response_cut_23906⟩⟩⟩, ⟨⟨⟨response_cut_24228, response_cut_24595⟩, ⟨response_cut_24953, response_cut_25310⟩⟩, ⟨⟨response_cut_25311, response_cut_25390⟩, ⟨response_cut_25391, response_cut_25415⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_25416, response_cut_25417⟩, ⟨response_cut_25422, response_cut_25564⟩⟩, ⟨⟨response_cut_25601, response_cut_25602⟩, ⟨response_cut_26012, response_cut_26367⟩⟩⟩, ⟨⟨⟨response_cut_26368, response_cut_26773⟩, ⟨response_cut_26774, response_cut_27128⟩⟩, ⟨⟨response_cut_27441, response_cut_27774⟩, ⟨response_cut_27775, response_cut_28141⟩⟩⟩⟩⟩⟩⟩⟩
+end D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
