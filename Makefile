@@ -190,3 +190,16 @@ compiled-judge-test:
 
 compiled-fib-test:
 	@/bin/bash tools/scripts/compiled-fib-test.sh
+
+.PHONY: search-reduction search-reduction-test
+# Requests are Lean commands; the shell only transports compiler invocations.
+search-reduction:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands $(SEARCH_MODULES)"
+	@test -f "$$SEARCH_REDUCTION_REQUESTS" || { echo 'REQUESTS must name a Lean declaration list' >&2; exit 2; }
+	@lake -d tools/lean-inspector-reg env lean -j1 "$$SEARCH_REDUCTION_REQUESTS"
+search-reduction: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
+
+search-reduction-test:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.Calibration"
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.Faults"
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.RealNegative"
