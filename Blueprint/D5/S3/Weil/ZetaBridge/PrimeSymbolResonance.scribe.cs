@@ -206,7 +206,7 @@ internal sealed class PrimeSymbolResonanceDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create("D5/S3/Weil/ZetaBridge/PrimeSymbolResonance.prime_symbol_mean_lower_bound"),
                     H("The exact universal positive mean bound"),
                     StatementSource.FromAuthor(Disp(Seq(
-                        D(3), Leq, c, Rightarrow,
+                        D(3), Leq, Sp, c, Rightarrow,
                         Call("div", Call("square", Call("log", D(2))), D(4)),
                         Leq, Call("mean", c)))),
                     AssessedProvenance.FromRepo(),

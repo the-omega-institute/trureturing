@@ -517,16 +517,16 @@ noncomputable def registration_8 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
   familyRecord := none
   options := #[] }
 
-/- SOURCE_ONLY_UNCOMPILED. Add the two opens below to the original Full Reg
-header; splice the declarations before its final end (input07), retaining its normSignature/normActual/normRejected,
-normDependence and one_not_summable. Its Contract.Registration and enrolled
-Reg.Support.DependentFamily imports (input09) remain required. The two readout
-paths below are raw-Expr CANDIDATES: neither compiled source reconstruction nor
-multi-occurrence selection/enrollment acceptance has been measured. -/
+/- Paired lower-tail registration over the original complete theorem telescope.
+The sole selected source occurrence is the positive-column norm function operand
+in Summable. All lower-bound norms, moments, lets and cutoffs stay actual.
+Source-role reconstruction, registration and native checks for this repair remain
+caller-owned and pending. -/
 
 
-/-- One selected norm function, used at the positive column in both energies.
-All negative norms, moments, lets and cutoff operands stay actual. -/
+/-- One selected positive-column norm occurrence in Summable.
+All other norms, including both lower-bound norms, stay actual, as do all
+moments, lets and cutoff operands. -/
 def paired_coupling_column_tail_lower_arena : Arena where
   signature := normSignature
   Law r := ∀ {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M)
@@ -547,7 +547,7 @@ def paired_coupling_column_tail_lower_arena : Arena where
       r.readout () () (couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)) ^ 2 +
         ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2) ∧
     q / (4 * Real.pi ^ 2 * ((M : ℝ) + 1)) ≤
-      ∑' j : ℕ, (r.readout () () (couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)) ^ 2 +
+      ∑' j : ℕ, (‖couplingColumn c S v ((M + j + 1 : ℕ) : ℤ)‖ ^ 2 +
         ‖couplingColumn c S v (-((M + j + 1 : ℕ) : ℤ))‖ ^ 2)
 
 private theorem paired_coupling_column_tail_lower_actual_law :
@@ -616,10 +616,10 @@ def paired_coupling_column_tail_lower_family :
   dependence := normDependence
 
 /- 9 original binders + 5 let bodies + 5 cutoff arrows precede the conjunction.
-The candidate selections are the Norm.norm function operands, not norm-square
-wrappers. Both occurrence paths must reconstruct the entire theorem type with
-one shared realization; validation must establish that the API supports this.
-No declared_validated/source-binding result is claimed by these strings. -/
+The single path selects the positive-column Norm.norm function operand in
+Summable. The lower-bound tsum retains both actual norms. Unit supplies one role
+for this one readout. Source-role reconstruction, registration and native checks
+for this repair remain caller-owned and pending. -/
 noncomputable def registration_9 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@paired_coupling_column_tail_lower) (type_of% normActual) Type Unit := {
   unitName := `Reg.D5.S3.Weil.ZetaBridge.ActualFullSymbolTail.paired_coupling_column_tail_lower.__information_unit
@@ -644,12 +644,6 @@ noncomputable def registration_9 : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
-      stateBinder := 0,
-      functionOperand := true,
-      stateOperand := none,
-      booleanPredicate := false
-    }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg", "fn"],
       stateBinder := 0,
       functionOperand := true,
       stateOperand := none,
