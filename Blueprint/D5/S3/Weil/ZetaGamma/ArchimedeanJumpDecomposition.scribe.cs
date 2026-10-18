@@ -47,6 +47,30 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
                             + "public conjunct records positivity of the independently constructed "
                             + "continuous jump energy."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("form-core-owner-archimedeanjumpdensity-nonneg"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedeanJumpDensity_nonneg"),
+                H("archimedeanJumpDensity nonneg"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For x>0 the actual Gamma density is nonnegative. The proof is an accessor to the unchanged owner proof and is consumed by both actual spectral-weight evaluations. SOURCE_ONLY_UNCOMPILED. This append-only API exposure adds no independent result. The existing owner declarations and proof bodies are preserved."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("form-core-owner-levy-integral-eq-digamma"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma"),
+                H("levy integral eq digamma"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real t the actual Levy integral 2*rho(x)*(1-cos(t*x)) on x>0 equals the actual digamma increment at 1/4+i*t/2. This accessor is consumed by the periodic and whole-line form-core spectral weights. SOURCE_ONLY_UNCOMPILED. This append-only API exposure adds no independent result. The existing owner declarations and proof bodies are preserved."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("form-core-owner-levy-integrableon"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integrableOn"),
+                H("levy integrableOn"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real frequency t the same actual Levy kernel is integrable on the positive half-line. This accessor supplies the exact one-frequency integrability in the live periodic and whole-line core proof. SOURCE_ONLY_UNCOMPILED. This append-only API exposure adds no independent result. The existing owner declarations and proof bodies are preserved."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The same density has an exact interval L2 application. Let a>0, d=2*a, "
                     + "I=(-a,a], and u be complex-valued with MemLp(u,2,dx restricted to I). "
