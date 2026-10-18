@@ -519,3 +519,159 @@ not control arbitrary signed restrictions or their cross terms.
 No all-size Gram positivity, full $K_0$ positivity, Green-trace
 Schur domination, signed Robin upper estimate or RH proof follows
 from (W12)--(W14) alone. Those original targets remain unproved.
+
+## Finite curvature alone does not supply the odd cross bound
+
+The odd sign-constrained result (W14) does not control arbitrary signed
+profiles. Even imposing the finite second-level curvature conclusion from
+the [existing theta source](../Zeros/planatsole2026secondlevel.md) does not
+give a sufficient general hypothesis for the physical odd two-position
+bound. The following model also satisfies the full decay class in
+Csordas, [arXiv:1309.0055v2](https://arxiv.org/abs/1309.0055v2),
+Definition 1.2. Gaussian times polynomial examples are classical; compare
+that paper's Example 3.12. Its parameters and assertion differ from those
+below. This is a repository-derived paper calculation in that model
+family, without a literature-priority or Lean-verification claim.
+
+The input in this construction is explicitly different from the actual
+Riemann theta kernel. Set
+$c=1/10$, $k=1/300$ and, for $r\ge0$, $\epsilon\ge0$, define
+
+$$
+\begin{aligned}
+P(r)&=1+cr+kr^2,\\
+Q(r)&=P'(r)^2-P(r)P''(r)
+     =c^2-2k+2ckr+2k^2r^2,\\
+\phi_\epsilon(t)&=e^{-t^2-\epsilon t^4}P(t^2),\\
+S_\epsilon(r)&=\phi_\epsilon(\sqrt r)
+              =e^{-r-\epsilon r^2}P(r),\\
+R_\epsilon(r)&=Q(r)+2\epsilon P(r)^2.
+\end{aligned}
+$$
+
+Since $c^2-2k=1/300$, $P,Q,R_\epsilon$ are strictly positive.
+The two finite curvature conditions hold for every $r\ge0$:
+
+$$
+(\log S_\epsilon)''=-2\epsilon-\frac Q{P^2}<0,\qquad
+D_\epsilon:=S_\epsilon'^2-S_\epsilon S_\epsilon''
+=e^{-2r-2\epsilon r^2}R_\epsilon>0.
+$$
+
+For the second logarithmic curvature, differentiation gives
+
+$$
+(\log D_\epsilon)''
+=-\frac{E_\epsilon}{R_\epsilon^2},\qquad
+E_\epsilon=4\epsilon R_\epsilon^2+R_\epsilon'^2-R_\epsilon R_\epsilon''.
+$$
+
+Using $P''=2k$, $Q'=2kP'$ and $Q''=4k^2$, expansion yields
+
+$$
+E_\epsilon
+=8k^3P+24\epsilon k^2P^2
+ +24\epsilon^2P^2Q+16\epsilon^3P^4>0.
+\tag{W15}
+$$
+
+For example, the coefficient of $\epsilon$ divided by four is
+$Q^2+2Q'PP'-Q(P'^2+PP'')-\tfrac12P^2Q''=6k^2P^2$.
+Thus $(\log D_\epsilon)''<0$ globally, including at $\epsilon=0$.
+
+For every fixed $\epsilon>0$, $\phi_\epsilon$ is positive, even and smooth.
+It is strictly decreasing on $t>0$ because
+$P'-(1+2\epsilon r)P<P'-P<0$ there, with
+$P-P'=(1-c)+(c-2k)r+kr^2>0$.
+Each derivative is a polynomial times $e^{-t^2-\epsilon t^4}$ and is
+$O(e^{-|t|^3})$ as $t\to\infty$. The constants may depend on $\epsilon$
+and derivative order. This supplies Definition 1.2(v) with exponent
+$2+\delta=3$. The endpoint $\epsilon=0$ itself has only Gaussian decay.
+
+Fix the physical parameter at $v=0$ and apply the complete integral
+construction to this explicitly substituted input:
+
+$$
+\begin{aligned}
+\mathsf K_\epsilon(a,b)
+&=\frac12\int_{|(a+b)/2|}^\infty
+ y\,\phi_\epsilon(y+(a-b)/2)\phi_\epsilon(y-(a-b)/2)\,dy,\\
+\mathsf L_\epsilon(a,b)
+&=\mathsf K_\epsilon(a,b)-\mathsf K_\epsilon(a,-b).
+\end{aligned}
+$$
+
+Here the subscript is the damping $\epsilon$, not the physical parameter.
+At the Gaussian endpoint, exact integration gives, for $a,b>0$,
+
+$$
+\mathsf L_0(a,b)=\frac{ab\,e^{-a^2-b^2}}4
+ \left[C+ck(a^2+b^2)+2k^2a^2b^2\right],
+\qquad C=c^2+2ck+3k^2-2k=\frac{121}{30000}.
+\tag{W16}
+$$
+
+To verify the full-tail integral, put
+$x=((a+b)/2)^2$, $z=((a-b)/2)^2$, $u=y^2$. The polynomial factor in the
+product of the two inputs is the symmetric polynomial
+
+$$
+\begin{aligned}
+A(u,z)={}&1+2c(u+z)+(c^2+2k)(u^2+z^2)+(12k-2c^2)uz\\
+&+2ck(u^3+z^3-u^2z-uz^2)+k^2(u-z)^4.
+\end{aligned}
+$$
+
+Writing $T(x,z)=\sum_{j=0}^4 2^{-j}\partial_x^j A(x,z)$, integration
+by parts gives
+$\mathsf K_0(a,b)=e^{-2(x+z)}T(x,z)/8$.
+Reflection exchanges $x,z$, and differentiation gives
+
+$$
+T(x,z)-T(z,x)
+=(x-z)\left[2c^2-4k+4ck+6k^2
+             +4ck(x+z)+4k^2(x-z)^2\right].
+$$
+
+Since $x-z=ab$ and $x+z=(a^2+b^2)/2$, this proves (W16).
+No part of the integral tail has been removed.
+
+The entries in (W16) are strictly positive. Nevertheless, for every
+distinct $a,b>0$, their two-position determinant is
+
+$$
+\begin{aligned}
+\Delta_0(a,b)
+&:=\mathsf L_0(a,a)\mathsf L_0(b,b)-\mathsf L_0(a,b)^2\\
+&=\frac{a^2b^2(a^2-b^2)^2e^{-2(a^2+b^2)}}{16}
+\,k^2\left[c^2+4ck+6k^2-4k\right]<0,
+\end{aligned}
+\tag{W17}
+$$
+
+because the last bracket equals $-29/15000$.
+
+For each fixed pair of positions,
+$0<\phi_\epsilon(t)\le\phi_0(t)$ and
+$\phi_\epsilon(t)\to\phi_0(t)$ as $\epsilon\downarrow0$.
+The integrable Gaussian-polynomial products dominate the complete
+integrals, including reflected arguments. Dominated convergence therefore
+makes $\Delta_\epsilon(1,2)$ continuous at zero. By (W17), there is
+$\epsilon_*>0$ such that
+
+$$
+\Delta_\epsilon(1,2)<0\qquad(0<\epsilon<\epsilon_*).
+\tag{W18}
+$$
+
+No numerical value of $\epsilon_*$ or simultaneous all-position
+negativity for one positive $\epsilon$ is asserted. Each fixed input
+in (W18) satisfies full super-Gaussian admissibility and both finite
+curvature inequalities. Thus those hypotheses together do not imply
+the general physical odd two-position cross bound.
+
+This countermodel does not change the actual theta input, refute its
+reported second-level theorem, or establish a negative actual-theta
+minor. A proof for that input can still use its specific series and
+Jacobi identities. The original actual-theta cross estimate, full
+physical $K_0$ positivity, signed Robin upper and RH remain unproved.
