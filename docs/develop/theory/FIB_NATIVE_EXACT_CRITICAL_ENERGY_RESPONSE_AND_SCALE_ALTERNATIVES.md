@@ -2618,3 +2618,787 @@ The complex closed-form interface is Gerald Teschl, *Mathematical Methods in Qua
 The parameter order remains reference, $b>0$, finite $M_b$, then $s\downarrow0$. No $b(s)$, source on the $b=0$ face, simultaneous limit, uniform-in-$b$ rate or uniform scalar probe is obtained. Local mass in (29.1) means squared $L^2$ norm; global microscopic convergence is weak with norm one. The unscaled raw potential expectation need not vanish. The macroscopic conclusion is the original source-centred unit-mass phase orbit under $\mathcal D_{g_s}$, not a microscopic strong-zero limit. None of these conditional analytic results selects physical-space dimension, physical $SO(3)$, a native preparation procedure or an operational resource bound.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 32. Fixed original data and the absolute heat functional
+
+**Definition 32.1 (analytic window, clocks and actual choices).** Use J, P, L and E as in Definition 24.1. Fix one original datum $d=(H,I,k_0,\kappa,\varepsilon,a)$ before any limit. Retain Definitions 1.1–2.1 and 24.1, J Definitions 1.1–3.2, 29.1 and 42.1, and their ordinary analytic antecedents. More explicitly, $I=(l,u)\Subset(0,H)$, $k_0\in I$, $a,\varepsilon>0$, and $\kappa\ne0$ lies in the sufficiently small fixed two-sided window of L Definition 35.1. Retain its larger-interval positive-probability, coefficient, pole and bracket-determinant margins, L Lemma 41.2, P §§76, 87–88, 97 and 104–107, and E Theorem 3.1. These heat hypotheses are additional applicability conditions; general geometric admission alone does not imply them. Throughout §§32–38 assume
+
+$$
+C_{\rm resp}(d)=0,\qquad C_4(d)=0.
+\tag{32.1}
+$$
+
+The original five probabilities are $(k-2\kappa,H+\kappa-k,1-2H,H+\kappa-k,k)$. With $\alpha_\kappa=\kappa+\kappa^2/H$, the single jointly realized vector is
+
+$$
+c_\kappa(k)=\left(
+\frac{(k-2\kappa)(H+\kappa-k)}{2H(k-\alpha_\kappa)},
+-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},
+\frac{H+\kappa-k}{H(k-\alpha_\kappa)}\right).
+\tag{32.2}
+$$
+
+All three components, including their signed cross terms and rational denominator, are retained. The real lift remains $x_{\rm lift}=D/\kappa$. The source is the unit point source at $o=(k_0,0)$ in raw $dY=dk\,dq$, $q\in\mathbb R^3$, with no survival or Haar normalization. Put
+
+$$
+\begin{aligned}
+B&=-\varepsilon^2\partial_k^2-(c_\kappa\cdot\partial_q)^2,&
+\lambda&=\varepsilon^2\pi^2/(u-l)^2,&S&=B-\lambda\ge0,\\
+K_d(t;Y,Z)&=e^{\lambda t}p_t^B(Y,Z),&
+W_{\tau,d}(Y)&=\int_\tau^\infty K_d(t;o,Y)dt.
+\end{aligned}
+\tag{32.3}
+$$
+
+Both original height faces are Dirichlet, and every real phase frequency is admitted. The entire complex domains remain (1.5): the fibre form domain is $H_0^1(I)$ with the integrability of $\varepsilon^2|\partial_k\widehat\psi|^2+|\eta\cdot c_\kappa|^2|\widehat\psi|^2$, and the operator domain has fibres $H^2(I)\cap H_0^1(I)$ and $\int\|B_\eta\widehat\psi\|_2^2d\eta<\infty$. Underlying raw $L^2$ membership is required in both cases. No phase $H^1$, reality or parity constraint is added.
+
+Use exactly $\Xi_s,\mathcal U_s,\mathscr L_s,\mathcal T_s$ of Definition 2.1 and J §2. Thus $|\det D\Xi_s|=j_0s^7$, $\det D\mathscr L_s=1$, $Y_s=\Xi_s\circ\mathscr L_s$, and $\mathcal T_sf=f\circ\mathscr L_s$. Suppress tildes only on the sheared operators and multipliers, so that
+
+$$
+\begin{aligned}
+C_s&=s^2(\mathcal T_s\mathcal U_s)S(\mathcal T_s\mathcal U_s)^{-1},&Q_s(t)&=e^{-tC_s},\\
+q_s(t;\eta,\xi)&=j_0s^7K_d(s^2t;Y_s\eta,Y_s\xi),&T&=s^{-2},\\
+F_s&=j_0^{-1}\int_1^Tq_s(t;0,\cdot)dt,&J_s&=s^5W_{1,d}(Y_s\cdot),\\
+U_s&=F_s+J_s,&H_s&=\int_0^TQ_s(t)dt,\\
+N_s&=F_sH_s,&L_s&=H_sF_s.
+\end{aligned}
+\tag{32.4}
+$$
+
+Here $J_s$ is a multiplier, not the source volume J, and $L_s$ is the early operator, not the phase matrix inside $\mathscr L_s$. Restriction to $\Omega_s=I_s\times\mathbb R^3$ and zero extension give common-space operators. Their native domains before extension are exactly $(\mathcal T_s\mathcal U_s)\mathcal Q$ and $(\mathcal T_s\mathcal U_s)D(S)$. The factor $j_0^{-1}$ occurs in the field alone. The heat clock is $B$ independently of $a$; neither $Q_s$ nor $W_\tau$ contains a replacement kinetic clock.
+
+On the original critical path put
+
+$$
+\tau=s^2,\quad g_s=\chi_cs^3,\quad E_s=E_{s^2}(\chi_cs^3),\quad
+\epsilon_c(s)=s^2E_s<0,\quad r_s=-E_s/s^6,
+\quad\gamma=\chi_c/a=C_*^{-1}.
+\tag{32.5}
+$$
+
+An actual choice means any normalized complex ground state $\psi_s\in D(S)$ at this path. All actual-state conclusions below hold along every prescribed sequence $s_n\downarrow0$ and every such choice on it.
+
+**Definition 32.2 (canonical coefficients and constants).** Retain the complete two-endpoint coefficients $\mathsf q_j,\mathsf Q_j$ of J (30.1), their field integrals $V_j$ of J (23.1), and their input-specific returns $G_j$ of Definition 24.1. They include every $\lambda$-clock term and the exact $\nu=\varepsilon/(k_0-\alpha_\kappa)$. Let $p>0$, $\|p\|_2=1$, be the canonical mode, $g_0=Vp/\mu$, $\mu=\int Vp^2$, and $g_1,\ldots,g_4$ the normalized charges of J §§36–45. Set
+
+$$
+A_p=\int Vp,\qquad a_0=\int g_0=A_p/\mu,\qquad
+\mathscr A=\frac{C_*+j_0A_p^2}{\mu}>0,\qquad
+\beta_*=\frac{C_*^2}{\mu}>0.
+\tag{32.6}
+$$
+
+Write $d_j^{\rm h}=j_0^{-1}\mathsf q_{2j}(1;0,0)$ for $j=0,1,2$. In the notation $p_j$ of J (30.2), these are
+
+$$
+\begin{aligned}
+d_0^{\rm h}&=j_0^{-1}p_0(1;0),\\
+d_1^{\rm h}&=j_0^{-1}\{\nu^2p_2(1;0)+\lambda p_0(1;0)\},\\
+d_2^{\rm h}&=j_0^{-1}\{\nu^4p_4(1;0)+\nu^2\lambda p_2(1;0)
+                       +\tfrac12\lambda^2p_0(1;0)\}.
+\end{aligned}
+\tag{32.7}
+$$
+
+These are coefficients of the same original source, not separately variable jets. The notation $d_j^{\rm h}$ is distinct from the pole distance in (1.1). Define
+
+$$
+\begin{aligned}
+\mathfrak m_d={}&W_{1,d}(o)-\frac{2d_0^{\rm h}}5
+                         -\frac{2d_1^{\rm h}}3-2d_2^{\rm h}\\
+&+\int_0^1\left[K_d(t;o,o)-d_0^{\rm h}t^{-7/2}
+                         -d_1^{\rm h}t^{-5/2}
+                         -d_2^{\rm h}t^{-3/2}\right]dt,\\
+Z_d&=\mathfrak m_d-W_{1,d}(o).
+\end{aligned}
+\tag{32.8}
+$$
+
+Thus $\mathfrak m_d$ is specified by the raw original heat before any spectral limit is considered.
+
+**Theorem 32.3 (existence and truncation of the original heat finite part).** The subtracted integrand in (32.8) is $O_d(t^{-1/2})$ as $t\downarrow0$, the original tail $W_{1,d}(o)$ is finite, and
+
+$$
+\mathfrak m_d=\lim_{\delta\downarrow0}
+\left[\int_\delta^\infty K_d(t;o,o)dt
+ -\frac{2d_0^{\rm h}}5\delta^{-5/2}
+ -\frac{2d_1^{\rm h}}3\delta^{-3/2}
+ -2d_2^{\rm h}\delta^{-1/2}\right].
+\tag{32.9}
+$$
+
+Replacing $\infty$ by $R\ge1$ in the bracket has total error at most $C_d(\sqrt\delta+R^{-1/2})$ from $\mathfrak m_d$, for sufficiently small $\delta>0$.
+
+Proof. Choose a fixed safe radius $\ell>0$ as in Lemma 24.3. At microscopic time one use its strip $(-\ell/s,\ell/s)$, held fixed during parameter differentiation. At the source diagonal the reflection $\sigma(r,y,z,w)=(-r,y,-z,w)$ conjugates the parameter $\theta$ to $-\theta$. Its odd scalar coefficients vanish. The sixth finite derivative in (24.8) bounds Taylor's remainder through degree five by $Cs^6$. The deleted-path bounds J (31.6), and their degree-$j$ versions, restore the original faces and the full canonical coefficients with polynomial times $e^{-c\ell^2/s^2}$ errors. Hence the exact raw scaling (32.4) gives
+
+$$
+j_0s^7K_d(s^2;o,o)
+ =\mathsf q_0(1;0,0)+s^2\mathsf q_2(1;0,0)
+                       +s^4\mathsf q_4(1;0,0)+O_d(s^6).
+\tag{32.10}
+$$
+
+Divide by $j_0s^7$ and put $t=s^2$. This proves the asserted integrable remainder. Independently, L Lemma 41.2 bounds $K_d(t;o,o)$ by $C_dt^{-3/2}$ for $t\ge1$, proving tail convergence. Integrating the three explicit powers over $(\delta,1)$ proves (32.9), including the constants at the upper endpoint. Integrating $Ct^{-1/2}$ over $(0,\delta)$ and $Ct^{-3/2}$ over $(R,\infty)$ gives the error bound. The original faces need not be symmetric: reflection was used only on the estimating strip. $\square$
+
+## 33. Absolute matching of the two seed scalars
+
+**Theorem 33.1 (complete field and two-endpoint seed matching).** In the fixed frame of Definition 32.1, define
+
+$$
+\alpha_s=\int p^2\left(F_s-\sum_{j=0}^4s^jV_j\right),\qquad
+\beta_s=\left\langle g_0,H_sg_0-\sum_{j=0}^4s^jG_jg_0\right\rangle.
+\tag{33.1}
+$$
+
+Then
+
+$$
+\frac{\alpha_s}{s^5}\longrightarrow Z_d,\qquad
+\frac{\beta_s}{s^5}\longrightarrow j_0a_0^2Z_d.
+\tag{33.2}
+$$
+
+The returns and pairings include the whole endpoint product space, both original deaths, all phases and the entire coefficient-time tails. More precisely, fix an admissible $\ell$ first. There is a function $\rho_\ell(\delta)\downarrow0$ as $\delta\downarrow0$ such that, with
+
+$$
+\begin{aligned}
+B_d(\delta)&=\int_\delta^1K_d(t;o,o)dt
+ -\frac{2d_0^{\rm h}}5\delta^{-5/2}
+ -\frac{2d_1^{\rm h}}3\delta^{-3/2}
+ -2d_2^{\rm h}\delta^{-1/2},\\
+\Psi_\ell(\delta)&=\sum_{j=0}^4\int_0^\delta
+              t^{(j-7)/2}e^{-c\ell^2/t}dt,
+\end{aligned}
+\tag{33.3}
+$$
+
+one has
+
+$$
+\limsup_{s\downarrow0}\left|\alpha_s/s^5-B_d(\delta)\right|
++\limsup_{s\downarrow0}\left|\beta_s/s^5-j_0a_0^2B_d(\delta)\right|
+\le C_d\sqrt\delta+C_d\Psi_\ell(\delta)=:\rho_\ell(\delta).
+\tag{33.4}
+$$
+
+Here $\delta>0$ is fixed before $s$, and tends to zero only after the displayed limsups. No rate for convergence at fixed positive physical time is required.
+
+Proof. Set $L=\ell/s$ and $D=\delta/s^2$. For small $s$, $1<D<T$. Split the field at microscopic time $D$, beginning at time one; split the return there, beginning at time zero. Each canonical coefficient is integrated to infinity, so its complementary tail begins at $D$ in both cases.
+
+On the symmetric strip use exactly the two scalar tests (24.20). Their odd derivatives at zero vanish. Taylor through degree five is therefore Taylor through degree four. The column sixth derivative is bounded by $Ct^{-1/2}$ for $t\ge1$. For the return, the input exponents (24.21) give precisely the powers (24.22); below time one bounded weighted seed inputs give integrable nonnegative half powers. The integrated sixth derivative on $(0,D)$ is at most
+
+$$
+C\{1+\sqrt D+\log(2+D)\}.
+\tag{33.5}
+$$
+
+Multiplication by $s^6$ and division by $s^5$ give a fixed-$\delta$ limsup at most $C\sqrt\delta$. This controls the short-physical-time scalar Taylor error. It does not differentiate an infinite-time return.
+
+Restore the original kernels on this short interval. For the field, the source is at zero. A deleted native source kernel is bounded by $Ct^{-7/2}e^{-cL^2/t}$; a deleted degree-$j$ coefficient by $Ct^{(j-7)/2}e^{-cL^2/t}$, $j\le4$. Integrate against $p^2$, whose mass is one. After its factor $s^j$, the substitution $v=s^2t$ and division by $s^5$ leave the corresponding term of $C\Psi_\ell(\delta)$. The native term is $j=0$. These bounds hold for all outputs, including zero extension beyond either original face.
+
+For the return, split input height at $L/4$. The outer seed has supremum $O(L^{-10})$ and $L^1$ mass $O(L^{-3})$. Native and safe returns cost $O(L^{-8})$ by J (31.7). A retained outer degree-$j$ coefficient has integrated supremum $O(L^{j-8})$ by J (31.9). After its factor $s^j$ this is $O(s^8)$. Pairing with the output $g_0\in L^1$ preserves these bounds, all negligible after division by $s^5$.
+
+For the inner input, write $j=n+m$ as in J (30.3), where $n$ is the input-height degree and $m$ is the relative degree. Retaining the exit event bounds the deleted kernel by $Ct^{(m-7)/2}e^{-cL^2/t}$ times the input moment. For $n=0$, physical rescaling gives $C\Psi_\ell(\delta)$. For $n\ge1$, the full integrated bound (24.23), after normalization, is at most
+
+$$
+C_{\ell,j}s^nM_n(L),\qquad
+M_1,M_2\le C,\quad M_3\le C(1+\log L),\quad M_4\le CL.
+\tag{33.6}
+$$
+
+Every expression in (33.6) tends to zero. Original paths that survive outside the estimating strip still have uniformly comparable covariance, by the fixed denominator margins. Thus the same deletion bound applies to them; safe paths cannot end outside an original face. This accounts for all input, output and face restorations on the short interval. It retains a modulus at order $s^5$, rather than declaring all face contributions zero.
+
+On physical times $v\in[\delta,1]$, exact scaling gives the complementary native pieces
+
+$$
+\begin{aligned}
+s^5\int_\delta^1\!\int p(\xi)^2K_d(v;o,Y_s\xi)d\xi\,dv,\\
+j_0s^5\int_\delta^1\!\iint g_0(\eta)g_0(\xi)
+                 K_d(v;Y_s\eta,Y_s\xi)d\eta d\xi\,dv.
+\end{aligned}
+\tag{33.7}
+$$
+
+For each fixed endpoint $Y_s\xi\to o$. The both-endpoint bound P76 is uniform on $[\delta,1]$, and $p^2$ and $|g_0|\otimes|g_0|$ have finite mass. Positive-time kernel continuity and dominated convergence on the entire endpoint product space therefore give the limits $\int_\delta^1K_d(v;o,o)dv$ and $j_0a_0^2$ times that integral after division by $s^5$. No compact-output replacement is made.
+
+It remains to identify the canonical tails, not just the native middle interval. Brownian scaling of J (30.1), with every clock factor of degree two included, gives
+
+$$
+\mathsf q_j(t;\eta,\xi)=t^{(j-7)/2}
+ \mathsf q_j(1;\delta_{t^{-1/2}}\eta,\delta_{t^{-1/2}}\xi),
+\qquad \delta_R(r,y,z,w)=(Rr,Ry,R^2z,R^3w).
+\tag{33.8}
+$$
+
+For the field the source-column supremum is $Ct^{(j-7)/2}$. At $t=v/s^2$ this is integrable on $v\in[\delta,\infty)$ for $j\le4$, and dominated convergence against $p^2$ collapses the output to zero. Odd diagonal coefficients vanish. For $j=0,2,4$, the normalized field tail is therefore respectively
+
+$$
+\frac{2d_0^{\rm h}}5\delta^{-5/2},\qquad
+\frac{2d_1^{\rm h}}3\delta^{-3/2},\qquad
+2d_2^{\rm h}\delta^{-1/2}.
+\tag{33.9}
+$$
+
+For the return, use the ordered decomposition J (30.3), not an unproved fourth $L^1$ height moment. The $n=0$ relative kernel is uniformly bounded after the scaling (33.8). Its limit at each fixed endpoint pair is the diagonal value. Dominated convergence against $|g_0|\otimes|g_0|$ gives $j_0a_0^2$ times each expression in (33.9). The other input degrees vanish. Indeed, using
+
+$$
+p_n=1,1,1,7/6,7/5\quad(n=0,\ldots,4)
+\tag{33.10}
+$$
+
+in J (30.4), their integrated tails satisfy
+
+$$
+s^j\int_D^\infty
+ t^{(j-n)/2-7/(2p_n)}\|r^ng_0\|_{p_n}dt
+ \le C_{\delta,j,n}s^{7/p_n-2+n}.
+\tag{33.11}
+$$
+
+For $n=1,2,3,4$ the powers are $6,7,7,7$, all strictly greater than five. For $n=0$ the power is five, and the just-proved dominated limit applies. All time powers in (33.11) are strictly integrable. The $n=0$ decomposition evaluated at input height zero is the full source coefficient, which identifies its limiting constant. No third or fourth absolute $L^1$ height moment of $g_0$ enters.
+
+Subtracting these full coefficient tails from (33.7), and adding the short-interval error, proves (33.4). Theorem 32.3 gives $B_d(\delta)\to Z_d$ with error $O(\sqrt\delta)$. Taking $s\downarrow0$ first and then $\delta\downarrow0$ proves (33.2). All physical times beyond one remain in $W_{1,d}(o)$ in (32.8). $\square$
+
+
+## 34. Lower-charge completion and the absolute early principal value
+
+**Theorem 34.1 (tested lower-charge cancellation).** With $E_{i,s}$ and $E_s^{\rm row}$ of (24.24), (24.40),
+
+$$
+s^i\langle p,E_{i,s}\rangle=o_d(s^5),\qquad i=1,2,3,4.
+\tag{34.1}
+$$
+
+Only the already specified $L^2$ norm of $g_4$ is required. Reflection is a property of the fixed canonical charges, not a restriction on any actual state.
+
+Proof. For $i=1,2,3$ put $k_i=5-i$. On the estimating strip apply Taylor's integral formula through degree $k_i-1$ to the return on the inner-height truncation of $g_i$. The next derivative orders are $4,3,2$. For $t<1$ its weighted-input $L^2$ bounds are integrable. For $t\ge1$, (24.34) gives respectively the complete lists
+
+$$
+\begin{array}{c|c|c}
+i&\text{input exponents}&\text{time exponents in }L^\infty\\ \hline
+1&(1,1,7/6,7/5,7/4)&(-3/2,-2,-2,-2,-2)\\
+2&(1,7/6,7/5,7/4)&(-2,-2,-2,-2)\\
+3&(6/5,18/13,18/11)&(-23/12,-73/36,-77/36)
+\end{array}
+\tag{34.2}
+$$
+
+Every long-time exponent is strictly below $-1$. At each fixed positive time, the finite strip derivatives at $\theta=vs$, $0\le v\le1$, converge to the canonical derivatives. To justify this on the noncompact inputs, approximate $g_i$ simultaneously in the finitely many weighted $L^2$ and weighted $L^p$ norms displayed in (34.2). Compact inputs admit dominated differentiation of the common bridge; (24.8) bounds the approximation error independently of $s,L$ at each time and by the stated integrable powers. This proves dominated convergence of the time-integrated Taylor remainder.
+
+The test $w_s=F_sp$ converges to $Vp$ both in $L^1$ and $L^2$: (24.6), Cauchy–Schwarz and bounded multiplication give errors $O(s)$. Pair the short-time output with its $L^2$ test, and the long-time output with its $L^1$ test. The normalized scalar return remainder consequently tends to
+
+$$
+\left\langle Vp,\int_0^\infty\mathsf Q_{k_i}(t)g_i\,dt\right\rangle.
+\tag{34.3}
+$$
+
+The integral in (34.3) is used only in $L^2$ for $0<t<1$ plus $L^\infty$ for $t>1$. The Taylor normalization is exactly $\mathsf Q_{k_i}=\partial_\theta^{k_i}Q_\theta|_0/k_i!$. Thus this step asserts neither a bounded operator derivative nor an additional $L^2$ threshold return.
+
+All restorations are smaller than $s^5$ after the exterior factor $s^i$. Equations (24.29)–(24.33) give $O(s^6)$ for outer native/safe inputs and $O(s^{31/6})$ for outer coefficient inputs, by transposing the complete symmetric endpoint kernel. The inner deleted-path and time-tail bounds (24.35)–(24.36) give $O(s^6)$ for $i=1$, $O(s^7)$ for $i=2$, and at worst $O(s^{41/6})$ for $i=3$ after that factor. These include outputs outside the original interval. They justify the same normalized scalar limit on the actual domain.
+
+Canonical reflection gives $g_i\circ\sigma=(-1)^ig_i$ and $\mathsf Q_j$ parity $(-1)^j$. Since $i+k_i=5$, (34.3) is zero. For the field products retain their exact order (24.26). Add the first omitted coefficient to each field remainder in (24.38). The exceptional $(i,j)=(1,0)$ uses convergence to $V_4$ in $L^\infty$, paired with $G_0g_1\in L^2$ and $p\in L^2$. Every other entry uses convergence to $V_{5-i-j}$ in $L^4$ paired with its stated $L^4$ return. These convergences follow from J Lemma 23.2 and Lemma 32.1: after including degree three the $L^4$ error is $O(s^{13/4})=o(s^3)$, and at degrees two and one the errors are $O(s^3)=o(s^2)$ and $O(s^2)=o(s)$. The degree-four supremum error is $O(s^5(1+|\log s|))=o(s^4)$. Each limiting field scalar has total degree $i+j+(5-i-j)=5$ and is zero by reflection. This proves (34.1) for $i=1,2,3$.
+
+For the last charge, the fourth right side in J (45.2) is even: every constituent has total degree four, and $g_0$ is even. Reflection commutes with its Fredholm operator and preserves $\langle p,g_4\rangle=0$. Normalized uniqueness therefore makes $g_4$ even, without adding a weight.
+
+We need only the following strong derivative on the single fixed input $p$:
+
+$$
+\frac{(L_s-K_{\rm rec})p}{s}
+ \longrightarrow D_1p:=G_0(V_1p)+\mu G_1g_0
+                   \quad\text{in }L^2.
+\tag{34.4}
+$$
+
+Indeed (24.17) splits the left numerator into $H_s((F_s-V)p)$ and $\mu(H_s-G_0)g_0$. The divided field input tends to $V_1p$ in both $L^1$ and $L^2$. For $L^1$ use the degree-one $L^2$ field expansion paired with $p$; for $L^2$ use the supremum expansion. The uniform bound (24.14) controls its moving-input error. On the fixed input $V_1p\in L^1\cap L^2$, finite-time heat convergence and the integrable $t^{-7/4}$ return bound give $H_s(V_1p)\to G_0(V_1p)$ in $L^2$.
+
+For the seed-return derivative, (24.15) is an integrable $L^2$ majorant for the first strip derivative. Weighted compact approximation and fixed-time bridge convergence identify its limit with $G_1g_0$. The original/strip and canonical zero-order time restorations in the proof of Lemma 24.4 are $O(s^{3/2})+O(s^{9/2})=o(s)$. The degree-one coefficient restorations after its exterior factor are also $O(s^{3/2})$ or smaller, from the same column $L^2$ interpolation. Removing them proves $(H_s-G_0)g_0/s\to G_1g_0$ strongly and hence (34.4).
+
+Both terms of $D_1p$ are odd $L^2$ vectors. By adjointness,
+
+$$
+\frac{\langle p,(N_s-N_0)g_4\rangle}{s}
+ =\left\langle\frac{(L_s-K_{\rm rec})p}{s},g_4\right\rangle
+ \longrightarrow\langle D_1p,g_4\rangle=0.
+\tag{34.5}
+$$
+
+Multiplication by $s^4$ proves the remaining assertion. No $G_0g_4$ or height moment of $g_4$ is involved. $\square$
+
+**Theorem 34.2 (absolute early fifth-order matching).** Let $\ell_s$ and $u_s$ be the original early principal value and nonnegative unit right vector. Then
+
+$$
+\begin{aligned}
+\ell_s&=C_*+\mathscr A Z_ds^5+o_d(s^5),\\
+\Theta_d(s)&:=\frac{\ell_s-C_*}{s^5}+\mathscr A W_{1,d}(o)
+           \longrightarrow\mathscr A\mathfrak m_d.
+\end{aligned}
+\tag{34.6}
+$$
+
+Proof. In the seed ordered identity (24.26), the return scalar is $\mu\beta_s+o(s^5)$ by (24.27)–(24.28). Its degree-zero field term is $(C_*/\mu)\alpha_s$, since $G_0g_0=C_*p/\mu$. For its remaining field terms $j=1,2,3,4$, divide by their total factor $s^5$. The first omitted field coefficients are $V_4,V_3,V_2,V_1$, respectively, in $L^\infty,L^4,L^4,L^2$. Their little-o remainders follow from J Lemmas 23.2 and 32.1. The required returns lie respectively in $L^2,L^4,L^4,L^\infty$, by J §§31 and 43. Hölder therefore gives the limits $\langle p,V_{5-j}G_jg_0\rangle$. Each is an integrable odd scalar of total degree five, hence zero. Theorem 33.1 yields
+
+$$
+\frac{\langle p,E_{0,s}\rangle}{s^5}
+ \longrightarrow\left(\frac{C_*}{\mu}+\mu j_0a_0^2\right)Z_d
+ =\mathscr A Z_d.
+\tag{34.7}
+$$
+
+Theorem 34.1 removes all other charge projections. The full row has norm $o(s^4)$ by its owning J §§33, 39 and 46 estimates. Lemma 24.4 gives $\|u_s-p\|_2=O(s)$, so changing the fixed test to $u_s$ costs $o(s^5)$. The exact scalar (24.42), with denominator $\langle G_s,u_s\rangle=1+O(s)$, proves (34.6). This uses the full finite charge identity rather than an eigenvalue ansatz. The early vector is only an auxiliary test. $\square$
+
+## 35. Original-domain reconstruction at fixed positive spectral probes
+
+**Theorem 35.1 (single-datum reconstruction and principal comparison).** Retain the original-data analytic hypotheses of Definition 32.1. The comparison in this theorem does not require the two equalities (32.1). Define, on the original transported complex space,
+
+$$
+R_s(h)=(C_s+h)^{-1},\qquad
+\mathscr K_s(h)=U_s^{1/2}R_s(h)U_s^{1/2},\qquad
+k_d(h)=\|\mathscr K_s(h)\|,\quad h>0.
+\tag{35.1}
+$$
+
+The early operator $L_s$ has an eventually simple principal value $\ell_s\to C_*$ and a nonnegative unit vector $u_s\to p$ in $L^2$. There are $M_{0,d}\ge1$ and $C_d<\infty$ such that for every separately fixed finite $M\ge M_{0,d}$,
+
+$$
+0\le\liminf_{s\downarrow0}
+ \frac{k_d(Ms^8)-\ell_s-\mathscr A W_{1,d}(o)s^5}{s^5}
+\le\limsup_{s\downarrow0}
+ \frac{k_d(Ms^8)-\ell_s-\mathscr A W_{1,d}(o)s^5}{s^5}
+\le C_d(M^{-1/4}+M^{-1/2}).
+\tag{35.2}
+$$
+
+For each $q=6,7$ one also has
+
+$$
+k_d(s^q)=\ell_s+\mathscr A W_{1,d}(o)s^5+o_d(s^5).
+\tag{35.3}
+$$
+
+This theorem concerns an arbitrary separately fixed original datum within the stated analytic window; membership in J Definition 51.1's translated family is not a hypothesis.
+
+Proof. All constructions below use the original-domain P104 and J29 suppliers. First justify the early vector at this scope. At each fixed $s$, $Q_s(t)F_s$ is Hilbert–Schmidt for $t>0$: its squared kernel norm is at most $C_{s,t}\|F_s\|_2^2$ by the both-endpoint column $L^2$ bound. Removing $(0,\delta)$ from $H_sF_s$ costs at most $\delta\|F_s\|_\infty$, and on $[\delta,T]$ operator-norm continuity of the selfadjoint heat gives compactness of the integral. The sandwich $F_s^{1/2}H_sF_s^{1/2}$ is likewise compact. Indeed its positive-time squared Hilbert–Schmidt norm is at most
+
+$$
+\sup_{\eta,\xi}q_s(t;\eta,\xi)\,
+       \langle F_s,Q_s(t)F_s\rangle
+ \le C_{s,t}\|F_s\|_2^2,
+\tag{35.4}
+$$
+
+and the same small-time truncation applies. It is positive selfadjoint and positivity preserving; taking absolute values in its Rayleigh quotient supplies a nonnegative top eigenvector. Bounded product factorization transfers its nonzero eigenvalue to $H_sF_s$ with a nonnegative nonzero right vector.
+
+P (104.9) gives $H_sF_s\to K_{\rm rec}$ in norm; compact conjugation by the strongly convergent shears preserves this convergence. P §§87–88 identify its isolated algebraically simple nonzero top $C_*$ and right vector $p$. Compact spectral perturbation makes the early top eventually simple and convergent. The equation $u_s=\ell_s^{-1}H_sF_su_s$ gives precompactness of its unit vectors. Every nonnegative unit cluster is $p$, so $u_s\to p$. P (104.6) and (24.6) then give
+
+$$
+\begin{aligned}
+x:=F_su_s&\longrightarrow Vp\quad\text{in }L^1\cap L^2,\\
+m:=\int F_su_s^2&\longrightarrow\mu,&
+\|x\|_1+\|x\|_2&\le C.
+\end{aligned}
+\tag{35.5}
+$$
+
+For example the $L^1$ difference is bounded by $\|F_s\|_2\|u_s-p\|_2+\|F_s-V\|_2\|p\|_2$; the $L^2$ difference uses the bounded multiplier and $(F_s-V)p\to0$. This proves the early-vector statements without translated-family membership. The residual/Riesz argument (24.17)–(24.18) applies at this same scope if its $O(s)$ rate is needed.
+
+Write $h>0$, $y=J_su_s$, $d_s=\int J_su_s^2$, $n=m+d_s$, and
+
+$$
+\begin{aligned}
+z&=U_s^{1/2}u_s/\sqrt n,&
+H^h&=\int_0^Te^{-ht}Q_s(t)dt,\\
+L^h&=\int_T^\infty e^{-ht}Q_s(t)dt,&
+D&=H_s-H^h,&R_s(h)&=H^h+L^h.
+\end{aligned}
+\tag{35.6}
+$$
+
+The multiplier $W_1$ is bounded and continuous at $o$, hence
+
+$$
+d_s/s^5\to W_1(o),\qquad n\to\mu,\qquad\|y\|_2\le Cs^5.
+\tag{35.7}
+$$
+
+For $h=Ms^8$, P (104.2) gives
+
+$$
+\|R_s(h)U_s-K_{\rm rec}\|
+\le\eta_s+CM^{3/4}s^6+C(M^{-1/4}+M^{-1/2}),\qquad\eta_s\to0.
+\tag{35.8}
+$$
+
+Choose a fixed small perturbation neighborhood of the compact reconstruction whose simple top is $C_*$. The resolvent identity on a contour around $C_*$, and on a compact spectral exclusion set outside that contour, preserves one simple eigenvalue near $C_*$ and excludes all remaining spectrum above $C_*-3\zeta$, for some fixed $\zeta>0$. First choose $M_{0,d}$ so the retained $M$-error is inside half this neighborhood. For each fixed finite $M\ge M_{0,d}$, choose $s$ small so the other errors fit. At $h=s^6,s^7$, all errors of P (104.2) tend to zero and the same neighborhood applies.
+
+At each $s,h>0$, positive-cutoff relative compactness P70 makes $\mathscr K_s(h)$ positive compact selfadjoint on the full complex space. The bounded products $(R_s(h)U_s^{1/2})U_s^{1/2}$ and $U_s^{1/2}(R_s(h)U_s^{1/2})$ have identical nonzero spectra and algebraic multiplicities. Thus the full principal value $k$ is bounded and simple, and its remaining spectrum is at most $k_2\le C_*-3\zeta$. This is a compact reconstruction separation; it is not an $L^2$ gap of the critical Hamiltonian. In particular (35.8) is not called norm convergence at fixed $M$.
+
+Exact scaling and L41 give the globally bounded late kernel
+
+$$
+s^{-5}L^h(\eta,\xi)=j_0\int_1^\infty
+ e^{-(h/s^2)t}K_d(t;Y_s\eta,Y_s\xi)dt,
+\quad |s^{-5}L^h(\eta,\xi)|\le C.
+\tag{35.9}
+$$
+
+At any of the present probes $h/s^2\to0$. Dominated convergence on the full product space, followed by (35.5), yields
+
+$$
+\langle x,L^hx\rangle=j_0W_1(o)A_p^2s^5+o(s^5).
+\tag{35.10}
+$$
+
+Moving an input costs its $L^1$ error under the bounded kernel. Contraction below time one and J (29.5) above it give
+
+$$
+0\le\langle x,Dx\rangle\le Ch,\quad
+\|Dx\|_2\le Chs^{-1/2},\quad
+0\le\langle y,R_s(h)y\rangle\le Cs^9h^{-1/2}.
+\tag{35.11}
+$$
+
+The first estimate integrates $ht\|Q_s(t/2)x\|_2^2$, whose large-time majorant is $Ct^{-5/2}h$. The second integrates $ht\|Q_s(t)x\|_2$ up to $T$, giving $ChT^{1/4}$. The last uses the original long-multiplier estimate P (104.14), $\|R_s(h)J_s\|\le Cs^4h^{-1/2}$, and $\|y\|_2\le Cs^5$. Spectral Cauchy–Schwarz for $0\le L^h\le R_s(h)$ consequently gives
+
+$$
+|\langle x,L^hy\rangle|\le Cs^7h^{-1/4},\qquad
+|\langle y,Dx\rangle|\le Cs^5hs^{-1/2}.
+\tag{35.12}
+$$
+
+Since $H_sx=\ell_su_s$, the full unit quotient is exactly
+
+$$
+\mathcal Q_s:=\langle z,\mathscr K_s(h)z\rangle
+=\frac{\ell_sm+2\ell_sd_s+\langle x,L^hx\rangle-\langle x,Dx\rangle
+ -2\operatorname{Re}\langle y,Dx\rangle
+ +2\operatorname{Re}\langle x,L^hy\rangle+\langle y,R_s(h)y\rangle}{m+d_s}.
+\tag{35.13}
+$$
+
+Subtracting $\ell_s$ leaves one early cross copy. At fixed $M$, (35.7), (35.10)–(35.12) give the upper quotient error $C(M^{-1/4}+M^{-1/2})s^5+o_M(s^5)$. For the lower limit, $x,y$ and the late heat kernels are nonnegative. Therefore $\langle x,L^hy\rangle$ and $\langle y,R_s(h)y\rangle$ are nonnegative scalars, while both damping terms are $o_M(s^5)$. Since $k\ge\mathcal Q_s$, this proves the lower inequality in (35.2). At $h=s^q$, the normalized damping, long self and late cross bounds are respectively
+
+$$
+O(s^{q-5}),\qquad O(s^{4-q/2}),\qquad O(s^{2-q/4}),
+\tag{35.14}
+$$
+
+all tending to zero for $q=6,7$. Thus the quotient has the equality in (35.3).
+
+To upgrade its upper bound to the full principal value, keep the exact residual
+
+$$
+R_s(h)U_su_s=\ell_su_s+e_s,\qquad e_s=-Dx+L^hx+R_s(h)y.
+\tag{35.15}
+$$
+
+The following weighted squared bounds hold:
+
+$$
+\begin{aligned}
+\|U_s^{1/2}Dx\|_2^2&\le Ch^2s^{-1},\\
+\|U_s^{1/2}L^hx\|_2^2&\le C(s^8+s^9h^{-1/2}),\\
+\|U_s^{1/2}R_s(h)y\|_2^2&\le Cs^9h^{-1/2}.
+\end{aligned}
+\tag{35.16}
+$$
+
+For the middle line, the raw killed-source mass up to $T$ gives $\int F_s\le Cs^{-2}$. Equation (35.9) gives $\|L^hx\|_\infty\le Cs^5$, so the $F_s$-weighted square costs $Cs^8$. The long-time $1\to2$ bound J (29.5), integrated with $e^{-ht}$, gives $\|L^hx\|_2\le Cs^2h^{-1/4}$. Multiplication by $\|J_s\|_\infty\le Cs^5$ gives its other weighted square $Cs^9h^{-1/2}$. The first line follows from (35.11) and bounded $U_s$. For the last, bounded product factorization gives
+
+$$
+\|U_s^{1/2}R_s(h)y\|_2^2
+\le\|R_s(h)^{1/2}U_sR_s(h)^{1/2}\|\,
+                   \langle y,R_s(h)y\rangle
+=k\langle y,R_s(h)y\rangle.
+\tag{35.17}
+$$
+
+The norm $k$ is already bounded by the spectral neighborhood. No $L^2$ norm is assigned to $J_s$ itself. Since $n\to\mu$,
+
+$$
+\|(\mathscr K_s(h)-\ell_s)z\|_2^2
+\le C(h^2s^{-1}+s^8+s^9h^{-1/2}).
+\tag{35.18}
+$$
+
+For a unit vector with quotient $\mathcal Q_s>k_2$, integrating $(k-t)(t-k_2)\le0$ over its spectral measure gives
+
+$$
+0\le k-\mathcal Q_s
+\le\frac{\|(\mathscr K_s(h)-\mathcal Q_s)z\|_2^2}{\mathcal Q_s-k_2}
+\le C\|(\mathscr K_s(h)-\ell_s)z\|_2^2.
+\tag{35.19}
+$$
+
+Here $\mathcal Q_s\to C_*$, and subtracting the quotient minimizes the residual. At fixed $M$, (35.18) is $C(M^2s^{15}+s^8+M^{-1/2}s^5)$; after division by $s^5$ it adds exactly a retained $CM^{-1/2}$ error. At $h=s^q$, its normalized bound is $C(s^{2q-6}+s^3+s^{4-q/2})\to0$. Combining with (35.13)–(35.14) proves (35.2)–(35.3). This proves the original-domain extension directly from its suppliers. $\square$
+
+
+## 36. Fixed-$H s^5$ damping and the complete principal laws
+
+**Theorem 36.1 (fixed spectral scale and absolute full-principal coefficient).** Assume Definition 32.1, including (32.1). For every separately fixed spectral probe constant $H>0$, independent of the probability parameter contained in $d$,
+
+$$
+k_d(Hs^5)=C_*+(\mathscr A\mathfrak m_d-\beta_*H)s^5+o_{d,H}(s^5).
+\tag{36.1}
+$$
+
+At the two smaller probes, for $q=6,7$,
+
+$$
+k_d(s^q)=C_*+\mathscr A\mathfrak m_ds^5+o_d(s^5).
+\tag{36.2}
+$$
+
+For each separately fixed finite $M\ge M_{0,d}$ of Theorem 35.1,
+
+$$
+\begin{aligned}
+\mathscr A\mathfrak m_d
+&\le\liminf_{s\downarrow0}\frac{k_d(Ms^8)-C_*}{s^5}\\
+&\le\limsup_{s\downarrow0}\frac{k_d(Ms^8)-C_*}{s^5}
+\le\mathscr A\mathfrak m_d+C_d(M^{-1/4}+M^{-1/2}).
+\end{aligned}
+\tag{36.3}
+$$
+
+In particular (36.3) is a bracket with a retained error, rather than equality at a fixed finite $M$.
+
+Proof. Equations (36.2)–(36.3) follow by inserting Theorem 34.2 into Theorem 35.1. For (36.1), fix $H>0$ first and set $h=Hs^5$. P (104.2) now has all errors tending to zero. The same bounded product factorization and compact spectral neighborhood in Theorem 35.1 give a bounded simple top $k$ and a fixed gap from the rest of the spectrum. Use exactly the vectors and split (35.5)–(35.6), so every field and return remains present.
+
+The late kernel still has (35.9), with $h/s^2=Hs^3\to0$. Therefore (35.7) and (35.10) hold. The long self and late cross bounds in (35.11)–(35.12) are $O_H(s^{13/2})$ and $O_H(s^{23/4})$, hence $o(s^5)$. The damping cross is at most $Cs^5hs^{-1/2}=O_H(s^{19/2})$. The damping quadratic scalar itself has a nonzero limit at this scale; we compute it.
+
+For every fixed $t>0$, $Q_s(t)\to P_t$ strongly on common $L^2$, where $P_t=e^{-t\mathcal E}$. To see the strong assertion directly, first take compactly supported smooth inputs. P104's local both-endpoint convergence gives weak convergence. Selfadjoint semigroup composition gives
+
+$$
+\|Q_s(t)f\|_2^2=\langle f,Q_s(2t)f\rangle
+ \longrightarrow\langle f,P_{2t}f\rangle=\|P_tf\|_2^2.
+\tag{36.4}
+$$
+
+Weak convergence plus convergence of norms gives strong convergence on this dense class. Contraction of both semigroups extends it to every fixed $L^2$ input. Restriction and zero extension preserve the composition identity. Since $x=F_su_s\to Vp$ in $L^2$, this also gives convergence of $\langle x,Q_s(t)x\rangle$ at each fixed positive time.
+
+The exact damping scalar is
+
+$$
+\frac{\langle x,Dx\rangle}{h}
+ =\int_0^T\frac{1-e^{-ht}}h\,\langle x,Q_s(t)x\rangle dt.
+\tag{36.5}
+$$
+
+Its integrand, extended by zero beyond $T$, is bounded by $Ct$ for $t<1$ and by $Ct^{-5/2}$ for $1\le t\le T$. Indeed $(1-e^{-ht})/h\le t$, and contraction or the $1\to2$ bound applied at $t/2$ gives these two bounds using the uniform $L^2$ and $L^1$ norms of $x$. Both majorants are integrable on their respective intervals. Dominated convergence in (36.5) yields
+
+$$
+\frac{\langle x,Dx\rangle}{h}
+\longrightarrow\int_0^\infty t\langle Vp,P_tVp\rangle dt
+=\|G_0(Vp)\|_2^2=C_*^2.
+\tag{36.6}
+$$
+
+For the middle equality integrate the nonnegative spectral measure of $\mathcal E$; its $\lambda^{-2}$ moment is finite since $G_0(Vp)=C_*p\in L^2$. Equivalently integrate $\|P_{t/2}Vp\|_2^2t$ by Tonelli. This evaluates the damping on this one input and does not assert a global derivative of an infinite-time operator.
+
+It follows that $\langle x,Dx\rangle=HC_*^2s^5+o_H(s^5)$. Insert this into the exact quotient (35.13). Since $m\to\mu$, $d_s/s^5\to W_1(o)$ and $\ell_s\to C_*$, it gives
+
+$$
+\mathcal Q_s=\ell_s+\mathscr A W_1(o)s^5
+                         -\frac{C_*^2}{\mu}Hs^5+o_H(s^5).
+\tag{36.7}
+$$
+
+The full weighted residual (35.18) is, at this fixed scale,
+
+$$
+O_H(s^9+s^8+s^{13/2})=O_H(s^{13/2})=o(s^5).
+\tag{36.8}
+$$
+
+The selfadjoint variance inequality (35.19) consequently upgrades (36.7) to the full principal value, with the same $o_H(s^5)$ remainder. Combining with Theorem 34.2 proves (36.1). Each $H$ was fixed before its $s$ limit. The proof has not replaced a fixed finite $M$ by an $s$-dependent value or inferred a fixed-$M$ equality from (36.1). $\square$
+
+## 37. Strict signs and every actual normalized complex choice
+
+**Theorem 37.1 (positive heat finite part, exact energy and critical orbit).** Fix one datum satisfying Definition 32.1 and suppose additionally $\mathfrak m_d>0$. Define
+
+$$
+H_*:=\frac{\mathscr A\mathfrak m_d}{\beta_*}
+     =\frac{C_*+j_0A_p^2}{C_*^2}\mathfrak m_d>0.
+\tag{37.1}
+$$
+
+Then the actual infimum on the original entire complex form domain obeys
+
+$$
+\epsilon_c(s)=-aH_*s^5+o_d(s^5),\qquad
+E_s=-aH_*s^3+o_d(s^3),\qquad
+r_s\sim aH_*s^{-3}\longrightarrow\infty.
+\tag{37.2}
+$$
+
+For every prescribed $s_n\downarrow0$ and every actual normalized complex choice $\psi_{s_n}\in D(S)$,
+
+$$
+\operatorname{dist}_{L^2(\mathbb R^4)}
+       (\mathcal U_{s_n}\psi_{s_n},\mathbb Tp)\longrightarrow0.
+\tag{37.3}
+$$
+
+Proof. For clarity, the positive-shift threshold test applies on this arbitrary fixed original domain, not just on a translated family. For every $h>0$ and every $f\in(\mathcal T_s\mathcal U_s)\mathcal Q$,
+
+$$
+q_s^c[\mathcal T_s^{-1}f]+ah\|f\|_2^2
+ =a\|(C_s+h)^{1/2}f\|_2^2-\chi_c\|U_s^{1/2}f\|_2^2.
+\tag{37.4}
+$$
+
+The map $(C_s+h)^{1/2}$ takes this whole complex form domain onto $L^2(\Omega_s)$. The squared norm of $U_s^{1/2}(C_s+h)^{-1/2}$ equals $k_d(h)$. Thus nonnegativity of (37.4) for all complex $f$ is equivalent to $k_d(h)\le C_*$ and, by the actual variational definition, to $\epsilon_c(s)\ge-ah$. Negation gives
+
+$$
+k_d(h)>C_*\quad\Longleftrightarrow\quad\epsilon_c(s)<-ah.
+\tag{37.5}
+$$
+
+This is the bounded complex-form factorization underlying J (56.3). The inverse-square-root product and the Birman–Schwinger operators used for the norm comparison are bounded at each fixed positive shift; no zero-energy inverse is invoked.
+
+Choose separately fixed $0<H_-<H_*<H_+$. Theorem 36.1 gives $k_d(H_-s^5)>C_*$ and $k_d(H_+s^5)<C_*$ for sufficiently small $s$, depending on these choices. Therefore
+
+$$
+-aH_+s^5\le\epsilon_c(s)<-aH_-s^5.
+\tag{37.6}
+$$
+
+First take the scalar liminf and limsup in $s$. Only afterward let the fixed bracketing constants approach $H_*$. This proves the first formula of (37.2), and (32.5) gives the other two. The full actual infimum, not the value of any chosen trial, has been squeezed.
+
+Now P Theorem 105.1 applies to each prescribed sequence and each actual normalized complex ground-state choice, since $r_s\to\infty$. It gives exactly (37.3) with the original $\mathcal U_s$. To make the transport explicit, if $f_s=\mathcal T_s\mathcal U_s\psi_s$, then
+
+$$
+\psi_s=(\mathcal U_s)^{-1}\mathcal T_s^{-1}f_s,\qquad
+\psi_s(Y)=(j_0s^7)^{-1/2}f_s(\mathscr L_s^{-1}\Xi_s^{-1}Y)
+\quad(Y\in I\times\mathbb R^3).
+\tag{37.7}
+$$
+
+In the phase coordinates of (2.2), the literal inverse is
+
+$$
+L_s^{-1}=\begin{pmatrix}1&-\nu s&2\nu^2s^2\\0&1&-2\nu s\\0&0&1\end{pmatrix},
+\qquad \mathscr L_s^{-1}(r,z)=(r,L_s^{-1}z).
+\tag{37.7a}
+$$
+
+The determinant-one maps $\mathcal T_s$ tend strongly to the identity. An auxiliary early vector was used only in spectral tests; no parity, reality or chosen phase is imposed on $f_s$ or $\psi_s$. $\square$
+
+**Theorem 37.2 (negative heat finite part, actual mass and the full Coulomb endpoint).** Fix one datum satisfying Definition 32.1 and suppose instead $\mathfrak m_d<0$. There exist one finite $M\ge M_{0,d}$ and constants $\eta_d,C_d>0$, all fixed before $s\downarrow0$, such that
+
+$$
+k_d(Ms^8)\le C_*-\eta_ds^5,\qquad
+0<-\epsilon_c(s)/a\le Ms^8
+\tag{37.8}
+$$
+
+for sufficiently small $s$. For every actual normalized complex choice put $f_s=\mathcal T_s\mathcal U_s\psi_s$. Its full sheared potential expectation satisfies
+
+$$
+\mathcal M_s:=\int_{\Omega_s}U_s|f_s|^2d\xi
+\le\frac{C_*^2M}{\eta_d}s^3.
+\tag{37.9}
+$$
+
+For every fixed compact $K\subset\mathbb R^4$,
+
+$$
+\|f_s\|_{L^2(K)}^2+\|\mathcal U_s\psi_s\|_{L^2(K)}^2
+\le C_{d,K}s^3,
+\qquad \mathcal U_s\psi_s\rightharpoonup0\text{ in }L^2(\mathbb R^4).
+\tag{37.10}
+$$
+
+The bounds hold uniformly over actual choices at each sufficiently small $s$, and the weak assertion holds in the every-choice sequential sense of Definition 32.1.
+
+For the endpoint constants use precisely J Definition 10.1. In raw native coordinates set
+
+$$
+\begin{aligned}
+\phi(k)&=\sqrt{2/(u-l)}\sin\frac{\pi(k-l)}{u-l},&
+\mathsf M_d&=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk>0,\\
+d_{C,d}(\mathbf z)&=\sqrt{\mathbf z^{\mathsf T}\mathsf M_d^{-1}\mathbf z},&
+\beta_{C,d}&=\frac{\phi(k_0)\int_I\phi(k)^3dk}
+                       {4\pi\sqrt{\det\mathsf M_d}},\\
+e_{C,d}&=-\frac{\beta_{C,d}^2}{4a}<0,&
+\rho_{C,d}&=\frac{\beta_{C,d}}{2a},\\
+h_{C,d}(\mathbf z)&=(\det\mathsf M_d)^{-1/4}
+ \left(\frac{\rho_{C,d}^3}{\pi}\right)^{1/2}
+                    e^{-\rho_{C,d}d_{C,d}(\mathbf z)},&
+(\mathcal D_gv)(k,\mathbf z)&=g^{-3/2}v(k,\mathbf z/g).
+\end{aligned}
+\tag{37.11}
+$$
+
+Then along every prescribed $s_n\downarrow0$ and every actual choice on it,
+
+$$
+\begin{aligned}
+E_s/g_s^2&\longrightarrow e_{C,d},&
+E_s&=\chi_c^2e_{C,d}s^6+o_d(s^6),\\
+\epsilon_c(s)&=\chi_c^2e_{C,d}s^8+o_d(s^8),&
+r_s&\longrightarrow-\chi_c^2e_{C,d}>0,\\
+\operatorname{dist}_{L^2(dk\,d\mathbf z)}
+ (\mathcal D_{g_s}\psi_s,\mathbb T(\phi h_{C,d}))
+ &\longrightarrow0,&
+\operatorname{dist}_{L^2}(\mathcal U_s\psi_s,\mathbb Tp)
+ &\longrightarrow\sqrt2.
+\end{aligned}
+\tag{37.12}
+$$
+
+The macroscopic phase orbit is centred at the original phase source and has full unit mass.
+
+Proof. Choose $M$ once, after fixing the datum, so that the upper error in (36.3) is less than $-\mathscr A\mathfrak m_d/2$. Its upper limsup is then strictly negative, giving a fixed $\eta_d>0$ and the first inequality in (37.8). The threshold equivalence (37.4)–(37.5) and negative attainment give the other inequality. Set $h=Ms^8$, $\alpha_s=-\epsilon_c(s)/a\in(0,h]$ and $t_s=\|C_s^{1/2}f_s\|_2^2$. The actual eigen-equation, valid on the full transported operator domain, is
+
+$$
+(aC_s-\chi_cU_s)f_s=\epsilon_c(s)f_s,\qquad
+t_s=\gamma\mathcal M_s-\alpha_s.
+\tag{37.13}
+$$
+
+For all complex form-domain vectors $f$, the same bounded factorization gives
+
+$$
+\int U_s|f|^2\le k_d(h)\{\|C_s^{1/2}f\|_2^2+h\|f\|_2^2\}.
+\tag{37.14}
+$$
+
+Apply it to the actual unit vector $f_s$ and substitute (37.13). With $k=k_d(h)<C_*$,
+
+$$
+\frac{C_*-k}{C_*}\mathcal M_s\le k(h-\alpha_s),\qquad
+\mathcal M_s\le\frac{C_*k(h-\alpha_s)}{C_*-k}
+                 \le\frac{C_*^2M}{\eta_d}s^3.
+\tag{37.15}
+$$
+
+This repeats the form algebra in (28.4)–(28.8) on the present original domain; here the signed supplier is (36.3), so translated-family membership is unnecessary. All constants are independent of the actual normalized complex eigenvector.
+
+The full field $U_s\to V$ uniformly, and $V$ has positive minimum on each fixed compact set. Such a compact lies inside $\Omega_s$ for small $s$. Hence (37.9) gives the first local bound in (37.10). The inverse shears send a fixed compact into one fixed larger compact and preserve measure; (37.7) gives the unsheared bound with the same order. Testing against compactly supported $L^2$ functions now gives weak convergence to zero; approximation of an arbitrary $L^2$ test and unit norm give global weak zero. This does not give global strong zero, since every state still has norm one.
+
+This is exactly J (10.2)'s additional actual weak-zero hypothesis, with the original source, path, cutoff-one normalization and complex domains. J Theorem 10.2 therefore yields the first four assertions and the macroscopic orbit in (37.12) with exactly (37.11). Both $\phi$ and $h_{C,d}$ have norm one: after $\mathbf z=\mathsf M_d^{1/2}y$, the latter normalization reduces to $4\rho_{C,d}^3\int_0^\infty R^2e^{-2\rho_{C,d}R}dR=1$. This verifies the full unit mass without a new endpoint theorem. Finally unit norm and weak zero imply
+
+$$
+\operatorname{dist}(\mathcal U_s\psi_s,\mathbb Tp)^2
+ =2-2|\langle p,\mathcal U_s\psi_s\rangle|\longrightarrow2.
+\tag{37.16}
+$$
+
+The argument began with arbitrary actual choices. Any failure of its every-choice limiting statements supplies a sequence of failing actual choices, contradicting the same estimates and the same application of J Theorem 10.2. $\square$
+
+## 38. Analytic interfaces and the remaining zero stratum
+
+**Definition 38.1 (local heat and global scope).** The local heat tool used with (32.10) is Colin de Verdière–Hillairet–Trélat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal, nilpotentization and related results*, Annales Henri Lebesgue 4, [Theorem A, Corollary 1.1 and Theorem 3.2](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf). Its original vector fields here are $\varepsilon\partial_k$ and $c_\kappa(k)\cdot\partial_q$, smooth and divergence free on the fixed larger pole-free neighborhood, with zero drift and raw smooth density. The flag is $(2,3,4)$, the privileged weights are $(1,1,2,3)$ and the step is three because the determinant in (1.3) has a nonzero margin. The source is interior. The Dirichlet realizations are selfadjoint contractions before shift, and satisfy the allowed exponential bound after the retained $\lambda$ shift. The nilpotent density in the chart is $j_0d\xi$. The integer diagonal expansion through order three gives precisely an integrable $O(t^{-1/2})$ remainder after the three displayed subtractions. Localization uses a common interior neighborhood, not equality of different operator domains.
+
+These local facts concern diagonal coefficients and local smoothness. In Theorem 33.1, the six finite strip derivatives, the bridge deletion estimates, the exact raw scaling, the input-height exponents and the separate L41 large-time bound supply all global time/input passages. In particular the local heat theorem alone does not permit an expanding-time derivative or an exchange of endpoint and infinite-time limits. The homogeneous dimension seven in these estimates is a dilation-volume exponent.
+
+The form interface in (37.4) and (37.14) is the closed semibounded complex-form/selfadjoint-operator correspondence; see Teschl, *Mathematical Methods in Quantum Mechanics*, [§2.3, Theorem 2.13, Lemma 2.14 and (2.65)](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf). Here the inherited Friedrichs form is nonnegative, $h>0$ makes its square root onto, and $U_s$ is bounded nonnegative at each fixed $s$. These are exactly the hypotheses used in the displayed bounded factorization. The compact spectral separation in Theorems 35.1 and 36.1 belongs only to the specified reconstruction/Birman–Schwinger operators, not to a positive $L^2$ threshold gap for $H_c$. All canonical heat, bridge, Sobolev, response, reconstruction, attainment and original-domain antecedents retain their stated ordinary conditional scopes.
+
+**Definition 38.2 (fixed limits and unresolved classification).** The scalar $\mathfrak m_d$ is the original raw heat functional (32.8), including both faces, the full clock coefficients and the entire original large-time tail. Theorems 34.2 and 36.1 identify its absolute spectral coefficient; they do not evaluate its sign or nonvanishing on the realized original double-zero locus. Nonemptiness or exclusion of that locus, the full original-family response and quartic sign classification, and actual scale/profile selection when $\mathfrak m_d=0$ remain unresolved. The zero fifth-order coefficient supplies no strict crossing or deficit. Thus the strict-sign implications do not by themselves settle every admitted original datum.
+
+Every datum, its interval, source, signed vector, analytic margins, $a$ and $B$ clock is fixed first. In the matching argument, $\ell$ and then $\delta$ are fixed before $s\downarrow0$, and $\delta\downarrow0$ follows that limit. In (36.3) and Theorem 37.2, one finite $M$ is fixed before $s$. In (36.1), each $H>0$ is fixed before $s$, and the bracketing constants in (37.6) approach $H_*$ only after the scalar $s$ limits. There is no $M(s)$, $H(s)$, moving source, source-to-face limit, phase cutoff or claim uniform over data outside the retained analytic window. In particular the finite-$M$ error in (36.3) is not discarded.
+
+The exact inverse-shear reconstruction remains (37.7); original raw wavefunctions and unit-source kernels have their different Jacobian factors in (1.9). All actual-state conclusions concern every normalized complex choice on every prescribed sequence. The early positive vector and the fixed canonical parities do not restrict the actual competitor class. Physical spatial dimension, physical $SO(3)$, operational state preparation and resource clocks require additional correspondences and are not selected by these analytic alternatives.
+
+## 追加锚（本行以下为增补区）
