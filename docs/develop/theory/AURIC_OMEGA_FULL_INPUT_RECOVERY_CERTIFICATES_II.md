@@ -1407,3 +1407,564 @@ The necessary scalar conditions of Proposition 63.1 remain valid and insufficien
 The original target (S.66) remains the uniform statement for every $0<\beta\leq1/2$, every allowed original-real actual encoder with actual rank at most nine, all admissible third columns, all complex whole-output CPTP recoveries, every finite complex reference and the unhalved diamond norm. Its general-beta part remains unresolved. Theorem 66.2 is a conditional half-beta consequence toward that unchanged target. An actual counterexample would still require an allowed common implementation and a full-reference diamond upper certificate below $1-\sqrt{1-\beta}$; passing an individual necessary scalar test cannot supply either.
 
 ## 追加锚（本行以下为增补区）
+
+## 68. An actual half-beta family separating subcode and full-input recovery
+
+**Definition 68.1 (the reused base and the allowed perturbations).** Use the original-real class of Definition 52.1 and the unhalved full-reference norm of (S.3). Fix $a=\beta=1/2$ and a real output orthonormal frame $(b_1,g_1,b_2,g_2,h)$. The following base encoder is exactly Definition 48.1, (R.244), of the [first volume](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#48-an-explicit-half-beta-encoder-with-two-complementary-certificates), under $(b_1,g_1,b_2,g_2,h)=(e_0,e_1,e_2,e_3,e_4)$ and $K_1^0=K_0$, $K_2^0=K_1$ there:
+
+$$
+\begin{aligned}
+t_1&=\frac{b_1+g_2+2h}{2\sqrt2},&
+t_2&=\frac{g_1-b_2}{2\sqrt2},\\
+K_1^0&=[b_1/\sqrt2,g_1/\sqrt2,t_1],&
+K_2^0&=[b_2/\sqrt2,g_2/\sqrt2,t_2],\\
+N_0(X)&=\sum_{\alpha=1}^2K_\alpha^0X(K_\alpha^0)^\dagger.
+\end{aligned}
+\tag{S.112}
+$$
+
+Let $Q\in M_5(\mathbb R)$ be any real symmetric density, including singular densities. Choose its real spectral factorization $Q=\sum_{\ell=1}^s q_\ell q_\ell^T$ with linearly independent $q_\ell$ and $s=\operatorname{rank}Q\in\{1,2,3,4,5\}$. Set
+
+$$
+\begin{gathered}
+0<\epsilon\leq\frac1{128},\qquad d_\epsilon=\sqrt{1-\epsilon},\\
+K_1^{\epsilon,Q}=[b_1/\sqrt2,g_1/\sqrt2,d_\epsilon t_1],\qquad
+K_2^{\epsilon,Q}=[b_2/\sqrt2,g_2/\sqrt2,d_\epsilon t_2],\\
+K_{2+\ell}^{\epsilon,Q}=[0,0,\sqrt\epsilon q_\ell],\qquad
+N_{\epsilon,Q}(X)=\sum_{\alpha=1}^{2+s}K_\alpha^{\epsilon,Q}X(K_\alpha^{\epsilon,Q})^\dagger.
+\end{gathered}
+\tag{S.113}
+$$
+
+The symbol $d_\epsilon$ is unrelated to the threshold defect $d=1-T$ of (S.3). The parameter $\epsilon$ here is a channel perturbation, not the center tail mass of Section 59. The base $\epsilon=0$ is used only for comparison and is outside the asserted rank-three-through-seven family.
+
+**Proposition 68.2 (actual class membership and minimal rank).** Every (S.113) is an actual original-real CPTP map on complex $M_3$, has $\lambda=f(\tau,\bar\tau)=1$, the prescribed half-beta phase-difference spectrum, and minimal encoder Kraus rank $2+\operatorname{rank}Q$.
+
+Proof. Proposition 48.2 already supplies the base realization. To check the changed third columns against the same first two columns, use
+
+$$
+\begin{gathered}
+\|t_1\|^2=\frac34,\quad\|t_2\|^2=\frac14,\qquad
+\frac{\langle b_1,t_1\rangle+\langle b_2,t_2\rangle}{\sqrt2}
+=\frac14-\frac14=0,\\
+\frac{\langle g_1,t_1\rangle+\langle g_2,t_2\rangle}{\sqrt2}=0,\qquad
+\sum_\alpha\|K_\alpha^{\epsilon,Q}|2\rangle\|^2
+=d_\epsilon^2+\epsilon\operatorname{Tr}Q=1.
+\end{gathered}
+\tag{S.114}
+$$
+
+Thus the third-to-code TP sums still vanish, while the code-column Gram sums are unchanged. Hence $\sum_\alpha(K_\alpha^{\epsilon,Q})^\dagger K_\alpha^{\epsilon,Q}=I_3$. These real matrices have the form $(x,Jx,t)$ in (R.8)–(R.9), with every third-column component retained. Their Kraus sum is CP on all complex matrices, so this verifies the actual class rather than a complementary relaxation.
+
+For $f_j^\pm=(b_j\pm ig_j)/\sqrt2$, the only nonzero phase Kraus vectors are $K_j^{\epsilon,Q}\chi_\pm=f_j^\pm/\sqrt2$, $j=1,2$. The four $f_j^\pm$ are orthonormal. The actual phase outputs and their environment data therefore satisfy
+
+$$
+\operatorname{spec}(N_{\epsilon,Q}(\chi_+)-N_{\epsilon,Q}(\chi_-))
+=(1/2,1/2,0,-1/2,-1/2),\qquad
+\tau=\bar\tau=\operatorname{diag}(1/2,1/2,0,\ldots,0),\qquad\lambda=1.
+\tag{S.115}
+$$
+
+Here $N(\chi_\pm)$ denotes the output on the phase projector, as in the first volume. In a complex linear relation among the Kraus matrices, their first columns force the coefficients of $K_1^{\epsilon,Q},K_2^{\epsilon,Q}$ to vanish. The remaining coefficients vanish because $\epsilon>0$ and the real independent $q_\ell$ are also complex independent. Thus the vectorized Kraus matrices are independent and the encoder Choi rank is exactly $2+s$, equal to the minimal Kraus number. Choosing $Q=\Pi_s/s$ for any real rank-$s$ orthogonal projection realizes each rank $3,4,5,6,7$. The unchanged code columns and $d_\epsilon t_1$ also span all five output directions, so retained-output support is five-dimensional. $\square$
+
+**Proposition 68.3 (the residual belongs to the same dilation).** The actual support-aware Schur residual of (S.65) for (S.113) is
+
+$$
+S_{\rm res}=v_{\epsilon,Q}v_{\epsilon,Q}^T,\qquad
+v_{\epsilon,Q}=(d_\epsilon/\sqrt2,0,\sqrt\epsilon\langle h,q_1\rangle,\ldots,
+\sqrt\epsilon\langle h,q_s\rangle)^T,
+\qquad
+w=\frac{1-\epsilon}{2}+\epsilon\langle h,Qh\rangle.
+\tag{S.116}
+$$
+
+Proof. Apply the same-dilation identity of Theorem 2.1 in the first volume: the residual is the Gram outer product of the actual third-input components along the one outside-phase output direction $h$. Their list is precisely $v_{\epsilon,Q}$, which is nonzero since $d_\epsilon>0$. Thus the residual has rank one and trace $w$. Its phase-Choi rank is $2\operatorname{rank}\tau+1=5$ by (R.5); this is distinct from the encoder Kraus rank $2+s$.
+
+For example, $Q=hh^T$ gives the actual third-input environment state and residual
+
+$$
+\sigma=\begin{pmatrix}
+3d_\epsilon^2/4&0&d_\epsilon\sqrt{\epsilon/2}\\
+0&d_\epsilon^2/4&0\\
+d_\epsilon\sqrt{\epsilon/2}&0&\epsilon
+\end{pmatrix},\qquad
+S_{\rm res}=\begin{pmatrix}d_\epsilon/\sqrt2\\0\\\sqrt\epsilon\end{pmatrix}
+\begin{pmatrix}d_\epsilon/\sqrt2&0&\sqrt\epsilon\end{pmatrix},\qquad
+w=\frac{1+\epsilon}{2}.
+\tag{S.117}
+$$
+
+The inverse of $\tau$ in the Schur calculation is its support inverse, zero on the remaining environment coordinates. No independently chosen residual or discarded active-space third column enters these identities. $\square$
+
+## 69. A sharper rational full-input dual for the reused base
+
+**Definition 69.1 (recovery-shaped vectorization and transport).** For every $3\times5$ recovery-shaped matrix $A$ use logical-first row vectorization
+
+$$
+\operatorname{vec}_{3,5}(A)=\sum_{i=0}^2\sum_{y=0}^4A_{iy}|i\rangle_3|y\rangle_5,\qquad
+C_{\rho,N}=\sum_\alpha|\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger)\rangle
+\langle\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger)|.
+\tag{S.118}
+$$
+
+For a complex whole-output recovery with Kraus matrices $R_k$, put $J=\sum_k|\operatorname{vec}_{3,5}(R_k)\rangle\langle\operatorname{vec}_{3,5}(R_k)|$. Then $J\succeq0$, $\operatorname{Tr}_3J=(\sum_kR_k^\dagger R_k)^T=I_5$, and, for every complex Hermitian density $\rho$,
+
+$$
+\langle\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger),\operatorname{vec}_{3,5}(R_k)\rangle
+=\operatorname{Tr}(\rho R_kK_\alpha),\qquad
+F_e(\rho,RN)=\operatorname{Tr}(C_{\rho,N}J).
+\tag{S.119}
+$$
+
+This is the same SDP as Theorem 7.1 of the first volume, in a transported convention. Explicitly, let $\mathsf S(|y\rangle_5|i\rangle_3)=|i\rangle_3|y\rangle_5$, and let $M_\rho=D_\rho D_\rho^\dagger$ be (R.29). Then
+
+$$
+C_{\rho,N}=\mathsf S\overline{M_\rho}\mathsf S^\dagger,\qquad
+X_{\rm out}=\mathsf S^\dagger\bar J\mathsf S,\qquad
+Y_{\rm out}=Y^T,\qquad
+C_{\rho,N}\preceq I_3\otimes Y
+\ \Longleftrightarrow\ M_\rho\preceq Y^T\otimes I_3.
+\tag{S.120}
+$$
+
+Indeed $\operatorname{vec}_{3,5}(\rho K_\alpha^\dagger)=\mathsf S\overline{\operatorname{vec}_{5,3}(K_\alpha\rho)}$. These are a whole tensor swap and full conjugation, equivalently full transpose of Hermitian matrices, together with transpose of the output dual. They are not a partial transpose. The real numerical certificate below is unchanged by the output transpose, but the general complex convention still requires it.
+
+The reused weak-dual and pure-target interfaces now read
+
+$$
+\begin{gathered}
+C_{\rho,N}\preceq I_3\otimes Y\quad\Longrightarrow\quad
+F_e(\rho,RN)\leq\operatorname{Tr}Y\quad\hbox{for every complex whole-output CPTP }R,\\
+\|(\mathrm{id}\otimes RN)(\Phi_\rho)-\Phi_\rho\|_1
+\geq2(1-F_e(\rho,RN)),
+\end{gathered}
+\tag{S.121}
+$$
+
+where $\Phi_\rho$ is any pure purification projector. The first implication follows by tracing against $J$; the second is the binary measurement onto $\Phi_\rho$. Both reuse Theorems 7.1 and 7.4, with the unhalved norm.
+
+**Theorem 69.2 (improved base certificate).** For $N_0$ of (S.112), the same full-input witness $\rho_\star$ as (R.260) and the following new rational dual satisfy
+
+$$
+\rho_\star=\operatorname{diag}(1/4,1/4,1/2),\qquad
+Y=\frac{M}{64},\qquad
+M=\begin{pmatrix}
+11&0&0&2&5\\
+0&10&-2&0&0\\
+0&-2&8&0&0\\
+2&0&0&8&6\\
+5&0&0&6&15
+\end{pmatrix},\qquad
+Y\succ0,\quad\operatorname{Tr}Y=\frac{13}{16}.
+\tag{S.122}
+$$
+
+Consequently every complex whole-output recovery obeys $F_e(\rho_\star,RN_0)\leq13/16$ and $\delta_{N_0}\geq3/8$.
+
+Proof. In the order $(b_1,g_2,h)\oplus(g_1,b_2)$ the matrix $M$ is $A\oplus B$, where
+
+$$
+\begin{gathered}
+A=\begin{pmatrix}11&2&5\\2&8&6\\5&6&15\end{pmatrix},\quad
+B=\begin{pmatrix}10&-2\\-2&8\end{pmatrix},\\
+A^{-1}=\frac1{28}\begin{pmatrix}3&0&-1\\0&5&-2\\-1&-2&3\end{pmatrix},\qquad
+B^{-1}=\frac1{76}\begin{pmatrix}8&2\\2&10\end{pmatrix}.
+\end{gathered}
+\tag{S.123}
+$$
+
+Their leading principal minors are $(11,84,784)$ and $(10,76)$, respectively. Sylvester's criterion proves positivity, and multiplication verifies the displayed inverses. Let
+
+$$
+\begin{aligned}
+w_1&=|0\rangle b_1+|1\rangle g_1+|2\rangle(b_1+g_2+2h),\\
+w_2&=|0\rangle b_2+|1\rangle g_2+|2\rangle(g_1-b_2),\qquad
+W=[w_1,w_2]/\sqrt{32}.
+\end{aligned}
+\tag{S.124}
+$$
+
+Tensor products in this formula have the logical factor first. Directly from (S.112), $C_{\rho_\star,N_0}=WW^\dagger$. For transparency the two diagonal contractions, including the factor $64/32=2$, are
+
+$$
+\begin{aligned}
+[W^\dagger(I_3\otimes Y^{-1})W]_{11}
+&=2\left(\frac3{28}+\frac8{76}+\frac8{28}\right)=\frac{265}{266},\\
+[W^\dagger(I_3\otimes Y^{-1})W]_{22}
+&=2\left(\frac{10}{76}+\frac5{28}+\frac{14}{76}\right)=\frac{263}{266},\\
+W^\dagger(I_3\otimes Y^{-1})W
+&=\operatorname{diag}(265/266,263/266),\\
+I_2-W^\dagger(I_3\otimes Y^{-1})W
+&=\operatorname{diag}(1/266,3/266)\succ0.
+\end{aligned}
+\tag{S.125}
+$$
+
+The off-diagonal contraction vanishes because corresponding vectors belong to different blocks of (S.123). In the first contraction, $(1,1,2)A^{-1}(1,1,2)^T=8/28$; in the second, $(1,-1)B^{-1}(1,-1)^T=14/76$.
+
+Taking both Schur complements of the same block matrix proves the full inequality:
+
+$$
+\begin{pmatrix}I_3\otimes Y&W\\W^\dagger&I_2\end{pmatrix}\succ0
+\ \Longleftrightarrow\ I_2-W^\dagger(I_3\otimes Y^{-1})W\succ0
+\ \Longleftrightarrow\ I_3\otimes Y-WW^\dagger\succ0.
+\tag{S.126}
+$$
+
+Thus this is a strict fifteen-dimensional certificate, not a test on selected recovery columns. Apply (S.121) at the fixed purification $\frac12|00\rangle+\frac12|11\rangle+\frac1{\sqrt2}|22\rangle$ to obtain
+
+$$
+F_e(\rho_\star,RN_0)\leq\frac{13}{16},\qquad
+\|RN_0-\mathrm{id}_3\|_\diamond\geq\frac38,\qquad
+\delta_{N_0}\geq\frac38.
+\tag{S.127}
+$$
+
+The witness and the encoder are reused from Sections 48–50 of the first volume. Relative to its $83/100$ fidelity upper bound and $17/50$ norm lower bound, the improvements are $7/400$ and $7/200$. Neither the displayed dual nor the witness is asserted optimal. $\square$
+
+## 70. Every complex code direction has a completed transpose recovery
+
+**Definition 70.1 (one recovery for a whole complex plane).** For any $u,v\in\mathbb C$ with $|u|^2+|v|^2=1$, put $\xi=u|0\rangle+v|1\rangle$, $V_\xi=[\xi,|2\rangle]$, and $\iota_\xi(X)=V_\xi XV_\xi^\dagger$. Define
+
+$$
+N_\xi=N_0\iota_\xi,\quad L_\alpha=K_\alpha^0V_\xi,\quad
+S_\xi=\sum_{\alpha=1}^2L_\alpha L_\alpha^\dagger,\quad
+P_\xi=\operatorname{supp}S_\xi,\quad H_\xi=S_\xi^{-1/2},
+\tag{S.128}
+$$
+
+where $H_\xi$ is zero on $\ker S_\xi$. Reuse the supported transpose recovery and whole-output completion of Section 49 in the first volume, now at this complex direction:
+
+$$
+\begin{aligned}
+D_\xi(X)&=\sum_{\alpha=1}^2L_\alpha^\dagger H_\xi XH_\xi L_\alpha
++\operatorname{Tr}((I_5-P_\xi)X)|0\rangle\langle0|,\\
+R_\xi&=\iota_\xi D_\xi:M_5\longrightarrow M_3.
+\end{aligned}
+\tag{S.129}
+$$
+
+The supported core has Kraus completeness $H_\xi S_\xi H_\xi=P_\xi$. Choosing an orthonormal basis $n_j$ of $\ker S_\xi$, the reset branch has Kraus matrices $|0\rangle\langle n_j|$, with completeness $I_5-P_\xi$. Thus $D_\xi$ and $R_\xi$ are complex CPTP maps on all of $M_5$. The completion acts also on later perturbation output outside the old support; it is not discarded when $Q$ changes.
+
+**Theorem 70.2 (uniform complex Gram bound).** Arrange the four vectors $L_\alpha|i\rangle$ in logical-first order $(i,\alpha)=(0,1),(0,2),(1,1),(1,2)$. Their Gram matrix is
+
+$$
+G_\xi=\begin{pmatrix}I_2/2&U_\xi/4\\U_\xi^\dagger/4&\operatorname{diag}(3/4,1/4)\end{pmatrix},\qquad
+U_\xi=\bar u Z+\bar v X,\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{S.130}
+$$
+
+It satisfies $G_\xi\succeq(2-\sqrt3)I_4/4\succ0$ and $\operatorname{Tr}\sqrt{G_\xi}\geq\sqrt2+\sqrt{3/2}$ for every complex unit direction.
+
+Proof. Formula (S.130) follows by contracting the actual columns; its conjugates cannot be dropped. With $\sigma_y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$ and $\kappa=2\operatorname{Im}(\bar u v)$,
+
+$$
+B_\xi:=4G_\xi-2I_4=\begin{pmatrix}0&U_\xi\\U_\xi^\dagger&Z\end{pmatrix},\quad
+U_\xi^\dagger U_\xi=I_2+\kappa\sigma_y,\quad |\kappa|\leq1,\quad
+\operatorname{Tr}B_\xi=\operatorname{Tr}B_\xi^3=0,\quad\operatorname{Tr}B_\xi^2=6.
+\tag{S.131}
+$$
+
+For the cubic trace use $\operatorname{Tr}B_\xi^3=3\operatorname{Tr}(ZU_\xi^\dagger U_\xi)+\operatorname{Tr}Z^3=0$. Equivalently, a Schur computation for $t\ne0$, then polynomial continuation to $t=0$, gives
+
+$$
+\det(tI_4-B_\xi)=\det((t^2-1)I_2-tZ-\kappa\sigma_y)
+=t^4-3t^2+1-\kappa^2.
+\tag{S.132}
+$$
+
+Hermiticity and the even polynomial give eigenvalues $s_1,-s_1,s_2,-s_2$ with $s_j\geq0$ and $s_1^2+s_2^2=3$. This includes a zero pair at $|\kappa|=1$. Consequently the eigenvalues of $G_\xi$ are $1/2\pm s_j/4$, all at least $(2-\sqrt3)/4>0$. The four actual output columns are independent, so $\operatorname{rank}S_\xi=4$ for real, circular, zero-coordinate and all other complex directions.
+
+Put $z_j=s_j^2/16$, so $z_1+z_2=3/16$. On $[0,3/16]$ define
+
+$$
+g(z)=\sqrt{1/2+\sqrt z}+\sqrt{1/2-\sqrt z}
+=\sqrt{1+\sqrt{1-4z}}.
+\tag{S.133}
+$$
+
+With $r=\sqrt{1-4z}\geq1/2$ and $g=\sqrt{1+r}$, differentiation gives $g''=-2/(r^3g)-1/(r^2g^3)<0$, including finite endpoint limits. Hence each $g(z)$ lies above its chord between $0$ and $3/16$. Adding the two chord bounds yields
+
+$$
+\operatorname{Tr}\sqrt{G_\xi}=g(z_1)+g(z_2)
+\geq g(0)+g(3/16)=\sqrt2+\sqrt{3/2}.
+\tag{S.134}
+$$
+
+No step assumes $u,v$ real. $\square$
+
+**Proposition 70.3 (midpoint fidelity with the tensor shuffle).** Let $\Lambda_\xi=D_\xi N_\xi$. Then
+
+$$
+F_e(I_2/2,\Lambda_\xi)
+=\frac14\|\operatorname{Tr}_{\rm logical}\sqrt{G_\xi}\|_{\rm HS}^2
+\geq\frac{(\operatorname{Tr}\sqrt{G_\xi})^2}{8}
+\geq\frac{7+4\sqrt3}{16}.
+\tag{S.135}
+$$
+
+Proof. Concatenate $F_\xi=[L_1,L_2]$ in Kraus-first order $(\alpha,i)$ and put $G_{\rm KF}=F_\xi^\dagger F_\xi$. Let $\Pi$ be the coordinate shuffle with zero-based order $(0,2,1,3)$, taking Kraus-first to logical-first order. Then
+
+$$
+G_\xi=\Pi G_{\rm KF}\Pi^\dagger,\qquad
+\sqrt{G_\xi}=\Pi\sqrt{G_{\rm KF}}\Pi^\dagger,\qquad
+F_\xi^\dagger H_\xi F_\xi=\sqrt{G_{\rm KF}}.
+\tag{S.136}
+$$
+
+The last identity is the singular-value/polar identity with the support inverse. Its $(\alpha,\gamma)$ block is the composite Kraus matrix $L_\alpha^\dagger H_\xi L_\gamma$. Reset Kraus products vanish since $n_j^\dagger L_\gamma=0$. Taking the logical trace of those blocks therefore produces the two-by-two environment matrix whose squared Hilbert–Schmidt norm divided by four is the midpoint fidelity. In logical-first order this is exactly $\operatorname{Tr}_{\rm logical}\sqrt{G_\xi}$. The shuffle preserves the total trace and makes this partial-trace identification explicit. Cauchy–Schwarz against $I_2$ gives its squared norm at least half its trace squared; (S.134) proves (S.135). The polar and midpoint identities reuse (R.258)–(R.259); their complex-direction estimate here is the extension. $\square$
+
+## 71. Full-reference error from the self-adjoint unital qubit composite
+
+**Theorem 71.1 (the restricted Pauli norm identity and the base subcode bound).** For each complex unit $\xi$, the particular channel $\Lambda_\xi$ is Hilbert–Schmidt self-adjoint, TP and unital, and
+
+$$
+\|\Lambda_\xi-\mathrm{id}_2\|_\diamond
+=2(1-F_e(I_2/2,\Lambda_\xi)),\qquad
+\|R_\xi N_0\iota_\xi-\iota_\xi\|_\diamond
+\leq\frac{9-4\sqrt3}{8}.
+\tag{S.137}
+$$
+
+Proof. Every $N_\xi(X)$ is supported on $P_\xi$, also for off-diagonal matrix units. Thus the completion branch vanishes in the composite, which is
+
+$$
+\Lambda_\xi=N_\xi^\dagger\circ[X\mapsto H_\xi XH_\xi]\circ N_\xi,\qquad
+\Lambda_\xi(I_2)=\sum_\alpha L_\alpha^\dagger P_\xi L_\alpha=I_2.
+\tag{S.138}
+$$
+
+The sandwich is self-adjoint for the Hilbert–Schmidt inner product, hence so is this composite. TP follows from composition of CPTP maps. For a TP unital Hermiticity-preserving qubit channel write $T_{ij}=\operatorname{Tr}(\sigma_i\Lambda(\sigma_j))/2$ on the three Pauli matrices. The Bloch matrix $T$ is real; Hilbert–Schmidt self-adjointness makes it symmetric. The real spectral theorem supplies a diagonalizing orthogonal eigenbasis, including degeneracies. Flip one eigenvector if needed to choose a rotation in $SO(3)$. Lift that rotation to a qubit unitary $U$. Thus the simultaneous conjugation $\Lambda'=\operatorname{Ad}_{U^\dagger}\Lambda\operatorname{Ad}_U$ is Pauli diagonal. The same unitary is used on both sides, so the identity target is preserved.
+
+If its three eigenvalues are $\mu_1,\mu_2,\mu_3$, set
+
+$$
+\begin{aligned}
+p_0&=(1+\mu_1+\mu_2+\mu_3)/4,&p_1&=(1+\mu_1-\mu_2-\mu_3)/4,\\
+p_2&=(1-\mu_1+\mu_2-\mu_3)/4,&p_3&=(1-\mu_1-\mu_2+\mu_3)/4.
+\end{aligned}
+\tag{S.139}
+$$
+
+The normalized Choi matrix is diagonal in the Bell basis with these entries. CP makes every $p_j\geq0$ and TP gives $\sum_jp_j=1$, so $\Lambda'(X)=\sum_{j=0}^3p_j\sigma_jX\sigma_j$, with $\sigma_0=I_2$. The Kraus-trace formula gives $p_0=F_e(I_2/2,\Lambda')=F_e(I_2/2,\Lambda)$; simultaneous unitary conjugation preserves this fidelity.
+
+For every finite complex reference and every trace-class operator, unitary conjugation preserves its trace norm. Writing $\Lambda'-\mathrm{id}=\sum_{j>0}p_j(\operatorname{Ad}_{\sigma_j}-\mathrm{id})$ gives the diamond upper bound $2\sum_{j>0}p_j$. On a normalized Bell input the four Pauli branches are orthogonal Bell projectors, so the difference has eigenvalues $p_0-1,p_1,p_2,p_3$ and trace norm exactly $2(1-p_0)$. Unitary invariance of the diamond norm proves the first identity of (S.137). This argument applies to self-adjoint unital CPTP qubit channels; it supplies no fidelity–diamond equality for arbitrary channels or for optimized qutrit recoveries.
+
+Finally $R_\xi N_0\iota_\xi-\iota_\xi=\iota_\xi(\Lambda_\xi-\mathrm{id}_2)$. Output isometries preserve trace norm with any finite reference. Combining (S.135) with the first identity proves the second bound. $\square$
+
+## 72. Uniform continuation through every real residual density
+
+**Theorem 72.1 (actual-channel perturbation estimate).** Put $P_2=|2\rangle\langle2|$, $P_{\mathcal C}=I_3-P_2$, $Z_0=P_{\mathcal C}-P_2$ and $Q_0=N_0(P_2)=t_1t_1^T+t_2t_2^T$. For every allowed $\epsilon,Q$,
+
+$$
+\begin{aligned}
+\mathcal D_{d_\epsilon}(X)
+&=P_{\mathcal C}XP_{\mathcal C}+P_2XP_2
++d_\epsilon(P_{\mathcal C}XP_2+P_2XP_{\mathcal C})\\
+&=\frac{1+d_\epsilon}{2}X+\frac{1-d_\epsilon}{2}Z_0XZ_0,\\
+N_{\epsilon,Q}(X)&=N_0\mathcal D_{d_\epsilon}(X)
++\epsilon\langle2|X|2\rangle(Q-Q_0),\\
+\|N_{\epsilon,Q}-N_0\|_\diamond
+&\leq1-\sqrt{1-\epsilon}+\epsilon\|Q-Q_0\|_1
+\leq\eta_\epsilon:=1-\sqrt{1-\epsilon}+2\epsilon
+\leq\frac83\epsilon\leq\frac1{48}.
+\end{aligned}
+\tag{S.140}
+$$
+
+Proof. The channel identity follows on all four input blocks: the code block is unchanged, the two cross blocks acquire $d_\epsilon$, and the third diagonal output becomes $d_\epsilon^2Q_0+\epsilon Q$. It therefore holds on every complex input and after tensoring with any reference.
+
+The dephasing mixture gives $\|\mathcal D_{d_\epsilon}-\mathrm{id}\|_\diamond\leq1-d_\epsilon$. A balanced superposition of one code vector and $|2\rangle$ has its two cross entries reduced by $d_\epsilon$, and the resulting difference has eigenvalues $\pm(1-d_\epsilon)/2$. This attains $1-d_\epsilon$. For any fixed $A\in M_5$, the map $X\mapsto\langle2|X|2\rangle A$ has diamond norm $\|A\|_1$: after any finite reference it is the reference compression of $X$ tensored with $A$. Compression has induced trace norm at most one, tensor-product trace norms multiply, and $P_2$ attains equality. Apply this with $A=Q-Q_0$. Since $Q,Q_0$ are densities, their trace distance is at most two. CPTP postprocessing by $N_0$ is contractive. Finally $d_\epsilon\geq1/2$, so $1-d_\epsilon=\epsilon/(1+d_\epsilon)\leq2\epsilon/3$. These prove every bound in (S.140), uniformly in the entire real-density continuum. $\square$
+
+**Theorem 72.2 (strict subcode/full-code separation).** For every fixed actual $N_{\epsilon,Q}$ of (S.113), every complex unit $\xi$ has the whole-output recovery (S.129), independent of $\epsilon,Q$, satisfying
+
+$$
+\|R_\xi N_{\epsilon,Q}\iota_\xi-\iota_\xi\|_\diamond
+\leq b:=\frac{55-24\sqrt3}{48},\qquad
+\delta_{N_{\epsilon,Q}}\geq\frac{17}{48}.
+\tag{S.141}
+$$
+
+In particular, with all recovery infima over complex CPTP maps $M_5\to M_3$,
+
+$$
+\sup_{\substack{\xi\in\mathcal C\\\|\xi\|=1}}
+\inf_R\|RN_{\epsilon,Q}\iota_\xi-\iota_\xi\|_\diamond
+\leq b<\frac9{32}<1-\frac1{\sqrt2}<\frac{17}{48}
+\leq\inf_R\|RN_{\epsilon,Q}-\mathrm{id}_3\|_\diamond.
+\tag{S.142}
+$$
+
+Proof. Fix the same arbitrary recovery $R$ when comparing the purified outputs at $N_0$ and $N_{\epsilon,Q}$ for the same $\rho_\star$. Their trace-norm difference is at most $\eta_\epsilon$ by (S.140) and CPTP contraction. Their difference is Hermitian and traceless, so any effect probability differs by at most $\eta_\epsilon/2$: its positive and negative parts each have trace half its trace norm. Using the pure target effect and (S.127) gives, simultaneously for every $R$,
+
+$$
+F_e(\rho_\star,RN_{\epsilon,Q})
+\leq\frac{13}{16}+\frac{\eta_\epsilon}{2}\leq\frac{79}{96},\qquad
+\|RN_{\epsilon,Q}-\mathrm{id}_3\|_\diamond
+\geq2(1-79/96)=\frac{17}{48}.
+\tag{S.143}
+$$
+
+This is one fixed three-dimensional purification witnessing a lower bound for all unrestricted recoveries. For each $\xi$, use its fixed base recovery $R_\xi$ on the entire perturbed output, including the reset branch outside $P_\xi$. Input isometries and CPTP postprocessing do not increase diamond norm, so
+
+$$
+\|R_\xi N_{\epsilon,Q}\iota_\xi-\iota_\xi\|_\diamond
+\leq\frac{9-4\sqrt3}{8}+\eta_\epsilon
+\leq\frac{55-24\sqrt3}{48}.
+\tag{S.144}
+$$
+
+The three strict comparisons in (S.142) reduce, by squaring positive sides, to
+
+$$
+48\sqrt3>83\quad(6912>6889),\qquad
+\frac1{\sqrt2}<\frac{23}{32}\quad(512<529),\qquad
+\frac{31}{48}<\frac1{\sqrt2}\quad(961<1152).
+\tag{S.145}
+$$
+
+The uniform separation between the displayed full-code lower bound and the subcode upper bound is $17/48-b=(12\sqrt3-19)/24>0$, since $432>361$. Every upper estimate holds after every finite complex reference. Taking a separate recovery infimum for each direction and then the direction supremum is therefore legitimate. It does not place a single recovery before that supremum. $\square$
+
+## 73. The exact fixed-input witness exclusion and its quantifiers
+
+**Corollary 73.1 (code-compression rank at most one cannot witness the threshold).** For each fixed $N_{\epsilon,Q}$ and each complex unit $\xi$, the same $R_\xi$ works simultaneously for every density $\rho$ supported on $\operatorname{span}\{\xi,|2\rangle\}$, with arbitrary complex coherences, weights and rank, and every purification. In particular
+
+$$
+F_e(\rho,R_\xi N_{\epsilon,Q})\geq1-b/2>
+\frac{55}{64}>T_{1/2}:=\frac{1+1/\sqrt2}{2}.
+\tag{S.146}
+$$
+
+For this actual family, no density with $\operatorname{rank}(P_{\mathcal C}\rho P_{\mathcal C})\leq1$ can be a fixed-input witness satisfying $\max_R F_e(\rho,RN_{\epsilon,Q})\leq T_{1/2}$, or admit a threshold dual of (S.121).
+
+Proof. A supported density is $V_\xi\sigma V_\xi^\dagger$ for a qubit density, including singular endpoints. Any purification lies on that plane tensored with its reference. Thus (S.141) bounds its recovered trace error by $b$. Combining with the binary lower inequality (S.121) gives (S.146); $55/64>T_{1/2}$ is equivalent to the middle comparison of (S.145).
+
+If a code vector $z$ is in the kernel of $P_{\mathcal C}\rho P_{\mathcal C}$, then $0=\langle z,\rho z\rangle=\|\rho^{1/2}z\|^2$, so $\rho z=0$. With code-compression rank one this confines the support to the orthogonal complement of its zero code direction, namely one plane $\operatorname{span}\{\xi,|2\rangle\}$. With code-compression rank zero both code directions vanish, and any unit $\xi$ supplies such a plane. The preceding recovery contradicts a uniform upper fidelity threshold at that input. Weak duality gives the same exclusion for a threshold dual. $\square$
+
+**Definition 73.2 (the common-object distinction).** The demonstrated quantifier order is one actual encoder, then every complex direction, then one recovery for the whole plane, then every density and finite reference on that plane. In fact $R_\xi$ depends only on $N_0$ and $\xi$ and works for all the allowed $\epsilon,Q$. On the other side, one actual encoder and the same $\rho_\star$ precede every unrestricted recovery in (S.143). The construction never exchanges $\forall\xi\,\exists R_\xi$ with a common qutrit recovery serving every input. The strict gap concerns these distinct operational optimizations for the same channel.
+
+The exclusion is exactly $\operatorname{rank}(P_{\mathcal C}\rho P_{\mathcal C})\leq1$, not every total-rank-two input or every complex two-dimensional subspace. An input of total rank two can have code-compression rank two. The witness $\rho_\star$ has total rank three and code-compression rank two and is sufficient for (S.143); necessity of total rank three among unrestricted threshold witnesses is not proved. Sections 48–51 of the first volume already supply the real-direction plane obstruction for the reused base; the all-complex-direction, referenced norm and perturbed-family conclusions here extend that scope.
+
+## 74. Exact matrix interfaces for the remaining arbitrary third columns
+
+**Definition 74.1 (the full lambda-one normal form).** In this section return to arbitrary $0<\beta\leq1/2$, $a=1-\beta$, and every original-real actual encoder of Definition 52.1 with $\lambda=f(\tau,\bar\tau)=1$. Unit-trace fidelity one gives $\tau=\bar\tau$. It is real symmetric, so a real orthogonal environment change diagonalizes it to $\operatorname{diag}(a,\beta,0,\ldots,0)$. The real and imaginary parts of the two nonzero orthogonal phase Kraus vectors, together with their orthogonal conjugate partners, then give a real output frame as in (R.7). In those coordinates the first two column lists and all third columns are
+
+$$
+\begin{gathered}
+E_0=[\sqrt a\,b_1,\sqrt\beta\,b_2,0,\ldots,0],\qquad
+E_1=[\sqrt a\,g_1,\sqrt\beta\,g_2,0,\ldots,0],\qquad
+\mathsf T=[t_1,\ldots,t_r],\\
+K_\alpha=[(E_0)_\alpha,(E_1)_\alpha,t_\alpha],\qquad
+\|\mathsf T\|_{\rm HS}^2=1,\qquad
+\operatorname{Tr}(E_0^\dagger\mathsf T)=\operatorname{Tr}(E_1^\dagger\mathsf T)=0.
+\end{gathered}
+\tag{S.147}
+$$
+
+This uses coordinate changes of the same actual channel, retaining $r\leq9$ and every admissible real third column, including columns at indices greater than two. It is not a two-Kraus restriction. Environmental conjugation and all actual blocks transform with the coordinates as required in Definition 58.1. No normal form for $\sqrt a<\lambda<1$ is inferred here.
+
+**Proposition 74.2 (real-direction diagonal weighted-input interface).** For real $\theta$ and $p\in[0,1]$, set $\xi=\cos\theta|0\rangle+\sin\theta|1\rangle$, $P_\xi^{\rm in}=|\xi\rangle\langle\xi|$ on the input, $\rho_{\theta,p}=pP_\xi^{\rm in}+(1-p)P_2$, and
+
+$$
+\begin{gathered}
+e_j(\theta)=\cos\theta b_j+\sin\theta g_j,\quad
+D_\theta=a e_1e_1^\dagger+\beta e_2e_2^\dagger=N(P_\xi^{\rm in}),\\
+Q_N=\mathsf T\mathsf T^\dagger=N(P_2),\qquad
+X_\theta=\sqrt a\,e_1t_1^\dagger+\sqrt\beta\,e_2t_2^\dagger=N(|\xi\rangle\langle2|).
+\end{gathered}
+\tag{S.148}
+$$
+
+Then the exact optimum over all complex whole-output recoveries is
+
+$$
+\begin{aligned}
+\max_R F_e(\rho_{\theta,p},RN)
+=\max_{0\preceq P\preceq I_5}\Bigl\{&p^2(1-\operatorname{Tr}(PD_\theta))
++(1-p)^2\operatorname{Tr}(PQ_N)\\
+&+2p(1-p)\|\sqrt{I_5-P}\,X_\theta\sqrt P\|_1\Bigr\}.
+\end{aligned}
+\tag{S.149}
+$$
+
+Proof. Restricting recovery output to the target plane loses nothing: postcompose any qutrit recovery with the channel that compresses to the plane and returns leakage to one fixed vector in it. In the Kraus-trace formula the compressed branch preserves the original overlap with the supported $\rho_{\theta,p}$; added reset branches contribute nonnegative squared overlaps. Thus code-valued recoveries attain the unrestricted optimum.
+
+For their unital CP adjoints put $P=R^\dagger(P_2)$, $B=R^\dagger(|\xi\rangle\langle2|)$. Complete positivity and unitality are exactly
+
+$$
+\begin{pmatrix}I_5-P&B\\B^\dagger&P\end{pmatrix}\succeq0
+\quad\Longleftrightarrow\quad
+B=\sqrt{I_5-P}\,C\sqrt P,\quad\|C\|_\infty\leq1.
+\tag{S.150}
+$$
+
+This block contraction factorization includes singular $P$ and $I_5-P$. The objective before optimizing $B$ is
+
+$$
+p^2\operatorname{Tr}((I_5-P)D_\theta)+(1-p)^2\operatorname{Tr}(PQ_N)
++2p(1-p)\operatorname{Re}\operatorname{Tr}(B^\dagger X_\theta).
+\tag{S.151}
+$$
+
+Substituting (S.150), cyclicity gives $\operatorname{Re}\operatorname{Tr}(C^\dagger\sqrt{I_5-P}X_\theta\sqrt P)$. Optimizing this one common contraction $C$ yields exactly the trace norm in (S.149). Conversely every such positive block defines a unital CP adjoint and a whole-output CPTP recovery, so this is equality. At $p=0$ choose $P=I_5$; at $p=1$ choose $P=0$. Both optima are one, as required for a pure known input. No inverse is used at a singular effect or endpoint. The displayed input is diagonal in the real-direction code basis; (S.149) is not asserted as a formula for arbitrary input coherences or all complex directions. $\square$
+
+**Proposition 74.3 (common full-input Schur interface).** For the same real data (S.147), the fixed input $\rho_\star$ and a real symmetric $Y\succ0$, the full dual inequality (S.121) is equivalent to
+
+$$
+\frac1{16}(E_0^\dagger Y^{-1}E_0+E_1^\dagger Y^{-1}E_1)
++\frac14\mathsf T^\dagger Y^{-1}\mathsf T\preceq I_r.
+\tag{S.152}
+$$
+
+Proof. The $\alpha$th vector of (S.118) is the stacked real vector $((E_0)_\alpha/4,(E_1)_\alpha/4,t_\alpha/2)$. Collect these as columns of $W$. The positive-definite Schur criterion $WW^\dagger\preceq I_3\otimes Y$ iff $W^\dagger(I_3\otimes Y^{-1})W\preceq I_r$ gives exactly (S.152). It retains every off-diagonal Kraus-index term and the same $Y$ across all three input blocks. For singular Hermitian $Y$, use the full inequality $C_{\rho_\star,N}\preceq I_3\otimes Y$ directly. Merely substituting a pseudoinverse into (S.152) without a range condition is not an equivalent singular formulation. $\square$
+
+**Proposition 74.4 (fixed-input exact SDP and sufficient uniform obligations).** For every actual $N$ and every complex density $\rho$, including singular inputs, Theorem 7.1 transports to
+
+$$
+\max_{R\ {\rm CPTP}}F_e(\rho,RN)
+=\max_{J\succeq0,\ \operatorname{Tr}_3J=I_5}\operatorname{Tr}(C_{\rho,N}J)
+=\min_{Y=Y^\dagger,\ I_3\otimes Y\succeq C_{\rho,N}}\operatorname{Tr}Y.
+\tag{S.153}
+$$
+
+Both optima are attained. Indeed $J_0=I_3\otimes I_5/3$ is strictly primal feasible, and $Y=cI_5$, $c>\|C_{\rho,N}\|_\infty$, is strictly dual feasible. The primal is compact with trace five. Dual feasible $Y$ is PSD, so its bounded-trace sublevels are compact too. Finite-dimensional Slater duality gives the claimed equality and attainment, independent of singularity of $\rho$. Singular dual optima are permitted by the full inequality.
+
+For the arbitrary-third-column $\lambda=1$ branch, a sufficient fixed-$\rho_\star$ programme would construct, for each actual $N$, one real $Y_N\succ0$ satisfying (S.152) and
+
+$$
+\operatorname{Tr}Y_N\leq\frac{1+\sqrt a}{2}.
+\tag{S.154}
+$$
+
+The more general sufficient programme, allowing an actual density to depend on that encoder, is
+
+$$
+\forall N\ \exists\rho_N\in\mathsf D(\mathbb C^3)\ \exists Y_N=Y_N^\dagger:
+\quad C_{\rho_N,N}\preceq I_3\otimes Y_N,\qquad
+\operatorname{Tr}Y_N\leq\frac{1+\sqrt a}{2}.
+\tag{S.155}
+$$
+
+For each successful certificate, $\rho_N,Y_N$ precede every recovery of that same encoder, and (S.121) gives $\delta_N\geq1-\sqrt a$. One $Y_N$ must constrain the complete Kraus list; different matrices for separate columns or input branches do not supply it. The matrix may depend on $N$; no common matrix across different encoders is required.
+
+Uniform feasibility of (S.152)–(S.154) for arbitrary admissible third columns is not proved here. Neither is feasibility of (S.155) for that entire branch or the original all-beta class. These are sufficient witness routes, not asserted necessary conditions for the original diamond target: failure of such a route does not exhibit a full-reference recovery below the target. The exact fixed-input equality (S.153) is reused SDP theory; it does not establish the missing all-channel existence statement.
+
+## 75. Attribution, preserved target and analytic limits
+
+**Definition 75.1 (reuse and primary-source conditions).** The base $N_0$, $\rho_\star$, actual class and residual identities, real-direction plane obstruction, supported transpose completion, polar/midpoint identities and exact recovery SDP reuse Sections 1–2, 7 and 48–51 of the first volume. The existing declarations `SpectralTransposeRecovery.spectral_transpose_candidate` and `ReferencePetzChannel.completed_reference_petz_channel`, cited there, supply the corresponding general support-completion structures; no new general Petz construction is claimed here. The additional source-specific analytic consequences are the sharper rational dual, the all-complex-direction full-reference bound and its uniform arbitrary-real-$Q$ continuation through actual encoder ranks three through seven. These are `repo-derived` compositions, with no global priority or novelty assertion.
+
+The standard methods have the following bounded primary-source scope. Bény–Oreshkov, [arXiv:0907.5391v4](https://arxiv.org/html/0907.5391v4), Theorem 1 and (1)–(3), uses root fidelity and all appropriately dimensioned channels. Their [arXiv:1103.0649v3](https://arxiv.org/html/1103.0649v3), Corollary 5 and (64), gives the unrestricted-channel identity; fixed-input (132) is Kraus bounded whereas (133) is unrestricted. Neither supplies an unrestricted fidelity–diamond equality or the missing arbitrary-third-column threshold. The separation proof above uses the direct fixed-input dual and independently proved Pauli norm identity, without those optimized-channel equalities.
+
+Barnum–Knill, [arXiv:quant-ph/0004088v2](https://arxiv.org/html/quant-ph/0004088v2), (12), gives the transpose formula on the supported noise output; its ensemble performance Theorem 3 requires commuting density matrices. Ng–Mandayam, [arXiv:0909.0931v2](https://arxiv.org/html/0909.0931v2), (4) and Section III.A, likewise takes the inverse on output support. Here only that construction is reused, with the explicit whole-output completion (S.129); their performance estimates are not imported as full-reference diamond bounds. Fletcher–Shor–Win, [arXiv:quant-ph/0606035](https://arxiv.org/html/quant-ph/0606035), (20)–(22), gives the fixed-input recovery SDP with objective $\operatorname{Tr}(JC)$ and TP marginal, agreeing with (S.118)–(S.121) and (S.153) under the stated conventions.
+
+Watrous, [arXiv:0901.4709v2](https://arxiv.org/html/0901.4709v2), Section 4, gives a channel-difference SDP value equal to one half of the diamond norm; all norms here remain unhalved. Watrous, [arXiv:1207.5726v2](https://arxiv.org/html/1207.5726v2), Section 2.1 and Lemma 2, (5), permits arbitrary PSD operands and the singular-valid block contraction factorization used in (S.150). The fixed-input recovery SDP has its own strict feasible points in (S.153); it does not assume strict feasibility of a singular-operand fidelity SDP. These seven primary interfaces are used only with these conditions, not as an exhaustive literature survey or a new authentication claim by this source author.
+
+**Definition 75.2 (unchanged programme and unresolved boundaries).** The family in (S.113) stays exactly at $\beta=1/2$ and $\lambda=1$. It satisfies a stronger full-qutrit lower bound than the original target while obstructing fixed-input witnesses with code-compression rank at most one. It is progress within the same programme, not a counterexample to (S.66), and gives no full-qutrit recovery improving that benchmark. Neither side of (S.142) is asserted to equal the displayed bound.
+
+The original domain remains all actual original-real CPTP encoders $M_3\to M_5$, every $0<\beta\leq1/2$, the original phase-difference spectrum, all admissible third columns, actual minimal Kraus ranks at most nine, every complex CPTP recovery on the whole output, every finite complex reference, and the unhalved diamond norm. The arbitrary-third-column witness obligations (S.154)–(S.155) and the $\sqrt a<\lambda<1$ bridge remain unproved by this increment. The estimate (S.140) measures the actual perturbation of $N_0$ and does not supply a distance estimate from $1-\lambda$. The preceding conditional interfaces, including Theorem 66.2, retain their stated hypotheses; this separate explicit-family proof does not strengthen their evidence status.
+
+All claims above are finite-dimensional analytic mathematics. The proofs include arbitrary complex input densities and references where stated, support inverses zero on kernels, singular density and effect endpoints, and the full convention transport. They assert no empirical physical realization, native recovery-control capability, Lean/kernel verification, exhaustive literature result, global novelty or completion of the original all-class target.
+
+## 追加锚（本行以下为增补区）
