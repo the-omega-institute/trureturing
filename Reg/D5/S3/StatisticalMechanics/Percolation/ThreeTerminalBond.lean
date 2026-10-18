@@ -1,0 +1,215 @@
+import D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.AuricFib
+import Reg.Support.SingleDependentReadout
+
+namespace Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (ℝ × ℝ × ℝ) (fun _ => Mode) (fun _ => ℝ)
+
+def actual : Realization signature := realize signature
+  (fun _ p s => law starEnds 0 1 2 ![p.1,p.2.1,p.2.2] s) (fun e => nomatch e)
+
+def zero : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def negative : Realization signature := realize signature
+  (fun _ _ s => if s = .ab ∨ s = .bc then 1 else 0) (fun e => nomatch e)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(0,0,0),Mode.separate,Mode.all,?_⟩
+  change law starEnds 0 1 2 ![0,0,0] .separate ≠ law starEnds 0 1 2 ![0,0,0] .all
+  rw [star_law]
+  norm_num
+
+abbrev formula (A B C : ℝ) (s : Mode) : ℝ := match s with
+  | .separate => 1-A*B-A*C-B*C+2*A*B*C
+  | .ab => A*B*(1-C)
+  | .bc => (1-A)*B*C
+  | .all => A*B*C
+  | .ac => A*(1-B)*C
+
+abbrev lawArena : Arena where
+  signature := signature
+  Law R := ∀ A B C : ℝ, R.readout () (A,B,C) = formula A B C
+
+private theorem zero_rejected : ¬ lawArena.Law zero := by
+  intro h
+  have hh := congrFun (h 0 0 0) .separate
+  norm_num [zero,realize,formula] at hh
+
+def lawRegistration : Registration lawArena (type_of% @star_law) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨star_law,zero,zero_rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity lawArena.Law actual zero zero_rejected
+  dependence := dependence
+
+abbrev determinantArena : Arena where
+  signature := signature
+  Law R := ∀ A B C : ℝ, delta (R.readout () (A,B,C)) =
+    B*(1-A*C)*law starEnds 0 1 2 ![A,B,C] .ac
+
+private theorem determinant_rejected : ¬ determinantArena.Law zero := by
+  intro h
+  have hh := h (1/2) (1/2) (1/2)
+  rw [star_law] at hh
+  norm_num [zero,realize,delta] at hh
+
+def determinantRegistration : Registration determinantArena (type_of% @star_determinant) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨star_determinant,zero,determinant_rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity determinantArena.Law actual zero
+    determinant_rejected
+  dependence := dependence
+
+abbrev boundArena : Arena where
+  signature := signature
+  Law R := ∀ A B C : ℝ, A ∈ Set.Icc 0 1 → B ∈ Set.Icc 0 1 → C ∈ Set.Icc 0 1 →
+    0 ≤ delta (R.readout () (A,B,C)) ∧
+    delta (law starEnds 0 1 2 ![A,B,C]) ≤ law starEnds 0 1 2 ![A,B,C] .ac
+
+private theorem bound_rejected : ¬ boundArena.Law negative := by
+  intro h
+  have hh := (h 0 0 0 (by norm_num) (by norm_num) (by norm_num)).1
+  norm_num [negative,realize,delta] at hh
+
+def boundRegistration : Registration boundArena (type_of% @star_bound) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨star_bound,negative,bound_rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity boundArena.Law actual negative
+    bound_rejected
+  dependence := dependence
+
+def register_star_law :
+    Contract.Registration (@_root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_law)
+      (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.register_star_law
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.lawRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨lawArena⟩
+  objectArena := .source ⟨lawArena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source lawArena ⟨lawRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p s => law starEnds 0 1 2 ![p.1,p.2.1,p.2.2] s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+    definition := none
+    coordinates := #[0,1,2]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def register_star_determinant :
+    Contract.Registration (@_root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_determinant)
+      (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.register_star_determinant
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.determinantRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨determinantArena⟩
+  objectArena := .source ⟨determinantArena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source determinantArena ⟨determinantRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p s => law starEnds 0 1 2 ![p.1,p.2.1,p.2.2] s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+    definition := none
+    coordinates := #[0,1,2]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def register_star_bound :
+    Contract.Registration (@_root_.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.star_bound)
+      (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.register_star_bound
+  realizationName := `Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond.boundRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨boundArena⟩
+  objectArena := .source ⟨boundArena⟩
+  catalog := .anonymous
+  localNames := false
+  realization := .source boundArena ⟨boundRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ p s => law starEnds 0 1 2 ![p.1,p.2.1,p.2.2] s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+    definition := none
+    coordinates := #[0,1,2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def lawAnalysisSource : Analysis.Source (@star_law) :=
+  Analysis.Source.ofRegistration _ lawRegistration .exact {
+    owner := `D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond
+    definition := none
+    coordinates := #[0,1,2]
+    readouts := #[{
+      path := #["body","body","body","fn","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+
+/-- The probability-mass operation is the source observation. Its real parameter
+family has no finite acquisition here. The native Fibonacci continuation adapter
+requires additional reader and reply evidence. -/
+def lawAnalysis : AuricFib.Contract.Application (@star_law) where
+  evidence := .typed {
+    source := lawAnalysisSource
+    plan := { task := (), initial := [], additions := [[()]] }
+    acquisition := .unavailable "Real edge-rate family; no native Fibonacci reader/reply bridge" }
+
+end
+end Reg.D5.S3.StatisticalMechanics.Percolation.ThreeTerminalBond

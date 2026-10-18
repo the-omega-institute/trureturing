@@ -36,6 +36,11 @@ internal sealed class ThreeTerminalBondDocument : IScribeDocumentDefinition
                     + "weight theta omega is the product over e of theta(e) if e is open "
                     + "and 1-theta(e) if e is closed. Rates in [0,1] give nonnegative masses "
                     + "whose sum over the complete Boolean configuration cube is one."),
+            Node("weight_sum", "Normalization of the independent source", DescribeRole.Theorem,
+                "For every finite decidable edge type E and every theta:E -> R, "
+                    + "the sum of weight theta omega over all omega:E -> Bool is one. "
+                    + "Expand the product of theta(e)+(1-theta(e)) over all edges. "
+                    + "Nonnegativity additionally requires theta(e) in [0,1]."),
             Node("law", "Connectivity pushforward", DescribeRole.Definition,
                 "For finite decidable vertex and edge types, endpoints ends, terminals a,b,c, "
                     + "rates theta and mode s, law ends a b c theta s is the sum of "

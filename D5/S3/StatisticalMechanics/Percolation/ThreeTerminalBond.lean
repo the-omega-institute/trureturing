@@ -57,7 +57,8 @@ def law {V E : Type*} [Fintype V] [DecidableEq V] [Fintype E] [DecidableEq E]
 /-- The determinant of the four base partition masses. -/
 def delta (p : Mode → ℝ) : ℝ := p .separate * p .all - p .ab * p .bc
 
-private lemma weight_sum {E : Type*} [Fintype E] [DecidableEq E] (θ : E → ℝ) :
+/-- The independent bond masses on the entire configuration cube sum to one. -/
+theorem weight_sum {E : Type*} [Fintype E] [DecidableEq E] (θ : E → ℝ) :
     ∑ ω : E → Bool, weight θ ω = 1 := by
   unfold weight
   rw [← Fintype.prod_sum (fun (e : E) (x : Bool) => if x then θ e else 1-θ e)]
