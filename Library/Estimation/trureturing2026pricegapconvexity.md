@@ -10836,3 +10836,144 @@ original qualifying source. These errors are relative to $S_H$, not
 absolute $o(M_XL_X)$. The original nonlocal FH first-prime test remains
 unpaid. No favorable cofinal sequence, equality with compensated $G_a$,
 strict all-integer Robin inequality or RH proof is supplied.
+
+
+## Original compensation pays a one-sided actual lag-boundary transfer
+
+Keep the original conditional RH-failure source, every full window and
+maximizing tie, every originally fixed $1-\Theta<\eta<1/2$ including
+$\Theta=1$, and the original fixed $a>0$. Reuse PG1/PG9, PE2,
+CQ5, FCT2--FCT4 and CE/SB on their stated domains. The complete future
+$\mathsf H$ and CE2's explicit half-open representative $D_X^*$ remain
+unchanged. This `repo-derived` paper application uses the existing
+bounded-variation quadrature and finite component integration by parts;
+it asserts no new generic theorem, literature priority or Lean verification.
+
+### The original positive labels pay the integrated negative response
+
+Write $\mathsf H_-(x)=\max\{-\mathsf H(x),0\}$ and
+
+$$
+q_X=\varepsilon_X^{\rm lab}\sqrt{R_X}\log(eR_X)=o(1).
+$$
+
+FCT4 retains the absolute $O(q_X)$ quadrature allowance, in addition
+to its displayed relative comparisons. The negative-part map is
+$1$-Lipschitz, so $\operatorname{Var}(\mathsf H_-)$ is at most
+$\operatorname{Var}(\mathsf H)$. FCT2--FCT3 give
+$\mathsf H_-(A_i)=0$ at every original label and allowed tie beyond
+one common start. Apply that same tagged monotone-selector quadrature
+and the exact visited-set pushforward to obtain
+
+$$
+\boxed{N_X:=\int_{D_X}\mathsf H_-(x)dx=O(q_X)=o(1).}
+\tag{SB4}
+$$
+
+This is an integrated sign estimate. It does not assert pointwise
+positivity at every real clock, proper-power atom or trace endpoint.
+The mesh and coarse clock ceiling are exactly those already used in FCT4.
+
+### Bound the lag-boundary error in one direction before taking a norm
+
+On each original positive-length component, $\tau=x-K(x)$ is the
+actual source parameter, with $\tau'=1$. Its endpoints and $B_\tau$
+are exactly those of SB1. Using the complete derivative
+$\mathsf H'=(s'/s)\mathsf H-skE$ gives the exact finite identity
+
+$$
+\mathcal I_X^H-B_\tau
+=-\int_{D_X}\tau\frac{s'}s\mathsf H\,dx
+ +\int_{D_X}\tau skE\,dx.
+$$
+
+The first coefficient is nonnegative and at most $C\rho_X$, where
+$\rho_X=\sup_t t/B(t)\to0$. Hence its upper contribution is at most
+$C\rho_XN_X$. For the other term, reuse $E(A(t))=t+Q(A(t))$,
+$|Q(x)|\le H_Q\sqrt x$, $A/B\to1$ and $sk\ll x^{-3/2}$:
+
+$$
+\int_{D_X}\tau skE\,dx
+\ll\int_{t_0}^{t_m}\left(\frac{t^2}{B(t)^{3/2}}+
+                              \frac{t}{B(t)}\right)dt.
+$$
+
+Retain the original nonnegative credit
+
+$$
+V_X^K=\int_{t_0}^{t_m}\frac{\Delta(A(t))}{\sqrt{B(t)}}dt,
+\qquad \Delta(A)=B-K(B)\ge0.
+$$
+
+PE2's existing two-case estimate bounds $t^2/B^{3/2}$ by one when
+$t\le B^{3/4}$, and otherwise by
+$(200/9)\rho_X\Delta(A)/\sqrt B$. Also
+$\int t/B\,dt\le\rho_XL_X$. Thus, for a fixed source constant $C$,
+
+$$
+\boxed{\mathcal I_X^H
+\le B_\tau+C\rho_XV_X^K+O(L_X)+O(\rho_Xq_X).}
+\tag{SB5}
+$$
+
+This one-sided error bound imposes no ceiling on $S_H/(M_XL_X)$ or
+$V_X^K/(M_XL_X)$. It does not replace SB3's distinct two-sided,
+source-relative comparison by an absolute norm bound.
+
+### Consume the original compensation once
+
+Keep CQ5's original continuous account
+$\mathcal J_X=\int_{t_0}^{t_m}G_a(B(t))dt$. PE2, with any fixed
+$0<\epsilon<a$, says
+
+$$
+G_a(B(t))\le\frac{s_{B(t)}}{s_{A(t)}}\mathsf H(A(t))
+ -(a-\epsilon)\frac{\Delta(A(t))}{\sqrt{B(t)}}+C_\epsilon.
+$$
+
+For $0<q\le1$, $q\mathsf H\le\mathsf H+\mathsf H_-$ for either
+sign of $\mathsf H$. Since $s_B/s_A\le1$, SB4 and the same exact
+pushforward therefore give
+
+$$
+\boxed{\mathcal J_X
+\le\mathcal I_X^H-(a-\epsilon)V_X^K+O_\epsilon(L_X)+O(q_X).}
+\tag{SB6}
+$$
+
+Combining SB5 and SB6 retains the correction to the credit coefficient:
+
+$$
+\boxed{\mathcal J_X
+\le B_\tau-(a-\epsilon-C\rho_X)V_X^K
+       +O_\epsilon(L_X)+O(q_X).}
+\tag{SB7}
+$$
+
+No boundedness of the normalized credit is used to discard that correction.
+For a fixed fraction, take $\epsilon=a/4$ and enlarge the common start
+until $C\rho_X\le a/4$. CQ5 then transports this bound to every
+original allowed tie assignment $\mathcal T$:
+
+$$
+\boxed{\begin{aligned}
+\mathcal J_X&\le B_\tau-\frac a2V_X^K+O_a(L_X)+o(1),\\
+\mathcal G_{X,\mathcal T}
+&\le B_\tau-\frac a2V_X^K+O_a(L_X)+o(1).
+\end{aligned}}
+\tag{SB8}
+$$
+
+Because $M_X\to\infty$, the uncredited allowance in SB8 is absolute
+$o(M_XL_X)$. The compensation is the existing fixed source credit;
+this account and DR/BV/LC do not provide two independently spendable
+copies of it. All original proper powers, gaps, ties, trace conventions
+and infinite future endpoints remain.
+
+SB4--SB8 pay the one-sided original compensated-source-to-boundary
+transfer without a ceiling on its complete response. They do not extend
+WRC's two-sided $G_a$ transport beyond its stated $\eta<13/30$ range,
+identify $G_a$ with $\mathsf H$, or pay the nonlocal FH first-prime test.
+The same-source signed boundary-minus-credit still needs its strict
+upper against the original lower margin. No favorable cofinal sequence,
+strict all-integer Robin inequality or RH proof is supplied.
