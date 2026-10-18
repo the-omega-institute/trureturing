@@ -39,7 +39,7 @@ theorem J_hasDerivAt (n z : ℝ) (hz : 0 < z) :
     (hn.const_mul (n + 1))).sub (hn1.const_mul (n - 1)) using 1 <;>
     dsimp [J, J₁] <;> congr 1 <;> ring_nf
 
-theorem J₁_hasDerivAt (n z : ℝ) (hz : 0 < z) :
+theorem J1_hasDerivAt (n z : ℝ) (hz : 0 < z) :
     HasDerivAt (J₁ n) (n * (n ^ (2 : ℕ) - 1) * z ^ (n - 2) * (1 - z)) z := by
   have hn := Real.hasDerivAt_rpow_const (p := n) (Or.inl hz.ne')
   have hn1 := Real.hasDerivAt_rpow_const (p := n - 1) (Or.inl hz.ne')
@@ -58,7 +58,7 @@ theorem J_nonneg (n z : ℝ) (hn : 0 ≤ n * (n ^ (2 : ℕ) - 1)) (hz : z ∈ Io
   have hder₁ : ∀ x ∈ Icc z 1, HasDerivAt (J₁ n)
       (n * (n ^ (2 : ℕ) - 1) * x ^ (n - 2) * (1 - x)) x := by
     intro x hx
-    exact J₁_hasDerivAt n x (hz.1.trans_le hx.1)
+    exact J1_hasDerivAt n x (hz.1.trans_le hx.1)
   have hm₁ : MonotoneOn (J₁ n) (Icc z 1) :=
     monotoneOn_of_deriv_nonneg (convex_Icc _ _)
       (fun x hx => (hder₁ x hx).continuousAt.continuousWithinAt)

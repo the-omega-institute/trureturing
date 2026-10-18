@@ -18,7 +18,10 @@ internal sealed class CachinNegativeBranchDocument : IScribeDocumentDefinition
                 H("The elasticity transform is antitone for negative n"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, Grp(Seq(F.Id("n"), Colon, Sp, Mathbb, Grp(F.Id("R")))), Comma, Sp,
-                    F.Id("-1 < n < 0"), Sp, F.Id("→"), Sp,
+                    new Formula.Logic(
+                        new Formula.Relation(Seq(Minus, D(1)), FormulaRelationOperator.LessThan, F.Id("n")),
+                        FormulaLogicOperator.And,
+                        new Formula.Relation(F.Id("n"), FormulaRelationOperator.LessThan, D(0))), Sp, Implies, Sp,
                     Call("AntitoneOn", Call("F", F.Id("n")), Call("Ioo", D(0), D(1)))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The reused four-term function J has J(1)=J'(1)=0 and "

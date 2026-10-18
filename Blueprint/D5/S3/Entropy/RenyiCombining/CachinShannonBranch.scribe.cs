@@ -42,6 +42,6 @@ internal sealed class CachinShannonBranchDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name, string title, string formula, DescribeRole role, string prose) =>
         Describe.Lean(DescribeId.Create("cachin-shannon-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(formula)), Paragraph(Text(prose))), role);
 }
