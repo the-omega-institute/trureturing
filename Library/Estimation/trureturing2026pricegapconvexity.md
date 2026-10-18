@@ -11109,8 +11109,8 @@ $$
 $$
 
 This does not assign a sign to $B_Q$, or bound either term in absolute
-value. The allowance remains relative to $S_H$; it is not an absolute
-$o(M_XL_X)$ bound. On the same actual contacts $\mathsf H_-=0$, so
+value. APC5 uses SB2's source-relative allowance; that estimate alone
+does not give an absolute $o(M_XL_X)$ bound. On the same actual contacts $\mathsf H_-=0$, so
 SB4's integrated allowance can also be replaced by zero there. That
 simplification supplies no additional credit or improvement of SB8's
 already paid target scale.
@@ -11121,3 +11121,104 @@ They do not pay the complete $B_D+C_D^{\rm pp}$ or boundary-minus-credit
 strict upper, the original nonlocal FH first-prime test, all-integer
 Robin or RH. Every original source condition and the single-use
 compensation remain.
+
+
+## The stock-boundary and proper-power remainder has an absolute payment
+
+Keep SB1 and APC1--APC5 on the original conditional RH-failure source,
+every full window and allowed tie, and every originally fixed
+$1-\Theta<\eta<1/2$, including $\Theta=1$. Use exactly the same
+$D_X^*=\bigcup_j(r_j,z_j]$, complete future $\mathsf H$, proper-power
+atoms and trace endpoints. This `repo-derived` paper application reuses
+CQ4's full-integral majorant and the existing source derivative. It
+asserts no new generic estimate, literature priority or Lean verification.
+
+### Use the existing full-integral majorant before taking a source norm
+
+CQ4 already evaluates the complete improper-integral majorant from the
+unconditional coarse PNT input. Apply that existing bound, without the
+local compensation, at the real clock $x=A(t)$:
+
+$$
+|\mathsf H(x)|\le C_{\rm PNT}\sqrt x
+\left[\frac1{2\log x}+\frac1{3\log^2x}\right].
+$$
+
+Its input $|E(v)|\le C_{\rm PNT}v/\log^2v$ holds for every future
+$v\ge x$ after the same real start. No horizon truncation or bound on
+$\mathsf H/M_X$ or $S_H/(M_XL_X)$ is used.
+
+Use the complete derivative from SB1--SB2 and its exact coefficients:
+
+$$
+\mathsf H'=\frac{s'}s\mathsf H-skE,
+\qquad \frac{s'}s=\frac1{2x}+\frac1{x\log x},
+\qquad s_xk(x)=\frac{1+1/\log x}{x^{3/2}}.
+$$
+
+On every actual visited branch, the existing full-real bound
+$|Q(x)|\le H_Q\sqrt x$ and identities $x=A(t)=B(t)+t$,
+$E(A(t))=t+Q(A(t))$ therefore give almost everywhere
+
+$$
+|Q(x)\mathsf H'(x)|
+\le C\left[\frac1{\log x}+\frac t x+\frac1{\sqrt x}\right]
+\le C\omega_X,
+\qquad
+\omega_X:=\frac1{\log b_X}+\rho_X+b_X^{-1/2}\longrightarrow0.
+$$
+
+Here $b_X=\min_tB(t)$ and $\rho_X=\sup_t t/B(t)$ are exactly the
+original uniformly escaping clock floor and vanishing lag ratio.
+Use PG9's exact pushforward and $|D_X|=L_X$, retaining the local clock
+in the majorant before integration. This yields the absolute payment
+
+$$
+\boxed{\int_{D_X}|Q\mathsf H'|dx
+\le C\omega_XL_X=o(L_X).}
+\tag{ASP1}
+$$
+
+No maximum-to-minimum clock ratio or normalized response ceiling enters.
+This is an integral of $|Q\mathsf H'|$, not the total variation of
+$Q\mathsf H$; the latter still contains the actual proper-power jumps.
+
+### Keep the cancellation with the actual endpoint atoms
+
+Apply the existing exact SB1 identity with its unchanged half-open
+representative. ASP1 gives
+
+$$
+\boxed{\begin{aligned}
+|B_Q+C_D^{\rm pp}|&\le C\omega_XL_X=o(L_X),\\
+|B_D+C_D^{\rm pp}-B_\tau|&\le C\omega_XL_X.
+\end{aligned}}
+\tag{ASP2}
+$$
+
+The second line uses $B_D=B_\tau+B_Q$ and the same single remainder.
+Since $M_X\to\infty$, this is also an absolute $o(M_XL_X)$ allowance
+for these boundary expressions. It does not bound either cancelling
+term in absolute value or consume any compensation credit.
+
+For every fixed $0<\epsilon<d/2$, consume APC4's actual atom sign in
+this same account to obtain
+
+$$
+\boxed{B_Q\le C\omega_XL_X
+ -(d/2-\epsilon)M_XZ_X^{\rm pp}.}
+\tag{ASP3}
+$$
+
+The proper-power mass $Z_X^{\rm pp}$ is unchanged and may be zero.
+No sign for $B_Q$, positive atom occupancy or separate absolute component
+bound is asserted. ASP3 pays the allowance in this one-sided constraint
+absolutely, strengthening APC5's source-relative allowance.
+
+ASP1--ASP3 pay this exact stock-boundary/proper-power remainder at the
+original target scale, with the complete future and every endpoint
+retained. They do not pay the separate pure-future energy terms, supply
+a two-sided absolute comparison of $\mathcal I_X^H$ and $B_\tau$, or
+establish the strict upper for the complete boundary-minus-credit.
+The original nonlocal FH first-prime test, all-integer Robin inequality
+and RH remain unproved. No uniformity as $\eta\uparrow1/2$ is asserted.
