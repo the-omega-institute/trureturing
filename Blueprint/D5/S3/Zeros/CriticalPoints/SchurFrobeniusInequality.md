@@ -21,3 +21,5 @@ Unitary triangularization preserves the characteristic polynomial and Frobenius 
 ## References
 
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/SchurFrobeniusInequality.schur_frobenius`
+- Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../../Quantum/Matrix/CartesianVariance.md)
+- Dependency: [D5/S3/Quantum/Matrix/CommutatorGap](../../Quantum/Matrix/CommutatorGap.md)

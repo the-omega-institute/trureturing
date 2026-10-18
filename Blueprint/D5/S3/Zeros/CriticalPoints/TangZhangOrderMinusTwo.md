@@ -65,4 +65,5 @@ For the invertible Hermitian square root R of I+J, the similar matrix RDR has sq
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangOrderMinusTwo.P`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangOrderMinusTwo.claim`
 - Truth anchor: `D5/S3/Zeros/CriticalPoints/TangZhangOrderMinusTwo.result`
+- Dependency: [D5/S3/Quantum/GNSMatrix](../../Quantum/GNSMatrix.md)
 - Dependency: [D5/S3/Zeros/CriticalPoints/SchurFrobeniusInequality](SchurFrobeniusInequality.md)
