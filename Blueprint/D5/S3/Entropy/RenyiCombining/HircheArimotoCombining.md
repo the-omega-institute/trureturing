@@ -14,9 +14,7 @@ $$\forall alpha \in \mathbb{R},\; \forall p \in \mathbb{R},\; \operatorname{k}\l
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.k` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -28,9 +26,7 @@ $$\forall alpha \in \mathbb{R},\; \operatorname{delta}\left(alpha\right) = 2^{\f
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.delta` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -42,9 +38,7 @@ $$\forall alpha \in \mathbb{R},\; \operatorname{I}\left(alpha\right) = \operator
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.I` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -56,9 +50,7 @@ $$\forall alpha \in \mathbb{R},\; \forall x \in \mathbb{R},\; \operatorname{kInv
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.kInv` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -70,9 +62,7 @@ $$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; \operatorname{star}\le
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.star` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -84,9 +74,7 @@ $$\forall alpha \in \mathbb{R},\; \forall x \in \mathbb{R},\; \forall y \in \mat
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.G` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -98,9 +86,7 @@ $$claim = \exists alphaHat:\mathbb{R},1 < alphaHat \land \left(alphaHat < \frac{
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -140,3 +126,4 @@ For fixed 0<v<1, the derivative ratio R(t)=v psi'(vt)/psi'(t) satisfies R'=v psi
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheArimotoCombining.star`
 - Dependency: [D5/S3/Entropy/RenyiCombining/ArimotoHyperbolic](ArimotoHyperbolic.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity](HircheCachinCombiningConcavity.md)
+- Dependency: [D5/S3/Weil/Budget/LinearCayleyScaleFlow](../../Weil/Budget/LinearCayleyScaleFlow.md)

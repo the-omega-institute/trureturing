@@ -35,7 +35,7 @@ internal sealed class ArimotoHyperbolicDocument : IScribeDocumentDefinition
                     Call("StrictMonoOn", Call("elasticity", N("b")), Call("Ioi", D(0))))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "For s>0 the functions r cosh(rs)/sinh(rs) and r sinh(rs)/cosh(rs) strictly increase for r>0. "
-                    + "The derivative of sinh(z)cosh(z)-z is 2sinh(z)^2, giving the first comparison. "
+                    + "Mathlib’s inequality 2z<sinh(2z), together with the double-angle identity, gives sinh(z)cosh(z)>z for the first comparison. "
                     + "The elasticity derivative divided by the positive elasticity is "
                     + "coth(s)+2tanh(s)-b coth(bs)-(b+1)tanh((b+1)s). "
                     + "For -1<b<0, oddness of sinh replaces b by -b in the coth term; both comparisons give positivity. "

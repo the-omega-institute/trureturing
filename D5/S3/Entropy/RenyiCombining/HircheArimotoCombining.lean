@@ -8,6 +8,7 @@
 
 import D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
 import D5.S3.Entropy.RenyiCombining.ArimotoHyperbolic
+import D5.S3.Weil.Budget.LinearCayleyScaleFlow
 import Mathlib.Tactic.LinearCombination
 
 /-! Real-power coordinates and the probability inverse on the binary half interval. -/
@@ -206,12 +207,10 @@ private lemma E_eq {α t : ℝ} (hα : 0 < α) (hne : α ≠ 1) (ht : t ∈ Ioo 
 
 private lemma tanh_hasDerivAt (s : ℝ) :
     HasDerivAt Real.tanh (1 / Real.cosh s ^ 2) s := by
-  have hd := (Real.hasDerivAt_sinh s).div (Real.hasDerivAt_cosh s) (Real.cosh_pos s).ne'
-  convert hd using 1
-  · ext z
-    exact Real.tanh_eq_sinh_div_cosh z
-  · congr 1
-    simpa only [pow_two] using (Real.cosh_sq_sub_sinh_sq s).symm
+  exact (D5.S3.Weil.Budget.LinearCayleyScaleFlow.real_tanh_hasDerivAt s).congr_deriv (by
+    rw [Real.tanh_eq_sinh_div_cosh]
+    field_simp [(Real.cosh_pos s).ne']
+    nlinarith [Real.cosh_sq_sub_sinh_sq s])
 
 private lemma ratio_tanh (s : ℝ) :
     HircheCachinCombiningConcavity.ratio (Real.tanh s) = Real.exp (-2 * s) := by

@@ -33,20 +33,9 @@ private def L (b s : ℝ) : ℝ :=
 
 private lemma sinh_cosh_sub_pos {z : ℝ} (hz : 0 < z) :
     0 < Real.sinh z * Real.cosh z - z := by
-  let H : ℝ → ℝ := fun x => Real.sinh x * Real.cosh x - x
-  have hd (x : ℝ) : HasDerivAt H (2 * Real.sinh x ^ 2) x := by
-    convert ((Real.hasDerivAt_sinh x).mul (Real.hasDerivAt_cosh x)).sub
-      (hasDerivAt_id x) using 1
-    · rfl
-    · nlinarith [Real.cosh_sq_sub_sinh_sq x]
-  have hm : StrictMonoOn H (Ici 0) := by
-    apply strictMonoOn_of_deriv_pos (convex_Ici _)
-      (fun x _ => (hd x).continuousAt.continuousWithinAt)
-    intro x hx
-    rw [interior_Ici] at hx
-    rw [(hd x).deriv]
-    exact mul_pos (by norm_num) (sq_pos_of_pos (Real.sinh_pos_iff.mpr hx))
-  simpa [H] using hm (by simp) hz.le (show (0 : ℝ) < z from hz)
+  have h := Real.self_lt_sinh_iff.mpr (show 0 < 2 * z by linarith)
+  rw [Real.sinh_two_mul] at h
+  linarith
 
 private lemma f_hasDerivAt {s r : ℝ} (hs : 0 < s) (hr : 0 < r) :
     HasDerivAt (f s)

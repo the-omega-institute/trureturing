@@ -30,7 +30,7 @@ $$\forall b \in \mathbb{R},\; \left(\left(0 - 1 < b \land b < 0\right) \lor \lef
 
 *Commentary.*
 
-For s>0 the functions r cosh(rs)/sinh(rs) and r sinh(rs)/cosh(rs) strictly increase for r>0. The derivative of sinh(z)cosh(z)-z is 2sinh(z)^2, giving the first comparison. The elasticity derivative divided by the positive elasticity is coth(s)+2tanh(s)-b coth(bs)-(b+1)tanh((b+1)s). For -1<b<0, oddness of sinh replaces b by -b in the coth term; both comparisons give positivity. For 0<b≤1/2, parameter comparison reduces the sign to b=1/2. At that endpoint the quotient equals cosh(s)^2/(2cosh(s)-1), whose derivative is 2cosh(s)(cosh(s)-1)sinh(s)/(2cosh(s)-1)^2>0. No logarithm of a negative sinh value and no numerical sign test is used.
+For s>0 the functions r cosh(rs)/sinh(rs) and r sinh(rs)/cosh(rs) strictly increase for r>0. Mathlib’s inequality 2z<sinh(2z), together with the double-angle identity, gives sinh(z)cosh(z)>z for the first comparison. The elasticity derivative divided by the positive elasticity is coth(s)+2tanh(s)-b coth(bs)-(b+1)tanh((b+1)s). For -1<b<0, oddness of sinh replaces b by -b in the coth term; both comparisons give positivity. For 0<b≤1/2, parameter comparison reduces the sign to b=1/2. At that endpoint the quotient equals cosh(s)^2/(2cosh(s)-1), whose derivative is 2cosh(s)(cosh(s)-1)sinh(s)/(2cosh(s)-1)^2>0. No logarithm of a negative sinh value and no numerical sign test is used.
 
 ## References
 

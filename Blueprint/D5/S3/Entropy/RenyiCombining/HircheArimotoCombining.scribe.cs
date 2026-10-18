@@ -76,7 +76,8 @@ internal sealed class HircheArimotoCombiningDocument : IScribeDocumentDefinition
         OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hirche-arimoto-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role,
+            (name == "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source)),
+            Blocks(Paragraph(Text(prose))), role,
             openProblemResolutionClaim: resolution);
     private static Formula N(string x) => F.Id(x);
     private static Formula RealType() => Seq(Mathbb, Grp(N("R")));
