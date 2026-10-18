@@ -3916,7 +3916,7 @@ $$
 \tag{W74}
 $$
 
-For $n=3$ has leading factor
+For $n=3$, the leading factor is
 $\kappa_3r\rho^3=256(b/a)(P/q)^3$. Terms retained only through
 first order have rank at most two and would lose this main term.
 
@@ -4006,3 +4006,257 @@ all-order positivity on one fixed interval, compact-core positivity,
 the independent original Robin signed upper, or RH. The analytic
 finite-degree gain is not a claim that FIB coordinate changes preserve
 or improve the arithmetic form.
+
+
+## An explicit growing degree range on arbitrary-width supports
+
+There is a constant $C>0$ for the complete actual kernel such that
+(W75)--(W76) hold with
+
+$$
+\boxed{A_m=\exp\!\bigl(Cm^4\log(m+1)\bigr),\qquad m\ge3.}
+\tag{W77}
+$$
+
+Thus the finite separator degree may grow without bound with the
+minimum support position, subject to
+$Cm^4\log(m+1)\le\log A$. The support above $A$ may have arbitrary
+finite width and density, and the roots may coincide. This bounds the
+growth of the order-dependent start; it is not a diagonal selection of
+unknown fixed-order starts. The complete endpoint expansion and Chebyshev--Schur
+consumer remain (W72)--(W76). The additional estimates below pay the
+order-dependent constants in that actual application. No numerical value of $C$, optimal exponent, common start for every
+order, literature priority or Lean verification is claimed.
+
+### A complex comparison whose near-strip cost is explicit
+
+Fix small complex discs of radius $2\delta>0$ with the strip clearance
+already supplied in (W46)--(W47). There are absolute $C_0,A_0$ such
+that, for real $A\ge A_0$, $D\ge0$, $A\ge C_0(D+1)$ and
+$|u|,|v|\le2\delta$,
+
+$$
+\boxed{|R(A+u,A+D+v)-\operatorname{sech}(u-D-v)|
+ \le\frac{C_0(D+1)}A.}
+\tag{W78}
+$$
+
+The discs, $C_0$ and $A_0$ do not depend on $D$. All diagonal square
+roots continue the positive-real branch as in (W62).
+
+To verify the distance dependence, use the existing congruence
+$\mathcal P(a,b)=8\pi e^{a+b}L_0(a,b)/(\Phi(a)\Phi(b))$.
+Put $a=A+u$, $b=A+D+v$, $x=(a+b)/2$, $d=(a-b)/2$ and
+$\varepsilon=e^{-2A}$. The direct calculation in (W46), retaining
+$D$ in its constants, has
+
+$$
+F_0=-2\pi(e^{2u}+e^{2(D+v)})s,\qquad
+\Re F,\Re F_0\le-cs,
+$$
+
+$$
+|F-F_0|\le C\varepsilon e^{2D}
+ (s+s^2e^{2\varepsilon s}).
+$$
+
+The same exponential difference identity on the complete half-line
+therefore gives
+
+$$
+\mathcal P^{\rm direct}(a,b)
+=x\operatorname{sech}(a-b)
+ +O\!\left((A+D+1)e^{-2A+3D}\right).
+$$
+
+For the reflected contribution retain exactly (W46)'s representation
+with $\mathscr H(x,z)=g(x+\sqrt z)+g(x-\sqrt z)$.
+For every $s\ge0$ one still has
+$|\Im\sqrt{d^2+\varepsilon s}|\le|\Im d|$.
+On the positive half of the $q$-segment in the formula for
+$\mathscr H_z$, the real argument is at least $\Re x\ge A-O(\delta)$;
+on its negative half use the same global upper bound on $\Re g''$.
+Consequently, with constants independent of $D$,
+
+$$
+\Re[\mathscr H(x,d^2+\varepsilon s)-\mathscr H(x,d^2)]
+ \le-ce^Ds.
+$$
+
+The reflected prefactor has size at most $Ce^D$, so its full integral
+is $O(1)$, uniformly in $D$. The region where the negative argument
+leaves the right tail remains included. No contour truncation is used.
+Finally (W46) and (W62) supply
+$\mathcal P(z,z)=z+O(1)$ on every such high diagonal disc, uniformly
+in its center, and
+
+$$
+R(a,b)=\frac{\mathcal P(a,b)}
+ {\sqrt{\mathcal P(a,a)\mathcal P(b,b)}}.
+$$
+
+For $A\ge C_0(D+1)$,
+$x/\sqrt{ab}=1+O((D+1)/A)$ and
+$(1+D/A)e^{-2A+3D}=O(A^{-1})$ after enlarging $C_0,A_0$.
+These complete estimates prove (W78), including its uniform complex
+neighborhood. It is not an assertion at $D$ arbitrarily large relative
+to $A$; the distant account is supplied separately by (W74).
+
+### Pay the constants in the full distant endpoint expansion
+
+Choose one sufficiently large constant $C_1$ and set
+
+$$
+B_n=\exp\!\bigl(C_1n^2\log(n+1)\bigr)\quad(n\ge2).
+$$
+
+The moment, Taylor and finite-matrix costs in (W72)--(W74) admit the
+following simultaneous bounds at $a\ge B_n^4$:
+
+$$
+\begin{aligned}
+\|[\partial_a^i\partial_b^jF_n]_{i,j<n}\|_2&\le B_n r\rho^n,\\
+\|\widehat U-\widehat U_\infty\|&\le B_n/a,&
+\|\widehat V-\widehat V_\infty\|&\le B_n/b,\\
+\|\widehat U_\infty^{-1}\|+
+\|\widehat V_\infty^{-1}\|&\le B_n.
+\end{aligned}
+\tag{W79}
+$$
+
+The first line is used for $b-a\ge D_0$ with a fixed sufficiently
+large $D_0$; the other lines use $b\ge a$. The symbols and exact
+rank-$n$ expansion are unchanged from (W73)--(W74). Here is a
+quantitative accounting without unknown order-dependent constants.
+
+First, Cauchy estimates on one smaller fixed source strip give
+$|g^{(j)}(z)|\le C^{j+1}j!e^{2|\Re z|}$ and the corresponding
+right-tail remainder bound $C^{j+1}j!e^{-2\Re z}$.
+For complex $b$ in a fixed high disc, $q=p(b)$ has
+$\Re q\ge c|q|$, and horizontal integration gives
+
+$$
+\Re[g(b+t)-g(b)],\ \Re(-qt)\le-c|q|t,\qquad
+|g(b+t)-g(b)+qt|\le C|q|t^2e^{2t}.
+$$
+
+The classical exponential integral and the same exponential difference
+identity used above give, for every $k\ge0$,
+
+$$
+\left|I_k(b)-k!q^{-k-1}\right|
+ \le C^{k+3}(k+2)!|q|^{-k-2}.
+$$
+
+In particular $I_0$ is nonzero on those high discs. Apply the ordinary
+quotient and Cauchy estimates to $I_k/I_0$; compare
+$p(b+w)^{-k}$ with $p(b)^{-k}e^{-2kw}$ on a smaller fixed disc.
+For $k,j<n$ the resulting error constants in (W72) are bounded by
+$(Cn)^{Cn}$, which is below $B_n$ after increasing $C_1$.
+
+For the other endpoint, the finite Bell formula for
+$\Phi^{(k)}/\Phi$ has leading term $(-p)^k$; all other monomials have
+at most $k-1$ factors. The same fixed-disc Cauchy estimates bound
+its $i<n$ parameter derivatives and the coefficient errors in
+$\widehat U$ by $(Cn)^{Cn}$ times the powers already displayed in
+(W73)--(W74). Differentiating $a^{-1}$ adds at most $i!$ and the
+stated $a^{-1}$ loss. The analogous $b$ factor contributes $b^{-1}$.
+
+For the complete Taylor remainder, keep its complex parameter discs
+and apply the integral remainder before estimating. The Bell formula
+and the whole-strip bound give
+$|\partial_t^nf_\pm(t)|\le n!(CP)^ne^{(CP+Cn)t}$ there, where
+$P$ denotes the real center's $p$-value. The omitted affine $2t$ term
+has the same allowance. The complex normalized density is bounded by
+$Cq e^{-cqt}$ with the real center's $q$-value. Choose $D_0$ fixed
+so that its latter exponent dominates $CPt$, and use $a\ge B_n^4$
+to dominate $Cnt$. Integration gives a remainder at most
+$(Cn)^{Cn}r\rho^n$ on those discs. Cauchy differentiation through
+$i,j<n$ adds $i!j!\delta^{-i-j}$ and preserves a bound of the same
+$(Cn)^{Cn}$ shape. Thus the first line of (W79) includes all mixed
+jets and the entire reflected exterior.
+
+Finally apply Batenkov,
+[*On the norm of inverses of confluent Vandermonde matrices*,
+arXiv:1212.0172v2](https://arxiv.org/pdf/1212.0172v2),
+Definition 1 and Theorem 1, equation (1.1), printed p.1.
+Use its ordinary-node case with $N=n$, every multiplicity one,
+$x_k=k/(n-1)$, $0\le k<n$, and $\delta=1/(n-1)$.
+These auxiliary nodes lie in the unit disc and have the required
+separation. The published row bound gives
+$\|\widetilde V^{-1}\|_\infty\le2[2(n-1)]^n$.
+For $V_{ik}=(2k)^i$, write
+$V=\operatorname{diag}([2(n-1)]^i)\widetilde V$;
+the inverse row-scaling factor has norm at most one.
+Converting to Euclidean operator norm costs at most $\sqrt n$,
+and the factorial column factors in the two limiting matrices cost
+at most $(n-1)!$. Thus their inverse norms are bounded by
+$(Cn)^{Cn}$. This is a direct published-theorem application, without
+reproving a generic inverse formula or imposing any spacing on the
+physical support nodes.
+
+The moment and Taylor estimates above initially bound entries.
+Converting an $n\times n$ entrywise bound to Euclidean operator norm
+costs at most $n$. Enlarging $C_1$ once absorbs this factor as well
+as the finite matrix factors, and verifies the operator-norm first
+line and all other bounds in (W79) with one constant.
+
+For $a\ge B_n^4$, these bounds and the finite Neumann estimate give
+actual inverse norms at most $2B_n$ and an actual determinant-factor
+product at least $\kappa_n/2$. In the transformed jet, the remainder
+has norm at most $4B_n^3r\rho^n$. Choose
+
+$$
+D_n=D_0+8\log B_n.
+$$
+
+Since $r\rho\le C(1+b-a)e^{-2(b-a)}$, enlarging $C_1,D_0$ once
+gives $4B_n^3r\rho\le1/(8n)$ for every $b-a\ge D_n$.
+The same decreasing-diagonal comparison in (W74) therefore pays the
+relative determinant, with factor at least $1/2$. Thus its complete
+actual lower bound holds whenever $a\ge B_n^4$ and $b-a\ge D_n$.
+In particular $D_n\le C_2n^2\log(n+1)$ with one absolute $C_2$.
+
+### Pay the remaining strip before allowing the order to grow
+
+Apply bivariate Cauchy estimates to (W78). For real $a,b$ with
+$A=\min(a,b)\ge C_0(D+1)$ and $|a-b|\le D$, they give
+
+$$
+\max_{i,j<n}|\partial_a^i\partial_b^j(R-S)|
+ \le (Cn)^{2n}\frac{C(D+1)}A,\qquad S(a,b)=\operatorname{sech}(a-b).
+$$
+
+The entries of the reference jet obey the corresponding
+$(Cn)^{2n}$ bound, with no $D$ dependence. The finite determinant
+multilinearity bound thus supplies
+
+$$
+|\det\mathcal J_nR-\det\mathcal J_nS|
+ \le\exp\!\bigl(C_3n^2\log(n+1)\bigr)\frac{D+1}A,
+$$
+
+when the displayed entry error is at most one. Meanwhile the exact
+confluent Cauchy determinant already used in (W74) gives
+
+$$
+\det\mathcal J_nS=
+ \left(\prod_{k=0}^{n-1}(k!)^2\right)\operatorname{sech}^{n^2}(a-b)
+ \ge e^{-n^2D}.
+$$
+
+Use $D=D_n$. Its preceding explicit bound shows that
+$A\ge\exp(C_4n^4\log(n+1))$ pays half of this positive reference
+minor, as well as $B_n^4$, $C_0(D_n+1)$ and the entry-error condition.
+One enlargement of $C_4$ works for every $n\ge2$.
+Take the maximum through $n=m$, and enlarge it once to leave the
+open-interval clearance required by (W75). The same classical
+Chebyshev applications and unchanged Hermite Schur consumer prove
+(W77). The minor and weighted-moment constants retain their stated
+support-endpoint dependence.
+
+This gives an explicit unbounded degree range for complete real
+profiles on arbitrary-width high supports. It does not give all orders
+at any fixed start, positivity for unrestricted complex measures,
+compact-core positivity or the original strict Robin joint upper.
+The full RH and strict Robin for every integer above 5040 remain open.
