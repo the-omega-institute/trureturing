@@ -10,6 +10,7 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Tactic
 import D5.S3.FluidDynamics.Fourier.PeriodicAllenCahnDecay
 
@@ -338,13 +339,169 @@ private lemma K_at_zero : K density 3 0 = 0 := by
 private lemma Kp_at_zero : Kp 0 = 0 := by
   simp [Kp, F0]
 
-private lemma density_unique_zero : ∃! t : ℝ, 0 < t ∧ K density 3 t = 0 := by
+private lemma g3_negative {x : ℝ} (hx0 : 0 ≤ x) (hx2 : x ≤ 2) : g3 x < 0 := by
+  have he0 : 1 ≤ Real.exp x := by simpa using Real.exp_le_exp.mpr hx0
+  have he1 : Real.exp 1 < 68 / 25 := Real.exp_one_lt_d9.trans (by norm_num)
+  have he2 : Real.exp x < 149 / 20 := by
+    have hpow : Real.exp 2 = Real.exp 1 ^ 2 := by
+      simpa using Real.exp_nat_mul 1 2
+    have hex := Real.exp_le_exp.mpr hx2
+    rw [hpow] at hex
+    nlinarith [Real.exp_pos 1]
+  have hp : (Real.exp x) ^ 2 - 8 * Real.exp x + 4 < 0 := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr he0) (sub_nonneg.mpr he2.le)]
+  exact div_neg_of_neg_of_pos
+    (mul_neg_of_pos_of_neg (mul_pos (by norm_num) (Real.exp_pos _)) hp) (by positivity)
+
+private lemma weighted_density_negative (h : ℝ → ℝ) (hh : Continuous h)
+    (hneg : ∀ w ∈ Icc (999 / 1000 : ℝ) (11001 / 1000), h w < 0) :
+    (∫ w, h w * density w) < 0 := by
+  have hi (a b : ℝ) (hab : a < b)
+      (hsub : Ioo a b ⊆ Icc (999 / 1000 : ℝ) (11001 / 1000)) :
+      (∫ w in a..b, h w) < 0 := by
+    have hp := intervalIntegral.intervalIntegral_pos_of_pos_on
+      (hh.neg.intervalIntegrable a b) (fun w hw => neg_pos.mpr (hneg w (hsub hw))) hab
+    simpa only [Pi.neg_apply, intervalIntegral.integral_neg, neg_pos] using hp
+  rw [integral_weighted_density _ hh]
+  have h1 := hi (999 / 1000) (1001 / 1000) (by norm_num) (by
+    intro w hw; constructor <;> linarith [hw.1, hw.2])
+  have h11 := hi (10999 / 1000) (11001 / 1000) (by norm_num) (by
+    intro w hw; constructor <;> linarith [hw.1, hw.2])
+  linarith
+
+private lemma F2_deriv (t : ℝ) :
+    HasDerivAt (averaged g2 3) (averaged g3 4 t) t := by
+  have hc : Continuous g3 := by
+    unfold g3
+    exact ((continuous_const.mul Real.continuous_exp).mul
+      ((Real.continuous_exp.pow 2).sub (continuous_const.mul Real.continuous_exp) |>.add
+        continuous_const)).div ((Real.continuous_exp.add continuous_const).pow 4)
+          (fun x => by positivity)
+  exact averaged_deriv g2 g3 g2_continuous hc g2_deriv 3 t
+
+private lemma F2_strictAnti : StrictAntiOn (averaged g2 3) (Icc 0 (9 / 50)) := by
+  apply strictAntiOn_of_deriv_neg (convex_Icc _ _)
+    (continuous_iff_continuousAt.2 (fun t => (F2_deriv t).continuousAt)).continuousOn
+  intro t ht
+  rw [(F2_deriv t).deriv]
+  have ht' : 0 < t ∧ t < 9 / 50 := by simpa only [interior_Icc, mem_Ioo] using ht
+  have hneg : (∫ w, w ^ 4 * g3 (t * w) * density w) < 0 := by
+    apply weighted_density_negative _ (by
+      have hc : Continuous g3 := by
+        unfold g3
+        apply Continuous.div (by fun_prop) (by fun_prop)
+        intro x; positivity
+      fun_prop)
+    intro w hw
+    have hw0 : 0 < w := by linarith [hw.1]
+    have hx : t * w ≤ 2 := by nlinarith [hw.2]
+    exact mul_neg_of_pos_of_neg (pow_pos hw0 _) (g3_negative (mul_nonneg ht'.1.le hw0.le) hx)
+  exact div_neg_of_neg_of_pos hneg (by rw [density_moments.1]; norm_num)
+
+private lemma F2_at_zero : 0 < averaged g2 3 0 := by
+  have heq : averaged g2 3 0 = moment density 3 / (9 * moment density 1) := by
+    unfold averaged
+    simp only [zero_mul, g2, Real.exp_zero]
+    norm_num
+    rw [show (fun w => w ^ 3 * (1 / 9) * density w) =
+      fun w => 1 / 9 * (w ^ 3 * density w) by ext w; ring, integral_const_mul]
+    unfold moment
+    ring
+  rw [heq, density_moments.1, density_moments.2.1]
+  norm_num
+
+private lemma F2_middle_negative :
+    ∀ t ∈ Icc (9 / 50 : ℝ) (7 / 10), averaged g2 3 t < 0 := by
   sorry
+
+private lemma F2_tail_negative {t : ℝ} (ht : 7 / 10 ≤ t) : averaged g2 3 t < 0 := by
+  apply div_neg_of_neg_of_pos ?_ (by rw [density_moments.1]; norm_num)
+  apply weighted_density_negative _ (by fun_prop)
+  intro w hw
+  have hw0 : 0 < w := by linarith [hw.1]
+  have hx : Real.log 2 < t * w := by
+    have hlog := Real.log_two_lt_d9
+    nlinarith [hw.1]
+  exact mul_neg_of_pos_of_neg (pow_pos hw0 _) (g2_negative hx)
+
+private lemma F2_zero_unique :
+    ∀ x y : ℝ, 0 < x → 0 < y → averaged g2 3 x = 0 → averaged g2 3 y = 0 → x = y := by
+  have hsmall (x : ℝ) (hx : 0 < x) (hzero : averaged g2 3 x = 0) : x < 9 / 50 := by
+    by_contra h
+    have hxlow : 9 / 50 ≤ x := le_of_not_gt h
+    by_cases hxhi : x ≤ 7 / 10
+    · linarith [F2_middle_negative x ⟨hxlow, hxhi⟩]
+    · linarith [F2_tail_negative (le_of_not_ge hxhi)]
+  intro x y hx hy hx0 hy0
+  have hxsmall := hsmall x hx hx0
+  have hysmall := hsmall y hy hy0
+  exact F2_strictAnti.injOn ⟨hx.le, hxsmall.le⟩ ⟨hy.le, hysmall.le⟩ (hx0.trans hy0.symm)
+
+private lemma K_zero_unique :
+    ∀ x y : ℝ, 0 < x → 0 < y → K density 3 x = 0 → K density 3 y = 0 → x = y := by
+  apply positive_zeros_unique (K density 3) Kp Kpp K_deriv Kp_deriv K_at_zero Kp_at_zero
+  intro x y hx hy hx0 hy0
+  have hcancel (z : ℝ) (hz : 0 < z) (hz0 : Kpp z = 0) : averaged g2 3 z = 0 := by
+    unfold Kpp at hz0
+    exact (mul_eq_zero.mp (((div_eq_zero_iff).1 hz0).resolve_right (by norm_num))).resolve_left
+      (neg_ne_zero.mpr (ne_of_gt hz))
+  exact F2_zero_unique x y hx hy (hcancel x hx hx0) (hcancel y hy hy0)
+
+private lemma K_positive_test : 0 < K density 3 (6931 / 50000) := by
+  sorry
+
+private lemma test_below_bound :
+    (6931 / 50000 : ℝ) < 2 * (moment density 3 / moment density 4) * Real.log (3 - 1) := by
+  rw [density_moments.2.1, density_moments.2.2]
+  norm_num
+  nlinarith [Real.log_two_gt_d9]
 
 private lemma density_small_zero :
     ∃ t : ℝ, 0 < t ∧ K density 3 t = 0 ∧
       t ≤ 2 * (moment density 3 / moment density 4) * Real.log (3 - 1) := by
-  sorry
+  have hc : Continuous (averaged g2 3) :=
+    continuous_iff_continuousAt.2 fun t => (F2_deriv t).continuousAt
+  obtain ⟨a, ha, hazero⟩ := intermediate_value_Icc (by norm_num : (0 : ℝ) ≤ 9 / 50)
+    hc.continuousOn ⟨(F2_middle_negative (9 / 50) (by norm_num)).le, F2_at_zero.le⟩
+  have ha0 : 0 < a := by
+    have hne : a ≠ 0 := by intro h; subst a; linarith [F2_at_zero]
+    exact lt_of_le_of_ne ha.1 (Ne.symm hne)
+  let d : ℝ := min (a / 2) (6931 / 100000)
+  have hd0 : 0 < d := lt_min (by positivity) (by norm_num)
+  have hda : d < a := (min_le_left _ _).trans_lt (by linarith)
+  have hdT : d < 6931 / 50000 := (min_le_right _ _).trans_lt (by norm_num)
+  have hpos : ∀ t ∈ Ioo 0 d, 0 < averaged g2 3 t := by
+    intro t ht
+    have hta : t < a := ht.2.trans hda
+    have h := F2_strictAnti ⟨ht.1.le, (hta.trans_le ha.2).le⟩ ha hta
+    rwa [hazero] at h
+  have hpanti : StrictAntiOn Kp (Icc 0 d) := by
+    apply strictAntiOn_of_deriv_neg (convex_Icc _ _)
+      (continuous_iff_continuousAt.2 (fun t => (Kp_deriv t).continuousAt)).continuousOn
+    intro t ht
+    have ht' : t ∈ Ioo 0 d := by simpa only [interior_Icc] using ht
+    rw [(Kp_deriv t).deriv]
+    exact div_neg_of_neg_of_pos
+      (mul_neg_of_neg_of_pos (neg_neg_of_pos ht'.1) (hpos t ht')) (by norm_num)
+  have hkanti : StrictAntiOn (K density 3) (Icc 0 d) := by
+    apply strictAntiOn_of_deriv_neg (convex_Icc _ _)
+      (continuous_iff_continuousAt.2 (fun t => (K_deriv t).continuousAt)).continuousOn
+    intro t ht
+    have ht' : t ∈ Ioo 0 d := by simpa only [interior_Icc] using ht
+    rw [(K_deriv t).deriv]
+    have h := hpanti ⟨le_rfl, hd0.le⟩ ⟨ht'.1.le, ht'.2.le⟩ ht'.1
+    rwa [Kp_at_zero] at h
+  have hdneg : K density 3 d < 0 := by
+    have h := hkanti ⟨le_rfl, hd0.le⟩ ⟨hd0.le, le_rfl⟩ hd0
+    rwa [K_at_zero] at h
+  obtain ⟨t, ht, htzero⟩ := intermediate_value_Icc hdT.le
+    (continuous_iff_continuousAt.2 (fun t => (K_deriv t).continuousAt)).continuousOn
+    ⟨hdneg.le, K_positive_test.le⟩
+  exact ⟨t, hd0.trans_le ht.1, htzero, ht.2.trans test_below_bound.le⟩
+
+private lemma density_unique_zero : ∃! t : ℝ, 0 < t ∧ K density 3 t = 0 := by
+  obtain ⟨t, ht, hzero, _⟩ := density_small_zero
+  exact ⟨t, ⟨ht, hzero⟩, fun s hs => K_zero_unique s t hs.1 ht hs.2 hzero⟩
 
 /-- The two-block density contradicts the proposed general moment lower bound. -/
 theorem result : ¬ claim := by
