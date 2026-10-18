@@ -197,7 +197,81 @@ private theorem synth_head_value (N j : ℕ) (hN : 56 ≤ N)
     if_pos (ht 7 (by omega)), if_pos (ht 6 (by omega)), if_pos (ht 5 (by omega)),
     if_pos (ht 4 (by omega)), if_pos (ht 3 (by omega)), if_pos (ht 2 (by omega)),
     if_pos (ht 1 (by omega)), if_pos (ht 0 (by omega)), mul_one]
-  fin_cases i <;> norm_num [head, low] <;> ring
+  fin_cases i
+  · norm_num [head, low]
+    simp only [(show 0 < j by omega),
+        (show 0 < N - 9 by omega),
+        (show 0 < N - 8 by omega),
+        (show 0 < N - 7 by omega),
+        (show 0 < N - 6 by omega),
+        (show 0 < N - 5 by omega),
+        (show 0 < N - 4 by omega),
+        (show 0 < N - 3 by omega),
+        (show 0 < N - 2 by omega),
+        (show 0 < N - 1 by omega),
+        (show 0 < N by omega),
+        (show 9 < N by omega),
+        (show 8 < N by omega),
+        (show 7 < N by omega),
+        (show 6 < N by omega),
+        (show 5 < N by omega),
+        (show 4 < N by omega),
+        (show 3 < N by omega),
+        (show 2 < N by omega),
+        (show 1 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [head, low]
+    simp only [(show 1 < j by omega),
+        (show 1 < N - 9 by omega),
+        (show 1 < N - 8 by omega),
+        (show 1 < N - 7 by omega),
+        (show 1 < N - 6 by omega),
+        (show 1 < N - 5 by omega),
+        (show 1 < N - 4 by omega),
+        (show 1 < N - 3 by omega),
+        (show 1 < N - 2 by omega),
+        (show 1 < N - 1 by omega),
+        (show 1 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [head, low]
+    simp only [(show 2 < j by omega),
+        (show 2 < N - 9 by omega),
+        (show 2 < N - 8 by omega),
+        (show 2 < N - 7 by omega),
+        (show 2 < N - 6 by omega),
+        (show 2 < N - 5 by omega),
+        (show 2 < N - 4 by omega),
+        (show 2 < N - 3 by omega),
+        (show 2 < N - 2 by omega),
+        (show 2 < N - 1 by omega),
+        (show 2 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [head, low]
+    simp only [(show 3 < j by omega),
+        (show 3 < N - 9 by omega),
+        (show 3 < N - 8 by omega),
+        (show 3 < N - 7 by omega),
+        (show 3 < N - 6 by omega),
+        (show 3 < N - 5 by omega),
+        (show 3 < N - 4 by omega),
+        (show 3 < N - 3 by omega),
+        (show 3 < N - 2 by omega),
+        (show 3 < N - 1 by omega),
+        (show 3 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [head, low]
+    simp only [(show 4 < j by omega),
+        (show 4 < N - 9 by omega),
+        (show 4 < N - 8 by omega),
+        (show 4 < N - 7 by omega),
+        (show 4 < N - 6 by omega),
+        (show 4 < N - 5 by omega),
+        (show 4 < N - 4 by omega),
+        (show 4 < N - 3 by omega),
+        (show 4 < N - 2 by omega),
+        (show 4 < N - 1 by omega),
+        (show 4 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
 
 private theorem synth_tail_value (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) (i : Fin 9) :
@@ -216,7 +290,106 @@ private theorem synth_tail_value (N j : ℕ) (hN : 56 ≤ N)
     ht 9 (by omega), ht 8 (by omega), ht 7 (by omega), ht 6 (by omega),
     ht 5 (by omega), ht 4 (by omega), ht 3 (by omega), ht 2 (by omega),
     ht 1 (by omega), ht 0 (by omega), mul_zero, zero_add]
-  fin_cases i <;> norm_num [tail, low] <;> ring
+  fin_cases i
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 9 < 1 by omega),
+        (show ¬ N - 9 < 2 by omega),
+        (show ¬ N - 9 < 3 by omega),
+        (show ¬ N - 9 < 4 by omega),
+        (show ¬ N - 9 < 5 by omega),
+        (show ¬ N - 9 < j by omega),
+        (show N - 9 ≠ 0 by omega),
+        (show ¬ N ≤ 10 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 8 < 1 by omega),
+        (show ¬ N - 8 < 2 by omega),
+        (show ¬ N - 8 < 3 by omega),
+        (show ¬ N - 8 < 4 by omega),
+        (show ¬ N - 8 < 5 by omega),
+        (show ¬ N - 8 < j by omega),
+        (show N - 8 ≠ 0 by omega),
+        (show ¬ N ≤ 9 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 7 < 1 by omega),
+        (show ¬ N - 7 < 2 by omega),
+        (show ¬ N - 7 < 3 by omega),
+        (show ¬ N - 7 < 4 by omega),
+        (show ¬ N - 7 < 5 by omega),
+        (show ¬ N - 7 < j by omega),
+        (show N - 7 ≠ 0 by omega),
+        (show ¬ N ≤ 8 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 6 < 1 by omega),
+        (show ¬ N - 6 < 2 by omega),
+        (show ¬ N - 6 < 3 by omega),
+        (show ¬ N - 6 < 4 by omega),
+        (show ¬ N - 6 < 5 by omega),
+        (show ¬ N - 6 < j by omega),
+        (show N - 6 ≠ 0 by omega),
+        (show ¬ N ≤ 7 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 5 < 1 by omega),
+        (show ¬ N - 5 < 2 by omega),
+        (show ¬ N - 5 < 3 by omega),
+        (show ¬ N - 5 < 4 by omega),
+        (show ¬ N - 5 < 5 by omega),
+        (show ¬ N - 5 < j by omega),
+        (show N - 5 ≠ 0 by omega),
+        (show ¬ N ≤ 6 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 4 < 1 by omega),
+        (show ¬ N - 4 < 2 by omega),
+        (show ¬ N - 4 < 3 by omega),
+        (show ¬ N - 4 < 4 by omega),
+        (show ¬ N - 4 < 5 by omega),
+        (show ¬ N - 4 < j by omega),
+        (show N - 4 ≠ 0 by omega),
+        (show ¬ N ≤ 5 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 3 < 1 by omega),
+        (show ¬ N - 3 < 2 by omega),
+        (show ¬ N - 3 < 3 by omega),
+        (show ¬ N - 3 < 4 by omega),
+        (show ¬ N - 3 < 5 by omega),
+        (show ¬ N - 3 < j by omega),
+        (show N - 3 ≠ 0 by omega),
+        (show ¬ N ≤ 4 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 2 < 1 by omega),
+        (show ¬ N - 2 < 2 by omega),
+        (show ¬ N - 2 < 3 by omega),
+        (show ¬ N - 2 < 4 by omega),
+        (show ¬ N - 2 < 5 by omega),
+        (show ¬ N - 2 < j by omega),
+        (show N - 2 ≠ 0 by omega),
+        (show ¬ N ≤ 3 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
+  · norm_num [tail, low]
+    simp only [(show ¬ N - 1 < 1 by omega),
+        (show ¬ N - 1 < 2 by omega),
+        (show ¬ N - 1 < 3 by omega),
+        (show ¬ N - 1 < 4 by omega),
+        (show ¬ N - 1 < 5 by omega),
+        (show ¬ N - 1 < j by omega),
+        (show N - 1 ≠ 0 by omega),
+        (show ¬ N ≤ 2 by omega),
+        (show 0 < N by omega),
+      ite_true, ite_false, mul_one, mul_zero, add_zero, zero_add] <;> ring
 
 private theorem spectrumK_synth (N j : ℕ) (hN : 56 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) (x : Fin 16 → ℝ) :
