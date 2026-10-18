@@ -1386,3 +1386,1100 @@ pair-gap theorem. The present proof supplies a finite-exception extension
 along the specified actual curve. Classification of the retained finite
 fibres, or a division-free obstruction covering them, remains the route
 to a whole-punctured-branch statement.
+
+
+## 92. Closing the two leading-coefficient fibres
+
+### 92.1. Statement and exact parameter field
+
+Use the original input convention and actual family of §§75,
+87–91. Let
+
+\[
+\begin{aligned}
+L(b)={}&2556b^{32}-71245b^{30}+763943b^{28}-4277291b^{26}
++14167798b^{24}-18831888b^{22}-32607612b^{20}\\
+&+183118968b^{18}-105937551b^{16}-660151053b^{14}
++1236698199b^{12}-1481126067b^{10}+1141299072b^8\\
+&-17045478b^6-207970578b^4-33657930b^2-1594323.
+\end{aligned}
+\]
+
+The decic \(F(b,k)\) in §88 has leading coefficient \(3L(b)\).
+
+**Theorem 92.1.** At every real \(b\) with \(0<|b|<1\) and
+\(L(b)=0\), there is no noncanonical common-flat orthogonal triple.
+Consequently the canonical complete common-flat input basis is unique up
+to phases and permutations, and the fixed pair \((I_6,H_0(b))\) cannot
+belong to a quartet. There are exactly two such parameters, \(b=\pm b_L\),
+where \(559/625<b_L<1789/2000\).
+
+Here is an exact irreducibility certificate. The monic reductions of \(L\)
+have these factorizations:
+
+```text
+mod 5:
+(b+1)(b-1)
+(b^4-2b^2+b+1)(b^4-2b^2-b+1)
+(b^22-2b^18+2b^14+b^12-2b^8-2b^6-2b^4-2b^2-2)
+
+mod 7:
+(b^14+2b^12+3b^10-b^8-b^4-3b^2-3)
+(b^18-b^16-3b^14-b^12-3b^10+2b^8-3b^6-2b^4+3b^2+1)
+```
+
+Each factor passes the exact Rabin criterion: for a degree \(n\) factor
+\(f\) over \(\mathbb F_p\), \(b^{p^n}=b\bmod f\), and
+\(\gcd(f,b^{p^{n/q}}-b)=1\) for every prime divisor \(q\) of \(n\).
+The possible proper factor degrees modulo 5 are
+
+```text
+1,2,4,5,6,8,9,10,22,23,24,26,27,28,30,31,
+```
+
+whereas modulo 7 they are 14 and 18. Their intersection is empty.
+Gauss's lemma therefore proves irreducibility over \(\mathbb Q\).
+The signs \(L(0)=-1594323\), \(L(1)=12779520\) give a real embedding of
+\(\mathbb Q[b]/(L)\). This field cannot contain \(i\); adjoining \(i\)
+has degree two, so \(L\) remains irreducible over \(\mathbb Q(i)\).
+
+Ordinary exact Sturm division gives one root in \((0,1)\), and one in
+\((559/625,1789/2000)\). Evenness gives the stated negative partner.
+All subsequent operations may be performed in the characteristic-zero
+field \(K_L=\mathbb Q(i)[b]/(L)\), without selecting an approximate root.
+
+Two good residue maps used below are
+
+\[
+(p,b,i)=(97,9,22),\qquad (101,13,10).
+\]
+
+They satisfy \(L(b)=0\) and \(i^2=-1\) modulo the indicated prime; neither
+prime divides the leading coefficient 2556. The second map is needed
+only for three component resultants, which have rational coefficients.
+
+**Specialization principle used throughout.** A finite computation in
+\(K_L\), performed by polynomial multiplication and inverses expressed as
+adjugates divided by determinants, is legitimate whenever each inverted
+determinant has a nonzero residue at one of these good maps. Such a residue
+proves nonvanishing in the characteristic-zero field. Consequently it
+proves nonvanishing at every complex root of \(L\), with a fixed choice of
+\(i\). This is an irreducible-number-field argument, not an inference that
+a modular solution set equals a real solution set. Different polynomial
+scalars may use different good maps.
+
+### 92.2. Complete projective classification in the opposite chart
+
+Write the physical scaled mean \(G=x+iy\), \(R=3-b^2\), and set
+
+\[
+ \ell=x/y,\qquad s=(x^2+y^2-R)/y.
+\]
+
+The old variables were \(k=y/x\), \(t=(x^2+y^2-R)/x\). Thus on the
+overlap \(k=1/\ell, t=s/\ell\). For each primitive source curve
+\(h(b,k,t)\) of degree \(n=8,10,10\) from §87, define
+
+\[
+ h^\vee(b,\ell,s)=\ell^n h(b,1/\ell,s/\ell).
+\]
+
+The homogeneous global identities in §87 make these necessary for every
+original generic ray with \(y\ne0\), without assuming \(F_8\ne0\).
+The global zero-mean exclusion guarantees \((x,y)\ne(0,0)\). The
+opposite vertical test below excludes \(y=0\), so this chart is complete
+at the roots of \(L\).
+
+For a component \(P_j(b,k)\) of degree \(n_j\), put
+\(P_j^\vee=\ell^{n_j}P_j(b,1/\ell)\). For the decic put
+
+\[
+ F^\vee=\ell^{10}F(b,1/\ell),\quad
+ T^\vee=-\ell^9T(b,1/\ell),\quad D^\vee=\partial_\ell F^\vee.
+\]
+
+Its lift is \(s=T^\vee/D^\vee\). Indeed modulo \(F^\vee\),
+\(D^\vee=-\ell^8F_k(b,1/\ell)\); on the generic overlap this gives
+\(s=\ell t\). For each other component with old numerator \(N_j\) and
+denominator \(D_j\), set
+
+\[
+ a_j=\max(\deg_kD_j,\deg_kN_j-1),\quad
+ N_j^\vee=\ell^{a_j+1}N_j(b,1/\ell),\quad
+ D_j^\vee=\ell^{a_j}D_j(b,1/\ell).
+\]
+
+The eighteen published component identities transport to these formulas.
+One precise way to justify specialization, including the new point
+\(\ell=0\), is to reduce each transformed identity by the monic
+\(P_j^\vee\), with inverses of \(D_j^\vee\) formed by multiplication
+adjugates. Over \(\mathbb Q(i)(b)\) it is zero by the overlap identity.
+The following leading-coefficient and denominator witnesses show every
+coefficient operation is regular in \(K_L\). The zero identity therefore
+specializes there, without division by \(\ell\) at the exceptional point.
+
+Use exactly the degree-19 Macaulay construction of §88, in variables
+\((s,\ell)\). Its 210 columns are the pairs \((e_s,e_\ell)\) of total
+degree at most 19, in descending order of \((e_s+e_\ell,-e_\ell)\).
+Retain the 30 basis monomials of total degree at most 6, together with
+\((1,6),(0,7)\). Use all source multiples in the printed source order and
+in increasing multiplier \(e_s\), then increasing \(e_\ell\). Delete
+row indices \(1,13,78,183,184,185,186,187\), with zero-based indexing.
+The remaining 180-by-180 minor, on the nonbasis columns, is
+\(65\bmod97\). The 18-by-18 opposite vertical Sylvester minor formed
+from the first two source curves is \(28\bmod97\). Thus the affine
+algebra has dimension at most 30 and there is no opposite vertical point.
+As in §88, every border of the 30 proposed basis monomials is within the
+represented degree range, so the finite matrix bound is an algebra bound.
+
+Here are the component leading coefficients and denominator resultants,
+in order \(j=0,\ldots,5\), modulo 97 at \(b=9\):
+
+```text
+(25,48), (65,51), (26,65), (22,61), (67,10), (1,50).
+```
+
+For the pairwise component resultants the residues modulo 97 are:
+
+```text
+01:33, 02:96, 03:22, 04:45, 05:50,
+12:44, 13:35, 14:0, 15:0,
+23:31, 24:72, 25:35, 34:25, 35:61, 45:0.
+```
+
+The three zero residues are replaced by the nonzero witnesses at
+\((p,b)=(101,13)\): \(14:69, 15:68, 45:24\). They do not indicate
+characteristic-zero collisions. Every component denominator is a unit,
+every pair of components is coprime, and their degrees sum to 30. The
+transported identities give a surjection onto their product. The dimension
+upper bound therefore gives an isomorphism with this full product,
+retaining the two nonreduced components just as in §88.
+
+The homogeneous positivity proofs for the other five components exclude
+all their real projective points. At \(\ell=0\) this uses their old
+strictly positive leading coefficients; it is not an affine division by
+\(\ell\). Thus every physical generic mean lies in the decic radial algebra
+
+\[
+ \mathcal A^\vee_L=K_L[\ell,Y]/\bigl(F^\vee,
+ (1+\ell^2)Y^2-sY-R\bigr),\quad
+ s=T^\vee/D^\vee,\quad x=\ell Y,\quad y=Y.             \tag{92.1}
+\]
+
+It is a free algebra of dimension 20. No physical root count is needed.
+
+### 92.3. All original lifts and units
+
+Construct \(G=x+iy\), the original affine-line coefficients
+\(A,D_0,C_0,\sigma\), and the global arrays \(a_Y,\mu_Y,F_8\) from
+§87. Then
+
+\[
+ \tau=-\mu_Y/a_Y,\quad
+ u=(-AC_0-D_0\tau)/\sigma,\quad
+ v=(-D_0C_0+A\tau)/\sigma.
+\]
+
+Construct \(C,D,Y_c,q,e,\bar e,\Delta,\delta\) by the original equations
+of §§87,89. Here the original input coefficients remain
+\(G/\kappa,C/\kappa,D/\kappa\), not the scaled quantities themselves.
+
+The following are exact multiplication norms in algebra (92.1), modulo 97 at
+\(b=9,i=22\). The derivative is that of the unnormalized \(F^\vee\).
+
+```text
+1+l^2:73; Fvee_l:81; radial discriminant:94; Y:24;
+aY:1; \sigma:17; beta:89; barbeta:17;
+C:16; barC:62; D:95; barD:12; Yc:44; barYc:23;
+q:29; e:81; bare:37; F8:38; G:49; barG:94;
+\Delta:47; \delta:65.
+```
+
+The radial discriminant is \(s^2+4R(1+\ell^2)\). The determinant of
+the columns \(1,Y,\ldots,Y^{19}\) in the ordered basis
+\((1,\ell,\ldots,\ell^9,Y,Y\ell,\ldots,Y\ell^9)\) is \(33\bmod97\).
+Every division in this reconstruction is therefore valid over \(K_L\).
+Direct finite-algebra multiplication also gives both parts of \(E=0\) and the two
+original equations \(N_Y=N_D=0\) in the entire specialized algebra.
+Those modular checks corroborate the transported characteristic-zero
+identities; they are not their proof.
+
+Necessity gives a point of algebra (92.1) before any \(F_8\) division. The nonzero
+norm of \(F_8\) then proves it cannot vanish at that point. The complete
+line-lift uniqueness and sufficiency of §87 now apply. This handles all
+original leading and pivot strata noncircularly. Both channels are
+three-distinct because the centered lower interpolation determinant
+\(-\Delta\) is a unit. Every root order and phase gauge is retained.
+
+### 92.4. Arbitrary generic pairs at these fibres
+
+In algebra (92.1) the radial involution fixes \(\ell\) and sends
+
+\[
+ Y\longmapsto s/(1+\ell^2)-Y
+       =-R/((1+\ell^2)Y),\qquad G\longmapsto-R/\bar G.
+\]
+
+It is defined at every point, including \(\ell=0\). The global
+characteristic-zero identities identifying this with the normalized
+\(\Theta\) action are those proved in §89. On the generic overlap the old
+and new algebras are isomorphic under \(k=1/\ell, X=\ell Y\). The physical
+coordinate \(Y=y\) is the same on both sides. All new construction
+denominators are units above, so those identities extend to \(K_L\).
+No claim that \(\ell\) itself is a unit at \(L=0\) is used.
+
+Evaluate the same all-six-order overlap norm \(N\) of §§79,89 in
+\(\mathcal A^\vee_L\otimes\mathcal A^\vee_L\), with the current \(R\).
+Let \(\rho(a\otimes c)=a\iota(c)\). It is onto, so its kernel has dimension
+380. The already proved field identity \(\rho(N)=0\) transports and
+specializes by the unit argument above. Thus multiplication by \(N\)
+has rank at most 380 in characteristic zero.
+
+In the tensor basis \(Y^r\otimes Y^s\), indexed by \(20r+s\), the leading
+380-by-380 principal minor has residue **17 modulo 97** at \(b=9,i=22\).
+Its exact construction uses the same 508-term integer norm, without a
+restriction on candidate relative order. Irreducibility of \(L\) proves
+the minor nonzero in \(K_L\); hence the rank is exactly 380 and
+
+\[
+ N(\mathcal A^\vee_L\otimes\mathcal A^\vee_L)=\ker\rho.
+\]
+
+In particular \(1+\bar GG'/R\), which lies in \(\ker\rho\), belongs to
+the principal ideal of \(N\). At an arbitrary physical orthogonal pair,
+\(N=0\), so its means are orthogonal. Full lift uniqueness identifies the
+second coefficient point with \(\iota\) of the first. Thus the second ray
+is in \(S_3\Theta\) of the first, up to phase, with all six orders retained.
+The uniform within-union graph theorem excludes an all-generic
+noncanonical orthogonal triple. It is applied separately to the union
+of each edge's endpoints, without a global single-union assumption.
+
+### 92.5. Complete aligned coverage and mixed exclusion
+
+Use the literal quintic \(Q_5\), Cramer formulas, shape polynomials \(U,V\),
+and retained exceptional scalars of §90. Their construction is unchanged.
+At \(b=9\bmod97\), the specialized quintic has degree five, and the
+cofactor resultants \(r_0,r_2\), its leading coefficient and the actual
+Cayley-pole factor are all nonzero. Their exact residues are respectively 27, 7, 13 and 53, reconstructed
+from the literal formulas of §90. This proves their nonvanishing at all roots of \(L\), including
+both real signs. The zero-angle, constant-channel and finite rank strata
+remain covered by the uniform original analysis of §90. No actual pole
+occurs on these fibres.
+
+In the monic quintic algebra, the exact norm residues are
+
+```text
+d:38; V:39; K_a:60; J_a:88; F_a:58;
+(2-id)^2+K_a:19; (2+id)^2+K_a:3.
+```
+
+Thus every finite aligned ray has the same rational shape lift
+\(\theta=U/V\), with both signs of the square root of \(K_a\), all three
+positions and all phase choices. Constant channels are included whenever
+the original strict chart permits them.
+
+Construct the mixed norm of §90.4 in the 200-dimensional algebra
+\(\mathcal A^\vee_L\otimes K_L[d,S]/(Q_5,S^2-K_a)\), using the original
+input normalization and basis \(S^\epsilon Y^id^j\) indexed by
+\(100\epsilon+5i+j\). The full multiplication determinant has residue
+**54 modulo 97**. All construction denominators have been certified above.
+Hence multiplication is invertible over \(K_L\), and no physical
+generic–aligned orthogonal pair exists at any real root of \(L\).
+
+### 92.6. Consumer and retained boundary
+
+All noncanonical rays are generic or aligned by §75, including
+constant-channel aligned cases. An all-generic triple is excluded by §92.4;
+an all-aligned triple by the uniform §§83–85 theorem; a mixed triple has
+an edge excluded by §92.5. The canonical-intersection rigidity of §60 then
+forces every complete common-flat input basis to be canonical. The exact
+input/output transport \(W=H_0^*B\) of §91 proves the fixed-pair quartet
+exclusion. None of these steps assumes a canonical intersection or cyclic
+covariance of a candidate basis.
+
+This closes the retained fibres \(L=0\). If \(H_*\) is the guard, one may remove its full \(L\)-primary factor and retain every other
+factor: let \(v\) be maximal with \(L^v\mid H_*\), and put
+\(H_{\rm new}=H_*/L^v\). At \(H_{\rm new}\ne0\), either \(L\ne0\) and
+Theorem 91.1 applies, or \(L=0\) and the present proof applies.
+No expanded computation of \(H_*\), no claim about the other fibres,
+and no limiting argument across them is used. The center and endpoints
+remain outside this basis-uniqueness statement.
+
+## 93. Complete source algebras at six projection-collision fibres
+
+### 93.1. Exact parameter field
+
+Let \(P(B)=\sum_{j=0}^{98}p_jB^j\) be the primitive integer polynomial
+whose complete ascending coefficient list is in §93.7. Put
+\(Q(b)=P(b^2)\).
+
+**Theorem 93.1.** For every real \(0<|b|<1\) with \(Q(b)=0\),
+there is no original noncanonical common-flat orthogonal triple.
+Every complete common-flat input basis is canonical up to phases and
+permutation, and the fixed pair \((I_6,H_0(b))\) cannot belong to a quartet.
+There are exactly six such parameters, three positive and their negatives.
+
+The polynomial \(P\) has multiplicity exactly two in the discriminant of
+\(\widetilde F(B,K)=b^{-6}F(b,bK)\), where \(B=b^2\) and \(F\) is the
+literal decic in §88. The substitution is a polynomial identity.
+Exact discriminant division verifies \(P^2\mid\operatorname{disc}_K
+\widetilde F\) and \(P^3\nmid\operatorname{disc}_K\widetilde F\).
+No numerical discriminant is used.
+
+The monic reductions of \(P\) have irreducible factor degrees
+\[
+\begin{array}{c|c}
+19&1,1,2,4,90\\
+29&2,9,15,17,19,36\\
+61&1,4,13,80.
+\end{array}
+\]
+The following ascending coefficient arrays specify all monic factors.
+For each prime, multiply its listed polynomials in \(B\); the result is
+the monic reduction of \(P\).
+
+~~~text
+factor19_1: [6, 1]
+factor19_2: [-7, 1]
+factor19_3: [3, -5, 1]
+factor19_4: [9, 6, 9, -9, 1]
+factor19_5: [-5, -3, 9, 8, 2, 1, 8, 6, -7, 5, -2, -8, 6, -5, 0, 9, -4, 0, 6, -7, 3, 3, 2, 4, 7, -9, -6, 9, 1, -9, -8, 4, -4, -2, 4, 0, -2, 6, 8, -9, -2, 2, 2, 6, 2, 4, -8, -8, -5, -6, 1, -9, -1, 9, 5, -3, -7, -1, 3, -9, -3, -1, -7, -4, -8, 3, 6, -5, 7, 5, 0, 0, -6, 9, -4, -5, -8, -3, 3, 6, 0, -3, -1, -5, -9, 7, -1, -5, 0, -2, 1]
+factor29_1: [-3, 7, 1]
+factor29_2: [13, 2, -8, 1, 14, 9, 6, 1, 9, 1]
+factor29_3: [-3, -11, 3, 2, -14, 4, 9, -2, 8, -2, -8, -4, 12, 6, 0, 1]
+factor29_4: [-3, -1, -8, -14, 2, 13, -1, 11, -10, -10, 4, 4, -5, 6, 10, -1, 3, 1]
+factor29_5: [3, 9, 4, 14, 2, -12, -13, -12, 11, 5, 9, -3, -3, 4, 7, -10, 9, 10, 2, 1]
+factor29_6: [-13, 4, -9, 5, 10, 2, 8, -5, -1, -6, 6, -11, -1, 3, -7, -13, -10, 6, -3, 3, -2, 3, 5, -9, -7, 9, 4, 2, -4, 4, -7, 8, 13, -10, -5, -6, 1]
+factor61_1: [-25, 1]
+factor61_2: [22, 7, 11, 9, 1]
+factor61_3: [-21, -11, 13, 4, -21, -25, 16, -3, 28, 28, 9, 23, -12, 1]
+factor61_4: [-7, -21, -7, 9, -1, -27, -30, 7, -1, 26, -14, 26, -30, -14, 22, -11, 21, 16, -8, -14, 21, 22, 27, 19, -6, 15, 0, -11, -3, 23, 8, -26, -16, -2, -13, -13, -2, -20, 22, 5, -15, 26, -17, 19, 1, 7, 19, -6, 11, -15, 11, 6, 17, -27, 26, -14, -16, -29, -27, 21, -1, 8, -4, -3, -10, 18, 25, 24, -16, -5, 25, 7, 16, -27, 16, 10, -20, -24, -22, -6, 1]
+~~~
+
+Their products are as stated, and each factor satisfies the Rabin criterion: for a
+degree \(n\) factor \(f\), \(B^{p^n}=B\bmod f\), and
+\(\gcd(f,B^{p^{n/r}}-B)=1\) for each prime \(r\mid n\).
+The proper subset-degree intersection for the first two rows is
+\(\{2,96\}\), while the third allows neither. Hence \(P\) is irreducible.
+
+For a root \(\beta\), its exact norm is
+\[
+ \operatorname{Nm}(\beta)
+ =\frac{3736172995358363574201349399792269}{23265280}
+ =\frac{3^{59}11\,13\,43^2}{2^{16}5\,71}.
+\]
+Its 5-adic valuation is \(-1\), so \(\beta\) cannot be a square in
+\(\mathbb Q(\beta)\). Adjoining its square root has degree two. Thus
+\(Q\) is irreducible of degree 196.
+Exact Sturm division gives three roots of \(P\) in \((0,1)\), one in each
+\[
+\begin{split}
+ &(282912/349561,\ 274537/339213),\\
+ &(215864/248923,\ 158403/182662),\\
+ &(508935/581954,\ 49319/56395).
+\end{split}
+\]
+For reproducibility, use the Sturm sequence beginning with \(P,P'\),
+replace each nonzero next term \(-\operatorname{rem}(A,B)\) by its
+positive primitive integer multiple, and omit zero signs when counting
+variations. Its endpoint variation counts are:
+
+~~~text
+0: 53
+1: 50
+282912/349561: 53
+274537/339213: 52
+215864/248923: 52
+158403/182662: 51
+508935/581954: 51
+49319/56395: 50
+~~~
+
+Their positive and negative square roots are the six stated parameters.
+In particular \(\mathbb Q[b]/(Q)\) has a real embedding, so it cannot
+contain \(i\). Thus \(Q\) remains irreducible over \(\mathbb Q(i)\).
+Work in \(K_Q=\mathbb Q(i)[b]/(Q)\).
+
+The good residue map is \(b\mapsto5,\ i\mapsto11\) modulo 61:
+\(P(25)=0\), \(11^2=-1\), and the leading coefficient of \(Q\) is nonzero.
+A nonzero residue of any constructed scalar proves its nonvanishing in
+\(K_Q\), hence at every complex root of \(Q\). Inverses are always formed
+by adjugates and determinants, with all denominators certified below.
+This irreducible-number-field argument does not identify a modular
+solution set with the real solution set.
+
+### 93.2. Full source algebra without dividing by a direction derivative
+
+Use the three primitive source curves \(h_0,h_1,h_2\) of §87.5, of degrees
+8,10,10 in \(k,t\). Use exactly the degree-19 monomial order, 30-element
+basis \(\mathcal B\), 188 source multiples and selected 180 rows in §88.2.
+The basis has total degree at most six, together with
+\((e_t,e_k)=(1,6),(0,7)\), in inherited monomial order.
+Let \(M\) be the selected matrix on the 180 nonbasis columns, and \(C\)
+its 30 basis columns. The exact residues are
+\[
+ \det M=8,\qquad \det V_*=57\pmod{61}.
+\]
+The second is the original vertical 18-by-18 minor. It excludes physical
+means with \(x=0\). Every other degree-at-most-19 monomial has its basis
+expression from \(-M^{-1}C\); basis monomials have their standard vectors.
+Define \(K,T\) by the expressions of the one-step \(k,t\) multiples
+of every basis monomial. These borders all lie in the represented range.
+
+Here is the characteristic-zero specialization justification. Over
+\(\mathbb Q(i)(b)\), the source/CRT theorem makes \(K,T\)
+the actual multiplication matrices. Therefore they commute,
+\(h_j(K,T)=0\), and evaluation of each basis monomial on the constant
+vector gives its standard basis vector. These are rational-function
+identities whose construction denominators divide powers of \(\det M\)
+and fixed scalar contents. They specialize to \(K_Q\) because \(\det M\)
+is a unit. They provide a 30-dimensional algebra representation generated
+by its constant vector. Conversely the same Macaulay border relations
+bound the full quotient by 30. Hence
+\[
+ K_Q[k,t]/(h_0,h_1,h_2)
+\]
+is exactly this free 30-dimensional algebra. No old component derivative
+is assumed invertible in this argument.
+
+### 93.3. Generic component and a new primitive element
+
+Let \(F=P_0\) be the old decic and \(P_{\rm other}=\prod_{j=1}^5P_j\)
+the other five component polynomials. Their product annihilates \(K\),
+by the same transported rational identity. Their degrees are 10 and 20,
+and
+\[
+ \operatorname{Res}_k(F,P_{\rm other})=56\pmod{61}.
+\]
+Construct
+\[
+ e(k)=P_{\rm other}(k)[P_{\rm other}^{-1}\bmod F]
+          \pmod{F P_{\rm other}},\qquad E=e(K).
+\]
+The identities \(E^2=E\), \(\operatorname{tr}E=10\) hold generically and
+specialize by the resultant unit. In characteristic zero they imply
+\(\operatorname{rank}E=10\).
+
+Take the first ten columns \(J=E_{[:,0:10]}\), and their first ten rows
+\(J_0\). One has \(\det J_0=15\bmod61\). Define
+\[
+\begin{split}
+ K_g&=J_0^{-1}(KJ)_{[0:10,:]},\qquad
+ T_g=J_0^{-1}(TJ)_{[0:10,:]},\\
+ {\bf1}_g&=J_0^{-1}(E{\bf1})_{[0:10]}.
+\end{split}
+\]
+The five other homogeneous components have no real projective points
+on the entire puncture, by §88.3. Therefore every original generic
+physical source point belongs to this image.
+
+Put \(W=K_g+T_g\). The ten columns
+\({\bf1}_g,W{\bf1}_g,\ldots,W^9{\bf1}_g\) have determinant \(56\bmod61\).
+Thus \(W\) is a primitive element. Its characteristic polynomial has
+residue
+\[
+ z^{10}-19z^9+16z^8-23z^7-12z^6-25z^5+
+ 6z^4+27z^3-22z^2+27z-2,
+\]
+with discriminant \(23\bmod61\). In particular the ten source points are
+distinct in characteristic zero. Reconstruct \(k(z),t(z)\), each of
+degree at most nine, by expressing \(K_g{\bf1}_g,T_g{\bf1}_g\) in these
+power columns. This exact finite construction never divides by \(F_k\).
+The repeated direction root is separated by the coordinate \(k+t\);
+completeness follows from the full source algebra, not from that diagnostic.
+
+### 93.4. Original generic reconstruction and all units
+
+Form the twenty-dimensional free algebra
+\[
+ \mathcal A_Q=K_Q[z,X]/
+ (f_W(z),\ (1+k(z)^2)X^2-t(z)X-R),\qquad R=3-b^2,
+\]
+and set \(x=X,\ y=k(z)X,\ G=x+iy\). Construct the original affine
+line and \(a_Y,\mu_Y,F_8\) from §87. Then
+\[
+ \tau=-\mu_Y/a_Y,\quad
+ u=(-AC_0-D_0\tau)/\sigma,\quad
+ v=(-D_0C_0+A\tau)/\sigma.
+\]
+Construct \(C,D,Y_c,q,e,\bar e,\Delta,\delta\) by the original formulas.
+The physical unscaled input coefficients are
+\(G/\kappa,C/\kappa,D/\kappa\).
+
+The exact multiplication norm residues modulo 61 are:
+
+~~~text
+1+k^2:57; fW_prime:41; radial discriminant:22; y:49;
+aY:57; sigma:35; beta:1; barbeta:10;
+C:55; barC:59; D:55; barD:40; Yc:41; barYc:41;
+q:5; e:39; bare:56; F8:4; G:39; barG:45;
+Delta:47; delta:48.
+~~~
+
+The radial discriminant is \(t^2+4R(1+k^2)\). The determinant of
+\(1,y,\ldots,y^{19}\) in the ordered basis
+\((1,z,\ldots,z^9,X,Xz,\ldots,Xz^9)\) is \(17\bmod61\).
+All reconstruction divisions are therefore regular at every root of \(Q\).
+
+Over the generic parameter field this source representation is the same
+source/decic algebra as §89. Its original-equation identities consequently
+transport to the new finite arrays and specialize through the certified
+denominators. Direct finite-algebra multiplication also gives both parts of
+\(E=0\), and \(N_Y=N_D=0\), as exact corroboration.
+
+For necessity, the division-free §87 theorem first puts every original
+generic mean into the full source quotient. Positivity removes the other
+five components, so its mean lies in \(\mathcal A_Q\) before any \(F_8\)
+division. The norm \(4\bmod61\) proves \(F_8\ne0\) there. The complete
+line reconstruction and strict physical filters then cover all original
+leading and pivot strata and all six root orders. The unit \(\Delta\)
+ensures both channels are three-distinct; optional \(\Theta\) chart
+interchanges lose no rays.
+
+### 93.5. Generic pair rigidity and mixed exclusion
+
+The radial involution fixes \(z,k,t\) and sends
+\[
+ X\longmapsto t/(1+k^2)-X,\qquad G\longmapsto-R/\bar G.
+\]
+The full normalized \(\Theta\) identities of §89 hold generically and
+specialize through the new source construction. They require no unit
+assumption on the old derivative \(F_k\).
+
+Use the complete all-six-order overlap norm \(N\) from §§79,89. For
+\(\rho(a\otimes c)=a\iota(c)\), the transported identity \(\rho(N)=0\)
+bounds multiplication rank by 380. The map is onto a twenty-dimensional
+algebra, so its kernel has dimension 380. In basis \(y^r\otimes y^s\),
+indexed by \(20r+s\), the leading 380-by-380 principal minor is
+**52 modulo 61**. The equivalent row order with seven swaps
+\[
+ (22,23),(36,37),(57,58),(140,141),(163,164),(194,195),(361,362)
+\]
+has residue 9. Thus the ranks agree in characteristic zero and the image
+ideal is \(\ker\rho\). Every arbitrary physical orthogonal generic pair
+has orthogonal mean spinors. Full lift uniqueness places its second ray
+in \(S_3\Theta\) of the first, up to phase. The uniform
+within-union bipartite theorem excludes all-generic noncanonical triples.
+
+For aligned rays use the complete original §90 quintic construction.
+The scalar cofactor resultants \(r_0,r_2\), leading quintic coefficient,
+and actual Cayley-pole factor are nonzero polynomials of degree less than
+196. Irreducibility of \(Q\) proves none vanishes at its roots; their residues are respectively 9, 45, 43 and 3 at the good map. All constant-channel, finite rank
+and pole cases of §90 are therefore retained.
+The aligned norm residues are:
+
+~~~text
+d:44; V:35; K_a:11; J_a:22; F_a:49;
+(2-id)^2+K_a:43; (2+id)^2+K_a:11.
+~~~
+
+Construct the §90.4 mixed norm in the 200-dimensional tensor algebra,
+using both signs of the aligned square root, all three repeated
+positions, all generic orders and the original input normalization.
+Its full multiplication determinant is **41 modulo 61**. Hence it is
+invertible in characteristic zero and excludes every original
+generic–aligned orthogonal edge.
+
+### 93.6. Consumer and exact boundary
+
+The complete §75 charts include all noncanonical rays. All-generic triples
+are excluded above; all-aligned triples by uniform §§83–85; every mixed
+triple has a forbidden mixed edge. A complete common-flat basis containing
+a canonical ray is canonical by §60. A basis containing none contradicts
+the triple obstruction. The exact \(W=H_0^*B\) transport of §91 gives
+the output-basis uniqueness and fixed-pair quartet exclusion.
+
+No ray census or numerical continuation is used. This closes only the six
+specified fibres of \(Q\). Every other retained guard fibre, remains outside this section. The four simple-discriminant fibres are
+handled separately in §94.
+The center and endpoints are not included.
+
+### 93.7. Complete parameter coefficients
+
+The following ascending integer list defines \(P(B)=\sum_{j=0}^{98}p_jB^j\).
+
+~~~text
+p0: 351735202430630662916120520249352697119088463
+p1: 18992614092931372111896364933620398108043516849
+p2: 477812092482784278653722215769569783638490690591
+p3: 7278223791495749967518822745209219963466617216544
+p4: 74184182071568229611924405809794004696086089309553
+p5: 534016659498625590276166272382849278790287333033621
+p6: 2786905716668020644073379466243600149852879202557499
+p7: 10510398100149828410996392398744706841040023899048446
+p8: 26943152967545408533686473566893766850425806013570503
+p9: 31594159058944591917927803105986713102947606157230931
+p10: -84522058659676565651705491991284720354378455059874573
+p11: -531386513223936950763518699696239241318834073737203590
+p12: -1055455940959683134625606960980697134825418639919130532
+p13: 776508751933078151708979310815243357574262003700223836
+p14: 8439962907305726954771773471660983871962718206636581352
+p15: 11300827496376157014898160585885449787431061141280741690
+p16: -30677225766147204979455834755208165575193187251258075765
+p17: -110335916557678735165027423916252403654682304869837690491
+p18: 92306974405526286756700313240587933506851312373321430107
+p19: 485588029164550876304288522786632326879480854590413708138
+p20: 464696693203125166138335446738405867092644285934700211687
+p21: -4226903466330088245139621145153512065272786178930969194685
+p22: 2029378756730194299908996341857469362240313155109228827177
+p23: 7846396763394149416717939060074284509730924811961856366760
+p24: 7038785951330854246339027897712816753563898590058883893079
+p25: -5429722240181887194718142445886417729122304726558502730729
+p26: -345541458497742312381837261025120763092369340611872833560437
+p27: 1572950383327258321608868863863174252220626680734135211592028
+p28: -4216139081729396532095184826131076242800903851028896561781088
+p29: 10260872820446236566385706911068214035523106570068369398608928
+p30: -25892760160841548414523649812673545024405262350848290465954576
+p31: 59147383169338926589558446073182610987040174602677569254804296
+p32: -107322566871319005514388909460815371236426733212052208540336034
+p33: 145464057400172904684532581239278791091831063010502659016742722
+p34: -137977249161313641833414844605176774746693459078435268969891650
+p35: 72997593026901414425836314474237563741987759603817925959022728
+p36: 16596553754688272845779441440702384262320069592958034848364154
+p37: -76258806940440966258827970986641939990386524657774628513549534
+p38: 76902715343128425099294332703035161817405706900379041898294446
+p39: -35793404983755285291378682292686194460639061135689603838166972
+p40: -7090325027813122266140303174025248195882315276276799388495746
+p41: 25754724316666631843451612378487289645642612947092301464889734
+p42: -21206710584882398842484096590971928309938362710103115544460682
+p43: 8391558705012257928691304624773674775145590716907158049775004
+p44: 920274670001660221181207772003076676955065200259766873220344
+p45: -3921222408235388299349334556306615554270196350270573834957000
+p46: 3107514720493938774458159911957286215600747223360335085052864
+p47: -1417289205049654247474905130202722827066180896908177467030740
+p48: 263809006507777195610212054878978168156235788823612872978798
+p49: 188374049794198175613296579535661711598592092083529694124242
+p50: -234103553654380802765149775925450233332812228618559359480498
+p51: 150895762900423618759467175453423651939616835620372349173004
+p52: -72782620818036994837337862423335129052856836377331039490818
+p53: 29454648700462256224299468054022927815934409354195023727478
+p54: -10881953791246859233450633360064065178600131192369087031886
+p55: 3848688572135098340939359027427155585037685462115516848504
+p56: -1248679407769293826500376002354101793233332968704692765866
+p57: 320258075720483010634037733546334356369130567405779135750
+p58: -42297909360835891711792504124532127191525994019521803138
+p59: -10268777935132090664805096123449158044571427054309484192
+p60: 8295289260746321847359007138404516870236060926564842304
+p61: -2583579708783376447170497464730214038022984978088146048
+p62: 376508966899447076067614534281451507035279628243266896
+p63: 42761772564783204761346678452635823316694631467863144
+p64: -39546225514096756030068821028758320941663400001306157
+p65: 10485935402033101566101945149549912703634260036405901
+p66: -1041362625157945603367196666513400824671262281416797
+p67: -238645958227819289608160847646410690772863089795448
+p68: 113360764724004460655755698115970546348691761935173
+p69: -17979810988890637947384848956385274378047676238023
+p70: -298085032170848690294152143784120666641361534905
+p71: 711141156811351075580437894149030475300155468846
+p72: -135227433007582444784305701086420246493457663461
+p73: 5016165925669039049138165325530063530702209255
+p74: 2666247417292302544029269947519644011901751095
+p75: -570578839359689165617436817137890354752558310
+p76: 33604607462520006440629278299932857482958028
+p77: 6265172795965241201768346885270869964756620
+p78: -1575907691402194295957251934169832682404008
+p79: 129999410035496942602251264568695628930282
+p80: 4395282640298078667412746335013089681799
+p81: -2170565501067014900202217925481812551127
+p82: 203990878849878006447089864192124164055
+p83: 281006209797824569196600603149797466
+p84: -2058631232434401599933007168632616469
+p85: 216384948050030793309174116410390615
+p86: -5248735778057663119367032990264075
+p87: -1066538782235109635917542423277200
+p88: 130008579954066342055904640984819
+p89: -4873433854716832872135939451101
+p90: -277790551010338782545484956073
+p91: 44476500690189262332348075540
+p92: -2328471351813890844181979136
+p93: 23068170527298051972532032
+p94: 4868006586427309347944640
+p95: -368218365442945200145152
+p96: 13427343533044623025152
+p97: -262686200569147330560
+p98: 2190267415500226560
+~~~
+
+## 94. Four nonreduced discriminant fibres
+
+### 94.1. Statement and exact parameter field
+
+Let \(P(B)=\sum_{j=0}^{48}p_jB^j\) be the primitive integer polynomial
+in §94.6, and put \(Q(b)=P(b^2)\).
+
+**Theorem 94.1.** At every real \(0<|b|<1\) with \(Q(b)=0\),
+there is no noncanonical common-flat orthogonal triple. Every complete
+common-flat input basis is canonical up to phases and permutations,
+and the fixed pair \((I_6,H_0(b))\) cannot belong to a quartet.
+There are exactly four such parameters.
+
+With the exact decic \(F(b,k)\) of §88, define
+\(\widetilde F(B,K)=b^{-6}F(b,bK)\), \(B=b^2\).
+This is a polynomial identity. Exact rational discriminant division gives
+\[
+ P\mid\operatorname{disc}_K\widetilde F,\qquad
+ P^2\nmid\operatorname{disc}_K\widetilde F.
+\]
+The monic factorizations of \(P\) have degrees
+\[
+\begin{array}{c|l}
+7&4,4,5,5,7,7,8,8\\
+11&2,6,6,17,17\\
+13&5,5,14,24\\
+17&16,16,16.
+\end{array}
+\]
+The following ascending coefficient arrays specify all monic factors.
+For each prime, multiply its listed polynomials in \(B\); the result is
+the monic reduction of \(P\).
+
+~~~text
+factor7_1: [-1, -1, 1, -2, 1]
+factor7_2: [1, 1, -2, -2, 1]
+factor7_3: [-2, -2, 0, 3, 1, 1]
+factor7_4: [3, -3, -3, -3, -1, 1]
+factor7_5: [-3, -1, -2, -1, -3, -2, 2, 1]
+factor7_6: [-3, 1, 0, 2, -1, 2, -3, 1]
+factor7_7: [3, -3, -3, 1, 1, -2, 0, 0, 1]
+factor7_8: [3, 3, 1, 0, 3, 0, 2, 2, 1]
+factor11_1: [4, 1, 1]
+factor11_2: [5, 2, -1, 0, 4, 4, 1]
+factor11_3: [1, -1, -2, 5, 3, 5, 1]
+factor11_4: [-3, -1, 2, -2, -1, 5, 4, -3, 0, 4, 5, 3, -2, 3, -1, -2, 1, 1]
+factor11_5: [4, -1, 0, 3, -2, 3, 0, 5, -2, -1, -5, -2, 0, -4, -4, 0, 4, 1]
+factor13_1: [2, -1, -6, 2, 3, 1]
+factor13_2: [3, 0, -6, 4, -4, 1]
+factor13_3: [3, 3, -3, 4, -6, 1, -2, 3, -6, 0, 0, 3, -5, 3, 1]
+factor13_4: [-6, 1, 5, 2, 3, 4, -2, 5, 5, 1, 0, -4, 5, -3, 5, -5, 3, 6, 2, 2, 1, 4, -1, -6, 1]
+factor17_1: [2, -7, -1, 4, -3, -7, 5, 3, -5, 5, -6, -7, -4, -1, -8, 7, 1]
+factor17_2: [6, 7, -8, 2, 8, -8, -1, -4, -7, 4, 5, -5, -2, 8, -4, -7, 1]
+factor17_3: [-2, -4, 3, -2, 2, -5, 0, 2, 6, 8, 1, 6, -7, -6, -6, -2, 1]
+~~~
+
+Every factor satisfies the exact Rabin power and gcd conditions of §92.1. The proper subset-degree intersections
+after the first three rows are \(\{14,19,29,34\}\); the final row permits
+only 16 and 32. Hence \(P\) is irreducible over \(\mathbb Q\).
+
+The norm of a root \(\beta\) is
+\[
+ \operatorname{Nm}(\beta)=-7625597484987/61063168<0.
+\]
+A square in \(\mathbb Q(\beta)\) has square, hence nonnegative, rational
+norm. Thus \(\beta\) is not a square, and \(Q\) is irreducible of degree 96.
+Exact primitive integer Sturm division gives two roots of \(P\) in
+\((0,1)\), one in each interval
+\[
+ (22911/28745,\ 435902/546899),\qquad
+ (158289/188234,\ 150101/178497).
+\]
+For reproducibility, use the Sturm sequence beginning with \(P,P'\),
+replace each nonzero next term \(-\operatorname{rem}(A,B)\) by its
+positive primitive integer multiple, and omit zero signs when counting
+variations. Its endpoint variation counts are:
+
+~~~text
+0: 26
+1: 24
+22911/28745: 26
+435902/546899: 25
+158289/188234: 25
+150101/178497: 24
+~~~
+
+Their signed square roots give the four parameters. The real embedding
+of \(\mathbb Q[b]/(Q)\) excludes \(i\), so \(Q\) remains irreducible over
+\(\mathbb Q(i)\). Work in \(K_Q=\mathbb Q(i)[b]/(Q)\).
+
+The good residue map is \((p,b,i)=(113,25,15)\).
+It has \(P(25^2)=0\), \(15^2=-1\), and nonzero leading coefficient.
+All nonzero residues below certify nonzero elements of \(K_Q\), hence
+nonvanishing at every root of \(Q\). Inverses are defined by adjugates and
+determinants. This is characteristic-zero number-field certification,
+not an identification of modular and real solution sets.
+
+### 94.2. Complete source algebra before taking its reduced quotient
+
+Use the original primitive \(h_0,h_1,h_2\), degree-19 monomial order,
+30 basis monomials and 180 selected rows of §88.2. In particular
+the basis consists of total degree at most six and \((e_t,e_k)=(1,6),(0,7)\).
+The nonbasis matrix \(M\) and original vertical minor have residues
+\[
+ \det M=67,\qquad \det V_*=101\pmod{113}.
+\]
+The latter excludes \(x=0\) in the physical mean \(G=x+iy\).
+Form the exact border multiplication matrices \(K,T\) from
+\(-M^{-1}C\), where \(C\) is the selected basis-column block.
+
+Over \(\mathbb Q(i)(b)\) these are the actual quotient matrices by §88.
+Commutation, all three source identities, and the cyclic constant-vector
+identities are therefore rational identities whose denominators divide
+powers of \(\det M\) and fixed scalar contents. They specialize in \(K_Q\).
+Together with the same border upper bound, they identify
+\[
+ K_Q[k,t]/(h_0,h_1,h_2)
+\]
+with a free algebra of dimension 30. This argument does not invert \(F_k\)
+or discard nilpotents.
+
+Let \(P_{\rm other}=\prod_{j=1}^5P_j\), with the five other §88 components.
+The exact residue
+\(\operatorname{Res}_k(F,P_{\rm other})=17\)
+makes the generic projector
+\[
+ E=e(K),\qquad
+ e=P_{\rm other}(P_{\rm other}^{-1}\bmod F)\bmod(FP_{\rm other})
+\]
+regular. Its transported identities \(E^2=E,\operatorname{tr}E=10\)
+give a ten-dimensional image in characteristic zero. Set
+\(J=E_{[:,0:10]}\), \(J_0=J_{[0:10,:]}\); then
+\(\det J_0=9\bmod113\). Restrict \(K,T\) and the constant vector using
+\(J_0^{-1}\), exactly as for any invariant direct summand.
+The five other homogeneous components have no real projective points
+on the puncture by the uniform positivity proof.
+
+The ten power columns of the restricted \(K\) on the constant vector have
+determinant \(2\bmod113\). Hence \(k\) itself is primitive in this full
+ten-dimensional source algebra. Its characteristic polynomial is
+\[
+ f(k)=F(b,k)/\operatorname{lc}_kF.
+\]
+The leading coefficient has residue 93. The polynomial expression
+\(t=t(k)\) of degree at most nine is obtained from those same power columns;
+it is not the singular formula \(T/F_k\).
+
+Now \(f\) has zero discriminant in \(K_Q\). Its first subresultant
+with \(f'\) has nonzero linear coefficient: at the good map the
+subresultant sequence degrees are \(10,9,\ldots,1\), with final polynomial
+\[
+ -51k-55.
+\]
+The zeroth subresultant is zero by the exact discriminant factor.
+Thus \(\gcd(f,f')\) is exactly the monic linear polynomial \(g\) obtained
+by normalizing the first subresultant. Put \(f_{\rm red}=f/g\).
+It is squarefree of degree nine, and \(g\mid f_{\rm red}\).
+The good residues are
+\[
+\begin{split}
+g&=k-10,\\
+f_{\rm red}&=k^9+3k^8+56k^7-14k^6+38k^5-31k^4
++48k^3-51k^2+45k+26,\\
+\operatorname{disc}(f_{\rm red})&=31.
+\end{split}
+\]
+The full source component \(K_Q[k]/(f)\) has exactly one double factor.
+Its quotient by \((f_{\rm red})\) is the reduced nine-dimensional algebra,
+and the quotient kernel is square-zero because \(f\mid f_{\rm red}^2\).
+Every field-valued physical source point factors through this quotient.
+No physical point is removed by deleting nilpotents.
+
+### 94.3. Original reconstruction through the nonreduced model
+
+Put \(R=3-b^2\). First form the full free radial algebra
+\[
+ \mathcal A_{\rm full}=
+ K_Q[k,X]/(f,\ (1+k^2)X^2-t(k)X-R).
+\]
+It has dimension twenty. Then form its quotient
+\[
+ \mathcal A_{\rm red}=
+ K_Q[k,X]/(f_{\rm red},\ (1+k^2)X^2-t(k)X-R),              \tag{94.1}
+\]
+of dimension eighteen. The quotient kernel is square-zero.
+The unit \(1+k^2\) is certified below; the radial discriminant also is a
+unit, so (94.1) is reduced. Necessity places every original generic mean
+in (94.1) before any lift denominator is used.
+
+Set \(x=X,y=kX,G=x+iy\). Construct the original affine-line coefficients
+\(A,D_0,C_0,\sigma=A^2+D_0^2\) and the global linear coefficients
+\(a_Y,\mu_Y,a_D,\mu_D,F_8\) of §87. Use the valid combined pivot
+\[
+ \tau=-\frac{\mu_Y+\mu_D}{a_Y+a_D},\qquad
+ u=\frac{-AC_0-D_0\tau}{\sigma},\quad
+ v=\frac{-D_0C_0+A\tau}{\sigma}.                            \tag{94.2}
+\]
+Both individual linear equations hold generically, so (94.2) agrees there
+with their unique original lift. Construct \(C,D,Y_c,q,e,\bar e,\Delta,\delta\)
+by the original formulas. Physical input coefficients are
+\(G/\kappa,C/\kappa,D/\kappa\).
+
+The multiplication norms in (94.1), in basis
+\((1,k,\ldots,k^8,X,Xk,\ldots,Xk^8)\), have residues:
+
+~~~text
+1+k^2:88; f_red_prime:57; radial discriminant:109; y:34;
+aY+aD:67; sigma:40; beta:88; barbeta:107;
+C:75; barC:40; D:43; barD:45; Yc:80; barYc:18;
+q:48; e:71; bare:44; F8:69; G:23; barG:74;
+Delta:7; delta:31.
+~~~
+
+The radial discriminant is \(t^2+4R(1+k^2)\).
+The power columns \(1,y,\ldots,y^{17}\) have determinant \(72\bmod113\).
+
+Here the order of the specialization argument matters. A unit modulo a
+nilpotent ideal lifts to a unit, by a finite geometric-series inverse.
+Consequently every original reconstruction denominator certified in (94.1)
+is also a unit in \(\mathcal A_{\rm full}\). The generic source construction
+and all original rational identities therefore specialize first to that
+full twenty-dimensional algebra, with its double source point retained.
+Only afterward are they passed to (94.1). We do not attempt to treat the
+nine-dimensional quotient as a flat generic-parameter family.
+
+In particular both parts of \(E=0\) and \(N_Y=N_D=0\) are characteristic-zero
+identities in (94.1); direct finite-algebra multiplication gives the same equalities.
+The nonzero F8 norm is proved only after universal necessity has placed
+every original generic source point in this algebra. It therefore gives
+noncircular F8 coverage, including all original leading and pivot zeros.
+The complete line uniqueness and original strict reconstruction filters
+retain all six root orders. The unit \(\Delta\) ensures both channels are
+three-distinct. No physical ray count is asserted.
+
+### 94.4. Arbitrary generic pairs and all mixed edges
+
+The radial involution fixes \(k,t(k)\) and sends
+\[
+ X\longmapsto t/(1+k^2)-X,\qquad G\longmapsto-R/\bar G.
+\]
+It preserves the square-zero ideal and descends to (94.1). The complete
+normalized Theta identities specialize first in the full algebra by the
+preceding unit argument, and then descend to (94.1).
+
+Evaluate the all-six-order generic overlap norm \(N\) of §§79,89 in
+\(\mathcal A_{\rm red}\otimes\mathcal A_{\rm red}\).
+For the onto map \(\rho(a\otimes c)=a\iota(c)\), the transported identity
+\(\rho(N)=0\) bounds multiplication rank by \(18^2-18=306\).
+In the power basis \(y^r\otimes y^s\), indexed by \(18r+s\),
+the leading 306-by-306 principal minor has residue **66 modulo 113**.
+Hence in characteristic zero the image ideal of \(N\) equals \(\ker\rho\).
+Every original orthogonal generic pair has orthogonal mean spinors;
+full lift uniqueness then places its second ray in \(S_3\Theta\) of the
+first, with all six relative orders retained. The uniform
+within-union bipartite theorem excludes all-generic noncanonical triples.
+
+Use the complete original aligned quintic and shape lift of §90.
+At the same good map the scalar cofactor resultants \(r_0,r_2\), quintic
+leading coefficient and actual pole factor have residues respectively
+\[
+ 96,\quad1,\quad26,\quad15.
+\]
+Thus all their exceptional charts are resolved by nonvanishing at every
+root of \(Q\). All finite rank, constant-channel and phase cases remain
+covered by the original aligned classification. Its norm residues are
+
+~~~text
+d:78; V:35; K_a:5; J_a:68; F_a:112;
+(2-id)^2+K_a:1; (2+id)^2+K_a:64.
+~~~
+
+The complete mixed norm of §90.4 in the 180-dimensional algebra
+\[
+ \mathcal A_{\rm red}\otimes K_Q[d,S]/(Q_5,S^2-K_a)
+\]
+has full multiplication determinant **77 modulo 113**.
+The construction retains both signs of \(S\), every aligned position,
+all generic orders and the original input normalization. It is a unit
+in characteristic zero, so no generic–aligned orthogonal edge exists.
+
+### 94.5. Consumer and retained boundary
+
+The complete §75 charts cover every noncanonical ray, including an aligned
+constant channel whenever present. All-generic triples are excluded above,
+all-aligned triples by uniform §§83–85, and a mixed triple contains an
+excluded mixed edge. A common-flat basis containing a canonical ray is
+canonical by §60; a basis without one would contain a forbidden triple.
+The exact input/output transport \(W=H_0^*B\) of §91 gives the fixed-pair
+quartet exclusion.
+
+The conclusion concerns only the four real punctured roots of the exact
+degree-96 polynomial \(Q\). Other retained guard fibres, the center and
+the endpoints are not covered by this argument. No density or continuity
+claim removes those remaining exceptions.
+
+The three sections give a combined strict improvement of the finite guard
+without changing the statement or proof of §91. Write
+\[
+ Q_{98}(b)=P_{93}(b^2),\qquad Q_{48}(b)=P_{94}(b^2),
+\]
+where \(P_{93}\) and \(P_{94}\) are the complete polynomials in §§93.7
+and 94.6. The irreducible polynomials \(L,Q_{98},Q_{48}\) have distinct
+degrees 32,196,96, so they are pairwise coprime. Their punctured real
+root sets are disjoint and have total cardinality \(2+6+4=12\).
+
+Let \(v_L,v_{98},v_{48}\) be the maximal nonnegative integers for which
+the corresponding powers divide the explicitly constructed \(H_*\) of
+§91. Each exponent is positive: the guard explicitly retains the leading
+coefficient of \(F\), and its component denominator resultant
+\(\operatorname{Res}_k(F,F_k)\) retains both discriminant factors
+certified in §§93–94. Define the exact nonzero polynomial
+\[
+ H_{\mathrm{reduced}}=
+ \frac{H_*}{L^{v_L}Q_{98}^{v_{98}}Q_{48}^{v_{48}}}.        \tag{94.3}
+\]
+For every \(0<|b|<1\) with \(H_{\mathrm{reduced}}(b)\ne0\), there is no
+noncanonical common-flat orthogonal triple, the complete common-flat
+basis is canonical, and \((I_6,H_0(b))\) cannot belong to a quartet.
+Indeed, away from the three displayed factors §91 applies; on any of
+them the corresponding section above applies. Maximality and irreducibility
+also show that \(H_{\mathrm{reduced}}\) is nonzero at every root of
+these three factors, so all twelve certified parameters are included.
+This argument neither
+expands \(H_*\) nor assumes that these twelve points exhaust its real
+zeros. All zeros of the remaining guard are retained as unresolved by
+this finite-fibre extension.
+
+
+### 94.6. Complete parameter coefficients
+
+The following ascending list defines \(P(B)=\sum_{j=0}^{48}p_jB^j\).
+
+~~~text
+p0: -50031545098999707
+p1: -1967907440560655142
+p2: -33456279509719989255
+p3: -301498120520723925693
+p4: -1463497638517823881986
+p5: -2842513135519665642813
+p6: 5692717288525141989099
+p7: 36589455340777231215570
+p8: 21762698312972135675367
+p9: -178739814881410046948331
+p10: -254585219538017926833678
+p11: 647018721835747647704325
+p12: 1077193076743510212442392
+p13: -2216443016806157505345156
+p14: -3015635507141450791581684
+p15: 10012672505287398099743784
+p16: -5075165694944134501363710
+p17: -15126770622773260231809120
+p18: 37246334237072319750027030
+p19: -45619964323819998132689730
+p20: 36121996471456960970616612
+p21: -17138614154213214785467638
+p22: 513859329122638713237450
+p23: 7601757127695087990619356
+p24: -8188905195779219571337794
+p25: 5305519440750917005431246
+p26: -2330939948168124115585272
+p27: 595784481517924741024362
+p28: 57619738525082168808216
+p29: -176801266151477947316916
+p30: 137410119283541814839772
+p31: -87761817841153999484664
+p32: 53088924176420394790377
+p33: -29261413111933204128978
+p34: 14004202234782367091401
+p35: -5692353997091298926705
+p36: 1948693609285148229006
+p37: -584470856448333487285
+p38: 170678490043698619235
+p39: -49480435047363174366
+p40: 11763828717714746123
+p41: -1641452215054120843
+p42: -19052657704172754
+p43: 54673375345148929
+p44: -9089238344520416
+p45: 328753841930784
+p46: 78014475053568
+p47: -10390332513024
+p48: 400635445248
+~~~

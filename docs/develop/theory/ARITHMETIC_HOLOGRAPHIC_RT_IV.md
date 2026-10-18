@@ -1493,3 +1493,256 @@ This is an existence alternative for a minimizer of the hypothetical value. Anot
 **Proof.** The exact physical calibration theorem in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) applies to the present target \(T\) with four fibres of size two and one shared branch of weight one. It replaces arbitrary local CPTP maps, including population leakage, by calibrated maps without increasing the full arbitrary-reference error or adding a shared branch. Conversely every \(G,H\in\mathcal E\) realizes calibrated local channels. Hence the unrestricted physical infimum equals the attained minimum (106.1). The established lower bound \(\sqrt3-3/2>0\) makes a hypothetical subquarter value positive, and Theorem 106.5 supplies the stated representative. \(\square\)
 
 The representative conclusion does not preserve the ranks or local minimality of a given leaking pair. The local transfer in Corollary 106.3 takes place wholly inside the calibrated domain. Neither residual class in Theorem 106.5 is excluded here, and the unrestricted global interval remains \([\sqrt3-3/2,1/4]\). General unequal noncomplementary polar angles and the remaining rank/support cases are unresolved.
+
+## 107. Sharp original-channel bound from one cyclic correct-output Gram
+
+### 107.1. Original-channel hypotheses and sharp statement
+
+Index the original logical coordinates by \(j\in\mathbb Z/8\mathbb Z\), with fibres \(\{f,f+4\}\), \(f=0,1,2,3\). Thus \(j=f+4i\) labels the original coordinate \(|f,i\rangle\). Retain the fixed correlated encodings \(V_{\rm in}|j\rangle=|j\rangle\otimes|j\rangle\) and \(V_{\rm out}|f\rangle=|f\rangle\otimes|f\rangle\), and write \(J_{\rm in},J_{\rm out}\) for the induced channels. The target \(\mathcal F\) has coefficients \(T_{jj}=1\), \(T_{j,j+4}=0\), and \(T_{jk}=1/2\) for different fibres.
+
+For arbitrary original CPTP maps \(A,B:\mathbb C^8\to\mathbb C^4\), choose Stinespring isometries and define their correct-output records by
+\[
+ a_j=(\langle j\bmod4|\otimes I)V_A|j\rangle,
+ \qquad b_j=(\langle j\bmod4|\otimes I)V_B|j\rangle.
+ \tag{107.1}
+\]
+Their forward Grams \(G,H\), using inner products conjugate-linear in the first argument, are independent of Stinespring environment isometries. Their original fibre blocks satisfy \(0\le G_{ff},H_{ff}\le I_2\). The error is the original unhalved, arbitrary-reference diamond norm
+\[
+ \delta(A,B)=\|(A\otimes B)\circ J_{\rm in}
+                       -J_{\rm out}\circ\mathcal F\|_\diamond.
+ \tag{107.2}
+\]
+
+**Theorem 107.1.** Suppose both correct-output Grams are circulant in this same original labeling:
+\(G_{j+1,k+1}=G_{jk}\) and \(H_{j+1,k+1}=H_{jk}\), with indices modulo eight. Then
+\[
+ \delta(A,B)\ge\sqrt2-1>\tfrac14.
+ \tag{107.3}
+\]
+The bound is sharp, with an attaining calibrated physical pair of local Kraus ranks \((3,3)\). The infimum is also \(\sqrt2-1\) in each calibrated simultaneous-cyclic exact-rank class \((7,4)\) and \((7,5)\) with full-support first kernel.
+
+The simultaneous-cyclic hypothesis allows complex entries and arbitrary original output leakage. It is a substantive hypothesis on both correct-output Grams, rather than a phase convention. The proof occupies §§107.2–107.6. Corollary 107.2 below weakens this to a cyclic hypothesis on just one Gram, allowing the other original channel to be arbitrary.
+
+### 107.2. Fourier coordinates and the original complete norm
+
+**Proof of Theorem 107.1.** First assume the pair is calibrated, so its fibre blocks are \(I_2\). Put \(\zeta=\exp(\pi i/4)\), and define
+\[
+ (C_k)_{ij}=\zeta^{k(j-i)},\qquad P_k=C_k/8,
+ \qquad k\in\mathbb Z/8\mathbb Z.
+ \tag{107.4}
+\]
+The \(P_k\) are mutually orthogonal rank-one projections summing to \(I\). A positive semidefinite Hermitian circulant matrix has a unique expansion in the \(C_k\) with nonnegative real coefficients. Calibration is therefore equivalent to
+\[
+ G=\sum_k g_kC_k,\qquad g_k\ge0,\qquad
+ \sum_{k\ {\rm even}}g_k=\sum_{k\ {\rm odd}}g_k=\tfrac12.
+ \tag{107.5}
+\]
+Indeed the two sums are equivalent to \(G_{jj}=1\) and \(G_{j,j+4}=0\). Write \(H\) similarly with coefficients \(h_k\). Since \(C_k\odot C_l=C_{k+l}\), the coefficients of \(K=G\odot H\) are the cyclic convolution \(c=g*h\). Its even and odd coefficient sums are each \(1/2\). The target coefficients are
+\[
+ (t_0,\ldots,t_7)
+  =(\tfrac12,\tfrac18,0,\tfrac18,0,\tfrac18,0,\tfrac18).
+ \tag{107.6}
+\]
+Thus \(L=T-K\) has eigenvalues \(\ell_k=8(t_k-c_k)\), with eigenvalue sum zero separately in each parity sector.
+
+For calibrated original Grams, the adaptive complete-norm theorem of [RT III §91](ARITHMETIC_HOLOGRAPHIC_RT_III.md#91-adaptive-original-channel-witnesses-and-an-obstruction-to-all-two-fibre-tests) gives
+\[
+ F(G,H)=\delta(A,B)
+ =\max\{2\operatorname{Tr}(LW):
+    \rho=\bigoplus_f\rho_f\ge0,\ \operatorname{Tr}\rho=1,
+    \ 0\le W\le\rho\}.
+ \tag{107.7}
+\]
+The forward-Gram convention makes the actual coefficient map use \(L^{\mathsf T}\). For a pure reference/input state, its error output is \(V L^{\mathsf T}V^*\), where \(V^*V\) is a fibre-block density. With \(\rho=(V^*V)^{\mathsf T}\), its trace norm is \(\|\sqrt\rho L\sqrt\rho\|_1\). Every such density is realizable. The zero fibre blocks of \(L\) make this norm twice the positive-part trace. Convexity and Jordan decomposition handle mixed and Hermitian inputs, while Hermitian block dilation handles arbitrary operator inputs. Hence (107.7) has the original complete, unhalved normalization.
+
+Let \(J\) send \(j\) to \(j+4\). The densities \(\rho_{\rm even}=(I+J)/8\) and \(\rho_{\rm odd}=(I-J)/8\) are feasible, with eigenvalue \(1/4\) on their selected parity. Taking \(W\) to be one quarter of the positive spectral projection of \(L\) within that parity gives respectively
+\[
+ \begin{aligned}
+ E&=\tfrac14\sum_{k\ {\rm even}}|\ell_k|
+     =2\sum_{k\ {\rm even}}|t_k-c_k|,\\
+ O&=\tfrac14\sum_{k\ {\rm odd}}|\ell_k|
+     =2\sum_{k\ {\rm odd}}|t_k-c_k|.
+ \end{aligned}
+ \tag{107.8}
+\]
+For the matching upper bound put \(Z=|L|\). Then \(Z\ge\pm L\), and each original fibre block of \(Z\) has the form \(\left(\begin{smallmatrix}d&b\\b&d\end{smallmatrix}\right)\), with eigenvalues \(E,O\). Thus \(Z_{ff}\le\max(E,O)I_2\), giving a feasible original complete-norm dual majorant. Equivalently, the positive coefficient matrices \(Z\pm L\) give completely positive majorants whose fibre-block bound controls every reference input and its operator-input dilation. Consequently
+\[
+ F(G,H)=\max\{E,O\}.
+ \tag{107.9}
+\]
+The two densities are realized by the no-reference unit vectors \(8^{-1/2}\sum_{f=0}^3(|f\rangle\pm|f+4\rangle)\). The dual proves that reference systems cannot improve (107.9). This assertion concerns the calibrated pair; the leaking case below uses the tagged-reference bound of RT III §91.
+
+Fourier diagonalization and positive/negative spectral majorants for circulant Schur maps are established techniques; see Regula, Takagi and Gu, *Operational applications of the diamond norm and related measures in quantifying the non-physicality of quantum maps*, equations (70)–(74), [DOI:10.22331/q-2021-08-09-522](https://doi.org/10.22331/q-2021-08-09-522), and the [source note](../../../Library/QuantumChannels/regula2021operational.md). Their scalar Schur-map normalization differs from (107.7); the original two-coordinate fibre normalization and the matching witnesses above are retained here.
+
+### 107.3. The sharp parity-convolution inequality
+
+Introduce four probability distributions on \(\mathbb Z/4\mathbb Z\):
+\[
+ p_i=2g_{2i},\quad q_i=2g_{2i+1},\quad
+ r_i=2h_{2i},\quad s_i=2h_{2i+1},
+ \tag{107.10}
+\]
+and put
+\[
+ A=\sum_i p_i r_{-i},\qquad
+ B=\sum_i q_i s_{-i-1}.
+ \tag{107.11}
+\]
+Then \(c_0=(A+B)/4\). All other even target coefficients vanish, and both even total masses are \(1/2\). It follows that
+\[
+ E=2-A-B.
+ \tag{107.12}
+\]
+If \(E\ge1/2\), (107.3) is immediate. Suppose \(0\le E<1/2\). Since \(A,B\le1\), both exceed \(1/2\).
+
+For two probability distributions \(x,y\) with inner product \(a>1/2\), each maximum \(m=\max x\), \(n=\max y\) is at least \(a\), and hence unique. Their peaks have the same index. Otherwise, at the peak index \(i\) of \(x\) one has \(y_i\le1-n\), so
+\[
+ a\le m(1-n)+(1-m)n
+   =\tfrac12-2(m-\tfrac12)(n-\tfrac12)<\tfrac12,
+ \tag{107.13}
+\]
+a contradiction. At the common peak the remaining inner product is at most \((1-m)(1-n)\). Therefore
+\[
+ a\le mn+(1-m)(1-n),\qquad
+ m+n\ge1+\sqrt{2a-1}.
+ \tag{107.14}
+\]
+For the second inequality, \(2m-1\) and \(2n-1\) are nonnegative with product at least \(2a-1\), and their arithmetic mean is \(m+n-1\).
+
+Apply this observation to \(p_i,r_{-i}\) and to \(q_i,s_{-i-1}\). There are unique peak indices \(u,v\): the peaks of \(p,r,q,s\) occur at \(u,-u,v,-v-1\), respectively. Writing their maxima as \(m_p,m_r,m_q,m_s\), one obtains
+\[
+ m_p+m_r\ge1+\sqrt{2A-1},\qquad
+ m_q+m_s\ge1+\sqrt{2B-1}.
+ \tag{107.15}
+\]
+The odd coefficients satisfy
+\[
+ c_{2j+1}=\tfrac14[(p*s)_j+(q*r)_j].
+ \tag{107.16}
+\]
+The two peak contributions occur at \(j_1=u-v-1\) and \(j_2=v-u\). These are distinct modulo four: equality would give \(2(u-v)=1\pmod4\). For \(S=\{j_1,j_2\}\),
+\[
+ \sum_{j\in S}c_{2j+1}
+       \ge\tfrac14(m_p m_s+m_q m_r).
+ \tag{107.17}
+\]
+The odd target has total mass \(1/2\) and mass \(1/4\) on these two indices. Equal total masses imply that the sum of absolute differences is at least twice the signed excess on any subset. Equations (107.8) and (107.17), followed by \(xy\ge x+y-1\) for \(x,y\in[0,1]\), therefore give
+\[
+ \begin{aligned}
+ O&\ge m_p m_s+m_q m_r-1\\
+  &\ge m_p+m_s+m_q+m_r-3\\
+  &\ge\sqrt{2A-1}+\sqrt{2B-1}-1.
+ \end{aligned}
+ \tag{107.18}
+\]
+Put \(X=2A-1\), \(Y=2B-1\). Both lie in \((0,1]\), and \(X+Y=2-2E\). Since \((1-X)(1-Y)\ge0\), one has \(XY\ge X+Y-1\). Squaring nonnegative sides gives
+\[
+ \sqrt X+\sqrt Y\ge1+\sqrt{X+Y-1},\qquad
+ O\ge\sqrt{1-2E}.
+ \tag{107.19}
+\]
+All roots are defined in this branch, including \(E=0\). The minimum of \(\max(E,\sqrt{1-2E})\) on \([0,1/2]\) is its intersection value \(\sqrt2-1\). Equivalently, \(E<\sqrt2-1\) implies \(1-2E>(\sqrt2-1)^2\), forcing \(O>\sqrt2-1\). Equations (107.9) and (107.19) prove the calibrated bound for every rank and every complex phase allowed by the simultaneous-cyclic hypothesis.
+
+### 107.4. Exact physical attainment
+
+Let \(m=1/\sqrt2\) and take
+\[
+ G_* =\tfrac12 C_0+\tfrac m2 C_1+\tfrac{1-m}{2}C_3,
+ \qquad
+ H_* =\tfrac12 C_0+\tfrac{1-m}{2}C_5+\tfrac m2 C_7.
+ \tag{107.20}
+\]
+All displayed coefficients are positive and have even/odd totals \(1/2\). These are calibrated rank-three Grams. Unit records with coordinates \(\sqrt{g_k}\zeta^{kj}\) and \(\sqrt{h_k}\zeta^{kj}\) realize them. The maps \(|j\rangle\mapsto|j\bmod4\rangle\otimes a_j\), and similarly for \(b_j\), are Stinespring isometries: records within each fibre are orthogonal, and distinct fibres have orthogonal output labels. Thus (107.20) specifies genuine original CPTP maps with the fixed correlated encodings. Their Kraus ranks equal the record-Gram ranks, namely three.
+
+Here \(A=1\), \(B=m^2+(1-m)^2\), and the odd product coefficients are \((m,1-m,1-m,m)/4\). Hence
+\[
+ E=2m(1-m)=\sqrt2-1,
+ \qquad O=2m-1=\sqrt2-1.
+ \tag{107.21}
+\]
+More explicitly, with \(d=\sqrt2-1\), the eigenvalues of \(L_*=T-G_*\odot H_*\) are
+\[
+ (\ell_0,\ldots,\ell_7)=(2d,-d,-d,d,0,d,-d,-d).
+ \tag{107.22}
+\]
+Both parity primal witnesses and the majorant \(Z=|L_*|\) in §107.2 match at \(d\), establishing exact complete-norm attainment.
+
+### 107.5. Infima at ranks seven and four or five
+
+Define three auxiliary coefficient distributions. Let \(u\) have weight \(1/6\) at even indices \(0,2,6\), weight \(1/8\) at odd indices \(1,3,5,7\), and zero at \(4\). Let \(v_4\) have weight \(1/4\) at \(0,2,5,7\) and zero elsewhere. Let \(v_5\) have weight \(1/6\) at \(0,2,6\), weight \(1/4\) at \(5,7\), and zero elsewhere. All have even/odd totals \(1/2\).
+
+For \(0<\varepsilon<1\), replace the coefficients of \(G_*\) by \((1-\varepsilon)g_*+\varepsilon u\), and those of \(H_*\) by \((1-\varepsilon)h_*+\varepsilon v_h\), with \(h=4\) or \(5\). The resulting calibrated physical pair has exactly ranks \((7,h)\). The unique first kernel is the Fourier mode \(k=4\), whose eight coordinates are all nonzero. Formula (107.9) is continuous in these finite coefficient arrays, so their complete norms converge to \(d\). The lower bound proves that the infimum in each stated exact-rank class is precisely \(d\). This infimum construction imposes no quotient or common-normer condition on the approximating pairs.
+
+### 107.6. Arbitrary original leakage
+
+Return to arbitrary original channels satisfying §107.1. Define
+\[
+ \widetilde G=G+\operatorname{blockdiag}_f(I_2-G_{ff}),
+ \qquad
+ \widetilde H=H+\operatorname{blockdiag}_f(I_2-H_{ff}).
+ \tag{107.23}
+\]
+The added matrices are positive semidefinite, so the completions are calibrated Grams. They remain circulant: a Hermitian circulant \(G\) has common fibre block \(\left(\begin{smallmatrix}d&c\\c&d\end{smallmatrix}\right)\), with \(c\) real, and its added matrix is \((1-d)I-cJ\). The same argument applies to \(H\). The completions may increase rank.
+
+Cross-fibre products are unchanged. On each original fibre, Schur-product positivity gives
+\[
+ 0\le G_{ff}\odot H_{ff}
+   \le I_2\odot H_{ff}=\operatorname{diag}(H_{ff})\le I_2.
+ \tag{107.24}
+\]
+Indeed the middle inequality is \((I_2-G_{ff})\odot H_{ff}\ge0\). Thus, for \(L=T-G\odot H\) and \(\widetilde L=T-\widetilde G\odot\widetilde H\), the matrix \(L-\widetilde L\) is positive semidefinite and fibre-block diagonal. Write \(\mathcal D\) for the original fibre-block densities. The leakage-safe adaptive bound of RT III §91 yields
+\[
+ \begin{aligned}
+ \delta(A,B)&\ge\mathcal B(L)
+   :=\max_{\rho\in\mathcal D,\ 0\le W\le\rho}2\operatorname{Tr}(LW)\\
+ &\ge\mathcal B(\widetilde L)
+   =F(\widetilde G,\widetilde H)\ge\sqrt2-1.
+ \end{aligned}
+ \tag{107.25}
+\]
+The second inequality uses only \(L-\widetilde L\ge0\) and \(W\ge0\). It does not require a physical transfer of a compressed block, a rank-preserving calibration, or local-minimum preservation. The calibrated attaining pair is also admissible in the larger leaking class, proving sharpness there and completing Theorem 107.1. \(\square\)
+
+### 107.7. One-party symmetry and reciprocal phase gauges
+
+**Corollary 107.2.** Under the original hypotheses of §107.1, it is enough for either correct-output Gram to be circulant. More generally, the conclusion holds if either Gram becomes circulant after a diagonal unitary conjugation and an original-fibre-preserving coordinate permutation. The other original channel may be nonsymmetric and leaking. The sharp minimum is still \(\sqrt2-1\), as are the infima in the calibrated exact-rank classes \((7,4)\) and \((7,5)\) with full-support first kernel.
+
+Here a fibre-preserving permutation sends each original coordinate pair to a coordinate pair; it may permute the four fibres and interchange the two coordinates within any fibre. The corollary assumes that the specified phase gauge and relabeling exist; it does not assert their existence for every Gram.
+
+**Proof.** Let \(P|j\rangle=|j+1\rangle\). It sends \(\{f,f+4\}\) to \(\{f+1,f+5\}\) modulo eight, including the order interchange at the last fibre. Thus conjugation by \(P\) bijects the set \(\mathcal D\) of original fibre-block densities and the complete fixed witness set \(\{(\rho,W):\rho\in\mathcal D,\ 0\le W\le\rho\}\). Also \(PTP^*=T\). Permutation covariance of the Hadamard product and the trace identity therefore give
+\[
+ \mathcal B(PLP^*)=\mathcal B(L),\qquad
+ F(PGP^*,PHP^*)=F(G,H)
+ \tag{107.26}
+\]
+for calibrated Grams. Both identities hold for every power of \(P\). The function \(\mathcal B\) is convex, since its definition is a maximum of linear functionals on this one fixed witness set. Accordingly \(F\) is convex in either Gram with the other fixed.
+
+Suppose first that \(G,H\) are calibrated and \(G\) is circulant. The matrix
+\[
+ \overline H=\frac18\sum_{r=0}^7P^rH(P^*)^r
+ \tag{107.27}
+\]
+is positive semidefinite with the original \(I_2\) fibre blocks. It commutes with \(P\), and hence is circulant. Every such calibrated Gram has an original Stinespring realization; no shared correlated branch is added. Since \(P^rG(P^*)^r=G\),
+\[
+ F(G,\overline H)
+ \le\frac18\sum_{r=0}^7F(G,P^rH(P^*)^r)=F(G,H).
+ \tag{107.28}
+\]
+This inequality is separate convexity, rather than an exchange of the reference optimization with the average. Theorem 107.1 applies to \((G,\overline H)\), proving the bound. Interchange the parties if \(H\) is circulant. The average may change rank; the lower bound required no rank hypothesis.
+
+For arbitrary leaking original maps, apply the completions (107.23). If \(G\) is circulant, its completion is circulant by the same calculation in §107.6; no symmetry is needed for \(\widetilde H\). The operator order and the first two inequalities in (107.25) remain valid. Applying (107.28) to the completed calibrated pair proves \(\delta\ge\sqrt2-1\). This retains arbitrary nonsymmetric leakage on the other side.
+
+Finally, let \(D\) be diagonal unitary and let \(Q\) be an original-fibre-preserving permutation. Define
+\[
+ G'=Q^*D^*GDQ,\qquad H'=Q^*DHD^*Q.
+ \tag{107.29}
+\]
+The reciprocal phase factors cancel entrywise, so
+\[
+ G'\odot H'=Q^*(G\odot H)Q,\qquad Q^*TQ=T.
+ \tag{107.30}
+\]
+The original fibre-block contraction constraints are preserved. These transformations can be implemented by precomposing the two local channels by \(D,D^*\), whose phases cancel on each correlated input, then precomposing both by \(Q\) and undoing its induced output-fibre permutation on both outputs. The target is covariant under the common relabeling, including the within-fibre swaps, and the complete norm is unitarily invariant. Alternatively, the leakage bound, (107.30) and the witness-set covariance prove the same implication directly. Thus, if either transformed Gram is circulant, the preceding argument applies with the unchanged original error bound. These transformations preserve ranks and full support of a one-dimensional kernel.
+
+The attaining pair in §107.4 and both exact-rank families in §107.5 already satisfy simultaneous cyclic symmetry. They therefore establish the minimum and infima for the larger class of this corollary. \(\square\)
+
+The averaging in (107.27) is justified because the other Gram is fixed and invariant. Independent cyclic averaging of two varying Grams need not preserve their product or improve the complete error. No reduction of an arbitrary pair to the class of Corollary 107.2 is asserted. The general residual alternatives of Theorem 106.5 and the unrestricted global quarter optimum remain unresolved.
