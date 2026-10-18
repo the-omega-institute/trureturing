@@ -91,6 +91,20 @@ internal sealed class RandomKernelExtremumDocument : IScribeDocumentDefinition
                     + "worstError(optimalKernel(d))=rho(d). This conclusion concerns "
                     + "the displayed kernel; it does not assert minimization over all kernels."))),
                 DescribeRole.Theorem),
+            Paragraph(Text(
+                "At d=2 the source alphabet is exactly the five literal Fibonacci "
+                + "Window constructors under the checked Reg source correspondence: "
+                + "zero maps to (0,0), low to (1,0), high to (0,1), ends to (1,1), "
+                + "and middle to the blocking symbol, representing occupancy of "
+                + "the middle position. Native seam rejection and subsequent "
+                + "replies require separate continuation data. This is a whole-fiber "
+                + "equivalence of real mass functions. For a legal window law q, "
+                + "put X=q(low)+q(ends), Y=q(high)+q(ends), Z=q(middle). The "
+                + "completed ends mass is XY/(1-Z) when 1-Z>0, and zero otherwise; "
+                + "the middle mass stays Z. The d=2 theorem gives error at most "
+                + "1/4 for every such law. The law carrier is infinite, so this "
+                + "correspondence supplies neither a finite acquisition nor native "
+                + "continuation or information-gain readings.")),
             Describe.Lean(
                 DescribeId.Create("uniform-kernel-lower-bound"),
                 DeclarationHandle.Create(

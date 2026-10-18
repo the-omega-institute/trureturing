@@ -634,16 +634,52 @@ noncomputable def contract : Contract.Registration
 #print axioms registration
 end Values
 
-/-- This occurrence retains the full family of real source laws. The d=2 fiber
-has five single-sample symbols, while its law space has not been finitely acquired. -/
+/-- The five literal window constructors are the actual d=2 sample alphabet:
+zero, low, high, ends are the four endpoint pairs; middle is the blocking atom. -/
+def fiveModeEncoding :
+    _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window ≃ Option (Fin 2 × Fin 2) where
+  toFun w := match w with
+    | .zero => some (0,0)
+    | .low => some (1,0)
+    | .high => some (0,1)
+    | .ends => some (1,1)
+    | .middle => none
+  invFun z := match z with
+    | none => .middle
+    | some (i,j) => if i = 0 then (if j = 0 then .zero else .high)
+      else (if j = 0 then .low else .ends)
+  left_inv w := by cases w <;> decide
+  right_inv z := by
+    cases z with
+    | none => rfl
+    | some z => rcases z with ⟨i,j⟩; fin_cases i <;> fin_cases j <;> decide
+
+/-- This occurrence retains the complete real source-law carrier at every d. -/
 def upperAnalysisSource : Analysis.Source (@optimal_kernel_upper_bound) :=
   Analysis.Source.ofRegistration _ Upper.registration .exact Upper.selection
+
+/-- A whole-fiber law correspondence, with the explicit substitution d=2.
+It preserves all five masses and retains the full original source occurrence. -/
+def fiveModeFiber : Analysis.Domain upperAnalysisSource where
+  parameter := (2 : ℕ)
+  State := _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window → ℝ
+  readout := fun _ p z => p (fiveModeEncoding.symm z)
+  scope := .whole (Equiv.arrowCongr fiveModeEncoding (Equiv.refl ℝ)) (fun _ _ => rfl)
 
 def upperAnalysis : AuricFib.Contract.Application (@optimal_kernel_upper_bound) where
   evidence := .typed {
     source := upperAnalysisSource
     plan := { task := (), initial := [], additions := [[()]] }
-    acquisition := .unavailable
-      "Real-valued source-law family; no finite law-domain acquisition or native window/reply bridge" }
+    acquisition := .infinite fiveModeFiber.parameter (by
+      change Infinite (Option (Fin 2 × Fin 2) → ℝ)
+      let e := Equiv.arrowCongr fiveModeEncoding (Equiv.refl ℝ)
+      apply Infinite.of_injective (fun r : ℝ => e (fun _ => r))
+      intro a b h
+      have hh := congrFun (e.injective h)
+        _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd.Window.zero
+      exact hh) }
+
+#print axioms fiveModeEncoding
+#print axioms upperAnalysis
 
 end Reg.D5.S3.TotalVariation.RandomKernelExtremum
