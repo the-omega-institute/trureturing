@@ -47,4 +47,4 @@ The complete boundary and internal-input statements use the same execution list 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciLiteralSource.actual_complete_boundary_geometry`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciLiteralSource.literal_source_geometry`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciLiteralSource.paired_source_reconstruction`
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral](FibonacciFactorCompletion/Bilateral.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral](Bilateral.md)

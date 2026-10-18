@@ -101,7 +101,7 @@ def paired_source_reconstruction_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciLiteralSource
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -187,7 +187,7 @@ def literal_source_geometry_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciLiteralSource
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -295,7 +295,7 @@ def actual_complete_boundary_geometry_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciLiteralSource
     definition := none
     coordinates := #[1, 2, 3]
     readouts := #[{
