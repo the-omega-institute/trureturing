@@ -5,7 +5,7 @@ year: 1978
 title: The analytic principle of the large sieve
 doi: 10.1090/S0002-9904-1978-14497-8
 url: https://doi.org/10.1090/S0002-9904-1978-14497-8
-claim: The classical discrete large sieve supplies a weighted square-tail allowance for the actual Weil arithmetic boundary symbol after its logarithmic frequency aliases are folded; this controls an unsigned coupling budget, not all-scale positivity.
+claim: Folded large-sieve and actual moment inputs bound the complete arithmetic coupling tail; a cancellation-uniform two-sided finite-head metric supplies a conditional Schur budget, with no all-scale positivity.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -514,3 +514,221 @@ $$
 for all symmetric retained vectors are sufficient, with the same form-domain bridge and cofinal support requirement. A lower bound valid on the whole exterior space also restricts to this subspace. A positive finite even compression alone does not pay for its infinite even complement. Neither (34)–(36) nor the existing criterion supplies the missing domination.
 
 The [Liu fixed-window source](../Weil/liu2026tailcompensation.md) gives a different retained positive-tail mechanism at half-width $17/16$. Its even restriction keeps the tail-filtered $h_0$ correction. The first new FIB half-width $\log3$ remains outside that theorem's range; importing its fixed-window matrices or constants there would require new support-dependent estimates.
+
+
+## A cancellation-uniform metric for the complete finite-head tail
+
+Keep the same complete odd arithmetic symbol $s_c(m)$, with integer
+$c\ge2$. Reuse the existing actual
+[finite-head faithfulness and polynomial lower tail](https://github.com/the-omega-institute/trureturing/blob/58a7f861239c6d1b14603aaabe4f15942814e5d2/D5/S3/Weil/ZetaBridge/ActualFiniteHeadFaithfulness.lean),
+the [centered prime-square blocks](https://github.com/the-omega-institute/trureturing/blob/58a7f861239c6d1b14603aaabe4f15942814e5d2/D5/S3/Weil/ZetaBridge/PrimeSymbolResonance.lean)
+and the [complete first-moment and tail inputs](https://github.com/the-omega-institute/trureturing/blob/58a7f861239c6d1b14603aaabe4f15942814e5d2/D5/S3/Weil/ZetaBridge/ActualFullSymbolTail.lean).
+The added paper estimate controls the full tail uniformly in its complex
+head, including heads approaching moment-annihilating directions. It uses
+the existing finite geometric jets and bounded-discrepancy summation;
+no generic inverse theorem, literature priority or Lean verification is
+claimed.
+
+Fix a nonempty finite $S\subset\mathbb Z$, $d=|S|$, and arbitrary
+$v\in\mathbb C^S$. Define the actual columns and their complete tail by
+
+$$
+C_v(m)=\frac1\pi\sum_{n\in S}
+ \frac{s_c(n)-s_c(m)}{m-n}v_n,\qquad
+\mathcal E_N(v)=\sum_{m>N}\bigl(|C_v(m)|^2+|C_v(-m)|^2\bigr).
+$$
+
+Only $N\ge2\max(1,\max_{n\in S}|n|)$ is used, so all these
+exterior denominators are nonzero. For $0\le j<d$ put
+
+$$
+\alpha_j=\sum_{n\in S}s_c(n)n^jv_n,\qquad
+\beta_j=\sum_{n\in S}n^jv_n,\qquad
+ a_{N,j}=N^{-j}\alpha_j,\quad b_{N,j}=N^{-j}\beta_j,
+$$
+
+and $Z_N(v)=\|a_N\|_2^2+\|b_N\|_2^2$. Retain the full ordered
+resonance correction from (2):
+
+$$
+\mu_c=E(c)=\frac12\left[
+ \sum_{2\le q<c}\frac{\Lambda(q)^2}{q}
+ -\sum_{\substack{2\le p,q<c\\pq=c}}
+       \frac{\Lambda(p)\Lambda(q)}{\sqrt{pq}}\right]\ge0,
+\qquad \kappa=\frac\pi4.
+$$
+
+In particular $\mu_2=0$; resonant self-pairs are not removed from
+the definition. For $A(x)=\sum_{j<d}a_jx^j$ and
+$B(x)=\sum_{j<d}b_jx^j$, define the explicit Hermitian form
+
+$$
+\begin{aligned}
+\mathcal H_{c,d}(a,b)=\int_0^1\bigl(&|A(x)+\kappa B(x)|^2
+ +|A(-x)-\kappa B(-x)|^2\\
+ &+\mu_c[|B(x)|^2+|B(-x)|^2]\bigr)dx.
+\end{aligned}
+\tag{37}
+$$
+
+There are finite $K_{c,S}$ and $N_{c,S}$, independent of $v$, such
+that every integer $N\ge N_{c,S}$ satisfies
+
+$$
+\boxed{\left|\pi^2N\mathcal E_N(v)
+ -\mathcal H_{c,d}(a_N,b_N)\right|
+ \le\frac{K_{c,S}}N Z_N(v).}
+\tag{38}
+$$
+
+Here $c,S$ are fixed. No uniform constant as either the support
+cutoff or the head size grows, and no numerical value of $K_{c,S}$
+or $N_{c,S}$, is supplied.
+
+### Keep the error relative to all the scaled moments
+
+Equation (21) and the exact pole give the owned smooth-part rate
+
+$$
+s_c(m)=-\kappa-P_c(m)+h_c(m),\qquad |h_c(m)|\le G_c/m.
+\tag{39}
+$$
+
+For $c\ge3$, take $G_c=K(c)+L/(2\pi)$. For $c=2$, use the
+unsimplified Gamma allowance displayed before (21), giving
+$G_c=K(c)+[L/(2\pi)]\max\{1,1/4+c^{-1/2}/(1-c^{-2})\}$.
+Thus (39) uses the entire damped Gamma series and pole, including
+that endpoint, without rederiving the existing Gamma estimate.
+
+Apply the existing finite geometric mechanism to both exterior signs:
+
+$$
+J_v(m)=\frac1\pi\sum_{j<d}
+ \frac{\alpha_j-s_c(m)\beta_j}{m^{j+1}},\qquad
+C_v(m)-J_v(m)=\frac1\pi\sum_{n\in S}
+ \frac{[s_c(n)-s_c(m)]v_nn^d}{m^d(m-n)}.
+$$
+
+The existing uniform symbol bound and the half-gap imply
+$\|C-J\|_{\ell^2(|m|>N)}\le C_{c,S}\|v\|_2N^{-d-1/2}$.
+The distinct-node moment map $v\mapsto(\beta_j)_{j<d}$ has a
+bounded finite-dimensional inverse by the existing Vandermonde
+tomography result. Hence, for one fixed $V_S$,
+
+$$
+\|v\|_2\le V_S\|(\beta_j)_{j<d}\|_2
+ \le V_SN^{d-1}Z_N(v)^{1/2}.
+$$
+
+Consequently $\|C-J\|\le C_{c,S}N^{-3/2}Z_N(v)^{1/2}$,
+whereas the same inverse-power tail bound gives
+$\|J\|\le C_{c,d}N^{-1/2}Z_N(v)^{1/2}$. Retaining the cross term
+$2\|J\|\|C-J\|$ proves
+
+$$
+\left|\pi^2N\mathcal E_N(v)-\pi^2N\|J\|^2\right|
+ \le C_{c,S}N^{-1}Z_N(v).
+\tag{40}
+$$
+
+This conversion is essential: an additive error in $\|v\|_2^2$
+alone does not establish a relative error in the degenerating moment
+metric.
+
+The cited actual block inputs give fixed finite $F_c,O_c$ with
+$|\sum P_c(m)|\le F_c$ and
+$|\sum(P_c(m)^2-\mu_c)|\le O_c$ on every consecutive integer
+block. Apply classical bounded-discrepancy partial summation with
+$m^{-p}$, for the finite set $2\le p\le2d$. The errors are at most
+$F_c(N+1)^{-p}$ and $O_c(N+1)^{-p}$, respectively. The ordinary
+integral comparison for $\sum_{m>N}m^{-p}$ and (39) therefore give
+
+$$
+\begin{aligned}
+N^{p-1}\sum_{m>N}\frac{s_c(m)}{m^p}
+ &=-\frac\kappa{p-1}+O_{c,d}(N^{-1}),\\
+N^{p-1}\sum_{m>N}\frac{s_c(m)^2}{m^p}
+ &=\frac{\kappa^2+\mu_c}{p-1}+O_{c,d}(N^{-1}).
+\end{aligned}
+\tag{41}
+$$
+
+The smooth error and its prime cross term use the absolutely summable
+$m^{-p-1}$ majorant. No independent-phase average is introduced.
+Expand both $J_v(m)$ and $J_v(-m)$ using the exact oddness of $s_c$.
+Equation (41) yields (37), with block entries, for $0\le j,l<d$,
+
+$$
+\begin{aligned}
+H_{aa,jl}&=\frac{1+(-1)^{j+l}}{j+l+1},\\
+H_{bb,jl}&=(\kappa^2+\mu_c)\frac{1+(-1)^{j+l}}{j+l+1},\\
+H_{ab,jl}&=\kappa\frac{1-(-1)^{j+l}}{j+l+1},\qquad
+H_{ba}=H_{ab}^*.
+\end{aligned}
+$$
+
+Each normalized jet-matrix entry has error $O_{c,d}(N^{-1})$.
+Absorbing the $2d$ entry-to-operator norm factor gives the same error
+against $Z_N$, uniformly in $v$. Together with (40) this proves (38).
+
+### A multiplicative enclosure of the same complete tail
+
+Let $H_d=((j+l+1)^{-1})_{j,l<d}$ be the ordinary positive definite
+Hilbert moment matrix. Set $u_j=a_j+\kappa b_j$ and
+$w_j=(-1)^j(a_j-\kappa b_j)$. The first two terms of (37) are
+$u^*H_du+w^*H_dw$. This coefficient change is invertible, and the
+remaining $\mu_c$ term is nonnegative. In particular
+
+$$
+\mathcal H_{c,d}(a,b)\ge
+2\lambda_{\min}(H_d)(\|a\|_2^2+\kappa^2\|b\|_2^2).
+$$
+
+Thus the matrix in (37) is positive definite even at $c=2$.
+Writing $\lambda_{c,d}>0$ for its smallest Euclidean eigenvalue,
+(38) gives the two-sided enclosure
+
+$$
+\boxed{
+\left(1-\frac{K_{c,S}}{\lambda_{c,d}N}\right)
+ \frac{\mathcal H_{c,d}(a_N,b_N)}{\pi^2N}
+\le\mathcal E_N(v)\le
+\left(1+\frac{K_{c,S}}{\lambda_{c,d}N}\right)
+ \frac{\mathcal H_{c,d}(a_N,b_N)}{\pi^2N}.}
+\tag{42}
+$$
+
+One cutoff, enlarged to $N\ge2K_{c,S}/\lambda_{c,d}$, works for
+all complex $v$, including $N$-dependent heads with nearly vanishing
+low moments. For a fixed nonzero $v$, let $k<d$ be the first index
+with $(\alpha_k,\beta_k)\ne(0,0)$; its existence is the existing
+moment injectivity. The same formula also identifies the leading
+constant of the already known polynomial lower tail:
+
+$$
+\lim_{N\to\infty}N^{2k+1}\mathcal E_N(v)
+=\frac{2[|\alpha_k|^2+(\pi^2/16+\mu_c)|\beta_k|^2]}
+ {\pi^2(2k+1)}>0.
+\tag{43}
+$$
+
+For a Schur consumer on this same coefficient space, if the actual
+exterior block satisfies $D_{\rm ext}\succeq h_NI>0$, put
+$T_Nv=(a_N,b_N)$. The complete omitted coupling charge then has the
+matrix upper bound
+
+$$
+C_{\rm tail}^*D_{\rm ext}^{-1}C_{\rm tail}
+\preceq\frac{1+K_{c,S}/(\lambda_{c,d}N)}{\pi^2Nh_N}
+ T_N^*H_{c,d}T_N.
+\tag{44}
+$$
+
+This is an upper budget, not an asymptotic equality for the inverse
+block. Every intervening row between an earlier retained cutoff and
+$N$ must still be charged. Identification with the physical Weil form,
+a positive exterior lower bound, domination by the retained signed
+form and uniform estimates along cofinal supports remain separate
+obligations. Equations (38)--(44) give neither that signed domination,
+the original Robin boundary-minus-one-use-credit upper, all-order
+theta positivity at one fixed start, nor RH.
