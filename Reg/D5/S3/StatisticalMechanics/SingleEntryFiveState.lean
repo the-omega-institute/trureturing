@@ -94,7 +94,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   exact ne_of_lt hpos
 
 def family : Registration arena (arena.Law actual) where
-  actual := actual
+  actual := realize signature actualReadout actualAnchor
   bridge := Iff.rfl
   variation := ⟨five_state_strict_association, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity

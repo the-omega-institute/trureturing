@@ -49,13 +49,16 @@ abbrev arena : Arena where
   Law R := ∀ {ι : Type u} [fi : Fintype ι] [de : DecidableEq ι] [ne : Nonempty ι]
     (a b : ι → ℝ) (η θ : ℝ),
     (∀ i, 0 < a i) → (∀ i, 0 < b i) → 0 < η → 0 < θ →
-    ∃! x : ℝ, 0 < x ∧ (∀ i, x < R.readout () ⟨ι, a, b⟩ i) ∧
-      secular a b η θ x = 0
+    (∃! x : ℝ, 0 < x ∧ (∀ i, x < R.readout () ⟨ι, a, b⟩ i) ∧
+      secular a b η θ x = 0) ∧
+    ∀ x : ℝ, 0 ≤ x → (∀ i, x < siteRate a b i) →
+      HasDerivAt (secular a b η θ) (secularSlope a b η x) x ∧
+      secularSlope a b η x < 0
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  obtain ⟨x, hx, _⟩ := h (ι := ULift.{u} Unit) (fun _ => 1) (fun _ => 1) 1 1
-    (by intro i; norm_num) (by intro i; norm_num) (by norm_num) (by norm_num)
+  obtain ⟨x, hx, _⟩ := (h (ι := ULift.{u} Unit) (fun _ => 1) (fun _ => 1) 1 1
+    (by intro i; norm_num) (by intro i; norm_num) (by norm_num) (by norm_num)).1
   have hh := hx.2.1 (ULift.up ())
   norm_num [rejected, realize] at hh
   linarith [hx.1]
@@ -67,7 +70,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   norm_num [actual, actualReadout, realize, siteRate, a]
 
 def family : Registration arena.{u} (arena.Law actual) where
-  actual := actual
+  actual := realize signature actualReadout actualAnchor
   bridge := Iff.rfl
   variation := ⟨@secular_unique_root.{u}, rejected, rejected_law⟩
   sensitivity := by
@@ -89,7 +92,7 @@ def selection : Contract.SourceSelection where
   readouts := #[{
     path := #["body", "body", "body", "body", "body", "body",
       "body", "body", "body", "body", "body", "body",
-      "arg", "body", "arg", "fn", "arg", "body", "arg"]
+      "fn", "arg", "arg", "body", "arg", "fn", "arg", "body", "arg"]
     stateBinder := 13
     functionOperand := false
     stateOperand := none

@@ -46,8 +46,36 @@ def secular {ι : Type*} [Fintype ι] [DecidableEq ι]
     η * x * ∑ S ∈ (Finset.univ.erase (∅ : Finset ι)),
       modeWeight a b S / (subsetRate a b S - x)
 
+/-- The pole-weight expression supplied for the derivative of the secular function. -/
+def secularSlope {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (a b : ι → ℝ) (η x : ℝ) : ℝ :=
+  -1 - η * ∑ S ∈ (Finset.univ.erase (∅ : Finset ι)),
+    modeWeight a b S * subsetRate a b S / (subsetRate a b S - x) ^ 2
+
 private def rationalSecular {α : Type*} (T : Finset α) (v w : α → ℝ)
     (C η x : ℝ) : ℝ := C - x - η * x * ∑ k ∈ T, w k / (v k - x)
+
+private theorem rational_derivative {α : Type*} (T : Finset α) (v w : α → ℝ)
+    (C η x : ℝ) (hx : ∀ k ∈ T, v k - x ≠ 0) :
+    HasDerivAt (rationalSecular T v w C η)
+      (-1 - η * ∑ k ∈ T, w k * v k / (v k - x) ^ 2) x := by
+  have hterm (k : α) (hk : k ∈ T) :
+      HasDerivAt (fun u => u * (w k / (v k - u)))
+        (w k * v k / (v k - x) ^ 2) x := by
+    have hd := (hasDerivAt_id x).mul
+      ((hasDerivAt_const x (w k)).div
+        ((hasDerivAt_const x (v k)).sub (hasDerivAt_id x)) (hx k hk))
+    convert hd using 1
+    · rfl
+    · dsimp
+      field_simp [hx k hk]
+      ring
+  have hsum := HasDerivAt.fun_sum hterm
+  have hd := ((hasDerivAt_const x C).sub (hasDerivAt_id x)).sub (hsum.const_mul η)
+  convert hd using 1
+  · funext u
+    simp [rationalSecular, Finset.mul_sum, mul_assoc]
+  · ring
 
 private theorem rational_strictAnti {α : Type*} (T : Finset α) (v w : α → ℝ)
     (C η m : ℝ) (hη : 0 < η) (hw : ∀ k ∈ T, 0 ≤ w k)
@@ -151,38 +179,69 @@ private theorem weight_pos {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-- For every nonempty finite family of positive binding and unbinding rates,
 the specified secular function has exactly one root strictly below every free
-site rate. This statement does not identify the root with a generator eigenvalue. -/
+site rate. Its derivative equals the supplied strictly negative pole-weight
+expression throughout the nonnegative pre-pole interval. This statement does not identify the root with a generator eigenvalue. -/
 theorem secular_unique_root {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
     (a b : ι → ℝ) (η θ : ℝ)
     (ha : ∀ i, 0 < a i) (hb : ∀ i, 0 < b i) (hη : 0 < η) (hθ : 0 < θ) :
-    ∃! x : ℝ, 0 < x ∧ (∀ i, x < siteRate a b i) ∧ secular a b η θ x = 0 := by
-  let rates := Finset.univ.image (siteRate a b)
-  have hrates : rates.Nonempty := Finset.image_nonempty.mpr Finset.univ_nonempty
-  let m := rates.min' hrates
-  have hm_mem : m ∈ rates := Finset.min'_mem rates hrates
-  obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hm_mem
-  have hmi (k : ι) : m ≤ siteRate a b k :=
-    Finset.min'_le rates _ (Finset.mem_image.mpr ⟨k, Finset.mem_univ _, rfl⟩)
-  have hm : 0 < m := by rw [← hi]; exact add_pos (ha i) (hb i)
-  let T : Finset (Finset ι) := Finset.univ.erase ∅
-  have hT (S : Finset ι) (hS : S ∈ T) : S.Nonempty := by
-    exact Finset.nonempty_iff_ne_empty.mpr (Finset.mem_erase.mp hS).1
-  have hv (S : Finset ι) (hS : S ∈ T) : m ≤ subsetRate a b S := by
-    obtain ⟨k, hk⟩ := hT S hS
-    exact (hmi k).trans (Finset.single_le_sum
-      (fun l _ => (add_pos (ha l) (hb l)).le) hk)
-  have hj : ({i} : Finset ι) ∈ T := by simp [T]
-  have hvj : subsetRate a b {i} = m := by simp [subsetRate, hi]
-  have hC : 0 < θ + η * modeWeight a b ∅ :=
-    add_pos hθ (mul_pos hη (weight_pos a b ha hb ∅))
-  obtain ⟨x, hx, huniq⟩ := rational_unique_root T (subsetRate a b) (modeWeight a b)
-    (θ + η * modeWeight a b ∅) η m hC hη hm
-    (fun S _ => (weight_pos a b ha hb S).le) hv {i} hj hvj
-    (weight_pos a b ha hb {i})
-  refine ⟨x, ⟨hx.1.1, fun k => lt_of_lt_of_le hx.1.2 (hmi k), hx.2⟩, ?_⟩
-  intro y hy
-  apply huniq y
-  exact ⟨⟨hy.1, by simpa [hi] using hy.2.1 i⟩, hy.2.2⟩
+    (∃! x : ℝ, 0 < x ∧ (∀ i, x < siteRate a b i) ∧ secular a b η θ x = 0) ∧
+    ∀ x : ℝ, 0 ≤ x → (∀ i, x < siteRate a b i) →
+      HasDerivAt (secular a b η θ) (secularSlope a b η x) x ∧
+      secularSlope a b η x < 0 := by
+  constructor
+  · let rates := Finset.univ.image (siteRate a b)
+    have hrates : rates.Nonempty := Finset.image_nonempty.mpr Finset.univ_nonempty
+    let m := rates.min' hrates
+    have hm_mem : m ∈ rates := Finset.min'_mem rates hrates
+    obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hm_mem
+    have hmi (k : ι) : m ≤ siteRate a b k :=
+      Finset.min'_le rates _ (Finset.mem_image.mpr ⟨k, Finset.mem_univ _, rfl⟩)
+    have hm : 0 < m := by rw [← hi]; exact add_pos (ha i) (hb i)
+    let T : Finset (Finset ι) := Finset.univ.erase ∅
+    have hT (S : Finset ι) (hS : S ∈ T) : S.Nonempty := by
+      exact Finset.nonempty_iff_ne_empty.mpr (Finset.mem_erase.mp hS).1
+    have hv (S : Finset ι) (hS : S ∈ T) : m ≤ subsetRate a b S := by
+      obtain ⟨k, hk⟩ := hT S hS
+      exact (hmi k).trans (Finset.single_le_sum
+        (fun l _ => (add_pos (ha l) (hb l)).le) hk)
+    have hj : ({i} : Finset ι) ∈ T := by simp [T]
+    have hvj : subsetRate a b {i} = m := by simp [subsetRate, hi]
+    have hC : 0 < θ + η * modeWeight a b ∅ :=
+      add_pos hθ (mul_pos hη (weight_pos a b ha hb ∅))
+    obtain ⟨x, hx, huniq⟩ := rational_unique_root T (subsetRate a b) (modeWeight a b)
+      (θ + η * modeWeight a b ∅) η m hC hη hm
+      (fun S _ => (weight_pos a b ha hb S).le) hv {i} hj hvj
+      (weight_pos a b ha hb {i})
+    refine ⟨x, ⟨hx.1.1, fun k => lt_of_lt_of_le hx.1.2 (hmi k), hx.2⟩, ?_⟩
+    intro y hy
+    apply huniq y
+    exact ⟨⟨hy.1, by simpa [hi] using hy.2.1 i⟩, hy.2.2⟩
+  · intro x hx hupper
+    let T : Finset (Finset ι) := Finset.univ.erase ∅
+    have hv (S : Finset ι) (hS : S ∈ T) : 0 < subsetRate a b S - x := by
+      have hn : S.Nonempty :=
+        Finset.nonempty_iff_ne_empty.mpr (Finset.mem_erase.mp hS).1
+      obtain ⟨i, hi⟩ := hn
+      have hsum : siteRate a b i ≤ subsetRate a b S :=
+        Finset.single_le_sum (fun j _ => (add_pos (ha j) (hb j)).le) hi
+      linarith [hupper i]
+    constructor
+    · have he : secular a b η θ =
+          rationalSecular T (subsetRate a b) (modeWeight a b)
+            (θ + η * modeWeight a b ∅) η := rfl
+      rw [he]
+      exact rational_derivative T (subsetRate a b) (modeWeight a b)
+        (θ + η * modeWeight a b ∅) η x (fun S hS => ne_of_gt (hv S hS))
+    · have hsum : 0 ≤ ∑ S ∈ T,
+          modeWeight a b S * subsetRate a b S / (subsetRate a b S - x) ^ 2 := by
+        apply Finset.sum_nonneg
+        intro S hS
+        apply div_nonneg
+        · exact mul_nonneg (weight_pos a b ha hb S).le (by linarith [hv S hS])
+        · exact sq_nonneg _
+      dsimp [secularSlope]
+      change -1 - η * (∑ S ∈ T, _) < 0
+      nlinarith [mul_nonneg hη.le hsum]
 
 #print axioms secular_unique_root
 
