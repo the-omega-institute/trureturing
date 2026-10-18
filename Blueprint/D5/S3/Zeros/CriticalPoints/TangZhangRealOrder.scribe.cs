@@ -61,13 +61,13 @@ internal sealed class TangZhangRealOrderDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Disp(Inequality),
+                    Paragraph(Math(Disp(Inequality))),
                     Paragraph(Text(
                         "The first conjunct asserts the displayed bound for every natural "
                         + "n at least one, every nonzero complex family z, and every real p "
                         + "at least one. The second asserts the following equivalence for "
                         + "every such family and every real p greater than one.")),
-                    Disp(EqualityCriterion),
+                    Paragraph(Math(Disp(EqualityCriterion))),
                     Paragraph(Text(
                         "The third conjunct negates the universal equality equivalence at "
                         + "p=1. It is witnessed by n=2 and z=(1,2), whose critical points "

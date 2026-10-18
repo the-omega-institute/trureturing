@@ -11,7 +11,7 @@ internal sealed class RankOneComplexPowersDocument : IScribeDocumentDefinition
         H("Complex powers from a rank-one projection"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("rank-one-power-H"),
+                DescribeId.Create("rank-one-power-h"),
                 DeclarationHandle.Create(Prefix + "H"),
                 H("The explicit matrix power"),
                 StatementSource.WithoutFormula(),
