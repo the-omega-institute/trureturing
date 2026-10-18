@@ -27,7 +27,7 @@ Q(\rho_{ABC})+Q(\rho_B)
 \le Q(\rho_{AB})+Q(\rho_{BC}).
 $$
 
-The intended formal statement quantifies over arbitrary finite coordinate
+The formal statement quantifies over arbitrary finite coordinate
 types and the repository's `DensityState`; changing the parentheses of a
 product coordinate type only relabels matrix entries. The original assertion
 does not impose commutation, full rank, separability or purity.
@@ -41,15 +41,15 @@ The existing finite density-state interface provides the common state domain.
 
 ## Gap
 
-A counterexample must use the paper's subentropy, including its extension to
-repeated and zero eigenvalues, and the actual partial traces of one joint
-state. A determinant-integral definition must therefore be connected to the
-simple-spectrum formula and its continuous extension. The paper-level
-counterexample below does not by itself supply these Lean proofs.
+The determinant-integral definition is connected to the positive distinct-spectrum
+formula, and continuity is proved on the entire positive trace-one domain,
+including zero and repeated eigenvalues. The witness uses the actual partial
+traces of one joint density state. Rectangular Gram invariance, pure-state
+vanishing and the two exact uniform values supply its subentropy evaluations.
 
 ## Route
 
-For a positive trace-one matrix $A$, use the proposed representation
+For a positive trace-one matrix $A$, use the representation
 
 $$
 Q(A)=\int_0^\infty\left[
@@ -57,7 +57,7 @@ Q(A)=\int_0^\infty\left[
 \right]dt.
 $$
 
-On probability vectors, the kernel has the proposed bound
+On probability vectors, the kernel satisfies the bound
 $0\le K_t(p)\le(1-p_x)/(1+t)^2$. The integrable dominating function
 $(1+t)^{-2}$ supplies convergence and continuity. Partial fractions at
 positive distinct eigenvalues give the spectral formula in
@@ -66,8 +66,8 @@ is needed at the counterexample's repeated and zero eigenvalues.
 
 Sylvester's identity $\det(I+VW)=\det(I+WV)$ makes this integral invariant
 under rectangular Gram conversion and isometric embedding. In particular,
-pure states have value zero. These are required proof obligations of the
-integral representation.
+pure states have value zero. These properties are proved directly for the
+integral representation, without a nonzero-spectrum or rank assumption.
 
 Take $A=B=C=\mathbb C^2$ and
 
@@ -113,20 +113,37 @@ One valid tripartite density state with strictly positive displayed gap
 refutes the universal assertion. The Bell-pair product state above is the
 specified witness. Failure of any claimed marginal identity, spectral
 invariance, exact integral value or identification with the paper's
-subentropy would invalidate this proposed certification route.
+subentropy would invalidate the refutation. The formal proof establishes those identities
+for the stated witness.
 
 ## Evidence
 
-The explicit witness, kernel expansions and integration calculation above
-give a paper-level refutation. They are not a compiled Lean certificate.
-No theorem `result : ¬ conjecture` or completed formal faithfulness proof is
-asserted by this dossier. The full Lean formalization and its required
-checks remain outstanding.
+The formal refutation is
+[`StrongSubadditivityRefutation.result`](../D5/S3/Quantum/Subentropy/StrongSubadditivityRefutation.lean),
+whose type is literally `¬ conjecture`. Its private `witness_gap` proves the
+left side minus the right side equals exactly $1/12$ for the Bell-pair
+product state. All three reduced states are obtained by the canonical
+partial-trace API, and the BC reassociation only relabels product indices.
+
+[`Basic`](../D5/S3/Quantum/Subentropy/Basic.lean) proves rectangular Gram
+invariance, isometric-embedding invariance and pure-state vanishing.
+[`UniformValues`](../D5/S3/Quantum/Subentropy/UniformValues.lean) proves the
+exact values $\log 2-1/2$ and $\log 4-13/12$ for uniform spectra of cardinality
+two and four, using the improper integrals in
+[`UniformIntegrals`](../D5/S3/Quantum/Subentropy/UniformIntegrals.lean).
+
+[`SpectralFormula.matrixSubentropy_diagonal_eq_distinct_formula`](../D5/S3/Quantum/Subentropy/SpectralFormula.lean)
+identifies the determinant integral with the paper's finite formula for
+positive pairwise distinct probabilities.
+[`DensityKernel`](../D5/S3/Quantum/Subentropy/DensityKernel.lean) proves the
+uniform kernel domination, absolute integrability on density matrices and
+`continuousOn_matrixSubentropy` on the full positive trace-one domain.
+Together the spectral formula and continuity provide the stated continuous
+extension at repeated and zero spectra.
 
 ## Triage
 
-**SSA REFUTED at paper level, with exact gap $1/12$; formal certification
-outstanding.** The witness is a Bell pair tensored with a maximally mixed
+**SSA REFUTED in Lean, with exact gap $1/12$.** The witness is a Bell pair tensored with a maximally mixed
 qubit. Its $AB$ marginal is pure; the $B$ and $C$ factors produce a strict
 product subadditivity gap.
 
@@ -158,6 +175,5 @@ The source quotation, version and section are supplied locators without an
 independently available original source. The journal DOI, expanded author
 names and bibliographic title have not been independently verified; see the
 library note. No network search for subsequent settlements or worldwide
-priority has been made. The integral's faithfulness, continuity,
-isometric invariance, exact values and full witness-to-refutation bridge
-are not claimed as compiled Lean results here.
+priority has been made. These bibliographic and literature-status boundaries
+are independent of the formal mathematical statements listed above.
