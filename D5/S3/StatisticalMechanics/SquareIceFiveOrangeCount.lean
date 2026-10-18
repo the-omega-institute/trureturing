@@ -15,6 +15,7 @@ import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.Int.Interval
 import Mathlib.Data.Finset.Prod
+import Mathlib.Data.Fintype.Powerset
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.IntervalCases
@@ -52,10 +53,6 @@ def claim : Prop :=
 
 private def Adjacent (u v : ℤ × ℤ) : Prop :=
   |u.1 - v.1| + |u.2 - v.2| = 1
-
-private theorem ground_nonneg (ℓ : ℕ) (v : ℤ × ℤ) : 0 ≤ ground ℓ v := by
-  unfold ground
-  split_ifs <;> positivity
 
 private theorem ground_nearest (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (v : ℤ × ℤ) :
     (∀ i : ℤ, 0 ≤ i → i < ℓ → ground ℓ v ≤ |v.1 - i| + |v.2 + i|) ∧
@@ -655,10 +652,41 @@ private theorem vertex_classification (ℓ : ℕ) (hℓ : 3 ≤ ℓ)
       norm_num at lmin <;> norm_num at rmin <;> norm_num at lrect <;>
       norm_num at rrect <;> norm_num at hvi <;> norm_num at p0 p1 p2 n0 n1 n2 <;> omega
 
+private noncomputable def vertices (ℓ : ℕ) : Finset (ℤ × ℤ) := by
+  classical
+  exact ((Finset.Icc (-4 : ℤ) ((ℓ : ℤ) + 3)).product
+    (Finset.Icc (-(ℓ : ℤ) - 3) 4)).filter (fun v => ground ℓ v ≤ 1 ∨ EndVertex ℓ v)
+
+private noncomputable def finiteEquiv (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} ≃
+      {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val} where
+  toFun I := ⟨⟨I.val, Finset.mem_powersetCard.mpr ⟨by
+    classical
+    intro v hv
+    unfold vertices
+    apply Finset.mem_filter.mpr
+    refine ⟨?_, vertex_classification ℓ hℓ I I.property.2 I.property.1 v hv⟩
+    have hr := rank_bound ℓ (by omega) I I.property.2 v hv
+    obtain ⟨_, i, hi, hil, he⟩ := ground_nearest ℓ (by omega) v
+    rw [I.property.1] at hr
+    apply Finset.mem_product.mpr
+    constructor <;> apply Finset.mem_Icc.mpr <;>
+      simp only [abs_eq_max_neg] at he <;> omega,
+    I.property.1⟩⟩, I.property.2⟩
+  invFun J := ⟨J.val.val, (Finset.mem_powersetCard.mp J.val.property).2, J.property⟩
+  left_inv I := by apply Subtype.ext; rfl
+  right_inv J := by apply Subtype.ext; apply Subtype.ext; rfl
+
+private theorem finite_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
+    (Nat.card {J : ↥((vertices ℓ).powersetCard 5) // IsDownset ℓ J.val} : ℤ) =
+      (ℓ.choose 5 : ℤ) + 10 * ℓ.choose 3 - 2 * ℓ.choose 2 + 36 * ℓ - 14 := by
+  sorry
+
 private theorem downset_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} : ℤ) =
       (ℓ.choose 5 : ℤ) + 10 * ℓ.choose 3 - 2 * ℓ.choose 2 + 36 * ℓ - 14 := by
-  sorry
+  rw [Nat.card_congr (finiteEquiv ℓ hℓ)]
+  exact finite_count ℓ hℓ
 
 theorem result : claim := by
   intro ℓ hℓ
