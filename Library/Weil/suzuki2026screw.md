@@ -1622,3 +1622,170 @@ linear span of these cones, and no arbitrary complex-measure or
 unweighted-gap claim. Compact positions and coupling to omitted
 positions remain uncontrolled. Full physical positivity, the strict
 all-integer Robin upper and RH remain unproved.
+
+
+## Analytic transport from one complete odd window
+
+For the actual complete kernel, all-order odd positivity on one physical
+open interval is already a sufficient target for zero exclusion. The
+application below transports that local hypothesis through the original
+kernel; it does not prove the hypothesis. In this sufficient route a
+separate comparison with compact or omitted positions is unnecessary.
+The all-order requirement remains, and no finite collection of minors or
+fixed sign-count bounds supplies it.
+
+The general transport is existing mathematics: Danciger and
+Rubinstein-Salzedo,
+[*A Hilbert Space Approach to Bounded Analytic Interpolation*,
+Theorem 4, printed p.526](https://doi.org/10.1007/s11785-007-0029-7)
+([authors' published text](https://simonrs.com/AnalyticInterpolation.pdf)).
+It states that a sesquianalytic kernel on $D\times D$, where
+$D\subseteq\mathbb C^d$ is connected and open, is positive semidefinite
+on all of $D\times D$ if it is positive semidefinite on $S\times S$;
+here $S$ is a uniqueness set for a relatively compact subdomain
+$D'\Subset D$. Its kernel definition uses every finite node set and
+all complex coefficients. This theorem is directly reused, without a
+new general extension theorem or a literature-priority claim.
+
+### The full integral has a common complex strip
+
+Fix $0<\eta<\pi/4$ and put
+$D_\eta=\{z\in\mathbb C:|\Im z|<\eta\}$. The original theta series
+for $\Phi$ converges normally there. On every closed smaller strip its
+positive-real tail obeys
+
+$$
+|\Phi(u+iv)|\le C_\eta e^{9u/2}
+  \exp(-c_\eta e^{2u})\qquad(u\ge0,\ |v|\le\eta),
+\tag{W37}
+$$
+
+with positive constants, enlarging the containing strip within
+$|\Im z|<\pi/4$ when needed. Indeed each summand is bounded using
+$\Re e^{2(u+iv)}\ge e^{2u}\cos(2\eta)>0$; its $n^4$ polynomial is
+summable against this same Gaussian tail. Evenness extends to the strip
+by the identity theorem. Thus the tail bound also pays complex shifts in
+compact sets.
+
+For complex $a,b\in D_\eta$, keep $p=(a+b)/2$, $d=(a-b)/2$ and define
+
+$$
+\begin{aligned}
+\mathcal T(d)&=\int_0^\infty
+ y\Phi(y+d)\Phi(y-d)\,dy,\\
+\mathcal U(p,d)&=p^2\int_0^1
+ t\Phi(tp+d)\Phi(tp-d)\,dt,\\
+\widetilde K_0(a,b)&=\tfrac12[\mathcal T(d)-\mathcal U(p,d)],\\
+\widetilde L_0(a,b)&=\widetilde K_0(a,b)-\widetilde K_0(a,-b).
+\end{aligned}
+\tag{W38}
+$$
+
+The infinite integral is locally uniformly dominated by (W37).
+For $0\le t\le1$,
+$|\Im(tp\pm d)|\le|\Im p|+|\Im d|
+=\max(|\Im a|,|\Im b|)<\eta$.
+Hence the finite integral stays in the same strip and (W38) is jointly
+holomorphic. On the real axis,
+$y\Phi(y+d)\Phi(y-d)$ is odd in $y$, so its integral from $0$ to
+$p$ is even in $p$. Consequently (W38) agrees exactly with the
+$|p|$ lower limit in (W2). The complete reflected exterior remains
+included. The identities of symmetry, reality and oddness extend from
+the real axis; in particular
+$\mathcal L(z,w)=\widetilde L_0(z,\overline w)$ is a Hermitian
+sesquiholomorphic kernel on $D_\eta\times D_\eta$.
+
+Suppose now that, on one nonempty open $I\subset(0,\infty)$,
+$[L_0(a_i,a_j)]$ is positive semidefinite for every finite real sample
+in $I$. Real and complex coefficients give the same positivity condition
+for these real symmetric matrices. Choose $D'$ to be a small disk
+centered at a point of $I$, with closure in $D_\eta$, and take $S$ to
+be a nonempty real subinterval of $I\cap D'$. It is a uniqueness set
+for $D'$. Apply the cited Theorem 4 directly to $\mathcal L$.
+It follows that $L_0$ is positive semidefinite on the whole real axis.
+No derivative-germ extension argument is required.
+
+### The odd sector alone detects every off-real zero
+
+Reuse the complete Fourier interface (W7) and its exponential-moment
+cutoff argument. Both sides extend to arbitrary complex frequencies:
+the numerator's vanishing at $\overline w=z$ removes that quotient
+singularity. Define the odd projection
+
+$$
+\begin{aligned}
+\mathcal B_{\rm odd}(w,z)
+&=\tfrac12[\mathcal B(w,z)-\mathcal B(-w,z)]\\
+&=\frac2\pi\int_{\mathbb R^2}L_0(a,b)
+ e^{iza-i\overline w b}\,da\,db.
+\end{aligned}
+$$
+
+Global $L_0$ positivity makes this kernel positive semidefinite on every
+finite set of complex frequencies. One first uses compact cutoffs and
+finite-sum approximation, then removes the cutoffs by the already owned
+full exponential moments. Physical strip coordinates and complex Fourier
+frequencies have different domains; the latter are unrestricted here.
+
+Since $F$ is even and entire, write $F(z)=H(z^2)$ with $H$ entire and
+real on the real axis; no global square-root branch is selected. Exact
+substitution into (W7) gives
+
+$$
+\begin{aligned}
+\mathcal D_H(U,V)&=
+\frac{H'(V)\overline{H(U)}-H(V)\overline{H'(U)}}
+ {\overline U-V},\\
+\mathcal B_{\rm odd}(w,z)&=
+\frac{2z\overline w}{\pi}\mathcal D_H(w^2,z^2).
+\end{aligned}
+\tag{W39}
+$$
+
+For $Z=z^2$ with $\Im Z>0$ and $H(Z)\ne0$, positivity implies
+
+$$
+0\le\mathcal D_H(Z,Z)
+=-\frac{|H(Z)|^2}{\Im Z}\Im\frac{H'(Z)}{H(Z)}.
+$$
+
+If $H$ had a $k$-fold zero $\lambda$ in that half-plane,
+$H'(\lambda-i\epsilon)/H(\lambda-i\epsilon)
+=ik/\epsilon+O(1)$ as $\epsilon\downarrow0$. For sufficiently small
+positive $\epsilon$, $Z=\lambda-i\epsilon$ remains in the half-plane
+and is not a zero, and the displayed diagonal is negative. Conjugation
+excludes lower-half-plane zeros as well. This argument never assumes
+zero-free holomorphy of $H'/H$ on the half-plane in advance.
+
+Thus every zero of $H$ would be real. The original positive density also
+supplies $F(iy)=\int_{\mathbb R}\Phi(x)e^{-yx}dx>0$ for every real
+$y$. Hence $H$ has no nonpositive real zero, and every zero of the actual
+$F$ is real. With the fixed $\Xi$ normalization already used in (W7),
+this gives the source-specific sufficient implication
+
+$$
+\boxed{\begin{gathered}
+\text{complete }L_0\text{ PSD on all finite samples in one nonempty}\\
+\text{open positive interval}\quad\Longrightarrow\quad\mathrm{RH}.
+\end{gathered}}
+\tag{W40}
+$$
+
+The compact/exterior transport in this implication is paid by (W37)--(W39)
+and the existing analytic-kernel theorem. Neither local positivity,
+unrestricted actual-kernel PSD, the even sector, the strict all-integer
+Robin upper nor RH has been established. No identity with Suzuki's
+localized Weil operator or its small-support theorem is assumed. These
+are reviewed paper interfaces, not a new general criterion or Lean
+verification.
+
+In particular, (W34)--(W36) retain the quantifiers
+$\forall m\,\exists A_{W,m}$; they do not supply the single-window
+all-order premise in (W40). Conditionally on RH failing, every nonempty
+open positive interval must contain a finite real sample with a negative
+$L_0$ quadratic direction. On a width-$W$ window above $A_{W,m}$, any
+such direction has more than $m$ sign changes after merging nodes.
+This is the contrapositive of (W40) combined with (W36), not a located
+negative theta sample or a new positivity estimate. The unpaid target
+is all-order positivity of the complete actual odd kernel on one fixed
+open interval, or the original same-source signed Robin upper.
