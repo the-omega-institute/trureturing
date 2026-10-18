@@ -47,6 +47,12 @@ internal sealed class TwoPointSlabSupportDocument : IScribeDocumentDefinition
                 Lines(Equal(Hvec, Paren(Seq(LogOf(2), Comma, LogOf(3), Comma, LogOf(7))))),
                 "The vector h is indexed by Fin(3), in this displayed order. In particular, "
                 + "a=log(2)>0, and a is no larger than either other width.", DescribeRole.Definition),
+            Entry("log_widths_bounds", "log-widths-bounds", "Positive logarithmic widths",
+                Lines(Ands(Positive(LogOf(2)), Seq(All(I, Fin3), LogOf(2), Sp, Le, Sp,
+                    Call("logWidths", I)))),
+                "The natural logarithm of two is positive and no larger than any of the "
+                + "three logarithmic widths. Its positivity permits division by log(2) when "
+                + "converting natural-logarithm entropy estimates into bits."),
             Entry("pair_distance_spec", "attained-distance", "The minimum is the genuine set distance",
                 Lines(Seq(All(S, Call("Set", Alpha)), All(C, Alpha), All(Dd, Alpha),
                     ImpliesTo(Ands(Call("IsCompact", S), Unequal(S, Emptyset)),

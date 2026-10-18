@@ -4,7 +4,19 @@
 
 Weighted finite-path rigidity, boundary observability, and spectral power decay.
 
-**Definition 1.1 (Zero endpoint extension).**
+**Lemma 1.1 (Successive differences telescope).**
+
+$$\forall n \in \mathbb{N},\; \forall f \in \operatorname{Fin}\left(n + 1\right) \to \mathbb{C},\; \sum_{j:\operatorname{Fin}\left(n\right)}(f\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right) - f\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right)) = f\left(\operatorname{Fin}.\operatorname{last}\left(n\right)\right) - f\left(0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.sum_succ_sub_castSucc` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n and complex-valued function f on Fin (n + 1), the sum of successor differences is the last value minus the first value.
+
+**Definition 1.2 (Zero endpoint extension).**
 
 $$\forall m \in \mathbb{N},\; \forall z \in \operatorname{Fin}\left(m\right) \to \mathbb{C},\; \operatorname{zeroExtend}\left(z\right) = \operatorname{Fin}.\operatorname{cases}\left(0, \operatorname{Fin}.\operatorname{snoc}\left(z, 0\right)\right)$$
 
@@ -16,7 +28,7 @@ $$\forall m \in \mathbb{N},\; \forall z \in \operatorname{Fin}\left(m\right) \to
 
 For every m and complex vector z on Fin m, Fin.cases places zero at the left endpoint and Fin.snoc places zero at the right endpoint. The resulting vector has domain Fin(m + 2).
 
-**Lemma 1.2 (The interior values are unchanged).**
+**Lemma 1.3 (The interior values are unchanged).**
 
 $$\forall m \in \mathbb{N},\; \forall z \in \operatorname{Fin}\left(m\right) \to \mathbb{C},\; \forall i \in \operatorname{Fin}\left(m\right),\; \operatorname{zeroExtend}\left(z\right)\left(\operatorname{Fin}.\operatorname{succ}\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)\right) = z\left(i\right)$$
 
@@ -28,7 +40,7 @@ $$\forall m \in \mathbb{N},\; \forall z \in \operatorname{Fin}\left(m\right) \to
 
 Interior coordinate i is coordinate i + 1 of the zero endpoint extension.
 
-**Lemma 1.3 (The right endpoint is zero).**
+**Lemma 1.4 (The right endpoint is zero).**
 
 $$\forall m \in \mathbb{N},\; \forall z \in \operatorname{Fin}\left(m\right) \to \mathbb{C},\; \operatorname{zeroExtend}\left(z\right)\left(\operatorname{Fin}.\operatorname{last}\left(m + 1\right)\right) = 0$$
 
@@ -40,7 +52,7 @@ $$\forall m \in \mathbb{N},\; \forall z \in \operatorname{Fin}\left(m\right) \to
 
 The last coordinate of the extended vector is zero.
 
-**Theorem 1.4 (Weighted harmonic Dirichlet rigidity).**
+**Theorem 1.5 (Weighted harmonic Dirichlet rigidity).**
 
 $$\forall m \in \mathbb{N},\; \forall v \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; \left(\forall j \in \operatorname{Fin}\left(m + 1\right),\; 0 < v\left(j\right)\right) \Rightarrow \left(\forall z \in \operatorname{Fin}\left(m\right) \to \mathbb{C},\; \left(\forall i \in \operatorname{Fin}\left(m\right),\; \frac{z\left(i\right) - \operatorname{zeroExtend}\left(z\right)\left(\operatorname{Fin}.\operatorname{castSucc}\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)\right)}{(v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right):\mathbb{C})} = \frac{\operatorname{zeroExtend}\left(z\right)\left(\operatorname{Fin}.\operatorname{succ}\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)\right) - z\left(i\right)}{(v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right):\mathbb{C})}\right) \Rightarrow z = 0\right)$$
 
@@ -52,7 +64,7 @@ $$\forall m \in \mathbb{N},\; \forall v \in \operatorname{Fin}\left(m + 1\right)
 
 For arbitrary m and positive velocities, equal adjacent weighted slopes force every interior complex coordinate to vanish. Finite induction makes all edge slopes equal. Their telescoping sum is zero; the strictly positive total velocity forces the common slope to zero.
 
-**Theorem 1.5 (A boundary zero propagates through the path).**
+**Theorem 1.6 (A boundary zero propagates through the path).**
 
 $$\forall m \in \mathbb{N},\; 1 \le m \Rightarrow \left(\forall z \in \operatorname{Fin}\left(m\right) \to \mathbb{C},\; z\left(\operatorname{Fin}.\operatorname{mk}\left(0\right)\right) = 0 \Rightarrow \left(\left(\forall i \in \operatorname{Fin}\left(m\right),\; z\left(i\right) = 0 \Rightarrow \left(\operatorname{zeroExtend}\left(z\right)\left(\operatorname{Fin}.\operatorname{castSucc}\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)\right) = 0 \Rightarrow \operatorname{zeroExtend}\left(z\right)\left(\operatorname{Fin}.\operatorname{succ}\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)\right) = 0\right)\right) \Rightarrow z = 0\right)\right)$$
 
@@ -64,7 +76,7 @@ $$\forall m \in \mathbb{N},\; 1 \le m \Rightarrow \left(\forall z \in \operatorn
 
 For m ≥ 1, a zero first interior coordinate and a recurrence propagating two adjacent zeros imply that the entire vector is zero. The left endpoint supplied by zeroExtend starts the induction.
 
-**Theorem 1.6 (Strict spectral bounds give real trajectory decay).**
+**Theorem 1.7 (Strict spectral bounds give real trajectory decay).**
 
 $$\forall m \in \mathbb{N},\; 1 \le m \Rightarrow \left(\forall N \in \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), \mathbb{R}\right),\; \left(\forall c \in \mathbb{C},\; c \in \operatorname{spectrum}\left(\mathbb{C}, \operatorname{Matrix}.\operatorname{map}\left(N, \operatorname{algebraMap}\left(\mathbb{R}, \mathbb{C}\right)\right)\right) \Rightarrow \left\lVert c \right\rVert < 1\right) \Rightarrow \left(\forall u \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\lambda k:\mathbb{N},\operatorname{Matrix}.\operatorname{mulVec}\left(N^{k}, u\right)), \operatorname{Filter}.\operatorname{atTop}, \operatorname{nhds}\left(0\right)\right)\right)\right)$$
 
@@ -83,4 +95,5 @@ For m ≥ 1 and a real matrix N, every complex spectral modulus below one implie
 - Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.extend_last`
 - Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.harmonic_dirichlet_zero`
 - Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.real_mulVec_powers_tendsto_zero`
+- Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.sum_succ_sub_castSucc`
 - Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.zeroExtend`

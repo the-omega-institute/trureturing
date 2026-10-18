@@ -25,6 +25,11 @@ Direct frozen dependencies: none (pinned Mathlib only).
 The statements hold for arbitrary finite paths; utility is none.
 -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17312.
+   D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics.sum_succ_sub_castSucc
+   declaration statement_id: sha256:4f021acd0150993eb37275dae31f1933287bfd4483ef95a2b47d9921dffc8a79.
+-/
+
 import Mathlib.Analysis.Normed.Algebra.GelfandFormula
 import Mathlib.Analysis.Matrix.Normed
 
@@ -42,7 +47,7 @@ lemma extend_last {m : ℕ} (z : Fin m → ℂ) :
   change (Fin.snoc z 0 : Fin (m + 1) → ℂ) (Fin.last m) = 0
   simp
 
-private lemma sum_succ_sub_castSucc (n : ℕ) (f : Fin (n + 1) → ℂ) :
+lemma sum_succ_sub_castSucc (n : ℕ) (f : Fin (n + 1) → ℂ) :
     (∑ j : Fin n, (f j.succ - f j.castSucc)) = f (Fin.last n) - f 0 := by
   have h1 := Fin.sum_univ_succ f
   have h2 := Fin.sum_univ_castSucc f
@@ -189,9 +194,4 @@ theorem real_mulVec_powers_tendsto_zero {m : ℕ} (hm : 1 ≤ m)
   · simpa only [Function.comp_def] using he.symm
 
 
-#print axioms extend_interior
-#print axioms extend_last
-#print axioms harmonic_dirichlet_zero
-#print axioms boundary_zero_observability
-#print axioms real_mulVec_powers_tendsto_zero
 end D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics
