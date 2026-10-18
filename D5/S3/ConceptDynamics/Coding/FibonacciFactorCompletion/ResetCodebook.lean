@@ -6,7 +6,7 @@
    utility: none
    digest: Positive reset blocks tile one bilateral letter realization with exact guards. -/
 
-import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FibonacciFactorCompletion
 import Mathlib.Topology.Sequences
 
 set_option autoImplicit false
