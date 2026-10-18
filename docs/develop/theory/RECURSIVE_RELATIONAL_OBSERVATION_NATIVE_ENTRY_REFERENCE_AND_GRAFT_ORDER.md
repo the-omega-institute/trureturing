@@ -3828,3 +3828,736 @@ are not consequences of this finite directed theorem.
 [ERMUNETS]: https://arxiv.org/html/1505.07164v1
 
 ## 追加锚（本行以下为增补区）
+
+## 20. A current spatial body as the actual operand supplier
+
+**Definition 20.1 (the directed received-shape model).** Denote by $\nu$
+the following model. Retain $\mathcal T,E=\rho^2,j,F_w$, the compound
+logical sources of Definition 16.1, the directed occurrence fields and
+static exclusive owner of Assumption 16.2, canonical fresh allocation,
+retention and the fine Edit relation of Definition 16.5. Fix the owner
+$o$, root **port** $\pi$, orientation, public finite control and typed
+allocation order before choosing any seed or input. The reference in
+$\pi$ may change at a graft; $\pi$ and its owner do not change.
+All finite $u\in\mathcal T$ and all finite words in
+$\Lambda=\{\mathsf U,\mathsf L,\mathsf R\}$ are admitted.
+
+Retain the actual raw acquisition of installed $u$, preparation of
+$a_0$, startup graft and two warm-up substitutions. Thus the initialized
+source is the actual $E(j(u))$. Retain the bank of Definition 16.3,
+its initialization and its event conventions. Replace **each** logical
+acquisition, including the first, by Definitions 20.3–20.5 below. The
+new service constructs its replacement rows directly; the Read0,
+Read1, Replace0 and Copy controls of Definition 11.3 are not part of
+this model. Bind, lookup, output and continuing actuation have the
+correspondence specified in Definition 20.6. Earlier models retain
+all their own operations and hypotheses.
+
+The sender and receiver are two control roles of this same owner. They
+have distinct buffers; passing a value between them is an actual
+mailbox operation. There is no independent service request, historical
+selector, writer, revocation, interruption, scheduling input or freely
+chosen waiting occurrence. A prescribed Advance performs the next row;
+stopping a finite prefix performs no further row. Input is admitted
+only at the two inherited command-input controls. A service therefore
+has no independent choice to be retained at a returned cut.
+
+**Assumption 20.2 (local material and bounded operation boundary).** In
+addition to the inherited bank, install one holder with twenty reference
+slots
+
+$$
+D,W,n,l,r,h,t,s,H,K,v,d,q,C,c,Z,z,f,g,e
+$$
+
+and four finite latch slots for token, side, pattern and service phase.
+The holder and its twenty-four one-value slot cells are created and
+attached in a fixed order, all slots initially null. This takes
+exactly twenty-five bounded creation rows with their events. Slot roles
+are reused between nonoverlapping service phases. The inherited
+current-anchor root holds the current descriptor; its tableHead and
+leafHead resolve the two list roots. These references, mailbox
+value/state and finite control are actual retained local material.
+The mailbox value/state are two of the finite latch roles, reused after
+delivery. No moving cursor is
+an immutable part of the public code.
+
+A local cell has one of the following bounded payloads: source work
+$(\mathsf{node},\mathsf{next})$; received word
+$(\mathsf{token},\mathsf{next})$; shape node
+$(\mathsf{tag},L,R)$; pending slot
+$(\mathsf{parent},\mathsf{side},\mathsf{next})$; materialization work
+$(\mathsf{shape},\mathsf{address},\mathsf{next})$; addressed row
+$(\mathsf{address},\mathsf{label},\mathsf{next})$; leaf link
+$(\mathsf{row},\mathsf{next})$; or the snoc address cell of Definition
+16.3. A service descriptor has ten fields
+
+$$
+(o,\pi,\mathsf{sourceRoot},\mathsf{entry},\mathsf{bodyHead},
+ \mathsf{bodyTail},\mathsf{shapeRoot},\mathsf{tableHead},
+ \mathsf{leafHead},\mathsf{state}).
+\tag{ER.84}
+$$
+
+Here entry is the actually held chronological tail at service entry,
+not a supplied integer. The other references are obtained by the
+operations below. State ranges over receiving, sealed, parsed,
+materialized, live, held and returned. Its meaning includes its control
+phase; returned is live for subsequent current-table use.
+
+Each indicated field read, child follow, field assignment, reference
+or finite-tag test, allocation, input or output is a row. Its bounded
+bank/control assignments and one event have the conventions of
+Definition 16.4. Creating a cell initializes its listed fields; those
+initializations are charged. Appending one cell may assign the previous
+tail's one next field and the two head/tail references as bounded
+coeffects, with all three assignments charged. Pushing one stack cell
+and changing its head is likewise bounded. A pop reads its fields in
+their displayed order and then changes the head. When several reads,
+tests, births or assignments are named together below, they are performed
+in that order, one row each; no list traversal is one row. A fixed
+finite branch selects a fixed finite row sequence. These rules define
+finite control with unbounded finite linked data, not bounded storage
+or fixed-width references.
+
+All rows append their opcode, actual operands, acquired value and bounded
+assignments to the actual event chain. Cleared or retired material stays
+allocated. No event payload, previous descriptor payload, old table,
+old leaf-list content or raw-seed acquisition supplies a traversal,
+parser or materialization operand. Bind may retire held roots without
+reading their contents. Their retention is part of the joint state,
+not an alternative operand source.
+
+**Definition 20.3 (actual spatial delivery).** For a finite unlabelled
+full shape $G$, let $\kappa(G)$ be its preorder word over
+$\{\mathsf b,\mathsf d\}$: $\mathsf d$ for a terminal and $\mathsf b$
+followed by its left and right words for a branch. This is a notation
+for a spatial body's codec; neither the tree nor its word is supplied
+to the sender as an argument. Terminal labels are erased.
+
+Service entry reads the actual reference in $\pi$, creates (ER.84)
+with that sourceRoot, actual entry tail and empty output fields, and
+pushes that reference on an initially empty source-work stack. The
+source is stationary until materialization and Bind finish. Delivery
+repeats the following finite operation sequence.
+
+| Control role | Actual operation and continuation |
+| --- | --- |
+| Work test | Test the source-work head. A nonempty head is popped into the node latch. Empty work goes to End only after the preceding mailbox acknowledgement. |
+| Source observation | Probe that node's actual tag. A branch latches $\mathsf b$, follows its nonnull left and right fields, and pushes right then left. Either terminal tag latches $\mathsf d$ and pushes nothing. |
+| Offer | With empty mailbox, write the latched token and mark it offered. The next control is Take; the sender cannot advance its traversal. |
+| Take | Read the actual offered value into the receiver latch. |
+| Arrival | Allocate one receiver-owned word cell containing that latch and a null next field, and append it to the receiver list. |
+| Acknowledge | Clear mailbox availability to empty and leave this token's delivery controls. Return to Work test. |
+| End | With work and mailbox empty, set the descriptor's body endpoints to the actual receiver endpoints, set state sealed and enter the shape parser. |
+
+The word cells contain only the spatial tokens and their next links.
+In particular they contain no source-node references, labels, addresses,
+seed, command word or separate source-state payload. The descriptor and
+events retain the causal source binding separately. There is no source call between
+an Offer and its acknowledgement, and there is exactly one Arrival on
+that control path. End is a paid control occurrence, not a missing-token
+inference by a clock. The sender's stack, tag probes and follows, every
+mailbox operation, allocation and end check are charged.
+
+**Definition 20.4 (received shape materialization).** Clear the local
+shape-root slot. Push its distinguished root-slot reference on a pending
+slot stack, and set the word cursor to the descriptor's sealed bodyHead.
+A nonroot pending slot specifies a held shape parent and one literal
+side. For each received word cell, read its token and next reference,
+require a pending slot, and pop that slot. Allocate one fresh shape node
+with that token as tag and null children, then assign the indicated slot
+to its returned reference. For $\mathsf b$ push its right slot and then
+its left slot; for $\mathsf d$ push neither. Continue at the read next
+word reference. Empty input with pending work, or nonempty input with
+no slot, takes the fixed fault control. Successful exhaustion requires
+both empty input and empty slot stack. Only then set shapeRoot to the
+actual constructed root, set state parsed and enter materialization.
+
+This is the ordinary pending-slot parser for a full binary preorder
+word, used as an intermediate construction. Each slot, tag, link and
+input-cell access is material. A $\mathsf d$ node remains null on both
+sides. A $\mathsf b$ node receives both children before successful
+exhaustion. No operation tests equality of two unknown whole trees.
+
+**Definition 20.5 (body-only address and label construction).** Start an
+empty addressed-row list and empty leaf list. Push
+$(\mathsf{shapeRoot},\varepsilon)$ on a materialization-work stack,
+where $\varepsilon$ is the fixed empty snoc reference. Pop a held shape
+reference $v$ and actual backed word $q$. Inspect the following bounded
+pattern at $v$, by individual tag reads and child follows.
+
+| Actual received pattern | Constructed row and new pending work |
+| --- | --- |
+| Root branch, both children terminal | Append $(q,\alpha)$ and its leaf link. |
+| Root branch, left child a branch with two terminal children, right child terminal | Append $(q,\beta)$ and its leaf link. |
+| Root branch, both children branches | Append $(q,\mathsf{branch})$; create two snoc cells extending $q$ by $L,R$; push right child with $qR$, then left child with $qL$. |
+
+Any other pattern faults. The middle pattern must check both indicated
+grandchildren; it cannot accept an arbitrary left subtree. The input
+shape has already been completely constructed by Definition 20.4, so
+its terminal tags have exactly null children. Pattern inspections touch
+at most the root, its two children and two grandchildren. The address
+stored in a row is precisely the actual snoc reference held on this
+stack. Each next-row and next-leaf link is installed as the corresponding
+row or link is appended. At empty work set the descriptor's tableHead
+and leafHead to these actual heads, state materialized, and enter Bind.
+No acquired row, address or leaf link from before this service is shared,
+except the fixed empty-address sentinel.
+
+The three cases are the existing erased-$E$ grammar of ABT Theorem
+12.1, applied here by finite local operations to the **received** shape.
+The actual row constructor receives no logical tree argument. Its only
+variable data are these shape nodes, its own work stack, the snoc words
+it constructs and its partially constructed lists.
+
+**Definition 20.6 (command, binding, return and complete state).** At Bind,
+retire the previous table and leaf list, install the materialized
+replacement and its descriptor as the current anchor, and mark it live.
+Run exactly the inherited local $LL$ lookup and framed table output.
+Replace Finish by Return: retire remaining active service scratch,
+clear its twenty-four service slots and the inherited command/reply/result
+latches by a fixed finite sequence, then mark the current descriptor
+returned and enter Ready in the final row. Cleanup uses no unbounded
+scan. Each clear is charged. No earlier service control is Ready.
+Startup uses the same service, lookup, output and Return with its startup
+tag; the domain begins only after this actual first return.
+
+Ready and Tail receive the actual code $\mathsf U=0$, $\mathsf L=10$,
+$\mathsf R=11$ of Definition 11.3. Select marks the receiver-derived
+anchor held. For U it sets the cursor to that anchor's actual leafHead.
+Every nonterminal Edit executes Definition 16.5, including its $E_0$,
+$E_1$ and $E_2$ reads of this leaf link, this row and this row's address
+and label. SeekInit uses the actual current reference in $\pi$.
+Edit at $\top$ enters the new service. For L or R retain the actual
+known-$A$ preparation and corresponding graft; its successor enters
+the same service. There is no inherited logical-refresh acquisition or
+old-table fallback. New leaves born during U never join its old list.
+
+Let $J_\nu(u,w)$ denote the complete joint state after the return for
+$w$, including $w=\epsilon$ at startup. It includes the live source,
+all retired/detached occurrences, raw and logical acquisition material,
+all delivered words, received shapes, rows, address/stack backing,
+descriptors, bank/holder/slot material, actual references, allocator,
+finite control, input/output and chronological records, and fixed rights.
+All references are canonical consequences of this initialized execution.
+There are no independent name, preparation or source-layout choices.
+The task $Q_\nu$ at such a cut has the present acquired table and local
+$LL$ result. Its three legal actions are the complete coded command
+transactions, including all prescribed intervening rows. Its response is
+
+$$
+\bigl(a,\mathsf{legal},\mathsf{ok},C',\operatorname{lookup}_{LL}(C'),
+       \Delta\Gamma_\nu,\Delta\mathsf{Out},J'\bigr).
+\tag{ER.85}
+$$
+
+$J'$ is the complete original successor just specified, not an emitted
+snapshot. All finite command responses, including their legal domains,
+are compared; other action symbols have the fixed disabled value and
+no executing successor. The internal row record in (ER.85) retains every
+actual guard, delivery, acknowledgement, binding, output and return.
+
+## 21. Authentic operand use, exact admission and continued return
+
+**Theorem 21.1 (received spatial operands actuate the current source).**
+For every finite $u$ and every finite admitted $w$, the schedule of
+§20 reaches exactly one returned-command cut $J_\nu(u,w)$. At this cut,
+with $x=F_w(j(u))$, the current source is $E(x)$ at the fixed owned port,
+and its current table is the actual $\mathsf A(x)$ materialized solely
+from the body delivered in its last service. That body is exactly
+
+$$
+\kappa\bigl(\operatorname{sh}(E(x))\bigr).
+\tag{ER.86}
+$$
+
+For every next U, its complete old-leaf address and label operands are
+the fresh materializer's actual cells. Every source walk, old-tile guard,
+staging test and attachment test succeeds. The resulting source is
+$E(\rho x)$, the next service acquires its spatial body, and lookup,
+output and exactly one Return complete. L and R similarly give
+$E(Lx)$ and $E(Rx)$ and a next authentic returned table. These assertions
+are uniform over all finite seeds and all finite command words, with
+completion conditional only on supplying their specified bits and
+Advances.
+
+Proof. During one service, the pending source stack lists actual
+unvisited roots in left-first order. Initially it contains exactly
+the reference read from $\pi$. At a branch, following both actual child
+fields and pushing right then left replaces its pending subtree by
+its two children. A terminal contributes no children. Induction on a
+finite source subtree proves that it contributes exactly its preorder
+word and visits each of its nodes once. Source tags are read before
+erasure. Stationarity and exclusive ownership preserve the pending
+references; no body content is obtained from an old table. This is the
+ordinary traversal invariant underlying NativeFullSourceProducer's
+private `traverse` and `production_reads`, here with actual directed
+reference follows rather than an assumed root-address primitive.
+
+After $i$ acknowledgements, the receiver word has exactly the first
+$i$ offered tokens in order and the mailbox is empty. Offer, Take,
+Arrival, Acknowledge prove the next case: the only appended token is
+the value read from that mailbox, and control leaves Arrival before
+another token can be offered. There is neither duplication nor a
+silent bypass. End is reached precisely after the finite traversal
+and the last acknowledgement. Hence its sealed body is the actual
+spatial word of the same stationary sourceRoot in (ER.84).
+
+For the parser, the pending slots are exactly the unfilled child
+positions in left-first order. Each consumed token fills its first
+slot, creating just the two new slots prescribed by a branch. Structural
+induction on a full shape shows that its preorder word consumes one
+initial slot and leaves none for that subtree. Thus the authentic body
+fills the root slot, exhausts both lists and constructs precisely
+$\operatorname{sh}(E(x))$ in fresh receiver material. No future token
+is assumed at a partial cut.
+
+Apply ABT Theorem 12.1 only as the following intermediate grammar law.
+At a logical alpha its shape is the first pattern of Definition 20.5;
+at beta it is the second; at a logical branch it has two encoded,
+branch-rooted children and is the third. These patterns are disjoint.
+Induction on the logical tree, with proof-side address $q$, shows that
+materialization appends exactly its preorder addressed rows, leaf links
+and labels. In the branch case the two new actual snoc cells spell
+$qL,qR$, and the two child-work cells preserve that invariant. The
+induction proves that every old-leaf operand is backed before Bind;
+it is not an unexecuted application of an abstract inverse. All loops
+consume a finite received list or a finite tree frontier, so all three
+phases terminate. Bind obtains $\mathsf A(x)$ with its actual new leaf
+list and truthful current-source binding.
+
+Startup has actually established $E(j(u))$, so this argument establishes
+the first returned table without source-dependent advice. Suppose the
+assertion holds for $w$. Until Select there is no writer. For U, $E_0$
+reads the leaf link created by the last materializer, $E_1$ reads its
+row's newly constructed word reference and $E_2$ reads its decoded
+label. The actual list equals the original leaves of $x$. Their
+addresses are nonempty and prefix-incomparable. Earlier publications
+therefore preserve each later old tile $C_\ell$ and its proper-prefix
+context. The word reversal, positioning, bounded guard, fresh birth,
+link and publication argument of Theorem 17.1 applies with these exact
+new row references as its initiating operands. In particular its
+successful-guard premise is proved by the received-body invariant;
+no successful-test bit is supplied. Each completed fragment changes
+exactly one original tile and advances once. At $\top$ the source is
+$E(\rho x)$. For a graft the prepared known $A=E(\alpha)$ and its
+orientation give the corresponding equation by (ER.33). These operations
+are at the same $\pi$ under the same live capability throughout.
+
+The next service is now on precisely that actual successor. It constructs
+a fresh current table before lookup/output. Every inherited output row
+terminates on this finite table. Cleanup is finite. The only edge entering
+Ready is the final Return; its predecessor leaves that edge, clears the
+pending command and cannot execute it again without another supplied
+command. No delivery, acknowledgement or Bind returns to Ready. Induction
+on $w$ therefore gives existence, unique attained returned position and
+exactly one command return per completed command. Finite descriptive
+execution also determines every retained cell and event identity. This
+is an attained-position proof for the returned-command domain, not a
+classification of the service's interior positions. $\square$
+
+**Theorem 21.2 (exact leaf-driver admission at a fixed owned port).**
+Let $x,y$ be arbitrary finite compound logical trees. Suppose the
+current source at $\pi$ is the canonical directed $E(y)$, the stated
+static owner right is live, and a materialized received body supplies
+exactly the complete leaf list of $\mathsf A(x)$. Run the U leaf driver
+of Definition 20.6 on that list, stopping at its first failed path or
+tile test. All its leaf publications complete if and only if $x=y$.
+When they complete the resulting source is $E(\rho x)$. This is an
+exact **whole-driver success** criterion, not atomic rejection of an
+incorrect $x$ and not an authentication test for a foreign descriptor.
+
+Proof. If $x=y$, the incomparable-leaf argument in Theorem 21.1 gives
+all tests and the stated endpoint. Conversely enumerate the leaves of
+$x$ as $p_1,\ldots,p_m$. A publication at $p_i$ changes only that tile's
+attachment and subtree. For $j>i$, $p_i$ and $p_j$ are incomparable,
+so it changes neither the path to $p_j$ nor its subtree. Thus, if the
+entire driver succeeds, every path and guard observed at $p_j$ would
+have succeeded on the initial $E(y)$ as well. Its exact tag and both
+child-status checks require
+
+$$
+E(y)|_{p_j}=C_{x|_{p_j}}=E(x|_{p_j})
+\quad(1\le j\le m).
+\tag{ER.87}
+$$
+
+Here existence of every proper path is part of success. The leaves of
+a finite full $x$ are a complete prefix code for its own branching
+skeleton. Induction on that skeleton reconstructs $E(y)$ from the
+subtrees in (ER.87): at an internal node both required child paths
+exist, and at a leaf the displayed complete subtree is fixed. Hence
+$E(y)=E(x)$. Injectivity of $E$, supplied by the substitution or ABT
+inverse, gives $y=x$. Notice that an individual test need not say that
+$p_j$ is a logical leaf of $y$; the complete covering family is what
+forces equality.
+
+For an explicit late failure, take $x=\langle\alpha,\alpha\rangle$
+and $y=\langle\alpha,\beta\rangle$. The first test at $L$ succeeds
+and publishes $B$ in place of $A$. The test at $R$ subsequently rejects
+$B$ against the required $A$. The first published change and its records
+remain. Thus the equivalence cannot be strengthened to rollback or
+no-write rejection. Rights and the fixed port were independent hypotheses
+in both directions; equal body values issue no capability. $\square$
+
+**Proposition 21.3 (operand dependence and authenticity are different).**
+In $\nu$, the address/label read dependency of every U fragment runs
+through the last received word, its parsed shape, its fresh snoc/row
+constructors and its actual leaf link. No old anchor, sender table,
+chronological replay or public dictionary supplies an alternative operand.
+For any finite compound $z$, supplying the canonical word
+$\kappa(\operatorname{sh}(E(z)))$ to the same local parser/materializer
+constructs exactly $\mathsf A(z)$; at a current $E(y)$ the whole U driver
+then succeeds exactly for $z=y$, under Theorem 21.2's rights assumptions.
+This counterfactual dependence does not make the supplied word an
+authentic current-source acquisition.
+
+Proof. The variable reads in Definitions 20.4–20.5 are exhausted by
+received-cell, local shape, own stack and own partial-output reads.
+The only literal label choices are the three disjoint shape cases.
+Every nonempty row address is constructed by one of their actual snoc
+extensions. Definition 20.6 binds only this output and directs $E_0$–
+$E_2$ to it. The intermediate ABT induction of Theorem 21.1 gives the
+counterfactual table for every $z$, and Theorem 21.2 gives its exact
+success domain. Erasing the receiver list and its constructed material
+therefore removes the only declared path to those operands; even the
+empty address sentinel supplies no leaf label or leaf-list entry.
+
+The stronger authenticity assertion in Theorem 21.1 instead uses actual
+root capture, source probes, mailbox arrivals, seal and stationarity
+through Bind. A different source with equal value can supply equal
+words without that chain or a right at $\pi$. Likewise a truthful old
+body can become stale after an intervening writer in a different model.
+Neither equality nor parsing rules out those cases. The no-writer and
+same-owner hypotheses rule them out on $\nu$'s actual runs. $\square$
+
+## 22. Four separate recoveries at all returned-command cuts
+
+**Definition 22.1 (independent returned observations).** On
+$\mathcal H^{\rm ret}_\nu=\mathcal T\times\Lambda^{<\omega}$ take
+these four projections of the actual $J_\nu(u,w)$.
+
+| View | Actual selected content |
+| --- | --- |
+| $S_\nu$ | The current source's ordered unlabelled support at $\pi$, with no service/workspace/record support attached. |
+| $B_\nu$ | That source's uncoloured terminal-address antichain. |
+| $M_\nu$ | The current receiver-materialized addressed rows, including their current fixed $o,\pi$ binding and local-use right. No old table, body, descriptor-entry reference, root-allocation name, seed, ordinal, past command word or history is an extra observed field. |
+| $T_\nu$ | The ordered actual occurrences from installed-source entrance through this Return, including initial truthful raw acquisition, supplied command bits, actual field probes, mailbox operations, materialization, actuation, outputs and returns. No endpoint snapshot is appended. |
+
+The memory equality convention compares complete addressed contents and
+fixed binding/right, as in Definition 11.4. Actual descriptor and backing
+identities remain in $J_\nu$; they are not hidden clocks in $M_\nu$.
+The spatial body (ER.86) is a codec of the independent source support:
+terminal/branch status is determined by that finite full support. It
+contains no record or execution index. Serializing any of these views
+or running a recovery computation costs additional work. The installed
+service delivers this current S-body, not arbitrary T-, B- or M-bodies.
+
+**Theorem 22.2 (individual kernels, attained return and route agreement).**
+For each $V\in\{S_\nu,B_\nu,M_\nu,T_\nu\}$ separately and every
+$h,h'\in\mathcal H^{\rm ret}_\nu$,
+
+$$
+V(h)=V(h')\quad\Longleftrightarrow\quad h=h'
+ \quad\Longleftrightarrow\quad h\sim_{Q_\nu}h'.
+\tag{ER.88}
+$$
+
+Each view has a finite decoder on its attained image to the identical
+complete $J_\nu(h)$. All twelve same-cut recovery arrows are mutual
+inverses and agree along every route. They preserve (ER.85), including
+its complete original successor, actual service/actuation records and
+all finite returned-command dynamics.
+
+Proof. Theorem 21.1 establishes $r=E(F_w(j(u)))$. For $S_\nu$, erase
+labels and use the existing ABT inverse, followed by Theorems 9.3/9.5's
+unique $j$ entrance and ordered U/L/R ancestry. This returns exactly
+$(u,w)$ without a service count or entry reference. For $B_\nu$, finite
+prefix closure reconstructs the support, giving its separate decoder.
+For $M_\nu$, its complete actual rows reconstruct the labelled logical
+$x$, and $E(x)$ supplies the preceding support decoder. For $T_\nu$,
+its initial raw acquisition determines $u$; its actual supplied bits
+and completed Return controls determine the finished word $w$.
+Theorem 21.1 proves that this last Return really was attained exactly
+once for that command prefix. It is not inferred from an entry-test
+program counter or an invisible service return.
+
+Conversely $(u,w)$ determines the canonical finite schedule and all
+four projections. Re-executing its **descriptions** reconstructs the
+entire $J_\nu$, including received buffers, shapes, fresh word cells,
+old retained anchors, fine invocation/completion material, actual
+allocations, records, output and rights. There is no independently
+chosen service count or interleaving left to recover. Replay is the
+classical descriptive supplier here; it neither consults an unknown
+source nor actuates a represented old right at the live port.
+
+For the task inclusion from $S_\nu$, equal supports give the same
+$(u,w)$ and therefore all equal responses. Conversely $Q_\nu$ equality
+includes equal present acquired tables, giving equal $x$, hence equal
+supports. For $B_\nu$, equal antichains give equal supports and responses;
+conversely equal present tables give the same current tree and terminal
+antichain. For $M_\nu$, equal contents recover the same $(u,w)$ and
+responses; conversely present-table equality together with the fixed
+current binding/right is exactly equal selected memory. For $T_\nu$,
+equal occurrences give equal raw seed acquisition and completed input
+word and hence responses; conversely equal present tables determine
+$(u,w)$ by the source inverse, and its canonical execution determines
+the same occurrence word. Thus both inclusions hold for each individual
+view, without intersecting weaker kernels or copying history into them.
+
+Write $d_V$ for these decoders to $h$. On attained images put
+$R_{VW}=W\circ d_V$ and $A_a^V(V(u,w))=V(u,wa)$. Directly,
+
+$$
+R_{WV}R_{VW}=\mathrm{id},\qquad
+R_{WZ}R_{VW}=R_{VZ},\qquad
+R_{VW}A_a^V=A_a^W R_{VW}.
+\tag{ER.89}
+$$
+
+Each path decodes the same $h$ and each successor is actually attained
+by Theorem 21.1. Computing (ER.85) from this recovered $J_\nu(h)$
+therefore gives the same legal domain, outputs, full internal append
+and complete successor along every route. Induction gives the entire
+finite response word. These algebraic steps use the ordinary typed
+partial-step/kernel framework, not a new general recovery theorem.
+No view map at an unreturned service interior is an argument of
+(ER.88)–(ER.89). $\square$
+
+## 23. Same-run resources and the precise mathematical increment
+
+**Proposition 23.1 (charged receipt, backing and actuation).** Put
+$x_i=F_{a_1\cdots a_i}(j(u))$ for an actual finite word
+$w=a_1\cdots a_k$, and let $n_i=N(E(x_i))$, $N_i=N(x_i)$,
+$\lambda_i=\lambda(x_i)$. Exactly $k+1$ spatial services occur, including
+startup. For the service on $E(x_i)$, the following counts are exact:
+
+$$
+\begin{aligned}
+\text{source tag probes}&=n_i,&
+\text{source child follows}&=n_i-1,\\
+\text{offered and arrived spatial tokens}&=n_i,&
+\text{received word births}&=n_i,\\
+\text{source-work births}&=n_i,&
+\text{pending-slot births}&=n_i,\\
+\text{received shape-node births}&=n_i,&
+\text{materialization-work births}&=N_i,\\
+\text{addressed-row births}&=N_i,&
+\text{snoc-address births}&=N_i-1,\\
+\text{leaf-link births}&=\lambda_i,&
+\text{service-descriptor births}&=1.
+\end{aligned}
+\tag{ER.90}
+$$
+
+Thus its non-event cell births are exactly $4n_i+3N_i+\lambda_i$.
+Every listed cell is retained, and its full bounded payload is initialized
+and charged. Counts of event births equal the actual executed row count;
+no event is a whole-body snapshot.
+
+There are absolute finite constants $c_0,c_1$, independent of $u,w,i$,
+such that the service through Bind, all its field operations and event
+payload/tail coeffects use at most $c_0(n_i+N_i+1)$ rows and
+$c_1(n_i+N_i+1)$ bounded field operations. The subsequent lookup uses
+exactly $\ell(x_i)$ inherited lookup rows, output sends $N_i+4$ tokens,
+and Return uses one fixed finite number of cleanup/return rows.
+For each U beginning at $x_i$, the unchanged fine Edit fragments use
+exactly
+
+$$
+\sum_{p\in\operatorname{LeafPos}(x_i)}
+       \bigl(8|p|+63\,\boldsymbol1_{x_i|_p=\alpha}
+                    +87\,\boldsymbol1_{x_i|_p=\beta}\bigr)
+\tag{ER.91}
+$$
+
+rows/events, and have precisely the word, template, retained-old-tile,
+invocation, retirement and completion coordinates of Proposition 18.4.
+A continuing graft prepares three known source nodes and one new
+attachment root. Input consumes exactly the actual one/two-bit command
+codes. No logical-refresh literal query or suffix word is hidden in
+(ER.90). Initial raw acquisition, initial supply and source initialization
+remain additional paid work.
+
+Proof. A finite full source has $n_i-1$ child incidences. The source
+traversal visits each node once and creates one stack entry per visit;
+its branch pushes account for all nonroot entries. Handshake induction
+gives one received word cell per observed node. The parser fills one
+slot per shape node, hence creates $n_i$ slots and $n_i$ shape nodes.
+At each logical branch the materializer creates its two pending entries
+and two address extensions. Together with the initial entry this gives
+$N_i$ entries, $N_i-1$ words, $N_i$ rows and the stated leaf links.
+Adding its one descriptor proves the birth formula.
+
+For an explicit meaning of the constants, expand the finite row
+sequences of Definitions 20.2–20.5, counting every field read, test,
+birth and assignment. Let $b_s,b_p,b_m$ be the maxima of the lengths
+of their respectively terminal/branch source-visit, terminal/branch
+parser-visit and three pattern/materialization blocks, including their
+loop tests. These are maxima of finitely many **fixed** lists: a source
+visit uses one stack pop, one tag, at most two follows/two pushes and
+four handshake rows; a parser visit uses one word read, one slot pop,
+one birth/attachment and at most two pushes; a materialization visit
+uses one three-field pop, at most five tag probes/four child follows,
+one row, at most one leaf link or two word births/two pushes. None
+contains a call to an unbounded local routine. Let $b_e$ be the length
+of the fixed entry/end/phase-change/Bind sequences. The service row
+count is bounded by
+$(b_s+b_p)n_i+b_mN_i+b_e$; take
+$c_0=b_s+b_p+b_m+b_e$. Let $b_f$ be the maximum number of field,
+reference, finite-control and event-payload/tail accesses in any one
+such bounded row, counting all its coeffects; take $c_1=b_fc_0$.
+These definitions and the displayed block enumeration prove the bounds
+without an unmeasured unit-cost whole decoder.
+
+Lookup and output have exactly their inherited lists. Cleanup visits
+a fixed set of slots, so it has constant length, and its last row alone
+returns. Equation (ER.91) is the existing exact fragment count applied
+to the actually materialized old leaves; no fragment is omitted at
+refresh. The initial source producer makes $N(u)$ literal Reads, with
+submitted-letter sum $\sum_{p\in\operatorname{Pos}(u)}|p|$, before
+the actual known-$a_0$ preparation, startup graft and two warm-ups.
+The inherited bank adds twenty-four creation rows/events and this
+service holder adds twenty-five. The actual source installation,
+code, rights, preparation, all old material and their records are
+included by Definition 20.1. They are not absorbed into $c_0$.
+
+For the whole run sum these coordinates over $i=0,\ldots,k$, add
+(ER.91) exactly for its actual U commands, the actual graft preparations,
+input, lookup/output/return and initialization coordinates. Equivalently
+sum every declared field/birth/event coeffect over the actual row word.
+Both descriptions count this single execution, including coexistence
+of the old anchor, received word, parsed shape and new operands.
+Reference width, source-operation internals at their inherited atomic
+boundaries, serialization and any later descriptive recovery have their
+own coordinates. No sum across different bases, physical unit-time
+reference convention, total-fee comparison or optimality assertion is
+implicit. $\square$
+
+**Definition 23.2 (supplier correspondence and source-specific content).**
+The mathematical increment of §§20–23 is the conjunction of actual
+current-source spatial delivery, received-only materialized U operands,
+(ER.87)'s exact whole-driver admission, continued same-port owned
+actuation and returned-command recovery for this relation. It is a
+repo-derived synthesis on the declared directed basis. The direct
+source-table operand supplier of §§11/16 is replaced in $\nu$ by
+(ER.86) and its receiver's new cells. Equality of values is used for
+the admission theorem; actual provenance and rights are separately
+established by Theorem 21.1's operation chain and Assumption 16.2.
+
+Theorems 9.3/9.5/9.8 supply the unchanged entrance, ancestry and erased
+source inverse. ABT Theorem 12.1 supplies the exact shape grammar;
+its parsing law is an intermediate step, not a new numbered parser
+result. Theorem 17.1 and Proposition 18.4 supply the exact directed
+leaf fragment once its initiating row/word/label correspondence is
+established. The new correspondence is to the receiver's own fresh
+material, not merely to an equal old anchor. NativeFullSourceProducer,
+including private `traverse`, `production_reads`, `stationary` and its
+[owning Scribe][ERPRODB], supplies the stationary preorder/acquisition
+pattern. Its runtime initial source is here the actual $E(x)$; unknown
+subtrees used in the induction are proof parameters. The actual
+reference traversal in §20 uses Assumption 16.2, rather than claiming
+that the supplier adds directed field rights. IntrinsicSubstitutionCoordinates,
+including private `substitution_injective` and [its owning Scribe][ERISCB],
+supplies the injectivity used in (ER.87).
+
+[Serial Literal Delivery, Construction 8.3 and Proposition 8.4][ERNUSLD]
+already proves that received information can materialize the actual
+subsequently consumed literal. Its task has a fixed finite menu
+$\mathcal D_{H,J}$ and an installed immutable $R$ tail; neither its
+menu bound nor its readonly backing is a uniform all-finite-seed
+operand supplier for this changing source. Its `DelayedOriginalReadout`
+`originalQueries` and private `original_query_bounds`, with the
+[owning Scribe][ERNUDEL], retain their original suffix-query task.
+The principle of actual receiver consumption is credited supply;
+(ER.86)–(ER.87) concern a different current ER task.
+
+[PVC §§6–7][ERPVC] supplies authentic paid finite historical conversion,
+ACK/return and mathematical next-occurrence transport, with its stated
+registry, binding and native installation. [Growing Paid View Cycle
+§§7–8][ERNUGROW] supplies actual sourceBody consumption on its acquired-Zero
+service domain. [RCA §§6, 11–16][ERNURCA] and [GCA §§5–6][ERNUGCA]
+supply paid historical packages, acquired selectors, current invocation
+rights and full Call return under their own premises. Their body,
+source, owner, task and target correspondences are not inferred merely
+from names. PVC Proposition 7.4 is not current private-source actuation;
+RCA Proposition 6.5's missing-realization implication is not a no-map
+theorem. None of these results is contradicted or restated as a universal
+obstruction. No universal obstruction is asserted here.
+
+TypedFiniteViewKernel and [its owning Scribe][ERMUKERNELB] supply the
+abstract partial-response/kernel vocabulary. At the manifest's mathlib
+revision $\texttt{56a005855ea17e0b0958f73ec801ae140b0a1679}$,
+StateTransition `Reaches`, `Respects`, `tr_reaches` and `tr_eval` supply
+ordinary finite-step/refinement language with their matching-start and
+halt premises. They do not supply received-body acquisition or operand
+provenance. NativeEffectiveSourceProducer's syntax decoder and
+NativeSerialEffective's supplied code-realization equation likewise
+confer no unexecuted local parsing, primitive realization or price.
+
+McCarthy, *Recursive Functions of Symbolic Expressions and Their
+Computation by Machine, Part I*, [§3, ordered-pair/list operations][ERNUMC],
+supplies classical symbolic construction and recursive list processing.
+Hassan–Mackie–Sato, [§4 and Figure 4][ERMUNETS], supplies classical
+allocation returning actual references and port assignment. Bennett's
+[Introduction and history/copy/reverse construction][Bennett] supplies
+paid history and copying as ordinary computation resources. Full-binary
+preorder parsing, depth-first traversal, finite linked stacks, prefix
+closure, persistence, descriptive replay and the algebra in (ER.89)
+are classical intermediate constructions, not claims of new general
+results. The source-specific join in Theorems 21.1–21.2 and its actual
+returned domain is the claimed increment, without a worldwide-priority
+claim.
+
+**Definition 23.3 (task-relative sufficiency and remaining domains).**
+The $E$ code makes the received uncoloured body label-informative;
+$j$ distinguishes the seed entrance and committed ternary ancestry.
+Their supplied fixed-model classification is retained. The three
+commands, root/owner capabilities and directed allocation/assignment
+operations are explicit task/model premises, not consequences of the
+two leaf names. The sender frontier is what discovers unknown source
+nodes; received backing and snoc/leaf construction are what provide
+subsequently used operands. The mailbox boundary prevents a sender's
+unreceived table from standing in for that material. Full pattern and
+path tests are what justify current actuation. Static exclusivity and
+the mandatory schedule preserve the observed source until its use;
+no authentication theorem for hostile replacement words is substituted.
+
+Finite control supplies no uniform finite capacity: $n_i,N_i$, word
+depths, retained earlier material and all event records grow with the
+finite seed and word. The received word and parsed shape are sufficient
+paid material for the stated provenance/task proof; there is no assertion
+that every representation must retain both or that this schedule is
+resource-minimal. No unrestricted history sidecar is added to S, B or M.
+The chronological view observes actual operation order, not duration.
+
+The recovery domain is exactly all completed returned-command cuts,
+including the initialized empty-word return. There is no claimed
+four-view inverse at a delivery return, partial received word, partial
+parser/materializer, Bind, input Tail, guard, publication, cleanup or
+other service/actuation interior. Those cuts retain actual control,
+backing and events in the process but require their own sufficient
+progress observations and attained-position proofs for any enlarged
+recovery theorem. In particular this model's added service interiors
+are not covered by $\mu$'s earlier fine inverse merely because the
+leaf fragment is reused.
+
+All earlier fixed-$G_{gc}$, original-$Q$, parked-consumer, unchanged-
+initialization and original-authority obligations remain in their
+original domains. No arbitrary historical or cross-owner delivery,
+independent returning-service choice, callable arbitrary-view converter,
+native/reciprocal/physical realization, infinite completion, universal
+alpha/beta reduction, general generator minimum or physical spacetime
+identification follows. The original prediction question (ER.3), Open
+problem 8.1 and the wider four-expression objective retain their stated
+unresolved scope.
+
+[ERNUSLD]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_LITERAL_DELIVERY.md
+[ERNUDEL]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.scribe.cs
+[ERNUGROW]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_PAID_VIEW_CYCLE.md
+[ERNURCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md
+[ERNUGCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_CUT_ACQUISITION.md
+[ERNUMC]: https://www-formal.stanford.edu/jmc/recursive/node3.html
+
+## 追加锚（本行以下为增补区）
