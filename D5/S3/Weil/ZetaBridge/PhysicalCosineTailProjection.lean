@@ -1,13 +1,11 @@
-/-
-SOURCE-ONLY PROOF ATTEMPT; UNCOMPILED. Requires PhysicalPrimeTwoCutoff.lean.
-This constructs the actual Lebesgue L2 carrier and an exterior projection onto
-the CLOSED SPAN of the original normalized cosines. It does not rename that
-span as the full AE-even subspace. That remaining completeness identification
-is stated, not assumed, in physical-bridge-obligations.json.
+/- GID: D5/S3/Weil/ZetaBridge/PhysicalCosineTailProjection
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaBridge/PhysicalCosineTailProjection
+   mirror-E: none(waiver:analytic-hilbert-fourier-identification-without-executable-mirror)
+   anchors: []
+   utility: none
+   digest: Complex Lebesgue L2 cosine-tail projections satisfy actual compressed-shift and finite-prime bounds for natural N < M and a > 0. -/
 
-Every Gram normalization helper below is consumed in the actual L2 construction;
-none is offered as independent mathematical content or first-freeze evidence.
--/
 import D5.S3.Weil.ZetaBridge.PhysicalPrimeTwoCutoff
 import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.Analysis.InnerProductSpace.l2Space

@@ -1,9 +1,11 @@
-/-
-SOURCE ATTEMPT ONLY. No elaboration, kernel checking, admission or freeze.
-Requires the visibility-only changes listed in owner-exports.patch.
-The even space is defined by the ORIGINAL Ioc zero extension, independently
-of all cosine spans. All scalar spaces and coefficients are complex.
--/
+/- GID: D5/S3/Weil/ZetaBridge/OriginalWindowEven
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaBridge/OriginalWindowEven
+   mirror-E: none(waiver:analytic-hilbert-fourier-identification-without-executable-mirror)
+   anchors: []
+   utility: none
+   digest: Original complex AE-even Ioc window sector, representative independence, and parity of the symmetric finite prime image. -/
+
 import D5.S3.Weil.ZetaBridge.PhysicalCosineTailProjection
 import D5.S3.Weil.ZetaGamma.PeriodicEnergyTransport
 import Mathlib.Analysis.InnerProductSpace.Projection.Submodule

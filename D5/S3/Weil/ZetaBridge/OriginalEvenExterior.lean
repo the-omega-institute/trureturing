@@ -1,7 +1,11 @@
-/-
-SOURCE ATTEMPT ONLY; UNCOMPILED. Uses the immutable source's tail space,
-projection and original orthonormality proof. Does not rebuild its tail basis.
--/
+/- GID: D5/S3/Weil/ZetaBridge/OriginalEvenExterior
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaBridge/OriginalEvenExterior
+   mirror-E: none(waiver:analytic-hilbert-fourier-identification-without-executable-mirror)
+   anchors: []
+   utility: none
+   digest: For a > 0, the closed cosine tail is the original even head complement, with its included projection equal to (id - P_head) composed with P_even. -/
+
 import D5.S3.Weil.ZetaBridge.OriginalEvenCosineComplete
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.Tactic

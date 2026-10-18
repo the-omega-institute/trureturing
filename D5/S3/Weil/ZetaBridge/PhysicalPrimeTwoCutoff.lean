@@ -1,16 +1,11 @@
-/-
-SOURCE-ONLY PROOF ATTEMPT. NEVER COMPILED. NOT A D5 ADMISSION OR KERNEL RECEIPT.
-Integration requires owner-exports.patch and the immutable repaired physical
-matrix source at its canonical import path. That repaired source is uncompiled;
-the older d73efc9... snapshot is the only supplied kernel-accepted matrix source.
+/- GID: D5/S3/Weil/ZetaBridge/PhysicalPrimeTwoCutoff
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaBridge/PhysicalPrimeTwoCutoff
+   mirror-E: none(waiver:analytic-hilbert-fourier-identification-without-executable-mirror)
+   anchors: []
+   utility: none
+   digest: Actual physical matrix bounds yield summable infinite shift and finite-prime coefficient tails for natural N < M and a > 0. -/
 
-All main estimates below concern the ORIGINAL `matrixEntry`, not an input
-matrix satisfying an assumed decay bound. Helpers with hypotheses are private
-proof organization and are used only after deriving their hypotheses here.
-No claim is made here of an L2/even-basis/projection identification: the precise
-remaining physical statement is recorded separately, without adding it as an
-axiom, a structure field, or a theorem premise.
--/
 import D5.S3.Weil.ZetaBridge.PhysicalCompressedCosineMatrix
 import D5.S3.Weil.ZetaBridge.WeilArithmeticFourierDualTail
 import D5.S3.Weil.ZetaBridge.WeilInfiniteComplementLeakage

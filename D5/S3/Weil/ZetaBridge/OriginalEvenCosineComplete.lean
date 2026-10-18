@@ -1,8 +1,11 @@
-/-
-SOURCE ATTEMPT ONLY; UNCOMPILED. Full original even completeness is the
-conclusion, never a premise or a definition of the even sector.
-The Fourier completeness step is Mathlib's original interval Parseval owner.
--/
+/- GID: D5/S3/Weil/ZetaBridge/OriginalEvenCosineComplete
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZetaBridge/OriginalEvenCosineComplete
+   mirror-E: none(waiver:analytic-hilbert-fourier-identification-without-executable-mirror)
+   anchors: []
+   utility: none
+   digest: For a > 0, physical Fourier normalization and interval Parseval identify the original complex AE-even sector with the closed cosine span. -/
+
 import D5.S3.Weil.ZetaBridge.OriginalWindowEven
 import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.MeasureTheory.Integral.Bochner.Set
