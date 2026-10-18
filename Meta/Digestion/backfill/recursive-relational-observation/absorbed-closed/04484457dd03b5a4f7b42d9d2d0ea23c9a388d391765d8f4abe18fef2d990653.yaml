@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:04484457dd03b5a4f7b42d9d2d0ea23c9a388d391765d8f4abe18fef2d990653
   normalized_sha256: sha256:04484457dd03b5a4f7b42d9d2d0ea23c9a388d391765d8f4abe18fef2d990653
 cas_ref: sha256:04484457dd03b5a4f7b42d9d2d0ea23c9a388d391765d8f4abe18fef2d990653
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Constants/FiniteStieltjesOperatorRealization.finite_stieltjes_operator_realization
+    target_statement_id: sha256:aaa8b7af535aa2c4384587ed3a4d8a9e88c99f36c2f67de41a7464bd1ef20914
 receipts:
   unresolved_subitems: []
