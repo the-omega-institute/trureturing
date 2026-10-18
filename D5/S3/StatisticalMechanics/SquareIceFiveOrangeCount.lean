@@ -102,33 +102,16 @@ private theorem ground_lipschitz (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (u v : ℤ × �
 
 private theorem ground_edge (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (u v : ℤ × ℤ)
     (huv : Adjacent u v) : |ground ℓ u - ground ℓ v| = 1 := by
-  rcases ground_nearest ℓ hℓ u with ⟨hu, i, hi, hil, hui⟩
-  rcases ground_nearest ℓ hℓ v with ⟨hv, j, hj, hjl, hvj⟩
-  have dist_step (a b c : ℤ) : |a - c| ≤ |b - c| + |a - b| := by
-    simpa only [add_comm] using abs_sub_le a b c
-  have add_step (a b c : ℤ) : |a + c| ≤ |b + c| + |a - b| := by
-    simpa only [sub_neg_eq_add] using dist_step a b (-c)
-  have h1 := hu j hj hjl
-  have h2 := hv i hi hil
-  have h3 := dist_step u.1 v.1 j
-  have h4 := add_step u.2 v.2 j
-  have h5 := dist_step v.1 u.1 i
-  have h6 := add_step v.2 u.2 i
-  have pu : ground ℓ u % 2 = (u.1 + u.2) % 2 := by
-    rw [hui]
-    simp only [abs_eq_max_neg]
-    omega
-  have pv : ground ℓ v % 2 = (v.1 + v.2) % 2 := by
-    rw [hvj]
-    simp only [abs_eq_max_neg]
-    omega
+  have hu := ground_lipschitz ℓ hℓ u v
+  have hv := ground_lipschitz ℓ hℓ v u
+  have parity (w : ℤ × ℤ) : ground ℓ w % 2 = (w.1 + w.2) % 2 := by
+    unfold ground
+    split_ifs <;> simp only [abs_eq_max_neg] <;> omega
+  have pu := parity u
+  have pv := parity v
+  rw [abs_sub_comm v.1 u.1, abs_sub_comm v.2 u.2] at hv
   unfold Adjacent at huv
-  rw [abs_sub_comm v.1 u.1] at h5
-  rw [abs_sub_comm v.2 u.2] at h6
-  have hb : ground ℓ u ≤ ground ℓ v + 1 ∧ ground ℓ v ≤ ground ℓ u + 1 := by
-    omega
-  clear hu hv h1 h2 h3 h4 h5 h6 hui hvj
-  simp only [abs_eq_max_neg] at huv ⊢
+  simp only [abs_eq_max_neg] at hu hv huv ⊢
   omega
 
 private theorem ground_edges (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (v : ℤ × ℤ) :
@@ -484,18 +467,8 @@ private theorem positive_triangle (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (�
       dsimp only
       split_ifs <;> simp only [abs_eq_max_neg] <;> omega
   have hc : t.card = 6 := by
-    have inj : Function.Injective (fun p : ℤ × ℤ => (p.1 + i, p.2 - i)) := by
-      intro p q hpq
-      apply Prod.ext <;> have h1 := congrArg Prod.fst hpq <;>
-        have h2 := congrArg Prod.snd hpq <;> dsimp only at h1 h2 <;> omega
-    have hm : t = ({(0,0), (1,-1), (2,-2), (1,0), (2,-1), (2,0)} :
-        Finset (ℤ × ℤ)).image (fun p => (p.1 + i, p.2 - i)) := by
-      simp only [Finset.image_insert, Finset.image_singleton, t]
-      ext p
-      simp only [Finset.mem_insert, Finset.mem_singleton, Prod.ext_iff]
-      omega
-    rw [hm, Finset.card_image_of_injective _ inj]
-    decide
+    simp (disch := (simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq]; omega))
+      only [t, Finset.card_insert_of_notMem, Finset.card_singleton]
   have hn := Finset.card_le_card hs
   omega
 
@@ -518,18 +491,8 @@ private theorem negative_triangle (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (�
       dsimp only
       split_ifs <;> simp only [abs_eq_max_neg] <;> omega
   have hc : t.card = 6 := by
-    have inj : Function.Injective (fun p : ℤ × ℤ => (p.1 + i, p.2 - i)) := by
-      intro p q hpq
-      apply Prod.ext <;> have h1 := congrArg Prod.fst hpq <;>
-        have h2 := congrArg Prod.snd hpq <;> dsimp only at h1 h2 <;> omega
-    have hm : t = ({(0,0), (1,-1), (2,-2), (0,-1), (1,-2), (0,-2)} :
-        Finset (ℤ × ℤ)).image (fun p => (p.1 + i, p.2 - i)) := by
-      simp only [Finset.image_insert, Finset.image_singleton, t]
-      ext p
-      simp only [Finset.mem_insert, Finset.mem_singleton, Prod.ext_iff]
-      omega
-    rw [hm, Finset.card_image_of_injective _ inj]
-    decide
+    simp (disch := (simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq]; omega))
+      only [t, Finset.card_insert_of_notMem, Finset.card_singleton]
   have hn := Finset.card_le_card hs
   omega
 
