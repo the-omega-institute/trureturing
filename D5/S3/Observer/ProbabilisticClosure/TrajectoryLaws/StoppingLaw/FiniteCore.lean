@@ -218,25 +218,6 @@ theorem zero_prefix_final (ts : List ℤ) (x : ℤ → Bool) :
       simpa [ZeroReplies, stopComb, run, hx, houtput,
         Execution.paid_prepend] using ih
 
-/-- Before the last call, a zero prefix means strictly more paid reads. -/
-theorem zero_prefix_survival (ts : List ℤ) (x : ℤ → Bool) (r : ℕ)
-    (hr : r < ts.length) : ZeroReplies ts r x ↔ r < ((stopComb ts).run x).paid := by
-  induction ts generalizing r with
-  | nil => simp at hr
-  | cons t ts ih =>
-    cases r with
-    | zero =>
-      have hp : 0 < ((stopComb (t :: ts)).run x).paid := by
-        simp only [stopComb, run]
-        split <;> simp
-      simpa [ZeroReplies] using hp
-    | succ r =>
-      have hr' : r < ts.length := by simpa using hr
-      cases hx : x t with
-      | true => simp [ZeroReplies, stopComb, run, hx, Execution.paid, Execution.prepend]
-      | false =>
-        simpa [ZeroReplies, stopComb, run, hx, Execution.paid_prepend] using ih r hr'
-
 def edgeComb (es : List ℤ) (φ : Bool) : ReadTree :=
   stopComb (es.map (fun e => 2 * e + φ.toInt))
 
