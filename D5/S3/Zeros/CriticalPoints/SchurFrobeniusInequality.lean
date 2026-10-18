@@ -90,7 +90,7 @@ private theorem lift_triangular {n : ℕ}
       simpa [Matrix.mul_apply, Fin.sum_univ_succ, lift, liftIndex, Matrix.submatrix_apply] using
         ht (Fin.succ_lt_succ_iff.mp h)
 
-private theorem triangularize (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
+theorem triangularize (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     ∃ U : Matrix (Fin n) (Fin n) ℂ,
       Uᴴ * U = 1 ∧ U * Uᴴ = 1 ∧ (Uᴴ * A * U).IsUpperTriangular := by
   induction n with

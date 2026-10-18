@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d7c3f203bfb9409da9ca5837f387e660bb363b0fa65e559194195dd8bbb5b55
+  normalized_sha256: sha256:2d7c3f203bfb9409da9ca5837f387e660bb363b0fa65e559194195dd8bbb5b55
+cas_ref: sha256:2d7c3f203bfb9409da9ca5837f387e660bb363b0fa65e559194195dd8bbb5b55
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only bind-only closure in pinned Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679, with no project frozen GID for this interface. Module.End.HasEigenvalue.exists_hasEigenvector and Module.End.HasEigenvector.apply_eq_smul supply a nonzero complex eigenvector; Finset.exists_max_image supplies its maximal component. Normalizing that component and Complex.abs_re_le_norm give the Dirac initial probability and effect b=(1-Re v)/2 in [0,1]. Matrix.rowStochastic, Submonoid.pow_mem, Matrix.sum_row_of_mem_rowStochastic, Matrix.map_pow, Matrix.toLin'_pow and Module.End.HasEigenvector.pow_apply supply the exact response for every natural k, including zero. Complex.exp_nat_mul and Complex.exp_ofReal_mul_I_re identify the polar response. Eigenvalue existence supplies nonemptiness; no irreducibility or nonnegative-eigenvector premise is added.
+    previous_atom_id: 6f6359565324abb3f8f45e3813892ad47d89be867100859d7d9f0f814d87e8e1
+    next_atom_id: 50eabe0196c79a9f4ad327dc14b513850351ba6e2883a6e3714f44c0d7c6022c

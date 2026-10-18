@@ -39,7 +39,7 @@ CPU_SLAB_PHASE ?= pilot
 CPU_SLAB_BOXES ?= 64
 CPU_SLAB_DEADLINE ?=
 TEST_PROJECT ?= $(HERE)/StrataLint.sln
-SELECTED_TEST_PROJECT = $(if $(filter tools/%,$(TEST_PROJECT)),$(abspath $(HERE)/../$(TEST_PROJECT)),$(TEST_PROJECT))
+SELECTED_TEST_PROJECT = $(if $(filter tools/%,$(TEST_PROJECT)),$(HERE)/../$(TEST_PROJECT),$(TEST_PROJECT))
 CI_NO_RESTORE = $(if $(filter 1,$(CI_DOTNET_PREPARED)),--no-restore,)
 TEST_FILTER ?=
 FILEMAP_SCOPE ?=
@@ -99,17 +99,17 @@ prime-slab-device-test:
 	@$(SLAB_ENV) "$(HERE)/scripts/agent/prime_slab_search.py" device-test --state-dir "$(SLAB_STATE)" --input "$(SLAB_INPUT)" --input-sha256 "$(SLAB_INPUT_SHA)"
 
 check-fast:
-	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln --filter "$(CHECK_FAST_FILTER)"
+	@/bin/bash "$(HERE)/scripts/dotnet-test.sh" "$(HERE)/StrataLint.sln" --filter "$(CHECK_FAST_FILTER)"
 
 test:
-	@/bin/bash $(HERE)/scripts/dotnet-test.sh "$(SELECTED_TEST_PROJECT)" $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",)
+	@/bin/bash "$(HERE)/scripts/dotnet-test.sh" "$(SELECTED_TEST_PROJECT)" $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",)
 test: export DOTNET_ROOT := $(RESOLVED_DOTNET_ROOT)
 
 compile-proof:
 	@test "$(PROOF)" = capability-proof -o "$(PROOF)" = banned-api-proof || { echo "PROOF must be capability-proof or banned-api-proof" >&2; exit 2; }; cd "$(REPOSITORY)" && dotnet build "$(HERE)/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" $(CI_NO_RESTORE) --configuration Release -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet && dotnet "$(HERE)/StrataLint.TestEvidence/bin/Release/net10.0/StrataLint.TestEvidence.dll" compile-proof "$(PROOF)"
 
 selftest:
-	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh
+	@/bin/bash "$(HERE)/scripts/stratalint-selftest.sh"
 
 capacity-audit: export CAPACITY_AUDIT_REPOSITORY := $(REPOSITORY)
 capacity-audit: export CAPACITY_AUDIT_HERE := $(HERE)
@@ -117,7 +117,7 @@ capacity-audit:
 	@set -u; result() { printf 'CAPACITY_AUDIT_RESULT exit=%s reason=%s\n' "$$1" "$$2"; exit "$$1"; }; repository="$${CAPACITY_AUDIT_REPOSITORY-}"; project="$${CAPACITY_AUDIT_HERE-}/StrataLint.Cli/StrataLint.Cli.csproj"; test -n "$$repository" || result 2 missing-repository; test -f "$$project" || result 2 missing-cli-project; git -C "$$repository" rev-parse --is-inside-work-tree >/dev/null 2>&1 || result 2 invalid-repository; cd "$$repository" || result 2 repository-unavailable; build_status=0; build_output="$$(dotnet build "$$project" --configuration Release --nologo 2>&1)" || build_status=$$?; if test "$$build_status" -ne 0; then printf '%s\n' "$$build_output"; result 2 build-failed; fi; audit_status=0; audit_output="$$(dotnet run --project "$$project" --configuration Release --no-build --no-restore --no-launch-profile -- capacity-audit 2>&1)" || audit_status=$$?; test -z "$$audit_output" || printf '%s\n' "$$audit_output"; case "$$audit_status" in 0) result 0 clean ;; 1) printf '%s\n' "$$audit_output" | grep -q '^CAPACITY_AUDIT ' && result 1 capacity-violation; result 2 unattributed-policy-exit ;; 2) printf '%s\n' "$$audit_output" | grep -q '^INFRASTRUCTURE_FAILURE capacity-audit:' && result 2 cli-infrastructure-failure; result 2 launcher-failed ;; *) result 2 launcher-failed ;; esac
 
 update-renderer-contract:
-	@/bin/bash $(HERE)/scripts/update-renderer-contract.sh
+	@/bin/bash "$(HERE)/scripts/update-renderer-contract.sh"
 
 clean-lanes:
 	@/bin/bash "$(HERE)/scripts/clean-lanes.sh" --base "$(BASE)" $(if $(filter 1,$(FORCE)),--force,)

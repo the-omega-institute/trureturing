@@ -3178,3 +3178,609 @@ worldwide-originality claim is made.
 [ABT-GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Independent word recodings of attained original responses
+
+**Convention 27.1 (the attained source remains the parameter domain).**
+Use exactly Theorem 24.2 and Convention 24.3. Write
+$f(e)=F_{e+3}$. The mathematical parameters remain the ordinary accepted-Rho
+count $e$ and positive semantic guard/reserve $h=K$, with
+
+$$
+D=\{(e,h):h\ge F_{e+2}\},\qquad
+\operatorname{Accept}(z_{e,h})\ \Longleftrightarrow\ h\ge f(e).
+\tag{ABT.95}
+$$
+
+In particular both $f(e)-1$ and $f(e)$ are attained guards at that same
+count: $f(e)-1\ge F_{e+2}$ follows from $F_{e+1}\ge1$.
+The response is the lawful original completion of the already admitted
+Rho request, through its existing release. Its complete original
+successors remain part of the task. Neither an automatic numerical
+representation of $D$ nor a common acquired-information fiber is assumed.
+
+**Definition 27.2 (separately recoded synchronous arithmetic interface).**
+Let $C\subseteq\Sigma_C^*$ and $H\subseteq\Sigma_H^*$ be regular
+languages over fixed finite alphabets. Fix bijections
+
+$$
+c:\mathbb N\longrightarrow C,\qquad
+v:\mathbb N_{\ge1}\longrightarrow H.
+\tag{ABT.96}
+$$
+
+A tuple is read synchronously from the beginning of each word, padding
+shorter words at the right by a fresh symbol $\#$ through the maximum
+length. There are no common trailing padding columns. A relation is
+regular when its language of these convolutions is regular. Different
+sorts may have disjoint alphabets and entirely different numerical codes;
+no automatic identity between the sorts is required. Require the relations
+
+$$
+\begin{aligned}
+D_b&=\{(c(e),c(2e+b)):e\in\mathbb N\},\quad b=0,1,\\
+<_{H}&=\{(v(h),v(j)):1\le h<j\}
+\end{aligned}
+\tag{ABT.97}
+$$
+
+to be regular and numerically exact. These are properties of a candidate
+representation, not extra native source actions. Ordinary synchronous
+count addition implies both count maps, by first-order definitions using
+the fixed code of $1$. They are not requirements imposed on every
+possible solution of the recovery programme. A noncanonical presentation
+is covered here only after a specified regular unique-representative
+restriction gives (ABT.96) and preserves the stated regular relations.
+
+**Theorem 27.4 (no independent synchronous recoding retaining the count
+maps and capacity order).** Under Definition 27.2 there is no regular
+relation $A\subseteq C\times H$ such that
+
+$$
+\forall(e,h)\in D,\qquad
+A(c(e),v(h))\ \Longleftrightarrow\ h\ge f(e).
+\tag{ABT.99}
+$$
+
+Values outside $D$ are unrestricted. The exclusion permits arbitrary
+additional fixed automatic predicates and first-order definitions in
+the same word presentation.
+
+Proof. Suppose $A$ exists.
+
+Use the literature-attested finite-fiber length bound of Khoussainov,
+Nies, Rubin and Stephan [ABT-KNRS, Proposition 2]. For nonempty input
+and output tuples, if a synchronous regular relation $R(\mathbf x,\mathbf y)$
+has finitely many output tuples
+$\mathbf y$ for every fixed input tuple $\mathbf x$, there is a constant
+$p_R$ such that
+
+$$
+\max_i|y_i|\le\max_j|x_j|+p_R
+\quad\text{whenever }R(\mathbf x,\mathbf y).
+\tag{ABT.98}
+$$
+
+Its short proof also fixes the padding convention used here. In an
+accepting run whose longest output exceeds
+all inputs by more than the automaton's state count, some state repeats
+within that excess. The intervening input columns are all padding.
+Repeat the nonempty loop. If any shorter output then has a padding symbol
+followed by an ordinary symbol, the accepted word is not a valid
+convolution, contrary to the recognized language being exactly $R$.
+Otherwise pumping produces arbitrarily long distinct output tuples for
+the identical inputs, contrary to the finite fiber. This proves (ABT.98).
+The constant concerns words and automata, with no physical resource
+interpretation.
+
+Use the exact capacity order to define
+
+$$
+\begin{aligned}
+\operatorname{Tail}(x,y)&\ \Longleftrightarrow\
+ \forall z\in H\ (y\le_H z\Longrightarrow A(x,z)),\\
+B(x,y)&\ \Longleftrightarrow\
+ \operatorname{Tail}(x,y)\land
+ \forall w\in H\ (w<_H y\Longrightarrow
+                         \neg\operatorname{Tail}(x,w)).
+\end{aligned}
+\tag{ABT.100}
+$$
+
+Synchronous relations are closed under first-order operations on regular
+domains [ABT-KNRS, Theorem 1], so $B$ is regular. Reuse the least-tail
+argument of Theorem 25.1: every $h\ge f(e)$ is attained and accepts,
+whereas the attained $f(e)-1$ refuses. Thus a tail starts exactly at a
+capacity at least $f(e)$, independently of all off-promise values, and
+
+$$
+B(c(e),v(j))\ \Longleftrightarrow\ j=f(e).
+\tag{ABT.101}
+$$
+
+Apply the credited estimate (ABT.98) to this functional relation and then
+to the finite-fiber relation $\{(v(j),v(h)):1\le h\le j\}$. There are
+constants $p_B,p_\le$
+such that every $1\le h\le f(e)$ satisfies
+
+$$
+|v(h)|\le |v(f(e))|+p_\le
+          \le |c(e)|+p_B+p_\le.
+\tag{ABT.102}
+$$
+
+Put $K_\Sigma=\max(2,|\Sigma_H|)$ and $L=|c(e)|+p_B+p_\le$.
+The $f(e)$ distinct positive capacities through $f(e)$ have distinct
+words of length at most $L$. Counting all such words gives
+
+$$
+f(e)\le\sum_{i=0}^{L}|\Sigma_H|^i
+       \le K_\Sigma^{L+1},\qquad
+|c(e)|\ge\log_{K_\Sigma}f(e)-p_B-p_\le-1.
+\tag{ABT.103}
+$$
+
+In particular the label relation together with capacity order forces
+linear count-name growth: the supplied Fibonacci inequality gives
+$F_{e+3}\ge2^{(e+1)/2}$. This implication did not use either count map.
+
+Each graph $D_b$ is functional. The same credited estimate gives
+a common $p_D\ge1$ with $|c(2e+b)|\le|c(e)|+p_D$. Starting at $0$,
+read the ordinary binary digits of $e$ and use these two maps. For $e\ge1$
+this takes $\lfloor\log_2 e\rfloor+1$ maps, and therefore
+
+$$
+|c(e)|\le|c(0)|+p_D(\lfloor\log_2 e\rfloor+1).
+\tag{ABT.104}
+$$
+
+Equations (ABT.103)–(ABT.104) would bound $F_{e+3}$ by a fixed polynomial
+in $e+1$, contradicting its exponential lower bound. Equivalently their
+linear lower bound on $|c(e)|$ contradicts its logarithmic upper bound.
+The bijections, finite alphabets, exact order, affine count maps and
+off-promise quantifiers have all retained their original types. $\square$
+
+**Corollary 27.5 (completed-original-response representation boundary).**
+Consider the actual finite original completions at all $z_{e,h}$ in
+(ABT.95). There is no interface of Definition 27.2 with a fixed regular
+completed-response relation $R(c(e),v(h),\mathbf w)$, regular response-word
+domains and a regular included-accept predicate $P_{\rm acc}(\mathbf w)$,
+which represents those complete original responses faithfully on every
+attained pair. Finitely many regular auxiliary word tracks and
+first-order definitions do not change this conclusion.
+
+Here fidelity requires, in particular, at least one representing tuple
+for each attained completion and no tuple with an incorrect released
+label there. Requiring all actual original successor fields is stronger
+and hence also excluded. No condition is placed on $R$ outside $D$.
+
+Proof. The relation
+$\exists\mathbf w\,[R(x,y,\mathbf w)\land P_{\rm acc}(\mathbf w)]$
+would be regular and satisfy (ABT.99), contradicting Theorem 27.4.
+The same projection works after any fixed finite regular auxiliary
+relations. $\square$
+
+Regularity here is a hypothesis on the parameter-to-*completed-response*
+relation itself. An automatic primitive-step graph supplies no such
+conclusion about its unbounded finite completions. A history input whose
+parameter-to-history relation has not been shown regular likewise supplies
+no instance of this corollary. The result neither equates complete
+responses having the same label nor asserts impossibility of every
+representation, algorithm or full-$Q$ recovery route.
+
+## 28. Compressed counts, canonical numerals and a quantitative boundary
+
+**Convention 28.1 (canonical values and synchronization).** Let $Z(n)$ be
+the canonical most-significant-digit Zeckendorf word on weights
+$F_2,F_3,\ldots$, with $Z(0)=\varepsilon$, no leading zero and no adjacent
+ones. Put $\ell(n)=|Z(n)|$. The classical canonical representation theorem
+gives, for $h>0$,
+
+$$
+\ell(h)=m\quad\Longleftrightarrow\quad
+ F_{m+1}\le h<F_{m+2},\qquad
+Z(F_{r+2})=10^r.
+\tag{ABT.105}
+$$
+
+Indeed the least length-$m$ word has only its leading weight $F_{m+1}$.
+For the greatest value $M_m$ using the first $m$ weights, the
+no-adjacent-one constraint gives $M_0=0,M_1=1$ and
+$M_m=F_{m+1}+M_{m-2}=F_{m+2}-1$ for $m\ge2$. Canonical existence and
+uniqueness then give the length interval. This is numeral calibration,
+not a new native source recurrence or an index/value interface.
+
+For the quantitative statement only, align most-significant-digit
+words by *left-zero* padding to their maximum length, with no unnecessary
+common leading-zero column. Denote this convolution by $\otimes_0$.
+For canonical tuples its domain is regular. This convention is also
+available for any fixed count name $c(e)$ over an alphabet containing
+$0$: use exactly $c(e)$ as its unpadded suffix. It depends on $e$ alone,
+not on the subsequently chosen capacity. Extra padding is not a new
+count value.
+
+These regularity conventions match the preceding right-$\#$ convention
+after reversing every canonical word. Reverse the complete left-zero
+convolution; it becomes a right-zero-padded convolution of the reversed
+words. On valid right-$\#$ convolutions replace padding by zero and
+test this reversed language. Reversal, inverse letter homomorphism and
+regular-domain restriction preserve regularity in both directions.
+Common all-zero prefix columns can be added or removed by regular
+saturation and normalization. Existentially projected tracks use this
+normalization as well. These transformations preserve numerical values;
+they need not preserve a deterministic automaton's state count.
+
+**Theorem 28.2 (direct count-name/state bound on the attained domain).**
+Let a complete deterministic $q$-state classifier on
+$c(e)\otimes_0 Z(h)$ output the correct original accept/refuse label for
+every $h\ge F_{e+2}$ at each count $e$ in a specified set $I$.
+Its answers on all other inputs are arbitrary. Then, for every $e\in I$,
+
+$$
+q\ge\max(1,e+2-|c(e)|).
+\tag{ABT.106}
+$$
+
+The states counted are those of this classifier itself, including any
+completion or validation states it actually uses. No separate validity
+product or complement automaton is required for the bound.
+
+Proof. Write $l=|c(e)|$. If $l>e$, the right side of (ABT.106)
+is $1$. Otherwise put $k=e-l\ge0$ and choose the attained refusing
+guard $h_0=F_{e+2}$. Since $Z(h_0)=10^e$, its input has the exact form
+
+$$
+a\,z^k\,w,
+\qquad a=(0,1),\quad z=(0,0),
+\tag{ABT.107}
+$$
+
+where $w$ pairs the $l$ symbols of $c(e)$ with $l$ zeros. Consider the
+$k+2$ prefixes $p_i=az^i$, $0\le i\le k+1$. For $i<j$, append to
+both the identical suffix $z^{k-i}w$; its exponent is nonnegative since
+$i\le k$. From $p_i$ the result is (ABT.107), which refuses. From
+$p_j$ it is $az^{k+j-i}w$, exactly
+$c(e)\otimes_0 Z(F_{e+j-i+2})$. The genuine count suffix is unchanged,
+and $j-i\ge1$ makes this capacity at least $F_{e+3}$, so it accepts.
+Theorem 24.2 realizes both as alternatives at the same count from the
+same initialization, with their lawful original completions.
+
+Both completed test words are valid and on-promise, regardless of the
+classifier's treatment of other inputs. If two prefixes reached the
+same state, their common suffix would give the same final output,
+contradicting these two labels. All $k+2$ reached states are therefore
+distinct, proving $q\ge k+2=e+2-l$. $\square$
+
+For $c(e)=Z(e)$, a classifier exact for $0\le e\le E$ and **all**
+attained guards at those counts consequently needs
+
+$$
+q\ge\max(1,E+2-\ell(E)).
+\tag{ABT.108}
+$$
+
+For $E\ge1$, (ABT.105) and $F_{m+1}\ge2^{(m-1)/2}$ give
+$\ell(E)\le1+2\log_2 E$. Thus these state requirements are unbounded.
+For example $e=F_{k+2}$ has $\ell(e)=k+1$, so (ABT.106) requires
+$q\ge F_{k+2}-k+1$. There is no fixed canonical Zeckendorf-input classifier.
+The same theorem excludes every capacity-independent count naming with
+unbounded $e-|c(e)|$ in this left-zero convention, without assuming
+automatic count arithmetic. Nondeterministic presentations must first
+be determinized; the bound then concerns the resulting deterministic
+machine. No bound on an unmodified NFA state count or on a different
+padding convention is asserted.
+
+**Corollary 28.3 (the exact Fibonacci/Ostrowski consequence).** There is
+no Fibonacci-recognizable numerical predicate satisfying (ABT.95) on $D$,
+and no such predicate first-order definable in
+$(\mathbb N,+,V_\varphi)$, even with fixed numerical parameters and any
+finite collection of additional fixed Fibonacci-recognizable relations.
+Here $\varphi=(1+\sqrt5)/2$. More generally the same no-extension
+conclusion holds in any one fixed quadratic Ostrowski automatic
+presentation, including finite fixed automatic expansions of its
+first-order arithmetic.
+
+Proof. The canonical Fibonacci case follows directly from Theorem 28.2.
+Hieronymi–Terry Theorems A–B and Definitions 3.2–3.3 [ABT-HT] give
+regular domains, automatic addition and first-order closure for each
+fixed quadratic irrational. Reverse their canonical words as in
+Convention 28.1, restrict the capacity sort to the positive numbers,
+and apply Theorem 27.4. A fixed parameter is a singleton regular
+language; additional fixed automatic relations remain subject to
+first-order closure. $\square$
+
+For $\varphi$, the paper has $q_0=q_1=1$, $q_k=F_{k+1}$ and a forced
+lowest digit $b_1=0$. Deleting that one trailing zero gives $Z(n)$;
+appending it reverses the conversion, with the zero convention handled
+as a finite exceptional code. These are fixed regular transformations.
+$V_\varphi(n)$ for $n>0$ returns the least occupied denominator **value**
+$q_k$, and $V_\varphi(0)=1$; it does not return $k$.
+
+In particular the ordinary-index/value graph $j=F_{e+3}$ is not
+Fibonacci-recognizable or definable in the above Fibonacci signature:
+its graph together with automatic order would define
+$\exists j\,(j=F_{e+3}\land j\le h)$, contradicting Corollary 28.3.
+This is consistent with the Fibonacci-*value* set being automatic:
+its positive canonical words are $10^*$. That set is not Presburger,
+since an infinite ultimately periodic set has bounded successive gaps,
+whereas the distinct Fibonacci values have unbounded gaps. Thus the
+excluded scalar class genuinely extends the Presburger class of §25.
+The result does not assert automatic conversion between an ordinary
+count and a Fibonacci value merely because both have Fibonacci numerals.
+
+## 29. Enriching the joint native language by automatic scalar predicates
+
+**Definition 29.1 (unchanged native block and automatic scalar envelope).**
+Retain Definition 25.2's finite syntax and [NCE, Definition 10.1][ABT-NCE]:
+finite alpha/beta ordered trees, literal equalities/disequalities,
+fixed regular native-tree memberships, and interpreted powers of $\rho$
+with specified integer-affine exponents in one finite natural tuple
+$(e,h,\mathbf s)$. All those exponents have explicit nonnegativity
+guards. All native variables in a block are jointly existential, and
+every repeated name denotes the same entire tree throughout that block.
+
+Enlarge the scalar conditions to any fixed Fibonacci-automatic relations
+and first-order scalar arithmetic over them, in particular
+$\operatorname{FO}(\mathbb N,+,V_\varphi)$. As in Definition 25.2,
+allow finitely many existential scalar auxiliaries, finite Boolean
+branches and the designated finite or in-language accept-label projection.
+One may also take first-order scalar combinations of **already eliminated**
+whole-block support predicates. This last closure does not move scalar
+quantifiers through a native witness that has to be shared.
+
+There is no native quantifier alternation, free unknown tree advice,
+variable formula length, parameter-dependent membership automaton,
+numerical leaf-count operator or arbitrary supplied homomorphism.
+Linked native atoms must be eliminated jointly; separate feasibility
+tests cannot replace a shared witness. No broader alternating
+scalar/native synthesis language is asserted to be covered.
+
+**Corollary 29.2 (joint-native enrichment still has no attained response
+extension).** No formula of Definition 29.1 gives the existing released
+original acceptance label at every $z_{e,h}$ in $D$. A complete-original-
+response representation in this class with an in-class included-label
+projection is therefore also excluded, with arbitrary off-promise behavior.
+
+Proof. Split the finitely many Boolean scalar/native branches. In each
+branch keep the full tuple $(e,h,\mathbf s)$ and the single joint native
+block. Apply NCE Theorem 10.2 to its native Boolean condition with the
+Presburger affine nonnegativity guard. This yields a Presburger support
+at that **identical** tuple, preserving all shared native witnesses.
+Conjoin the branch's automatic scalar condition. Presburger predicates
+are Fibonacci-automatic; finite Boolean operations and scalar projection,
+including padding normalization, preserve that class. Finite label
+branches, an in-language label projection, or first-order combinations
+of the resulting support predicates likewise remain automatic.
+The resulting $A(e,h)$ would violate Corollary 28.3. $\square$
+
+The same argument works in any one of the fixed quadratic Ostrowski
+presentations of Corollary 28.3. This reuses NCE's elimination rather
+than strengthening its native theorem: witnesses coexist at one scalar
+tuple but may realize a different source from the actual unknown source.
+Neither existence nor a unique label acquires a native tree, identifies
+the observer's exact information fiber, or establishes complete-$Q$
+equality. NCE's supplied-numeral positive results in §§13–14 and the
+input-dependent constructions of Proposition 26.1 remain valid.
+
+## 30. Fixed matrix thresholds and a weaker encoding that survives
+
+**Theorem 30.1 (fixed nonnegative matrix output cannot be the threshold).**
+There are no fixed dimension $d\ge1$, nonnegative integer row/column
+vectors $u,v$, and fixed matrices $M_0,M_1\in\mathbb N^{d\times d}$
+such that, writing $Z(e)=d_1\cdots d_{\ell(e)}$,
+
+$$
+W(e)=uM_{d_1}\cdots M_{d_{\ell(e)}}v,
+\qquad
+\forall(e,h)\in D,\quad
+h\ge W(e)\ \Longleftrightarrow\ \operatorname{Accept}(z_{e,h}).
+\tag{ABT.109}
+$$
+
+The empty product is used for $e=0$. This is the fixed finite
+nonnegative linear-representation contract of Du, Mousavi, Schaeffer
+and Shallit [ABT-DMSS, §8], applied to the **canonical ordinary count**
+$Z(e)$. It is distinct from assuming an automatic graph for $W$.
+
+Proof. The two attained threshold neighbors $h=f(e)-1,f(e)$ respectively
+refuse and accept. Since $W(e)$ is an integer, correctness at just those
+two guards forces
+
+$$
+W(e)=f(e)=F_{e+3}\quad\text{for every }e.
+\tag{ABT.110}
+$$
+
+Let $B\ge1$ bound both matrices' maximum row sums, and let
+$C=\max(1,\|u\|_1\|v\|_\infty)$. The elementary matrix norm bound gives
+$W(e)\le CB^{\ell(e)}$. For $e\ge1$, Convention 28.1 gives
+
+$$
+W(e)\le CB\,e^{2\log_2 B},\qquad
+F_{e+3}\ge2^{(e+1)/2}.
+\tag{ABT.111}
+$$
+
+An exponential eventually exceeds each fixed polynomial, contradicting
+(ABT.110). No claim that arbitrary matrix-output comparisons are
+first-order automatic was used. $\square$
+
+The cited paper supplies Fibonacci-regular counting sequences and their
+fixed matrix representations, including its subword-complexity result
+in Theorem 56. It does not identify ordinary count $e$ with a Fibonacci
+index/value input or supply every comparison $W(e)\le h$ as an automatic
+predicate. Theorem 30.1 independently excludes the specific threshold-
+output route even if that comparison is provided separately. Variable
+matrices, a growing representation, unary-length count input, arbitrary
+matrix algorithms or a different complete-response interface are outside
+its hypotheses.
+
+**Proposition 30.2 (mixed unary/Zeckendorf containment check).** Let the
+count code instead be $U_c(e)=1^e$, and keep $Z(h)$ for positive capacity.
+With synchronous right-$\#$ padding, the two numerical relations
+
+$$
+(e,h)\in D\ \Longleftrightarrow\ |Z(h)|\ge|U_c(e)|+1,
+\qquad
+h\ge f(e)\ \Longleftrightarrow\ |Z(h)|\ge|U_c(e)|+2
+\tag{ABT.112}
+$$
+
+are regular. Unary count successor and exact capacity order are regular
+in this presentation. Count doubling, and hence full ordinary count
+addition, is not synchronous regular.
+
+Proof. Equation (ABT.105) gives (ABT.112) on all positive capacities,
+including the off-promise ones. A finite automaton checks the regular
+unary and canonical domains and counts one or two capacity symbols past
+the end of the count word. Unary successor is a one-symbol length
+increment. Capacity order is shortlex order on the canonical words:
+their length intervals are ordered, and within one length the first
+unequal weight exceeds every legal combination of lower weights.
+A finite automaton retains the first lexical comparison and, if lengths
+differ, uses the end order instead.
+
+If $\{(1^e,1^{2e}):e\in\mathbb N\}$ were synchronous regular, its
+functional graph would satisfy $2e\le e+p$ by the finite-fiber bound of
+Khoussainov–Nies–Rubin–Stephan [ABT-KNRS, Proposition 2], a
+contradiction. The same argument on the addition triples
+$(1^e,1^e,1^{2e})$ excludes ordinary ternary addition. Thus this
+presentation gives up a stated hypothesis of Theorem 27.4. $\square$
+
+This is a numerical scope check, not a new source service or a second
+recovery contribution. CAP's actual counter word is $U(e)=1^e0$;
+removing its fixed terminal zero gives the abstract unary name, but
+does not construct an acquired capacity word $Z(h)$ or an installed
+conversion. The two-sort comparison grants neither all affine arithmetic
+nor retained operands, a present token, an admitted invocation, an
+installed consumer, a complete-response decoder or paid return. It shows
+why the obstruction cannot be promoted to all encodings or even to
+every successor-only word interface.
+
+## 31. Original-source, response, authority and cost correspondence
+
+**Convention 31.1 (unchanged programme map).** The representation
+theorems have the following exact connection to the original task.
+
+| Original object or obligation | Correspondence and retained scope |
+| --- | --- |
+| Parameters and actual source | $e$ is the accepted original Rho count after the one fixed first Ready $P$; $h$ is the actual semantic guard and $K=h$ the reserve. The reached logical source is $\rho^e\beta$ on the same source16 and continuing $\phi_K$. None of these is native time, a receipt count, represented Step count, physical support, or a substituted Fibonacci-value count. |
+| Same initialization | GENERAL Assumption 1.2, ARC Definition 9.1 and Theorem 24.2 fix the beta seed, preparation occurrence $\xi$, original code/capture bindings, parked client, occupied verifier/INITIAL consumer and absorbing halt. Each attained $(e,h)$ is an alternative finite continuation of that installation. Alternatives do not authorize reset, cloning or simultaneous independently controllable sources. |
+| Actual operations and material | Theorem 24.2 uses completed Reserve($h$), Raise($h$) when $h>1$, then $e$ accepted returning original Rho calls. At $h=1$ only $e=0$ is attained and maintenance is omitted. Every frame is actually supplied and retained; each next call starts only after the preceding true Ready return. Ordered nonassociative pairing and alpha/beta remain the original constructors. |
+| Admitted original test | The tested next frame is canonical `0010`. The cut is after sealing, parsing, actual service admission and ReadState, before template generation. AIF Definition 2.6 and SOURCECALL Lemma 2.3 allow its instancewise finite original completion through release using prescribed enabled non-IN rows, before the changed final idle CTL. No outer gate, InnerReturn or CaptureCAP row becomes an original action by this argument. There is no uniform finite primitive-depth experiment tree over $D$. |
+| Complete response | The released accept/executed-refusal label is already included in the original response. Each executed action still has its complete source-defined original joint successor, output and marked receipt chain. Corollary 27.5 uses only a necessary projection of that requested whole response. It assumes the proposed completed-response graph is regular; it does not derive that assumption from automatic primitive steps or erase intermediate successors. |
+| Legal domains and continuations | Canonical Supply, prescribed enabled Advance and real protocol admission keep AIF/ARC/UAS meanings. An enabled noncanonical task input is undefined on the lawful task domain; a disabled or unauthorized attempt is unexecuted `none`; an overlarge admitted Rho candidate executes refusal. Empty responses retain only running/terminal type and actual terminal output. All other simultaneous lawful domains and adaptive continuations remain the original ones. |
+| Current authority and use | The producer has its actual current service/source token at the tested body cut. Actual input, code, scratch, copy, receiver, check, ACK, owner-transfer and saved-return paths remain CAP/ARC/GENERAL's. Historical owner/token data grants no current access. The arithmetic codes and automata add no actor port, free structural probe, class promise, query, target chooser, controller or handoff. |
+| Independent expressions | $S$ remains physical storage support, $B$ the independent terminal-path boundary, $T$ actual occurrence order with its operands and receipts, and $M_J$ the specified jointly retained material and rights. Logical leaf number, source shape, word length and classifier state replace none of these. No new four-view inverse follows from a label representation. |
+
+All actual same-run prices are still Convention 23.2's bill
+
+$$
+\bigl(\nu_{\rm phys},2\nu_{\rm phys},
+S_{\rm irreducible}+b_{\rm ctl}+8A_{\rm phys}+8\nu_{\rm phys}\bigr),
+\tag{ABT.113}
+$$
+
+with the separately declared UAS atomic/incidence foundation and
+structural tariff. This includes actual ingress, Base/Resolve,
+generation, whole-candidate guards and source writes, maintenance
+allocation, code/scratch, counters/fences/rows/indices, dependency copies,
+seals/checks, ACKs, source-token and owner transfers, capture and all
+returns. Retired material remains retained. The preparation pays its
+added-phase rows without converting them into original $Q$ experiments.
+No full bills, receipt chains, physical histories or acquired observations
+of two alternatives have been equated, and no cross-target full-cost
+monotonicity is assumed.
+
+The bounds (ABT.103), (ABT.106), (ABT.108) and (ABT.111) concern
+mathematical names, automaton states and fixed matrix growth. They are
+not physical storage, runtime, energy, acquisition-bit or paid-conversion
+lower bounds. The mathematical complete-response output is still
+distinct from an actor's current permission to read it.
+
+## 32. Suppliers, substantive boundary and remaining recovery conditions
+
+**References 32.1 (mathematical ownership and literature correspondence).**
+The new source-specific synthesis is Theorem 27.4 and its completed-
+response consequence, the direct quantitative bound of Theorem 28.2,
+the exact automatic-scalar/NCE consequences, and the independently proved
+fixed-matrix threshold exclusion. These are `repo-derived` ordinary
+deductions. The attained family and admission/label map in §24, the
+least-tail extraction in §25, NCE's native elimination, canonical
+numeration, first-order automata closure and finite-fiber pumping are
+suppliers, not new foundational results here.
+
+| Supplier | Exact role and limitation |
+| --- | --- |
+| Khoussainov–Nies–Rubin–Stephan, *Automatic Structures: Richness and Limitations*, [arXiv cs/0703064v2][ABT-KNRS], Definitions 2.2–2.3, Theorem 1, Proposition 2 and Lemma 3 | Right-padded synchronous relations, first-order closure, finite-fiber length control and logarithmic automatic-monoid product growth. Theorem 27.4 needs only the two stated unary affine count graphs and proves their logarithmic consequence directly. Proposition 2 also supplies the unary countercheck in Proposition 30.2. These results do not identify words with physical memory or turn an automatic transition graph into an automatic completion relation. |
+| Hieronymi–Terry, *Ostrowski numeration systems, addition and finite automata*, [arXiv 1407.7000v2][ABT-HT], Theorems A–B and Definitions 3.2–3.3 | For a fixed quadratic irrational, first-order $(\mathbb N,+,V_a)$ definability equals recognizability, and addition is recognizable. The paper's parameter-free statement extends to fixed numerical parameters by regular singleton codes. Convention 28.1 supplies the padding conversion; $V_a$ selects a denominator value, not its ordinal index. No ordinary count-to-denominator graph is imported. |
+| Du–Mousavi–Schaeffer–Shallit, *Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance*, [arXiv 1406.0670v4][ABT-DMSS], §2, Procedure 3, §8 and Theorem 56 | Canonical weights $F_2$ onward, empty zero, synchronous tuples and first-order arithmetic using supplied fixed DFAOs; separately, fixed nonnegative finite matrix representations for Fibonacci-regular counts. Their matrix contract is used literally in Theorem 30.1, with a separate norm proof. A supplied counting representation is not an automatic comparison or a G_gc acquisition service. |
+| NCE Theorem 10.2 and §§11–14 | Elimination of the entire joint native block at the identical scalar tuple, fixed regular memberships and fixed-numeral original-label supports. Corollary 29.2 changes scalar expressivity, not NCE's native witness, quantifier or acquisition scope. |
+| The present volume §§24–26; CAP/ARC/GENERAL; AIF/SOURCECALL | Same actual beta initialization, attained capacities/counts, original admission and included label, full paid returns and the original complete-successor contract. The new theorem does not repeat their source construction, recurrence, source-only history inverses or earlier meter/payload families as a new contribution. |
+
+The pinned mathlib canonical representation source
+`Mathlib/Data/Nat/Fib/Zeckendorf.lean` at revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679` supplies
+`Nat.zeckendorfEquiv`, `Nat.sum_zeckendorf_fib` and
+`Nat.zeckendorf_sum_fib`. The repository's
+`GoldenZeckendorfLanguage.zeckendorfMSDWord_noAdjacentOnes` and its
+owning Scribe concern canonical digit execution.
+`GoldenGapZeckendorf.wdigits_fib_add`, including its actual
+`CloitreActualSpineCarry` consumer, is a separated digit/value identity.
+Neither supplies an automatic ordinary-index/value graph.
+`DFAOStateLowerBound` and its Scribe use the classical reached-state and
+common-continuation principle. Theorem 28.2 uses that principle in a
+source-specific padded-prefix proof; it is not a compiled specialization
+of the module.
+
+`NativePresburgerDescriptorObstruction.result` and its owning Scribe
+concern all native trees and physical addresses with finite-dimensional
+Presburger descriptors, rather than the attained two-sort completed-
+response interface here. `NativeSourceSelectorCode.selector_code_correct`
+and `realization` have the real
+`NativeSerialEffective.original_code_service_simulation` consumer;
+that consumer preserves external reads and terminal observation after
+erasing evaluator steps. It is not a G_gc current-authority or literal
+complete-successor identification. These existing results are neither
+absent capabilities nor new accomplishments of this representation
+boundary. No worldwide novelty or new Lean certificate is asserted.
+
+**Convention 32.2 (the surviving original programme).** A uniform
+complete-original-response bridge cannot be obtained merely by replacing
+Presburger arithmetic with a fixed synchronous word language while
+retaining the stated count affine maps and exact capacity order.
+Independent recoding of both numeric sorts does not repair that class;
+the fixed matrix-threshold route on canonical ordinary count input also
+fails. This strengthens the necessary response-representation condition
+on the same attained original family. It establishes no common-observation
+collision, full-$Q$ equality, universal computational impossibility or
+all-representation obstruction.
+
+Input-dependent numeral-capacity automata, growing literal records,
+asynchronous or branching-tree presentations, and paid algorithms beyond
+the excluded interfaces remain possible routes. Each still owes its
+actual source/parameter/operation/admission and complete-response/
+continuation correspondence. The mixed unary construction only gives
+the label relation and explicitly abandons the affine count interface.
+No numerical representability alone provides actual acquired operands,
+current permission, an installed consumer or the cost of its invocation.
+
+The full programme remains incomplete. Required unresolved domains and
+interfaces include faithful complete original successors and all lawful
+finite adaptive continuations; actual acquisition and retained/currently
+callable use; independently variable successful source/history inputs,
+mixed intermediate cuts and independent source growth; equal-weight and
+synchronized-mate full-$Q$ comparisons; changed-return, annex and
+arbitrary old-target access; raw/bootstrap/preacquisition, unfinished,
+malformed/refusal/fault domains; final00 without later Ready and absorbing
+terminal comparisons; and every recovery direction among the independently
+defined $S,B,T,M_J$ with all actual same-run costs. The published positive
+four-view cycles, source-only and linked-input inverses retain their exact
+domains. No central bridge, decoder upgrade or actor control is assumed
+to close any of these remaining obligations.
+
+[ABT-KNRS]: https://arxiv.org/html/cs/0703064v2
+[ABT-HT]: https://arxiv.org/html/1407.7000v2
+[ABT-DMSS]: https://arxiv.org/html/1406.0670v4
+
+## 追加锚（本行以下为增补区）
