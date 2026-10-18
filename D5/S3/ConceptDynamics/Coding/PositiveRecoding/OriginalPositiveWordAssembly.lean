@@ -1,9 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Construct the original-domain positive word
-from the actual full outgoing input tower and actual response-output word.
-Every leaf and intermediate endpoint belongs to TypedPositiveSplitWord.Word.
-Local supplier candidates expose RepeatedFullOutSplit.appendFull and make
-terminal reflexivity tactics safe under goal closure. Their mathematical
-statements and constructions are unchanged. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/OriginalPositiveWordAssembly
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/OriginalPositiveWordAssembly
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Construct the positive word on the original finite presentation. -/
+
+/- Construct the original-domain word from the full outgoing input tower, its actual numbered response identification and the response-output word. Every leaf and endpoint belongs to TypedPositiveSplitWord.Word. -/
 import D5.S3.ConceptDynamics.Coding.ResponseRealization.FullOutResponseIdentification
 import D5.S3.ConceptDynamics.Coding.ResponseRealization.ResponsePositiveShiftConsumer
 

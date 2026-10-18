@@ -1,5 +1,10 @@
-/- SOURCE ONLY, UNCOMPILED. Consume the completed RECTANGULAR localized
-supplier, retaining every actual graph-chart term of the typed word. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordLocalizedComparison
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordLocalizedComparison
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The rectangular localized cochain equals the same actual positive-word gyration modulo three. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualPositiveWordPeriodicCochain
 import D5.S3.ConceptDynamics.Coding.CountedLocalizedGyrationResidue
 

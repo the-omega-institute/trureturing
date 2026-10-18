@@ -1,5 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Exact numbered coordinate and inverse signs.
-Uses the EXISTING counted split/join enumeration, never another ranking. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/NumberedPositiveInverseLaws
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/NumberedPositiveInverseLaws
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Exact numbered positive recoding and inverse time signs. -/
+
+/- At time t the positive recoding joins s_t to r_(t+1); its inverse reads the preceding half at t-1. Opposite positive recodings compose to forward unit time. -/
 import D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 import Mathlib.Tactic.NormNum
 
@@ -16,13 +23,6 @@ variable {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
 def translate {k : ℕ} (B : CountMat k k) (a : ℤ) (x : Path B) : Path B :=
   ⟨fun t => x.val (t+a),fun t => by
     simpa only [add_assoc,add_comm a 1] using x.property (t+a)⟩
-@[simp] theorem translate_zero {k : ℕ} (B : CountMat k k) (x : Path B) :
-    translate B 0 x = x := by apply Subtype.ext; funext t; simp [translate]
-theorem translate_add {k : ℕ} (B : CountMat k k) (a b : ℤ) (x : Path B) :
-    translate B a (translate B b x) = translate B (a+b) x := by
-  apply Subtype.ext
-  funext t
-  simp only [translate,add_assoc]
 
 /-- The actual positive law (r_t,s_t) -> (s_t,r_(t+1)). -/
 theorem positive_coordinate (x : Path (R*S)) (t : ℤ) :
@@ -55,12 +55,5 @@ theorem inverse_eq_negative_positive (y : Path (S*R)) :
   have hprev : t+(-1) = t-1 := by omega
   simp only [hprev,sub_add_cancel]
 
-/-- Two opposite positive recodings yield FORWARD unit time, not identity. -/
-theorem positive_opposite (x : Path (R*S)) :
-    elementaryHomeomorph S R (elementaryHomeomorph R S x) = shift (R*S) x := by
-  apply Subtype.ext
-  funext t
-  simp only [positive_coordinate, split_join]
-  exact join_split R S (x.val (t+1))
 
 end D5.S3.ConceptDynamics.Coding.NumberedPositiveInverseLaws

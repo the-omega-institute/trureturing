@@ -1,6 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Exact finite identification of the actual full
-outgoing tower with the response graph and its unchanged literal numbering.
-No graph equivalence, desired history equality or arbitrary U is a premise. -/
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseRealization/FullOutResponseIdentification
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseRealization/FullOutResponseIdentification
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Repeated full outgoing splits identify with the original response graph and its unchanged finite edge numbering on every history. -/
+
+/- Identify the actual full outgoing tower with the response graph and its existing numbered edges. Both finite graph maps and their full-history equation are constructed. -/
 import D5.S3.ConceptDynamics.Coding.FullOutSplitWordIdentification
 import D5.S3.ConceptDynamics.Coding.ResponseGraphs.OriginalResponseGraph
 import D5.S3.ConceptDynamics.Coding.ResponseRealization.CentredResponseCorrection
@@ -78,60 +84,8 @@ def numberedIdentification :
   target e := ((numbering F pair).target ((responseIdentification F pair).edge e)).trans
     (congrArg (vertexNumber F.graph) ((responseIdentification F pair).target e))
 
-/-- Restrict the already constructed edge bijection to each entire endpoint
-fibre. This reuses the existing Fibre and its numbering, including zeros. -/
-def fibreIdentification (u v : (stage F (a+b+1)).V) :
-    {e : (stage F (a+b+1)).E //
-      (stage F (a+b+1)).graph.source e = u ∧ (stage F (a+b+1)).graph.target e = v} ≃
-    Fibre F.graph pair ((numberedIdentification F pair).vertex u)
-      ((numberedIdentification F pair).vertex v) where
-  toFun e := ⟨(responseIdentification F pair).edge e.val,by
-    apply Prod.ext
-    · change vertexNumber F.graph ((graph F.graph pair).source
-          ((responseIdentification F pair).edge e.val)) = _
-      rw [(responseIdentification F pair).source,e.property.1]
-      rfl
-    · change vertexNumber F.graph ((graph F.graph pair).target
-          ((responseIdentification F pair).edge e.val)) = _
-      rw [(responseIdentification F pair).target,e.property.2]
-      rfl⟩
-  invFun f := ⟨(responseIdentification F pair).edge.symm f.val,by
-    constructor
-    · apply (numberedIdentification F pair).vertex.injective
-      change vertexNumber F.graph ((responseIdentification F pair).vertex
-        ((stage F (a+b+1)).graph.source
-          ((responseIdentification F pair).edge.symm f.val))) = _
-      rw [← (responseIdentification F pair).source,
-        (responseIdentification F pair).edge.apply_symm_apply]
-      exact congrArg Prod.fst f.property
-    · apply (numberedIdentification F pair).vertex.injective
-      change vertexNumber F.graph ((responseIdentification F pair).vertex
-        ((stage F (a+b+1)).graph.target
-          ((responseIdentification F pair).edge.symm f.val))) = _
-      rw [← (responseIdentification F pair).target,
-        (responseIdentification F pair).edge.apply_symm_apply]
-      exact congrArg Prod.snd f.property⟩
-  left_inv e := Subtype.ext ((responseIdentification F pair).edge.symm_apply_apply e.val)
-  right_inv f := Subtype.ext ((responseIdentification F pair).edge.apply_symm_apply f.val)
 
-theorem fibre_card (u v : (stage F (a+b+1)).V) :
-    Fintype.card {e : (stage F (a+b+1)).E //
-      (stage F (a+b+1)).graph.source e = u ∧ (stage F (a+b+1)).graph.target e = v} =
-    matrix F.graph pair ((numberedIdentification F pair).vertex u)
-      ((numberedIdentification F pair).vertex v) :=
-  Fintype.card_congr (fibreIdentification F pair u v)
 
-theorem zero_fibre_iff (u v : (stage F (a+b+1)).V) :
-    matrix F.graph pair ((numberedIdentification F pair).vertex u)
-      ((numberedIdentification F pair).vertex v) = 0 ↔
-    ¬ ∃ e : (stage F (a+b+1)).E,
-      (stage F (a+b+1)).graph.source e = u ∧ (stage F (a+b+1)).graph.target e = v := by
-  rw [← fibre_card F pair u v,Fintype.card_eq_zero_iff]
-  constructor
-  · rintro h ⟨e,hs,ht⟩
-    exact h.false ⟨e,hs,ht⟩
-  · intro h
-    exact ⟨fun e => h ⟨e.val,e.property.1,e.property.2⟩⟩
 
 /-- Defined from the actual repeated outsplit followed by the constructed
 finite numbered graph identification. It does not reuse inputHomeomorph. -/

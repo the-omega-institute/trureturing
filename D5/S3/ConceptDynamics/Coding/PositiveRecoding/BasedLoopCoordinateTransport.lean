@@ -1,7 +1,10 @@
-/- SOURCE ONLY. UNCOMPILED. A closed RS edge changes coordinates through
-the existing TWO-TRIANGLE square. The endpoint terms are retained before
-cancellation. No individual open-edge basis invariance is asserted.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/BasedLoopCoordinateTransport
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/BasedLoopCoordinateTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Closed RS loops change coefficient basis through two triangles before endpoint cancellation. -/
 import D5.S3.ConceptDynamics.Coding.FiniteKernelLadder
 
 set_option autoImplicit false

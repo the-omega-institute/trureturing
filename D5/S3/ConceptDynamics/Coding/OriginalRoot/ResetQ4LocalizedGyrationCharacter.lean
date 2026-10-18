@@ -1,14 +1,12 @@
-/-
-UNCOMPILED SOURCE CANDIDATE. Same project/mathlib pins as the residue module.
-Consumes the exact completed cube candidate hash
-1ed1953ba6fff0f6ada2bf9bad056d768abbcd824770d83b2baccba9ab392662,
-with ResetQ4OriginalLocalizedCubes.exports.patch applied. Those changes export
-three existing proof bodies; they do not strengthen their statements.
+/- GID: D5/S3/ConceptDynamics/Coding/OriginalRoot/ResetQ4LocalizedGyrationCharacter
+   generality: I
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/OriginalRoot/ResetQ4LocalizedGyrationCharacter
+   mirror-E: none(waiver:symbolic-structural-theorems)
+   anchors: []
+   utility: none
+   digest: The original reset column action carries the fixed localized gyration character and symbolic signed evaluations. -/
 
-The terminal theorems reduce the actual time and I+time character values to
-the actual signed polynomial evaluations. They do not assert the numerical
-evaluations as Lean theorems. The ordinary evaluator/identity is separate.
--/
+/- The symbolic time and I+time evaluations use the original forward column matrix and the exact signed backward factor. Their numerical calibrations are separate identities. -/
 import D5.S3.ConceptDynamics.Coding.CountedLocalizedGyrationResidue
 import D5.S3.ConceptDynamics.Coding.ResetQ4OriginalLocalizedCubes
 

@@ -1,6 +1,12 @@
-/- SOURCE ONLY, UNCOMPILED. Constructor assembly immediately after the
-actual relabel comparison. No original-h theorem is named or specialized.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordRelabelAssembly
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordRelabelAssembly
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Assemble actual dictionary weights over typed words. -/
+
+/- Assemble the actual relabel and positive-leaf comparisons over endpoint-typed words, retaining both chart corrections. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualRelabelCharts
 
 set_option autoImplicit false

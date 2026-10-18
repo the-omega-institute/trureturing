@@ -1,5 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Consumes, rather than rederives, the completed
-response graph AND its completed first strict outgoing step. -/
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponseTwoSidedConsumer
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseRealization/ResponseTwoSidedConsumer
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The actual response output is reduced to two concrete finite split towers and a terminal finite graph relabeling. -/
+
+/- Combine the actual response graph, its first outgoing step and the existing two-sided reduction into the concrete terminal data. -/
 import D5.S3.ConceptDynamics.Coding.TwoSidedFiniteInduction
 import D5.S3.ConceptDynamics.Coding.ResponseRealization.ResponseOutSplitConsumer
 
@@ -78,15 +85,4 @@ def terminal : Terminal (response G hG pair S) (original G hG)
       (OutSplitConjugacyDecrease.changed cb P (ActualOutSplit.lift F.graph cb.edge z)) = _ at hs
     exact (congrArg r.right.toHomeomorph (OutSplitConjugacyDecrease.square cb P z)).symm.trans hs
 
-/-- Literal equality on every original history, still expressed by ACTUAL
-split towers. This is not yet a numbered elementary-word presentation. -/
-theorem original_history (x : History G) :
-    S.forward x = (terminal G hG pair S).right.toHomeomorph.symm
-      ((terminal G hG pair S).relabel.history
-        ((terminal G hG pair S).left.toHomeomorph (numberedLift G pair x))) := by
-  obtain ⟨_,_,hp,_,_,_,_,_⟩ := numbered_response_reduction G pair hG S
-  rw [← hp x]
-  apply (terminal G hG pair S).right.toHomeomorph.injective
-  exact ((terminal G hG pair S).square (numberedLift G pair x)).trans
-    ((terminal G hG pair S).right.toHomeomorph.apply_symm_apply _).symm
 end D5.S3.ConceptDynamics.Coding.ResponseTwoSidedConsumer

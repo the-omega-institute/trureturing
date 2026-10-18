@@ -1,10 +1,10 @@
-/- UNCOMPILED SOURCE CANDIDATE. No Lean invocation or admission has occurred.
-Intended owner: D5/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamDiagram.lean
-Supplier commit: 16002abdb6569c0a6ce86679f021c3acf002c07e.
-The graph below is only the literal DirectedMultigraph adapter for the existing
-CountedMatrixOverlap.Edge. Its History is definitionally the existing Path.
-No new history, ray, beam, quotient, or colimit is introduced.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamDiagram
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamDiagram
+   mirror-E: none(waiver:symbolic-structural-theorems)
+   anchors: []
+   utility: none
+   digest: Literal counted-edge images and intrinsic endpoint multiplicities at every integer cut. -/
 import Mathlib.Data.Fintype.Sigma
 import D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 import D5.S3.ConceptDynamics.Coding.StandardBeamIdentification
@@ -127,38 +127,8 @@ theorem elementary_symm_split {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
       simpa only [split_source, split_target, sub_add_cancel] using y.property (t - 1))) = _
   exact split_join R S _ _ _
 
-/-- Two forward elementary recodings compose to the actual forward shift. -/
-theorem reverse_forward {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
-    (x : Path (R * S)) :
-    elementaryHomeomorph S R (elementaryHomeomorph R S x) =
-      CountedMatrixOverlap.shift (R * S) x := by
-  apply Subtype.ext
-  funext t
-  apply split_injective R S
-  simp only [elementary_split, CountedMatrixOverlap.shift]
 
-theorem elementary_shift {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
-    (x : Path (R * S)) :
-    elementaryHomeomorph R S (CountedMatrixOverlap.shift (R * S) x) =
-      CountedMatrixOverlap.shift (S * R) (elementaryHomeomorph R S x) := by
-  apply Subtype.ext
-  funext t
-  apply split_injective S R
-  simp only [elementary_split, CountedMatrixOverlap.shift]
 
-/-- The original FORWARD offset is -k. This is the SAME coding at that
-offset, not a replacement recoding with a reversed time orientation. -/
-theorem elementary_forward_offset {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
-    (x : Path (R * S)) (k : ℤ) :
-    elementaryHomeomorph R S
-        (StandardBeamHomeomorphisms.translate (countedGraph (R * S)) (-k) x) =
-      StandardBeamHomeomorphisms.translate (countedGraph (S * R)) (-k)
-        (elementaryHomeomorph R S x) := by
-  apply Subtype.ext
-  funext t
-  apply split_injective S R
-  simp only [elementary_split, StandardBeamHomeomorphisms.translate,
-    add_assoc, add_left_comm, add_comm]
 
 section ActualRay
 variable {n m : ℕ} (R : CountMat n m) (S : CountMat m n)

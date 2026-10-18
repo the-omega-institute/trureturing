@@ -1,8 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Exact ranked unit-factor recodings.
-No phase, preferred rank equality, orbit sum, invertibility or nonemptiness
-is an input. The finite rank identification uses the EXISTING
-Finset.orderEmbOfFin_unique and fiber_number_lt_iff.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/RankedTimeRecoding
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/RankedTimeRecoding
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Unit-factor recodings retain the original parallel-edge rank. -/
+
+/- Unit-factor recodings preserve the original edge number. The ranking argument reuses Finset.orderEmbOfFin_unique and fiber_number_lt_iff, including empty fibers. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.CountedRelativeGyrationTransport
 
 set_option autoImplicit false
@@ -112,12 +116,6 @@ theorem split_right_identity {n : ℕ} (A : CountMat n n) (a : Edge A) :
     rw [edgeCast_symm_apply, join_right_identity]
   rw [hj, split_join]
 
-theorem split_left_identity {n : ℕ} (A : CountMat n n) (a : Edge A) :
-    split 1 A (edgeCast (Matrix.one_mul A).symm a) = (identityEdge a.source,a) := by
-  have hj : edgeCast (Matrix.one_mul A).symm a = join 1 A (identityEdge a.source) a rfl := by
-    apply (edgeCast (Matrix.one_mul A)).injective
-    rw [edgeCast_symm_apply, join_left_identity]
-  rw [hj, split_join]
 
 /-- Actual forward convention: the S-half at t joins the R-half at t+1. -/
 theorem recoding_time {n : ℕ} (A : CountMat n n) :
@@ -136,22 +134,6 @@ theorem recoding_time {n : ℕ} (A : CountMat n n) :
   simp only [elementary_coordinate, cast_coordinate, split_right_identity]
   simpa only [x.property t] using join_left_identity A (x.val (t+1))
 
-/-- For I,A the A-half stays at t; the identity half is at its target. -/
-theorem recoding_identity {n : ℕ} (A : CountMat n n) :
-    ((castTimed (Matrix.one_mul A).symm).comp (TimedEquiv.elementary 1 A)).comp
-      (castTimed (Matrix.mul_one A)) = TimedEquiv.refl A := by
-  apply TimedEquiv.ext
-  intro x
-  apply Subtype.ext
-  funext t
-  change (((castTimed (Matrix.mul_one A)).equiv
-    ((elementaryHomeomorph 1 A) ((castTimed (Matrix.one_mul A).symm).equiv x))).val t) = _
-  rw [cast_coordinate]
-  change edgeCast (Matrix.mul_one A)
-    ((elementaryHomeomorph 1 A ((castTimed (Matrix.one_mul A).symm).equiv x)).val t) =
-      x.val t
-  simp only [elementary_coordinate, cast_coordinate, split_left_identity]
-  simpa only [← x.property t] using join_right_identity A (x.val t)
 
 /-- The genuine original-ranked primitive-orbit sum, at ALL nonzero periods. -/
 theorem relative_time {n d : ℕ} [NeZero d] (A : CountMat n n) :
@@ -161,10 +143,5 @@ theorem relative_time {n d : ℕ} [NeZero d] (A : CountMat n n) :
   simpa only [TimedEquiv.gyration_comp, cast_gyration, zero_add, add_zero,
     TimedEquiv.gyration_elementary, TimedEquiv.gyration_time, Int.cast_one, mul_one] using h
 
-theorem relative_identity {n d : ℕ} [NeZero d] (A : CountMat n n) :
-    relativeForwardGyration (d := d) 1 A = 0 := by
-  have h := congrArg (fun u => u.gyration d) (recoding_identity A)
-  simpa only [TimedEquiv.gyration_comp, cast_gyration, zero_add, add_zero,
-    TimedEquiv.gyration_elementary, TimedEquiv.gyration_refl] using h
 
 end SourceOnly.RankedTimeRecoding

@@ -1,6 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Finite, endpoint-typed positive words.
-There is NO arbitrary homeomorphism leaf and NO inverse-recoding leaf.
-Numbering reuses the supplied rectangular fibres and counted split/join. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/TypedPositiveSplitWord
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/TypedPositiveSplitWord
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Endpoint-typed finite positive words with explicit corrections. -/
+
+/- Words have only relabel, positive and composition constructors, with literal intermediate presentations. Numbering reuses the existing rectangular fibers and counted split/join. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.SplitTowerTranslation
 
 set_option autoImplicit false

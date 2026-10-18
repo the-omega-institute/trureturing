@@ -1,6 +1,10 @@
-/- SOURCE ONLY. UNCOMPILED. Actual finite graph isomorphisms transport
-inclusive integer-cut rays, intrinsic endpoint rows and the existing colimit.
-Intended owner: D5/S3/ConceptDynamics/Coding/BeamColimits/FiniteRelabelBeamTransport.lean -/
+/- GID: D5/S3/ConceptDynamics/Coding/BeamColimits/FiniteRelabelBeamTransport
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/BeamColimits/FiniteRelabelBeamTransport
+   mirror-E: none(waiver:symbolic-structural-theorems)
+   anchors: []
+   utility: none
+   digest: Actual finite graph relabels transport edge fibers, beam endpoints and row colimits. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.TypedPositiveSplitWord
 import D5.S3.ConceptDynamics.Coding.BeamColimits.CountedMatrixBeamColimit
 

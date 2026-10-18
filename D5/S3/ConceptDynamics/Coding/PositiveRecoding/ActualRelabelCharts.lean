@@ -1,7 +1,12 @@
-/- SOURCE ONLY, UNCOMPILED. ACTUAL counted chart composites.
-Both vertex and edge maps are composed. Both RS factors are transported.
-No basis-invariance of a single edge value is assumed.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelCharts
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelCharts
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Transport both relabel factors through the actual charts. -/
+
+/- Compose the actual vertex and edge charts and transport both RS factors. An individual open edge value is not assumed invariant under basis change. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualRelabelResidue
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualWordLocalizedComparison
 

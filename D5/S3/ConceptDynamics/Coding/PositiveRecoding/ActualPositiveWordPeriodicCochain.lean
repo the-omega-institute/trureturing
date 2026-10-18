@@ -1,7 +1,10 @@
-/- SOURCE ONLY, UNCOMPILED. Actual finite-presentation transport and typed
-positive-word cochain. Counted primitive orbits and canonical rotations are
-reused. The fixed chart is EXISTING outOld F F id; no new edge enumeration.
-Finite graph relabelings keep both vertex and parallel-edge bijections. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualPositiveWordPeriodicCochain
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualPositiveWordPeriodicCochain
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual-history charts, endpoint-corrected positive-word gyration and signed time translation. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.CountedRelativeGyrationTransport
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.TypedPositiveSplitWord
 
@@ -46,26 +49,8 @@ private theorem chart_minimalPeriod (F : Presentation) (x : Path (matrix F)) :
   rw [← chart_iterate]
   exact (chart F).homeomorph.injective.eq_iff
 
-abbrev Periodic (F : Presentation) (d : ℕ) :=
-  {x : Hist F // Function.IsPeriodicPt (FiniteWindowTableCriterion.shift F.graph) d x}
 
-def periodicChart (F : Presentation) (d : ℕ) : PeriodicPath (matrix F) d ≃ Periodic F d where
-  toFun x := ⟨(chart F).homeomorph x.val,by
-    rw [Function.isPeriodicPt_iff_minimalPeriod_dvd,chart_minimalPeriod]
-    exact x.property.minimalPeriod_dvd⟩
-  invFun x := ⟨(chart F).homeomorph.symm x.val,by
-    rw [Function.isPeriodicPt_iff_minimalPeriod_dvd]
-    have h := chart_minimalPeriod F ((chart F).homeomorph.symm x.val)
-    rw [(chart F).homeomorph.apply_symm_apply] at h
-    rw [← h]
-    exact x.property.minimalPeriod_dvd⟩
-  left_inv x := Subtype.ext ((chart F).homeomorph.symm_apply_apply x.val)
-  right_inv x := Subtype.ext ((chart F).homeomorph.apply_symm_apply x.val)
 
-instance periodicFintype (F : Presentation) (d : ℕ) [NeZero d] : Fintype (Periodic F d) := by
-  classical
-  let e := (periodicWordEquiv (d := d) (matrix F)).trans (periodicChart F d)
-  exact Fintype.ofEquiv _ e
 
 /-- The carrier is the actual original signed history, with its true forward
 minimal period; it is not a residue word or a quotient of edge identities. -/
@@ -81,8 +66,6 @@ def primitiveChart (F : Presentation) (d : ℕ) : PrimitivePath (matrix F) d ≃
   left_inv x := Subtype.ext ((chart F).homeomorph.symm_apply_apply x.val)
   right_inv x := Subtype.ext ((chart F).homeomorph.apply_symm_apply x.val)
 
-instance primitiveFintype (F : Presentation) (d : ℕ) [NeZero d] : Fintype (Primitive F d) :=
-  Fintype.ofEquiv _ (primitiveChart F d)
 
 /-- Pull back the EXISTING orbit relation through the actual primitive chart.
 Chart equivariance identifies it with forward reachability on actual histories. -/
@@ -114,13 +97,8 @@ def orbitChart (F : Presentation) (d : ℕ) [NeZero d] :
 instance orbitFintype (F : Presentation) (d : ℕ) [NeZero d] : Fintype (Orbit F d) :=
   Fintype.ofEquiv _ (orbitChart F d)
 
-abbrev Basis (F : Presentation) (d : ℕ) [NeZero d] := PathBasis (matrix F) d
 
-def representative (F : Presentation) {d : ℕ} [NeZero d] (b : Basis F d) : Primitive F d :=
-  primitiveChart F d b.val
 
-def orbitBasis (F : Presentation) (d : ℕ) [NeZero d] : Orbit F d ≃ Basis F d :=
-  (orbitChart F d).symm.trans (orbitBasisEquiv (matrix F))
 
 /-- Transport a given actual history equivalence into the fixed counted
 charts. Equivariance is an actual coordinate theorem of the supplied maps. -/
@@ -151,17 +129,8 @@ def chartComparison {F : Presentation} {n : ℕ} {A : CountMat n n}
 def wordMap {F H : Presentation} (w : Word F H) : TimedEquiv (matrix F) (matrix H) :=
   inCharts w.eval.toEquiv (Word.eval_time w)
 
-def wordPeriodicEquiv {F H : Presentation} (w : Word F H) (d : ℕ) :
-    Periodic F d ≃ Periodic H d :=
-  (periodicChart F d).symm.trans (((wordMap w).periodicEquiv d).trans (periodicChart H d))
 
-def wordPrimitiveEquiv {F H : Presentation} (w : Word F H) (d : ℕ) :
-    Primitive F d ≃ Primitive H d :=
-  (primitiveChart F d).symm.trans (((wordMap w).primitiveEquiv d).trans (primitiveChart H d))
 
-def wordOrbitEquiv {F H : Presentation} (w : Word F H) (d : ℕ) [NeZero d] :
-    Orbit F d ≃ Orbit H d :=
-  (orbitChart F d).symm.trans (((wordMap w).orbitEquiv d).trans (orbitChart H d))
 
 theorem wordMap_comp {F H K : Presentation} (u : Word F H) (v : Word H K) :
     wordMap (.comp u v) = (wordMap u).comp (wordMap v) := by
@@ -249,63 +218,7 @@ theorem time_corrected_word {F : Presentation} (w : Word F F) (s : ℤ)
   rw [historyGyration,he,TimedEquiv.gyration_comp,word_gyration,TimedEquiv.gyration_time]
   rw [Fintype.card_congr (orbitChart F d)]
 
-/-- Compute the SAME loop in any actual finite vertex-and-edge chart.
-The independent ranked basis of that chart is allowed to have nonzero phase. -/
-def loopInChart {F : Presentation} {n : ℕ} {A : CountMat n n}
-    (r : Relabel (countedGraph A) F.graph) (h : Hist F ≃ Hist F)
-    (ht : ∀ s x, h (time F.graph s x) = time F.graph s (h x)) : TimedEquiv A A where
-  equiv := r.homeomorph.toEquiv.trans (h.trans r.homeomorph.symm.toEquiv)
-  time s x := by
-    change r.homeomorph.symm (h (r.homeomorph (time _ s x))) = _
-    rw [relabel_homeomorph_time,ht,relabel_inverse_time]
-    rfl
 
-theorem historyGyration_in_any_chart {F : Presentation} {n : ℕ} {A : CountMat n n}
-    (r : Relabel (countedGraph A) F.graph) (h : Hist F ≃ Hist F)
-    (ht : ∀ s x, h (time F.graph s x) = time F.graph s (h x)) (d : ℕ) [NeZero d] :
-    (loopInChart r h ht).gyration d = historyGyration h ht d := by
-  have he : loopInChart r h ht =
-      (((chartComparison r).symm).symm.comp (inCharts h ht)).comp (chartComparison r).symm := by
-    apply TimedEquiv.ext
-    intro x
-    change r.homeomorph.symm (h (r.homeomorph x)) =
-      r.homeomorph.symm ((chart F).homeomorph ((chart F).homeomorph.symm
-        (h ((chart F).homeomorph ((chart F).homeomorph.symm (r.homeomorph x))))))
-    rw [(chart F).homeomorph.apply_symm_apply,(chart F).homeomorph.apply_symm_apply]
-  rw [he,TimedEquiv.gyration_conjugate] <;> rfl
 
-/-- Intrinsic composition on actual histories. It follows from the actual
-orbit permutation; no presentation independence is a hypothesis. -/
-theorem historyGyration_comp {F : Presentation} (h k : Hist F ≃ Hist F)
-    (ht : ∀ s x, h (time F.graph s x) = time F.graph s (h x))
-    (kt : ∀ s x, k (time F.graph s x) = time F.graph s (k x))
-    (d : ℕ) [NeZero d] :
-    historyGyration (h.trans k)
-      (fun s x => (congrArg k (ht s x)).trans (kt s (h x))) d =
-      historyGyration h ht d + historyGyration k kt d := by
-  have he : inCharts (h.trans k)
-      (fun s x => (congrArg k (ht s x)).trans (kt s (h x))) =
-      (inCharts h ht).comp (inCharts k kt) := by
-    apply TimedEquiv.ext
-    intro x
-    change (chart F).homeomorph.symm (k (h ((chart F).homeomorph x))) =
-      (chart F).homeomorph.symm (k ((chart F).homeomorph
-        ((chart F).homeomorph.symm (h ((chart F).homeomorph x)))))
-    rw [(chart F).homeomorph.apply_symm_apply]
-  exact (congrArg (fun u => u.gyration d) he).trans
-    (TimedEquiv.gyration_comp _ _ d)
 
-/-- The period-3 and period-6 expression, with the literal signed time
-correction. Letter count alone is never substituted for the correction. -/
-theorem time_corrected_three_six {F : Presentation} (w : Word F F) (s : ℤ)
-    (h : Hist F ≃ Hist F)
-    (ht : ∀ t x, h (time F.graph t x) = time F.graph t (h x))
-    (hh : ∀ x, h x = time F.graph s (w.eval x)) :
-    historyGyration h ht 3 + reduceSix (historyGyration h ht 6) =
-      cochain 3 w+reduceSix (cochain 6 w)+
-        ((Fintype.card (Orbit F 3)+Fintype.card (Orbit F 6) : ℕ) : ZMod 3)*(s : ZMod 3) := by
-  rw [time_corrected_word w s h ht hh 3,time_corrected_word w s h ht hh 6,
-    map_add,map_mul]
-  simp only [reduceSix,map_natCast,map_intCast,Nat.cast_add]
-  ring
 end D5.S3.ConceptDynamics.Coding.ActualPositiveWordPeriodicCochain

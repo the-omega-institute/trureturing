@@ -1,6 +1,10 @@
-/- SOURCE ONLY. UNCOMPILED. Compare with the existing actual full beam
-representation, using the proved positive-word and signed-cut transports.
-Intended owner: D5/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordFullAction.lean -/
+/- GID: D5/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordFullAction
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordFullAction
+   mirror-E: none(waiver:symbolic-structural-theorems)
+   anchors: []
+   utility: none
+   digest: Literal positive-word decompositions determine the full native beam-group action. -/
 import D5.S3.ConceptDynamics.Coding.BeamColimits.SignedBeamCutTranslation
 import D5.S3.ConceptDynamics.Coding.StandardBeamPushforward
 

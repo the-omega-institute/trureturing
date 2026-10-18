@@ -1,7 +1,10 @@
-/- SOURCE ONLY. UNCOMPILED. Genuine per-period calibration in any actual
-finite coefficient basis, derived through the existing two-triangle square.
-The endpoint chart terms are displayed before cancellation.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/PresentationTimeCochain
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/PresentationTimeCochain
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The same time/id edge in every finite presentation basis measures actual primitive-orbit count. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.RankedTimeRecoding
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualWordEnumeratedLoop
 

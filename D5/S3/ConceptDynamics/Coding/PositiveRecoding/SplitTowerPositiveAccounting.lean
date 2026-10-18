@@ -1,6 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Actual finite tower-to-word construction.
-Forward corrections count incoming stages; inverse corrections count outgoing
-stages. Neither desired total correction nor a word equality is a hypothesis. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/SplitTowerPositiveAccounting
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/SplitTowerPositiveAccounting
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Count the signed corrections of every actual split tower. -/
+
+/- Forward corrections count incoming stages; reverse corrections count outgoing stages. Terminal accounting retains both actual counts. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.TypedPositiveSplitWord
 
 set_option autoImplicit false

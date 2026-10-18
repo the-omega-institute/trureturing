@@ -1,7 +1,12 @@
-/- SOURCE ONLY. Every new Lean declaration is UNCOMPILED.
-Consumes the completed response P_B, without redoing table locality.
-Imports OriginalResponse* from the authorized completed predecessor directory;
-those files are unchanged and are not copied into this target. -/
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponseOutSplitConsumer
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseRealization/ResponseOutSplitConsumer
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The actual numbered response output admits its first strict outgoing split and a shortened total inverse table. -/
+
+/- Use the actual numbered response code and its completed first strict outgoing step. Recovery is total on the split target histories. -/
 import D5.S3.ConceptDynamics.Coding.ResponseGraphs.OriginalResponseGraph
 import D5.S3.ConceptDynamics.Coding.TwoSidedFiniteInduction
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.OutSplitNumberedRecoding
@@ -96,19 +101,6 @@ def splitRecover :=
     (numberedRecover G pair (local_of_conjugacy hG hG pair S).seamF)
     (responseInverseTable G pair hG S)
 
-/-- The new step preserves the literal original-h diagram inherited from
-P_B; this helper is consumed by the original-domain example below. -/
-theorem response_square (x : History G) :
-    splitOutput G pair hG S
-      (ActualOutSplit.lift (countedGraph G pair)
-        (responseCode G pair (local_of_conjugacy hG hG pair S).seamG).edge
-        (numberedLift G pair x)) = ActualOutSplit.lift G id (S.forward x) := by
-  let C := local_of_conjugacy hG hG pair S
-  obtain ⟨_,_,hp,_,_,_,_,_⟩ := numbered_response_reduction G pair hG S
-  change OutSplitConjugacyDecrease.changed (responseCode G pair C.seamG)
-    (numberedOutput G pair S C.seamG) _ = _
-  rw [OutSplitConjugacyDecrease.square]
-  exact congrArg (ActualOutSplit.lift G id) (hp x)
 
 theorem response_recovery (z : History (ActualOutSplit.graph G id)) (t : ℤ) :
     splitRecover G pair hG S

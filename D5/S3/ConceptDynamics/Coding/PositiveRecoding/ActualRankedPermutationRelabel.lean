@@ -1,7 +1,12 @@
-/- SOURCE ONLY, UNCOMPILED. A permutation half-edge is unique, including
-when there are no vertices; arbitrary Q fibres can be empty.
-Every numbered product edge uses the ORIGINAL ranked split/join.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRankedPermutationRelabel
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRankedPermutationRelabel
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Ranked permutation factors as actual graph relabelings. -/
+
+/- The permutation half-edge is unique. Arbitrary complementary fibers may be empty; every product edge uses the existing ranked split/join. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualRelabelParallelPhase
 
 set_option autoImplicit false

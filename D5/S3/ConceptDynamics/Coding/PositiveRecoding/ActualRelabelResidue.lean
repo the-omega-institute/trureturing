@@ -1,7 +1,12 @@
-/- SOURCE ONLY, UNCOMPILED. The exact actual counted relabel comparison.
-The factors are constructed from r.vertex, and B is derived from r.edge.
-No graph matrix is identified with a literal signed 8 by 8 matrix.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelResidue
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelResidue
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual relabel row matrices equal the reduced forward gyration. -/
+
+/- Construct both factors from the actual vertex bijection and derive target adjacency from the edge bijection. Standard coordinates use the row convention. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualRankedPermutationRelabel
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualWordMatrixPath
 

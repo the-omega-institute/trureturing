@@ -1,6 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Counts and paired kinds for the EXISTING reduce.
-This does not strengthen Terminal by a new input hypothesis, and does not
-replace reduce by a newly assumed or independently supplied paired chain. -/
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseRealization/ConstructedTowerProfiles
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseRealization/ConstructedTowerProfiles
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The existing two-sided reduction has paired split kinds and exact incoming and outgoing counts on both constructed towers. -/
+
+/- Count incoming and outgoing steps and pair the split kinds of the towers constructed by the existing reduce recursion. No paired-chain premise is added. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.SplitTowerPositiveAccounting
 import D5.S3.ConceptDynamics.Coding.ResponseRealization.ResponseTwoSidedConsumer
 
@@ -89,21 +95,6 @@ theorem reduce_profile : ∀ (k : ℕ) (F H : Presentation) (c : Code F.graph H.
         rw [Nat.strongRecOn_eq]
         exact ⟨rfl,rfl,rfl,rfl,rfl⟩
 
-/-- The requested -k is now a conclusion for the constructed reduction,
-not a law postulated for arbitrary towers of equal length. -/
-theorem reduce_literal (k : ℕ) (F H : Presentation) (c : Code F.graph H.graph)
-    (P : Hist F ≃ₜ Hist H) (hP : ∀ x t, (P x).val t = c.edge (x.val t))
-    (M N : ℕ) (Q : LegalWord H.graph (M+N+1) → F.E)
-    (hQ : ∀ y t, Q (historyWindow H.graph y (t-(M:ℤ)) (M+N+1)) = (P.symm y).val t)
-    (hk : M+N = k) (x : Hist F) :
-    P x = time H.graph (-(k:ℤ))
-      ((terminalWord (reduce k F H c P hP M N Q hQ hk)).eval x) := by
-  let r := reduce k F H c P hP M N Q hQ hk
-  have hr := reduce_profile k F H c P hP M N Q hQ hk
-  have he : -(inCount r.left : ℤ)-(outCount r.right : ℤ) = -(k:ℤ) := by
-    rw [hr.1,hr.2.2.2.1]
-    omega
-  simpa only [he] using terminal_literal r x
 
 section Response
 open OriginalResponseNumbering ResponseOutSplitConsumer ResponseTwoSidedConsumer

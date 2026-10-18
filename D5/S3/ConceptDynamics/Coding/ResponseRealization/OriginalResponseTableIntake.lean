@@ -1,13 +1,12 @@
-/-
-SOURCE ONLY, UNCOMPILED. Consumed intake of the authorized predecessor's
-finite-table extraction; not a new locality or table-extraction result.
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseRealization/OriginalResponseTableIntake
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseRealization/OriginalResponseTableIntake
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Original automorphism windows yield total finite tables and the same actual forward and inverse history maps. -/
 
-The predecessor mechanism is retained: choose an actual realization of each
-word, apply the original automorphism, and use accepted Controls. This small
-slice avoids importing its unrelated uncompiled line-split code. Explicit
-topology parameters and the two coordinate equalities below repair the
-source-level integration; no compiler acceptance is asserted.
--/
+/- Reuse the realization-based finite tables of the original automorphism and its inverse. Keep the same TablePair and SameTableConjugacy witness. -/
 import D5.S3.ConceptDynamics.Coding.ResponseGraphs.OriginalResponseGraph
 
 set_option autoImplicit false

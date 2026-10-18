@@ -1,8 +1,10 @@
-/- UNCOMPILED SOURCE CANDIDATE. No Lean/kernel/axiom/Reg/CI acceptance.
-Intended owner: D5/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamColimit.lean
-Depends on the companion CountedMatrixBeamDiagram and unchanged suppliers at
-16002abdb6569c0a6ce86679f021c3acf002c07e.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamColimit
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/BeamColimits/CountedMatrixBeamColimit
+   mirror-E: none(waiver:symbolic-structural-theorems)
+   anchors: []
+   utility: none
+   digest: Actual counted beam images and right-row colimit transport with the exact inverse cut. -/
 import D5.S3.ConceptDynamics.Coding.BeamColimits.CountedMatrixBeamDiagram
 
 set_option autoImplicit false
@@ -115,20 +117,6 @@ def rowInverse {n m : ℕ} (R : CountMat n m) (S : CountMat m n) :
   simp only [rowInverse, stage, Module.DirectLimit.lift_of, LinearMap.comp_apply,
     rightRow, Matrix.toLinearMapRight'_apply]
 
-theorem rowInverse_intStage {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
-    (N : ℤ) (w : Fin m → ℤ) :
-    rowInverse R S (intStage (rowTransition (countedGraph (S * R))) N w) =
-      intStage (rowTransition (countedGraph (R * S))) (N + 1) (w ᵥ* integerCounts S) := by
-  let K := N.toNat
-  have hNK : N ≤ (K : ℤ) := by dsimp [K]; omega
-  rw [intStage_at (rowTransition (countedGraph (S * R))) N K hNK, rowInverse_stage]
-  change stage (rowTransition (countedGraph (R * S))) (K + 1)
-      (rightRow S (((rowTransition (countedGraph (S * R))) ^ ((K : ℤ) - N).toNat) w)) = _
-  rw [rightRow_power S R]
-  rw [intStage_at (rowTransition (countedGraph (R * S))) (N + 1) (K + 1) (by omega)]
-  have he : (((K + 1 : ℕ) : ℤ) - (N + 1)).toNat = ((K : ℤ) - N).toNat := by omega
-  rw [he]
-  rfl
 
 theorem rowInverse_left {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
     (x : RowLimit (countedGraph (R * S))) : rowInverse R S (rowMap R S x) = x := by
@@ -157,23 +145,7 @@ def rowEquiv {n m : ℕ} (R : CountMat n m) (S : CountMat m n) :
   left_inv := rowInverse_left R S
   right_inv := rowInverse_right R S
 
-/-- The SAME-CUT reverse coding is Theta, not the identity, on composition. -/
-theorem reverse_rowMap_comp {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
-    (x : RowLimit (countedGraph (R * S))) :
-    rowMap S R (rowMap R S x) = Theta (rowTransition (countedGraph (R * S))) x := by
-  obtain ⟨N, z, hz⟩ := Module.DirectLimit.exists_of x
-  change stage (rowTransition (countedGraph (R * S))) N z = x at hz
-  rw [← hz, rowMap_stage, rowMap_stage, Theta_stage]
-  exact congrArg (stage (rowTransition (countedGraph (R * S))) N)
-    (rightRow_product R S z)
 
-/-- Composing reverse coding with the proper inverse-cut correction. This
-also records the existing intStage_shift direction, rather than choosing it. -/
-theorem reverse_rowMap_intStage {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
-    (N : ℤ) (z : Fin n → ℤ) :
-    rowMap S R (rowMap R S (intStage (rowTransition (countedGraph (R * S))) N z)) =
-      intStage (rowTransition (countedGraph (R * S))) (N - 1) z := by
-  rw [reverse_rowMap_comp, ← intStage_shift]
 
 section ActualBeams
 variable {n m : ℕ} (R : CountMat n m) (S : CountMat m n)
@@ -237,34 +209,8 @@ theorem elementaryBeamEquiv_object (A : Object (countedGraph (R * S))) :
   rw [elementaryBeamEquiv_coordinate, F_objectGroup, F_objectGroup,
     actual_object_coordinate R S hA hB]
 
-private theorem value_singleton (G : DirectedMultigraph (Fin n) (Edge (R * S)))
-    (U : Beam G) : objectValue G (singleton G U) = beamCoordinate G U := by
-  unfold objectValue
-  letI : Subsingleton (singleton G U).Tag := inferInstanceAs (Subsingleton PUnit)
-  exact Fintype.sum_subsingleton
-    (fun i : (singleton G U).Tag => beamCoordinate G ((singleton G U).beam i))
-    (PUnit.unit : (singleton G U).Tag)
 
-/-- Every original signed-cut ray generator has the demanded basis-row
-formula, with no transpose or hidden stage offset. -/
-theorem elementaryBeamEquiv_ray (alpha : Path (R * S)) (N : ℤ) :
-    let U : Beam (countedGraph (R * S)) :=
-      ⟨ray (countedGraph (R * S)) alpha N, N, ray_atCut _ hA alpha N⟩
-    F (countedGraph (S * R)) hB
-      (elementaryBeamEquiv R S hA hB (objectGroup _ hA (singleton _ U))) =
-        intStage (rowTransition (countedGraph (S * R))) N
-          ((Pi.single (endpoint (countedGraph (R * S)) alpha N) 1) ᵥ* integerCounts R) := by
-  dsimp only
-  rw [elementaryBeamEquiv_coordinate, F_objectGroup, value_singleton]
-  rw [beamCoordinate_at _ hA _ N (ray_atCut _ hA alpha N),
-    coordinateAt_ray _ hA alpha N, rowMap_intStage]
 
-theorem elementaryBeamEquiv_inverse_coordinate (x : BeamGroup (countedGraph (S * R)) hB) :
-    F (countedGraph (R * S)) hA ((elementaryBeamEquiv R S hA hB).symm x) =
-      rowInverse R S (F (countedGraph (S * R)) hB x) := by
-  change (beamRowEquiv _ hA)
-      ((beamRowEquiv _ hA).symm ((rowEquiv R S).symm ((beamRowEquiv _ hB) x))) = _
-  exact (beamRowEquiv _ hA).apply_symm_apply _
 
 end ActualBeams
 end D5.S3.ConceptDynamics.Coding.CountedMatrixBeamColimit

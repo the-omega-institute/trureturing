@@ -1,6 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Actual response-output positive word and shift.
-The uncentred input U is explicit but is NOT claimed to be a positive word.
-Its identification with the iterated full outgoing input remains external. -/
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseRealization/ResponsePositiveShiftConsumer
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseRealization/ResponsePositiveShiftConsumer
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The constructed response-output positive word has its exact letter count and literal negative time correction on all histories. -/
+
+/- Construct the response-output positive word and its signed correction. The original-domain input identification is supplied by FullOutResponseIdentification. -/
 import D5.S3.ConceptDynamics.Coding.ResponseRealization.ConstructedTowerProfiles
 import D5.S3.ConceptDynamics.Coding.ResponseRealization.CentredResponseCorrection
 
@@ -51,40 +57,5 @@ theorem original_centred (x : History G) :
   rw [← hp x]
   exact output_literal G hG pair S (numberedLift G pair x)
 
-/-- U commutes with integer time by its ACTUAL future-block coordinates.
-No full-outgoing graph equivalence or word representation for U is used. -/
-theorem uncentred_time (s : ℤ) (x : History G) :
-    CentredResponseCorrection.uncentred G pair (time G s x) =
-      time (countedGraph G pair) s (CentredResponseCorrection.uncentred G pair x) := by
-  apply Subtype.ext
-  funext t
-  apply (edgeEquiv G pair).injective
-  change edgeEquiv G pair ((CentredResponseCorrection.uncentred G pair (time G s x)).val t) =
-    edgeEquiv G pair ((CentredResponseCorrection.uncentred G pair x).val (t+s))
-  rw [CentredResponseCorrection.uncentred_coordinate,CentredResponseCorrection.uncentred_coordinate]
-  congr 1
-  apply legalWord_ext
-  funext j
-  change x.val (t+(j.val:ℤ)+s) = x.val (t+s+(j.val:ℤ))
-  exact congrArg x.val (by omega)
 
-/-- Compose ONLY the already constructed U centring law with the now
-constructed response-output word. The full original input word is NOT a
-hypothesis and is NOT a conclusion. The resulting sign is literally -a-k. -/
-theorem original_uncentred (x : History G) :
-    S.forward x = time G (-(a:ℤ)-(((a+c)+(b+d+1):ℕ):ℤ))
-      ((word G hG pair S).eval (CentredResponseCorrection.uncentred G pair x)) := by
-  rw [original_centred G hG pair S x,
-    CentredResponseCorrection.centred_eq_uncentred_negative,uncentred_time,
-    ]
-  have ht := Word.eval_time (word G hG pair S) (-(a:ℤ))
-    (CentredResponseCorrection.uncentred G pair x)
-  refine (congrArg (time G (-(((a+c)+(b+d+1):ℕ):ℤ))) ht).trans ?_
-  let y : History G := (word G hG pair S).eval (CentredResponseCorrection.uncentred G pair x)
-  change time G (-(((a+c)+(b+d+1):ℕ):ℤ)) (time G (-(a:ℤ)) y) = _
-  apply Subtype.ext
-  funext t
-  change y.val (t+(-(((a+c)+(b+d+1):ℕ):ℤ))+(-(a:ℤ))) =
-    y.val (t+(-(a:ℤ)-(((a+c)+(b+d+1):ℕ):ℤ)))
-  exact congrArg y.val (by omega)
 end D5.S3.ConceptDynamics.Coding.ResponsePositiveShiftConsumer

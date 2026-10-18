@@ -719,27 +719,9 @@ theorem residueCharacter_plus_factorization (u : Plus4ˣ)
     plusCharacterK_alpha, plusCharacterK_B, nsmul_eq_mul, Nat.cast_ofNat, hthree,
     mul_zero, mul_one, zero_mul, zero_add, add_zero]
 
-/-- Descend the actual oriented residue character through powers of any unit
-on which it vanishes. The subgroup is the literal `Subgroup.zpowers t`. -/
-def vanishingResidueQuotientCharacter (t : (Common 4)ˣ)
-    (ht : residueCharacter (Additive.ofMul t) = 0) :
-    Additive ((Common 4)ˣ ⧸ Subgroup.zpowers t) →+ ZMod 3 := by
-  have hker : Subgroup.zpowers t ≤ residueCharacter.toMultiplicativeRight.ker := by
-    apply Subgroup.zpowers_le.mpr
-    change Multiplicative.ofAdd (residueCharacter (Additive.ofMul t)) = 1
-    exact congrArg (fun a : ZMod 3 => Multiplicative.ofAdd a) ht
-  exact (QuotientGroup.lift (Subgroup.zpowers t)
-    residueCharacter.toMultiplicativeRight hker).toAdditiveLeft
 
-/-- On every actual plus-order unit, the quotient character computes to the
-same oriented character of its literal common residue. -/
-theorem vanishingResidueQuotientCharacter_plus (t : (Common 4)ˣ)
-    (ht : residueCharacter (Additive.ofMul t) = 0) (u : (Plus 4)ˣ) :
-    vanishingResidueQuotientCharacter t ht
-      (Additive.ofMul ((QuotientGroup.mk' (Subgroup.zpowers t))
-        (Units.map (rplus 4).toMonoidHom u))) =
-      residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom u)) := by
-  rfl
+
+
 
 /-- Compatibility consumer. The hypothesis is literal equality
 of residues under the existing rplus/rminus maps, not a rho-image premise. -/

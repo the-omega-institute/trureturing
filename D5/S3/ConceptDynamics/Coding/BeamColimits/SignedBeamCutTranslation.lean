@@ -1,5 +1,10 @@
-/- SOURCE ONLY. UNCOMPILED. Integer time acts by subtraction on ray cuts.
-Intended owner: D5/S3/ConceptDynamics/Coding/BeamColimits/SignedBeamCutTranslation.lean -/
+/- GID: D5/S3/ConceptDynamics/Coding/BeamColimits/SignedBeamCutTranslation
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/BeamColimits/SignedBeamCutTranslation
+   mirror-E: none(waiver:symbolic-structural-theorems)
+   anchors: []
+   utility: none
+   digest: Signed time transports actual beam cuts by subtraction on the existing row colimit. -/
 import D5.S3.ConceptDynamics.Coding.BeamColimits.PositiveWordBeamTransport
 
 set_option autoImplicit false

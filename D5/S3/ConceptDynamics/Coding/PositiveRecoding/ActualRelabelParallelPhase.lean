@@ -1,7 +1,12 @@
-/- Parallel-edge discrepancies on the original canonical path basis.
-The actual phase is compared on the original primitive paths and PathBasis.
-The vanishing proof is reused at its ORIGINAL declaration, never duplicated.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelParallelPhase
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualRelabelParallelPhase
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Parallel-edge discrepancy on the original primitive path basis. -/
+
+/- Compare the actual discrepancy on the original primitive paths and canonical PathBasis. Reuse the existing parallel-edge vanishing theorem. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.CountedRelativeGyrationTransport
 import D5.S3.ConceptDynamics.Coding.CountedPositiveTriangleModThree
 

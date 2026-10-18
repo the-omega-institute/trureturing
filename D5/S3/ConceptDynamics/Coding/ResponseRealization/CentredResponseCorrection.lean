@@ -1,6 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Exact response centring correction.
-This proves the correction on the actual numbered response lift. It does
-NOT identify the iterated full-out input composite with this lift. -/
+/- GID: D5/S3/ConceptDynamics/Coding/ResponseRealization/CentredResponseCorrection
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseRealization/CentredResponseCorrection
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The numbered response lift is uncentred by a forward translation and recovered by the literal negative centring correction. -/
+
+/- The numbered response lift is recovered from the actual uncentred lift by negative centring time. Histories and their full legal response words retain the same integer coordinates. -/
 import D5.S3.ConceptDynamics.Coding.ResponseGraphs.OriginalResponseGraph
 
 set_option autoImplicit false

@@ -1,6 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Construction-internal integer time laws.
-The sign convention is always (tau a x)_t = x_(t+a).
-No time-commutation premise is introduced. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/SplitTowerTranslation
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/SplitTowerTranslation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Derive integer-time laws inside the actual recoding constructions. -/
+
+/- The signed convention is (translate a x)_t = x_(t+a). Time equivariance is derived for the actual relabel and split constructions. -/
 import D5.S3.ConceptDynamics.Coding.TwoSidedFiniteInduction
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.InSplitNumberedRecoding
 import D5.S3.ConceptDynamics.Coding.StandardBeamHomeomorphisms
@@ -20,9 +26,6 @@ abbrev time {V E : Type*} (G : DirectedMultigraph V E) :=
   StandardBeamHomeomorphisms.translate G
 abbrev counted {n : ℕ} (B : CountMat n n) := InSplitNumberedRecoding.counted B
 
-/-- Both previously supplied translations have exactly the same coordinates. -/
-theorem counted_time {n : ℕ} (B : CountMat n n) (a : ℤ) (x : Path B) :
-    time (counted B) a x = NumberedPositiveInverseLaws.translate B a x := rfl
 
 section Relabel
 variable {V E W D : Type*} {G : DirectedMultigraph V E} {H : DirectedMultigraph W D}
@@ -43,29 +46,11 @@ end Relabel
 section Split
 variable {V E L : Type*} (G : DirectedMultigraph V E) (p : E → L)
 
-theorem outgoing_lift_time (a : ℤ) (x : History G) :
-    ActualOutSplit.lift G p (time G a x) =
-      time (ActualOutSplit.graph G p) a (ActualOutSplit.lift G p x) := by
-  apply Subtype.ext
-  funext t
-  apply ActualOutSplit.edge_ext G p
-  · rfl
-  · change p (x.val (t+1+a)) = p (x.val (t+a+1))
-    exact congrArg (fun s : ℤ => p (x.val s)) (by omega)
 
 theorem outgoing_forget_time (a : ℤ) (z : History (ActualOutSplit.graph G p)) :
     ActualOutSplit.forget G p (time (ActualOutSplit.graph G p) a z) =
       time G a (ActualOutSplit.forget G p z) := rfl
 
-theorem incoming_lift_time (a : ℤ) (x : History G) :
-    ActualInSplit.lift G p (time G a x) =
-      time (ActualInSplit.graph G p) a (ActualInSplit.lift G p x) := by
-  apply Subtype.ext
-  funext t
-  apply ActualInSplit.edge_ext G p
-  · change p (x.val (t-1+a)) = p (x.val (t+a-1))
-    exact congrArg (fun s : ℤ => p (x.val s)) (by omega)
-  · rfl
 
 theorem incoming_forget_time (a : ℤ) (z : History (ActualInSplit.graph G p)) :
     ActualInSplit.forget G p (time (ActualInSplit.graph G p) a z) =
@@ -80,15 +65,5 @@ theorem positive_time (a : ℤ) (x : Path (R*S)) :
       time (counted (S*R)) a (elementaryHomeomorph R S x) :=
   NumberedPositiveInverseLaws.positive_translate R S a x
 
-/-- The actual inverse also commutes with every integer time, derived from
-bijectivity and the positive coordinate theorem, rather than assumed. -/
-theorem positive_inverse_time (a : ℤ) (z : Path (S*R)) :
-    (elementaryHomeomorph R S).symm (time (counted (S*R)) a z) =
-      time (counted (R*S)) a ((elementaryHomeomorph R S).symm z) := by
-  apply (elementaryHomeomorph R S).injective
-  exact ((elementaryHomeomorph R S).apply_symm_apply _).trans
-    ((positive_time R S a ((elementaryHomeomorph R S).symm z)).trans
-      (congrArg (time (counted (S*R)) a)
-        ((elementaryHomeomorph R S).apply_symm_apply z))).symm
 end Positive
 end D5.S3.ConceptDynamics.Coding.SplitTowerTranslation

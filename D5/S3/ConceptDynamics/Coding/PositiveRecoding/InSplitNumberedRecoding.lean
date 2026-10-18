@@ -1,5 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Incoming split uses the established rectangular
-half-edge fibre enumerator and counted split/join, not duplicate ranking. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/InSplitNumberedRecoding
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/InSplitNumberedRecoding
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Number the actual incoming split and retain its time correction. -/
+
+/- Incoming split numbering uses the existing rectangular fiber enumerator and counted split/join. Lift carries a negative unit-time correction; forget uses the opposite positive recoding. -/
 import D5.S3.ConceptDynamics.Coding.TwoSidedFiniteInduction
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.OutSplitNumberedRecoding
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.FiniteGraphRelabelHomeomorph

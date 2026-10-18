@@ -1,11 +1,10 @@
-/- SOURCE ONLY — UNCOMPILED.
-Actual finite graph adjacency, actual relabel factors and actual positive
-Word constructors are translated into FiniteKernelLadder.Path.
-
-The matrix weight is NOT identified here with P1.localizedCochain. The
-missing relabel-residue comparison is stated in first-residual.md, outside
-Lean; it is neither an assumption nor an axiom in this file.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordMatrixPath
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordMatrixPath
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual finite graph words give chronological rectangular RS paths and exact scalar-extended endpoint maps. -/
 import D5.S3.ConceptDynamics.Coding.FiniteKernelLadder
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualPositiveWordPeriodicCochain
 import D5.S3.ConceptDynamics.Coding.BeamColimits.PositiveWordBeamTransport
@@ -167,20 +166,6 @@ theorem vertex_matrix (F : Presentation) :
   change (vertex F).matrix = _ at h
   exact h.trans (counted_matrix (ActualPositiveWordPeriodicCochain.matrix F))
 
-theorem vertex_matrix_entry (F : Presentation)
-    (i j : Fin (Fintype.card F.V)) :
-    (vertex F).matrix i j = algebraMap ℤ D
-      (StandardBeamEndpointRows.adjacency F.graph
-        ((ActualPositiveWordPeriodicCochain.chart F).vertex i)
-        ((ActualPositiveWordPeriodicCochain.chart F).vertex j)) := by
-  rw [vertex_matrix]
-  have h := relabel_adjacency (ActualPositiveWordPeriodicCochain.chart F) i
-    ((ActualPositiveWordPeriodicCochain.chart F).vertex j)
-  rw [Equiv.symm_apply_apply] at h
-  change StandardBeamEndpointRows.adjacency
-    (CountedMatrixBeamDiagram.countedGraph (ActualPositiveWordPeriodicCochain.matrix F)) i j = _ at h
-  rw [CountedMatrixBeamDiagram.adjacency_counted] at h
-  exact congrArg (algebraMap ℤ D) h
 
 /-- Relabel leaves cost one RS edge; positive leaves cost three because both
 actual chart arrows are retained. This length is not Word.letters. -/
@@ -269,11 +254,5 @@ theorem endpointMap_cast : ∀ {F H : Presentation} (w : Word F H) (z : F.V → 
       change endpointMap v (endpointMap u (fun i => algebraMap ℤ D (z i))) = _
       rw [endpointMap_cast u z, endpointMap_cast v] <;> rfl
 
-theorem dictionary_forwardRows {F H : Presentation} (w : Word F H) :
-    (dictionary w).forwardRows = rows (presentationBasis F) (presentationBasis H)
-      (endpointMap w) := by
-  unfold SourceOnly.FiniteKernelLadder.Path.forwardRows
-  rw [dictionary_forward]
-  rfl
 
 end SourceOnly.ActualWordMatrixPath

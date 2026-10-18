@@ -1,3 +1,11 @@
+/- GID: D5/S3/ConceptDynamics/Coding/OriginalRoot/CentralizerTimePowers
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/OriginalRoot/CentralizerTimePowers
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Signed integer time powers of a triangle cocycle on monoid units. -/
+
 /- SOURCE ONLY. UNCOMPILED. A consumed algebraic helper. It applies the
 EXISTING centralizer_product body, with its original triangle hypothesis.
 No numerical cochain calibration is assumed or defined into B.

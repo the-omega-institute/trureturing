@@ -1,4 +1,12 @@
-/- SOURCE ONLY. UNCOMPILED. Transport by actual finite graph bijections. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/FiniteGraphRelabelHomeomorph
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/FiniteGraphRelabelHomeomorph
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Relabel actual graph histories by vertex and edge equivalences. -/
+
+/- Graph relabels act coordinatewise on integer-indexed histories. The homeomorphism requires discrete edge topologies, without a finiteness premise. -/
 import D5.S3.ConceptDynamics.Coding.TwoSidedFiniteInduction
 
 set_option autoImplicit false

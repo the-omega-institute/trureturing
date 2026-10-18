@@ -1,7 +1,10 @@
-/- SOURCE ONLY. UNCOMPILED. The OLD basis below is the actual P1 outOld
-chart, and the NEW basis is a supplied literal vertex enumeration. The
-history cochain is P1.localizedCochain, not a cochain defined from a unit.
--/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordEnumeratedLoop
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/ActualWordEnumeratedLoop
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual positive-word loop transport to literal vertex coordinates with both endpoint corrections. -/
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.BasedLoopCoordinateTransport
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.ActualWordRelabelAssembly
 

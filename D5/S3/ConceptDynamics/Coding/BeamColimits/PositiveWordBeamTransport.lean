@@ -1,6 +1,10 @@
-/- SOURCE ONLY. UNCOMPILED. Functorial transport of the existing dependent
-positive Word on actual beams and the native integer row colimits.
-Intended owner: D5/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordBeamTransport.lean -/
+/- GID: D5/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordBeamTransport
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/BeamColimits/PositiveWordBeamTransport
+   mirror-E: none(waiver:symbolic-structural-theorems)
+   anchors: []
+   utility: none
+   digest: Dependent positive words transport actual beams and integer endpoint rows functorially. -/
 import D5.S3.ConceptDynamics.Coding.BeamColimits.FiniteRelabelBeamTransport
 
 set_option autoImplicit false
@@ -204,14 +208,5 @@ theorem beamEquiv_object {F H : Presentation} (w : Word F H) (A : Object F.graph
   apply F_injective H.graph H.essential
   rw [beamEquiv_coordinate, F_objectGroup, F_objectGroup, object_coordinate]
 
-/-- Every signed-cut ray of every actual word has its same-cut finite row. -/
-theorem ray_coordinate {F H : Presentation} (w : Word F H) (alpha : Hist F) (N : ℤ) :
-    let U : Beam F.graph := ⟨ray F.graph alpha N, N, ray_atCut _ F.essential alpha N⟩
-    beamCoordinate H.graph (imageBeam w U) =
-      intStage (rowTransition H.graph) N
-        (endpointMap w (Pi.single (endpoint F.graph alpha N) 1)) := by
-  dsimp only
-  rw [beam_coordinate, beamCoordinate_at _ F.essential _ N (ray_atCut _ F.essential alpha N),
-    coordinateAt_ray _ F.essential, rowEquiv_intStage]
 
 end D5.S3.ConceptDynamics.Coding.PositiveWordBeamTransport

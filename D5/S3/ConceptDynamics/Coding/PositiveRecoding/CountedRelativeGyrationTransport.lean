@@ -1,7 +1,12 @@
-/- SOURCE ONLY, UNCOMPILED. Extension of CountedOriginalOrbitGyration.
-The orbit quotient, least rotations and phase uniqueness are the supplier's
-actual primitive Path objects. No new invariant or representative selector.
-All equalities below are intended proof text; no elaboration has been run. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/CountedRelativeGyrationTransport
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/CountedRelativeGyrationTransport
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Transport forward orbit phases under timed history equivalences. -/
+
+/- Use the existing actual primitive paths, orbit quotient and canonical least-word basis. Offsets are forward phases; general transport laws allow every nonzero period. -/
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
 import D5.S3.ConceptDynamics.Coding.CountedPositiveTriangleModThree
 import D5.S3.ConceptDynamics.Coding.PositiveRecoding.SplitTowerTranslation
@@ -64,18 +69,6 @@ theorem minimalPeriod (u : TimedEquiv A B) (x : Path A) :
   · intro hk
     exact ((u.semiconj.iterate_right k) x).symm.trans (congrArg u.equiv hk)
 
-def periodicEquiv (u : TimedEquiv A B) (d : ℕ) : PeriodicPath A d ≃ PeriodicPath B d where
-  toFun x := ⟨u.equiv x.val,by
-    rw [Function.isPeriodicPt_iff_minimalPeriod_dvd,u.minimalPeriod]
-    exact x.property.minimalPeriod_dvd⟩
-  invFun y := ⟨u.equiv.symm y.val,by
-    rw [Function.isPeriodicPt_iff_minimalPeriod_dvd]
-    have h := u.minimalPeriod (u.equiv.symm y.val)
-    rw [u.equiv.apply_symm_apply] at h
-    rw [← h]
-    exact y.property.minimalPeriod_dvd⟩
-  left_inv x := Subtype.ext (u.equiv.symm_apply_apply x.val)
-  right_inv y := Subtype.ext (u.equiv.apply_symm_apply y.val)
 
 def primitiveEquiv (u : TimedEquiv A B) (d : ℕ) : PrimitivePath A d ≃ PrimitivePath B d where
   toFun x := ⟨u.equiv x.val,(u.minimalPeriod x.val).trans x.property⟩

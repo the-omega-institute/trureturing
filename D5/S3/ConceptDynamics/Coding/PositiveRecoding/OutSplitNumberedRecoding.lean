@@ -1,6 +1,12 @@
-/- SOURCE ONLY. ALL NEW LEAN UNCOMPILED.
-Rectangular half-edge fibres and the exact positive future recoding for
-ActualOutSplit. Empty endpoint fibres and parallel edges are retained. -/
+/- GID: D5/S3/ConceptDynamics/Coding/PositiveRecoding/OutSplitNumberedRecoding
+   generality: G
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PositiveRecoding/OutSplitNumberedRecoding
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Number rectangular edge fibers for the actual outgoing split. -/
+
+/- Rectangular endpoint fibers retain empty fibers and every parallel edge. The numbered positive future recoding agrees with the actual outgoing lift. -/
 import D5.S3.ConceptDynamics.Coding.TwoSidedFiniteInduction
 import Mathlib.Logic.Equiv.Sum
 
@@ -52,15 +58,6 @@ theorem encode_endpoints (a : A) :
   rw [(decode iv jv s t).apply_symm_apply] at h
   exact ⟨h.1.symm,h.2.symm⟩
 
-theorem zero_fibre (i : Fin n) (j : Fin m) :
-    matrix iv jv s t i j = 0 ↔ ¬ ∃ a, iv (s a) = i ∧ jv (t a) = j := by
-  change Fintype.card (Fibre iv jv s t i j) = 0 ↔ _
-  rw [Fintype.card_eq_zero_iff]
-  constructor
-  · intro h ⟨a,hi,hj⟩
-    exact h.false ⟨a,Prod.ext hi hj⟩
-  · intro h
-    exact ⟨fun a => h ⟨a.val,congrArg Prod.fst a.property,congrArg Prod.snd a.property⟩⟩
 end Rect
 
 variable {V E L : Type*} [Fintype V] [Fintype E] [Fintype L]
@@ -205,53 +202,8 @@ theorem new_endpoints (a : Edge (S G p * R G p)) :
     rw [hu]
     exact r_target G p (split (S G p) (R G p) a).2
 
-/-- Restrict the actual endpoint-preserving decoding to any one fibre.
-This includes a literal Fin 0 domain when that fibre is empty. -/
-private def endpointFibreEquiv {I A : Type*} {n : ℕ}
-    (F : DirectedMultigraph I A) (iv : I ≃ Fin n) (B : CountMat n n)
-    (e : Edge B ≃ A)
-    (he : ∀ a, iv (F.source (e a)) = a.source ∧ iv (F.target (e a)) = a.target)
-    (i j : Fin n) : Fin (B i j) ≃
-      {a : A // iv (F.source a) = i ∧ iv (F.target a) = j} := by
-  let f : Fin (B i j) → {a : A // iv (F.source a) = i ∧ iv (F.target a) = j} :=
-    fun k => ⟨e ⟨i,j,k⟩,he ⟨i,j,k⟩⟩
-  apply Equiv.ofBijective f
-  constructor
-  · intro k l h
-    have hh := e.injective (congrArg Subtype.val h)
-    apply Fin.ext
-    exact congrArg (fun a : Edge B => a.number.val) hh
-  · intro a
-    rcases hb : e.symm a.val with ⟨u,v,k⟩
-    have ha : e ⟨u,v,k⟩ = a.val := by
-      rw [← hb]
-      exact e.apply_symm_apply a.val
-    have hu : u = i := (he ⟨u,v,k⟩).1.symm.trans
-      ((congrArg (fun z => iv (F.source z)) ha).trans a.property.1)
-    have hv : v = j := (he ⟨u,v,k⟩).2.symm.trans
-      ((congrArg (fun z => iv (F.target z)) ha).trans a.property.2)
-    subst u
-    subst v
-    exact ⟨k,Subtype.ext ha⟩
 
-theorem old_product_count (i j : Fin (Fintype.card V)) :
-    (R G p * S G p) i j = Fintype.card
-      {e : E // oldNumber (V := V) (G.source e) = i ∧
-        oldNumber (V := V) (G.target e) = j} := by
-  classical
-  simpa only [Fintype.card_fin] using Fintype.card_congr
-    (endpointFibreEquiv G (oldNumber (V := V)) _ (oldEdgeEquiv G p)
-      (old_endpoints G p) i j)
 
-theorem new_product_count (i j : Fin (Fintype.card (ActualOutSplit.Vertex G p))) :
-    (S G p * R G p) i j = Fintype.card
-      {e : ActualOutSplit.SplitEdge G p //
-        newNumber G p ((ActualOutSplit.graph G p).source e) = i ∧
-        newNumber G p ((ActualOutSplit.graph G p).target e) = j} := by
-  classical
-  simpa only [Fintype.card_fin] using Fintype.card_congr
-    (endpointFibreEquiv (ActualOutSplit.graph G p) (newNumber G p) _
-      (newEdgeEquiv G p) (new_endpoints G p) i j)
 
 /-- An edge equivalence with explicit vertex numbering induces a literal
 numbered Path homeomorphism. Consumed for both products below. -/

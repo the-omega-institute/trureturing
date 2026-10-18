@@ -540,52 +540,10 @@ theorem original_localized_cube_factorization (h : ResetFullAut 4) :
     Units.val_pow_eq_pow_val, originalImage_val, rhoD_unitShift, rhoD_even] using he
 
 
-/-- The same real commuting unit and bounded exponents carry the native
-residue value. The quantifier is over ALL original ResetFullAut 4. -/
-theorem original_character_factorization (h : ResetFullAut 4) :
-    ∃ i j : Fin 3, ∃ v : Centralizer,
-      originalImage h = time^i.val * onePlusTime^j.val * v^3 ∧
-      residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom
-        (Units.map (plus 4).toMonoidHom (originalScalar h)))) =
-          (j.val : ZMod 3) := by
-  obtain ⟨i,j,v,hv,hres⟩ := localized_normal_form (originalScalar h)
-  refine ⟨i,j,evaluateCentralizer v,?_,hres⟩
-  simpa only [map_mul, map_pow, originalImage, time, onePlusTime] using
-    congrArg evaluateCentralizer hv
 
-private theorem originalScalar_unitShift_val :
-    (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) : QF 4) =
-      fp 4 X := by
-  apply (nativeIntEquiv 4 (by decide)).injective
-  calc
-    nativeIntEquiv 4 (by decide)
-        (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) : QF 4) =
-        rho 4 (by decide) (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))
-          (nativeIntEquiv 4 (by decide) 1) := by
-      simpa only [mul_one] using originalScalar_action
-        (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) (1 : QF 4)
-    _ = resetTheta 4 (nativeIntEquiv 4 (by decide) 1) :=
-      LinearMap.congr_fun (rho_unitShift 4 (by decide)) _
-    _ = nativeIntEquiv 4 (by decide) (fp 4 X) := by
-      simpa only [mul_one] using
-        ((native_presentation 4 (by decide)).2.1 (1 : QF 4)).symm
 
-/-- The residue of the ACTUAL original forward shift is annihilated.
-This is proved in the integral chart, before any dyadic localization. -/
-theorem original_time_residueCharacter_eq_zero :
-    residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom
-      (Units.map (plus 4).toMonoidHom
-        (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))))) = 0 := by
-  have hp : Units.map (plus 4).toMonoidHom
-      (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))) = alpha := by
-    apply Units.ext
-    change plus 4
-      (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) : QF 4) =
-        alpha.val
-    rw [originalScalar_unitShift_val]
-    rfl
-  rw [hp]
-  simpa only [Fin.val_zero, Nat.cast_zero] using residueCharacter_plus_factorization
-    alpha (1 : Fin 3) (0 : Fin 3) 1 (by simp)
+
+
+
 
 end D5.S3.ConceptDynamics.Coding.ResetQ4OriginalLocalizedCubes
