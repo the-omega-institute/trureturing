@@ -68193,3 +68193,155 @@ $$
 **来源与边界。** 式（441.1）使用经典 Fibonacci–Lucas 乘积恒等式；统一估计与周期提升分别直接复用 §§172、170。新增内容是这一实际异奇偶加法族与已有乘法估计、局部高赋值构造之间的参数衔接，不主张恒等式、秩估计或 Robin 方法的原创性。一般异奇偶双项和、任意五模式历史及全部整数的 Robin 判据仍未由此解决；本节为纸面应用，没有新增 Lean 核验。
 
 ## 追加锚（本行以下为增补区）
+
+## 442. 异奇偶双项的可变小约数切面与完整 Robin 尾段
+
+本节在同一个实际来源上复用 §175.1 的素数秩排除、[尺度几何卷命题 8.1](AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md) 的加层倍率与 §160.1 的 Axler 上界。固定正整数 $c$，记 $\varphi=(1+\sqrt5)/2$、$a_0=0.0094243$、$Z(n)=\sigma(n)/n$。这里控制完整约数响应，而不把五模式区间长度当成 Euler 权重。以下为已有结果的纸面应用，没有新增 Lean 声明或解析上界的原创性主张。
+
+**应用 442.1（指标差含可变小约数时的一致严格估计）。** 存在仅依赖 $c$ 的 $A_c$，使所有满足下列条件的整数 $a,b,d$，在 $a\ge A_c$ 时都有式（442.2）：
+
+$$
+a>b\ge2,\qquad k=a-b\ge3\text{ 为奇数},\qquad g=\gcd(a,b),
+$$
+
+$$
+d\ge5\text{ 为奇数},\qquad d\mid k,\qquad\gcd(d,g)=1,
+\qquad d\le\frac{\log\log a}{\log\varphi}.
+\tag{442.1}
+$$
+
+令 $V=F_a+F_b$、$n=cV$，则
+
+$$
+\boxed{\frac{Z(n)}{e^\gamma\log\log n}
+<1-\frac1{8c\log a}<1.}
+\tag{442.2}
+$$
+
+阈值对满足（442.1）的全部 $b,d$ 共同有效；$d$ 无须固定，$k$ 也无须为 $o(\log a)$。结论不认证 $a<A_c$ 的有限部分，也不允许 $c$ 随 $a$ 自由增长。
+
+证明。先从同一对指标提取一个实际缺失素数。奇数 $d\ge5$ 时 $F_d$ 有奇素因子：若 $3\nmid d$，则 $F_d>1$ 为奇数；否则 $d\ge9$，标准模四周期给 $F_d\equiv2\pmod4$ 且 $F_d>2$。选任意奇素数 $p\mid F_d$。若同时 $p\mid V$，由 $z(p)\mid d\mid k$ 与 §175.1，必有 $z(p)\mid g$，这与 $\gcd(d,g)=1$ 矛盾。因此
+
+$$
+p\nmid V,\qquad p\le F_d<\varphi^d\le\log a,
+\qquad v_p(n)=v_p(c)=:J.
+\tag{442.3}
+$$
+
+不向 $n/\varphi(n)$ 的真实乘积插入缺失素数。改为使用真实整数 $np$，直接将既有加层倍率用于指数 $J=v_p(c)$，得到
+
+$$
+\begin{aligned}
+\frac{Z(np)}{Z(n)}
+&=\frac{1-p^{-J-2}}{1-p^{-J-1}}\\
+&=1+\frac{(1-p^{-1})p^{-J-1}}{1-p^{-J-1}}
+\ge1+\frac1{2cp}
+\ge1+\frac1{2c\log a}.
+\end{aligned}
+\tag{442.4}
+$$
+
+这里使用 $p^J\le c$；$J=0$ 同样允许。对 $m=np$ 直接应用 §160.1 所引用的 [Axler 作者稿 v3](https://arxiv.org/pdf/2110.13478v3) 式（3.4）—（3.5）：当 $a$ 足够大时，$m$ 超过既有固定阈值，因而
+
+$$
+Z(m)\le\frac m{\varphi(m)}
+<e^\gamma\left(\Lambda_m+\frac{a_0}{\Lambda_m^2}\right),
+\qquad\Lambda_m=\log\log m.
+\tag{442.5}
+$$
+
+Binet 的标准增长界对全部 $2\le b<a$ 一致给出
+
+$$
+\log n=a\log\varphi+O_c(1),\qquad
+\Lambda_n=\log a+\log\log\varphi+O_c(a^{-1}).
+$$
+
+又由 $p\le\log a$，
+
+$$
+0<\Lambda_{np}-\Lambda_n
+=\log\left(1+\frac{\log p}{\log n}\right)
+=O_c\left(\frac{\log\log a}{a}\right).
+$$
+
+故对同一个实际 $n,p$，一致有
+
+$$
+\frac{\Lambda_{np}+a_0/\Lambda_{np}^2}{\Lambda_n}
+=1+O_c((\log a)^{-3})
+ +O_c\left(\frac{\log\log a}{a\log a}\right)
+=1+o_c((\log a)^{-1}).
+\tag{442.6}
+$$
+
+令 $\delta=1/(2c\log a)$。扩大仅依赖 $c$ 的阈值，使（442.6）至多为 $1+\delta/4$，且 $0<\delta\le1$。结合（442.4）—（442.5），有
+
+$$
+\frac{Z(n)}{e^\gamma\Lambda_n}
+<\frac{1+\delta/4}{1+\delta}
+\le1-\frac\delta4
+=1-\frac1{8c\log a},
+$$
+
+即得（442.2）。所有误差界只依赖固定的 $c$，没有把分别可达的局部最优值组合成共同实现。$\square$
+
+**应用 442.2（同一区域可保留任意指定有限集的高赋值）。** 固定非空有限素数集 $S$，令 $R=\prod_{p\in S}p$。从 §170.5 取固定 $P_0\ge12$，满足 $12\mid P_0$、$M^{P_0}=I\pmod R$。取趋于无穷的素数 $d\nmid RP_0(P_0-2)$，并对每个 $d$ 选整数 $T$，满足
+
+$$
+T\equiv1\pmod{\operatorname{ord}_d(R)},\qquad
+T\ge\exp(2d\log\varphi).
+$$
+
+设 $P=P_0R^{T-1}$，并选唯一 $1\le u<d$ 使 $uP\equiv-1\pmod d$。定义实际指标
+
+$$
+a=(u+1)P-1,\qquad b=P-2.
+\tag{442.7}
+$$
+
+它们分别为奇数、偶数。由 $P\equiv P_0\pmod d$，有 $d\nmid b$；同时
+
+$$
+a-b=uP+1\equiv0\pmod d,
+\qquad\gcd(d,\gcd(a,b))=1.
+$$
+
+且 $\log\log a=\log T+O_{S,P_0}(1)$，所以（442.1）的小约数条件最终成立。既有周期提升给 $M^P=I\pmod{R^T}$；沿用负指标 $F_{-1}=1$、$F_{-2}=-1$，得到
+
+$$
+F_a\equiv1,\qquad F_b\equiv-1\pmod{R^T},
+\qquad R^T\mid F_a+F_b.
+\tag{442.8}
+$$
+
+因此（442.2）适用，同时每个 $S$ 中素数的真实赋值至少为 $T$。对 $n=5040(F_a+F_b)$，令 $\Lambda=\log\log n$，有
+
+$$
+\Lambda=(T-1)\log R+\log(u+1)+O_{S,P_0}(1)\asymp_{S,P_0} T,
+\qquad
+0\le1-\eta_S(n)\le |S|2^{-T-1}.
+$$
+
+直接复用 §441.2 的指数与多项式比较，得到最终有
+
+$$
+\eta_S(n)\left(1+\frac{a_0}{\Lambda^3}\right)>1.
+\tag{442.9}
+$$
+
+所以这一指定固定 $S$ 的 Axler 局部乘积充分条件不能认证这些实际来源，而（442.2）的可变素数切面仍给出完整 Robin 估计。它没有排除其他充分条件。
+
+此外，$P_0u+1$ 是 $d$ 的正倍数，故 $u\ge(d-1)/P_0\to\infty$。从（442.7）可得
+
+$$
+\frac ab\longrightarrow\infty,\qquad
+\frac{a-b}{\log a}\longrightarrow\infty,\qquad
+ a-2b=(u-1)P+3>0.
+$$
+
+这些来源超出 §180.3 的小间距条件与 §441 的倍增射线；这里没有断言它们不满足任何其他已知来源条件。
+
+**来源与未解范围。** Fibonacci 强整除性、奇偶性、Binet 增长与负指标恒等式是经典输入；秩排除、周期提升和解析上界分别直接复用 §§175、170、160，加层倍率直接引用尺度几何卷命题 8.1。新增内容是可变小约数条件与同一实际双项、真实素数增广及完整预算之间的参数对应，不是新的通用 Robin 判据。固定 $S$ 的失败只针对（442.9）中的指定充分条件，不是有限信息方法的一般不可能性结果。一般异奇偶双项、任意五模式历史、严格全整数 Robin 与 RH 仍未解决；本节未做数值阈值计算或 Lean 核验。
+
+## 追加锚（本行以下为增补区）
