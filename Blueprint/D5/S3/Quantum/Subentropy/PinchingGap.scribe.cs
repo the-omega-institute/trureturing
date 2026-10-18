@@ -30,7 +30,7 @@ internal sealed class PinchingGapDocument : IScribeDocumentDefinition
                 H("The pointwise entropy defect"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Let q(A,z)=Re〈z,Az〉/2. Matrix linearity and the sign-twirl identity give q(blockPinch(A),z)=av_s q(U_s A U_s*,z). Therefore η(q(blockPinch(A),z))−av_s η(q(U_s A U_s*,z)) is exactly the finite entropy Jensen gap of the actual sign orbit. For positive semidefinite A, every orbit readout is nonnegative, so this pointwise defect is nonnegative.")),
+                    Paragraph(Text("Let q(A,z)=Re⟨z,Az⟩/2. Matrix linearity and the sign-twirl identity give q(blockPinch(A),z)=av_s q(U_s A U_s*,z). Therefore η(q(blockPinch(A),z))−av_s η(q(U_s A U_s*,z)) is exactly the finite entropy Jensen gap of the actual sign orbit. For positive semidefinite A, every orbit readout is nonnegative, so this pointwise defect is nonnegative.")),
                     Paragraph(Text("The common Gaussian representation identifies the integral of this defect with Q(blockPinch(A))−Q(A) on positive trace-one matrices: every sign conjugate has the same subentropy and the same fixed Gaussian baseline. Joint convexity of the scalar Jensen gap therefore proves convexity of the actual subentropy pinching gap."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("matrix-subentropy-concave"),
                 DeclarationHandle.Create("D5/S3/Quantum/Subentropy/PinchingGap.matrix_subentropy_concave"),
