@@ -7,6 +7,7 @@
    digest: Sharp separable simplex estimates for stochastic approximation to independence. -/
 
 import D5.S3.TotalVariation.Metric
+import D5.S3.TotalVariation.Convexity
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Tactic
 
@@ -38,10 +39,9 @@ private theorem beta_nonneg (d : ℕ) : 0 ≤ beta d := by
 
 /-- A finite simplex bound with independently checkable scalar hypotheses.
 The finite support inequalities and the discriminant bound control all three pieces. -/
-theorem simplex_overlap_bound {d : ℕ} (b a : ℝ)
+private theorem simplex_overlap_bound {d : ℕ} (b a : ℝ)
     (hb : 0 ≤ b) (hba : b ≤ a) (ha : a ≤ 3 / 4)
     (hdisc : a ^ 2 ≤ 4 * b)
-    (hrel : a = 1 - ((d : ℝ) - 1) * b)
     (hfinite : ∀ n : ℕ, 2 ≤ n → n ≤ d →
       a ≤ 1 / (n : ℝ) + ((n : ℝ) - 1) * b)
     (s : Fin d → ℝ) (hs : ∀ i, 0 ≤ s i) (hm : ∑ i, s i = 1) :
@@ -62,7 +62,7 @@ theorem simplex_overlap_bound {d : ℕ} (b a : ℝ)
         nlinarith [sq_nonneg (s i - a / 2)]
   by_cases hhigh : ∃ i, a ≤ s i
   · obtain ⟨j, hj⟩ := hhigh
-    have hall : ∑ i, (a - b) * s i + (if i = j then b else 0) ≤
+    have hall : (∑ i, ((a - b) * s i + (if i = j then b else 0))) ≤
         ∑ i, overlap b a (s i) := by
       apply Finset.sum_le_sum
       intro i _
@@ -117,34 +117,423 @@ theorem simplex_overlap_bound {d : ℕ} (b a : ℝ)
       simpa using Finset.card_le_card (Finset.filter_subset (fun i : Fin d => b ≤ s i) Finset.univ)
     have hcs : t ^ 2 ≤ (n : ℝ) * q := by
       exact sq_sum_le_card_mul_sum_sq
-    rcases n with _ | n
-    · have hM0 : M = ∅ := Finset.card_eq_zero.mp (show M.card = 0 from rfl)
+    by_cases hn0 : n = 0
+    · have hM0 : M = ∅ := Finset.card_eq_zero.mp hn0
       have ht : t = 0 := by simp [t, hM0]
       have hq : q = 0 := by simp [q, hM0]
-      simp only [Nat.cast_zero, zero_mul, ht, hq, sub_zero, add_zero]
+      simp only [hn0, Nat.cast_zero, zero_mul, ht, hq, sub_zero, add_zero]
       linarith
-    · by_cases hn1 : n = 0
-      · subst n
-        norm_num at hcs ⊢
+    · by_cases hn1 : n = 1
+      · rw [hn1, Nat.cast_one, one_mul] at hcs ⊢
         have hbt : 0 ≤ b * (1 - t) := mul_nonneg hb (sub_nonneg.mpr ht1)
-        nlinarith [sq_nonneg (t - 1 / 2)]
-      · have hn2 : 2 ≤ n + 1 := by omega
-        have hnpos : (0 : ℝ) < n + 1 := by positivity
-        have hnreal : (2 : ℝ) ≤ (n + 1 : ℕ) := by exact_mod_cast hn2
-        have hf := hfinite (n + 1) hn2 hn
-        have haux : 1 - t + t ^ 2 / (n + 1 : ℕ) - b * t + ((n + 1 : ℕ) : ℝ) * b ≥
-            1 / (n + 1 : ℕ) + (((n + 1 : ℕ) : ℝ) - 1) * b := by
-          have hnpos' : (0 : ℝ) < (n + 1 : ℕ) := by positivity
-          apply (le_of_sub_nonneg ?_)
-          have hmul : 0 ≤ (1 - t) * (((n + 1 : ℕ) : ℝ) - (1 + t) + b * (n + 1 : ℕ)) := by
+        nlinarith only [hcs, hbt, ha, sq_nonneg (t - 1 / 2)]
+      · have hn2 : 2 ≤ n := by omega
+        have hnpos : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+        have hnreal : (2 : ℝ) ≤ n := by exact_mod_cast hn2
+        have hf := hfinite n hn2 hn
+        have haux : 1 / (n : ℝ) + ((n : ℝ) - 1) * b ≤
+            1 - t + t ^ 2 / n - b * t + (n : ℝ) * b := by
+          apply le_of_sub_nonneg
+          have hmul : 0 ≤ (1 - t) * ((n : ℝ) - (1 + t) + b * n) := by
             apply mul_nonneg (sub_nonneg.mpr ht1)
-            nlinarith
-          apply (mul_nonneg_iff_of_pos_right hnpos').mp
+            nlinarith only [hnreal, ht1, mul_nonneg hb hnpos.le]
+          apply (mul_nonneg_iff_of_pos_right hnpos).mp
           convert hmul using 1 <;> field_simp <;> ring
-        have hq : t ^ 2 / (n + 1 : ℕ) ≤ q := by
-          apply (div_le_iff₀ (by positivity : (0 : ℝ) < (n + 1 : ℕ))).mpr
-          simpa [mul_comm] using hcs
-        linarith
+        have hq : t ^ 2 / n ≤ q := (div_le_iff₀ hnpos).mpr (by simpa [mul_comm] using hcs)
+        linarith only [hf, haux, hq]
 
-#print axioms simplex_overlap_bound
+private theorem beta_le_inv {d : ℕ} (hd : 2 ≤ d) : beta d ≤ 1 / (d : ℝ) := by
+  apply Finset.sup'_le
+  intro k hk
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd0 : (0 : ℝ) < d := by linarith
+  rcases k with _ | k
+  · simp [coefficient, le_of_lt (one_div_pos.mpr hd0)]
+  · rcases k with _ | k
+    · simp [coefficient, le_of_lt (one_div_pos.mpr hd0)]
+    · have hkR : (2 : ℝ) ≤ (k + 2 : ℕ) := by exact_mod_cast (show 2 ≤ k + 2 by omega)
+      have hden : (0 : ℝ) < (k + 2 : ℕ) * ((d : ℝ) + (k + 2 : ℕ) - 2) := mul_pos (by linarith) (by linarith)
+      unfold coefficient
+      apply (div_le_div_iff₀ hden hd0).mpr
+      nlinarith only [hdR, hkR, mul_nonneg (sub_nonneg.mpr hkR) (by positivity : (0 : ℝ) ≤ (k + 2 : ℕ))]
+
+private theorem beta_two {d : ℕ} (hd : 2 ≤ d) : 1 / (2 * (d : ℝ)) ≤ beta d := by
+  have h := coefficient_le_beta (d := d) (k := 2) hd
+  simpa only [coefficient, Nat.cast_ofNat, show (2 : ℝ) - 1 = 1 by norm_num,
+    show (d : ℝ) + 2 - 2 = d by ring] using h
+
+private theorem beta_support {d n : ℕ} (hd : 2 ≤ d) (hn : 2 ≤ n) (hnd : n ≤ d) :
+    1 - ((d : ℝ) - 1) * beta d ≤ 1 / (n : ℝ) + ((n : ℝ) - 1) * beta d := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hnR : (2 : ℝ) ≤ n := by exact_mod_cast hn
+  have hden : (0 : ℝ) < (n : ℝ) * ((d : ℝ) + n - 2) := mul_pos (by linarith) (by linarith)
+  have h : (n : ℝ) - 1 ≤ beta d * ((n : ℝ) * ((d : ℝ) + n - 2)) :=
+    (div_le_iff₀ hden).mp (coefficient_le_beta hnd)
+  have hn0 : (0 : ℝ) < n := by linarith
+  apply (mul_le_mul_iff_right₀ hn0).mp
+  field_simp
+  nlinarith only [h]
+
+private theorem beta_discriminant {d : ℕ} (hd : 2 ≤ d) :
+    (1 - ((d : ℝ) - 1) * beta d) ^ 2 ≤ 4 * beta d := by
+  obtain ⟨k, hk, hmax⟩ := Finset.exists_mem_eq_sup'
+    (show (Finset.range (d + 1)).Nonempty by simp) (coefficient d)
+  change beta d = coefficient d k at hmax
+  have hkd : k ≤ d := by have := Finset.mem_range.mp hk; omega
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hβpos : 0 < beta d := lt_of_lt_of_le (by positivity : (0 : ℝ) < 1 / (2 * (d : ℝ))) (beta_two hd)
+  have hk2 : 2 ≤ k := by
+    by_contra h
+    have : k = 0 ∨ k = 1 := by omega
+    rcases this with rfl | rfl <;> simp [coefficient] at hmax <;> linarith
+  have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk2
+  have hden : (0 : ℝ) < (k : ℝ) * ((d : ℝ) + k - 2) := mul_pos (by linarith) (by linarith)
+  have hlower : ((k : ℝ) - 1) * ((k : ℝ) - 2) ≤ (d : ℝ) - 1 := by
+    by_cases hk3 : 3 ≤ k
+    · have hprev := coefficient_le_beta (d := d) (k := k - 1) (by omega)
+      rw [hmax] at hprev
+      have hcast : ((k - 1 : ℕ) : ℝ) = (k : ℝ) - 1 := by rw [Nat.cast_sub (by omega), Nat.cast_one]
+      simp only [coefficient, hcast] at hprev
+      have hprevden : 0 < ((k : ℝ) - 1) * ((d : ℝ) + ((k : ℝ) - 1) - 2) := by
+        have : (3 : ℝ) ≤ k := by exact_mod_cast hk3
+        exact mul_pos (by linarith) (by linarith)
+      have hcross := (div_le_div_iff₀ hprevden hden).mp hprev
+      nlinarith only [hcross]
+    · have : k = 2 := by omega
+      subst k
+      norm_num
+      linarith
+  have hupper : (d : ℝ) - 1 ≤ (k : ℝ) * ((k : ℝ) - 1) := by
+    by_cases hlast : k = d
+    · rw [hlast]
+      nlinarith only [hdR]
+    · have hnext := coefficient_le_beta (d := d) (k := k + 1) (by omega)
+      rw [hmax] at hnext
+      simp only [coefficient, Nat.cast_add, Nat.cast_one] at hnext
+      have hnextden : 0 < ((k : ℝ) + 1) * ((d : ℝ) + ((k : ℝ) + 1) - 2) := mul_pos (by linarith) (by linarith)
+      have hcross := (div_le_div_iff₀ hnextden hden).mp hnext
+      nlinarith only [hcross]
+  have hgap : 0 ≤ (k : ℝ) * (k - 1) - (d - 1) := sub_nonneg.mpr hupper
+  have hgap2 : (k : ℝ) * (k - 1) - (d - 1) ≤ 2 * (k - 1) := by nlinarith only [hlower]
+  have hsq : ((k : ℝ) * (k - 1) - (d - 1)) ^ 2 ≤ 4 * (k - 1) ^ 2 := by
+    nlinarith only [mul_nonneg hgap (sub_nonneg.mpr hgap2), sq_nonneg (2 * (k : ℝ) - 2 - ((k : ℝ) * (k - 1) - (d - 1)))]
+  have hpoly : ((d : ℝ) - 1 + k * (k - 1)) ^ 2 ≤
+      4 * k * (k - 1) * ((d : ℝ) + k - 2) := by
+    have hmore : 0 ≤ ((k : ℝ) - 1) ^ 2 * ((k : ℝ) - 1) :=
+      mul_nonneg (sq_nonneg _) (by linarith)
+    nlinarith only [hsq, hmore]
+  rw [hmax]
+  unfold coefficient
+  have haeq : 1 - ((d : ℝ) - 1) * (((k : ℝ) - 1) / ((k : ℝ) * ((d : ℝ) + k - 2))) =
+      ((d : ℝ) - 1 + k * (k - 1)) / ((k : ℝ) * ((d : ℝ) + k - 2)) := by
+    field_simp [show ((d : ℝ) + k - 2) ≠ 0 by linarith,
+      show (k : ℝ) ≠ 0 by linarith]
+    <;> ring
+  rw [haeq, div_pow]
+  calc
+    _ ≤ (4 * k * (k - 1) * ((d : ℝ) + k - 2)) /
+        ((k : ℝ) * ((d : ℝ) + k - 2)) ^ 2 :=
+      (div_le_div_iff_of_pos_right (sq_pos_of_pos hden)).mpr hpoly
+    _ = _ := by
+      field_simp
+      <;> ring
+
+/-- The complete nonconvex separable bound for every real probability vector in every d>=2. -/
+theorem sharp_simplex_overlap_bound {d : ℕ} (hd : 2 ≤ d)
+    (s : Fin d → ℝ) (hs : ∀ i, 0 ≤ s i) (hm : ∑ i, s i = 1) :
+    1 - rho d ≤ ∑ i, overlap (beta d) (1 - rho d) (s i) := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd0 : (0 : ℝ) < d := by linarith
+  have hb := beta_nonneg d
+  have hbhi := (le_div_iff₀ hd0).mp (beta_le_inv hd)
+  have hblo := (div_le_iff₀ (by positivity : (0 : ℝ) < 2 * (d : ℝ))).mp (beta_two hd)
+  apply simplex_overlap_bound (beta d) (1 - rho d) hb
+  · dsimp [rho]
+    nlinarith only [hbhi]
+  · dsimp [rho]
+    have hprod : 0 ≤ ((d : ℝ) - 2) * beta d := mul_nonneg (by linarith) hb
+    nlinarith only [hblo, hprod, hdR]
+  · exact beta_discriminant hd
+  · exact fun n hn hnd => beta_support hd hn hnd
+  · exact hs
+  · exact hm
+
+#print axioms sharp_simplex_overlap_bound
+
+
+open D5.S3.TotalVariation.Pinsker D5.S3.TotalVariation.Metric
+
+/-- A label is retained with probability 1-rho; each other label receives beta. -/
+def replacement (d : ℕ) (i x : Fin d) : ℝ :=
+  if x = i then 1 - rho d else beta d
+
+/-- Change the first coordinate and retain the second coordinate. -/
+def firstOutput {d : ℕ} (p : Fin d × Fin d → ℝ) (z : Fin d × Fin d) : ℝ :=
+  ∑ i, p (i, z.2) * replacement d i z.1
+
+/-- Average the two one-coordinate replacement channels. -/
+def optimalActive {d : ℕ} (p : Fin d × Fin d → ℝ) (z : Fin d × Fin d) : ℝ :=
+  (firstOutput p z + firstOutput (fun z => p z.swap) z.swap) / 2
+
+private theorem replacement_mass {d : ℕ} (i : Fin d) :
+    ∑ x, replacement d i x = 1 := by
+  classical
+  have heq (x : Fin d) : replacement d i x = beta d +
+      if x = i then 1 - (d : ℝ) * beta d else 0 := by
+    by_cases h : x = i <;> simp [replacement, h, rho] <;> ring
+  simp only [heq, Finset.sum_add_distrib]
+  simp [rho]
+  <;> ring
+
+private theorem tv_overlap {X : Type*} [Fintype X] (p q : X → ℝ)
+    (hp : ∑ x, p x = 1) (hq : ∑ x, q x = 1) :
+    totalVariation p q = 1 - ∑ x, min (p x) (q x) := by
+  have heq (x : X) : |p x - q x| = p x + q x - 2 * min (p x) (q x) := by
+    rcases le_total (p x) (q x) with h | h
+    · rw [min_eq_left h, abs_of_nonpos (sub_nonpos.mpr h)]; ring
+    · rw [min_eq_right h, abs_of_nonneg (sub_nonneg.mpr h)]; ring
+  simp only [totalVariation, heq, Finset.sum_sub_distrib, Finset.sum_add_distrib,
+    ← Finset.mul_sum, hp, hq]
+  ring
+
+private theorem replacement_average {d : ℕ} (s : Fin d → ℝ) (hm : ∑ i, s i = 1) :
+    (∑ i, s i * totalVariation (replacement d i) s) =
+      1 - ∑ x, overlap (beta d) (1 - rho d) (s x) := by
+  classical
+  simp_rw [tv_overlap _ _ (replacement_mass _) hm, mul_sub, mul_one]
+  rw [Finset.sum_sub_distrib, hm]
+  congr 1
+  simp_rw [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro x _
+  have heq (i : Fin d) : s i * min (replacement d i x) (s x) =
+      s i * min (beta d) (s x) +
+        if i = x then s x * (min (1 - rho d) (s x) - min (beta d) (s x)) else 0 := by
+    by_cases h : i = x
+    · subst i; simp [replacement]; ring
+    · have h' : x ≠ i := Ne.symm h
+      simp [replacement, h, h']
+  simp only [heq, Finset.sum_add_distrib, ← Finset.sum_mul, hm, one_mul]
+  simp [overlap]
+  <;> ring
+
+private theorem first_output_le {d : ℕ} (hd : 2 ≤ d)
+    (p : Fin d × Fin d → ℝ) (hp : ∀ z, 0 ≤ p z) (hm : ∑ z, p z = 1) :
+    totalVariation (firstOutput p)
+      (fun z => (∑ j, p (z.1, j)) * (∑ i, p (i, z.2))) ≤ rho d := by
+  let s : Fin d → ℝ := fun i => ∑ j, p (i, j)
+  have hs (i : Fin d) : 0 ≤ s i := Finset.sum_nonneg fun j _ => hp (i, j)
+  have hsm : ∑ i, s i = 1 := by simpa [s, Fintype.sum_prod_type] using hm
+  have heq (x j : Fin d) : firstOutput p (x, j) - s x * (∑ i, p (i, j)) =
+      ∑ i, p (i, j) * (replacement d i x - s x) := by
+    simp only [firstOutput, Finset.mul_sum, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro i _
+    ring
+  have habs (x j : Fin d) : |firstOutput p (x, j) - s x * (∑ i, p (i, j))| ≤
+      ∑ i, p (i, j) * |replacement d i x - s x| := by
+    rw [heq]
+    calc
+      _ ≤ ∑ i, |p (i, j) * (replacement d i x - s x)| := Finset.abs_sum_le_sum_abs _ _
+      _ = _ := by simp_rw [abs_mul, abs_of_nonneg (hp _)]
+  have hbound : totalVariation (firstOutput p)
+      (fun z => s z.1 * (∑ i, p (i, z.2))) ≤
+      ∑ i, s i * totalVariation (replacement d i) s := by
+    simp only [totalVariation, Fintype.sum_prod_type]
+    calc
+      _ ≤ (1 / 2 : ℝ) * ∑ x, ∑ j, ∑ i, p (i, j) * |replacement d i x - s x| := by
+        apply mul_le_mul_of_nonneg_left _ (by norm_num)
+        exact Finset.sum_le_sum fun x _ => Finset.sum_le_sum fun j _ => habs x j
+      _ = _ := by
+        simp_rw [Finset.sum_comm (f := fun j i => p (i, j) * |replacement d i _ - s _|)]
+        rw [Finset.sum_comm]
+        simp_rw [← Finset.sum_mul, ← Finset.mul_sum]
+        dsimp [s]
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro i _
+        ring
+  have hsharp := sharp_simplex_overlap_bound hd s hs hsm
+  rw [replacement_average s hsm] at hbound
+  exact hbound.trans (by linarith only [hsharp])
+
+/-- Every active joint law, with arbitrary zero entries, obeys the proposed approximation bound. -/
+theorem active_joint_upper_bound {d : ℕ} (hd : 2 ≤ d)
+    (p : Fin d × Fin d → ℝ) (hp : ∀ z, 0 ≤ p z) (hm : ∑ z, p z = 1) :
+    totalVariation (optimalActive p)
+      (fun z => (∑ j, p (z.1, j)) * (∑ i, p (i, z.2))) ≤ rho d := by
+  have hfirst := first_output_le hd p hp hm
+  have hswap : (∑ z : Fin d × Fin d, p z.swap) = 1 := by
+    simp only [Fintype.sum_prod_type, Prod.swap_prod_mk] at hm ⊢
+    rw [Finset.sum_comm]
+    exact hm
+  have hsecond := first_output_le hd (fun z => p z.swap) (fun z => hp z.swap) hswap
+  let target : Fin d × Fin d → ℝ := fun z => (∑ j, p (z.1, j)) * (∑ i, p (i, z.2))
+  have hsecond' : totalVariation (fun z => firstOutput (fun z => p z.swap) z.swap) target ≤ rho d := by
+    simp only [totalVariation, Fintype.sum_prod_type, Prod.swap_prod_mk] at hsecond ⊢
+    rw [Finset.sum_comm]
+    simpa only [target, mul_comm] using hsecond
+  have hc := D5.S3.TotalVariation.Convexity.total_variation_joint_convex
+    (firstOutput p) (fun z => firstOutput (fun z => p z.swap) z.swap) target target
+    (1 / 2) (by constructor <;> norm_num)
+  have heq : (fun i => (1 / 2 : ℝ) * target i + (1 - 1 / 2) * target i) = target := by
+    funext i; ring
+  rw [heq] at hc
+  have hleft : (fun i => (1 / 2 : ℝ) * firstOutput p i +
+      (1 - 1 / 2) * firstOutput (fun z => p z.swap) i.swap) = optimalActive p := by
+    funext i; simp [optimalActive]; ring
+  rw [hleft] at hc
+  dsimp [target] at *
+  linarith only [hc, hfirst, hsecond']
+
+#print axioms active_joint_upper_bound
+
+
+/-- Conditional independence completion preserves the blocking mass. -/
+def completion {d : ℕ} (p : Option (Fin d × Fin d) → ℝ) : Option (Fin d × Fin d) → ℝ
+  | none => p none
+  | some z => if 0 < 1 - p none then
+      (∑ j, p (some (z.1, j))) * (∑ i, p (some (i, z.2))) / (1 - p none)
+    else 0
+
+/-- Output-first indexing makes the stochasticity condition a column sum. -/
+def optimalKernel (d : ℕ) : Option (Fin d × Fin d) → Option (Fin d × Fin d) → ℝ
+  | none, none => 1
+  | some _, none => 0
+  | none, some _ => 0
+  | some x, some y =>
+    (replacement d y.1 x.1 * (if x.2 = y.2 then 1 else 0) +
+      (if x.1 = y.1 then 1 else 0) * replacement d y.2 x.2) / 2
+
+/-- Matrix action on an unknown source law. -/
+def kernelOutput {d : ℕ} (K : Option (Fin d × Fin d) → Option (Fin d × Fin d) → ℝ)
+    (p : Option (Fin d × Fin d) → ℝ) (x : Option (Fin d × Fin d)) : ℝ :=
+  ∑ y, K x y * p y
+
+/-- Uniform error over all nonnegative normalized real source laws. -/
+def worstError {d : ℕ} (K : Option (Fin d × Fin d) → Option (Fin d × Fin d) → ℝ) : ℝ :=
+  sSup {e : ℝ | ∃ p : Option (Fin d × Fin d) → ℝ,
+    (∀ z, 0 ≤ p z) ∧ (∑ z, p z = 1) ∧ e = totalVariation (kernelOutput K p) (completion p)}
+
+private theorem tv_scale {X : Type*} [Fintype X] (r : ℝ) (hr : 0 ≤ r) (p q : X → ℝ) :
+    totalVariation (fun x => r * p x) (fun x => r * q x) = r * totalVariation p q := by
+  simp only [totalVariation, ← mul_sub, abs_mul, abs_of_nonneg hr, ← Finset.mul_sum]
+  ring
+
+private theorem optimal_linear {d : ℕ} (r : ℝ) (p : Fin d × Fin d → ℝ) :
+    optimalActive (fun z => r * p z) = fun z => r * optimalActive p z := by
+  funext z
+  simp [optimalActive, firstOutput, mul_assoc, ← Finset.mul_sum]
+  ring
+
+private theorem active_scaled_bound {d : ℕ} (hd : 2 ≤ d) (r : ℝ) (hr : 0 < r)
+    (p : Fin d × Fin d → ℝ) (hp : ∀ z, 0 ≤ p z) (hm : ∑ z, p z = r) :
+    totalVariation (optimalActive p)
+      (fun z => (∑ j, p (z.1, j)) * (∑ i, p (i, z.2)) / r) ≤ r * rho d := by
+  let q : Fin d × Fin d → ℝ := fun z => p z / r
+  have hq (z) : 0 ≤ q z := div_nonneg (hp z) hr.le
+  have hqm : ∑ z, q z = 1 := by simp [q, ← Finset.sum_div, hm, hr.ne']
+  have hpq : p = fun z => r * q z := by funext z; dsimp [q]; field_simp [hr.ne'] <;> ring
+  have htarget : (fun z : Fin d × Fin d => (∑ j, p (z.1, j)) * (∑ i, p (i, z.2)) / r) =
+      fun z => r * ((∑ j, q (z.1, j)) * (∑ i, q (i, z.2))) := by
+    funext z
+    simp only [q, ← Finset.sum_div]
+    field_simp [hr.ne']
+    <;> ring
+  rw [htarget, hpq, optimal_linear, tv_scale r hr.le]
+  exact mul_le_mul_of_nonneg_left (active_joint_upper_bound hd q hq hqm) hr.le
+
+private theorem optimal_output {d : ℕ} (p : Option (Fin d × Fin d) → ℝ) :
+    kernelOutput (optimalKernel d) p = fun z => match z with
+      | none => p none
+      | some z => optimalActive (fun z => p (some z)) z := by
+  classical
+  funext z
+  cases z with
+  | none => simp [kernelOutput, optimalKernel, Fintype.sum_option]
+  | some z =>
+    simp only [kernelOutput, Fintype.sum_option, optimalKernel, zero_mul, add_zero,
+      Fintype.sum_prod_type, optimalActive, firstOutput, Prod.swap_prod_mk]
+    simp_rw [div_mul_eq_mul_div, ← Finset.sum_div]
+    congr 1
+    simp_rw [add_mul, Finset.sum_add_distrib]
+    congr 1
+    · simp [mul_ite, ite_mul, eq_comm, mul_comm]
+
+private theorem optimal_stochastic {d : ℕ} (hd : 2 ≤ d) :
+    (∀ x y, 0 ≤ optimalKernel d x y) ∧ ∀ y, ∑ x, optimalKernel d x y = 1 := by
+  classical
+  have hb := beta_nonneg d
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hbhi := (le_div_iff₀ (by linarith : (0 : ℝ) < d)).mp (beta_le_inv hd)
+  have hrep (i x : Fin d) : 0 ≤ replacement d i x := by
+    unfold replacement
+    split_ifs
+    · dsimp [rho]; nlinarith only [hb, hbhi]
+    · exact hb
+  constructor
+  · intro x y
+    cases x with
+    | none => cases y <;> norm_num [optimalKernel]
+    | some x =>
+      cases y with
+      | none => norm_num [optimalKernel]
+      | some y =>
+        simp only [optimalKernel]
+        apply div_nonneg _ (by norm_num)
+        apply add_nonneg
+        · exact mul_nonneg (hrep _ _) (by split_ifs <;> norm_num)
+        · exact mul_nonneg (by split_ifs <;> norm_num) (hrep _ _)
+  · intro y
+    cases y with
+    | none => simp [optimalKernel, Fintype.sum_option]
+    | some y =>
+      simp only [optimalKernel, Fintype.sum_option, zero_add,
+        Fintype.sum_prod_type, mul_ite, ite_mul, mul_one, one_mul, mul_zero, zero_mul]
+      simp_rw [← Finset.sum_div, Finset.sum_add_distrib]
+      simp [replacement_mass, Finset.sum_ite_irrel]
+
+/-- The explicit fixed column-stochastic kernel attains the uniform upper bound,
+including the blocking vertex and every partially blocked source. -/
+theorem optimal_kernel_upper_bound {d : ℕ} (hd : 2 ≤ d) :
+    ((∀ x y, 0 ≤ optimalKernel d x y) ∧ ∀ y, ∑ x, optimalKernel d x y = 1) ∧
+    ∀ p : Option (Fin d × Fin d) → ℝ,
+      (∀ z, 0 ≤ p z) → (∑ z, p z = 1) →
+      totalVariation (kernelOutput (optimalKernel d) p) (completion p) ≤ rho d := by
+  refine ⟨optimal_stochastic hd, ?_⟩
+  intro p hp hm
+  have hmass : ∑ z : Fin d × Fin d, p (some z) = 1 - p none := by
+    simp only [Fintype.sum_option] at hm
+    linarith only [hm]
+  have hr0 : 0 ≤ 1 - p none := by
+    rw [← hmass]
+    exact Finset.sum_nonneg fun z _ => hp (some z)
+  have hr1 : 1 - p none ≤ 1 := by linarith only [hp none]
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hρ : 0 ≤ rho d := mul_nonneg (by linarith) (beta_nonneg d)
+  rw [optimal_output]
+  by_cases hr : 0 < 1 - p none
+  · have hc := active_scaled_bound hd (1 - p none) hr (fun z => p (some z))
+      (fun z => hp (some z)) hmass
+    have htv : totalVariation
+        (fun z => match z with | none => p none | some z => optimalActive (fun z => p (some z)) z)
+        (completion p) =
+        totalVariation (optimalActive (fun z => p (some z)))
+          (fun z => (∑ j, p (some (z.1, j))) * (∑ i, p (some (i, z.2))) / (1 - p none)) := by
+      simp [totalVariation, Fintype.sum_option, completion, hr]
+    rw [htv]
+    exact hc.trans (mul_le_of_le_one_left hρ hr1)
+  · have hrz : 1 - p none = 0 := le_antisymm (le_of_not_gt hr) hr0
+    have hpz (z : Fin d × Fin d) : p (some z) = 0 := by
+      have hle : p (some z) ≤ ∑ w : Fin d × Fin d, p (some w) :=
+        Finset.single_le_sum (fun w _ => hp (some w)) (Finset.mem_univ z)
+      rw [hmass, hrz] at hle
+      exact le_antisymm hle (hp _)
+    have hout (z : Fin d × Fin d) : optimalActive (fun z => p (some z)) z = 0 := by
+      simp [optimalActive, firstOutput, hpz]
+    simp [totalVariation, Fintype.sum_option, completion, hr, hout, hρ]
+
+#print axioms optimal_kernel_upper_bound
+
 end D5.S3.TotalVariation.RandomKernelExtremum
