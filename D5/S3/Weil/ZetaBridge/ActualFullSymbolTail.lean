@@ -480,7 +480,8 @@ private theorem actual_full_real_tail_lower_coarse {c M : ℕ} (hc : 2 ≤ c) (h
             (Real.pi / 4 + (U + 3 / (4 * a)) / ((M + 1 : ℕ) : ℝ)) ≤
               2 + U / ((M + 1 : ℕ) : ℝ)
         exact min_le_left _ _
-      _ ≤ 2 + U := add_le_add_left (div_le_self hU ht) 2
+      _ ≤ 2 + U := by
+        simpa only [add_comm] using (add_le_add_left (div_le_self hU ht) 2)
   have herr :
       2 * primeFirstMoment c * smoothEnvelope c (M + 1) / ((M + 1 : ℕ) : ℝ) ^ 2 ≤
         D0 / ((M + 1 : ℕ) : ℝ) ^ 2 :=
@@ -751,10 +752,10 @@ private theorem paired_first_jet_energy_exact {c M : ℕ}
               (arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
                 inverseSquareWeight M j)) := tsum_congr hpair
     _ = (2 / Real.pi ^ 2) *
-        (∑' j : ℕ, ‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j +
+        (∑' j : ℕ, (‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j +
           ‖jetEnergyBeta S v‖ ^ 2 *
             (arithmeticBoundarySymbol c ((M + j + 1 : ℕ) : ℤ) ^ 2 *
-              inverseSquareWeight M j)) := (ha.add hb).tsum_mul_left _
+              inverseSquareWeight M j))) := (ha.add hb).tsum_mul_left _
     _ = (2 / Real.pi ^ 2) *
         ((∑' j : ℕ, ‖jetEnergyAlpha c S v‖ ^ 2 * inverseSquareWeight M j) +
           (∑' j : ℕ, ‖jetEnergyBeta S v‖ ^ 2 *
@@ -919,7 +920,7 @@ theorem paired_coupling_column_tail_lower {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M
     simpa only [t, W, inverseSquareWeight, one_div] using
       (inverse_square_tsum_lower_candidate hm)
   have hT : smoothFloor c ^ 2 * W - D0 / t ^ 2 ≤ T := by
-    simpa only [Nat.cast_add, Nat.cast_one] using
+    simpa only [W, T, D0, U, t, Nat.cast_add, Nat.cast_one] using
       (actual_full_real_tail_lower_coarse hc hM hw)
   have hweighted := mul_le_mul_of_nonneg_left hT (show 0 ≤ b by dsimp [b]; positivity)
   have hWq := mul_le_mul_of_nonneg_left hW hq.le
@@ -927,7 +928,10 @@ theorem paired_coupling_column_tail_lower {c M : ℕ} (hc : 2 ≤ c) (hM : 0 < M
     calc
       _ = q * (1 / t) - b * D0 / t ^ 2 := by ring
       _ ≤ q * W - b * D0 / t ^ 2 := sub_le_sub_right hWq _
-      _ ≤ _ := by dsimp only [q]; nlinarith only [hweighted]
+      _ = a * W + b * (smoothFloor c ^ 2 * W - D0 / t ^ 2) := by
+        dsimp only [q]
+        ring
+      _ ≤ _ := add_le_add le_rfl hweighted
   have hmix' : 2 * b * D0 ≤ t * q := (div_le_iff₀ hq).1 hmix
   have herr : b * D0 / t ^ 2 ≤ q / (2 * t) := by
     apply (div_le_div_iff₀ (by positivity) (by positivity)).2

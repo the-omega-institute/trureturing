@@ -622,7 +622,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro hall
   have hbad := (hall (c := 2) (m := 1)
     (by decide) (by decide) witness_frequency).2
-  change smoothFloor 2 ≤ (1 : ℝ) ^ 2 * (-1) at hbad
+  simp only [rejected, realize, Nat.cast_one] at hbad
   have hpositive := (smooth_weight_floor (c := 2) (m := 1)
     (by decide) (by decide) witness_frequency).1
   norm_num only [one_pow, one_mul] at hbad

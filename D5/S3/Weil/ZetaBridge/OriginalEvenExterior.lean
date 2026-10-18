@@ -142,6 +142,6 @@ theorem exteriorProjection_prime (a : ℝ) (ha : 0 < a) (M N : ℕ) (v : ℕ →
   have he : evenProjection a (primeHeadL2 a N v) = primeHeadL2 a N v :=
     (Submodule.starProjection_eq_self_iff).mpr (primeHead_mem_originalEven a N v)
   simpa only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.sub_apply,
-    ContinuousLinearMap.id_apply, he] using h
+    ContinuousLinearMap.id_apply, Submodule.subtypeL_apply, he] using h
 
 end OriginalEvenExterior

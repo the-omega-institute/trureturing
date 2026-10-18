@@ -200,7 +200,7 @@ internal sealed class WeilArithmeticCouplingJetDocument : IScribeDocumentDefinit
                     StatementSource.FromAuthor(Disp(Seq(
                         Call("smoothFloor", c), Eq,
                         Call("div", Seq(D(1), Minus,
-                            Call("exp", Call("div", Seq(Minus, Call("logLength", c)), D(2)))), D(10))))),
+                            Call("exp", Call("div", Seq(Minus, Call("logLength", c)), D(2)))), D(1, 0))))),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "For natural c, smoothFloor(c)=(1-exp(-logLength(c)/2))/10, with "

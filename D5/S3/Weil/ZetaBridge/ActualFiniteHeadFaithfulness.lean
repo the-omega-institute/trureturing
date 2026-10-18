@@ -6,6 +6,11 @@
    utility: none
    digest: Exterior nullity of the actual arithmetic divided-difference columns forces every finite head coefficient to vanish. -/
 
+import D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
+import D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
+import Mathlib.Algebra.Order.Archimedean.Basic
+import Mathlib.Data.Fintype.EquivFin
+
 /-!
 SOURCE_ONLY_UNCOMPILED. This file is a complete source proof candidate, not a
 kernel-checked result. WeilArithmeticCouplingJet, ActualColumnRemainder and
@@ -26,11 +31,6 @@ positivity, Robin5040 or RH claim. The saved higher-order-jet route is separate.
 Utility none: the declarations prove parameterized arithmetic-column identities
 and faithfulness; they supply no bounded checker, certificate or fixed instance.
 -/
-
-import D5.S3.Weil.ZetaBridge.ActualFullSymbolTail
-import D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
-import Mathlib.Algebra.Order.Archimedean.Basic
-import Mathlib.Data.Fintype.EquivFin
 
 noncomputable section
 
