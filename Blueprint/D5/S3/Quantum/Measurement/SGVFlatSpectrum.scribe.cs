@@ -31,7 +31,10 @@ internal sealed class SGVFlatSpectrumDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name, string title, DescribeRole role,
         AssessedProvenance provenance, Formula formula, string prose) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("schoute-grinko-subasi-volkoff-2024-flat-spectrum"),
+                ResolutionKind.Proved) : null);
 
     private static Formula SumDefinition()
     {
