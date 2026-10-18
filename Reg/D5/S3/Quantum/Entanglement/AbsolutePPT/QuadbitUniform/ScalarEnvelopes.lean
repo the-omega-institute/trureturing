@@ -1,3 +1,4 @@
+-- UNCOMPILED dimension-alignment changes; existing registration proofs are preserved.
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
@@ -18,7 +19,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => (fun _ => (0 : ℕ))) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law O := ∀ (N j : ℕ) (_hN : 67 ≤ N), O.readout () N j = ![1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N]
+  Law O := ∀ (N j : ℕ) (_hN : 56 ≤ N), O.readout () N j = ![1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N]
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := congrFun (h 67 6 (by norm_num)) 0
@@ -79,7 +80,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => (fun _ => (0 : ℕ))) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law O := ∀ (N j : ℕ) (_hN : 67 ≤ N) (_hj : 6 ≤ j) (_hj' : j ≤ N-10), StrictMono (O.readout () N j)
+  Law O := ∀ (N j : ℕ) (_hN : 56 ≤ N) (_hj : 6 ≤ j) (_hj' : j ≤ N-10), StrictMono (O.readout () N j)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 67 6 (by norm_num) (by norm_num) (by norm_num)
@@ -260,7 +261,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law O := ∀ (N : ℝ) (_hN : 67 ≤ N), O.readout () () N ≤ commonEnvelope N
+  Law O := ∀ (N : ℝ) (_hN : 56 ≤ N), O.readout () () N ≤ commonEnvelope N
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 67 (by norm_num)
@@ -376,7 +377,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law O := ∀ (N : ℕ) (_hN : 67 ≤ N), O.readout () () N ≤ bulkValue (N : ℝ) (bulkIndex N : ℝ)
+  Law O := ∀ (N : ℕ) (_hN : 56 ≤ N), O.readout () () N ≤ bulkValue (N : ℝ) (bulkIndex N : ℝ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 67 (by norm_num)
@@ -434,7 +435,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law O := ∀ (N j : ℕ) (_hN : 67 ≤ N), O.readout () N j ≤ bulkValue (N : ℝ) (bulkIndex N : ℝ)
+  Law O := ∀ (N j : ℕ) (_hN : 56 ≤ N), O.readout () N j ≤ bulkValue (N : ℝ) (bulkIndex N : ℝ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 67 0 (by norm_num)
