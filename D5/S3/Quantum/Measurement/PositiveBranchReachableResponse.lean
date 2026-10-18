@@ -6,6 +6,8 @@
    utility: none
    digest: Positive Kraus orbits span precisely the original reachable support. -/
 
+import D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
+import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Analysis.Matrix.Order
@@ -20,7 +22,8 @@ import Mathlib.Tactic.Ring
 
 noncomputable section
 
-open Matrix
+open Matrix Filter Topology
+open D5.S3.Quantum.Measurement.GeneralInstrumentSurvivalLimit
 open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
 
 namespace D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
@@ -28,7 +31,7 @@ namespace D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-variable {n α : Type*} [Fintype n] [DecidableEq n] [Fintype α]
+variable {n : Type*} {α : Type} [Fintype n] [DecidableEq n] [Fintype α]
 
 /-- The support of a positive matrix, as the orthogonal complement of its kernel. -/
 def matrixSupport (A : Matrix n n ℂ) : Submodule ℂ (EuclideanSpace ℂ n) :=
@@ -67,6 +70,16 @@ def wordSpan (K : α → Matrix n n ℂ) (ρ : Matrix n n ℂ) (l : ℕ) :
 def reachableSpace (K : α → Matrix n n ℂ) (ρ : Matrix n n ℂ) :
     Submodule ℂ (EuclideanSpace ℂ n) :=
   ⨆ l, wordSpan K ρ l
+
+/-- The trace dual of the weighted continuation map. -/
+def weightedDual (K : α → Matrix n n ℂ) (c : α → ℝ) :
+    Matrix n n ℂ →ₗ[ℂ] Matrix n n ℂ :=
+  weightedCP (fun a => (K a)ᴴ) c
+
+/-- Survival effects are defined on the original ambient space; their
+quadratic forms on the reachable subspace give the compressed effects. -/
+def survivalEffect (K : α → Matrix n n ℂ) (c : α → ℝ) (N : ℕ) : Matrix n n ℂ :=
+  (weightedDual K c)^[N] 1
 
 omit [DecidableEq n] in
 private theorem weightedCP_psd (K : α → Matrix n n ℂ) (c : α → ℝ)
@@ -307,7 +320,152 @@ theorem finite_reachable_faithful_sum (K : α → Matrix n n ℂ) (c : α → �
     (orbitSum_psd K c (fun a => (hc a).le) hρ L)
   exact ⟨L, μ, hμ, hs, fun v hv => hbound v (hs.symm ▸ hv)⟩
 
+private theorem matrixSupport_eq_range {A : Matrix n n ℂ} (hA : A.IsHermitian) :
+    matrixSupport A = LinearMap.range A.toEuclideanLin := by
+  rw [matrixSupport, LinearMap.orthogonal_ker,
+    ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, hA.eq]
+
+omit [DecidableEq n] in
+private theorem weightedCP_trace_pairing (K : α → Matrix n n ℂ) (c : α → ℝ)
+    (X Y : Matrix n n ℂ) :
+    (weightedCP K c X * Y).trace = (X * weightedDual K c Y).trace := by
+  simp only [weightedCP, weightedDual, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.conjTranspose_conjTranspose, Matrix.sum_mul, Matrix.mul_sum,
+    Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul]
+  apply Finset.sum_congr rfl
+  intro a _
+  congr 1
+  simpa only [Matrix.mul_assoc] using
+    Matrix.trace_mul_cycle (K a) X ((K a)ᴴ * Y) |>.trans
+      (Matrix.trace_mul_comm ((K a)ᴴ * Y * K a) X)
+
+omit [DecidableEq n] in
+private theorem weightedCP_iterate_trace (K : α → Matrix n n ℂ) (c : α → ℝ)
+    (N : ℕ) (X Y : Matrix n n ℂ) :
+    ((weightedCP K c)^[N] X * Y).trace =
+      (X * (weightedDual K c)^[N] Y).trace := by
+  induction N generalizing X Y with
+  | zero => rfl
+  | succ N ih =>
+    rw [Function.iterate_succ_apply', weightedCP_trace_pairing, ih,
+      Function.iterate_succ_apply]
+
+private theorem weighted_survival_limit {d : ℕ}
+    (K : α → Matrix (Fin d) (Fin d) ℂ) (c : α → ℝ) (hc : ∀ a, 0 < c a)
+    (hcomp : weightedDual K c 1 ≤ 1) :
+    ∃ F : Matrix (Fin d) (Fin d) ℂ,
+      Tendsto (survivalEffect K c) atTop (𝓝 F) ∧ 0 ≤ F ∧
+      weightedDual K c F = F ∧
+      ∀ X : Matrix (Fin d) (Fin d) ℂ,
+        Tendsto (fun N => ((weightedCP K c)^[N] X).trace) atTop (𝓝 (X * F).trace) := by
+  classical
+  let Q : α → Matrix (Fin d) (Fin d) ℂ := fun a => (Real.sqrt (c a) : ℂ) • K a
+  have hQ (X : Matrix (Fin d) (Fin d) ℂ) :
+      D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.noClickDual Q X =
+        weightedDual K c X := by
+    simp only [D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.noClickDual,
+      weightedDual, weightedCP, LinearMap.coe_mk, AddHom.coe_mk,
+      Matrix.conjTranspose_conjTranspose]
+    apply Finset.sum_congr rfl
+    intro a _
+    simp only [Q, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+      smul_smul, Complex.star_def, Complex.conj_ofReal,
+      ← Complex.ofReal_mul, Real.mul_self_sqrt (hc a).le]
+  obtain ⟨A, hA⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (sub_nonneg.mpr hcomp)
+  have hA' : 1 - weightedDual K c 1 = Aᴴ * A := hA
+  have hcomplete : (∑ a, (Q a)ᴴ * Q a) + ∑ _ : Unit, Aᴴ * A = 1 := by
+    have hsum : (∑ a, (Q a)ᴴ * Q a) = weightedDual K c 1 := by
+      simpa only [D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.noClickDual,
+        Matrix.mul_one] using hQ 1
+    rw [hsum, Fintype.sum_unique, ← hA']
+    abel
+  obtain ⟨F, hlim, _, hF, _, hfix, _, htrace⟩ :=
+    survival_tendsto_maximal_fixed_effect Q (fun _ : Unit => A) hcomplete
+  have hsurv (N : ℕ) :
+      D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival Q N =
+        survivalEffect K c N := by
+    induction N with
+    | zero => rfl
+    | succ N ih =>
+      rw [D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival, ih,
+        hQ]
+      simp only [survivalEffect, Function.iterate_succ_apply']
+  have hsurvfun :
+      D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival Q =
+        survivalEffect K c := funext hsurv
+  rw [hsurvfun] at hlim
+  refine ⟨F, hlim, hF, ?_, ?_⟩
+  · simpa only [hQ] using hfix
+  · intro X
+    have hpair (N : ℕ) : ((weightedCP K c)^[N] X).trace =
+        (X * D5.S3.Quantum.Measurement.GeneralInstrumentDarkClosure.survival Q N).trace := by
+      rw [hsurv, survivalEffect, ← weightedCP_iterate_trace, Matrix.mul_one]
+    simpa only [← hpair] using htrace X
+
+/-- Termination from the single original state gives a common finite return
+gap for every direction in its original Kraus reachable space. The inequality
+is exactly `I_S - (T*)^N(I_S) ≥ I_S / 2`, written as quadratic forms. -/
+theorem initial_termination_uniform_reachable_gap {d : ℕ}
+    (K : α → Matrix (Fin d) (Fin d) ℂ) (c : α → ℝ) (hc : ∀ a, 0 < c a)
+    (hcomp : weightedDual K c 1 ≤ 1) (ρ : Matrix (Fin d) (Fin d) ℂ)
+    (hρ : ρ.PosSemidef)
+    (hterm : Tendsto (fun N => ((weightedCP K c)^[N] ρ).trace) atTop (𝓝 0)) :
+    ∃ N : ℕ, 1 ≤ N ∧ ∀ v ∈ reachableSpace K ρ,
+      (inner ℂ v ((survivalEffect K c N).toEuclideanLin v)).re ≤ ‖v‖ ^ 2 / 2 := by
+  obtain ⟨L, μ, hμ, hsupp, _⟩ := finite_reachable_faithful_sum K c hc ρ hρ
+  obtain ⟨F, hlim, hF, hfix, htrace⟩ := weighted_survival_limit K c hc hcomp
+  have hρF : (ρ * F).trace = 0 := tendsto_nhds_unique (htrace ρ) hterm
+  have hFiter (k : ℕ) : (weightedDual K c)^[k] F = F := by
+    induction k with
+    | zero => rfl
+    | succ k ih => rw [Function.iterate_succ_apply', ih, hfix]
+  have hRF : (F * orbitSum K c ρ L).trace = 0 := by
+    rw [Matrix.trace_mul_comm]
+    simp only [orbitSum, Matrix.sum_mul, Matrix.trace_sum]
+    apply Finset.sum_eq_zero
+    intro k _
+    rw [weightedCP_iterate_trace, hFiter, hρF]
+  have hrange :=
+    D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity.zero_trace_support
+      F (orbitSum K c ρ L) (Matrix.nonneg_iff_posSemidef.mp hF)
+      (orbitSum_psd K c (fun a => (hc a).le) hρ L) hRF
+  have hkill : ∀ v ∈ reachableSpace K ρ, F.toEuclideanLin v = 0 := by
+    intro v hv
+    have hv' : v ∈ LinearMap.range (orbitSum K c ρ L).toEuclideanLin := by
+      rw [← matrixSupport_eq_range (orbitSum_psd K c (fun a => (hc a).le) hρ L).isHermitian,
+        hsupp]
+      exact hv
+    exact hrange hv'
+  let e : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ]
+      (EuclideanSpace ℂ (Fin d) →L[ℂ] EuclideanSpace ℂ (Fin d)) :=
+    (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)).toAlgEquiv.toLinearMap
+  have he : Continuous e := e.continuous_of_finiteDimensional
+  have hn : Tendsto (fun N => ‖e (survivalEffect K c N) - e F‖) atTop (𝓝 0) := by
+    simpa only [Function.comp_apply, sub_self, norm_zero] using
+      (((he.tendsto F).comp hlim).sub_const (e F)).norm
+  obtain ⟨N, hN⟩ := eventually_atTop.mp
+    (hn.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 2)))
+  refine ⟨max N 1, le_max_right _ _, ?_⟩
+  intro v hv
+  have hn' : ‖e (survivalEffect K c (max N 1)) - e F‖ < 1 / 2 :=
+    hN (max N 1) (le_max_left _ _)
+  have hq : (inner ℂ v ((survivalEffect K c (max N 1)).toEuclideanLin v)).re =
+      (inner ℂ v ((e (survivalEffect K c (max N 1)) - e F) v)).re := by
+    simp only [_root_.sub_apply, e]
+    change (inner ℂ v ((survivalEffect K c (max N 1)).toEuclideanLin v)).re =
+      (inner ℂ v ((survivalEffect K c (max N 1)).toEuclideanLin v -
+        F.toEuclideanLin v)).re
+    rw [hkill v hv, sub_zero]
+  rw [hq]
+  calc
+    _ ≤ ‖v‖ * ‖(e (survivalEffect K c (max N 1)) - e F) v‖ :=
+      re_inner_le_norm (𝕜 := ℂ) _ _
+    _ ≤ ‖v‖ * (‖e (survivalEffect K c (max N 1)) - e F‖ * ‖v‖) :=
+      mul_le_mul_of_nonneg_left (ContinuousLinearMap.le_opNorm _ _) (norm_nonneg _)
+    _ ≤ ‖v‖ ^ 2 / 2 := by nlinarith [norm_nonneg v]
+
 #print axioms finite_orbit_support_eq_word_span
 #print axioms finite_reachable_faithful_sum
+#print axioms initial_termination_uniform_reachable_gap
 
 end D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
