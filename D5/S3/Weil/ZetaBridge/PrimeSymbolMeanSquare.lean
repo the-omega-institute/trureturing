@@ -1,4 +1,4 @@
-/-!
+/-
 SOURCE-ONLY / UNCOMPILED. This is proposed source, not a delivered library theorem.
 Requires owner-exports.patch. No owner source was modified by this worker.
 The finite-block and tail proofs below are attempts; no elaboration or kernel

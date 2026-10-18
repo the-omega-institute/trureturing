@@ -1,4 +1,4 @@
-/-!
+/-
 SOURCE_ONLY_UNCOMPILED. Full proof attempts, with no elaboration/kernel claim.
 Install at D5/S3/Weil/ZetaBridge/PrimeSymbolResonance.lean only in a later,
 authorized integration. Requires the proposed T2 and owner visibility patches.
