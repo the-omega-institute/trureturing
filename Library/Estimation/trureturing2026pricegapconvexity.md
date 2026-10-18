@@ -9197,3 +9197,205 @@ SIH2, SAH and OSH remain their separate absolute allowances; overlapping
 payments are not added as reserves. This is a source application of
 existing estimates, not a new density theorem, a literature-priority
 claim, a Lean verification or a proof of Robin or RH.
+
+
+## The retained source height pays every zero in the same frequency mask
+
+Keep JM1--JM7's original conditional source, all full windows, maximizing
+ties, positive outgoing weights, actual zero multiplicities and individual
+legal upper heights. In this application the originally supplied parameters
+must satisfy
+
+$$
+\Theta\in(1/2,1],\qquad 1-\Theta<\eta<\frac9{28},\qquad
+\mu=\frac12-\eta>\frac5{28}.
+$$
+
+The original restrictions on $d,\kappa,a$ are unchanged. This is a
+restriction on the supplied $\eta$, not permission to reselect it. In
+particular the application includes $\Theta=1$ on this range. Retain
+SIH1's same lower cut
+
+$$
+H_{B,X}=\max\{51,\sqrt B/M_X^{19/10}\},\qquad
+M_X=X^\mu\log X,
+$$
+
+and its same real-part interval $[3/5,3/4]$. Here the sum includes
+**all** actual zeros in that mask, without any half-isolation assumption:
+
+$$
+\begin{aligned}
+r_X^{\rm all}(B,\tau)
+&=2\!\sum_{\substack{H_{B,X}<\gamma\le\tau\\
+                       3/5\le\beta\le3/4}}
+ m_\rho|c_{B,a}(\rho)|,\\
+\mathcal R_X^{\rm all}
+&=\sum_{i<m}\delta_i r_X^{\rm all}(B_i,\tau_i).
+\end{aligned}
+$$
+
+The complete coefficient is still
+$c_{B,a}(\rho)=s_BF_B(\rho)-aB^{\rho-1/2}/\rho$.
+The result is a source application of the existing general density
+estimates and the same retained positive height. No new density theorem
+is asserted.
+
+### Match the general density loss to the original positive height
+
+Reuse IH3's Ingham input for $3/5\le\sigma\le7/10$ and DH3's
+[Guth--Maynard input](../Analytic/guthmaynard2024largevalues.md#the-zero-density-input-for-cumulative-contributions)
+for $7/10\le\sigma\le3/4$. Write
+
+$$
+D(\sigma)=
+\begin{cases}
+3(1-\sigma)/(2-\sigma),&3/5\le\sigma\le7/10,\\
+15(1-\sigma)/(3+5\sigma),&7/10\le\sigma\le3/4,
+\end{cases}
+\qquad
+U(\sigma)=\frac{19}{10}[1-D(\sigma)],\quad
+E(\sigma)=\sigma-1+\frac{D(\sigma)}2.
+$$
+
+The two density exponents agree at $7/10$. Both published estimates
+count actual zeros with multiplicity. Their existing fixed-parameter
+reciprocal-height consequence is
+$\sum_{\gamma>H,\,\beta\ge\sigma}m_\rho/\gamma
+\ll_{\sigma,\epsilon}H^{D(\sigma)-1+\epsilon}$ for $H\ge51$.
+Only finitely many fixed real-part parameters are used below.
+
+On the first segment, direct substitution gives
+
+$$
+\frac{E(\sigma)}{1-U(\sigma)}
+=\frac{5(1-\sigma)(2\sigma-1)}{39-48\sigma}
+\le\frac19.
+$$
+
+The denominator is positive, and the last inequality is equivalent to
+$90(\sigma-7/10)(\sigma-4/3)\ge0$. On the second segment,
+
+$$
+\frac{E(\sigma)}{1-U(\sigma)}
+=\frac{5(1-\sigma)(9-10\sigma)}{6(43-55\sigma)}
+\le\frac5{28}.
+$$
+
+Its denominator is positive; after clearing it, the last inequality is
+$280(3/4-\sigma)(\sigma+1/35)\ge0$. Also $D$ is decreasing on
+both segments, so $1-U\ge7/45$ throughout this interval. Consequently,
+with one fixed positive parameter
+
+$$
+q=\frac7{90}\left(\mu-\frac5{28}\right)>0,
+\qquad
+(1-U(\sigma))\mu-E(\sigma)\ge2q.
+\tag{AHA1}
+$$
+
+Use disjoint half-open bins with $7/10$ as an endpoint, closing the
+final bin at $3/4$. Choose their maximum width $\omega>0$ and one
+fixed $\epsilon>0$ so that $\omega+\epsilon/2\le q$ and
+$D(\sigma_j)+\epsilon<1$ at every left endpoint. DH3's existing full
+coefficient bound and reciprocal-height sum bound a bin by
+
+$$
+C B^{\sigma_{j+1}-1/2}H_{B,X}^{D(\sigma_j)-1+\epsilon}
+\le C M_X^{U(\sigma_j)}B^{E(\sigma_j)+q}.
+\tag{AHA2}
+$$
+
+Indeed, $H_{B,X}\ge\sqrt B/M_X^{19/10}$ and the height exponent
+is negative. This also covers the branch $H_{B,X}=51$; bounded initial
+heights are in the existing constant. The favorable factor
+$M_X^{-19\epsilon/10}$ has only been discarded. Extending each
+positive sum above $\tau$ is an upper estimate; no actual upper mask
+is changed.
+
+Let $r_{X,j}^{\rm all}$ denote the contribution of one bin, and write
+$h_X(B)=(d/2)X^{-\eta}\sqrt B\log B$, as in HIA2. For
+$B\le X$, divide each bound in AHA2 by $M_X$ and use AHA1 to get
+
+$$
+\frac{r_X^{\rm all}(B,\tau)}{M_X}
+\ll X^{-q}(\log X)^{-7/45}.
+$$
+
+For $B>X$, $E(\sigma_j)+q<1/2$, so division by $h_X(B)$ gives
+
+$$
+\begin{aligned}
+\frac{r_{X,j}^{\rm all}(B,\tau)}{h_X(B)}
+&\ll X^\eta M_X^{U(\sigma_j)}
+ \frac{B^{E(\sigma_j)+q-1/2}}{\log B}\\
+&\ll X^{-(1-U(\sigma_j))\mu+E(\sigma_j)+q}
+ (\log X)^{U(\sigma_j)-1}\\
+&\ll X^{-q}(\log X)^{-7/45}.
+\end{aligned}
+$$
+
+The displayed binwise estimates are summed over a fixed finite
+partition. Here $0<E(\sigma)\le1/4$ and $q<7/180$ ensure the
+negative power of $B$ used in the second case. This splits only the
+estimate, retaining both parts of the original source. In particular,
+no upper clock ceiling and no assumption $B\asymp X$ is used.
+
+Thus, for one constant depending on the fixed original parameters
+and suppliers,
+
+$$
+\boxed{
+\begin{aligned}
+e_X^{\rm all}&=C X^{-q}(\log X)^{-7/45}\longrightarrow0,\\
+r_X^{\rm all}(B,\tau)&\le e_X^{\rm all}[M_X+h_X(B)],\\
+\mathcal R_X^{\rm all}
+&\le e_X^{\rm all}[M_XL_X+\mathscr H_X].
+\end{aligned}}
+\tag{AHA3}
+$$
+
+The estimates are uniform on all original windows, ties and legal
+individual height assignments on the stated original exponent range,
+including $\Theta=1$. As in HIA2, $\mathscr H_X$ need not be
+$O(M_XL_X)$; AHA3 is not an absolute $o(M_XL_X)$ assertion.
+
+### Remove the whole masked class in the unchanged signed account
+
+Apply HIA3's already established
+$\mathscr H_X\le\mathcal G_X+O_a(L_X)$ and HIA4--HIA5's same
+comparison, now with AHA3's actual all-zero allowance. If
+$S_X^{\rm rem,all}(\boldsymbol\tau)$ deletes precisely the real
+contribution of the zeros in this same mask from the original full
+head, then
+
+$$
+\begin{aligned}
+S_X^{\rm rem,all}(\boldsymbol\tau)
+&\ge(1-e_X^{\rm all})\mathcal G_X
+ -e_X^{\rm all}M_XL_X-O_a(L_X),\\
+S_X^{\rm rem,all}(\boldsymbol\tau)
+&\ge(R_\eta-\varepsilon)M_XL_X
+\quad\text{eventually for every fixed }\varepsilon>0,\\
+\mathcal R_X^{\rm all}/\mathcal G_X&=O(e_X^{\rm all})\longrightarrow0.
+\end{aligned}
+\tag{AHA4}
+$$
+
+All original full-window, maximizing-tie and legal-height quantifiers
+are retained. The positive height is used only inside the same
+complete response. This controls non-half-isolated zeros in the mask
+as well as the half-isolated zeros already covered by HIA1--HIA5.
+It leaves that earlier result's wider $\eta<1/2$ scope intact.
+The fact that the estimate covers a larger class does not assert that
+any added zeros actually exist or carry a positive fraction of the
+original response.
+
+The whole masked class is removed, but frequencies below $H_{B,X}$,
+real parts outside $[3/5,3/4]$, and their original complete signed
+contributions remain. No favorable cofinal full window or sufficient
+upper bound for this remaining head is supplied. Overlapping allowances
+are not added as independent reserves. This is a paper application of
+existing general density and source inequalities, with no new density
+theorem, literature-priority claim, Lean verification, all-integer Robin
+inequality or RH proof.
