@@ -56,6 +56,12 @@ internal sealed class StrictBornFibersDocument : IScribeDocumentDefinition
                     + "The five-mode reconstruction formula transfers their changed blockade "
                     + "coordinate to their changed joint endpoint mass.")),
                 Paragraph(Text(
+                    "The degree bound belongs to the five-mode task statement. The complete "
+                    + "bipartite graph K(3,3) has two distinct nonlinear neighborhoods, but "
+                    + "every vertex has three neighbors. It therefore has no degree-two "
+                    + "local source of this form. The unrestricted-graph setting-number "
+                    + "classification still applies to that graph.")),
+                Paragraph(Text(
                     "This concerns repeated preparation of one unknown initial state and occupation "
                     + "plus double-commutator acceleration data. The conclusion provides actual Born sources "
                     + "with an unresolved joint endpoint task. It does not assert a native Fibonacci "
