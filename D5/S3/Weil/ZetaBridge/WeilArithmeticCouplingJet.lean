@@ -51,9 +51,9 @@ private def gammaMajorant (w : ℝ) (j : ℕ) : ℝ :=
   w / (gammaRate j ^ 2 + w ^ 2)
 private def gammaSineTerm (L w : ℝ) (j : ℕ) : ℝ :=
   w * (1 - Real.exp (-gammaRate j * L)) / (gammaRate j ^ 2 + w ^ 2)
-private def logLength (c : ℕ) : ℝ := Real.log (c : ℝ)
-private def frequency (c : ℕ) (n : ℤ) : ℝ := 2 * Real.pi * (n : ℝ) / logLength c
-private def primeWeight (j : ℕ) : ℝ := ArithmeticFunction.vonMangoldt j / Real.sqrt j
+def logLength (c : ℕ) : ℝ := Real.log (c : ℝ)
+def frequency (c : ℕ) (n : ℤ) : ℝ := 2 * Real.pi * (n : ℝ) / logLength c
+def primeWeight (j : ℕ) : ℝ := ArithmeticFunction.vonMangoldt j / Real.sqrt j
 private def poleSine (L w : ℝ) : ℝ :=
   2 * w * (Real.cosh (L / 2) - 1) / (w ^ 2 + 1 / 4)
 
