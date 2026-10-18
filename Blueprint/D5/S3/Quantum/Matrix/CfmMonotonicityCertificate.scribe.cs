@@ -54,7 +54,7 @@ internal sealed class CfmMonotonicityCertificateDocument : IScribeDocumentDefini
                         Eq(Call("cfc", V("scalarFunction"), V("A")), Call("rationalFunction", V("A"))))))),
                 "For every natural number n and every positive definite complex n by n matrix A, cfc scalarFunction A equals rationalFunction A. The spectrum is finite, so all scalar functions are continuous there. Its nonnegative spectrum makes all three affine denominators strictly positive. cfc_map_div, cfc_add_const and cfc_const_mul_id identify each rational term with its matrix counterpart; Matrix.nonsing_inv_eq_ringInverse identifies the two inverse conventions.", false),
             Entry("not-matrix-monotone", "not_matrix_monotone", "Neither direction of matrix monotonicity",
-                Disp(Seq(Neg, Call("MatrixMonotoneDegree", Num(3), V("scalarFunction")))),
+                Disp(Seq(Neg, Sp, Call("MatrixMonotoneDegree", Num(3), V("scalarFunction")))),
                 "The scalar function is not matrix monotone of degree three in the paper's convention allowing either direction. For every positive definite matrix A, continuous functional calculus identifies scalarFunction(A) with rationalFunction(A): affine denominators are positive on the spectrum, and cfc_map_div identifies the inverse with the nonsingular matrix inverse. The exact finite certificate then contradicts positivity for the increasing direction and diagonal positivity for the decreasing direction.", false))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
@@ -73,7 +73,7 @@ internal sealed class CfmMonotonicityCertificateDocument : IScribeDocumentDefini
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Smul(Formula a, Formula b) => Call("smul", a, b);
-    private static Formula Negate(Formula x) => Seq(Neg, x);
+    private static Formula Negate(Formula x) => Seq(Minus, x);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(V(name), [.. args]);
     private static Formula Tuple(params Formula[] xs) => Seq(Open, Seq(xs.SelectMany((x, i) =>
         i == 0 ? new[] { x } : new[] { Comma, Sp, x }).ToArray()), Close);

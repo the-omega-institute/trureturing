@@ -21,16 +21,15 @@ def actual : Realization signature :=
   realize signature (fun _ _ x => x ^ 2) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 def theoremLaw (R : Realization signature) : Prop :=
   ∀ (C : Mat) (hC : C.IsHermitian) (_hspec : ∀ i, hC.eigenvalues i < 1)
     {E : Type u} [SeminormedAddCommGroup E] [NormedSpace ℝ E]
     (L : Mat →ₗ[ℝ] E),
     let r := fun s : ℝ => (s • (1 : Mat) - C)⁻¹
-    R.readout () () ‖L (r 2 * r 4)‖ + R.readout () () ‖L (r 3 * r 4)‖ ≤
-    54 * (R.readout () () ‖L (r 2 * r 2)‖ + R.readout () () ‖L (r 2 * r 3)‖ +
-      R.readout () () ‖L (r 3 * r 3)‖)
+    R.readout () () ‖L (r 2 * r 4)‖ + ‖L (r 3 * r 4)‖ ^ 2 ≤
+    54 * (‖L (r 2 * r 2)‖ ^ 2 + ‖L (r 2 * r 3)‖ ^ 2 + ‖L (r 3 * r 3)‖ ^ 2)
 
 abbrev arena : Arena where
   signature := signature
@@ -82,30 +81,6 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "fn", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["fn", "arg"]

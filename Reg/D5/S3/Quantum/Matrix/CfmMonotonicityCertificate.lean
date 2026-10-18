@@ -165,24 +165,19 @@ end FunctionalCalculus
 
 namespace Monotonicity
 open _root_.D5.S3.Quantum.Matrix.RadialConvexity
-open Classical
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ → ℝ) (fun _ => Bool)
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ f => decide (MatrixMonotoneDegree 3 f)) (fun e => nomatch e)
+  realize signature (fun _ _ t => scalarFunction t) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => true) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ¬ R.readout () () scalarFunction = true
-
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  exact h rfl
+  Law R := ¬ MatrixMonotoneDegree 3 (fun t => R.readout () () t)
 
 private theorem zero_monotone : MatrixMonotoneDegree 3 (fun _ => 0) := by
   left
@@ -190,16 +185,18 @@ private theorem zero_monotone : MatrixMonotoneDegree 3 (fun _ => 0) := by
   simp only [matFun, cfc_const_zero]
   exact le_refl _
 
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h zero_monotone
+
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  exact ⟨(), scalarFunction, (fun _ => 0), by
-    simp [actual, realize, not_matrix_monotone, zero_monotone]⟩
+  exact ⟨(), 1, 2, by norm_num [actual, realize, scalarFunction]⟩
 
 def source_registration : Registration arena (type_of% @not_matrix_monotone) where
   actual := actual
-  bridge := by simp [arena, actual, realize]
-  variation := ⟨by simpa [arena, actual, realize] using not_matrix_monotone,
-    rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨not_matrix_monotone, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
@@ -220,7 +217,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ f => decide (MatrixMonotoneDegree 3 f)) (fun e => nomatch e))
+    (fun _ _ t => scalarFunction t) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -230,11 +227,11 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg"]
+      path := #["arg", "arg"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }

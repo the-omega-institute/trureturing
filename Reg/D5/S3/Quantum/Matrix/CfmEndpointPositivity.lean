@@ -5,43 +5,57 @@ import Reg.Support.SingleDependentReadout
 namespace Reg.D5.S3.Quantum.Matrix.CfmEndpointPositivity
 open _root_.D5.S3.Quantum.Matrix.CfmEndpointPositivity
 open _root_.D5.S3.Quantum.Matrix.CfmRadialDerivative
+open _root_.D5.S3.Quantum.Matrix.CayleyResolvent
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.Matrix
 open scoped MatrixOrder ComplexOrder Matrix.Norms.L2Operator
 noncomputable section
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Mat 3) (fun _ => Prop)
+  Reg.Support.SingleDependentReadout.signature (Mat 3) (fun _ => Mat 3) (fun _ => Mat 3)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ X => X.PosSemidef) (fun e => nomatch e)
+  realize signature (fun _ U X => resolventSumDerivative (1/20000 : ℝ) U X)
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (U V : Mat 3), U ∈ cayleyDomain 3 → V ∈ cayleyDomain 3 → U ≤ V →
-    R.readout () () (resolventSumDerivative (1/20000 : ℝ) U
-      (resolventSum (1/20000 : ℝ) V - resolventSum (1/20000 : ℝ) U)) ∧
-    R.readout () () (resolventSumDerivative (1/20000 : ℝ) V
-      (resolventSum (1/20000 : ℝ) V - resolventSum (1/20000 : ℝ) U))
+    (R.readout () U
+      (resolventSum (1/20000 : ℝ) V - resolventSum (1/20000 : ℝ) U)).PosSemidef ∧
+    (resolventSumDerivative (1/20000 : ℝ) V
+      (resolventSum (1/20000 : ℝ) V - resolventSum (1/20000 : ℝ) U)).PosSemidef
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 : (0 : Mat 3) ∈ cayleyDomain 3 := by
     exact ⟨by simpa using (Matrix.PosDef.one (n := Fin 3) (R := ℂ)),
       by simpa using (Matrix.PosDef.one (n := Fin 3) (R := ℂ))⟩
-  exact (h 0 0 h0 h0 le_rfl).1
+  have hh := (h 0 0 h0 h0 le_rfl).1
+  have hn : (- (1 : Mat 3)).PosSemidef := hh
+  have hle : (1 : Mat 3) ≤ 0 := neg_nonneg.mp hn.nonneg
+  exact one_ne_zero (le_antisymm hle Matrix.PosSemidef.one.nonneg)
+
+private theorem resolvent_zero (s : ℝ) (hs : s ≠ 0) :
+    _root_.D5.S3.Quantum.Matrix.CayleyResolvent.resolvent s (0 : Mat 3) =
+      s⁻¹ • (1 : Mat 3) := by
+  unfold _root_.D5.S3.Quantum.Matrix.CayleyResolvent.resolvent
+  rw [sub_zero]
+  apply Matrix.inv_eq_right_inv
+  simp [smul_mul_smul, hs]
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, -1, ?_⟩
+  refine ⟨0, 0, 1, ?_⟩
   intro he
-  have hz : actual.readout i () 0 := Matrix.PosSemidef.zero
-  have hn : (- (1 : Mat 3)).PosSemidef := Eq.mp he hz
-  have hd := hn.diag_nonneg (i := 0)
-  norm_num at hd
+  have hd := congrArg (fun X : Mat 3 => (X 0 0).re) he
+  norm_num [actual, realize, resolventSumDerivative, resolventDerivative,
+    ContinuousLinearMap.mulLeftRight_apply,
+    resolvent_zero 2 (by norm_num), resolvent_zero 3 (by norm_num),
+    resolvent_zero 4 (by norm_num), smul_mul_smul] at hd
 
 def source_registration : Registration arena (type_of% @endpoint_derivatives_positive) where
   actual := actual
@@ -64,7 +78,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ X => X.PosSemidef) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ U X => resolventSumDerivative (1/20000 : ℝ) U X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -72,18 +87,13 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Matrix.CfmEndpointPositivity
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := true }, {
-      path := #["body", "body", "body", "body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
