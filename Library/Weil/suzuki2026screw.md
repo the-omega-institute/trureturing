@@ -1254,3 +1254,134 @@ The remaining target is the joint actual form, with the complete
 reflected contribution and all finite coefficient vectors retained.
 Neither an actual negative theta minor, full physical positivity, the
 signed Robin upper nor RH is established by this core obstruction.
+
+## A joint bound for high-window profiles with one sign change
+
+The complete actual kernel permits an order-uniform comparison on a
+restricted signed cone. Reuse (W12), the actual mixed $C^2$ limit (W24),
+and the exact diagonal $J$. No positivity of the first correction $C$
+in (W27) is assumed. The rectangle argument below is classical
+log-supermodularity reasoning, applied to the actual kernel; it is not
+an integration-closure claim about its triangular integrand support or
+a new general positivity criterion. No literature-priority or
+Lean-verification claim is made.
+
+Write
+
+$$
+R(a,b)=\frac{L_0(a,b)}{\sqrt{J(a)J(b)}}\qquad(a,b>0).
+$$
+
+This is smooth, symmetric and strictly positive, with $R(a,a)=1$.
+Fix a width $W>0$ and set $\kappa_W=\tfrac12\operatorname{sech}^2W$.
+There is one existential $A_W$ such that
+
+$$
+\boxed{\partial_a\partial_b\log R(a,b)\ge\kappa_W>0
+\quad\text{on }[c,c+W]^2\text{ for every }c\ge A_W.}
+\tag{W30}
+$$
+
+Indeed, in the exact coordinates $x=(a+b)/2$, $d=(a-b)/2$,
+
+$$
+\partial_a\partial_b\log R(a,b)
+=-\frac1{4x^2}
+ +\frac14\left(\partial_x^2\log T(x,d)
+                    -\partial_d^2\log T(x,d)\right).
+$$
+
+The factors $\Phi(a)$, $\Phi(b)$ and the diagonal normalizers have
+zero mixed logarithmic derivative. For $|d|\le W/2$, (W24) makes the
+right side converge uniformly to $\operatorname{sech}^2(2d)$, whose
+minimum is $\operatorname{sech}^2W$. This proves (W30) after increasing
+the same threshold. The complete reflected exterior remains included
+through (W24); no numerical value of $A_W$ is asserted.
+
+Fix such a window and a separator $s\in[c,c+W]$, and put
+$r(a)=R(a,s)>0$. Integrate the mixed logarithmic derivative over the
+rectangle from $(s,s)$ to $(a,b)$. Since $R(s,s)=1$, the result is
+
+$$
+\boxed{\begin{aligned}
+R(a,b)&\ge r(a)r(b)
+ \bigl(1+\kappa_W|a-s||b-s|\bigr)
+ &&\text{if }a,b\text{ lie on the same side of }s,\\
+R(a,b)&\le r(a)r(b)e^{-\kappa_W(s-a)(b-s)}
+ \le r(a)r(b)
+ &&\text{if }a\le s\le b.
+\end{aligned}}
+\tag{W31}
+$$
+
+For the first line the logarithmic rectangle increment is at least
+$\kappa_W|a-s||b-s|$, and $e^t\ge1+t$.
+For the second line one integration orientation is reversed, so that
+increment is at most $-\kappa_W(s-a)(b-s)$.
+These are simultaneous comparisons of the same actual $R$ and $s$.
+They do not combine independently attainable extremal values.
+
+Let $\mu$ be any finite nonzero real signed measure on this window
+with at most one sign change. After multiplying by an overall minus
+sign if needed, this means that its Jordan parts satisfy
+
+$$
+\operatorname{supp}\mu_+\subset[c,s],\qquad
+\operatorname{supp}\mu_-\subset[s,c+W]
+$$
+
+for some separator $s$. Either part may vanish. Set
+$d\nu_\pm=\sqrt J\,d\mu_\pm$ and define the nonnegative quantities
+
+$$
+\begin{aligned}
+U&=\int r(a)\,d\nu_+(a),&
+V&=\int r(b)\,d\nu_-(b),\\
+D_+&=\int(s-a)r(a)\,d\nu_+(a),&
+D_-&=\int(b-s)r(b)\,d\nu_-(b).
+\end{aligned}
+$$
+
+All integrals are finite on the fixed compact window. The full joint
+estimate is
+
+$$
+\boxed{\iint L_0(a,b)\,d\mu(a)d\mu(b)
+\ge (U-V)^2+\kappa_W(D_+^2+D_-^2)>0.}
+\tag{W32}
+$$
+
+To prove it, express the left side with kernel $R$ and signed measure
+$\nu_+-\nu_-$. Apply the two within-side lower bounds in (W31) to
+its positive blocks. Apply the opposite-side upper bound to its cross
+block, which has a negative coefficient. The resulting bound is
+$U^2+V^2-2UV+\kappa_W(D_+^2+D_-^2)$, retaining all cross terms.
+If this were zero, $D_+=D_-=0$ and $r>0$ would force both Jordan
+parts to be supported at the single point $s$. Their mutual singularity
+allows at most one nonzero mass there; $U=V$ then forces both to vanish.
+This contradicts $\mu\ne0$ and also covers atoms at the separator.
+
+In particular (W32) applies to every nonzero finite sampled measure
+$\mu=\sum_i c_i\delta_{a_i}$, after merging repeated nodes, with real
+coefficients that change sign at most once in the ordered positions.
+The threshold and $\kappa_W$ are independent of sample count,
+spacing and coefficients. Thus arbitrarily dense samples are included.
+It also applies directly to every nonzero real smooth density $h(a)da$
+with the same support and sign condition. The odd physical test with
+positive-half-line profile $h$ has the exact full quadratic form
+
+$$
+\iint_{\mathbb R^2}K_0(a,b)f(a)f(b)\,da\,db
+=2\iint_{(0,\infty)^2}L_0(a,b)h(a)h(b)\,da\,db>0.
+$$
+
+This is a restricted signed-profile result in addition to the
+one-signed cone (W14). It does not assert positivity on the linear
+span of the admitted profiles: adding such profiles can introduce
+further sign changes. The estimate uses the actual diagonal weights;
+it gives no unweighted spectral gap. The threshold may depend on $W$.
+Arbitrary sign patterns, arbitrary complex coefficients, compact
+positions and coupling to omitted positions remain uncontrolled.
+No bound for the separated correction $C$ is extracted, and the result
+is compatible with (W29). Full physical positivity, the strict Robin
+upper and RH remain unproved.
