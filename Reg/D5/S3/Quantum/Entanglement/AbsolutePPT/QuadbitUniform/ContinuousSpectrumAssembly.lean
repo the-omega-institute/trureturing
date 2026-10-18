@@ -43,7 +43,7 @@ private theorem uniform_psd :
     fin_cases i <;> fin_cases j <;> norm_num [Matrix.conjTranspose]
   · intro x
     simp [dotProduct, mulVec, Fin.sum_univ_succ, star_trivial]
-    positivity
+    nlinarith only [sq_nonneg (x 0), sq_nonneg (x 1), sq_nonneg (x 2)]
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hall
   let l : Fin 56 → ℝ := fun _ => 1 / 56
