@@ -2221,3 +2221,647 @@ finite-source recovery results supply no physical spacetime identity,
 universal alpha/beta reduction or completion of that programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Exact source fibres in the first acquired update
+
+**Definition 13.1 (first-U cuts and admissible frontiers).** Retain exactly
+Assumptions 11.1 and Definitions 11.2–11.4, including the actual initial
+acquisition of $u$, the initialization $E(j(u))$, the acquisition of its
+logical anchor and the first Ready. For each finite seed $u$, supply the
+single bit 0 there, execute Select, and execute an initial segment of the
+prescribed leaf-cell steps. Denote the resulting Edit cut by $e(u,p)$,
+where $p$ is the next original leaf of $j(u)$, or $\top$ after the last
+cell step. Thus
+
+$$
+\begin{aligned}
+\mathcal E_1
+ &=\{e(u,p):u\in\mathcal T,
+       p\in\operatorname{LeafPos}(j(u))\cup\{\top\}\},\\
+z(e(u,p))&=P_p(j(u)),\qquad r(e(u,p))=E(z(e(u,p))),\\
+A_*(e(u,p))&=\mathsf A(j(u)),\qquad
+\operatorname{role}(A_*)=\mathsf{held}.
+\end{aligned}
+\tag{ER.55}
+$$
+
+The seed and mark determine an actual prefix by Theorem 11.5. No later
+command, refresh or output of this U transaction has occurred. The end
+mark is still an Edit cut: the completion-record step is its next Advance.
+This is a subdomain of $\mathcal H_\partial$, with the same owner, actual
+source port, initializer, program and task $Q_\partial$.
+
+For a finite labelled tree $v$, let $\mathcal L_I(v)$ be the leaves $q$
+of $v$ such that, at each right turn on the root-to-$q$ path, its entire
+left sibling subtree lies in $I$. This is the domain test of Theorem
+10.2; in particular $D_q(v)$ is defined for exactly these leaves.
+Put
+
+$$
+\begin{aligned}
+b_0&=\langle\alpha,\alpha\rangle=a_0,&
+b_1&=\langle\beta,\alpha\rangle,&
+b_2&=\langle\beta,\beta\rangle=\rho(a_0),\\
+\mathfrak F(z)
+ &=\{(u,p):e(u,p)\in\mathcal E_1,\ P_p(j(u))=z\},&
+m(z)&=|\mathfrak F(z)|.
+\end{aligned}
+\tag{ER.56}
+$$
+
+These are fibres of the decoded *current source*, with its frontier
+forgotten in the observation. The actual controller and its receipt
+have not been modified. Ordered source support, terminal boundary and
+labelled source have the same fibres on this domain, by ABT Theorem
+12.1 and prefix closure. All comparisons use the fixed original root
+and orientation. Equality here is of source-tree contents; it does not
+identify the complete occurrence, allocation or archive fields of $J$.
+
+**Theorem 13.2 (exhaustive first-U ambiguity and actual separation).**
+For every $z\in\mathcal T$, the following disjoint cases give its entire
+fibre:
+
+$$
+\mathfrak F(z)=
+\begin{cases}
+\{(v,LL)\},&z=\langle b_0,v\rangle,\\
+\{(v,LR)\},&z=\langle b_1,v\rangle,\\
+\{(D_q(v),Rq):q\in\mathcal L_I(v)\}
+ \ \cup\ \{(\delta(v),\top):v\in I\},
+       &z=\langle b_2,v\rangle,\\
+\varnothing,&\text{otherwise}.
+\end{cases}
+\tag{ER.57}
+$$
+
+The conditional singleton in the third case is empty when $v\notin I$.
+In particular that case has the exact size
+
+$$
+m(\langle b_2,v\rangle)
+ =|\mathcal L_I(v)|+\boldsymbol 1_{v\in I}
+ \le\lambda(v)+1.
+\tag{ER.58}
+$$
+
+Every displayed member is attained by the existing controller, and the
+finite fibre and its corresponding actual held anchors can be recovered
+from the current source description. Distinct members of any one fibre
+have different actually acquired anchors. Furthermore their *next enabled
+Advance operations* have pairwise different current-source successors,
+including the $\top$ case. Consequently they are pairwise inequivalent
+for the unchanged $Q_\partial$, both by its present acquired readout and
+by its actual next complete response.
+
+Proof. The first two leaves of every $j(u)$ are $LL,LR$. At $LL$ no
+cell has changed and its left subtree is $b_0$. At $LR$ just its first
+alpha cell has changed, giving left subtree $b_1$. Once both have
+changed, the left subtree is $b_2$. For a later leaf $Rq$, (ER.41) gives
+
+$$
+ P_{Rq}(j(u))=\langle b_2,P_q(u)\rangle,
+ \qquad P_\top(j(u))=\langle b_2,\rho(u)\rangle.
+\tag{ER.59}
+$$
+
+The three left subtrees are different. In the third case Theorem 10.2
+says precisely that $P_q(u)=v$ has a solution at an original leaf $q$
+if and only if $q\in\mathcal L_I(v)$, and that its unique solution is
+$u=D_q(v)$. For $\top$, the supplied exact image grammar gives precisely
+$v\in I$ and $u=\delta(v)$. Conversely every such recovered $q$ is an
+original leaf of the recovered $u$, and reapplying $P_q$ gives $v$.
+The existing startup acquires this seed, and the leaf list reaches this
+cut after finitely many lawful cell steps. This proves both exhaustion
+and actual realization, including the first two cases. It also proves
+(ER.58), since its nonterminal candidates are distinct leaves.
+
+All tests and inverses used here terminate on finite syntax. The ABT
+shape inverse first recovers $z$ from current support; boundary first
+gives that support. Formula (ER.57) then enumerates all candidates and
+computes each $\mathsf A(j(u))$. This is enumeration on a source
+*description*, not an additional readout of the actual held slot.
+
+Two different marks for the same seed cannot give the same source.
+Indeed, moving from one original leaf to the next executes a nonempty
+sequence of cell substitutions. On logical syntax each alpha cell raises
+$\nu=2A+3B$ by 1, and each beta cell raises it by 2. Thus $\nu$ strictly
+increases between different marks, also up to $\top$. Hence two members
+of one fibre have different seeds. Their acquired complete anchors
+$\mathsf A(j(u))$ differ, because those tables recover $j(u)$ and $u$.
+Theorem 11.5 proves that these are the actual held tables at these cuts.
+This separation uses their acquired contents, not an inferred snapshot
+or a freely supplied old-source table.
+
+For the successor assertion, fix one fibre and its common decoded
+source $z$. Formula (ER.57) gives at most one member per mark, so
+different members have different marks. Every nonterminal candidate
+mark $p$ is a leaf of $z$.
+That original leaf has not yet been changed, so its current label is
+exactly the acquired old label used by the next guard. Definition 11.3
+and Theorem 11.5 therefore give the actual next source
+
+$$
+ r^+(e(u,p))=
+ \begin{cases}
+ E\bigl(z[p\leftarrow\rho(z|_p)]\bigr),&p\ne\top,\\
+ E(z),&p=\top.
+ \end{cases}
+\tag{ER.60}
+$$
+
+Here $z|_p$ is that leaf and the substitution notation changes just its
+occurrence. This equation describes the enabled guarded patch, rather
+than a hypothetical diagnostic action. Two different leaf positions of
+$z$ are incomparable. At one of them one successor has the changed
+logical label or subtree, while the other has its unchanged leaf.
+Since $\rho(\alpha)\ne\alpha$ and $\rho(\beta)\ne\beta$, those logical
+successors differ. Each also differs from the unchanged $z$ of the end
+case. Injectivity of $E$, already supplied by substitution injectivity,
+separates their actual source successors. The $\top$ successor is
+exactly Read0($\mathsf U,\varepsilon$), with its completion record and
+unchanged source. At every other mark the successor is the next Edit
+cut with its actual patch record. All other retained fields stay in the
+full successors required by Definition 11.4. Thus source projection
+already separates these complete responses, without discarding any of
+their remaining fields. $\square$
+
+**Theorem 13.3 (an attained unbounded exact fibre).** For $d\ge1$ let
+$t_d$ be the perfect ordered binary tree of height $d$ with all leaves
+$\beta$, and put $n=2^d$. Order its leaf addresses as
+$q_0<\cdots<q_{n-1}$ in left-first order. For $0\le k\le n$, let
+$u_{d,k}$ have the same perfect shape, with its first $k$ leaves
+$\alpha$ and all remaining leaves $\beta$. Set
+
+$$
+\begin{aligned}
+p_{d,k}&=Rq_k &&(k<n),& p_{d,n}&=\top,\\
+e_{d,k}&=e(u_{d,k},p_{d,k}),&
+z_d&=\langle b_2,t_d\rangle,& r_d&=E(z_d).
+\end{aligned}
+\tag{ER.61}
+$$
+
+Then the complete fibre over $r_d$ within $\mathcal E_1$ consists of
+exactly these $n+1$ cuts. Its members share the same labelled current
+source, source support and terminal boundary, pending U, Edit family,
+held role and empty finished-command word. They have pairwise different
+actually acquired anchors and next enabled source successors. Their
+source height and exact fibre size are
+
+$$
+ H_d=h(r_d)=d+3,\qquad
+ m(z_d)=2^d+1=2^{H_d-3}+1.
+\tag{ER.62}
+$$
+
+Even if Edit($\top$) is excluded, the nonterminal Edit subdomain has
+exactly $2^d$ members over this same source.
+
+Proof. Every nonempty all-beta labelled tree belongs to $I$: its beta
+leaves belong to $I$ and the paired-image production closes $I$ under
+pairing. Its inverse is the same ordered shape with all leaves alpha.
+For this last assertion, at a branch with all-beta descendants the
+exceptional production $\langle\beta,\alpha\rangle$ cannot apply;
+$\delta$ therefore preserves the branch and recurses into both children.
+Consequently every leaf of $t_d$ passes the sibling-image tests, and
+$D_{q_k}(t_d)$ changes precisely the earlier leaves to alpha. It is
+exactly $u_{d,k}$. Also $\delta(t_d)=u_{d,n}$. Formula (ER.57) proves
+that these are all candidates, not merely a selected colliding list.
+
+In the actual run for $u_{d,k}$, first the two alpha leaves of $a_0$
+are patched, then exactly the first $k$ alpha leaves of the seed are
+patched. All become beta; every remaining seed leaf was already beta
+and has not yet been patched. Thus the current logical tree is exactly
+$z_d$, with the claimed frontier and actual old anchor. This gives a
+direct realization under the unchanged startup as well as the image
+argument. For $k<n$ the next actual patch replaces the B tile at $Rq_k$
+by $\langle B,A\rangle$; for $k=n$ the next step leaves the source
+unchanged. Their separation is Theorem 13.2.
+
+The height of $E(b_2)=\langle B,B\rangle$ is 3. The height of
+$E(t_d)$ is $d+2$, because every leaf tile B has height 2. Hence
+$h(r_d)=1+\max(3,d+2)=d+3$ for $d\ge1$. Counting the $n$ leaves
+and the one end candidate gives (ER.62). Removing the end cut removes
+exactly that candidate. $\square$
+
+## 14. Necessary supplementary information and stationary source acquisition
+
+**Definition 14.1 (conditional supplement and source-only comparison).**
+A supplementary name is a function $C$ on $\mathcal E_1$ with a fixed
+comparison alphabet, intended to accompany the current source description
+or an acquisition of that source. For a decoded source $z$, its
+conditional capacity is the cardinality
+
+$$
+ \kappa_C(z)=|\{C(e):(u,p)\in\mathfrak F(z),\ e=e(u,p)\}|.
+\tag{ER.63}
+$$
+
+This is an extensional information function. No effective presentation
+of its alphabet, algorithm evaluating $C$ on candidate cuts, equality
+test for its values or procedure acquiring the actual value $C(e)$ is
+assumed. Supplying a value and computing the assignment are different
+requirements.
+
+The name is complete only when it includes every accessible
+source-dependent or history-dependent distinction beyond public fixed
+inputs and the current source itself. In particular this includes any
+available actual anchor or old table, leaf list, selected row or frontier,
+control operand and latch, previous reply or emitted frame, patch count,
+primitive ordinal, original acquisition transcript, event or retired-tile
+archive, scratch contents, list lengths and address backing. It also
+includes exposed allocation numbers, object identities, handles,
+allocator state, variable permission/binding information, scripts,
+source-dependent scheduling, timing and output length. Information may
+be shared, but every accessible joint distinction is counted in $C$.
+Fixed owner, source occurrence, root, program and rights are public
+comparison fields; they carry no seed-dependent choice. A transcript
+of additional source-only queries is considered below. This is the
+complete-name convention of Assumption 1.3 applied to this source fibre.
+
+Define $\mathcal O_{\rm src}$ as a separate stationary comparison
+interface: on the source present at an Edit cut, a source-blind
+observer with common initial local data may issue finite original-root
+literal queries, adaptively using only public inputs, any explicitly
+supplied supplement $C$, and the replies already obtained. The source stays fixed throughout such an experiment.
+The sole source-dependent return of a query is its truthful four-valued
+literal. Its other local computation, choice of address and stopping
+rule are deterministic functions of these data. Any additional
+accessible distinction just listed must instead enter $C$ explicitly;
+there is no side-channel reply supplied for free.
+
+This is an interface for comparing information on stationary source
+versions. In $Q_\partial$ itself no literal-query interrupt is enabled
+at Edit: its only enabled action there is Advance, which performs
+(ER.60). In particular $\mathcal O_{\rm src}$ neither pauses that
+controller as a newly installed service nor changes its transition
+table. Query counts, address lengths, decoding and delivery in this
+comparison remain charged operations whenever realized.
+
+**Theorem 14.2 (sharp conditional necessity on the actual source fibre).**
+Suppose a decoder from current source and complete supplementary name
+correctly recovers, on all of $\mathcal E_1$, any one of the following:
+the actual held anchor, the actual next source successor under Advance,
+or the actual $Q_\partial$ cut. Then on every attained source fibre
+$C$ is injective and
+
+$$
+ \kappa_C(z)=m(z).
+\tag{ER.64}
+$$
+
+The same requirement holds if the current source description is
+replaced by source support, terminal boundary or any terminating
+$\mathcal O_{\rm src}$ acquisition. Conversely, conditional on a fixed
+source $z$, the explicit rank encoding below uses exactly $m(z)$
+supplementary values and suffices to recover the cut and its full
+$Q_\partial$ response map. Thus this conditional cardinality is sharp.
+In particular a fixed-width binary supplement valid on the family
+(ER.61) requires, and conditionally can attain,
+
+$$
+ b_d=\left\lceil\log_2(2^d+1)\right\rceil=d+1=H_d-2.
+\tag{ER.65}
+$$
+
+On the nonterminal-only family the corresponding exact capacity is
+$2^d$ and fixed width is $d=H_d-3$. No single fixed finite supplementary
+alphabet suffices over all these attained heights. This is a lower
+bound for a subdomain of the full declared domain, and therefore also
+for any complete supplementary interface required on all of
+$\mathcal H_\partial$ with these same recovery demands.
+
+Proof. By Theorem 13.2 the target values of each of the three specified
+tasks are pairwise different on every fibre. If two members have the
+same $C$ value, a decoder with that same source and name has equal
+inputs and cannot return both distinct targets. This proves
+injectivity and (ER.64); the image cannot have more than the number of
+members. This counting step is the elementary pigeonhole argument
+already used in Theorem 3.1 and AIF §§4–5, reused here. The new premise
+is the exhaustive actual-source fibre and its acquired-anchor and
+source-successor separation, not a new general counting theorem.
+
+Support and boundary determine the same $z$ by ABT and prefix closure,
+so they give exactly the same obstruction. For a stationary query
+acquisition, fix equal $z$ and equal $C$. The first submitted address
+is equal. Its truthful reply is equal because the labelled sources
+are equal. Induction gives equal subsequent addresses, replies,
+accessible local states and stopping decisions. Hence no such
+transcript separates those two members, regardless of the number or
+lengths of its queries. Any additional source-dependent timing,
+allocation or prior record escaping this induction is, by Definition
+14.1, part of $C$ and must be counted. The argument uses equality of
+actual literal functions, rather than a bound on queries or a failure
+to inspect sufficiently deep positions.
+
+For sufficiency on a fixed fibre, enumerate (ER.57) in left-first mark
+order, with $\top$ last, and assign ranks $0,\ldots,m(z)-1$. The rank
+selects exactly one recovered pair $(u,p)$. The already proved partial
+inverse and Theorem 11.5 then reconstruct that cut and full joint state;
+Definition 11.3 supplies its entire lawful partial response map,
+including complete original successors, retired material and records.
+This is an information encoding on the attained fibre. It does not
+claim that a source-only observer can obtain the rank. The actual
+controller already has the distinguishing frontier in its receipt,
+backed by the acquired leaf list; translating its description to a
+rank is finite additional local computation if requested.
+
+For (ER.61), the ranks are exactly $k=0,\ldots,2^d$. A binary word of
+length $d+1$ can encode them, whereas $d$ bits have only $2^d$ values.
+This proves (ER.65) without a probability distribution or an average
+coding assumption. Excluding $\top$ leaves precisely $2^d$ ranks.
+Unbounded $d$ excludes a uniform finite alphabet. A correct interface
+on the full domain restricts to a correct one here, proving the final
+lower-bound assertion without changing that full domain. $\square$
+
+**Theorem 14.3 (what stationary source acquisition determines).** On
+$\mathcal E_1$, complete stationary literal acquisition under
+$\mathcal O_{\rm src}$ determines exactly the finite candidate list
+(ER.57), its candidate held anchors and its candidate next source
+successors. It recovers the actual one of these without supplementation
+if and only if $m(z)=1$. When $m(z)>1$, even full labelled-source
+disclosure and arbitrarily many stationary queries do not select it.
+With a complete supplementary name, exact recovery on a fibre is
+possible set-theoretically if and only if that name separates its
+members. Effective recovery is supplied here for the explicit
+frontier-word and rank encodings, conditional on the actual encoded
+value being supplied together with the current source description.
+
+Proof. A finite stationary tree can be acquired by the source-blind
+producer of Construction 9.10, using one truthful literal at every
+node. Apply the ABT decoder to its acquired description of $r=E(z)$,
+and compute (ER.57), (ER.55) and (ER.60). This gives the entire finite
+candidate list. On a singleton it supplies the unique actual cut.
+On a larger fibre Theorem 13.2 separates the anchors and successors,
+while the transcript induction in Theorem 14.2 makes every
+source-only experiment identical on its members. Thus it cannot
+select among them. If $C$ separates the fibre, each attained pair
+$(z,c)$ has a unique member $e$ with $C(e)=c$. Assigning that member
+defines the set-theoretic inverse on the attained image. Conversely,
+failure to separate gives the equal-input contradiction. This inverse
+does not assume evaluation of $C$ or an equality test on its alphabet.
+Even when names are represented by natural numbers with decidable
+equality, that comparison alone supplies no evaluation of $C$ on the
+reconstructed candidates. No effective inverse for an arbitrary
+separating $C$ is asserted.
+
+For the explicit frontier encoding, compare the supplied finite
+$L/R$ word or $\top$ with the marks in (ER.57). There is exactly one
+matching candidate on its actual image. For the rank encoding, select
+the entry at the supplied rank in that list's fixed left-first order,
+with $\top$ last. Both rules are uniform finite algorithms on the
+supplied descriptions: they use the computed candidate marks or list
+indices, not evaluations of an unspecified naming function. Theorem
+11.5 then reconstructs the cut and complete $J$, and Definition 11.3
+gives its full response map. Enumeration, word comparison or indexing,
+reconstruction and delivery are additional computations whenever
+realized, with their work, workspace and word/reference backing
+charged. No uniform runtime or storage bound is supplied here, and
+these computations are not part of the prefix subtotals in Proposition
+15.1. Neither algorithm acquires its supplementary input from the
+source alone.
+
+The producer here is used under the separately declared stationary
+comparison interface, not as an additional busy operation of
+$Q_\partial$. It can acquire the current source, not its lost original
+labels or update frontier. Conversely the existing controller's
+actual held anchor or its actual event transcript, when accessible,
+is source-dependent supplementary information and is counted as
+such. Their availability refutes no source-only assertion, since
+neither is a function of $r_d$ across (ER.61). $\square$
+
+## 15. Same-prefix resources, attribution and retained interfaces
+
+**Proposition 15.1 (operation and material coordinates of the exact family).**
+For each $e_{d,k}$ of (ER.61), let $n=2^d$. Count from the installed raw
+seed through its actual startup and then up to this first-U Edit cut.
+All these runs have the exact same literal Read count and total number
+of letters submitted by those Read opcodes:
+
+$$
+ N_{\rm Read}=6n+5,\qquad
+ L_{\rm addr}=(6d+6)n+26.
+\tag{ER.66}
+$$
+
+Between the first Ready and $e_{d,k}$ there are exactly $k+4$
+continuing primitives: one supplied bit, one Select and $k+2$ alpha
+cell patches. There are no additional literal Reads, refresh rows,
+row-transfer primitives or output tokens in this interval. Its source
+patches allocate $5(k+2)$ new tile nodes, retire $3(k+2)$ old tile nodes,
+and inspect exactly $3(k+2)$ old tile nodes for their guards. Their
+submitted tile-address lengths sum to
+
+$$
+ L_{\rm patch}=4+k(d+1).
+\tag{ER.67}
+$$
+
+At first Ready the active source node count is $6n-2k+7$; at the Edit
+cut it is the common value $6n+11$. Each initial logical-anchor
+acquisition constructs $8n+12$ query-suffix word links and $2n+2$
+logical child-address links. Its initial output frame has $2n+7$
+tokens. These are selected same-run subtotals; they do not assert
+equality of acquisition histories, source provenance, total work,
+retained material or physical storage.
+
+Proof. The perfect seed shape has $N(u_{d,k})=2n-1$ nodes and
+
+$$
+ W(u_{d,k})=\sum_{q\in\operatorname{Pos}(u_{d,k})}|q|
+   =\sum_{i=0}^d i2^i=2(d-1)n+2.
+$$
+
+The last finite-sum identity follows by induction on $d$: adding the
+new level contributes $(d+1)2^{d+1}$. The entry
+$x_{d,k}=j(u_{d,k})$ has $N(x_{d,k})=2n+3$ nodes. Attaching its
+three-node $a_0$ and the seed below one root gives
+
+$$
+ W(x_{d,k})=W(u_{d,k})+N(u_{d,k})+W(a_0)+N(a_0)
+           =2dn+6.
+$$
+
+The actual initial raw traversal uses $N(u_{d,k})$ Reads; startup
+logical acquisition uses $2N(x_{d,k})$. All later steps before this
+cut are input, Select and guarded patches, whose source probes are
+separate from literal Read opcodes. Substitution in (ER.53), with
+no finished transactions, therefore gives
+
+$$
+\begin{aligned}
+ N_{\rm Read}&=(2n-1)+2(2n+3),\\
+ L_{\rm addr}&=W(u_{d,k})+2W(x_{d,k})+4N(x_{d,k}),
+\end{aligned}
+$$
+
+which are (ER.66). The address words and node counts agree across the
+family because both the raw seeds and their logical entries have the
+same ordered shapes. Their actual replies do not agree: already the
+initial seed traversal distinguishes the alpha-prefix labels. The
+logical anchor replies and the emitted startup frames also distinguish
+those labels. Equal query counts and submitted-word lengths therefore
+do not erase their different actual acquisition histories.
+
+The two leaves $LL,LR$ of $a_0$ and the first $k$ seed leaves were all
+alpha, so all $k+2$ patches are exactly the alpha case of Assumption
+11.1: three checked/retired old nodes and five new nodes each. The two
+left addresses have length 2, and the $k$ right leaf addresses have
+length $d+1$, proving (ER.67). Each step appends its actual event,
+so the continuing event-record suffix has $k+4$ entries; their
+operands and backing remain charged. For $k<n$, the *next* step is a
+beta patch at length $d+1$, allocating nine new nodes, retiring and
+checking five old nodes. For $k=n$, the next step is the completion
+record with no source patch. These are the actual next steps used
+in Theorem 13.3, not a postponed whole-U operation.
+
+There are $n+1$ logical branch nodes in $x_{d,k}$, $k+2$ alpha leaves
+and $n-k$ beta leaves. Its encoded node count is consequently
+$(n+1)+3(k+2)+5(n-k)=6n-2k+7$. Each completed alpha patch adds two
+active nodes, giving $6n+11$ at every displayed cut. Startup logical
+acquisition uses the two queries of (ER.46) per logical node, each
+with two new suffix links, giving $4N(x_{d,k})=8n+12$ links; its
+branch scheduling creates $N(x_{d,k})-1=2n+2$ child-address links.
+The output rule gives $N(x_{d,k})+4=2n+7$ tokens. These are startup
+acquisition and output counts, not an assumed startup Copy phase.
+
+The startup source preparation, two warm-up substitutions, acquired
+rows, tables, source occurrence backing, raw traversal stack, lookup,
+all prior/retired material, address traversal, reference identity,
+serialization and records keep their existing charges in §§11–12.
+In particular long patch addresses are not constant-time seeks; even
+equal submitted Read words do not assert equal source-node traversal
+work when absence is encountered at different depths. The varying
+patch and retirement totals alone preclude inferring equal total cost
+from (ER.66). No total-storage optimum follows from the common active
+node count. $\square$
+
+**Definition 15.2 (information coordinate and supplier boundary).**
+The lower coordinate in (ER.64) is the number of distinct complete
+supplementary values *conditional on a current source*. Equation
+(ER.65) is its zero-error fixed-width binary encoding cost. A variable
+length, pointer identity or backing geometry that distinguishes members
+belongs to the name under Definition 14.1. It cannot evade the bound
+by being omitted from a displayed payload. The bound requires no new
+physical cells when existing acquired material already supplies the
+necessary distinctions; the actual anchor and receipt do so here.
+
+On (ER.61) a nonterminal receipt address $Rq_k$ has length $d+1$,
+and the end case has its fixed token. The source description determines
+$d$. Thus the conditional rank code attains $d+1$ bits, while the
+existing actual receipt supplies at most $d+1$ address letters plus
+fixed tags. For the whole domain the supplied word-description bound
+remains $h(r)+c$ from Proposition 12.3. To compare binary information
+on the same coordinate, fix a current source of height $H$. Its receipt
+has at most one word of length at most $H$, or the end token. Including
+all word lengths and that token gives
+
+$$
+ 1+\sum_{i=0}^{H}2^i=2^{H+1}
+$$
+
+possible address-field values. A phase without an address can use the
+empty word in this encoding, since the phase tag specifies its absence.
+Let $K$ be a fixed bound on the number of finite phase/command/reply-tag
+tuples. Thus at most $K2^{H+1}$ complete extensional receipt values
+occur, with a fixed-width encoding of at most
+$H+1+\lceil\log_2K\rceil$ bits. This count includes word length and the
+end token; it does not suppress them as side channels. Theorem 11.5
+makes every remaining field of $J$ a function of this source and receipt.
+More precisely, let $B(H)$ be the least fixed binary width sufficient
+for a complete supplementary name uniformly on all cuts of
+$\mathcal H_\partial$ whose current source has height $H$, conditional
+on that source and this fixed model. This is a conditional
+description-width quantity. Its upper bound uses the explicit receipt
+encoding and the effective reconstruction of Theorem 11.5 on supplied
+source and receipt descriptions; it invokes no effective inverse for
+an arbitrary supplementary function. Acquiring, encoding, reading and
+using that receipt retain their separate work and material costs.
+Taking $d=H-3$ in (ER.61) gives its lower bound, so
+
+$$
+ H-2\le B(H)\le H+1+\lceil\log_2K\rceil\qquad(H\ge4).
+$$
+
+This is a worst-case comparison at each attained height. A particular
+singleton source fibre needs no supplement on $\mathcal E_1$; the
+family (ER.61) has the explicit exact conditional width $H_d-2$.
+The bounds compare the same variable, supplementary information, and
+do not identify it with physical address backing, whole-memory size,
+all retained source history, runtime or a universal bit lower bound.
+
+The source-specific content of §§13–15 is repo-derived: the exhaustive
+first-U fibre (ER.57), its actual anchor and next enabled source
+separation, the fully realized perfect-tree family and exact exhaustion,
+and their necessary-information and same-prefix consequences. Repository
+suppliers here designate the fixed text at
+$\texttt{09d4a7e32b723bd50b1cfc839724a624544a0320}$.
+Theorem 10.2 supplies the marked inverse and its image tests; Theorem
+11.5 supplies acquisition, leaf-list actuation and canonical actual
+prefixes; Theorem 12.2 supplies the four independent full-domain kernels
+and full successors; Proposition 12.3 supplies the counted primitive
+rules. None of their inverse or replay conclusions is reproved as new
+content. ABT Theorem 12.1 supplies erased-source decoding. The
+[Intrinsic Substitution Coordinates declarations][ERISC], including
+`pair_image`, `no_alpha` and private `substitution_injective`, and their
+[owning Scribe][ERISCB], supply the image grammar and injectivity.
+[Native Full Source Producer][ERPROD], its private `traverse`,
+`production_reads`, `stationary` and [owning Scribe][ERPRODB], supply
+the actual stationary initial traversal under unbounded finite workspace.
+Reading those statements is not an additional Lean verification.
+
+The generic equal-input and finite-alphabet counting arguments are
+reuse from Theorem 3.1 and [AIF §§4–5][ERAIF]. The literature-attested
+focus/context representation of Huet, *The Zipper*, §§1.1–1.3
+([author manuscript](https://pauillac.inria.fr/~huet/PUBLIC/zip.pdf)),
+retains a focus together with surrounding siblings and a path; it does
+not enumerate the different old seeds consistent with this one present
+partially substituted source. The literature-attested history tape and
+history/copy/reverse construction in [Bennett, Introduction and
+three-tape construction][Bennett] likewise supplies a comparison for
+retaining distinctions and charging records, not this exact source
+fibre or its old-anchor acquisition. Neither literature comparison
+is used as a physical-storage bound, nor is the source-specific
+deduction a claim of worldwide originality.
+
+**Definition 15.3 (preserved kernels and open operational interfaces).**
+The four views remain exactly (ER.49), with their individual diagonal
+$Q_\partial$ kernels and all full response/successor transports in
+Theorem 12.2. In particular $S_\partial$ and $B_\partial$ still include
+the actual receipt. Forgetting its frontier on $\mathcal E_1$ produces
+the coarser source fibres studied here; it does not replace either view
+or assert a new all-cut kernel theorem. $T_\partial$ retains the actual
+acquisition and event history, and $M_\partial$ retains the acquired
+anchor, role and receipt. Their different records and physical backing
+are preserved in $J$ and its complete successors. The same-run
+counts above do not identify those histories or erase their provenance.
+
+The stationary comparison interface of Definition 14.1 installs no
+busy interrupt, diagnostic, controller or acquisition service. Effective
+recovery from the explicit frontier, rank or receipt encoding assumes
+its actual supplied value; the arbitrary-name sufficiency of Theorem
+14.3 is only set-theoretic. No evaluator or means of obtaining an
+arbitrary $C(e)$ is installed. Manipulation of a recovered description
+does not grant access to a historical cut, new observer rights,
+authenticated handoff, returned
+conversion, interruption authority or a physical lowering. Those
+remain separate operational interfaces in Definition 12.6. The
+pre-first-Ready four-kernel extension, finer cuts inside the declared
+atomic primitives, other owners and independently interleaved requests
+also remain outside this theorem.
+
+The first-U restriction is used only to prove a necessary-information
+bound inside the unchanged full declared domain. Initialization and
+actual acquisition have not been replaced by an all-beta source
+supplied as advice: the different $u_{d,k}$ are the actual initially
+installed seeds, and $r_d$ is their attained common partial-update
+source. This addition supports the source-specific parsimony question
+of how many frontier distinctions must accompany current geometry.
+It supplies no solution of the original prediction task (ER.3), no
+extension of original fixed-$G_{gc}$ or original-$Q$ results beyond
+their stated hypotheses, no universal alpha/beta reduction, no identity
+with physical spacetime and no completion of the sustained four-expression
+objective. All original open interfaces listed in Definitions 12.6 and
+Open problem 8.1 remain in their stated scopes.
+
+## 追加锚（本行以下为增补区）
