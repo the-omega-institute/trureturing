@@ -6,27 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.claim; result=D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.result; claim=D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.claim
    digest: The Fourier Clifford changes the Euclidean operator norm of MUB autocorrelations. -/
 
-/-
-result: proof_shape: bind-only
-escape_witness: none
-admission_basis: open-problem-resolution (#18928; Refuted)
-The designated refutation result is the only public theorem and is exempt from
-four-slot escape registration. All private lemmas are consumed by its normalization,
-Fourier Clifford certificate, probability tables, or operator-norm separation.
-Direct frozen dependencies:
-  D5/S3/Observer/WindowRegister.windowRoot
-    module statement_id: sha256:1f03573f26ffc97bee9217cd4164f7e0941cb73ba680130d6cfd2e970fc3554a
-  D5/S3/Quantum/Algebra/WeylPhaseArithmetic.windowRoot_pow_mod
-    module statement_id: sha256:4d8cb610ca10401018714711b996eb7561a95eb2075c94c708a598155c4f2cf6
-  D5/S3/Arith/Lattices/Klartag/Walk/StepInputs2.opNorm_le_frobenius
-    module statement_id: sha256:aa6e330285c4882d66215d211541a6ffb44f7add8a2c59e5add45257b3da1134
--/
-
 import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
 import D5.S3.Arith.Lattices.Klartag.Walk.StepInputs2
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Tactic
 
 /-!
 The native MUB spectral labels do not admit one common column permutation under every
