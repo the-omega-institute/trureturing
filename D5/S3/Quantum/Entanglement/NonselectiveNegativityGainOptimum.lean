@@ -183,16 +183,6 @@ private theorem vector_schmidt (ψ : Fin 2 × Fin 2 → ℂ) :
     Fintype.sum_prod_type, Fin.sum_univ_two, Pi.star_apply, mul_comm, mul_left_comm,
     mul_assoc] using h
 
-private theorem partialTranspose_local
-    (M : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
-    (V W : Matrix (Fin 2) (Fin 2) ℂ) :
-    partialTranspose ((V ⊗ₖ W) * M * (V ⊗ₖ W)ᴴ) =
-      (V ⊗ₖ W.map star) * partialTranspose M * (V ⊗ₖ W.map star)ᴴ := by
-  ext ⟨i, j⟩ ⟨k, l⟩
-  simp [partialTranspose, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.map_apply,
-    Fintype.sum_prod_type, Fin.sum_univ_two]
-  ring
-
 private theorem negativity_local
     (M : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (V W : unitaryGroup (Fin 2) ℂ) :
@@ -200,7 +190,14 @@ private theorem negativity_local
       M * ((V : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ (W : Matrix (Fin 2) (Fin 2) ℂ))ᴴ) =
       negativity M := by
   unfold negativity
-  rw [partialTranspose_local, traceNorm_isometry]
+  have hp (A : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
+      partialTranspose A =
+        D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.partialTransposeB A := by
+    ext ⟨i, j⟩ ⟨k, l⟩
+    rfl
+  simp only [hp,
+    D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.partialTransposeB_kronecker_conj]
+  rw [traceNorm_isometry]
   exact Matrix.mem_unitaryGroup_iff'.mp
     (Matrix.kronecker_mem_unitary V.prop (Matrix.map_star_mem_unitaryGroup_iff.mpr W.prop))
 
