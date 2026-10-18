@@ -480,7 +480,7 @@ private lemma hRenyiInv_three_spec {H : ℝ} (hH : H ∈ Set.Icc 0 (Real.log 2))
   have him : H ∈ hRenyi 3 '' Set.Icc 0 (1/2) := by rw [hRenyi_three_image]; exact hH
   exact ⟨Function.invFunOn_mem him, Function.invFunOn_eq him⟩
 
-private lemma bconv_bias (p q : ℝ) : 1 - 2*bconv p q = (1 - 2*p)*(1 - 2*q) := by
+lemma bconv_bias (p q : ℝ) : 1 - 2*bconv p q = (1 - 2*p)*(1 - 2*q) := by
   unfold bconv
   ring
 

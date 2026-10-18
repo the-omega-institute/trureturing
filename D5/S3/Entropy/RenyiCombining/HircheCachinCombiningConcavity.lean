@@ -16,12 +16,15 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Convert
 import D5.S3.Entropy.RenyiCombining.CachinElasticityMonotone
 import D5.S3.Entropy.RenyiCombining.CachinConvexBranch
+import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.Calculus.Deriv.Inverse
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Topology.Homeomorph.Lemmas
+
+open D5.S3.QuantumChannels.ContractionSpectrumOrder (hasDerivAt_artanh)
 
 /-! Strict Shannon elasticity and its multiplicative slope comparison. -/
 
@@ -32,43 +35,9 @@ namespace D5.S3.Entropy.RenyiCombining.CachinShannonBranch
 
 private noncomputable def E (t : ℝ) : ℝ := t / ((1 - t ^ 2) * Real.artanh t)
 
-private theorem artanh_hasDerivAt {t : ℝ} (ht : t ∈ Ioo (-1) 1) :
-    HasDerivAt Real.artanh (1 / (1 - t ^ 2)) t := by
-  have hp : 1 + t ≠ 0 := by linarith [ht.1]
-  have hm : 1 - t ≠ 0 := by linarith [ht.2]
-  have hq : (1 + t) / (1 - t) ≠ 0 := div_ne_zero hp hm
-  have hsq : 1 - t ^ 2 ≠ 0 := by
-    rw [show 1 - t ^ 2 = (1 - t) * (1 + t) by ring]
-    exact mul_ne_zero hm hp
-  have hd := ((((hasDerivAt_const t 1).add (hasDerivAt_id t)).div
-    ((hasDerivAt_const t 1).sub (hasDerivAt_id t)) hm).log hq).const_mul (1 / 2 : ℝ)
-  have he : (fun s : ℝ => 1 / 2 * Real.log ((1 + s) / (1 - s))) =ᶠ[𝓝 t]
-      Real.artanh := by
-    filter_upwards [isOpen_Ioo.mem_nhds ht] with s hs
-    exact (Real.artanh_eq_half_log ⟨hs.1.le, hs.2.le⟩).symm
-  convert hd.congr_of_eventuallyEq he.symm using 1
-  dsimp
-  field_simp [hp, hm, hsq]
-  <;> ring
-
 private theorem self_le_artanh {t : ℝ} (ht : t ∈ Ioo 0 1) : t ≤ Real.artanh t := by
-  have hd : ∀ s ∈ Icc (0 : ℝ) t,
-      HasDerivAt (fun x => Real.artanh x - x) (1 / (1 - s ^ 2) - 1) s := by
-    intro s hs
-    exact (artanh_hasDerivAt ⟨by linarith [hs.1], by linarith [hs.2, ht.2]⟩).sub
-      (hasDerivAt_id s)
-  have hm : MonotoneOn (fun x => Real.artanh x - x) (Icc 0 t) := by
-    apply monotoneOn_of_deriv_nonneg (convex_Icc _ _)
-      (fun s hs => (hd s hs).continuousAt.continuousWithinAt)
-      (fun s hs => (hd s (interior_subset hs)).differentiableAt.differentiableWithinAt)
-    intro s hs
-    have hst := interior_subset hs
-    rw [(hd s hst).deriv]
-    have hpos : 0 < 1 - s ^ 2 := by nlinarith [hst.1, hst.2, ht.2]
-    have : (1 : ℝ) ≤ 1 / (1 - s ^ 2) := (le_div_iff₀ hpos).2 (by nlinarith [sq_nonneg s])
-    linarith
-  have h := hm ⟨le_rfl, ht.1.le⟩ ⟨ht.1.le, le_rfl⟩ ht.1.le
-  simpa using h
+  rw [Real.artanh_eq_half_log ⟨by linarith [ht.1], ht.2.le⟩]
+  simpa using Real.sum_range_le_log_div ht.1.le ht.2 1
 
 private theorem E_hasDerivAt {t : ℝ} (ht : t ∈ Ioo 0 1) :
     HasDerivAt E (((1 + t ^ 2) * Real.artanh t - t) /
@@ -77,7 +46,7 @@ private theorem E_hasDerivAt {t : ℝ} (ht : t ∈ Ioo 0 1) :
   have ha := Real.artanh_pos ht
   have hd := (hasDerivAt_id t).div
     (((hasDerivAt_const t 1).sub (hasDerivAt_pow 2 t)).mul
-      (artanh_hasDerivAt ⟨by linarith [ht.1], ht.2⟩)) (mul_pos hp ha).ne'
+      (hasDerivAt_artanh ⟨by linarith [ht.1], ht.2⟩)) (mul_pos hp ha).ne'
   convert hd using 1
   · rfl
   · dsimp
@@ -106,9 +75,9 @@ private theorem slope_ratio_strictAntiOn {v : ℝ} (hv : v ∈ Ioo 0 1) :
       (fun s => v * Real.artanh (v * s) / Real.artanh s)
       (v * Real.artanh (v * t) / (t * Real.artanh t) * (E (v * t) - E t)) t := by
     intro t ht
-    have h₁ := artanh_hasDerivAt (show v * t ∈ Ioo (-1 : ℝ) 1 from
+    have h₁ := hasDerivAt_artanh (show v * t ∈ Ioo (-1 : ℝ) 1 from
       ⟨by linarith [(hvt t ht).1], (hvt t ht).2⟩)
-    have h₂ := artanh_hasDerivAt (show t ∈ Ioo (-1 : ℝ) 1 from
+    have h₂ := hasDerivAt_artanh (show t ∈ Ioo (-1 : ℝ) 1 from
       ⟨by linarith [ht.1], ht.2⟩)
     convert ((h₁.comp t ((hasDerivAt_id t).const_mul v)).const_mul v).div h₂
       (Real.artanh_pos ht).ne' using 1
@@ -155,12 +124,20 @@ open scoped Topology
 namespace D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
 
 noncomputable def h (α p : ℝ) : ℝ :=
-  if α = 1 then Real.binEntropy p else Real.log (p ^ α + (1 - p) ^ α) / (1 - α)
+  if α = 1 then Real.binEntropy p else
+    D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.hRenyi α p
 
 noncomputable def hInv (α : ℝ) : ℝ → ℝ :=
   Function.invFunOn (h α) (Icc 0 (1 / 2))
 
-def star (a b : ℝ) : ℝ := a + b - 2 * a * b
+noncomputable def star (a b : ℝ) : ℝ :=
+  D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.bconv a b
+
+private lemma h_eq (α : ℝ) : h α = fun p =>
+    if α = 1 then Real.binEntropy p else Real.log (p ^ α + (1 - p) ^ α) / (1 - α) := by
+  funext p
+  simp only [h, D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.hRenyi,
+    div_eq_inv_mul, mul_one]
 
 noncomputable def G (α x y : ℝ) : ℝ := h α (star (hInv α x) (hInv α y))
 
@@ -182,7 +159,7 @@ private lemma powerSum_pos {α p : ℝ} (hp : p ∈ Icc 0 (1 / 2)) :
   exact add_pos_of_nonneg_of_pos (Real.rpow_nonneg hp.1 _) (Real.rpow_pos_of_pos hw _)
 
 private lemma h_continuousOn {α : ℝ} (hα : 0 < α) : ContinuousOn (h α) (Icc 0 (1 / 2)) := by
-  unfold h
+  rw [h_eq]
   by_cases ha : α = 1
   · simpa [ha] using Real.binEntropy_continuous.continuousOn
   simp only [if_neg ha]
@@ -192,7 +169,7 @@ private lemma h_continuousOn {α : ℝ} (hα : 0 < α) : ContinuousOn (h α) (Ic
     ((continuousOn_const.sub continuousOn_id).rpow_const (fun _ _ => Or.inr hα.le))
 
 private lemma h_zero {α : ℝ} (hα : 0 < α) : h α 0 = 0 := by
-  by_cases ha : α = 1 <;> simp [h, ha, Real.zero_rpow hα.ne']
+  by_cases ha : α = 1 <;> simp [h_eq, ha, Real.zero_rpow hα.ne']
 
 private lemma h_half {α : ℝ} (hα : 0 < α) : h α (1 / 2) = Real.log 2 := by
   by_cases hne : α = 1
@@ -204,7 +181,9 @@ private lemma h_half {α : ℝ} (hα : 0 < α) : h α (1 / 2) = Real.log 2 := by
     rw [show (1 - 1 / 2 : ℝ) = 1 / 2 by ring,
       Real.rpow_sub hp _ _, Real.rpow_one]
     ring
-  rw [h, if_neg hne, he, Real.log_rpow hp, Real.log_div (by norm_num) (by norm_num), Real.log_one]
+  rw [h_eq]
+  dsimp only
+  rw [if_neg hne, he, Real.log_rpow hp, Real.log_div (by norm_num) (by norm_num), Real.log_one]
   field_simp
   <;> ring
 
@@ -216,7 +195,7 @@ private lemma h_hasDerivAt {α p : ℝ} (hne : α ≠ 1) (hp : p ∈ Ioo 0 (1 / 
   have hd := (((hasDerivAt_id p).rpow_const (p := α) (Or.inl hp.1.ne')).add
     (((hasDerivAt_const p 1).sub (hasDerivAt_id p)).rpow_const
       (p := α) (Or.inl hw.ne'))).log (powerSum_pos ⟨hp.1.le, hp.2.le⟩).ne'
-  unfold h
+  rw [h_eq]
   simp only [if_neg hne]
   convert hd.div_const (1 - α) using 1 <;> dsimp
   field_simp
@@ -224,7 +203,7 @@ private lemma h_hasDerivAt {α p : ℝ} (hne : α ≠ 1) (hp : p ∈ Ioo 0 (1 / 
 
 private lemma h_strictMonoOn {α : ℝ} (hα : 0 < α) : StrictMonoOn (h α) (Icc 0 (1 / 2)) := by
   by_cases hne : α = 1
-  · unfold h
+  · rw [h_eq]
     simpa [hne, one_div] using Real.binEntropy_strictMonoOn
   apply strictMonoOn_of_deriv_pos (convex_Icc _ _) (h_continuousOn hα)
   intro p hp
@@ -304,7 +283,8 @@ private lemma psi_hasDerivAt {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) :
     ⟨by linarith [ht.2], by linarith [ht.1]⟩
   by_cases hne : α = 1
   · subst α
-    unfold psi h slope
+    unfold psi slope
+    rw [h_eq]
     simpa only [ite_true] using
       CachinShannonBranch.binEntropy_bias_hasDerivAt ht
   have hd := (h_hasDerivAt hne hp).comp t
@@ -530,9 +510,12 @@ private lemma slope_ratio_antitone {α v : ℝ} (hα : 0 < α) (hne : α ≠ 1)
 
 private lemma bias_combining (α x y : ℝ) :
     G α x y = psi α (inverseBias α y * inverseBias α x) := by
-  unfold G psi inverseBias star
+  unfold G psi inverseBias
+  unfold star
   congr 1
-  ring
+  have hb := D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree.bconv_bias
+    (hInv α x) (hInv α y)
+  nlinarith [hb]
 
 private lemma transported_continuousOn {α v : ℝ} (hα : 0 < α) (hv : v ∈ Icc 0 1) :
     ContinuousOn (fun x => psi α (v * inverseBias α x)) (Icc 0 (Real.log 2)) := by

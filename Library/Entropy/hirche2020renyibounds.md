@@ -3,7 +3,7 @@ bibkey: hirche2020renyibounds
 authors: Christoph Hirche
 year: 2020
 title: "Rényi Bounds on Information Combining"
-doi: null
+doi: 10.48550/arXiv.2004.14408
 url: https://arxiv.org/abs/2004.14408v1
 claim: "Conjecture IV.18 asks for a threshold 1 < alpha_hat < 1.3863 giving separate convexity below it and separate concavity for alpha at least two."
 strata_touched:
@@ -15,11 +15,14 @@ triage: anchor
 # Rényi bounds on information combining
 
 The source is C. Hirche, “Rényi Bounds on Information Combining”, ISIT 2020,
-arXiv:2004.14408v1, Conjecture IV.18. The conjecture scope and source locator
-are supplied by the preregistration
-[#18704](https://github.com/the-omega-institute/trureturing/issues/18704).
-This note records that supplied scope; it does not assert an independent
-literature or priority search.
+arXiv:2004.14408v1, §IV-D, Conjecture IV.18, Eq. (88).
+This note does not assert an independent literature or priority search.
+
+## Locator
+
+DOI: 10.48550/arXiv.2004.14408
+Source: https://arxiv.org/abs/2004.14408v1
+§IV-D, Conjecture IV.18, Eq. (88).
 
 Conjecture IV.18 states verbatim: “There exists a value
 $1 < \hat\alpha < 1.3863$, such that

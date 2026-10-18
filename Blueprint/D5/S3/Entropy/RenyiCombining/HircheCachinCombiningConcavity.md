@@ -14,7 +14,7 @@ $$\forall (alpha: \mathbb{R}), \forall (p: \mathbb{R}), \operatorname{h}\left(al
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.h` (`✓ std3`).
 
-*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \operatorname{hInv}\left
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.hInv` (`✓ std3`).
 
-*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$\forall (a: \mathbb{R}), \forall (b: \mathbb{R}), \operatorname{star}\left(a, 
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star` (`✓ std3`).
 
-*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -50,7 +50,7 @@ $$\forall (alpha: \mathbb{R}), \forall (x: \mathbb{R}), \forall (y: \mathbb{R}),
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.G` (`✓ std3`).
 
-*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -62,7 +62,7 @@ $$claim = \exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \f
 
 *Formalization.* `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.claim` (`✓ std3`).
 
-*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
+*Citation.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -80,7 +80,7 @@ $$\exists (alphaHat: \mathbb{R}), 1 < alphaHat \land \left(alphaHat < \frac{1386
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. URL: <https://arxiv.org/abs/2004.14408v1>.
+*Acknowledgement.* Christoph Hirche (2020). *Rényi Bounds on Information Combining*. DOI: [10.48550/arXiv.2004.14408](https://doi.org/10.48550/arXiv.2004.14408). URL: <https://arxiv.org/abs/2004.14408v1>.
 
 *Commentary.*
 
@@ -88,7 +88,7 @@ The witness 5/4 lies strictly between 1 and 1.3863. For every y in [0,log 2], x 
 
 Set psi(t)=h(alpha,(1-t)/2) and f(t)=-psi'(t) for 0<t<1. The function f is positive, and psi decreases continuously from log 2 to zero on [0,1]. The inverse bias is t(x)=1-2hInv(alpha,x), so psi(t(x))=x. Binary convolution gives G(alpha,x,y)=psi(v t(x)), where v=t(y) belongs to [0,1].
 
-For n=alpha-1 and r=(1-t)/(1+t), the certificate transform T=(1-r^n)/(1+r^n) gives f(t)=(alpha/n)T/(1+tT). Its derivative satisfies f'(t)=f(t)F(n,r)/t. The certificate proves that r maps to F(n,r) is nondecreasing for n>=1. Since r decreases with t, the elasticity E(t)=F(n,r(t)) is nonincreasing.
+For alpha >= 2, set n=alpha-1 and r=(1-t)/(1+t). Then the certificate transform T=(1-r^n)/(1+r^n) gives f(t)=(alpha/n)T/(1+tT). Its derivative satisfies f'(t)=f(t)F(n,r)/t. The certificate proves that r maps to F(n,r) is nondecreasing for n>=1. Since r decreases with t, the elasticity E(t)=F(n,r(t)) is nonincreasing.
 
 Fix 0<v<1. Differentiation gives the entropy-coordinate derivative R(t)=v f(vt)/f(t). Its t derivative is v f(vt)[E(vt)-E(t)]/[t f(t)], which is nonnegative because vt<=t and E is nonincreasing. The inverse bias decreases with x. Thus the derivative of x maps to psi(v t(x)) is antitone in x, and Mathlib's derivative criterion yields concavity on the closed interval using continuity there. Only interior inverse derivatives are used.
 
@@ -104,3 +104,4 @@ At v=0 the transported function is constant, and at v=1 it is the identity. Thes
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/HircheCachinCombiningConcavity.star`
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinConvexBranch](CachinConvexBranch.md)
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinElasticityMonotone](CachinElasticityMonotone.md)
+- Dependency: [D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree](../../Quantum/Information/RenyiInformationCombiningOrderThree.md)

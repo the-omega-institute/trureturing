@@ -22,3 +22,4 @@ The real-power transform F(n,r) equals the denominator elasticity at z=((1-r)/(1
 
 - Truth anchor: `D5/S3/Entropy/RenyiCombining/CachinConvexBranch.antitoneOn_F`
 - Dependency: [D5/S3/Entropy/RenyiCombining/CachinElasticityMonotone](CachinElasticityMonotone.md)
+- Dependency: [D5/S3/QuantumChannels/ContractionSpectrumOrder](../../QuantumChannels/ContractionSpectrumOrder.md)

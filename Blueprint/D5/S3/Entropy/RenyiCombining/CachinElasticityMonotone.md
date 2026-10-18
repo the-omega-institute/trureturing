@@ -110,7 +110,7 @@ The sign certificate is the four-term real-power function $\operatorname{J}\left
 
 Differentiating A gives A'(r)=n r^(n-2) J(r^2)/(1-r^(2n))^2, hence A' >= 0. The derivative of B is -2 T/(1+r)^2 - 2n((1-r)/(1+r))r^(n-1)/(1+r^n)^2, which is strictly negative. Since A and B are positive, F'=A'/(1+B)-(1+A)B'/(1+B)^2 is strictly positive. At n=1 the J term vanishes, but the B term remains strictly negative.
 
-The consumer is the alpha-at-least-two clause of C. Hirche, Renyi Bounds on Information Combining, ISIT 2020, arXiv:2004.14408v1, Conjecture IV.18. This certificate supplies the real-order one-variable inequality; it does not assert a result for orders below two.
+The consumers are the alpha-at-least-two and below-one clauses of C. Hirche, Renyi Bounds on Information Combining, ISIT 2020, arXiv:2004.14408v1, Conjecture IV.18. This certificate supplies the real-order one-variable inequalities: F is nondecreasing for n >= 1 (alpha >= 2) and antitone for -1 < n < 0 (0 < alpha < 1).
 
 ## References
 

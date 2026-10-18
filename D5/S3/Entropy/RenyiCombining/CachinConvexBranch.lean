@@ -24,6 +24,7 @@ import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import D5.S3.Entropy.RenyiCombining.CachinElasticityMonotone
+import D5.S3.QuantumChannels.ContractionSpectrumOrder
 /-! A removable quotient in the bias variable supplies the initial curvature data. -/
 open Set Filter
 open scoped Topology
@@ -337,6 +338,11 @@ private theorem curvature_neg_of_first_zero (g f f' : ℝ → ℝ) (a : ℝ) (ha
   exact (not_le_of_gt hfb') hnonneg
 /-- Logarithmic inverse hyperbolic tangent, in natural-log units. -/
 private noncomputable def artanh (t : ℝ) : ℝ := (Real.log (1 + t) - Real.log (1 - t)) / 2
+private theorem artanh_eq_real {t : ℝ} (ht : t ∈ Ioo (-1) 1) : artanh t = Real.artanh t := by
+  rw [Real.artanh_eq_half_log ⟨ht.1.le, ht.2.le⟩,
+    Real.log_div (by linarith [ht.1]) (by linarith [ht.2])]
+  unfold artanh
+  ring
 /-- The auxiliary quotient, with both removable singularities filled explicitly. -/
 private noncomputable def C (n z : ℝ) : ℝ :=
   if z = 0 then 1 else
@@ -390,21 +396,16 @@ private theorem elasticity_strictMonoOn (D D₁ D₂ : ℝ → ℝ) (a b : ℝ)
   have hres := add_pos_of_pos_of_nonneg (add_pos h₁ h₂') h₃
   convert hres using 1 <;> ring
 private theorem artanh_pos (t : ℝ) (ht : t ∈ Ioo 0 1) : 0 < artanh t := by
-  have hp : 0 < Real.log (1 + t) := Real.log_pos (by linarith [ht.1])
-  have hm : Real.log (1 - t) < 0 := Real.log_neg (by linarith [ht.2]) (by linarith [ht.1])
-  unfold artanh
-  linarith
+  rw [artanh_eq_real ⟨by linarith [ht.1], ht.2⟩]
+  exact Real.artanh_pos ht
 private theorem artanh_hasDerivAt (t : ℝ) (ht : t ∈ Ioo 0 1) :
     HasDerivAt artanh (1 / (1 - t ^ 2)) t := by
-  have hp : 1 + t ≠ 0 := by linarith [ht.1]
-  have hm : 1 - t ≠ 0 := by linarith [ht.2]
-  have h1t : 1 - t ^ 2 ≠ 0 := by nlinarith [ht.1, ht.2]
-  convert ((((hasDerivAt_const t 1).add (hasDerivAt_id t)).log hp).sub
-    (((hasDerivAt_const t 1).sub (hasDerivAt_id t)).log hm)).div_const 2 using 1
-  · rfl
-  · dsimp
-    field_simp [hp, hm, h1t]
-    <;> ring
+  have he : artanh =ᶠ[𝓝 t] Real.artanh := by
+    filter_upwards [isOpen_Ioo.mem_nhds (show t ∈ Ioo (-1 : ℝ) 1 from
+      ⟨by linarith [ht.1], ht.2⟩)] with s hs
+    exact artanh_eq_real hs
+  exact (D5.S3.QuantumChannels.ContractionSpectrumOrder.hasDerivAt_artanh
+    ⟨by linarith [ht.1], ht.2⟩).congr_of_eventuallyEq he
 private theorem C_pos (n z : ℝ) (hn : 0 < n) (hz : z ∈ Ioo 0 1) : 0 < C n z := by
   have ht : Real.sqrt z ∈ Ioo 0 1 := ⟨Real.sqrt_pos.mpr hz.1,
     (Real.sqrt_lt' (by norm_num : (0 : ℝ) < 1)).mpr (by simpa using hz.2)⟩

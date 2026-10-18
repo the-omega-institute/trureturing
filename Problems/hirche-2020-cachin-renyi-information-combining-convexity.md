@@ -1,7 +1,7 @@
 ---
 slug: hirche-2020-cachin-renyi-information-combining-convexity
 bibkey: hirche2020renyibounds
-doi: null
+doi: 10.48550/arXiv.2004.14408
 url: https://arxiv.org/abs/2004.14408v1
 triage: theorem
 motivation_gids:
@@ -13,9 +13,7 @@ motivation_gids:
 ## Problem
 
 The target is the whole of C. Hirche, “Rényi Bounds on Information
-Combining”, ISIT 2020, arXiv:2004.14408v1, Conjecture IV.18, with the source
-statement and scope supplied by
-[#18704](https://github.com/the-omega-institute/trureturing/issues/18704):
+Combining”, ISIT 2020, arXiv:2004.14408v1, §IV-D, Conjecture IV.18, Eq. (88):
 
 > There exists a value $1 < \hat\alpha < 1.3863$, such that
 > $h_\alpha(h_\alpha^{-1}(x) \ast h_\alpha^{-1}(y))$ is convex for
@@ -45,8 +43,7 @@ every real order at least two. Both statements include entropy endpoints.
 
 ## Gap
 
-The named-clause and literature boundary is the supplied preregistration.
-No additional independent literature search is claimed. The exact maximal convexity
+No independent literature or priority search is claimed. The exact maximal convexity
 threshold and quantum conditional-entropy inequalities are outside the formal target.
 
 ## Route
@@ -89,7 +86,9 @@ The reuse boundary is:
 | Needed interface | Reused source | Role |
 | --- | --- | --- |
 | Binary Shannon entropy and derivative | Mathlib `Real.binEntropy`, `Real.hasDerivAt_binEntropy` | The order-one definition and bias derivative |
-| Inverse hyperbolic tangent | Mathlib `Real.artanh_eq_half_log`, `Real.artanh_pos` | The Shannon elasticity certificate |
+| Inverse hyperbolic tangent | `ContractionSpectrumOrder.hasDerivAt_artanh`; Mathlib `Real.artanh_eq_half_log`, `Real.artanh_pos`, `Real.sum_range_le_log_div` | The logarithmic and Shannon derivatives share one source; the one-term logarithm bound gives artanh(t) ≥ t |
+| Binary Rényi entropy and convolution | `RenyiInformationCombiningOrderThree.hRenyi`, `bconv`, `bconv_bias` | Non-Shannon entropy, convolution and the bias product identity |
+| Inverse branch and continuity | Mathlib `Function.invFunOn_mem`, `Function.invFunOn_eq`, `Set.InjOn.leftInvOn_invFunOn`, `Continuous.continuous_symm_of_equiv_compact_to_t2` | The specified probability inverse and continuity on the closed entropy interval |
 | Hyperbolic quotient and derivatives | Mathlib `Real.cosh`, `Real.sinh`, `Real.cosh_sq_sub_sinh_sq` and derivative composition | The Riccati quotient uses explicit cosh/sinh in place of a coth interface |
 | Real-power derivatives and binomial series | Mathlib `Real.hasDerivAt_rpow_const`, `Real.one_add_rpow_hasFPowerSeriesAt_zero` | Negative orders and removable initial quotient |
 | Analytic removable division | Mathlib `HasFPowerSeriesAt.has_fpower_series_dslope_fslope` | Initial Taylor coefficients |
@@ -121,7 +120,7 @@ The complete source conjecture reads: “There exists a value
 $1 < \hat\alpha < 1.3863$, such that
 $h_\alpha(h_\alpha^{-1}(x) \ast h_\alpha^{-1}(y))$ is convex for
 $0 < \alpha < \hat\alpha$ and concave for $\alpha \ge 2$.”
-The amended scope of #18704 targets this entire assertion with witness
+The formalized scope is this entire assertion with witness
 $\hat\alpha=5/4$. The settling `result` combines convexity for every $0<\alpha<5/4$ with
 concavity for every $\alpha\ge2$, including the Shannon order and all
 entropy endpoints.
@@ -167,7 +166,7 @@ separate convexity there. This expansion and the exact threshold are not
 claimed as kernel-verified conclusions.
 
 The interval $(\alpha_c,2)$ lies between the two convexity/concavity regimes.
-Lemma IV.16 of the supplied source shows neither convexity nor concavity on
+Lemma IV.16 of the paper shows neither convexity nor concavity on
 $(1.387,1.95)$. That lemma does not by itself settle concavity throughout
 $(\alpha_c,2)$; the local expansion excludes convexity above
 $\alpha_c$, and a concavity classification of the remaining orders is not
@@ -175,7 +174,6 @@ asserted here.
 
 ## ASSUMED-UNVERIFIED
 
-The paper locator and preregistration's literature boundary are supplied
-source metadata. They have not been independently rechecked against later
-literature in this implementation. The formal theorem has no mathematical
+The paper locator and the absence of a later settlement have not been
+independently verified against later literature. The formal theorem has no mathematical
 premise asserting the conjecture or its elasticity inequality.

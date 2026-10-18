@@ -34,7 +34,8 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   rintro ⟨αhat, hlow, _⟩
-  norm_num [rejected, realize] at hlow
+  change (1 : ℝ) < 0 at hlow
+  exact (by norm_num : ¬ (1 : ℝ) < 0) hlow
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i

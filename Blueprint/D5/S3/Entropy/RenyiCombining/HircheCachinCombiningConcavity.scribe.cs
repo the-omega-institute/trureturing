@@ -65,7 +65,7 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                 + "The function f is positive, and psi decreases continuously from log 2 to zero on [0,1]. "
                 + "The inverse bias is t(x)=1-2hInv(alpha,x), so psi(t(x))=x. "
                 + "Binary convolution gives G(alpha,x,y)=psi(v t(x)), where v=t(y) belongs to [0,1].")),
-            Paragraph(Text("For n=alpha-1 and r=(1-t)/(1+t), the certificate transform T=(1-r^n)/(1+r^n) gives "
+            Paragraph(Text("For alpha >= 2, set n=alpha-1 and r=(1-t)/(1+t). Then the certificate transform T=(1-r^n)/(1+r^n) gives "
                 + "f(t)=(alpha/n)T/(1+tT). Its derivative satisfies f'(t)=f(t)F(n,r)/t. "
                 + "The certificate proves that r maps to F(n,r) is nondecreasing for n>=1. Since r decreases with t, "
                 + "the elasticity E(t)=F(n,r(t)) is nonincreasing.")),
