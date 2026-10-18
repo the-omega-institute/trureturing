@@ -298,7 +298,7 @@ private theorem commutator_norm_bound_of_pure {n : ℕ} (hn : 0 < n) (A : (Matri
       (sq_le_sq₀ (norm_nonneg _) (Real.sqrt_nonneg _)).mpr hh
     _ = _ := Real.sq_sqrt hc
 
-private theorem exists_unitary_first_column {n : ℕ}
+theorem exists_unitary_first_column {n : ℕ}
     (v : EuclideanSpace ℂ (Fin (n+1))) (hv : ‖v‖ = 1) :
     ∃ U : Matrix.unitaryGroup (Fin (n+1)) ℂ, ∀ i, (U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) i 0 = v i := by
   classical

@@ -198,7 +198,7 @@ private theorem sin_mul_eq_zero {a m : ℕ} (h : sin (π * m / a) = 0) (j : ℕ)
   rw [e, sin_int_mul_pi]
 
 /-- Over a full period of residues, the squared sines `sin² (π j m / a)` sum to `a / 2`. -/
-private theorem sum_sin_sq {a m : ℕ} (ha : 0 < a) (hm : sin (π * m / a) ≠ 0) :
+theorem sum_sin_sq {a m : ℕ} (ha : 0 < a) (hm : sin (π * m / a) ≠ 0) :
     ∑ j ∈ range a, sin (m * (π * j / a)) ^ 2 = a / 2 := by
   have haR : (a : ℝ) ≠ 0 := by exact_mod_cast ha.ne'
   have hcos : ∑ j ∈ range a, cos (2 * π * m / a * j + 0) = 0 := by

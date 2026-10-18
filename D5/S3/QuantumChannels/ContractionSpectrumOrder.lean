@@ -16,7 +16,7 @@ namespace D5.S3.QuantumChannels.ContractionSpectrumOrder
 
 /-- Derivative of `artanh` on `(-1,1)`: `d/dx artanh x = 1/(1-x²)`.
 Built from `artanh x = ½(log(1+x) − log(1−x))`. Mathlib has no `Real.hasDerivAt_artanh`. -/
-private theorem hasDerivAt_artanh {x : ℝ} (hx : x ∈ Ioo (-1 : ℝ) 1) :
+theorem hasDerivAt_artanh {x : ℝ} (hx : x ∈ Ioo (-1 : ℝ) 1) :
     HasDerivAt Real.artanh (1 / (1 - x ^ 2)) x := by
   obtain ⟨hx1, hx2⟩ := hx
   have h1x : (0 : ℝ) < 1 + x := by linarith

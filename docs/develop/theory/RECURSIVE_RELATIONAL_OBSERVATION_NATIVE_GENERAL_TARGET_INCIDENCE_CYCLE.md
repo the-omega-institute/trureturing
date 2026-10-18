@@ -4171,3 +4171,176 @@ ordered alpha/beta source. This restricted response inverse leaves
 the full programme open.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Predecessor-bank amplification for fresh recovery
+
+**Definition 19.1 (fresh complete recovery flight).** Fix the initialization of
+Assumption 1.2 and one actual run. A fresh complete recovery flight is an
+interval whose first state is an authentic completed-predecessor Ready at
+absolute native ordinal $b$ and whose last state is the next Ready at ordinal
+$t$. During the interval the installed Recover route accepts a supplied
+mode-one history request, runs `Boundary` from the irreducible entrance,
+accepts the target $k$ with $a\leq k\leq b$, and completes the inherited
+CoverRef, PackageRef and Image publications, the five received-body stages,
+all independent checks, ACKs, invocation return and the final Ready. The
+current seals, phase/read slots, positioned imports and callback tokens are
+those of the actual route; historical ownership is only data. All current
+owner, token, input, code, scratch, copy, sender/mailbox/receiver, check, ACK
+and return records are the actual records of this flight, and their work is
+included in $t-b$ and $A(t)-A(b)$.
+
+The flight is called fresh because its `Boundary` does not reuse a previously
+materialized predecessor simulation. It executes the $b$ literal `Step`
+instances specified by GCA Definition 4.1 and ARC Definition 6.4, including
+rows belonging to earlier recovery flights. The installed source compiler
+emits every tally assignment as a complete new bank version, retains earlier
+versions, and materializes every appended unary symbol by the actual
+$\mathrm{EX};\mathrm{WR};\mathrm{MR}$ expansion of RCA Definition 11.3.
+
+**Definition 19.2 (predecessor charge).** Put
+
+$$
+H(b)=\sum_{i=1}^{b}i=\frac{b(b+1)}2,
+\qquad
+\Lambda=L_C+L_P+L_I+\sum_{j=0}^{4}L_j,
+$$
+
+where the $L$'s are the eight actual full publication lengths of Definition
+8.5. Let $A(z)$ be the cumulative number of constructed nonmeter cells at
+native cut $z$, including retired banks, scratch and descriptors. The
+predecessor charge is the collection of the $b$ completed unary-tally bank
+emissions during `Boundary`; it is distinct from the represented `Step`
+count and from the final meter receipts.
+
+**Theorem 19.3 (fresh predecessor-bank lower bound).** Every fresh complete
+recovery flight satisfies
+
+$$
+ t-b\;\geq\;3H(b)+17\Lambda+56,
+ \qquad
+ A(t)-A(b)\;\geq\;H(b)+3\Lambda .
+ \tag{19.1}
+$$
+
+Consequently,
+
+$$
+ t+1\geq (b+1)^2.
+ \tag{19.2}
+$$
+
+These are necessary lower bounds for this installed route. They are not a
+runtime formula, an attainable schedule, or a bound on another recovery
+representation.
+
+**Proof.** `Boundary` executes exactly $b$ represented rows. After its
+$i$-th row, the separate tally field is the unary word $1^i$. By the
+full-bank rule in Definition 19.1, the real emission of that assignment
+contains all $i$ tally symbols in a newly appended bank version. The $b$
+selected emissions occur in chronological disjoint native intervals. Each
+new symbol uses an `EX`, a `WR`, and an `MR`; therefore the $i$-th selected
+interval contributes at least $3i$ native rows and $i$ new nonmeter cells.
+Summing over $i=1,\ldots,b$ gives $3H(b)$ rows and $H(b)$ cells. This counts
+only the selected tally field: the unchanged fields, dry emissions, Base,
+separators, seals, descriptors, scans and control rows remain additional.
+No represented row is identified with a native row.
+
+The selected emissions finish inside `Boundary`, before the CoverRef
+publication. Definition 8.5 and CYCLE Proposition 10.2 place the eight
+full sender/mailbox/receiver publication intervals after this point and
+make them disjoint. Their two-copy-plus-print subtotal is
+$17\Lambda+56$, and their three distinct payload intervals retain at least
+$3\Lambda$ cells. Adding these disjoint contributions proves (19.1); all
+remaining acquisition, binding, decoder, check, ACK and return rows and
+cells are nonnegative additions. Since
+$3H(b)\geq b(b+1)$, (19.1) gives
+$t\geq b+b(b+1)$, which is (19.2). The proof uses the actual compiler,
+actual native intervals and actual current authority throughout. ∎
+
+**Corollary 19.4 (chronological squaring and retained-material budget).**
+Let $F_1,\ldots,F_m$ be fresh complete recovery flights on the same run,
+with predecessor/return pairs $(b_j,t_j)$, $B=b_1\geq1$, and
+$b_{j+1}\geq t_j$ for every $j<m$. Then
+
+$$
+ t_m+1\geq (B+1)^{2^m},
+ \qquad
+ A(t_m)-A(B)\geq
+ \sum_{j=1}^{m}\bigl(H(b_j)+3\Lambda_j\bigr).
+ \tag{19.3}
+$$
+
+In particular, if every return is contained in the native prefix ending at
+$N$, then
+
+$$
+ (B+1)^{2^m}\leq N+1,
+ \qquad
+ m\leq
+ \left\lfloor\log_2\!\left(\log_{B+1}(N+1)\right)\right\rfloor .
+ \tag{19.4}
+$$
+
+**Proof.** Equation (19.2) gives
+$t_j+1\geq(b_j+1)^2$. Since the next authentic predecessor cannot precede
+the preceding Ready, $b_{j+1}+1\geq t_j+1$. Induction yields
+$b_j+1\geq(B+1)^{2^{j-1}}$ and the first inequality in (19.3). The flight
+intervals are disjoint; $A$ is cumulative and intervening actual work can
+only add cells. Summing the second inequality of (19.1) proves the material
+inequality. Taking logarithms in (19.3) proves (19.4) for $B\geq1$ and
+$N\geq B$. No target-progress relation is used. ∎
+
+**Proposition 19.5 (fixed-target finite nonvacuity).** For every finite
+$m$, the class in Corollary 19.4 contains a lawful $m$-flight schedule in
+which every selected target is the same $k=a$. At each restored authentic
+Ready supply outer gate $1$, separate HistoryMode $1$, and the frame
+
+$$
+111\,U(2)\,0\,U(0)=11111000.
+\tag{19.5}
+$$
+
+The AcquisitionOffset parser reads the final zero offset, so Definition
+5.2 binds $k=a$. The accepted-target binding of Lemma 5.3, finite completion
+of Lemma 8.1 and the completed-return induction of Theorem 8.2 apply at
+each step. Thus every prescribed finite number of these requests completes
+on the same initialization, while (19.2)--(19.4) still hold.
+
+This is an externally supplied finite schedule. It does not give the
+observer a predecessor read, a class label, an adaptive target chooser or
+an infinite execution. Its purpose is to show that the recurrence is caused
+by the growing actual predecessor $b$, not by an assumed advance of $k$.
+
+## 20. Operational boundary and cited limits
+
+**Proposition 20.1 (route-specific consequence).** A plan that repeatedly
+uses the fresh complete Recover route must reserve native-work and retained-
+material budgets satisfying (19.1)--(19.4), even when it recalls the same
+old target. Hence pointwise successful four-view recovery on this route does
+not imply a uniformly bounded fresh-call cost, a positive native-row
+completion density, or a fixed positive ratio of target ordinal to return
+ordinal. These consequences concern the installed full-predecessor replay
+and full-bank emission; they do not quantify already acquired reuse or a
+different lawful route.
+
+The conclusion is compatible with the standard persistence distinction of
+Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*,
+JCSS 38 (1989), 86--124, [primary text](https://www.cs.cmu.edu/~sleator/papers/making-data-structures-persistent.pdf):
+sharing in their pointer model does not remove the full-bank-emission
+premise used here, and their bounds are not a native GCA tariff. It is also
+compatible with the rr project's [primary Background](https://rr-project.org/),
+which describes restoring a checkpoint and executing forward to a selected
+point: that alternative supplies neither this installed checkpoint nor a
+current GCA permission or cost identity.
+
+The proposition establishes no original-$Q$ admission, complete original
+successor/continuation correspondence, acquired class recognition, actor
+read permission, autonomous target selection, upper runtime, attainable
+schedule, physical time or energy law, universal representation lower bound,
+or impossibility of a cached, checkpointed, incremental or differently
+represented recovery route. The independent $S$, $B$, $T$ and $M$ meanings,
+all current-authority checks, complete receipts, source-growth/input,
+mixed, raw, fault, unfinished, changed-return and terminal domains remain
+those of Definitions 1.3--1.4 and §§7--10.
+
+## 追加锚（本行以下为增补区）
