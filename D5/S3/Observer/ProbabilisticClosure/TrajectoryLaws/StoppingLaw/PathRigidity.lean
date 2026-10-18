@@ -116,11 +116,10 @@ theorem joint_masses_force_target_separation (β : Bias) (V : Finset ℤ)
   have hvpath : pathVertices L es.length ⊆ V :=
     path_vertices_supported V L hk (fun a ha => hV a (by simpa [← hL] using ha))
   have hp (s : Bool) : (β.π s)^es.length = β.T (es.length + 1) := by
-    have ht := htarget s
-    rw [hL, target_collision_prob β V L q es.length hvpath hq s, pow_succ] at ht
-    have he : (β.π s)^es.length * β.π s = β.T (es.length + 1) * β.π s := by
-      simpa [mul_comm] using ht
-    exact (mul_right_cancel₀ (ne_of_gt (β.π_pos s))) he
+    have hc := target_collision_conditional β V L q es.length hvpath hq s
+    rw [← hL, htarget s, mul_comm (β.π s) (β.T (es.length + 1)),
+      mul_div_cancel_right₀ _ (ne_of_gt (β.π_pos s))] at hc
+    exact hc.symm
   have hne := β.unequal_powers hk
   apply hne
   exact (hp false).trans (hp true).symm
