@@ -1955,3 +1955,523 @@ The exact-isometry interface is [F. Ticozzi and L. Viola, *Quantum Information E
 These two primary interfaces have only the attributed roles above. The model-specific comparison is repo-derived ordinary finite-dimensional mathematics, with no global novelty, exhaustive literature coverage or kernel-verification assertion. Universal identities rest on the displayed proofs, rather than finite numerical checks. G and the positive-beta all-encoder sharp lower bound remain unproved here. The larger complex encoder class is unchanged and separate. All physical uses still require the actual encoder and supplied inputs, common source-fiber membership, finite-history transport and native-word joint legality of the phase-gain volume. The comparison encoder, inverse damping, coordinate frames and mathematical witnesses supply no native gates, state preparation, physical encoder/decoder apparatus or hardware resources.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Expanded actual rank-two families and the full tilted phase circle
+
+**Definition 24.1 (actual family and inherited domain).** Retain the actual real class, passive frame, arbitrary complex recoveries on the whole output, unhalved norms and all finite references of Definitions 1.1 and 23.1. Write $(e_0,e_1,e_2,e_3,h)=(b_1,g_1,b_2,g_2,h)$, with $Je_0=e_1$, $Je_2=e_3$, $J^T=-J$ and $Jh=0$. Throughout Sections 24–27 take $0<\beta\leq1/2$, $a=1-\beta$. Choose real, possibly signed or zero parameters satisfying
+
+$$
+u^2+\frac{v^2}{a}+s_0^2+s_1^2+k^2=1,
+\qquad
+\begin{aligned}
+K_0&=(\sqrt a\,e_0,\sqrt a\,e_1,
+       -\sqrt{\beta/a}\,v e_1+s_0e_2+s_1e_3+kh),\\
+K_1&=(\sqrt\beta\,e_2,\sqrt\beta\,e_3,u e_0+v e_3).
+\end{aligned}
+\tag{R.115}
+$$
+
+The notation $(x,y,t)$ specifies all three columns. These two matrices define $N(X)=K_0XK_0^T+K_1XK_1^T$ on every complex input. The specialization $u=v=t$, $s_0=s_1=0$ is already owned by (R.75), (R.89)–(R.96); those statements are reused directly. The additional independent coefficients and their phase interference are the subject here.
+
+**Theorem 24.2 (complete phase-circle output and attained minimum).** The matrices (R.115) are an actual TP common realization with
+
+$$
+B=\operatorname{diag}(a,0,\beta,0,0),\quad
+B+JBJ^T=Q,\quad q=1,\quad
+\operatorname{rank}B=2,\quad c_{\rm pl}=1.
+\tag{R.116}
+$$
+
+For $d=\sqrt{\beta+v^2}>0$, set
+
+$$
+\eta=\frac{\sqrt\beta\,|2\rangle-v|1\rangle}{d},\quad
+X_\theta=e^{i\theta}|0\rangle\langle\eta|
+          +e^{-i\theta}|\eta\rangle\langle0|,
+\quad X_+=X_0,\quad X_-=X_{\pi/2}.
+\tag{R.117}
+$$
+
+Every $X_\theta$ belongs to the full complex Hermitian $\mathcal H_0$ of (R.102), has eigenvalues $1,-1,0$, and has trace norm two. Its exact ratio is
+
+$$
+\begin{aligned}
+r(\theta)^2
+&:=\frac{\|N(X_\theta)\|_1^2}{4}\\
+&=\frac{v^2+a\beta(s_0^2+s_1^2+k^2)+\beta^2u^2
+       +2\beta\sqrt{a\beta}\,s_0u\cos(2\theta)}{\beta+v^2},\\
+r_*^2:=\min_{\theta\in\mathbb R}r(\theta)^2
+&=\min\{r(0)^2,r(\pi/2)^2\}\\
+&=a-\frac{\beta(a-\beta)u^2+2\beta\sqrt{a\beta}|s_0u|}{\beta+v^2}
+\leq a.
+\end{aligned}
+\tag{R.118}
+$$
+
+For $s_0u>0$ choose $X_-$; for $s_0u<0$ choose $X_+$; for $s_0u=0$ either phase attains the minimum. If $s_0u\ne0$, the minimizing phases are exactly those with $\cos(2\theta)=-\operatorname{sign}(s_0u)$. The family therefore has
+
+$$
+m_0(N)\leq r_*,\qquad
+\delta_N\geq1-r_*\geq1-\sqrt a.
+\tag{R.119}
+$$
+
+The first inequality is a witness bound, not an assertion that this circle contains a minimizer over all of $\mathcal H_0$.
+
+**Proof.** In the TP sum the first two diagonal entries are $a+\beta=1$, and the $01$ entry vanishes termwise. The $02$ entry is zero. The two contributions to the $12$ entry are $-\sqrt\beta v$ and $+\sqrt\beta v$. The third diagonal entry is $u^2+v^2/a+s_0^2+s_1^2+k^2=1$. Thus the full two-term map is CPTP. Its $A$ in (R.99) has independent columns $\sqrt a e_0,\sqrt\beta e_2$, so $P_A=I_2$, $q=\operatorname{Tr}TT^T=1$, and the displayed $B$ follows. Equation (R.103) gives $N(\chi_\pm)=(Q\pm iJQ)/2$, with orthogonal phase supports and eigenvalues $a,\beta$. This verifies actual class membership rather than just a putative block constraint. The diagonal difference in (R.105) has trace norm two, giving $c_{\rm pl}=1$.
+
+The vectors $|0\rangle,\eta$ are real orthonormal, so the input assertions follow on their two-dimensional span, including when $v=0$. Direct column multiplication, keeping both Kraus terms, gives
+
+$$
+K_1\eta=\frac{\sqrt\beta u}{d}e_0,\qquad
+g:=\sqrt a K_0\eta=
+\frac{-v e_1+\sqrt{a\beta}(s_0e_2+s_1e_3+kh)}d,
+\qquad j:=\frac{\beta u}{d}e_2.
+$$
+
+Both $g,j$ are orthogonal to $e_0$. Consequently
+
+$$
+N(X_\theta)=e^{i\theta}(e_0g^T+je_0^T)
+            +e^{-i\theta}(ge_0^T+e_0j^T).
+$$
+
+This Hermitian matrix has only an $e_0$-to-$e_0^\perp$ block and its adjoint. Its nonzero eigenvalues are $\pm\|e^{i\theta}g+e^{-i\theta}j\|_2$; the formula remains valid if the vector is zero. Squaring the vector norm uses $g^Tj=\beta\sqrt{a\beta}s_0u/d^2$ and proves the first line of (R.118). In particular
+
+$$
+\begin{gathered}
+w_\pm=\frac{-v e_1+(\sqrt{a\beta}s_0\pm\beta u)e_2
+                         +\sqrt{a\beta}s_1e_3+\sqrt{a\beta}kh}{d},\\
+N(X_+)=e_0w_+^T+w_+e_0^T,\qquad
+N(X_-)=i(e_0w_-^T-w_-e_0^T).
+\end{gathered}
+$$
+
+Minimizing the cosine chooses the sign stated. Subtracting the phase-independent numerator from $a(\beta+v^2)$ and using (R.115) gives $\beta(a-\beta)u^2$. This proves the minimum formula without restrictions on any parameter sign. Its nonnegativity also follows from its attained squared-norm expression. The inequality is strict precisely when $\beta(a-\beta)u^2+2\beta\sqrt{a\beta}|s_0u|>0$. This includes $0<\beta<1/2$, $u\ne0$; at half beta it requires $s_0u\ne0$ for this formula. For any phase, $X_\theta$ is the difference of the orthogonal pure states $(e^{i\theta}|0\rangle\pm\eta)/\sqrt2$. Apply the existing same-recovery estimate (R.95) to the minimizing phase. It already permits every complex CPTP recovery and the full finite-reference unhalved diamond norm, proving (R.119). $\square$
+
+**Proposition 24.3 (phase discrimination and the exact extra frame conditions).** At $a=\beta=1/2$, $v=s_1=k=0$, $u=s_0=1/\sqrt2$, the ratios of $X_+$ and $X_-$ are respectively one and zero. Replacing $s_0$ by $-s_0$ exchanges them. Thus the real phase alone cannot replace the circle minimum in Theorem 24.2.
+
+In a canonical first-column frame $x_0=\sqrt a e_0$, $x_1=\sqrt\beta e_2$, write the two plane projections of the third column $t_1$ as $r_A=(t_{1,0},t_{1,1})$, $r_B=(t_{1,2},t_{1,3})$. The common $SO(2)$ rotation of these two coordinate pairs puts $t_1$ in the form $u e_0+v e_3$ if and only if
+
+$$
+\langle h,t_1\rangle=0,\qquad r_A\cdot r_B=0.
+\tag{R.120}
+$$
+
+Here a common output-plane rotation may be accompanied by the inverse input $01$-plane rotation to retain the displayed canonical first two columns. The criterion is for this specified frame freedom; it is not a classification under every possible parameter-dependent change of representation. Once this form of $t_1$ is obtained, TP forces $t_{0,0}=0$ and $t_{0,1}=-\sqrt{\beta/a}v$, leaving exactly the other coefficients in (R.115). The two conditions (R.120) are additional hypotheses, not consequences of TP.
+
+**Proof.** The first assertions follow from the explicit $w_\pm$. A common planar rotation preserves $r_A\cdot r_B$ and the $h$ component. If $r_A\ne0$, align it with the first axis; orthogonality puts $r_B$ on the second axis. If $r_A=0$ but $r_B\ne0$, align $r_B$ with the second axis. If both vanish nothing needs alignment. Signed $u,v$ include all orientations and zero projections. The $02$ TP equation becomes $\sqrt a t_{0,0}=0$; the $12$ equation becomes $\sqrt a t_{0,1}+\sqrt\beta v=0$. The remaining third-column norm is precisely (R.115). These equations impose neither condition on an arbitrary initial $t_1$. $\square$
+
+**Proposition 24.4 (when $B$ is canonical and actual instances outside the family).** For $a\ne\beta$, the additional condition $[B,Q]=0$ is sufficient to put any feasible rank-two $B$ of (R.108) in the canonical form (R.116) by $J$-preserving orthogonal plane frames. At $a=\beta=1/2$, every feasible rank-two $B$ has a $J$-preserving canonical frame. Neither assertion supplies (R.120).
+
+There are also actual noncanonical rank-two examples in the region $c_{\rm pl}>\sqrt a$. An exact one is obtained with $\beta=1/5$, $a=4/5$, $t=1/5$, $c=2\sqrt6/5$, and
+
+$$
+\begin{gathered}
+x_0=\sqrt a c e_0-\sqrt\beta t e_3,\qquad
+x_1=-\sqrt a t e_1+\sqrt\beta c e_2,\\
+t_0=h/\sqrt2,\qquad
+t_1=\frac{\sqrt\beta c e_0-\sqrt a t e_3}
+                {\sqrt{2(\beta c^2+a t^2)}},\qquad
+K_j=(x_j,Jx_j,t_j)\quad(j=0,1).
+\end{gathered}
+\tag{R.121}
+$$
+
+It has $q=1$, $\operatorname{rank}B=\operatorname{rank}C_{\rm out}=2$, $[B,Q]\ne0$, and
+
+$$
+\begin{gathered}
+\operatorname{spec}_{>0}B=(97/125,28/125)\ne(a,\beta),\\
+c_{\rm pl}^2=1-(a-\beta)^2(2ct)^2
+             =\frac{14761}{15625}>
+               \frac{12500}{15625}=a.
+\end{gathered}
+\tag{R.122}
+$$
+
+Canonical $B$ also allows third columns outside (R.120). For any positive beta, $t_0=e_2/\sqrt2$, $t_1=h/\sqrt2$ is actual with a forbidden $h$ component. At $\beta=1/5$, the alternative
+
+$$
+t_1=(e_0+e_2)/2,\qquad
+t_0=-\tfrac12\sqrt{\beta/a}\,e_0
+       +\sqrt{\tfrac12-\tfrac{\beta}{4a}}\,h
+$$
+
+is actual with $r_A\cdot r_B=1/4$. Both have $q=1$, $c_{\rm pl}=1$ and $\operatorname{rank}C_{\rm out}=2$. These instances show missing hypotheses in a proposed exhaustive use of (R.115); they assert no impossibility of finding other witnesses.
+
+**Proof.** If $[B,Q]=0$ and $a\ne\beta$, $B$ splits over the two distinct two-dimensional eigenspaces of $Q$. The identity $B+JBJ^T=Q$ gives block traces $a,\beta$. Both blocks are nonzero PSD, so total rank two makes each rank one. Rotating an eigenvector within each oriented $J$ plane makes the two blocks $\operatorname{diag}(a,0)$ and $\operatorname{diag}(\beta,0)$. At half beta, $B\preceq aI$ on $U$, $\operatorname{Tr}B=2a$ and rank two force both positive eigenvalues to be $a$. Thus $B=aP_L$, where $L$ has dimension two, and $JP_LJ^T=I_U-P_L$. In particular $JL=L^\perp$; an orthonormal basis of $L$ followed by its $J$ images gives the claimed canonical frame. Third columns have not entered either argument.
+
+For (R.121), the summed first-column norm is $a+\beta=1$, and $x_j^TJx_j=0$. The two $02$ products vanish. The only possible nonzero $12$ product is $(Jx_1)^Tt_1$, whose two terms $\sqrt{a\beta}tc$ cancel. The third-column squared norms are $1/2,1/2$. Thus TP holds. The complex phase coefficients in (R.8) can be taken as the rows $(\sqrt a c,i\sqrt a t)$ and $(i\sqrt\beta t,\sqrt\beta c)$; their Hermitian cross product is zero and their squared norms are $a,\beta$. Hence this is an actual original-class channel. Both $A$ and $T$ have independent columns, giving the stated ranks and $q=1$.
+
+The two $x$ vectors have disjoint coordinate supports; their squared lengths are $ac^2+\beta t^2$ and $at^2+\beta c^2$, giving (R.122)'s spectrum. The $03$ entry of $B$ is $-\sqrt{a\beta}ct\ne0$, while those two $Q$ entries differ, so the commutator is nonzero. In the $(e_0,e_3)$ block, $B-JBJ^T$ has diagonal entries $a(c^2-t^2),-\beta(c^2-t^2)$ and off-diagonal entry $-2\sqrt{a\beta}ct$. Its determinant is $-a\beta$ and its trace is $(a-\beta)(c^2-t^2)$. The other block has the opposite eigenvalues. Thus the half trace norm squared is $(a-\beta)^2(c^2-t^2)^2+4a\beta=1-(a-\beta)^2(2ct)^2$, proving the exact strict inequality.
+
+For the two canonical counterinstances, use the first two columns of (R.115) and the specified third columns. Their two summed cross inner products vanish: in the second instance the $02$ terms are $-\sqrt\beta/2$ and $+\sqrt\beta/2$. Their total third squared norms are one. The third columns are independent, so the full-column-rank $A$ again gives $q=1$ and rank two for $C_{\rm out}$. The $h$ component and dot product are exactly those stated. $\square$
+
+## 25. Three actual Kraus terms and one shared tilted input
+
+**Theorem 25.1 (full rank-three output, exact norm and endpoints).** Let $u,v,k$ be real with $u^2+v^2/a+k^2=1$, and $0\leq p\leq1$. Use all three terms
+
+$$
+\begin{aligned}
+K_0&=(\sqrt a e_0,\sqrt a e_1,-\sqrt{\beta/a}v e_1+kh),\\
+K_1&=\sqrt p(\sqrt\beta e_2,\sqrt\beta e_3,u e_0+v e_3),\\
+K_2&=\sqrt{1-p}(\sqrt\beta e_3,-\sqrt\beta e_2,u e_0-v e_2).
+\end{aligned}
+\tag{R.123}
+$$
+
+This is an actual real-Kraus CPTP channel. For $0<p<1$,
+
+$$
+B=\operatorname{diag}(a,0,\beta p,\beta(1-p),0),\quad
+q=1,\quad \operatorname{rank}B=3,\quad
+c_{\rm pl}=a+\beta|2p-1|.
+\tag{R.124}
+$$
+
+In this interior range $\operatorname{rank}C_{\rm out}=3$ if and only if $v\ne0$; in particular $k\ne0$ is not necessary. For the identical $\eta,X_+$ of (R.117),
+
+$$
+\begin{gathered}
+N(X_+)=e_0w_p^T+w_pe_0^T,\qquad
+w_p=\frac{-v e_1+\beta u[pe_2+(1-p)e_3]+\sqrt{a\beta}kh}
+                    {\sqrt{\beta+v^2}},\\
+\frac{\|N(X_+)\|_1^2}{4}
+=\|w_p\|^2
+=\frac{v^2+\beta^2u^2[p^2+(1-p)^2]+a\beta k^2}{\beta+v^2}\\
+=a-\frac{\beta[(a-\beta)+2\beta p(1-p)]u^2}{\beta+v^2}
+\leq a.
+\end{gathered}
+\tag{R.125}
+$$
+
+Consequently (R.95) gives $\delta_N\geq1-\|w_p\|\geq1-\sqrt a$. All formulas have their stated values at $p=0,1$, where $\operatorname{rank}B=2$ instead of three. In the interior, this actual family lies in $c_{\rm pl}>\sqrt a$ exactly when
+
+$$
+|2p-1|>\frac{\sqrt a}{1+\sqrt a}.
+\tag{R.126}
+$$
+
+At half beta, interior $p$ and $u\ne0$, (R.125) is strictly below $a$. Thus the complete third term supplies a strict witness also at that endpoint.
+
+**Proof.** The first two summed column norms are one and their inner product is zero. The $02$ products vanish. The $12$ contributions are $-\sqrt\beta v$, $p\sqrt\beta v$ and $(1-p)\sqrt\beta v$. Their full sum is zero. The third summed squared norm is $\beta v^2/a+k^2+u^2+v^2=1$. This proves TP with no discarded term. The first columns give (R.124); $B+JBJ^T=Q$ gives the required actual phase outputs by (R.103). For interior $p$ these three first columns are independent, so $P_A=I_3$ and $q=1$. Their independence also implies $\operatorname{rank}C_{\rm out}=\operatorname{rank}T$. If $v\ne0$, the $e_3$ and $e_2$ coordinates distinguish $t_1,t_2$, while the nonzero $e_1$ coordinate of $t_0$ is outside their span. Thus rank $T$ is three even when $k=0$ or $u=0$. If $v=0$, the last two third columns are parallel to $e_0$ and the first is parallel to $h$, so rank is at most two. At $p=0,1$ there are only two nonzero first columns, giving the endpoint rank assertion.
+
+Directly $K_1\eta=\sqrt{p\beta}u e_0/d$ and $K_2\eta=\sqrt{(1-p)\beta}u e_0/d$. Their contributions to $N(X_+)$ are respectively $p\beta u(e_2e_0^T+e_0e_2^T)/d$ and $(1-p)\beta u(e_3e_0^T+e_0e_3^T)/d$. The $K_0$ contribution supplies $-v e_1$ and $\sqrt{a\beta}kh$ in $w_p$. This proves the entire output in (R.125); $w_p\perp e_0$ gives eigenvalues $\pm\|w_p\|$. Squaring and using $p^2+(1-p)^2=1-2p(1-p)$ and the stated normalization gives the last equality. Equation (R.95) consumes this one common input pair. Finally (R.105) applied to the diagonal $B$ gives $c_{\rm pl}=a+\beta|2p-1|$. For $b_*=\sqrt a$, $(b_*-a)/\beta=b_* /(1+b_*)$, proving (R.126) and its strictness direction. $\square$
+
+**Proposition 25.2 (an exact omitted-term discriminator).** At $a=\beta=1/2$, $u=v=k=1/2$, $p=1/10$, the actual channel (R.123) has rank $B=\operatorname{rank}C_{\rm out}=3$, $c_{\rm pl}=9/10>1/\sqrt2$, and the squared ratio in (R.125) is $97/200$. Keeping just $K_0,K_1$ instead gives $167/400$ for that same input and fails TP.
+
+**Proof.** The parameter norm is $1/4+(1/4)/(1/2)+1/4=1$. The full numerator in (R.125) is $1/4+(1/16)(82/100)+1/16=291/800$, and its denominator is $3/4$, giving $97/200$. Deleting $K_2$ deletes the $e_3$ coefficient $\beta u(1-p)/d$ of $w_p$, so the squared ratio decreases by $\beta^2u^2(1-p)^2/d^2=27/400$. The result is $167/400$. The removed nonzero PSD contribution $K_2^TK_2$ also prevents the remaining list from being TP. The rank and plane inequalities follow from Theorem 25.1. $\square$
+
+## 26. Four actual Kraus terms with the same input witness
+
+**Theorem 26.1 (common-witness mixture and exact zero-$k$ formula).** Let $N_0$ be (R.115) with $s_0=s_1=0$, $u^2+v^2/a+k^2=1$. Let $S|_U=J|_U$ and $Sh=h$, so $S$ is a real orthogonal matrix, rather than the singular extension $J$ itself. For $0\leq p\leq1$, the actual channel $N_p=pN_0+(1-p)\operatorname{Ad}_S N_0$ has the complete four-term list
+
+$$
+\sqrt p K_0,\quad \sqrt p K_1,\quad
+\sqrt{1-p}SK_0,\quad\sqrt{1-p}SK_1.
+\tag{R.127}
+$$
+
+For positive beta and $0<p<1$ its common blocks satisfy
+
+$$
+\begin{gathered}
+B_p=\operatorname{diag}(ap,a(1-p),\beta p,\beta(1-p),0),\\
+q=1,\quad \operatorname{rank}B_p=4,\quad
+c_{\rm pl}=|2p-1|,\qquad
+\operatorname{rank}C_{{\rm out},p}=4\ \Longleftrightarrow\ v\ne0.
+\end{gathered}
+\tag{R.128}
+$$
+
+For exactly the same $X_+$ of (R.117) in both summands,
+
+$$
+\begin{aligned}
+\frac{\|N_p(X_+)\|_1}{2}
+&\leq\frac{\|N_0(X_+)\|_1}{2}
+=\sqrt{a-\frac{\beta(a-\beta)u^2}{\beta+v^2}}
+\leq\sqrt a.
+\end{aligned}
+\tag{R.129}
+$$
+
+When $k=0$, this squared ratio is exactly
+
+$$
+\frac{\|N_p(X_+)\|_1^2}{4}
+=\frac{(1-2p)^2v^2+\beta^2u^2}{\beta+v^2}
+=a-\frac{\beta(a-\beta)u^2+4p(1-p)v^2}{\beta+v^2}.
+\tag{R.130}
+$$
+
+Both formulas include $p=0,1$, where $B_p$ has rank two and no rank-four conclusion is made. Equation (R.95) again gives $\delta_{N_p}\geq1-\sqrt a$. In the zero-$k$ formula, half beta, $v\ne0$ and interior $p$ make the squared ratio strictly less than $a$. The hard plane region here is exactly $|2p-1|>\sqrt a$.
+
+**Proof.** Orthogonality of $S$ makes (R.127) TP, and $SQ S^T=Q$, $SJ=JS$ preserve the actual phase-output relation. The displayed first-column matrix has four independent columns for positive beta and interior $p$, giving (R.128)'s $B$, $P_A=I_4$, and $q=1$. For $v\ne0$, consider the unscaled four third columns $t_0,t_1,St_0,St_1$. Their $e_3,e_2$ coordinates first distinguish $t_1,St_1$, respectively. After their coefficients vanish, their $e_1,e_0$ coordinates distinguish $t_0,St_0$, respectively, because $\sqrt{\beta/a}v\ne0$. Thus all four are independent, even for $k=0$ or $u=0$. If $v=0$, $t_0,St_0$ are both multiples of $h$, while $t_1,St_1$ are multiples of $e_0,e_1$, so rank is at most three. The full-column-rank $A$ transfers this exact rank statement to $C_{{\rm out},p}$. The diagonal difference gives $c_{\rm pl}$ as displayed.
+
+The input is fixed before taking either output norm:
+
+$$
+N_p(X_+)=pN_0(X_+)+(1-p)SN_0(X_+)S^T.
+$$
+
+Triangle inequality and orthogonal invariance bound its norm by $\|N_0(X_+)\|_1$. The explicit zero-$s_0,s_1$ case of (R.118) supplies (R.129); this is an application within the present four-term proof.
+
+When $k=0$, the $h$ row and column vanish. In the ordered split $(e_0,e_3)\mid(e_1,e_2)$ the output is $\left(\begin{smallmatrix}0&M\\M^T&0\end{smallmatrix}\right)$ with
+
+$$
+M=\frac1d\begin{pmatrix}(1-2p)v&p\beta u\\(1-p)\beta u&0\end{pmatrix}.
+$$
+
+Its trace norm is $2\|M\|_1$. If $\sigma_1,\sigma_2\geq0$ are the singular values of $M$, then $(\sigma_1+\sigma_2)^2=\operatorname{Tr}(MM^T)+2|\det M|$. Here $\det M=-p(1-p)\beta^2u^2/d^2$, so the terms in $u^2$ combine to $[p^2+(1-p)^2+2p(1-p)]\beta^2u^2/d^2=\beta^2u^2/d^2$. This proves the first expression in (R.130), including zero determinant and repeated singular values. Substitute $u^2+v^2/a=1$ to obtain the second. No sign of $u$ or $v$ was discarded. At $p=0,1$ just two first columns remain; the formulas are still defined because $\beta>0$. $\square$
+
+**Proposition 26.2 (a strict actual instance and the common-input requirement).** The parameters $a=\beta=1/2$, $u=k=0$, $v^2=1/2$, $p=1/10$ give an actual rank-four example with $\operatorname{rank}C_{\rm out}=4$, $c_{\rm pl}=4/5>1/\sqrt2$, and squared witness ratio $8/25<1/2$.
+
+**Proof.** All assertions follow by direct substitution in (R.128)–(R.130). The common input in the preceding proof cannot be replaced by unrelated minimizers for arbitrary component channels. For a concrete standard caution within this use of mixtures, qubit Pauli channels with probabilities $(1/2,0,1/4,1/4)$ and $(3/8,3/8,1/8,1/8)$, in the order $(I,\sigma_x,\sigma_y,\sigma_z)$, have Bloch matrices $\operatorname{diag}(0,1/2,1/2)$ and $\operatorname{diag}(1/2,0,0)$. Each has minimum traceless-Hermitian contraction zero. Their equal mixture has Bloch matrix $I_3/4$ and minimum contraction $1/4$. The probability tables verify CPTP directly, and the contraction values are the least singular values on the Bloch sphere. Thus minimum contraction is not a convex function that would justify mixing separately chosen zero witnesses. This is a limitation of that proof step, not an extra all-class package or a claim that these qubit maps belong to the original qutrit class. $\square$
+
+## 27. A half-beta channel isometric on every imaginary direction
+
+**Theorem 27.1 (exact imaginary-space obstruction with a real zero witness).** At $a=\beta=1/2$ the actual two-Kraus channel
+
+$$
+K_0=(e_0,e_1,e_2)/\sqrt2,\qquad
+K_1=(e_2,e_3,-e_0)/\sqrt2
+\tag{R.131}
+$$
+
+has $q=1$, rank $B=\operatorname{rank}C_{\rm out}=2$ and $c_{\rm pl}=1$. For every $\xi=(x,y,z)\in\mathbb R^3$, including zero, put
+
+$$
+X(\xi)=i\begin{pmatrix}0&x&y\\-x&0&z\\-y&-z&0\end{pmatrix},\qquad
+E_{ij}^{\wedge}=e_ie_j^T-e_je_i^T.
+$$
+
+Then $X(\xi)\in\mathcal H_0$ and
+
+$$
+\begin{gathered}
+N(X(\xi))=iF(\xi),\\
+F(\xi)=\frac{x}{2}(E_{01}^{\wedge}+E_{23}^{\wedge})
+        +yE_{02}^{\wedge}
+        +\frac z2(E_{12}^{\wedge}+E_{03}^{\wedge}),\\
+\|N(X(\xi))\|_1=\|X(\xi)\|_1=2\sqrt{x^2+y^2+z^2}.
+\end{gathered}
+\tag{R.132}
+$$
+
+In contrast the nonzero real symmetric input $X_{\rm r}=|0\rangle\langle2|+|2\rangle\langle0|\in\mathcal H_0$ obeys
+
+$$
+\|X_{\rm r}\|_1=2,\qquad N(X_{\rm r})=0,\qquad m_0(N)=0.
+\tag{R.133}
+$$
+
+Thus searching only the imaginary antisymmetric Hermitian three-space cannot establish G even for this example: every nonzero member of that search space has ratio one, while a valid real witness has ratio zero. The example satisfies G and supplies no counterexample to it.
+
+**Proof.** Each displayed column triple is orthonormal before division by $\sqrt2$, so the TP sum is $I_3$. Its first columns give $B=\operatorname{diag}(1/2,0,1/2,0,0)$ and its cross block is $C_{\rm out}=(e_0e_2^T-e_2e_0^T)/2$. The phase relation, rank and $q$ assertions follow as in (R.116); the third columns are independent. The input spectrum is $0,\pm\sqrt{x^2+y^2+z^2}$, by the characteristic polynomial of its $3\times3$ skew matrix. Direct multiplication of both Kraus terms gives exactly the signed expression for $F$ in (R.132), whose $h$ row and column vanish.
+
+Let the four active eigenvalues of the real skew matrix $F$ be $\pm i\lambda_1,\pm i\lambda_2$, with $\lambda_j\geq0$. These are its two possibly zero singular-value pairs. On the ordered active frame $(e_0,e_1,e_2,e_3)$,
+
+$$
+\begin{aligned}
+\lambda_1^2+\lambda_2^2
+ &=\tfrac12\|F\|_F^2=(x^2+z^2)/2+y^2,\\
+\operatorname{Pf}F
+ &=F_{01}F_{23}-F_{02}F_{13}+F_{03}F_{12}
+   =(x^2+z^2)/4,\\
+\lambda_1\lambda_2&=|\operatorname{Pf}F|=(x^2+z^2)/4,\\
+(\lambda_1+\lambda_2)^2&=x^2+y^2+z^2.
+\end{aligned}
+$$
+
+Here the Pfaffian identity follows by expanding the $4\times4$ determinant as the square of the displayed three-term expression. The nonnegative square root fixes the sign of $\lambda_1+\lambda_2$. The Hermitian eigenvalues of $iF$ have absolute values $\lambda_1,\lambda_1,\lambda_2,\lambda_2$, proving the norm identity. The calculation permits all signs of $x,y,z$, the zero vector, repeated singular values and vanishing singular values without division. Finally $N(X_{\rm r})=C_{\rm out}+C_{\rm out}^T=0$, proving (R.133). $\square$
+
+## 28. The exact pointwise dual on the seven-dimensional complex Hermitian domain
+
+**Theorem 28.1 (source-specific all-complex norming-functional dual).** For any actual common real Kraus realization of Definition 23.1, let $P=|0\rangle\langle0|+|1\rangle\langle1|$, and define on $M_3$ the complex-linear map
+
+$$
+\Pi(Z)=Z-\frac{Z_{00}+Z_{11}}2P-Z_{22}E_{22},\qquad
+\mathcal A=\Pi\circ N^\dagger.
+\tag{R.134}
+$$
+
+Its restriction to Hermitian matrices is the real trace-inner-product orthogonal projection onto precisely the real seven-dimensional $\mathcal H_0$ in (R.102). In this theorem $\Pi$ is an input-space projection, not the output phase-support projection of Theorem 2.1, and $\mathcal A$ is a map, not the first-column matrix $A$ of (R.99). For every real $s\geq0$,
+
+$$
+\begin{aligned}
+m_0(N)\geq s
+\quad\Longleftrightarrow\quad
+&\text{for every }\psi\in\mathbb C^3,\ \|\psi\|_2=1,\text{ there exists }F_\psi=F_\psi^\dagger\in M_5\text{ with}\\
+&-I_5\preceq F_\psi\preceq I_5,\qquad
+\mathcal A(F_\psi)=2s\Pi(|\psi\rangle\langle\psi|).
+\end{aligned}
+\tag{R.135}
+$$
+
+The choices are pointwise in $\psi$; a linear selection is not required. Both sides depend only on the same $B,C_{\rm out}$, not $D$ or $D_\perp$. The vector $\psi$ indexes all complex norming functionals, not a pure-versus-pure restriction on the primal witness $X$.
+
+**Proof.** For Hermitian $Z$, $\Pi(Z)$ has trace zero and $22$ entry zero, and $\Pi$ fixes every $X\in\mathcal H_0$. The removed term belongs to $\operatorname{span}_{\mathbb R}\{P,E_{22}\}$, which is orthogonal to $\mathcal H_0$ for $\langle Z,X\rangle=\operatorname{Tr}(ZX)$. Conversely these are exactly the two independent real constraints defining $\mathcal H_0$, so its real dimension is $9-2=7$ and
+
+$$
+\operatorname{Tr}(\Pi(Z)X)=\operatorname{Tr}(ZX)\quad(X\in\mathcal H_0),\qquad
+\ker\Pi|_{\operatorname{Herm}}=\operatorname{span}_{\mathbb R}\{P,E_{22}\}.
+$$
+
+The formula is also a complex-linear projection on all matrices. No positivity of this projection is assumed. For a Hermitian $F$, $N^\dagger(F)=\sum_\alpha K_\alpha^TFK_\alpha$. The only entry using $D$ is its $22$ entry $\operatorname{Tr}(FD)$, by (R.103). The projection deletes that entry; every remaining entry is determined by $B,C_{\rm out}$ and $J$. Equivalently $\operatorname{Tr}(\mathcal A(F)X)=\operatorname{Tr}(F\mathcal L_{B,C_{\rm out}}(X))$. Thus this is the adjoint of the precise restricted action (R.104), establishing the claimed dependence on the common pair.
+
+For every traceless Hermitian qutrit $X$,
+
+$$
+\|X\|_1=2\|X\|_{\rm op}.
+$$
+
+Indeed if there are two positive eigenvalues, their sum is the absolute value of the single negative eigenvalue, which is at least each of them; the reverse sign case is identical. A zero eigenvalue gives the same equality, and the zero matrix is immediate. This proves the identity for rank two, rank three, repeated eigenvalues and both sign patterns. It is specific to the traceless qutrit space.
+
+Assume first the pointwise lifts in (R.135). For any $X\in\mathcal H_0$ and complex unit $\psi$,
+
+$$
+2s|\langle\psi|X|\psi\rangle|
+=|\operatorname{Tr}(F_\psi N(X))|
+\leq\|N(X)\|_1.
+$$
+
+The last inequality is Hermitian operator-norm/trace-norm duality, since $\|F_\psi\|_{\rm op}\leq1$. Taking the supremum over all complex unit $\psi$ gives $2s\|X\|_{\rm op}=s\|X\|_1\leq\|N(X)\|_1$. This is exactly the lower bound defining $m_0$. The absolute value covers both signs with the same functional; it needs no extra factor or second family of lifts.
+
+Conversely assume $m_0(N)\geq s>0$. The restriction of $N$ to the real normed space $\mathcal H_0$ is injective. On the real subspace $N(\mathcal H_0)\subseteq\operatorname{Herm}(M_5)$, define for each complex unit $\psi$
+
+$$
+\ell_\psi(N(X))=2s\operatorname{Tr}(X|\psi\rangle\langle\psi|).
+\tag{R.136}
+$$
+
+It is well defined by injectivity, real linear, and has norm at most one because
+
+$$
+|\ell_\psi(N(X))|\leq2s\|X\|_{\rm op}
+ =s\|X\|_1\leq\|N(X)\|_1.
+$$
+
+Apply the real Hahn–Banach theorem to extend it to all of $\operatorname{Herm}(M_5)$ with norm at most one. In finite dimension any real linear functional on this real Hermitian space has a unique Hermitian trace representative $F_\psi$: this follows by taking a real orthonormal Hermitian matrix basis and its coefficients. Testing the extension on the signed rank-one spectral projections of $F_\psi$ gives $\|F_\psi\|_{\rm op}\leq1$; conversely this bound controls the functional by spectral decomposition. The extension therefore has $-I_5\preceq F_\psi\preceq I_5$ and
+
+$$
+\operatorname{Tr}\bigl([\mathcal A(F_\psi)-2s\Pi(|\psi\rangle\langle\psi|)]X\bigr)=0
+\quad\text{for all }X\in\mathcal H_0.
+$$
+
+The bracket is itself in $\mathcal H_0$, so its pairing with itself forces it to vanish. This proves the other direction. At $s=0$, the lower bound is automatic and $F_\psi=0$ supplies every lift without injectivity; the separate endpoint requires no inverse. Real Hahn–Banach and finite-dimensional Schatten duality are standard ingredients consumed in this particular restricted-channel proof, not new general results. $\square$
+
+**Proposition 28.2 (complex norming directions and a noninjective check).** Real unit $\psi$ cannot replace all complex unit $\psi$ in the norming step of Theorem 28.1. For $X=i(E_{01}-E_{10})\in\mathcal H_0$, all real $\psi$ have $\langle\psi|X|\psi\rangle=0$, while $(|0\rangle-i|1\rangle)/\sqrt2$ has expectation one. For $\psi=(1,i,1)/\sqrt3$, the matrix $\Pi(|\psi\rangle\langle\psi|)$ has nonzero imaginary entries. On the channel (R.131), no positive $s$ can satisfy (R.135); $s=0$ still does.
+
+**Proof.** A real quadratic form of a real antisymmetric matrix is zero, whereas the stated complex vector is a unit eigenvector of $X$ with eigenvalue one. Directly $\Pi$ removes only diagonal entries from the second example, leaving its imaginary $01$ and $12$ entries. Thus a restriction to real norming functionals would discard an actual part of $\mathcal H_0$. For the channel (R.131), use the real kernel input $X_{\rm r}$ from (R.133) and $\psi=(|0\rangle+|2\rangle)/\sqrt2$, for which $\operatorname{Tr}(X_{\rm r}|\psi\rangle\langle\psi|)=1$. Pairing the asserted lift with $X_{\rm r}$ would give $0=2s$, impossible for $s>0$. The zero choice handles $s=0$. Neither example restricts the primal domain to pure differences; the entire real seven-dimensional Hermitian space remains in (R.135). $\square$
+
+## 29. A finite sufficient certificate and an actual lower-certificate family
+
+**Theorem 29.1 (linear and decomposable sufficient certificate for the exact dual).** Fix an actual channel as in Theorem 28.1 and $s\geq0$. A sufficient condition for (R.135) is a complex-linear Hermiticity-preserving map $W:M_3\to M_5$ such that
+
+$$
+\mathcal A\circ W=2s\Pi,\qquad
+\Phi_\pm:Z\longmapsto\operatorname{Tr}(Z)I_5\pm W(Z)
+\text{ are positive maps}.
+\tag{R.137}
+$$
+
+Use the unnormalized input-first Choi convention
+
+$$
+\begin{gathered}
+C_W=\sum_{i,j=0}^2E_{ij}\otimes W(E_{ij}),\qquad
+\Omega_3=\sum_{i=0}^2|i\rangle\otimes|i\rangle,\\
+C_\Pi=|\Omega_3\rangle\langle\Omega_3|
+       -\tfrac12P\otimes P-E_{22}\otimes E_{22},\\
+(\mathrm{id}_3\otimes\mathcal A)(C_W)=2sC_\Pi.
+\end{gathered}
+\tag{R.138}
+$$
+
+For a finite sufficient strengthening of positivity in (R.137), it is enough to find Hermitian matrices satisfying
+
+$$
+I_{15}\pm C_W=S_\pm+T_\pm^{\Gamma},\qquad
+S_\pm\succeq0,\quad T_\pm\succeq0,
+\tag{R.139}
+$$
+
+where $\Gamma$ is partial transpose on the three-dimensional INPUT factor, in the fixed original basis. The equality in (R.138) and these four PSD conditions are a finite sufficient system for $m_0(N)\geq s$. No converse from the pointwise choices $F_\psi$ to a single $W$, or from positivity to (R.139), is asserted.
+
+**Proof.** For each complex pure input $\rho_\psi=|\psi\rangle\langle\psi|$, set $F_\psi=W(\rho_\psi)$. Hermiticity preservation makes it Hermitian; positivity of $\Phi_\pm$ gives $I_5\pm F_\psi\succeq0$. The first equality in (R.137) gives its exact lift in (R.135), which is sufficient by Theorem 28.1.
+
+Expanding $\Pi(E_{ij})$ gives the stated $C_\Pi$: only $E_{00},E_{11}$ have the $-P/2$ term, and $E_{22}$ has the $-E_{22}$ term. Linearity of the Choi representation proves the last equality of (R.138) equivalent to the first in (R.137), on the whole complex matrix algebra. In particular the maximally entangled vector is unnormalized; normalizing it without changing the other coefficients would change the equation. The Choi matrix of $Z\mapsto\operatorname{Tr}(Z)I_5$ is $I_{15}$.
+
+For clarity, the standard Choi positivity ingredient can be consumed directly here. A PSD input-first matrix $S=\sum_r|v_r\rangle\langle v_r|$ can be reshaped as $v_r=\sum_i|i\rangle\otimes L_r|i\rangle$, giving the CP map $Z\mapsto\sum_rL_rZL_r^\dagger$. Applying input transpose changes its Choi matrix to $S^\Gamma$. Consequently the right side of (R.139) represents a CP map plus another CP map composed with input transposition. Transposition preserves PSD inputs, so this sum is positive on every complex PSD input. It is not necessary for $T_\pm^\Gamma$ itself to be PSD. This proves sufficiency for each sign and therefore (R.137). These are the usual Choi and decomposable-map ingredients inside this common-pair certificate. Neither Hahn–Banach nor this argument supplies a linear selection or proves that all positive maps are decomposable. $\square$
+
+**Theorem 29.2 (an explicit actual nonzero certificate with both PSD decompositions).** On the already-owned $t=0$ member of (R.75), the actual normalized Kraus list is, also including $\beta=0$,
+
+$$
+K_0=(\sqrt a e_0,\sqrt a e_1,h),\qquad
+K_1=(\sqrt\beta e_2,\sqrt\beta e_3,0),\qquad
+0\leq\beta\leq1/2.
+\tag{R.140}
+$$
+
+Let $V=(e_0,e_1,h)$, $D_a=\operatorname{diag}(\sqrt a,\sqrt a,1)$, $L=VD_a^{-1}$. For every $0\leq s\leq a$ the map
+
+$$
+W(Z)=sL(2Z-\operatorname{Tr}(Z)I_3)L^\dagger
+\tag{R.141}
+$$
+
+satisfies (R.137)–(R.139), and hence $m_0(N)\geq s$. Explicitly put $R_s=I_5-sLL^\dagger\succeq0$, $\omega_L=\sum_i|i\rangle\otimes L|i\rangle$, and let $\mathsf F$ be the swap on $\mathbb C^3\otimes\mathbb C^3$. Valid PSD choices are
+
+$$
+\begin{aligned}
+C_W&=s(2|\omega_L\rangle\langle\omega_L|-I_3\otimes LL^\dagger),\\
+S_+&=I_3\otimes R_s+2s|\omega_L\rangle\langle\omega_L|,&T_+&=0,\\
+S_-&=I_3\otimes R_s,&
+T_-&=2s(I_3\otimes L)(I_9-\mathsf F)(I_3\otimes L^\dagger).
+\end{aligned}
+\tag{R.142}
+$$
+
+For positive beta the endpoint certificate $s=a$ is nonzero and satisfies $a<\sqrt a$. It is a lower bound on contraction, not an improving recovery or a counterexample to G. At $\beta=0$ this channel is isometric and $m_0(N)=1$.
+
+**Proof.** The TP sum for (R.140) is $\operatorname{diag}(a+\beta,a+\beta,1)=I_3$, and the phase outputs follow as before. For positive beta, its two first columns are independent, so $q=1$; the disappearance of the second Kraus term at zero is allowed. The ranges of $V$ and $K_1$ are orthogonal, and $K_0=VD_a$, so $K_0^\dagger L=L^\dagger K_0=I_3$ and $K_1^\dagger L=0$. Hence on every complex $Z$,
+
+$$
+N^\dagger(W(Z))=s(2Z-\operatorname{Tr}(Z)I_3),\qquad
+\mathcal A(W(Z))=2s\Pi(Z),
+$$
+
+using $\Pi(I_3)=0$. For a complex unit $\psi$, $2\rho_\psi-I_3$ has eigenvalues $1,-1,-1$, so $\|W(\rho_\psi)\|_{\rm op}\leq s\|L\|_{\rm op}^2=s/a\leq1$. Thus $I_5\pm W(\rho_\psi)\succeq0$; spectral decomposition of any PSD $Z$ proves positivity of $\Phi_\pm$. This also verifies the nonzero certificate directly, independently of its decomposition.
+
+The nonzero eigenvalues of $LL^\dagger$ are $1/a,1/a,1$, so $R_s\succeq0$ for the stated interval. The swap is a self-adjoint involution, so $I_9-\mathsf F\succeq0$. Every term in (R.142) is therefore PSD. Expansion of $W$ on matrix units gives its displayed Choi matrix. Under input partial transpose,
+
+$$
+\bigl[(I_3\otimes L)\mathsf F(I_3\otimes L^\dagger)\bigr]^\Gamma
+=|\omega_L\rangle\langle\omega_L|,
+$$
+
+because $\mathsf F=\sum_{ij}E_{ij}\otimes E_{ji}$, and interchanging $i,j$ after transposing the first factor gives $\sum_{ij}E_{ij}\otimes LE_{ij}L^\dagger$. Thus $T_-^\Gamma=2s(I_3\otimes LL^\dagger-|\omega_L\rangle\langle\omega_L|)$. Adding $S_-$ gives $I_{15}-C_W$, while $S_++T_+^\Gamma=I_{15}+C_W$ is immediate. This checks both signs, the coefficient two and the input-transpose convention. Finally $\beta=0$ gives $K_1=0$, $K_0=V$ an isometry, so every trace norm is preserved. For $0<\beta\leq1/2$, $0<a<1$ gives $a<\sqrt a$ exactly. $\square$
+
+## 30. Attribution and the original all-class boundary
+
+**Definition 30.1 (scope of the mathematical compositions).** The additional source-specific results are the independent-coefficient actual family and complete phase minimum (R.115)–(R.122), the full three-term output (R.123)–(R.126), the four-term same-input output (R.127)–(R.130), the exact imaginary-space obstruction (R.131)–(R.133), and the restricted-action dual and its actual sufficient-certificate family (R.134)–(R.142). The old $u=v$, $s_0=s_1=0$ family, common-Gram realization, inverse damping, orthogonal-support Jordan domain and recovery obstruction retain their existing owners (R.75), (R.89)–(R.112). The spectral, Pfaffian, Schatten-dual, real Hahn–Banach, Choi and decomposable-map steps are standard ingredients consumed in these particular statements. They are not additional general novelty claims.
+
+The minimum trace-distance interface remains [G. Chiribella and K. Goswami, *Maximum and minimum causal effects of physical processes*, arXiv:2404.07683v3, Proposition 6, (14), PDF p.6; Section III.A, (24), PDF p.8](https://arxiv.org/pdf/2404.07683v3). It permits orthogonal-support density pairs, and forces both to be pure only for qubit input. Its classical illustration after Proposition 6 is not a quantum pure-pair counterexample. Corollary 7, (32), PDF p.10 is an approximate recovery bound with dimension-dependent and square-root losses; it supplies neither the model-specific $\sqrt a$ estimate nor a sharp all-encoder lower bound here.
+
+The distinction between pure-pair and mixed-pair minimization has a primary quantum illustration in [T. Heinosaari, L. Mazzarella and M. M. Wolf, *Quantum tomography under prior information*, arXiv:1109.5478v3, Corollary 1 and Proposition 5, PDF p.8; Remark 2, PDF p.9](https://arxiv.org/pdf/1109.5478v3). In its nontrivial qutrit pure-state informationally complete case, the Hermitian measurement kernel is $\mathbb RT$ for invertible traceless Hermitian $T$. Writing $T=T_+-T_-$, $t=\operatorname{Tr}T_+=\operatorname{Tr}T_->0$, gives orthogonal-support densities $T_+/t,T_-/t$ with identical measurement output. On the other hand a difference of distinct pure states has rank at most two, so it cannot lie in that kernel. On the compact set of orthogonal pure pairs the output distance therefore has a strictly positive minimum, whereas the unrestricted orthogonal-support minimum is zero. Proposition 5's minimal construction has eight classical outcomes. This is an illustration outside the original $M_3\to M_5$ real phase class; it supplies no counterexample to G and is not a substitute for (R.135)'s complex norming-functional quantifier.
+
+The exact all-prior trace-isometry structure remains [F. Ticozzi and L. Viola, *Quantum Information Encoding, Protection, and Correction from Trace-Norm Isometries*, arXiv:0912.0963v1, Definition 1, Lemma 1 and (4)–(8), PDF pp.2–3; Definitions 4–5 and (16), PDF p.7](https://arxiv.org/pdf/0912.0963v1). Its exact subsystem interface and the complex-CP exclusion of nonzero antiunitary blocks are consumed with the boundaries already stated in Definition 23.7. Its approximate section assumes closeness to an actual linear isometry. A lower Lipschitz bound on $\mathcal H_0$ alone does not furnish that premise or the sharp approximate coefficient. These narrow interfaces carry no exhaustive literature-search or global originality assertion.
+
+**Definition 30.2 (unclosed branches and endpoint discipline).** Assumption 23.5 remains unproved and unrefuted on the entire feasible domain (R.108). In particular it still includes arbitrary noncanonical rank-two $B$, canonical rank-two $B$ with third columns outside (R.120), and arbitrary rank-three or rank-four common pairs without the displayed shared-witness structure. At half beta rank-two $B$ has a canonical frame, but the third-column issue persists. An actual outside-family example does not settle its witness problem, and none of these families is an exhaustive classification of G.
+
+The original encoder's possible Kraus Choi rank up to nine, the normalized comparison's bound $\operatorname{rank}B\leq4$, and the changed-channel discrepancy are exactly Theorems 1.3 and 23.2–23.4, especially (R.101), (R.106) and (R.112). They are reused without replacing the original map by its comparison. For $q=1$ those maps coincide. For $q=0$ there is a direct cross zero witness and no division by $q$. For intermediate $q$, only the stated $\mathcal H_0$ inverse-damping argument transports witnesses; general inputs retain the $Y_{22}[D_\perp-(1-q)D^\sharp]$ term. The rank-nine original branch is not deleted by the rank-two, three or four comparison families above.
+
+The tilted formulas use $\beta>0$ and hence $d>0$. They do not extend a positive-beta rank assertion to $\beta=0$, nor define a tilted vector when $\beta=v=0$. The original zero-beta sharp lower target is simply $\delta_N\geq0$, with its existing isometric upper example. For instance the separate endpoint Kraus list $K_0=(e_0,e_1,0)$, $K_1=(0,0,e_0)$ is TP and has the direct zero witness $E_{02}+E_{20}$; it need not use (R.117). The isometric endpoint of Theorem 29.2 instead has $m_0=1$. Both behaviors are compatible with the original endpoint target. The $p=0,1$ values in Sections 25–26 explicitly retain their dropped ranks.
+
+The exact equivalence (R.135) does not equate pointwise lifts with the sufficient finite linear/decomposable system (R.137)–(R.139). Infeasibility of that system proves neither the existence nor the absence of the pointwise lifts, and proves neither G nor its negation. An exact feasible $s>\sqrt a$ on one actual normalized pair would imply $m_0(N)\geq s>\sqrt a$ and refute G. No such certificate or pair is supplied here. Even a refutation of G would leave open $m_{\min}(N)\leq\sqrt a$ and the possibility of another full-reference diamond lower certificate; it would not alone refute the original recovery target.
+
+The unchanged original task in Definition 22.2 is to prove $\delta_N\geq1-\sqrt{1-\beta}$ for every actual original real-Kraus encoder, or exhibit an actual original-class encoder and one complex CPTP recovery with a rigorous strictly smaller unhalved full-reference diamond upper certificate. Neither alternative is settled by these families or the finite sufficient system. Their status is ordinary conditional finite-dimensional mathematics, not a kernel result. Physical uses still require the actual encoder, supplied inputs, common source-fiber membership, finite-history transport and native-word joint legality of the phase-gain volume; these mathematical frames, witnesses and certificates supply no native operations, input preparation, encoder/decoder apparatus or hardware resources. The larger complex encoder class remains separate.
+
+## 追加锚（本行以下为增补区）
