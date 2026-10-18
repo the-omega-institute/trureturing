@@ -47,14 +47,18 @@ internal sealed class BadScienceFiveOptimalityDocument : IScribeDocumentDefiniti
                     + "For Astar, eight vertices have image sup norm 2 and the other 24 "
                     + "have image sup norm √3, attaining the bound. Uniqueness and "
                     + "dimensions at least six remain open.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("albors-et-al-2024-bad-science-matrix-five"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula NatType() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula RealType() => new Formula.NamedConstant(FormulaIdentifier.Create("Real"));

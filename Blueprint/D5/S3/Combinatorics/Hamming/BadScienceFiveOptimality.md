@@ -58,6 +58,10 @@ $$\forall A \in Matrix\left(Fin\left(5\right), Fin\left(5\right), \mathrm{Real}\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hamming/BadScienceFiveOptimality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/albors-et-al-2024-bad-science-matrix-five` (proved) by `D5/S3/Combinatorics/Hamming/BadScienceFiveOptimality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"albors-et-al-2024-bad-science-matrix-five","declaration_gid":"D5/S3/Combinatorics/Hamming/BadScienceFiveOptimality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Alex Albors, Hisham Bhatti, Lukshya Ganjoo, Raymond Guo, Dmitriy Kunisky, Rohan Mukherjee, Alicia Stepin, Tony Zeng (2026). *On the Structure of Bad Science Matrices*. DOI: [10.2140/involve.2026.19.443](https://doi.org/10.2140/involve.2026.19.443). URL: <https://arxiv.org/abs/2408.00933>.
