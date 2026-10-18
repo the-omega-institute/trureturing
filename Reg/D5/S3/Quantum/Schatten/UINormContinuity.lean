@@ -3,6 +3,7 @@ import D5.S3.Quantum.Schatten.UINormContinuity
 import Reg.D5.S3.Quantum.Schatten.UnitarilyInvariantNorm
 import Reg.Support.SingleDependentReadout
 import Mathlib.Topology.Order.IntermediateValue
+import Mathlib.Analysis.CStarAlgebra.Matrix
 
 /-! Full-statement registrations for norm continuity and scalar optimization. -/
 
@@ -18,31 +19,38 @@ noncomputable section
 
 namespace Continuity
 
+open scoped Matrix.Norms.L2Operator in
+private def oneDimNorm : UINorm 1 where
+  N X := ‖X‖
+  nonneg X := norm_nonneg X
+  eq_zero_iff X := norm_eq_zero
+  add_le X Y := norm_add_le X Y
+  smul_eq c X := norm_smul c X
+  unitary_invariant U V X hU hV := by
+    rw [CStarRing.norm_mul_mem_unitary _ hV, CStarRing.norm_mem_unitary_mul _ hU]
+
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Matrix (Fin n) (Fin n) ℂ → ℝ) (fun _ => Prop)
+  Reg.Support.SingleDependentReadout.signature (Σ n : ℕ, UINorm n)
+    (fun p => Matrix (Fin p.1) (Fin p.1) ℂ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ f => Continuous f) (fun e => nomatch e)
+  realize signature (fun _ p X => p.2.N X) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+def rejected : Realization signature := by
+  classical
+  exact realize signature (fun _ p X => if hn : 0 < p.1 then
+    if (X ⟨0, hn⟩ ⟨0, hn⟩).re = 0 then 0 else 1 else 0) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ {n : ℕ} (ν : UINorm n), R.readout () n ν.N
+  Law R := ∀ {n : ℕ} (ν : UINorm n), Continuous (R.readout () ⟨n, ν⟩)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
   intro h
-  exact @h 0 UnitarilyInvariantNorm.zeroDimNorm
-
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  let bad : Matrix (Fin 1) (Fin 1) ℂ → ℝ :=
-    fun M => if (M 0 0).re = 0 then 0 else 1
-  refine ⟨1, (fun _ => 0), bad, ?_⟩
-  intro he
-  have hb : Continuous bad := Eq.mp he continuous_const
+  have hb : Continuous (fun X : Matrix (Fin 1) (Fin 1) ℂ =>
+      if (X 0 0).re = 0 then (0 : ℝ) else 1) := by
+    simpa [rejected, realize] using @h 1 oneDimNorm
   have hc : Continuous (fun t : ℝ =>
       (fun _ _ => (t : ℂ) : Matrix (Fin 1) (Fin 1) ℂ)) :=
     continuous_pi fun _ => continuous_pi fun _ => Complex.continuous_ofReal
@@ -54,6 +62,13 @@ private theorem dependence : ObservationalDependence signature actual := by
   obtain ⟨x, _, hx⟩ := hi hhalf
   dsimp only at hx
   split_ifs at hx <;> norm_num at hx
+
+open scoped Matrix.Norms.L2Operator in
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, oneDimNorm⟩, 0, 1, ?_⟩
+  intro he
+  norm_num [actual, realize, oneDimNorm] at he
 
 def source_registration : Registration arena (type_of% @continuous_N) where
   actual := actual
@@ -78,7 +93,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => Continuous f) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p X => p.2.N X) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -86,9 +101,9 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Schatten.UINormContinuity
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "fn"]
+      path := #["body", "body", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
