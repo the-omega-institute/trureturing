@@ -7,11 +7,7 @@
    digest: A two-block density refutes the general annealed Potts moment lower bound. -/
 
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Tactic
 import D5.S3.FluidDynamics.Fourier.PeriodicAllenCahnDecay
 
 /-! The functions use Lebesgue integration against a density on the real line.
