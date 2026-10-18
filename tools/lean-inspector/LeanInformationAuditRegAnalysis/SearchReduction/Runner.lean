@@ -87,6 +87,8 @@ abbrev Fact := Name × List Name
 structure FactIndex where
   statements : Std.HashMap UInt64 (Array Name) := {}
   statementHeads : Std.HashMap (List Name) (Array Name) := {}
+  matcherConstants : Array (Name × ConstantInfo) := #[]
+  matcherIndexed : Bool := false
   projections : LazyDiscrTree Fact := {}
 
 private partial def indexType (index : LazyDiscrTree.PreDiscrTree Fact)
@@ -158,7 +160,6 @@ private partial def pairHead (env : Environment) (expression : Expr)
 def factIndex : MetaM FactIndex := do
   let mut index : LazyDiscrTree.PreDiscrTree Fact := {}
   let mut statements : Std.HashMap UInt64 (Array Name) := {}
-  let mut statementHeads : Std.HashMap (List Name) (Array Name) := {}
   let env ← getEnv
   let names := env.constants.toList.toArray.qsort (fun a b => Name.quickLt a.1 b.1)
   for (name, info) in names do
@@ -166,10 +167,6 @@ def factIndex : MetaM FactIndex := do
     if name.isInternalDetail && !isPrivateName name then continue
     let key := info.type.hash
     statements := statements.insert key ((statements[key]?.getD #[]).push name)
-    let head := statementHead info.type
-    unless (head.getLast!).isAnonymous do
-      statementHeads := statementHeads.insert head
-        ((statementHeads[head]?.getD #[]).push name)
     unless pairHead env (telescopeBody info.type) do continue
     let initial ← get
     index ← forallTelescopeReducing info.type fun _ body => do
@@ -178,7 +175,21 @@ def factIndex : MetaM FactIndex := do
         indexType index name [] body
       else pure index
     set initial
-  return {statements, statementHeads, projections := index.toLazy}
+  return {statements, matcherConstants := names, projections := index.toLazy}
+
+/-- Build the identical matcher retrieval index only when a goal uses it.
+The already sorted constants preserve candidate order and avoid another sort. -/
+private def ensureMatcherIndex : StateRefT FactIndex MetaM Unit := do
+  if (← get).matcherIndexed then return
+  let mut heads : Std.HashMap (List Name) (Array Name) := {}
+  for (name, info) in (← get).matcherConstants do
+    if info.isUnsafe then continue
+    if name.isInternalDetail && !isPrivateName name then continue
+    let head := statementHead info.type
+    unless (head.getLast!).isAnonymous do
+      heads := heads.insert head ((heads[head]?.getD #[]).push name)
+  modify fun index => {index with statementHeads := heads,
+    matcherConstants := #[], matcherIndexed := true}
 
 private def factExpr (fact : Fact) : MetaM Expr := do
   let mut e ← mkConstWithFreshMVarLevels fact.1
@@ -211,6 +222,7 @@ partial def structural (goal : MVarId) (extra : Array Name) :
     else #[originalHead, reducedHead]
   let shape := matcherShape original
   if shape != original then
+    ensureMatcherIndex
     for key in heads do
       for name in (← get).statementHeads[key]?.getD #[] do
         let info ← getConstInfo name
