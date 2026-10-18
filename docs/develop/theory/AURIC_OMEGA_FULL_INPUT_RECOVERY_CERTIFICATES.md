@@ -3108,3 +3108,489 @@ attained at $z=-w$ with $|z|=|w|=1/2$. In particular every pair has fidelity str
 $\delta_N\geq1-\sqrt{1-\beta}$ with the unhalved diamond norm, or give an actual improving encoder and a rigorous full-reference recovery upper certificate. Sections 36--39 provide the full-beta R38 benchmark, the corrected marginal/reference interface, and the precise limitation of the marginal-packing route. They provide no general rank-two, rank-three or rank-four solution, physical preparation, apparatus, or global novelty claim.$\quad\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 40. A kernel effect and a scalar sufficient condition
+
+**Definition 40.1 (one actual complement and its normalized kernel effect).** Retain Definition 1.1, the original real Kraus frame, and the actual blocks (R.3)–(R.4). Write $J_0=J_\Gamma$ in original input coordinates, and use the reference/input transpose convention of (R.27). All reference and environment densities below may be complex and singular. A single environment center is fixed before minimizing over inputs:
+
+$$
+ h(\omega):=F(\Gamma,\mathcal C_\omega)
+ =\min_{q\in\mathsf D(\mathbb C^3)}f(A_q,q\otimes\omega),
+ \qquad A_q=(\sqrt q\otimes I_E)J_0(\sqrt q\otimes I_E),
+ \qquad g_N=\max_\omega h(\omega).
+\tag{R.186}
+$$
+
+Here $q$ is the reference density and its actual input marginal is $q^T$, exactly as in (R.27). For a unit vector $\xi\in\ker J_0$, define
+
+$$
+ \begin{aligned}
+ D_R&=\operatorname{Tr}_E|\xi\rangle\langle\xi|,
+ &D_E&=\operatorname{Tr}_R|\xi\rangle\langle\xi|,\\
+ \ell&=\operatorname{Tr}\sqrt{D_R}=\operatorname{Tr}\sqrt{D_E},
+ &E_\xi&=\frac{D_E}{\ell^2},
+ &t_\xi&=\operatorname{Tr}(\tau E_\xi).
+ \end{aligned}
+\tag{R.187}
+$$
+
+The equality defining $\ell$ uses the common nonzero Schmidt spectrum. The normalized $D_R,D_E$ have trace one. Consequently, if $k$ is the Schmidt rank,
+
+$$
+ 1\leq\ell^2\leq k,\qquad
+ 0\preceq E_\xi\preceq I_E,\qquad
+ \operatorname{Tr}E_\xi=\ell^{-2},\qquad
+ 0\leq t_\xi\leq a/\ell^2\leq a\leq1.
+\tag{R.188}
+$$
+
+Indeed $\sum_j\sqrt{\lambda_j}\geq\sum_j\lambda_j=1$, Cauchy–Schwarz gives its square at most $k$, and $D_E\preceq I_E$, $\tau\preceq aI_E$. Thus $E_\xi$ is an actual effect, including at zero beta and for a nonminimal environment. These inequalities and the use of (R.28) retain its support-restricted inverse convention.
+
+**Theorem 40.2 (scalar envelope from the same kernel and phase input).** Every vector in Definition 40.1 gives
+
+$$
+ g_N^2\leq\frac{1+\sqrt{1-t_\xi}}2,
+ \qquad
+ \delta_N\geq1-\sqrt{1-t_\xi}.
+\tag{R.189}
+$$
+
+In particular, for positive beta, $t_\xi\geq\beta$ is sufficient for $g_N^2\leq T_\beta=(1+\sqrt a)/2$ and $\delta_N\geq1-\sqrt a$. No existence of such a charged kernel vector for every actual encoder is assumed.
+
+**Proof.** At one fixed complex environment density $\omega$, put $z=\operatorname{Tr}(\omega E_\xi)\in[0,1]$. The weighted reference-bearing certificate (R.28) and the actual phase-input test in (R.44) give respectively $h(\omega)^2\leq1-z$ and $h(\omega)\leq f(\tau,\omega)$. Apply the binary environment measurement with effects $E_\xi,I_E-E_\xi$ to the latter two states. The root-fidelity monotonicity attributed in Definition 10.1 gives
+
+$$
+ h(\omega)^2\leq
+ \min\left\{1-z,
+ B_{t_\xi}(z)\right\},\qquad
+ B_t(z):=\left(\sqrt{tz}+\sqrt{(1-t)(1-z)}\right)^2.
+\tag{R.190}
+$$
+
+Both tests use the same $\omega$. The first test has not been replaced by an environment marginal test; its reference-dependent input is precisely the one supplied by (R.28).
+
+For every scalar $0\leq t\leq1$ the exact envelope is
+
+$$
+ \max_{0\leq z\leq1}\min\{1-z,B_t(z)\}
+ =\frac{1+\sqrt{1-t}}2,\qquad
+ z_*:=\frac{1-\sqrt{1-t}}2.
+\tag{R.191}
+$$
+
+For $t>0$, $z_*=t/[2(1+\sqrt{1-t})]\leq t$, and direct substitution gives $B_t(z_*)=1-z_*$. Write $t=\sin^2\alpha$, $z=\sin^2\theta$, with $\alpha,\theta\in[0,\pi/2]$. On $0\leq z\leq t$, $B_t(z)=\cos^2(\alpha-\theta)$ is increasing. Thus below $z_*$ its value is at most $1-z_*$, and above $z_*$ the first member $1-z$ is at most $1-z_*$. Equality holds at $z_*$. At $t=0$, $B_0(z)=1-z$ and the maximum is one at zero; at $t=1$ the two functions are $z$ and $1-z$, meeting at $1/2$. This proves every endpoint of (R.191).
+
+Bound (R.190) by (R.191) before maximizing over the common center in (R.186). The pure-target unhalved norm bound (R.35), $\delta_N\geq2(1-g_N^2)$, then gives (R.189). Monotonicity of $1-\sqrt{1-t}$ proves the sufficient condition. The scalar maximization supplies an upper bound; it asserts neither that every $z$ is obtainable from an environment density nor that the actual channel attains the scalar envelope. $\square$
+
+**Theorem 40.3 (Schur subfamily and its original reference coordinates).** For the same actual blocks let
+
+$$
+ T_A:=\tau^+C,\qquad
+ v_\eta:=\begin{pmatrix}-T_A\eta\\-\overline{T_A}\eta\\\eta\end{pmatrix},
+ \qquad 0\ne\eta\in\ker S,
+$$
+
+$$
+ G_\eta:=|T_A\eta\rangle\langle T_A\eta|
+ +|\overline{T_A}\eta\rangle\langle\overline{T_A}\eta|
+ +|\eta\rangle\langle\eta|.
+\tag{R.192}
+$$
+
+The inverse is only on $\operatorname{ran}\tau$. The symbol $T_A$ differs from the positive-spectrum coordinate matrix $T$ in (R.50). The barred matrix in (R.192) acts on $\eta$ itself; $\eta$ is not conjugated. Then
+
+$$
+ \begin{aligned}
+ &v_\eta\in\ker J_p,\qquad
+ \|v_\eta\|^2=\operatorname{Tr}G_\eta>0,\\
+ &\xi_p=\frac{v_\eta}{\sqrt{\operatorname{Tr}G_\eta}},\qquad
+ \xi_0=(\bar H\otimes I_E)\xi_p\in\ker J_0,\\
+ &E_{\xi_0}=\frac{G_\eta}{(\operatorname{Tr}\sqrt{G_\eta})^2},\qquad
+ t_{\xi_0}=\frac{\operatorname{Tr}(\tau G_\eta)}
+ {(\operatorname{Tr}\sqrt{G_\eta})^2}.
+ \end{aligned}
+\tag{R.193}
+$$
+
+Here $H$ is exactly (R.2). Therefore
+
+$$
+ \exists\,0\ne\eta\in\ker S:\quad
+ \operatorname{Tr}(\tau G_\eta)
+ \geq\beta(\operatorname{Tr}\sqrt{G_\eta})^2
+ \quad\Longrightarrow\quad
+ g_N^2\leq T_\beta,\quad\delta_N\geq1-\sqrt a.
+\tag{R.194}
+$$
+
+**Proof.** The actual range condition gives $\tau T_A=C$ and $\bar\tau\,\overline{T_A}=\bar C$. Thus the first two blocks of $J_pv_\eta$ vanish. Its third block is
+
+$$
+ \bigl(\sigma-C^\dagger\tau^+C
+ -C^T\overline{\tau^+}\,\bar C\bigr)\eta=S\eta=0,
+$$
+
+where $\overline{\tau^+}=(\bar\tau)^+$. This calculation is complex-linear in $\eta$. Tracing $|v_\eta\rangle\langle v_\eta|$ over the phase reference gives $G_\eta$, and its trace is the squared norm of $v_\eta$, at least $\|\eta\|^2>0$.
+
+Equation (R.2) gives $J_0=(\bar H\otimes I)J_p(H^T\otimes I)$ and $H^T\bar H=I$, proving the asserted kernel transport. The local unitary $\bar H$ on the reference preserves $D_E$ and the Schmidt eigenvalues, hence preserves $\ell$ and $E_\xi$. In this case $D_E=G_\eta/\operatorname{Tr}G_\eta$ and $\ell=\operatorname{Tr}\sqrt{G_\eta}/\sqrt{\operatorname{Tr}G_\eta}$, so the normalization cancels exactly as in (R.193). Apply Theorem 40.2.
+
+This is the zero-$u_+$, zero-$u_-$ subfamily of the existing complete kernel (R.52). That formula also allows independent $u_+\in\ker\tau$ and $u_-\in\ker\bar\tau$ in its first and second blocks. They remain available and can change the kernel effect. No completeness assertion for (R.192) replaces (R.52). The proof uses no inverse of a zero eigenvalue, no eigenvector selection at repeated eigenvalues, and no inversion of $S$. It therefore includes singular $\tau$, $S=0$, and the rank-at-most-three residual at beta zero. It does not assert a nonzero $\eta\in\ker S$ when that kernel is trivial. $\square$
+
+## 41. An actual two-Kraus continuum and all complex support charges
+
+**Definition 41.1 (the actual family and its domain).** In the fixed original real output basis $e_0,\ldots,e_4$, let
+
+$$
+ 0<\beta\leq\tfrac12,\qquad a=1-\beta,\qquad 0<u\leq a,
+$$
+
+$$
+ K_0=\begin{bmatrix}\sqrt a\,e_0&\sqrt a\,e_1&\sqrt{1-u}\,e_4\end{bmatrix},
+ \qquad
+ K_1=\begin{bmatrix}\sqrt\beta\,e_2&\sqrt\beta\,e_3&\sqrt u\,e_0\end{bmatrix},
+ \qquad
+ N_{\beta,u}(X)=K_0XK_0^T+K_1XK_1^T.
+\tag{R.195}
+$$
+
+Its environment basis is $|0\rangle_E,|1\rangle_E$. All subsequent complements, kernels, centers and recovery certificates for this family use this same actual Kraus list. The parameter $u$ in (R.195) is a squared third-column weight, independent of the coordinate names in earlier sections.
+
+**Theorem 41.2 (realization and the unique original-frame kernel).** The map (R.195) is an actual original real-Kraus encoder. Its phase-output difference has spectrum $(a,\beta,0,-\beta,-a)$, its complementary phase blocks are
+
+$$
+ \tau=\bar\tau=\begin{pmatrix}a&0\\0&\beta\end{pmatrix},\qquad
+ C=\bar C=\sqrt{\frac{au}{2}}\,|0\rangle_E\langle1|_E,
+ \qquad
+ \sigma=\begin{pmatrix}1-u&0\\0&u\end{pmatrix},\qquad
+ S=\begin{pmatrix}1-u&0\\0&0\end{pmatrix},
+\tag{R.196}
+$$
+
+and its original-input-frame $J_0$ has rank five and one-dimensional kernel spanned by the unit vector
+
+$$
+ \xi=\frac{-\sqrt u\,|0\rangle_R|0\rangle_E
+ +\sqrt a\,|2\rangle_R|1\rangle_E}{\sqrt{a+u}}.
+\tag{R.197}
+$$
+
+**Proof.** The columns within each Kraus matrix are pairwise orthogonal, so
+
+$$
+ K_0^TK_0=\operatorname{diag}(a,a,1-u),\qquad
+ K_1^TK_1=\operatorname{diag}(\beta,\beta,u),
+$$
+
+and their sum is $I_3$. Set $f_1^\pm=(e_0\pm ie_1)/\sqrt2$, $f_2^\pm=(e_2\pm ie_3)/\sqrt2$. Directly,
+
+$$
+ N_{\beta,u}(\chi_\pm)
+ =a|f_1^\pm\rangle\langle f_1^\pm|
+ +\beta|f_2^\pm\rangle\langle f_2^\pm|.
+$$
+
+The four displayed vectors are orthonormal, so the actual difference has the stated spectrum and the real Kraus list meets the original-class conditions. The physical member is obtained by the same coordinate correspondence (P.1), without introducing additional physical operations.
+
+Contracting the actual isometry with $\chi_\pm$ and $|2\rangle$ gives the first three blocks in (R.196). Since $C^\dagger\tau^{-1}C=(u/2)|1\rangle_E\langle1|_E$, subtraction of it and its conjugate gives the displayed $S$. All trace and range conditions of (R.3)–(R.4) hold. In original reference coordinates, the five output contractions give the Gram columns
+
+$$
+ \begin{aligned}
+ b_0&=\sqrt a\,|0,0_E\rangle+\sqrt u\,|2,1_E\rangle,&
+ b_1&=\sqrt a\,|1,0_E\rangle,\\
+ b_2&=\sqrt\beta\,|0,1_E\rangle,&
+ b_3&=\sqrt\beta\,|1,1_E\rangle,&
+ b_4&=\sqrt{1-u}\,|2,0_E\rangle,
+ \qquad J_0=\sum_{j=0}^4b_jb_j^\dagger.
+ \end{aligned}
+\tag{R.198}
+$$
+
+All five are nonzero and have mutually disjoint coordinate supports; $1-u\geq\beta>0$. They are linearly independent. Their unique orthogonal direction in the six-dimensional reference/environment space is (R.197). This proves rank and kernel for every parameter in the continuum, including $u=a$ and $\beta=1/2$. $\square$
+
+**Theorem 41.3 (exact support-charge optimization, including singular inputs).** For the family (R.195), let $A_q$ be (R.186) and put $Q_q=q\otimes\omega$. With $\Pi_{\ker A_q}$ the orthogonal projection onto the entire kernel, every complex environment density $\omega$ obeys
+
+$$
+ \sup_{q\in\mathsf D(\mathbb C^3)}
+ \operatorname{Tr}(Q_q\Pi_{\ker A_q})
+ =\frac{u\,\omega_{00}+a\,\omega_{11}}{(\sqrt a+\sqrt u)^2}.
+\tag{R.199}
+$$
+
+The maximum is attained by the legitimate rank-two reference density
+
+$$
+ q_*:=\operatorname{diag}\left(
+ \frac{\sqrt u}{\sqrt a+\sqrt u},\ 0,\
+ \frac{\sqrt a}{\sqrt a+\sqrt u}\right).
+\tag{R.200}
+$$
+
+The supremum restricted to positive definite $q$ has the same value, approached by $q_\varepsilon=(1-\varepsilon)q_*+\varepsilon I_3/3$ as $\varepsilon\downarrow0$.
+
+**Proof.** For (R.197), its two reduced densities and normalization are
+
+$$
+ D_R=\frac{\operatorname{diag}(u,0,a)}{a+u},\qquad
+ D_E=\frac{\operatorname{diag}(u,a)}{a+u},\qquad
+ \ell^2=\frac{(\sqrt a+\sqrt u)^2}{a+u}.
+\tag{R.201}
+$$
+
+For $q\succ0$, the kernel of $A_q$ is spanned by $(q^{-1/2}\otimes I_E)\xi$. Its squared norm is $\operatorname{Tr}(D_Rq^{-1})$. Sandwiching $Q_q$ between the unnormalized kernel vector cancels $q^{-1/2}qq^{-1/2}$, so the entire kernel charge equals
+
+$$
+ \operatorname{Tr}(Q_q\Pi_{\ker A_q})
+ =\frac{\operatorname{Tr}(\omega D_E)}{\operatorname{Tr}(D_Rq^{-1})}.
+\tag{R.202}
+$$
+
+To cover every singular complex $q$, set $P=\operatorname{supp}q$ and $W=\operatorname{span}\{|0\rangle_R,|2\rangle_R\}$. The operator $A_q$ is zero on $P^\perp\otimes E$ and has no coupling between that space and $P\otimes E$. Its kernel splits orthogonally into this external space and its kernel within $P\otimes E$. The external part has zero $Q_q$ mass. Within $P\otimes E$, positivity gives
+
+$$
+ y\in\ker A_q
+ \quad\Longleftrightarrow\quad
+ (\sqrt q\otimes I_E)y\in\ker J_0.
+$$
+
+The map $\sqrt q$ is invertible on $P$. The unique vector (R.197) lies in $P\otimes E$ exactly when $W\subseteq\operatorname{ran}q$, because its two nonzero Schmidt reference directions span $W$. Hence the internal kernel is zero if this containment fails. When it holds, that kernel is spanned by $((\sqrt q)^+\otimes I_E)\xi$ and the same calculation as (R.202) gives
+
+$$
+ \operatorname{Tr}(Q_q\Pi_{\ker A_q})
+ =\begin{cases}
+ \displaystyle\frac{\operatorname{Tr}(\omega D_E)}{\operatorname{Tr}(D_Rq^+)},
+ &W\subseteq\operatorname{ran}q,\\[6pt]
+ 0,&W\not\subseteq\operatorname{ran}q.
+ \end{cases}
+\tag{R.203}
+$$
+
+A pseudoinverse expression without its support-containment test would be invalid.
+
+On any containing support, Hilbert–Schmidt Cauchy–Schwarz gives
+
+$$
+ \begin{aligned}
+ (\operatorname{Tr}\sqrt{D_R})^2
+ &=\left|\operatorname{Tr}\bigl(\sqrt q\,(\sqrt q)^+\sqrt{D_R}\bigr)\right|^2\\
+ &\leq\operatorname{Tr}q\;
+ \operatorname{Tr}\bigl(\sqrt{D_R}\,q^+\sqrt{D_R}\bigr)
+ =\operatorname{Tr}(D_Rq^+).
+ \end{aligned}
+\tag{R.204}
+$$
+
+This uses $P\sqrt{D_R}=\sqrt{D_R}$ and $\operatorname{Tr}q=1$, not reality or diagonality of $q$. Equality is attained by $q_* =\sqrt{D_R}/\ell$ on $W$, as in the already established construction (R.28). Equations (R.201)–(R.204) now prove (R.199) for all complex $q$ and $\omega$, including non-diagonal and singular ones. Off-diagonal entries of $\omega$ disappear here because this particular $D_E$ is diagonal.
+
+Finally $q_\varepsilon\succ0$ for $0<\varepsilon<1$. Its inverse restricted to $W$ converges to $q_*^+$ there, while $D_R$ is zero on $W^\perp$. Thus (R.202) converges to the value attained by (R.200). This proves the full-rank approximation claim without discarding any singular input from the optimization. $\square$
+
+## 42. Failure of the specified support-plus-phase surrogate
+
+**Definition 42.1 (the precise surrogate).** For the same actual channel, define
+
+$$
+ U_N:=\max_{\omega\in\mathsf D(E)}
+ \min\left\{
+ f(\tau,\omega)^2,\ f(\bar\tau,\omega)^2,\
+ 1-\sup_{q\in\mathsf D(\mathbb C^3)}
+ \operatorname{Tr}\bigl[(q\otimes\omega)\Pi_{\ker A_q}\bigr]
+ \right\}.
+\tag{R.205}
+$$
+
+The symbol $U_N$ differs from the sharp diamond benchmark $U(\beta)=1-\sqrt a$. Here $A_q$ is the actual filtered original-frame Choi state in (R.186), $q$ is complex and may be singular, and the maximum uses one common complex center. The support measurement and the two actual phase-input restrictions in (R.44) give
+
+$$
+ g_N^2\leq U_N.
+\tag{R.206}
+$$
+
+Indeed the binary measurement onto $\ker A_q$ and its complement compares distributions $(0,1)$ and $(c_q,1-c_q)$, with $c_q=\operatorname{Tr}[(q\otimes\omega)\Pi_{\ker A_q}]$. Thus $h(\omega)^2\leq1-c_q$ for every $q$, and both phase tests also bound this same $h(\omega)^2$. Taking the infimum of those upper bounds and then the common-center maximum proves (R.206). The exact formula (R.199) makes the functions in (R.205) continuous on the compact center domain for this family.
+
+**Theorem 42.2 (a continuum above the threshold for every positive beta).** Put
+
+$$
+ s=\sqrt a,\qquad p=T_\beta=\frac{1+s}{2},\qquad
+ t=1-p=\frac{1-s}{2}.
+$$
+
+For every $0<\beta\leq1/2$ and every
+
+$$
+ 0<u<(1-s)^2,
+\tag{R.207}
+$$
+
+the actual family (R.195) satisfies $U_N>p$. In particular such failures exist at arbitrarily small positive $u$ for every positive allowed beta.
+
+**Proof.** Since $s\geq1/\sqrt2$, $1-s<s$, so (R.207) implies $u<a$ and lies within Definition 41.1. For the legitimate diagonal centers $\omega_x=\operatorname{diag}(1-x,x)$, define
+
+$$
+ A(x):=\left(\sqrt{a(1-x)}+\sqrt{\beta x}\right)^2,
+ \qquad
+ \kappa_u(x):=\frac{u+(a-u)x}{(s+\sqrt u)^2}.
+\tag{R.208}
+$$
+
+The two phase fidelities both equal $A(x)$, while (R.199) equals $\kappa_u(x)$. Since $1-t=p$ and $\beta=4pt$, substitution yields
+
+$$
+ A(t)=p,\qquad
+ t-\kappa_u(t)
+ =\frac{s\sqrt u(2t-\sqrt u)}{(s+\sqrt u)^2}>0.
+\tag{R.209}
+$$
+
+Here $2t=1-s>\sqrt u$. Also $\beta=2t(1+s)>t$. The following strictly positive displacement is therefore defined:
+
+$$
+ \epsilon:=\frac12\min\left\{
+ \beta-t,\ \frac{s\sqrt u(2t-\sqrt u)}{a-u}\right\}>0.
+\tag{R.210}
+$$
+
+It obeys $t+\epsilon\leq(t+\beta)/2<\beta$. For $x\in[0,\beta]$, write $x=\sin^2\theta$, $\beta=\sin^2\alpha$, with $0\leq\theta\leq\alpha\leq\pi/4$. Then $A(x)=\cos^2(\alpha-\theta)$ is strictly increasing up to $\beta$. Consequently $A(t+\epsilon)>A(t)=p$. On the other hand, $\kappa_u$ is affine with positive slope $(a-u)/(s+\sqrt u)^2$, and (R.210) increases it by at most half of the positive gap in (R.209). Thus
+
+$$
+ A(t+\epsilon)>p,\qquad
+ \kappa_u(t+\epsilon)<t,\qquad
+ U_N\geq\min\{A(t+\epsilon),1-\kappa_u(t+\epsilon)\}>p.
+\tag{R.211}
+$$
+
+This gives an explicit center for every member of the stated continuum and proves the strict result without requiring the outer optimum in (R.205). $\square$
+
+**Theorem 42.3 (an exact half-beta instance and its kernel charge).** At
+
+$$
+ a=\beta=\tfrac12,\qquad u=\tfrac1{18},\qquad
+ \omega_*=\operatorname{diag}(17/20,3/20),
+$$
+
+the same actual family has
+
+$$
+ \begin{aligned}
+ f(\tau,\omega_*)^2=f(\bar\tau,\omega_*)^2
+ &=\frac12+\frac{\sqrt{51}}{20}>T_{1/2},\\
+ \sup_q\operatorname{Tr}[(q\otimes\omega_*)\Pi_{\ker A_q}]
+ &=\frac{11}{80},\qquad
+ 1-\frac{11}{80}=\frac{69}{80}>T_{1/2},\\
+ E_\xi&=\frac{\operatorname{diag}(u,a)}{(\sqrt a+\sqrt u)^2},
+ \qquad t_\xi=\frac5{16}<\beta.
+ \end{aligned}
+\tag{R.212}
+$$
+
+**Proof.** For $\tau=I_2/2$, the phase fidelity is $1/2+\sqrt{\omega_{00}\omega_{11}}=1/2+\sqrt{51}/20$. At these parameters $(\sqrt a+\sqrt u)^2=8/9$, and (R.199) gives $11/80$, attained by $q_*=\operatorname{diag}(1/4,0,3/4)$. The two strict comparisons with $T_{1/2}=(1+1/\sqrt2)/2$ reduce respectively to $51>50$ and $29>20\sqrt2$, the latter following from $841>800$. Equations (R.187) and (R.201) give the effect and $t_\xi=a(u+\beta)/(\sqrt a+\sqrt u)^2=5/16$. The kernel is one-dimensional by Theorem 41.2, so changing its unit-vector phase cannot increase this charge. Thus a uniform assertion of $t_\xi\geq\beta$ for some vector of every actual Choi kernel is false. This does not negate the sufficient implication (R.194). $\square$
+
+**Definition 42.4 (scope of the failure).** The result $U_N>T_\beta$ means that the particular upper bound (R.205), consisting of the two phase fidelities and optimized full-kernel support probabilities, does not certify $g_N^2\leq T_\beta$ on this continuum. A value of an upper-bound surrogate above $T_\beta$ gives no lower bound on $g_N^2$. It does not refute $g_N^2\leq T_\beta$, assertion G of Section 23, all kernel methods, the informational sufficiency of the full complementary map, or the original full-reference diamond target. It supplies no improving recovery. The same-channel bound below is compatible with every strict inequality in (R.211)–(R.212).
+
+## 43. Positive-weight full-reference certificates on the same continuum
+
+**Definition 43.1 (one original-basis witness and the full-transpose dual).** For exactly the Kraus list (R.195), put
+
+$$
+ \rho=\operatorname{diag}(1/2,0,1/2),\qquad
+ d_\alpha=\operatorname{vec}_{\mathrm{out\ first}}(K_\alpha\rho),
+ \qquad D_\rho=[d_0\ d_1],
+$$
+
+$$
+ \begin{aligned}
+ d_0&=\tfrac12\bigl(\sqrt a\,|e_0,0\rangle
+ +\sqrt{1-u}\,|e_4,2\rangle\bigr),\\
+ d_1&=\tfrac12\bigl(\sqrt\beta\,|e_2,0\rangle
+ +\sqrt u\,|e_0,2\rangle\bigr).
+ \end{aligned}
+\tag{R.213}
+$$
+
+The order is output $\mathbb C^5$ first and logical $\mathbb C^3$ second. For any complex CPTP whole-output recovery, its Choi variable is $X=J_R^T$, the full transpose in this product basis, with $X\succeq0$, $\operatorname{Tr}_3X=I_5$. Reusing (R.29)–(R.31),
+
+$$
+ F_e(\rho,RN)=\operatorname{Tr}(XD_\rho D_\rho^\dagger),\qquad
+ Y\otimes I_3\succeq D_\rho D_\rho^\dagger
+ \quad\Longrightarrow\quad F_e(\rho,RN)\leq\operatorname{Tr}Y.
+\tag{R.214}
+$$
+
+This is squared entanglement fidelity at the specified actual input $\rho$, distinct from the reference variable $q$ in (R.186). The full transpose is essential: if $\ell_j=\sum_{b,i}(L_j)_{ib}|b,i\rangle$ for recovery Kraus matrices $L_j$, the overlap is $\ell_j^Td_\alpha=\operatorname{Tr}(\rho L_jK_\alpha)$ and $X=\sum_j\bar\ell_j\ell_j^T$. This is the existing recovery dual, without a partial transpose or any restriction to real recoveries.
+
+**Theorem 43.2 (analytic diagonal feasibility over the whole positive-weight continuum).** For every $0<\beta\leq1/2$ and $0<u\leq a$, let $s=\sqrt a$ and define
+
+$$
+ \begin{aligned}
+ Y&=y_0|e_0\rangle\langle e_0|
+ +y_2|e_2\rangle\langle e_2|
+ +y_4|e_4\rangle\langle e_4|,\\
+ y_0&=\frac{a+s}{4},\qquad
+ y_2=\frac{\beta+su}{4},\qquad
+ y_4=\frac{(1-u)(1+s)}4.
+ \end{aligned}
+\tag{R.215}
+$$
+
+This $Y$ is feasible in (R.214) on the entire output space, and
+
+$$
+ \operatorname{Tr}Y=T_\beta-\frac u4,\qquad
+ g_{N_{\beta,u}}^2\leq T_\beta-\frac u4,\qquad
+ \delta_{N_{\beta,u}}\geq1-\sqrt a+\frac u2.
+\tag{R.216}
+$$
+
+**Proof.** All three $y$ entries are strictly positive: $a>0$, $\beta>0$, and $1-u\geq\beta>0$. The columns (R.213) vanish on the zero-output support of $Y$, namely $\operatorname{span}(e_1,e_3)\otimes\mathbb C^3$. Their nonzero coordinate supports
+
+$$
+ \mathcal S_0=\operatorname{span}\{|e_0,0\rangle,|e_4,2\rangle\},\qquad
+ \mathcal S_1=\operatorname{span}\{|e_2,0\rangle,|e_0,2\rangle\}
+$$
+
+are disjoint and orthogonal. Since $Y\otimes I_3$ is diagonal, the slack in (R.214) splits into two rank-one subtraction blocks on these spaces and nonnegative diagonal entries on the remaining coordinates. For a positive definite diagonal $B$, the condition $B-dd^\dagger\succeq0$ is equivalent, by congruence with $B^{-1/2}$, to $\|B^{-1/2}d\|^2\leq1$. Thus the two necessary and sufficient nontrivial tests here are
+
+$$
+ \frac{a}{4y_0}+\frac{1-u}{4y_4}=1,
+ \qquad
+ \frac{\beta}{4y_2}+\frac{u}{4y_0}\leq1.
+\tag{R.217}
+$$
+
+The first sum is $s/(1+s)+1/(1+s)=1$. In the second, substitute $4y_2=\beta+su$ and $4y_0=a+s=s(1+s)$. Since $u>0$ and all denominators are positive, the inequality is equivalent to
+
+$$
+ \frac{\beta}{\beta+su}+\frac{u}{s(1+s)}\leq1
+ \quad\Longleftrightarrow\quad
+ \beta+su\leq a(1+s).
+\tag{R.218}
+$$
+
+The last inequality follows by adding $\beta\leq a$ and $su\leq sa$. It includes the endpoints $u=a$ and $\beta=1/2$. Therefore both blocks are PSD, and every remaining coordinate has nonnegative diagonal slack, including the zero entries of $Y$. This proves feasibility without a recovery restriction or an optimization solver.
+
+Finally,
+
+$$
+ \operatorname{Tr}Y
+ =\frac{a+s+\beta+su+(1-u)(1+s)}4
+ =\frac{1+s}{2}-\frac u4.
+$$
+
+For every arbitrary complex CPTP recovery, (R.214) bounds its fidelity at this one witness input. Its minimum over all purifications is no greater, so $g_N^2\leq\operatorname{Tr}Y$. Applying the already established full-reference unhalved norm inequality (R.35) gives $\delta_N\geq2(1-g_N^2)\geq1-s+u/2$. The argument uses a single rank-two input as a lower witness inside the full diamond supremum; it does not restrict that supremum or reduce the entire input optimization to diagonal states. $\square$
+
+**Theorem 43.3 (the exact instance and the reused zero-weight limit).** On the half-beta instance of Theorem 42.3,
+
+$$
+ \operatorname{Tr}Y=T_{1/2}-\frac1{72},\qquad
+ g_N^2\leq T_{1/2}-\frac1{72},\qquad
+ \delta_N\geq1-\frac1{\sqrt2}+\frac1{36}.
+\tag{R.219}
+$$
+
+As $u\downarrow0$ at fixed positive beta, the channel (R.195), the witness (R.213), and the certificate (R.215) converge to the existing upper-family channel and matched certificate (R.37). The zero-weight certificate and its optimum are those of Theorem 8.1.
+
+**Proof.** Substituting $u=1/18$ in (R.216) gives (R.219). At $u=0$, the second Kraus matrix has zero third column, while the first has third column $e_4$. The limiting diagonal entries are $(a+\sqrt a)/4$, $\beta/4$, and $(1+\sqrt a)/4$ on $e_0,e_2,e_4$, exactly (R.37). This identifies the previously proved certificate rather than providing a new zero-weight optimum. For $u>0$, (R.216) is only a certified upper bound on $g_N^2$ and lower bound on $\delta_N$; neither equality nor an exact diamond optimum follows. $\square$
+
+**Definition 43.4 (reused tools and remaining mathematical scope).** The root-fidelity convention, binary CPTP monotonicity and finite-dimensional Kraus, Choi and Stinespring tools are the standard interfaces attributed to Watrous and the existing recovery sources in Definition 10.1. The common-center equality is the already attributed unrestricted Bény–Oreshkov result (R.27). The weighted kernel input is reused from (R.28), the full recovery dual and norm implication from (R.29)–(R.35), simultaneous phase restrictions from (R.44), the additional Schur-kernel freedoms from (R.52), and the $u=0$ certificate from (R.37). Hilbert–Schmidt Cauchy–Schwarz and positive congruence are used within the explicit calculations, not asserted as new general inequalities. The new scalar comparison, continuum support calculation and positive-weight certificate are model-specific analytic consequences of these interfaces; no global novelty or priority is asserted.
+
+The original all-class task of Definition 39.3 remains unresolved: prove $\delta_N\geq1-\sqrt{1-\beta}$ for every actual original all-real-Kraus encoder $M_3\to M_5$, or exhibit an actual original-class encoder and one complex CPTP whole-output recovery with a rigorously smaller unhalved full-reference diamond upper bound. Assertion G and the stronger uniform fidelity threshold remain unproved. No uniform sufficiently charged kernel follows from the rank defect, and no conclusion about all possible kernel certificates follows from the failure of the defined $U_N$. The full complementary map still determines its Choi matrix; these comparisons imply no failure of tomography sufficiency. The positive-weight certificates apply to the same actual family (R.195) and permit all finite complex references, but they supply no encoder/decoder apparatus, input preparation, native physical operation or hardware resource. The larger complex encoder class is separate, and none of these statements is a kernel-certification claim.
+
+## 追加锚（本行以下为增补区）
