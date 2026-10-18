@@ -275,7 +275,8 @@ private theorem selector_signature_law {U : Type*} [MeasurableSpace U]
     Measure.map_apply (measurable_observation j (S u)) hBu, selectorJoint,
     Set.preimage_preimage, Function.comp_def] using he
 
-private theorem normalized_actual_radius {U : Type*} [MeasurableSpace U]
+/-- Formal address bounds control every actual prefix, including nonreturns. -/
+theorem normalized_actual_radius {U : Type*} [MeasurableSpace U]
     (R : RawRule U) (k : ℕ) (hc : R.TotalCap k) (j : Bool) (ρ : ℕ)
     (hb : ∀ u : U, ∀ t ∈ (R.normalize k u).addresses, |t - j.toInt| ≤ (ρ : ℤ)) :
     R.WithinActualRadius j ρ := by
