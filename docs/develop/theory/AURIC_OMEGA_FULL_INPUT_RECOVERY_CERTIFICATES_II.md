@@ -703,3 +703,427 @@ Variational fidelity, fidelity concavity, compact convex-concave minimax, invers
 The source-specific compositions in Theorems 52.3, 53.1–53.2, 54.1, 55.1–55.2, 56.1 and 57.1–57.2 are `repo-derived` ordinary finite-dimensional arguments using these intermediates and the actual phase-class domain. This attribution identifies the displayed derivations, not global novelty, priority, physical realization or a theorem for arbitrary complex encoders. Original-real assumptions enter through (S.11) and the actual lifting conditions; they do not restrict complex recoveries or references.
 
 ## 追加锚（本行以下为增补区）
+
+## 59. One common defect vector on the two leading center coordinates
+
+**Definition 59.1 (supported normal form and parameters).** Work in the paired center coordinates of (S.55)–(S.59), with one supported positive center and one common triple of matrices. Write
+
+$$
+\begin{gathered}
+3\leq k\leq9,\qquad n=3k-5,\qquad
+\omega=\operatorname{diag}(s,t,\lambda_3,\ldots,\lambda_k)>0,\\
+s\geq t\geq\lambda_3\geq\cdots\geq\lambda_k>0,\qquad
+\operatorname{Tr}\omega=1,\qquad \epsilon=1-s-t>0,\\
+\Omega_2=\operatorname{diag}(s,t),\qquad
+\omega_{\rm tail}=\operatorname{diag}(\lambda_3,\ldots,\lambda_k),\\
+T_a=\frac{1+\sqrt a}{2},\qquad d_a=\frac{1-\sqrt a}{2},\qquad
+v_a=\sqrt{T_a},\qquad a=1-\beta,\quad0<\beta\leq\frac12.
+\end{gathered}
+\tag{S.67}
+$$
+
+The symbols $T_a,d_a,v_a$ are the $T,d,v$ of (S.3). Relaxed feasibility means precisely (S.59), with $H_a$ given by (S.57)–(S.58). The support is fixed before forming the normalized matrices; no arbitrary compression of a larger projection is asserted to preserve its rank. Center eigenvalue degeneracies are allowed.
+
+**Theorem 59.2 (one vector for every complex direction).** For every normalized triple in (S.55), there is one unit vector $\eta$ supported on $\mathbb C^3\otimes K_2$, where $K_2$ is a two-dimensional span of selected leading eigenvectors of $\omega$, and one complex $2\times2$ matrix $L$, such that, simultaneously for every complex unit $\psi=(\psi_0,\psi_1)$,
+
+$$
+\begin{gathered}
+\eta=(\ell_0,\ell_1,b_{\rm vec}),\qquad
+L=[\ell_0,\ell_1],\qquad G=LL^\dagger,\qquad
+\operatorname{Tr}G+\|b_{\rm vec}\|^2=1,\\
+z=L\psi,\qquad \kappa=\|z\|^2\leq1,\qquad q=z^\dagger\Omega_2z,\\
+0\preceq M_\psi\preceq B_\psi:=A_\psi\oplus\omega_{\rm tail},\qquad
+A_\psi=\Omega_2-\sqrt{\Omega_2}zz^\dagger\sqrt{\Omega_2}\succeq0,\\
+H_a(M_\psi)\leq H_a(B_\psi),\qquad
+q_2\geq b_{\rm vec}^\dagger\Omega_2b_{\rm vec}
+\geq t(1-\operatorname{Tr}G).
+\end{gathered}
+\tag{S.68}
+$$
+
+Here $\ell_0,\ell_1,b_{\rm vec}$ are expressed in $K_2$. The exact reduced test uses
+
+$$
+\begin{aligned}
+\operatorname{Tr}A_\psi&=s+t-q,&\det A_\psi&=st(1-\kappa),\\
+\mu_\psi&=\frac{s+t-q+\sqrt{(s+t-q)^2-4st(1-\kappa)}}2,\\
+b_\psi:=\operatorname{Tr}B_\psi&=1-q,&
+\ell_\psi:=\lambda_{\max}(B_\psi)&=\max\{\mu_\psi,\lambda_3\}.
+\end{aligned}
+\tag{S.69}
+$$
+
+Thus (S.57), evaluated at $(b_\psi,\ell_\psi)$, gives $H_a(B_\psi)$ exactly, and feasibility requires $H_a(B_\psi)>v_a$ for every complex unit $\psi$, as well as $t(1-\operatorname{Tr}G)<d_a$. The same $\eta$ and $L$ serve the entire sphere and every permitted $\beta$ at the specified center and projection. Singular $L$, $A_\psi$ and $M_\psi$ are included.
+
+Proof. Stack the three $Z_i$ of (S.55) into $Z$. Its columns are orthonormal, so
+
+$$
+E_Z=ZZ^\dagger=\overline D,
+\qquad E_Z^\dagger=E_Z^2=E_Z,\qquad \operatorname{rank}E_Z=n.
+$$
+
+This is the conjugated defect projection, rather than $D$ with its conjugation suppressed. For subspaces $A,B$ of a space of dimension $3k$, the identity $\dim(A+B)=\dim A+\dim B-\dim(A\cap B)\leq3k$ gives, in this instance,
+
+$$
+\dim\bigl(\operatorname{ran}E_Z\cap(\mathbb C^3\otimes K_2)\bigr)
+\geq(3k-5)+6-3k=1.
+\tag{S.70}
+$$
+
+Choose one unit $\eta$ in that intersection. Its three blocks give $L,G,b_{\rm vec}$ in (S.68). Since $E_Z\eta=\eta$, the restriction of $E_Z$ to $\eta^\perp$ is a projection, and hence $E_Z\succeq\eta\eta^\dagger$.
+
+For the same complex $\psi$ as in (S.56), set $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$. This is the transpose row $\psi^T$ on the phase plane, not the adjoint row $\psi^\dagger$. It satisfies $C_\psi C_\psi^\dagger=I_k$, $C_\psi Z=Z_\psi$ and $C_\psi\eta=L\psi$, with the latter embedded in $K_2$. Positive compression therefore gives
+
+$$
+0\preceq zz^\dagger\preceq C_\psi E_ZC_\psi^\dagger
+=Z_\psi Z_\psi^\dagger\preceq I_k.
+\tag{S.71}
+$$
+
+Congruence by $\sqrt\omega$ proves $0\preceq M_\psi\preceq B_\psi$. Also $\kappa\leq\|L\|_{\rm op}^2\leq\operatorname{Tr}G\leq1$, so $A_\psi=\sqrt{\Omega_2}(I_2-zz^\dagger)\sqrt{\Omega_2}\succeq0$, including $\kappa=1$. Compressing $E_Z\succeq\eta\eta^\dagger$ to the third block and taking its $\omega$-weighted trace proves the two lower bounds for $q_2$ in (S.68).
+
+For any fixed feasible $Q$ in (S.58), positive order of $M\preceq B$ gives positive order of $\sqrt Q M\sqrt Q\preceq\sqrt Q B\sqrt Q$. Ordered eigenvalues, and their scalar square roots, increase under this order. Consequently
+
+$$
+f(Q,M)=\operatorname{Tr}\sqrt{\sqrt Q M\sqrt Q}
+\leq\operatorname{Tr}\sqrt{\sqrt Q B\sqrt Q}=f(Q,B).
+$$
+
+Taking the maximum over the same feasible set proves the $H_a$ comparison. This uses no inverse of $Q$ or $M$, and does not assert that the maximizing $Q$ in different directions comes from one channel.
+
+Finally, writing $z=(z_1,z_2)^T$ gives
+
+$$
+A_\psi=\begin{pmatrix}
+s(1-|z_1|^2)&-\sqrt{st}z_1\bar z_2\\
+-\sqrt{st}\bar z_1z_2&t(1-|z_2|^2)
+\end{pmatrix},\qquad
+\det A_\psi=st\bigl[(1-|z_1|^2)(1-|z_2|^2)-|z_1|^2|z_2|^2\bigr].
+$$
+
+This proves the trace and determinant in (S.69); the quadratic eigenvalue formula and the direct sum give the rest. The discriminant is nonnegative because $A_\psi$ is Hermitian. This reduces the test through the tail mass and its largest eigenvalue, while discarding the other defect directions. $\square$
+
+## 60. Half-beta nonlinear and scalar necessities
+
+**Theorem 60.1 (a stronger pencil bound and its scalar consequence).** Specialize to $\beta=1/2$ and set
+
+$$
+h=\frac1{\sqrt2},\qquad T=\frac{1+h}{2},\qquad d=\frac{1-h}{2},\qquad
+\Delta=4s(1-s)-\frac12.
+\tag{S.72}
+$$
+
+For $s\geq1/2$, every pencil of Theorem 59.2 satisfies the upper bound
+
+$$
+H_{1/2}(B_\psi)^2
+\leq\frac{1-q}{2}+\sqrt{st(1-\kappa)+s\epsilon}.
+\tag{S.73}
+$$
+
+If (S.59) is feasible, its one common $L$ must then satisfy, for every complex unit $\psi$,
+
+$$
+\begin{gathered}
+4st\kappa+2hq+q^2<\Delta,\qquad \Delta>0,\\
+B_0:=4stI_2+2h\Omega_2\succ0,\qquad
+L^\dagger B_0L\prec\Delta I_2,\qquad
+G\prec\Delta B_0^{-1}.
+\end{gathered}
+\tag{S.74}
+$$
+
+In particular the scalar necessary condition is
+
+$$
+q_2>f(s,t):=t-\Delta\left[\frac1{4s+2h}
++\frac{t}{s(4t+2h)}\right],\qquad f(s,t)<d.
+\tag{S.75}
+$$
+
+The notation $f(s,t)$ in this section is this scalar function; the two-operator root fidelity remains $f(Q,M)$.
+
+Proof. Put $b=1-q$ and let $\mu\geq\nu\geq0$ be the eigenvalues of $A_\psi$. Positive order $A_\psi\preceq\Omega_2$ gives $\mu\leq s$, while
+
+$$
+\mu+\nu=b-\epsilon,\qquad \mu\nu=st(1-\kappa),\qquad0\leq b\leq1.
+$$
+
+If $\mu\geq b/2$, every other eigenvalue of $B_\psi$ is at most the sum of those other eigenvalues, $b-\mu\leq\mu$. Formula (S.57), including its branch boundary, gives
+
+$$
+H_{1/2}(B_\psi)^2=\frac b2+\sqrt{\mu(\nu+\epsilon)}
+\leq\frac b2+\sqrt{\mu\nu+s\epsilon}.
+$$
+
+If $\mu\leq b/2$, then $\mu\in[(b-\epsilon)/2,b/2]$. The polynomial $x(b-\epsilon-x)$ decreases on this interval, because its derivative is $b-\epsilon-2x\leq0$. Thus
+
+$$
+\mu\nu\geq\frac{b^2}{4}-\frac{b\epsilon}{2},\qquad
+\mu\nu+s\epsilon\geq\frac{b^2}{4},
+$$
+
+where the second inequality uses $s\geq1/2\geq b/2$. For every $B\succeq0$, (S.58) and trace Cauchy–Schwarz give $H_a(B)^2\leq\operatorname{Tr}B=b$. Hence in this second case $H_{1/2}(B_\psi)^2\leq b\leq b/2+\sqrt{\mu\nu+s\epsilon}$. The case $b=0$ also satisfies the inequality. This proves (S.73) without selecting a cap branch on the basis of the tail spectrum, and permits singular pencils.
+
+Feasibility and (S.68) force the right side of (S.73) to exceed $T$. Therefore
+
+$$
+2\sqrt{st(1-\kappa)+s\epsilon}>h+q>0.
+$$
+
+Both sides are positive, so squaring preserves the strict inequality. Since $t+\epsilon=1-s$ and $h^2=1/2$, its rearrangement is the first inequality of (S.74). Its left side is nonnegative, proving $\Delta>0$.
+
+Drop only the nonnegative term $q^2$. The resulting inequality is $\psi^\dagger L^\dagger B_0L\psi<\Delta$ for every complex unit $\psi$. A largest-eigenvalue unit eigenvector is among these directions, so $L^\dagger B_0L\prec\Delta I_2$. In particular testing only two basis directions or only real directions would not justify this conclusion for a general complex $L$.
+
+Let $K=B_0^{1/2}L$. The equality $\|K\|_{\rm op}=\|K^\dagger\|_{\rm op}$ gives $KK^\dagger\prec\Delta I_2$ from $K^\dagger K\prec\Delta I_2$. Congruence by $B_0^{-1/2}$ now proves $G\prec\Delta B_0^{-1}$, without requiring $L$ to be invertible. Here
+
+$$
+B_0=\operatorname{diag}\bigl(s(4t+2h),t(4s+2h)\bigr),\qquad
+\operatorname{Tr}G<\Delta\left[\frac1{t(4s+2h)}+\frac1{s(4t+2h)}\right].
+$$
+
+All denominators are positive because $s,t,h>0$. Multiplying the strict trace bound by $t>0$ and using (S.68) gives $q_2\geq t(1-\operatorname{Tr}G)>f(s,t)$. Combining this with $q_2<d$ proves (S.75). The only inverse is of the positive definite $B_0$; neither $L$, $M_\psi$ nor $A_\psi$ is inverted. $\square$
+
+**Proposition 60.2 (monotonicity and positive tails from a fixed boundary).** For $1/2\leq s<T$ and $t>0$, $f(s,t)$ increases strictly with $t$. For each such fixed $s$, a nonzero interval immediately below $t_0=1-s$ is excluded by (S.75), and therefore excludes positive-tail centers in that interval.
+
+Proof. The roots of $\Delta$ are $d,T$, so $0<\Delta\leq1/2$ in this range. Differentiating only in $t$ gives
+
+$$
+\partial_t f=1-\frac{2h\Delta}{s(4t+2h)^2}\geq1-h>0.
+\tag{S.76}
+$$
+
+Indeed $s(4t+2h)^2\geq(1/2)(2h)^2=1$ and $2h\Delta\leq h$. The scalar expression is defined for every $t>0$, whether or not that $t$ is the second eigenvalue of an ordered center.
+
+At $t=t_0=1-s$, one has $d<t_0\leq1/2$ and $\Delta=4(t_0-d)(T-t_0)$. Put $C(s,t)=1/(4s+2h)+t/[s(4t+2h)]$. Then
+
+$$
+f(s,t_0)-d=(t_0-d)\bigl[1-4(T-t_0)C(s,t_0)\bigr].
+$$
+
+Clearing the positive denominator $s(4s+2h)(4t_0+2h)$ shows that the bracket has the sign of
+
+$$
+\begin{aligned}
+D_0&=s(4st_0+2h+h^2)-2(T-t_0)(4st_0+h)\\
+&=h-h^2t_0-4st_0(h-t_0)\\
+&\geq h-h^2t_0-(h-t_0)=\frac{t_0}{2}>0.
+\end{aligned}
+\tag{S.77}
+$$
+
+The last step uses $s+t_0=1$, $4st_0\leq1$ and $h>t_0$. This is the boundary comparison already used in (R.228)–(R.229) of Theorem 44.2 of the first volume, with $c=h$; it is not a new rank-two result. Its use here is continuity of the explicit scalar function: since $f(s,t_0)>d$, there is $\varepsilon_s\in(0,t_0)$ such that $f(s,t)>d$ whenever $t_0-\varepsilon_s<t\leq t_0$. The part $t<t_0$ has $0<\epsilon=1-s-t<\varepsilon_s$, and so gives genuinely positive-tail exclusions in ranks $3$ through $9$ whenever the spectrum is ordered. Section 62 gives explicit rational widths and margins. $\square$
+
+## 61. A common trace constraint and an exact quartic exclusion
+
+**Theorem 61.1 (trace necessity and excluded leading eigenvalues).** At half beta, every feasible system (S.59) with positive support $3\leq k\leq9$ obeys
+
+$$
+3s+2t>3T,\qquad t>t_*(s):=\frac32(T-s),\qquad
+\frac{31}{50}<s<T.
+\tag{S.78}
+$$
+
+Proof. As used in Theorem 60.1, $H_a(M)^2\leq\operatorname{Tr}M$. The phase basis tests in (S.59) therefore give $\operatorname{Tr}(\omega Z_iZ_i^\dagger)<d$ for $i=0,1$; the same inequality for $i=2$ is $q_2<d$. For $E_Z$ of Theorem 59.2 and its rank-five complement $\widehat P=I-E_Z=\overline P$, it follows that
+
+$$
+\operatorname{Tr}((I_3\otimes\omega)E_Z)<3d,\qquad
+\operatorname{Tr}((I_3\otimes\omega)\widehat P)>3-3d=3T.
+$$
+
+The eigenvalues of $I_3\otimes\omega$ repeat each center eigenvalue three times. The diagonal entries of a rank-five projection lie in $[0,1]$ and sum to five, so the weighted allocation argument of (S.22) bounds its trace by its five largest eigenvalues, $3s+2t$. This proves the first two inequalities of (S.78), with the same projection in all three tests.
+
+If $s\leq1/2$, ordering implies $3s+2t\leq5s\leq5/2<3T$. To justify the strict last comparison, $h>7/10$ follows from $1/2>49/100$, and hence $3T>51/20>5/2$. This excludes that entire branch without using Theorem 60.1 there.
+
+Consider next $1/2\leq s\leq31/50$. This closed interval is contained in $[1/2,T)$ because $T>17/20$, so $\Delta>0$ and $t_*(s)>0$. Clear the positive denominator in (S.75):
+
+$$
+\begin{aligned}
+2s(2s+h)(2t+h)(f(s,t)-d)
+&=N(s,t),\\
+N(s,t)&=2s(2s+h)(2t+h)(t-d)
+-\Delta\,[4st+h(s+t)].
+\end{aligned}
+\tag{S.79}
+$$
+
+Substitution of $t=t_*(s)=3(1+h-2s)/4$ and reduction by $h^2=1/2$ yields every coefficient of the quartic
+
+$$
+\begin{aligned}
+N_*(s):=N(s,t_*(s))
+={}&\frac3{16}+\frac{3h}{8}
++\left(\frac52+\frac{17h}{8}\right)s
++\left(-\frac{53}{4}-3h\right)s^2\\
+&+(24-11h)s^3-6s^4.
+\end{aligned}
+\tag{S.80}
+$$
+
+For an exact sign on the entire interval, put $s=1/2+3u/25$, $0\leq u\leq1$. The power coefficients $a_i$ in $N_*(1/2+3u/25)=\sum_{i=0}^4a_iu^i$ are
+
+$$
+\begin{aligned}
+a_0&=\frac34-\frac{11h}{16},&
+a_1&=\frac{51}{100}-\frac{219h}{200},&
+a_2&=\frac{99}{500}-\frac{351h}{1250},\\
+a_3&=\frac{324-297h}{15625},&
+a_4&=-\frac{486}{390625}.
+\end{aligned}
+$$
+
+Using $u^i=\sum_{j=i}^4[\binom ji/\binom4i]\binom4j u^j(1-u)^{4-j}$ gives the consumed degree-four Bernstein representation
+
+$$
+N_*(1/2+3u/25)=\sum_{j=0}^4b_j\binom4j u^j(1-u)^{4-j},\qquad
+b_j=\sum_{i=0}^j a_i\frac{\binom ji}{\binom4i}.
+\tag{S.81}
+$$
+
+The identity for $u^i$ follows by $\binom4j\binom ji=\binom4i\binom{4-i}{j-i}$ and the binomial theorem. The complete coefficient list and strictly positive lower bounds are
+
+| $j$ | $b_j$ | strict rational lower bound |
+| --- | --- | --- |
+| $0$ | $3/4-11h/16$ | $1319/5000$ |
+| $1$ | $351/400-769h/800$ | $24713/125000$ |
+| $2$ | $519/500-6409h/5000$ | $102743/781250$ |
+| $3$ | $309171/250000-826951h/500000$ | $1309463/19531250$ |
+| $4$ | $2308581/1562500-520577h/250000$ | $381533/78125000$ |
+
+For these bounds use
+
+$$
+0<h<\frac{442}{625},\qquad 2\cdot442^2-625^2=103>0.
+\tag{S.82}
+$$
+
+Both compared numbers are positive; the integer comparison proves $(442/625)^2>1/2=h^2$. Every coefficient of $h$ in the table is negative, so substituting this strict upper bound gives exactly the displayed lower bounds. Each Bernstein weight is nonnegative on $[0,1]$ and their sum is one. All five coefficients are strictly positive, proving $N_*(s)>0$ on $[1/2,31/50]$, including both endpoints.
+
+Since the denominator of (S.79) is positive at $t_*(s)>0$, this proves $f(s,t_*(s))>d$. The trace necessity gives $t>t_*(s)$ and (S.76) gives $f(s,t)>f(s,t_*(s))>d$, contradicting (S.75). This argument does not require $t_*(s)$ itself to be an admissible ordered eigenvalue.
+
+Finally $s<1$ on positive support. The exact factorization $\Delta=4(s-d)(T-s)$ implies $\Delta\leq0$ for $s\geq T$, contradicting (S.74). Thus $s=T$ is excluded as well, leaving exactly the asserted open leading-eigenvalue interval as a necessary condition. $\square$
+
+## 62. Explicit positive-tail regions and center consumers
+
+**Theorem 62.1 (a fixed leading eigenvalue and a full rectangle).** At half beta, (S.59) is infeasible at every ordered positive center of ranks $3$ through $9$ in either of the following regions:
+
+$$
+s=\frac7{10},\quad \frac{29}{100}\leq t<\frac3{10};
+\qquad
+\frac{699}{1000}\leq s\leq\frac{701}{1000},\quad
+0<\epsilon=1-s-t\leq\frac1{100}.
+\tag{S.83}
+$$
+
+Proof. In the fixed-$s$ band, $\Delta=17/50$ and $0<\epsilon\leq1/100$. The function $t/(4t+2h)$ increases with $t$, with derivative $2h/(4t+2h)^2>0$. Using $h>7/10$ and $t\leq3/10$ in the positive denominators gives
+
+$$
+C(s,t)\leq\frac5{21}+\frac{15}{91}=\frac{110}{273}.
+$$
+
+Consequently the exact rational margin is
+
+$$
+f(s,t)\geq\frac{29}{100}-\frac{17}{50}\frac{110}{273}
+=\frac{4177}{27300}=\frac3{20}+\frac{41}{13650}>d,
+\tag{S.84}
+$$
+
+where $d<3/20$ follows from $h>7/10$. This contradicts (S.75), including the $t=29/100$ endpoint. The upper endpoint $t=3/10$ is the zero-tail boundary, used only for the upper estimate of $C$.
+
+In the rectangle, $289/1000\leq t\leq301/1000$, and $\Delta>0$. Since $\Delta$ decreases with $s>1/2$, it obeys $\Delta\leq85399/250000$, its value at $s=699/1000$. Each summand of $C(s,t)$ decreases with $s$ and with $h$, while the second increases with $t$. Thus
+
+$$
+\begin{aligned}
+C(s,t)&\leq\frac1{4(699/1000)+7/5}
++\frac{301/1000}{(699/1000)(4(301/1000)+7/5)}\\
+&=\frac{27528500}{68192343}.
+\end{aligned}
+$$
+
+All factors used to clear denominators are positive. Because $C\geq0$ and $\Delta>0$, simultaneous upper bounds on these two factors give
+
+$$
+\begin{aligned}
+f(s,t)&\geq\frac{289}{1000}
+-\frac{85399}{250000}\frac{27528500}{68192343}\\
+&=\frac{10303961641}{68192343000}
+=\frac3{20}+\frac{75110191}{68192343000}>d.
+\end{aligned}
+\tag{S.85}
+$$
+
+This contradicts (S.75) on the full closed $s$ interval and at $\epsilon=1/100$, with $\epsilon=0$ excluded from the asserted positive-support region. These are rational inequalities for the whole rectangle, not sampled sign tests. $\square$
+
+**Corollary 62.2 (individual centers beyond the spread criterion).** For each $k\in\{3,4,5,6,7,8,9\}$, the center spectrum
+
+$$
+\left(\frac7{10},\frac{29}{100},
+\underbrace{\frac1{100(k-2)},\ldots,\frac1{100(k-2)}}_{k-2\text{ entries}}\right)
+\tag{S.86}
+$$
+
+is excluded by Theorem 62.1, but does not meet the existing sufficient criterion (S.28).
+
+Proof. The entries are strictly positive, ordered and sum to $7/10+29/100+1/100=1$. Their tail mass is $1/100$, so they lie in the rectangle (S.83). Their spread is
+
+$$
+2s+2t+\lambda_3=\frac{198}{100}+\frac1{100(k-2)}>1+h=2T,
+$$
+
+because $h<71/100<98/100$, where $h<71/100$ follows by squaring positive numbers, $1/2<5041/10000$. Thus (S.28) does not exclude these centers. Similarly $(3/5,39/100,1/100)$ is excluded by Theorem 61.1 and has spread $199/100>1+h$.
+
+Within ordered positive spectra, the region $699/1000<s<701/1000$, $0<\epsilon<1/100$ is relatively open by continuity of these strict inequalities. It is nonempty in every stated rank: distribute $\epsilon$ equally among the $k-2$ tail entries. Then $t=1-s-\epsilon>289/1000$ exceeds each tail entry, so strict positivity and ordering hold for every $k=3,\ldots,9$. The rectangle exclusions therefore include positive tails in every stated rank.
+
+By Theorem 57.2, infeasibility of (S.59) implies (S.15) at each excluded center, for every allowed actual $V$ and common contraction $U$ at that center. These are individual center examples consumed by that necessary-system exclusion, not actual encoder constructions or a statement about the location of any optimizer. $\square$
+
+## 63. Residual necessary range, actual lifting and attribution
+
+**Proposition 63.1 (the exact remaining certificate gap).** At half beta any feasible (S.59) with ordered positive spectrum and $3\leq k\leq9$ must satisfy all of
+
+$$
+\frac{31}{50}<s<T,\qquad
+ t>\frac32(T-s),\qquad f(s,t)<d,\qquad
+2s+2t+\lambda_3>2T.
+\tag{S.87}
+$$
+
+These are necessary conditions, not a characterization of feasible centers. The exclusions of Section 62 are already enforced by $f(s,t)<d$.
+
+Proof. The first three conditions are (S.75) and (S.78). For the last one, the two phase basis tests give $\operatorname{Tr}M_0+\operatorname{Tr}M_1>2T$. In the conjugated defect coordinates this sum equals $\operatorname{Tr}(\operatorname{diag}(\omega,\omega,0)\widehat P)$. The rank-five allocation in (S.22) bounds it by $2s+2t+\lambda_3$. This is exactly failure of the spread exclusion (S.28), reused within the nonlinear relaxation.
+
+The rank-three spectrum $(7/10,1/4,1/20)$ is inconclusive for these conditions. It has $31/50<s<T$ and
+
+$$
+3s+2t=\frac{13}{5}>3T,\qquad
+2s+2t+\lambda_3=\frac{39}{20}>2T.
+$$
+
+Indeed $h<71/100$ gives $3T<513/200<13/5$ and $2T<171/100<39/20$. Its $\Delta=17/50$ is independent of $h$; $C(s,t)$ decreases with $h$, so
+
+$$
+\begin{aligned}
+f(7/10,1/4)
+&<\frac14-\frac{17}{50}\left[
+\frac1{4(7/10)+2(71/100)}
++\frac{1/4}{(7/10)(4(1/4)+2(71/100))}\right]\\
+&=\frac{85251}{714868}<\frac3{25}<\frac{29}{200}<d.
+\end{aligned}
+\tag{S.88}
+$$
+
+The last inequality also uses $h<71/100$. Thus none of the displayed certificates excludes it. No common $Z$, strict all-direction relaxed point, or actual channel is supplied by this scalar calculation. $\square$
+
+**Definition 63.2 (what remains to prove).** The one-vector reduction keeps one rank-one part of a rank-$(3k-5)$ defect. It drops the other defect directions and their orthogonality and coupling. The passage to (S.73) also bounds the exact nonlinear $H_a$ pencil, and (S.74) drops $q^2$ before taking a trace. Passing $f(s,t)<d$ therefore does not establish even the stronger one-vector directional inequalities, much less feasibility of (S.59). No strict relaxed feasible point or actual counterexample is established here.
+
+The remaining analytic question is joint infeasibility of (S.59) on all surviving ordered positive centers, with the same normalized projection for the entire complex unit sphere. A proposed relaxed point would instead need a strict continuum verification, not separate directionwise optimizing marginals. For $0<\beta<1/2$, Theorem 59.2 supplies the all-complex common-vector reduction, but the numerical thresholds and regions of Sections 60–62 are asserted only at $\beta=1/2$.
+
+Actual lifting still requires Definition 58.1: one allowed original-real Stinespring isometry $V$, one common rectangular contraction $U$, the same projection, and actual marginals and overlaps arising jointly, including phase/third superpositions. The actual phase family is the mixture (S.11) of $\tau$ and its conjugate in the original real frame; those mixtures need not have rank two. Their contracted marginals must obey the actual domination in (S.8), beyond the relaxed cap. The full phase-Choi range, trace, reality, Schur-residual and rank conditions (S.64)–(S.65) remain required. Diagonalizing the center transports the antiunitary with every actual block; it does not make those blocks jointly real or commuting.
+
+Even actual common-contraction threshold failure would not by itself be a counterexample to (S.66). A counterexample requires an allowed actual encoder and a complex whole-output recovery with an unhalved diamond upper certificate strictly below $1-\sqrt{1-\beta}$ for all finite complex references. The original target retains all positive $\beta\leq1/2$, all admissible third columns and all actual ranks at most nine, as well as all those recoveries and references. That target remains unresolved.
+
+**Definition 63.3 (reuse and mathematical scope).** Sections 59–63 are source-specific analytic compositions of (S.55)–(S.59), the marginal comparison in Section 52 and the rank-five trace allocation (S.22). The spread interface (S.28), the scalar-method limitation of Sections 55–56, and the half-beta actual-rank-two result in Sections 44–45 of the first volume remain their respective existing results. In particular (S.77) consumes the boundary comparison (R.228)–(R.229) to extend to positive tails; it does not recount that boundary calculation as a new rank-two theorem.
+
+Dimension intersection, positive compression and fidelity monotonicity, the $2\times2$ determinant identity, equality of the operator norms of a matrix and its adjoint, and the Bernstein representation are established intermediates used at the displayed steps. The coefficient and rational-margin calculations are part of the concrete center exclusions, not new generic dimension, spectral-norm or Bernstein theorems. The derivations are `repo-derived` analytic mathematics; no kernel verification, global novelty, priority or literature-completeness claim is made. Excluding these individual center regions does not prove all-center infeasibility, locate an actual optimizer or construct an encoder.
+
+## 追加锚（本行以下为增补区）
