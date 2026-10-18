@@ -187,7 +187,7 @@ private theorem prime_term_eq_active_sum
   · have hz : ArithmeticFunction.vonMangoldt n = 0 := not_ne_iff.mp hLambda
     simp [hz, primeSummand]
 
-private theorem prime_weight_nonnegative (n : ℕ) : 0 ≤ primeWeight n := by
+theorem prime_weight_nonnegative (n : ℕ) : 0 ≤ primeWeight n := by
   exact div_nonneg ArithmeticFunction.vonMangoldt_nonneg (Real.sqrt_nonneg _)
 
 private theorem translation_energy_nonnegative (f : WeilTestFunction) (x : ℝ) :
