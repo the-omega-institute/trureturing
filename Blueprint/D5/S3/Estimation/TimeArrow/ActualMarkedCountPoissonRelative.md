@@ -25,5 +25,4 @@ Positive radii (n+1)/mu extract both native and Poisson count coefficients from 
 ## References
 
 - Truth anchor: `D5/S3/Estimation/TimeArrow/ActualMarkedCountPoissonRelative.actual_marked_count_poisson_relative`
-- Dependency: [D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicMidpoint](../../Combinatorics/Permanental/CycleGeodesic/CycleGeodesicMidpoint.md)
-- Dependency: [D5/S3/Estimation/TimeArrow/ActualMarkedPathPgfPoissonEnvelope](ActualMarkedPathPgfPoissonEnvelope.md)
+- Dependency: [D5/S3/Estimation/TimeArrow/ArbitraryMarkedCountPoissonRelative](ArbitraryMarkedCountPoissonRelative.md)
