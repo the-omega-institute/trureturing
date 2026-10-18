@@ -14,7 +14,6 @@ import D5.S3.Quantum.Schatten.ExpandingDiagonal
 import Mathlib.LinearAlgebra.Matrix.Hadamard
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.Data.Fintype.Lattice
 
 /-! The full rank-one assertion includes the finite permutation minimum, the
 invertible-matrix product bound, and equality at the minimizing permutation. -/
@@ -43,21 +42,6 @@ private theorem inverse_perm_hadamard_transpose {n : ℕ} (σ : Equiv.Perm (Fin 
     rw [transpose_permMatrix, ← permMatrix_mul]
     simp
   rw [hinv, transpose_hadamard]
-
-/-- The finite permutation minimum is attained, with equal transpose-inverse factor. -/
-theorem exists_minimizing_permutation (n : ℕ) (G : Matrix (Fin n) (Fin n) ℂ)
-    (ν : UINorm n) :
-    ∃ σ : Equiv.Perm (Fin n),
-      (∀ τ : Equiv.Perm (Fin n),
-        ν.N ((σ.permMatrix ℂ) ⊙ G) ≤ ν.N ((τ.permMatrix ℂ) ⊙ G)) ∧
-      ν.N ((σ.permMatrix ℂ) ⊙ G) * ν.N ((σ.permMatrix ℂ)⁻¹ ⊙ Gᵀ) =
-        ν.N ((σ.permMatrix ℂ) ⊙ G) ^ 2 := by
-  classical
-  obtain ⟨σ, _, hσ⟩ := Finset.exists_min_image
-    (Finset.univ : Finset (Equiv.Perm (Fin n)))
-    (fun τ => ν.N ((τ.permMatrix ℂ) ⊙ G)) Finset.univ_nonempty
-  refine ⟨σ, fun τ => hσ τ (Finset.mem_univ τ), ?_⟩
-  rw [inverse_perm_hadamard_transpose, ν.N_transpose, pow_two]
 
 /-- The rank-one assertion holds for every complex unitarily invariant norm. -/
 theorem result : claim := by

@@ -10,6 +10,10 @@ Problem 3: Relate min_{W nonsingular} ‖W∘G‖_ui ‖W^{-1}∘G^T‖_ui to mi
 
 In fact, for rank-one G, Romeo and Tilli [23, Theorem 1.2] proved (1.1) with c1=1 and the unitary restriction (2.3) with c2=1. They explicitly left the corresponding nonsingular version of Problem 3 unresolved; see [23, Remark 3.1].
 
+Zhang–Li Theorem 1.1 proves Conjecture 1.1 with c = 1 for the Frobenius norm for every G. The result here settles the rank-at-most-one case for every unitarily invariant norm. Higher rank remains open for general unitarily invariant norms; the Frobenius case is already solved by Zhang–Li.
+
+The averaging method has a related precedent in R. Bhatia, F. Kittaneh, R.-C. Li, Some inequalities for commutators and an application to spectral variation. II, Linear and Multilinear Algebra 43 (1997), no. 1–3, 207–219, §4, https://doi.org/10.1080/03081089708818526. The exact remark number is ASSUMED-UNVERIFIED.
+
 **Definition 1.1 (The complete rank-one variational assertion).**
 
 Lean statement: `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.claim`
@@ -22,19 +26,7 @@ Lean statement: `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.claim`
 
 For every natural n, every complex n by n matrix G of rank at most one, and every unitarily invariant norm N, there exists a permutation σ minimizing N(Pσ∘G) over all permutations, with N(Pσ∘G)²≤N(W∘G)N(W⁻¹∘Gᵀ) for every invertible W and equality in that product when W=Pσ. This includes zero G and dimension zero.
 
-**Theorem 1.2 (The permutation minimum and its equal factors).**
-
-Lean statement: `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.exists_minimizing_permutation`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.exists_minimizing_permutation` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every natural n, every complex n by n G and every unitarily invariant norm N, a permutation σ minimizes N(Pσ∘G), and N(Pσ∘G)N(Pσ⁻¹∘Gᵀ)=N(Pσ∘G)². Finiteness gives the minimum, while Pσ⁻¹∘Gᵀ=(Pσ∘G)ᵀ gives the equality. No rank hypothesis is needed for this statement.
-
-**Theorem 1.3 (The rank-one infimum equals the permutation minimum).**
+**Theorem 1.2 (The rank-one infimum equals the permutation minimum).**
 
 Lean statement: `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.result`
 
@@ -53,7 +45,6 @@ For every natural n, every complex n by n G of rank at most one and every unitar
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.claim`
-- Truth anchor: `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.exists_minimizing_permutation`
 - Truth anchor: `D5/S3/Quantum/Schatten/ZhangLiRankOneProblemThree.result`
 - Dependency: [D5/S3/Quantum/Schatten/ExpandingAverage](ExpandingAverage.md)
 - Dependency: [D5/S3/Quantum/Schatten/ExpandingDiagonal](ExpandingDiagonal.md)

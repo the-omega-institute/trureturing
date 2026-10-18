@@ -39,6 +39,9 @@ The question compares arbitrary changes of basis with discrete permutation
 matchings in a norm expression associated with eigenvalue perturbations.
 Equality with constant one would show that nonsingular matrices cannot
 improve the rank-one permutation minimum, extending the cited unitary case.
+Zhang–Li Theorem 1.1 already proves Conjecture 1.1 with $c=1$ for the
+Frobenius norm for every $G$, without a rank restriction. The rank-one
+question here concerns every unitarily invariant norm.
 
 ## Gap
 
@@ -48,8 +51,10 @@ lower bound must therefore connect the two factors involving $W$ and
 $W^{-1}$ without imposing a unitary restriction. The classical background
 is the lower Gelfand–Naimark inequality and symmetric-gauge norm comparison;
 the required link is an expanding middle factor and its balanced average.
-The source identifies this rank-one gap in §5. It is a first-tier recent
-published question in the sense of the repository's problem classification;
+Zhang–Li Theorem 1.1 settles the Frobenius-norm case for every $G$ with
+$c=1$; the missing case is the rank-one assertion for general unitarily
+invariant norms. The source identifies this rank-one gap in §5. It is a
+first-tier recent published question in the sense of the repository's problem classification;
 the absence of later solutions is not independently established here.
 
 ## Route
@@ -62,8 +67,11 @@ $$
 
 Writing $S_t=tW-t^{-1}W^{-*}$ gives
 $T_t^*T_t-I=S_t^*S_t/4\succeq0$. This identity supplies expansion for every
-positive scale. Bhatia–Kittaneh–Li (1997), §4 Remark 2, provides the related
-diagonal matrix-and-inverse averaging precedent.
+positive scale. R. Bhatia, F. Kittaneh, R.-C. Li, “Some inequalities for
+commutators and an application to spectral variation. II”, *Linear and Multilinear Algebra*
+**43** (1997), no. 1–3, 207–219,
+https://doi.org/10.1080/03081089708818526, §4, provides the related diagonal
+matrix-and-inverse averaging precedent.
 
 **E2: expanding diagonal minimum.** For nonnegative real diagonal weights
 $a,b$, a single permutation $P_0$ satisfies
@@ -182,12 +190,18 @@ $t>0$. The scalar argument of E3, with factors multiplied by $c$, proves
 the assertion, including $c=0$ and zero factors. This consequence does not
 supply the one-sided estimate for any additional $H$.
 
-The rank-at-least-two question in Zhang–Li §5 remains **OPEN**. The common
-diagonal reduction uses rank at most one; the result does not extend that
-reduction to higher rank. No other conjecture or downstream result is
-claimed as settled.
+The rank-at-least-two question in Zhang–Li §5 remains **OPEN for general
+unitarily invariant norms**. For the Frobenius norm it is **solved by
+Zhang–Li Theorem 1.1**, which proves Conjecture 1.1 with $c=1$ for every
+$G$. The common diagonal reduction here uses rank at most one; the result
+does not extend that reduction to higher rank. No other conjecture or
+downstream result is claimed as settled.
 
 ## ASSUMED-UNVERIFIED
+
+The exact remark number for the Bhatia–Kittaneh–Li §4 averaging precedent
+is ASSUMED-UNVERIFIED: “Remark 2” was reported through a secondary reading
+and has not been independently inspected.
 
 Romeo–Tilli Remark 3.1 wording has been read only through Zhang–Li's
 citation. The original remark has not been independently inspected.

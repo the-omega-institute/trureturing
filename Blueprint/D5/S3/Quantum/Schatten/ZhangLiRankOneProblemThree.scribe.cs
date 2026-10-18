@@ -14,6 +14,8 @@ internal sealed class ZhangLiRankOneProblemThreeDocument : IScribeDocumentDefini
             Paragraph(Text("Lei-Hong Zhang and Ren-Cang Li, On a Conjecture Related to Eigenvalue Perturbations, arXiv:2609.25552v1, §1 Problem 3 and §5.")),
             Paragraph(Text("Problem 3: Relate min_{W nonsingular} ‖W∘G‖_ui ‖W^{-1}∘G^T‖_ui to min_{P permutation} ‖P∘G‖_ui^2.")),
             Paragraph(Text("In fact, for rank-one G, Romeo and Tilli [23, Theorem 1.2] proved (1.1) with c1=1 and the unitary restriction (2.3) with c2=1. They explicitly left the corresponding nonsingular version of Problem 3 unresolved; see [23, Remark 3.1].")),
+            Paragraph(Text("Zhang–Li Theorem 1.1 proves Conjecture 1.1 with c = 1 for the Frobenius norm for every G. The result here settles the rank-at-most-one case for every unitarily invariant norm. Higher rank remains open for general unitarily invariant norms; the Frobenius case is already solved by Zhang–Li.")),
+            Paragraph(Text("The averaging method has a related precedent in R. Bhatia, F. Kittaneh, R.-C. Li, Some inequalities for commutators and an application to spectral variation. II, Linear and Multilinear Algebra 43 (1997), no. 1–3, 207–219, §4, https://doi.org/10.1080/03081089708818526. The exact remark number is ASSUMED-UNVERIFIED.")),
             Describe.Lean(
                 DescribeId.Create("zhangli-zhanglirankoneproblemthree-claim"),
                 DeclarationHandle.Create(Module + ".claim"),
@@ -22,14 +24,6 @@ internal sealed class ZhangLiRankOneProblemThreeDocument : IScribeDocumentDefini
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every natural n, every complex n by n matrix G of rank at most one, and every unitarily invariant norm N, there exists a permutation σ minimizing N(Pσ∘G) over all permutations, with N(Pσ∘G)²≤N(W∘G)N(W⁻¹∘Gᵀ) for every invertible W and equality in that product when W=Pσ. This includes zero G and dimension zero."))),
                 DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("zhangli-zhanglirankoneproblemthree-exists-minimizing-permutation"),
-                DeclarationHandle.Create(Module + ".exists_minimizing_permutation"),
-                H("The permutation minimum and its equal factors"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural n, every complex n by n G and every unitarily invariant norm N, a permutation σ minimizes N(Pσ∘G), and N(Pσ∘G)N(Pσ⁻¹∘Gᵀ)=N(Pσ∘G)². Finiteness gives the minimum, while Pσ⁻¹∘Gᵀ=(Pσ∘G)ᵀ gives the equality. No rank hypothesis is needed for this statement."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("zhangli-zhanglirankoneproblemthree-result"),
                 DeclarationHandle.Create(Module + ".result"),
