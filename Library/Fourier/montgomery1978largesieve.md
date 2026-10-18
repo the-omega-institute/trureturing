@@ -5,7 +5,7 @@ year: 1978
 title: The analytic principle of the large sieve
 doi: 10.1090/S0002-9904-1978-14497-8
 url: https://doi.org/10.1090/S0002-9904-1978-14497-8
-claim: Folded large-sieve and actual moment inputs bound the complete arithmetic coupling tail; a cancellation-uniform two-sided finite-head metric supplies a conditional Schur budget, with no all-scale positivity.
+claim: Folded large-sieve and actual moment inputs bound the complete arithmetic coupling tail; exact rational head coordinates give an effective two-sided metric with growing support and dimension, and a conditional Schur budget without all-scale positivity.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -732,3 +732,231 @@ form and uniform estimates along cofinal supports remain separate
 obligations. Equations (38)--(44) give neither that signed domination,
 the original Robin boundary-minus-one-use-credit upper, all-order
 theta positivity at one fixed start, nor RH.
+
+
+## An effective metric while the arithmetic support and head grow
+
+Keep the same actual complete columns and paired tail from (37)--(44).
+The signed jet model in (37), folded prime aliases, full smooth rate (39)
+and the two-Hilbert positivity comparison are reused. An exact common
+denominator gives a simultaneous parameter bound without recovering the
+head through an ill-conditioned moment inverse. The result below is a
+paper application, without a literature-priority or Lean/kernel claim.
+
+Let $c\ge2$ be an integer, $S\subset\mathbb Z$ nonempty and finite,
+$d=|S|$, $B\ge1$ with $|n|\le B$ on $S$, and $N\ge2B$ an integer.
+Write $r=B/N$, $u_n=n/N$ and define the same-source polynomials
+
+$$
+\begin{aligned}
+q_N(z)&=\prod_{n\in S}(1-u_nz),\\
+\widehat A_N(z)&=\sum_{n\in S}s_c(n)v_n
+                   \prod_{\ell\in S\setminus\{n\}}(1-u_\ell z),\\
+\widehat B_N(z)&=\sum_{n\in S}v_n
+                   \prod_{\ell\in S\setminus\{n\}}(1-u_\ell z).
+\end{aligned}
+\tag{45}
+$$
+
+Both numerators have degree at most $d-1$. Let their coefficient
+vectors be $\widehat a_N,\widehat b_N$, and put
+$\widehat Z_N=\|\widehat a_N\|_2^2+\|\widehat b_N\|_2^2$.
+Equivalently, multiply the original normalized moment polynomials
+$A,B$ by $q_N$ and retain coefficients below degree $d$.
+This coefficient change is lower triangular with diagonal one;
+the existing finite-head moment injectivity remains the supplier.
+All coefficients in (45) come from the same $v,c,S,N$.
+
+### Preserve the exact denominator instead of a geometric remainder
+
+The ordinary common-denominator identity gives, for every $|m|>N$,
+
+$$
+C_v(m)=\frac{\widehat A_N(N/m)-s_c(m)\widehat B_N(N/m)}
+             {\pi m q_N(N/m)}.
+\tag{46}
+$$
+
+For real $|z|\le1$, every factor of $q_N(z)$ is positive and
+
+$$
+(1-r)^d\le q_N(z)\le(1+r)^d.
+$$
+
+Let $\widehat J_v(m)$ be the numerator of (46) divided by $\pi m$.
+Consequently, on the complete paired exterior,
+
+$$
+(1+r)^{-2d}\|\widehat J_v\|_{\ell^2(|m|>N)}^2
+\le\mathcal E_N(v)\le
+(1-r)^{-2d}\|\widehat J_v\|_{\ell^2(|m|>N)}^2.
+\tag{47}
+$$
+
+This includes both signs and every exterior row. There is no geometric
+truncation error, omitted cross term or inverse-Vandermonde allowance.
+The polynomials are finite exact coordinates; this does not assert
+that their coefficients can be computed stably at fixed precision.
+
+### Make the actual signed moment bounds simultaneous in every power
+
+Write $L=\log c$, $W=\sum_{2\le j<c}\Lambda(j)/\sqrt j$ and set
+$D=(c+1)L$, $F=DW$, $O=DW^2$. Reuse the folded gap (3) and
+geometric consecutive-sum bound. The first prime polynomial has
+exponential coefficient $\ell^1$ mass at most $W$; its frequencies
+have distance at least $1/D$ from the integers. The centered square
+has nonconstant coefficient mass at most $W^2$. Each of its
+nonconstant frequencies is a difference of distinct folded prime
+frequencies, so the same gap applies. Its constant is exactly
+$\mu_c$ from (2), including ordered resonances and self-pairs.
+Thus consecutive-block discrepancies are at most $F$ for $P_c$ and
+$O$ for $P_c^2-\mu_c$.
+
+For every real $p\ge2$, integral comparison and the same bounded-
+discrepancy partial summation give
+
+$$
+\begin{aligned}
+\left|N^{p-1}Z_p(N)-\frac1{p-1}\right|&\le N^{-1},\\
+\left|N^{p-1}\sum_{m>N}\frac{P_c(m)}{m^p}\right|&\le F/N,\\
+\left|N^{p-1}\sum_{m>N}\frac{P_c(m)^2-\mu_c}{m^p}\right|&\le O/N.
+\end{aligned}
+$$
+
+Use the entire smooth error $h_c$ in (39), with its stated $G_c$,
+also at $c=2$. Its normalized first-moment error is at most
+$G_c/(pN)$. Expanding $s_c^2=(\kappa+P_c-h_c)^2$ adds at most
+$2(\kappa+W)G_c/(pN)+G_c^2/((p+1)N^2)$ to its constant and
+centered-prime terms. Put
+
+$$
+\begin{aligned}
+U_c={}&1+\kappa+F+G_c+\kappa^2+\mu_c+O+2\kappa F\\
+     &+2(\kappa+W)G_c+G_c^2
+\le64c^2(1+\log c)^3.
+\end{aligned}
+$$
+
+The last bound uses $W\le2\sqrt c\log c$,
+$G_c\le\sqrt c\log c$, $0\le\mu_c\le W^2$, $\kappa<1$ and
+$D\le2c\log c$. These also cover the empty prime sum at $c=2$.
+All normalized scalar errors in (41) are therefore at most $U_c/N$,
+independently of the moment power. Reusing that same signed jet
+matrix with coefficient pair $(\widehat a_N,\widehat b_N)$ gives
+
+$$
+\left|\pi^2N\|\widehat J_v\|^2
+ -\mathcal H_{c,d}(\widehat a_N,\widehat b_N)\right|
+\le\frac{4dU_c}{N}\widehat Z_N.
+\tag{48}
+$$
+
+Here each paired matrix entry costs at most $2U_c/N$, and the
+entry-to-operator conversion uses all $2d$ coordinates.
+
+### Reuse an explicit Hilbert inverse and retain the whole tail
+
+For the conditioning input use Christian Berg,
+*Fibonacci numbers and orthogonal polynomials*,
+[arXiv:math/0609283v1](https://arxiv.org/pdf/math/0609283v1),
+section 4, Theorem 4.1, equation (36), printed/PDF p.11.
+Its inverse formula for $(1/(\alpha+i+j))_{0\le i,j\le n}$,
+with $\alpha=1$, $n=d-1$, is the ordinary inverse-Hilbert formula.
+It is reused, not proved again. Bounding its binomial factors by
+powers of two bounds every inverse entry by $2d\,256^d$, and
+hence $\|H_d^{-1}\|\le2d^2\,256^d$. The existing coefficient
+transport after (41), $\mu_c\ge0$ and $2\kappa^2>1$ imply
+
+$$
+\mathcal H_{c,d}(\widehat a_N,\widehat b_N)
+\ge\frac{\widehat Z_N}{2d^2\,256^d}.
+$$
+
+Define the explicit simultaneous error
+
+$$
+\varepsilon_{c,d,N}
+=\frac{512d^3c^2(1+\log c)^3\,256^d}{N}.
+$$
+
+Combining (47)--(48) gives, for every complex head $v$,
+
+$$
+\boxed{
+\begin{aligned}
+&(1+r)^{-2d}(1-\varepsilon_{c,d,N})
+ \frac{\mathcal H_{c,d}(\widehat a_N,\widehat b_N)}{\pi^2N}
+ \le\mathcal E_N(v)\\
+&\hspace{12mm}\le
+(1-r)^{-2d}(1+\varepsilon_{c,d,N})
+ \frac{\mathcal H_{c,d}(\widehat a_N,\widehat b_N)}{\pi^2N}.
+\end{aligned}}
+\tag{49}
+$$
+
+A negative lower coefficient is vacuous; it causes no sign assertion.
+When $\varepsilon_{c,d,N}$ and $dB/N$ tend to zero, both coefficients
+tend to one. This holds uniformly over all heads, including heads
+with $N$-dependent approximate moment cancellations, and now permits
+$c,d,S$ to grow. The metric uses the exact numerator coefficients
+in (45), rather than silently replacing the old moment coordinates.
+
+### Growing heads on the existing FIB support schedule
+
+For example, fix $a>0$, $0<b<1$, $\delta>0$ with
+$2a+\delta\log256<1$. Uniformly in
+
+$$
+2\le c\le N^a,\qquad B\le N^b,\qquad d\le\delta\log N,
+$$
+
+one has
+$\varepsilon_{c,d,N}\le N^{-1+2a+\delta\log256+o(1)}$ and
+$dB/N=O(\log N/N^{1-b})$. This allows both arithmetic support
+and head dimension to tend to infinity.
+
+For sufficiently large levels of the existing integer FIB schedule
+$c_r=3^{F_{r+1}}$, take
+
+$$
+N_r=\lceil e^{c_r}\rceil,\qquad
+B_r\le c_r,\qquad
+1\le d_r\le\frac{c_r}{4\log256}.
+\tag{50}
+$$
+
+Then
+
+$$
+\varepsilon_{c_r,d_r,N_r}
+\le\exp\{-3c_r/4+O(\log c_r)\},\qquad
+(1\pm B_r/N_r)^{-2d_r}=1+O(c_r^2e^{-c_r}).
+\tag{51}
+$$
+
+Thus (49) is a relative enclosure for the complete tail on linearly
+growing finite heads along these supports. These heads are smaller
+than the entire retained space at cutoff $N_r$. The already owned
+conditional exterior comparison (13)--(16) has a positive floor of
+size proportional to $c_r$ at this cutoff; its physical identification
+and form-domain premises are unchanged.
+
+For the same actual positive exterior block $D_{\rm ext}\succeq h_NI$,
+write $\widehat T_Nv=(\widehat a_N,\widehat b_N)$. The existing
+inverse-order consumer (44) now has the simultaneous upper budget
+
+$$
+C_{\rm tail}^*D_{\rm ext}^{-1}C_{\rm tail}
+\preceq\frac{(1-B/N)^{-2d}(1+\varepsilon_{c,d,N})}
+                 {\pi^2Nh_N}
+ \widehat T_N^*H_{c,d}\widehat T_N.
+\tag{52}
+$$
+
+Every intervening row below $N$, the actual physical-column bridge
+and domination by the retained signed form still require their own
+payment. Neither this growing-parameter tail estimate nor the cited
+Hilbert/Fibonacci moment paper supplies that domination, the original
+Robin strict upper, all-order theta positivity at one fixed start,
+or RH. No assertion that the arithmetic columns and Berg's Fibonacci
+moment matrices are the same object is made.
