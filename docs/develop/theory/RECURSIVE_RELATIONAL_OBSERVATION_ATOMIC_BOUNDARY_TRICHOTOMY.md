@@ -2867,3 +2867,314 @@ final00 无后来 Ready 及吸收 terminal 比较，仍保留 §§10、18–20 �
 的原有义务。两项源分量正条件既没有安装全域桥，也没有否定其他恢复路线。
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Attained varying-capacity original Rho tests
+
+**Convention 24.1 (same source and numerical coordinates).** Retain
+Definition 18.1's one actual GENERAL/ARC initialization, preparation
+occurrence $\xi$, first Ready $P$, source $\beta$, $H_0=h=K=1$,
+parked original client, occupied verifier and INITIAL consumer. Use only
+finite canonical outer01 source calls with their complete returns as in
+Convention 18.2. The actual source is always source16 under its continuing
+$\phi_K$. Neither a reset nor a fresh per-capacity installation is used.
+All required finite inputs are actually supplied at their original INs;
+reached local computations retain GENERAL Assumption 1.2's termination
+premises. No autonomous infinite supply or uniform completion time is
+assumed.
+
+Write $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. Here $e$ counts accepted Rho
+calls after $P$; $h$ is the actual semantic guard, and $K$ the actual
+reserve. These are not a primitive clock, a receipt count or physical
+storage support. The supplied atomic recurrence gives
+
+$$
+t_e=\rho^e\beta=T_{e+1},\qquad
+\lambda(t_e)=F_{e+2},\qquad
+\lambda(\rho t_e)=F_{e+3}.
+\tag{ABT.88}
+$$
+
+The use below of this recurrence is not a new leaf-count theorem.
+
+**Theorem 24.2 (actual promised family and its included response).** For
+every pair
+
+$$
+(e,h)\in D:=\{(e,h)\in\mathbb N^2:h\ge F_{e+2}\},
+\tag{ABT.89}
+$$
+
+there is an actual finite alternative continuation from this same $P$
+ending with source $t_e$, accepted-Rho epoch $e$ and guard/reserve $h=K$.
+There is then a genuine original source-body cut $z_{e,h}$ after the
+next canonical Rho frame `0010` is sealed, parsed, admitted and
+ReadState-complete, before its template generation. The original finite
+completion through response release is lawful there and has label
+
+$$
+\operatorname{Accept}(z_{e,h})
+\quad\Longleftrightarrow\quad h\ge F_{e+3}.
+\tag{ABT.90}
+$$
+
+Failure of this inequality is executed original source refusal. All
+requests, work, records, native receipts and complete original successors
+retain their actual values; the assertion is not equality of observations
+between different $(e,h)$.
+
+Proof. If $h>1$, complete Reserve($h$), then Raise($h$) from $P$.
+CAP Theorems 5.2–5.3 preserve the same source and occurrence, set $K=h$
+and then the semantic guard to $h$, and preserve accepted-Rho epoch zero.
+If $h=1$, (ABT.89) forces $e=0$, and both maintenance calls are omitted.
+Now supply and complete $e$ original Rho calls. For the $i$th candidate,
+$1\le i\le e$, (ABT.88) and monotonicity of the positive Fibonacci
+sequence give $\lambda(t_i)=F_{i+2}\le F_{e+2}\le h$.
+CAP Theorem 4.5 therefore accepts every preparatory call. CAP Lemmas 4.7
+and 6.7, ARC's actual outer01 path and GENERAL Lemma 8.1 give each full
+finite row/delivery/check/ACK/source-token/InnerReturn/CaptureCAP/Ready
+return. Induction gives the asserted reached source and epoch. These
+are alternative continuations of one actual initialization, not permission
+to clone or replay a live source.
+
+Supply the next canonical `0010` frame through that same installed entry.
+The producer has its actual service/source authority after admission and
+ReadState. The whole candidate is $\rho t_e$, with the size in (ABT.88).
+CAP's existing original Rho rule accepts exactly at (ABT.90). Convention
+18.2, AIF Definition 2.6 and SOURCECALL Lemma 2.3 give the genuine original
+completion protocol to release, using prescribed enabled non-IN rows.
+It stops before the changed final idle CTL; no outer or return row has
+been relabelled as an original experiment. Its accept/refuse label is
+already included in the original response. Complete original successors
+are retained after every executed action. The distinction therefore
+requires neither a new output diagnostic nor an annex-visibility claim.
+$\square$
+
+**Convention 24.3 (authority, acquisition and price map).** Preparation
+calls begin only after the previous true Ready return. All framing,
+canonical context/material handling, current owner/token/phase, source
+and scratch bindings, generated code, receiver checks, ACK and fixed
+return paths are those of CAP/ARC/GENERAL. All original labels, legal
+Supply domains, actual prescribed Advance rows and finite semantic
+protocols keep AIF's meanings. Physically enabled noncanonical Supply
+remains task-undefined; disabled or unauthorized attempts remain
+unexecuted none; the refusal in (ABT.90) executes its actual work.
+
+The full original completion protocol is used instancewise at an already
+admitted request. Every instance is finite; this does not supply a
+uniform finite primitive-depth tree for the infinite family. The physical
+preparation also pays the actual added-phase rows, without declaring them
+to be original experiments. Convention 23.2's bill applies on each run,
+including every source/header/Base/Resolve/generation/guard/write,
+maintenance allocation, fence/counter/row/index, copy, seal/check/ACK,
+owner transfer, capture and return. Retired material and marked receipts
+are not erased. Neither (ABT.88) nor a within-run cost monotonicity claim
+is a cross-run full-cost comparison.
+
+The actual initial beta is acquired by its existing entrance. Supplied
+maintenance and source frames remain retained inputs. No new observer
+port for $e,h$, live tree value or a class label is supplied by their
+mathematical use in (ABT.89). Historical permissions remain historical;
+the original controller remains parked. The theorem compares the already
+defined mathematical original responses, not a newly installed actor
+computation of the guard.
+
+## 25. No Presburger separator even on the attained promise
+
+**Theorem 25.1 (no extension of the attained acceptance relation).** There
+is no Presburger predicate $A(e,h)$ on $\mathbb N^2$ such that
+
+$$
+\forall(e,h)\in D,\qquad
+A(e,h)\quad\Longleftrightarrow\quad h\ge F_{e+3}.
+\tag{ABT.91}
+$$
+
+Its values outside $D$ may be arbitrary. In particular the assertion does
+not assume that $D$ itself has a Presburger definition, and does not
+require any behavior on unattained pairs.
+
+Proof. Suppose such $A$ exists. In Presburger arithmetic define
+
+$$
+\begin{aligned}
+\operatorname{Tail}(e,H)&\ \Longleftrightarrow\
+           \forall h\ (h\ge H\Longrightarrow A(e,h)),\\
+B(e,H)&\ \Longleftrightarrow\
+\operatorname{Tail}(e,H)\land
+       \forall J\ (J<H\Longrightarrow\neg\operatorname{Tail}(e,J)).
+\end{aligned}
+\tag{ABT.92}
+$$
+
+For each $e$, $\operatorname{Tail}(e,F_{e+3})$ holds, since every
+$h\ge F_{e+3}$ belongs to $D$ and is accepting. On the other hand,
+$F_{e+3}-1\ge F_{e+2}$, because $F_{e+1}\ge1$. Thus this preceding
+integer is also attained and $A(e,F_{e+3}-1)$ is false. Every
+$H<F_{e+3}$ includes that false point in its tail. It follows that
+
+$$
+B(e,H)\quad\Longleftrightarrow\quad H=F_{e+3}.
+\tag{ABT.93}
+$$
+
+No value of $A$ below the promise was used. Presburger closure under
+Boolean operations and scalar quantification makes $B$ Presburger.
+
+For clarity, the graph in (ABT.93) is not semilinear. Any linear set
+contained in it has a base $(a,b)$ with $b=F_{a+3}>0$ and nonnegative
+periods. A period $(0,v)$ with $v>0$ violates the function property.
+For a period $(u,v)$ with $u>0$, take its second and fourth multiples.
+They would give
+
+$$
+F_{a+2u+3}=b+2v,\qquad F_{a+4u+3}=b+4v.
+\tag{ABT.94}
+$$
+
+For every $r\ge1$, $F_{r+2}\ge2F_r$. Since $u\ge1$, monotonicity
+gives $F_{r+2u}\ge2F_r$. Applying this to $r=a+2u+3$ in (ABT.94)
+yields $b+4v\ge2(b+2v)$, hence $b\le0$, a contradiction.
+Every period is therefore zero, so such a linear set is a singleton.
+A finite union of them cannot be the infinite graph (ABT.93).
+Ginsburg–Spanier Theorem 1.3 [ABT-GS] identifies Presburger subsets of
+$\mathbb N^2$ with semilinear sets. This contradicts the Presburger
+predicate $B$ and proves (ABT.91) impossible. $\square$
+
+This proof rules out an arbitrary Presburger *extension* of the promised
+response relation, rather than only a Presburger definition of its graph
+on the full plane. Nondefinability of the promise alone would not prove
+that stronger assertion. The two attained threshold neighbors are what
+make the least-tail argument independent of off-promise behavior.
+
+**Definition 25.2 (fixed finite uniform response language).** A uniform
+formula has free natural coordinates $(e,h)$ and finitely many auxiliary
+natural and finite native-tree variables. It uses alpha, beta, ordered
+pairing and the interpreted powers $\rho^{a(e,h,\mathbf s)}$ with
+specified integer-affine exponents, guarded nonnegative; Boolean native
+equalities/disequalities and regular native memberships; and Presburger
+scalar conditions. All native variables are existential. Regular
+automata and formula syntax are fixed independently of $(e,h)$.
+Finitely many existential auxiliary scalar projections and finite unions
+are allowed. A designated accept label is either a finite branch or
+an in-language definable coordinate, for example a scalar bit or one of
+the two literal leaf labels.
+
+There is no free ground record supplied as non-Presburger advice, variable
+formula length, unknown leaf-count cutoff inside an automaton, arbitrary
+predicate or alternating native-tree quantifier hidden in this definition.
+It concerns the same semantic $(e,h)$, rather than a new non-Presburger
+recoding whose original-parameter graph is left external to the formula.
+
+**Corollary 25.3 (uniform constructor/membership response exclusion).**
+No formula of Definition 25.2 can agree on every actual $z_{e,h}$ of
+Theorem 24.2 with the released original acceptance label. Consequently a
+complete-original-response representation in this class cannot be both
+exact on that family and have an in-language projection to its included
+accept/refuse label. The exclusion holds even when its off-promise
+behavior is unspecified.
+
+Proof. [NCE, Theorem 10.2][ABT-NCE] eliminates the jointly existential
+native variables at the identical full scalar tuple $(e,h,\mathbf s)$,
+including arbitrary supplied fixed regular memberships. Its output is
+Presburger. Existentially project $\mathbf s$, and take the finite label
+branch or its definable projection. The result would be a Presburger
+$A(e,h)$ satisfying (ABT.91), contrary to Theorem 25.1. Any allegedly
+complete response has to retain this existing label; when its projection
+is expressed in the stated class the same contradiction applies. This
+argument does not replace the complete response by the label as a task,
+or infer what its other fields are. $\square$
+
+## 26. Fixed numeral capacities and the surviving recovery obligation
+
+**Proposition 26.1 (the positive and negative capacity quantifiers).**
+For every supplied numeral $h\ge1$, [NCE, Definitions 13.1–13.3 and
+Theorem 13.4][ABT-NCE] gives fixed finite automata and exact Presburger
+supports $E_h^+,E_h^-$ for the two existing original Rho labels on its
+shared-epoch source class. This permits the automaton, formula syntax and
+construction cost to depend on $h$. There is nevertheless no one fixed
+finite formula of Definition 25.2 with $h$ free that represents those
+labels throughout the attained family (ABT.89).
+
+Proof. At a fixed numeral the language $L_h$ of trees with at most $h$
+leaves is recognized by truncated addition in $h+1$ states. It is a
+permitted fixed regular membership in NCE Theorem 10.2. Its exact
+source-class and original-admission application is NCE Theorems 13.2
+and 13.4, which retain one source, one epoch tuple and the actual guard.
+On the pure-beta orbit, each such fixed $h$ also bounds the attained
+$e$ by $F_{e+2}\le h$, so there is no conflicting assertion of an
+unbounded nonperiodic fixed-$h$ epoch set. A uniform formula with free
+$h$ would instead contradict Corollary 25.3. Quantifier order and the
+fixed automata, rather than the word regular, separate the claims.
+$\square$
+
+An effective procedure which takes numeral $h$ and builds a larger
+$L_h$ automaton is fully consistent with this obstruction. A finite
+algorithm computing Fibonacci thresholds in a stronger arithmetic
+language is likewise not excluded. The result is a fixed-language
+expressivity boundary, not an undecidability result or a physical
+resource lower bound. SFP's all-source representation with arbitrary
+finite residual shapes and shape-dependent arithmetic dimensions is
+outside the excluded fixed scalar projection class. A growing literal
+record, fully expanded ground source supplied as actual material, or a
+proved richer growth-sensitive relation also needs its own exact
+correspondence; none is excluded merely by (ABT.91).
+
+**Convention 26.2 (the changed original-goal condition).** NCE's regular
+membership extension decides joint feasibility at the same epoch tuple
+and tests possibility or uniqueness of an actual original response label
+at each fixed numeral capacity. The present result proves a necessary
+boundary for extending that relation to all actual capacities in one
+fixed formula: even the pure-orbit included guard label requires a
+relation outside its Presburger projection class. A proposed uniform
+complete-original-response bridge must therefore retain or construct
+such growth-sensitive information in a justified richer representation.
+An externally supplied unrepresented threshold cannot count as having
+proved that bridge.
+
+The obstruction does not assert a common acquired-information collision:
+$h$, the complete supplied frames and contexts, physical histories, all
+source/code/scratch bits, heads, latches, descriptors, channels, archives,
+owner bindings, original successors and receipts can differ between its
+actual prefixes. They have not been erased or identified. Likewise a
+fixed-class unique label is not complete-$Q$ equality, a mathematical
+source witness is not the actual unknown source, and an existential
+history is not its acquisition certificate. No current actor authority,
+callable decoder, controller, target chooser or return marker is added.
+The independent physical $S,B,T,M_J$ expressions keep their existing
+meanings and do not become logical leaf count or code shape.
+
+All original full-domain obligations remain: faithful complete-original
+successor and continuation maps; actual acquisition and retained/currently
+callable use; mixed independent history/source growth and intermediate
+cuts; equal-weight and synchronized-mate full-$Q$ cases; changed returns,
+annex and old-target access; raw/bootstrap/preacquisition/unfinished/fault
+cuts; final00 without later Ready and absorbing-terminal comparisons;
+and the independently specified four-view recovery directions with every
+actual price. The fixed-capacity construction and attained expressivity
+boundary advance that programme locally and do not complete or refute it.
+
+**References 26.3 (proof basis and literature scope).** The attained
+source/response map and no-extension argument are `repo-derived` ordinary
+proofs. CAP/ARC/GENERAL supply the actual same-initialization preparation,
+source operations, admission and paid return paths; AIF/SOURCECALL and
+Convention 18.2 supply the original response protocol. The atomic
+Fibonacci recurrence is reused. [NCE, Sections 10–12][ABT-NCE] supplies
+the independently proved regular-membership elimination; NCE Sections
+4–5 and SFP Sections 3–4 remain the prior equation and all-source suppliers.
+
+Ginsburg and Spanier, *Semigroups, Presburger Formulas, and Languages*,
+Pacific Journal of Mathematics 16(2), 285–296, Theorems 1.1–1.3,
+especially Theorem 1.3 on printed p. 288 [ABT-GS], is
+`literature-attested` for effective Presburger/semilinear equivalence
+and scalar projection closure. The pinned mathlib declaration
+`presburger.definable_iff_isSemilinearSet` has this arithmetic meaning;
+it is not a compiled instance of (ABT.91). Comon–Delor's admissible
+constructor-membership theorem is used only through NCE's proved
+$c/f$ reduction, not as a theorem about varying native capacity.
+No new Lean verification, installed algorithm, universal minimality or
+worldwide-originality claim is made.
+
+[ABT-NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+[ABT-GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+
+## 追加锚（本行以下为增补区）
