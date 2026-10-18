@@ -9,6 +9,7 @@
 module
 
 import Mathlib.Algebra.BigOperators.Finprod
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Rat.Cast.Order
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Data.Nat.Choose.Basic
@@ -161,6 +162,74 @@ private theorem height_even (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (h : ℤ × ℤ → �
   have hf := all (v.1 - b)
   have he : b + (v.1 - b) = v.1 := by omega
   rwa [he] at hf
+
+private theorem excess_step (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (h : ℤ × ℤ → ℤ)
+    (hh : IsHeight ℓ h) (u v : ℤ × ℤ) (huv : Adjacent u v) :
+    h u - ground ℓ u - 2 ≤ h v - ground ℓ v := by
+  have ha := edge_difference h hh.2.2 u v huv
+  have hg := ground_edge ℓ hℓ u v huv
+  simp only [abs_eq_max_neg] at ha hg
+  omega
+
+private theorem sum_le_volume (ℓ : ℕ) (h : ℤ × ℤ → ℤ) (hh : IsHeight ℓ h)
+    (s : Finset (ℤ × ℤ)) :
+    ∑ v ∈ s, ((h v - ground ℓ v : ℤ) : ℚ) / 2 ≤ volume ℓ h := by
+  classical
+  let t := hh.1.toFinset ∪ s
+  unfold volume
+  rw [finsum_eq_sum_of_support_subset _ (s := t) ?_]
+  · apply Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_right
+    intro v _ _
+    have hn : (0 : ℤ) ≤ h v - ground ℓ v := sub_nonneg.mpr (hh.2.1 v)
+    have hq : (0 : ℚ) ≤ ((h v - ground ℓ v : ℤ) : ℚ) := by exact_mod_cast hn
+    exact div_nonneg hq (by norm_num)
+  · intro v hv
+    apply Finset.mem_union_left
+    apply hh.1.mem_toFinset.mpr
+    intro he
+    apply hv
+    simp only [he, sub_self, Int.cast_zero, zero_div]
+
+private theorem height_binary (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (h : ℤ × ℤ → ℤ)
+    (hh : IsHeight ℓ h) (hvol : volume ℓ h = 5) (v : ℤ × ℤ) :
+    h v = ground ℓ v ∨ h v = ground ℓ v + 2 := by
+  classical
+  have he := height_even ℓ hℓ h hh v
+  have hn := hh.2.1 v
+  by_contra hbad
+  have hv : 4 ≤ h v - ground ℓ v := by omega
+  have neighbours (w : ℤ × ℤ) (hw : Adjacent v w) :
+      (1 : ℚ) ≤ ((h w - ground ℓ w : ℤ) : ℚ) / 2 := by
+    have hs := excess_step ℓ hℓ h hh v w hw
+    have hz : (2 : ℤ) ≤ h w - ground ℓ w := by omega
+    have hq : (2 : ℚ) ≤ ((h w - ground ℓ w : ℤ) : ℚ) := by exact_mod_cast hz
+    linarith
+  have hc : (2 : ℚ) ≤ ((h v - ground ℓ v : ℤ) : ℚ) / 2 := by
+    have hq : (4 : ℚ) ≤ ((h v - ground ℓ v : ℤ) : ℚ) := by exact_mod_cast hv
+    linarith
+  have hr := neighbours (v.1 + 1, v.2) (by
+    unfold Adjacent; dsimp only; simp only [abs_eq_max_neg]; omega)
+  have hl := neighbours (v.1 - 1, v.2) (by
+    unfold Adjacent; dsimp only; simp only [abs_eq_max_neg]; omega)
+  have hu := neighbours (v.1, v.2 + 1) (by
+    unfold Adjacent; dsimp only; simp only [abs_eq_max_neg]; omega)
+  have hd := neighbours (v.1, v.2 - 1) (by
+    unfold Adjacent; dsimp only; simp only [abs_eq_max_neg]; omega)
+  have hsum := sum_le_volume ℓ h hh
+    {v, (v.1 + 1, v.2), (v.1 - 1, v.2), (v.1, v.2 + 1), (v.1, v.2 - 1)}
+  have distinct : v ∉ ({(v.1 + 1, v.2), (v.1 - 1, v.2),
+      (v.1, v.2 + 1), (v.1, v.2 - 1)} : Finset (ℤ × ℤ)) ∧
+      (v.1 + 1, v.2) ∉ ({(v.1 - 1, v.2), (v.1, v.2 + 1),
+        (v.1, v.2 - 1)} : Finset (ℤ × ℤ)) ∧
+      (v.1 - 1, v.2) ∉ ({(v.1, v.2 + 1), (v.1, v.2 - 1)} : Finset (ℤ × ℤ)) ∧
+      (v.1, v.2 + 1) ∉ ({(v.1, v.2 - 1)} : Finset (ℤ × ℤ)) := by
+    rcases v with ⟨x, y⟩
+    simp only [Finset.mem_insert, Finset.mem_singleton, Prod.mk.injEq]
+    omega
+  rw [Finset.sum_insert distinct.1, Finset.sum_insert distinct.2.1,
+    Finset.sum_insert distinct.2.2.1, Finset.sum_insert distinct.2.2.2,
+    Finset.sum_singleton, hvol] at hsum
+  linarith
 
 private def IsDownset (ℓ : ℕ) (I : Finset (ℤ × ℤ)) : Prop :=
   ∀ u v, Adjacent u v → ground ℓ u + 1 = ground ℓ v → v ∈ I → u ∈ I
