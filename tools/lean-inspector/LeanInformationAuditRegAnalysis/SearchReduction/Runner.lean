@@ -217,7 +217,10 @@ partial def structural (goal : MVarId) (extra : Array Name) :
         unless matcherShape info.type == shape do continue
         let before ← (saveState : MetaM Meta.SavedState)
         let value ← mkConstWithFreshMVarLevels name
-        if ← isDefEq (← inferType value) original then
+        let equal ← match Kernel.isDefEq (← getEnv) (← getLCtx) (← inferType value) original with
+          | .ok equal => pure equal
+          | .error error => throwError "search.matcher_kernel_check: {error.toMessageData (← getOptions)}"
+        if equal then
           goal.assign value
           return #[]
         (before.restore : MetaM Unit)
