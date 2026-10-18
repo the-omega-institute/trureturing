@@ -7,6 +7,10 @@ namespace LeanInformationAudit.SearchReduction
 open Lean Meta Elab Command Tactic
 open LeanInformationAudit.Tests.SearchReduction (Run Verdict)
 
+-- Checked declarations may retain expressions from these small probe regions.
+-- Their lifetime is the outer compiler process; no imported extension is read.
+private initialize probeRegions : IO.Ref (Array CompactedRegion) ← IO.mkRef #[]
+
 private def runJson : Run → Json
   | .found => toJson "found"
   | .exhausted => toJson "exhausted"
@@ -193,17 +197,13 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       return
     logInfo child.stdout
     unless child.stderr.isEmpty do logInfo child.stderr
-    let oldPath ← searchPathRef.get
-    searchPathRef.set (directory :: oldPath)
-    let projected ← try
-      importModules #[{module := moduleName.toName}] options 0
-        (leakEnv := true) (loadExts := false)
-    finally searchPathRef.set oldPath
+    let (projected, region) ← readModuleData output
+    probeRegions.modify (·.push region)
     liftTermElabM do
       for n in #[name.getId ++ `baseline, name.getId ++ `paired, name.getId ++ `reason, name.getId,
           name.getId ++ `baselineProof, name.getId ++ `pairedProof,
           name.getId ++ `baselineFailureGuard] do
-        match (projected.setExporting false).find? n with
+        match projected.constants.find? (·.name == n) with
         | some (.defnInfo info) => addAndCompile (.defnDecl info)
         | some (.thmInfo info) => discard <| checkProof n info.levelParams info.type info.value
         | _ => pure ()
