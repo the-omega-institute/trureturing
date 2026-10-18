@@ -21,11 +21,12 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                 + "The parameter alpha is real; it is not restricted to integers. The formal claim fixes any second entropy coordinate "
                 + "in the entire closed interval and proves concavity in the first coordinate.")),
             Node("h", "Binary Renyi entropy", AllReal("alpha", AllReal("p",
-                Equal(Call("h", N("alpha"), N("p")), new Formula.Fraction(
+                Equal(Call("h", N("alpha"), N("p")), Call("ite", Equal(N("alpha"), D(1)),
+                    Call("binEntropy", N("p")), new Formula.Fraction(
                     Call("log", Add(Pow(N("p"), N("alpha")),
                         Pow(Subtract(D(1), N("p")), N("alpha")))),
-                    Subtract(D(1), N("alpha")))))), DescribeRole.Definition,
-                "Both variable powers use Real.rpow. On the probability branch [0,1/2], for alpha >= 2, "
+                    Subtract(D(1), N("alpha"))))))), DescribeRole.Definition,
+                "At alpha = 1 the definition uses Real.binEntropy in natural-log units; otherwise both variable powers use Real.rpow. On the probability branch [0,1/2], for every alpha > 0, "
                 + "the power sum is positive and h is continuous and strictly increasing, with values zero at zero and log 2 at one half. "
                 + "The displayed total real definition also exists outside the parameter and probability domain of the theorem."),
             Node("hInv", "The specified inverse branch", AllReal("alpha", AllReal("x",
@@ -33,7 +34,7 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                     Call("invFunOn", Call("h", N("alpha")), Interval("Icc", D(0), Half()), N("x"))))),
                 DescribeRole.Definition,
                 "This is Function.invFunOn applied to h alpha on the closed interval [0,1/2]. "
-                + "For alpha >= 2, that restriction is a continuous strictly increasing bijection onto [0,log 2]. "
+                + "For alpha > 0, that restriction is a continuous strictly increasing bijection onto [0,log 2]. "
                 + "Consequently, for x in the entropy interval, hInv(alpha,x) belongs to [0,1/2] and h(alpha,hInv(alpha,x))=x. "
                 + "The inverse is continuous on the entropy interval. No inverse identity outside that interval is claimed."),
             Node("star", "Binary convolution", AllReal("a", AllReal("b",
@@ -49,6 +50,18 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
                 DescribeRole.Definition,
                 "The quantifiers range over every real alpha >= 2 and every y in the closed entropy interval. "
                 + "ConcaveOn is Mathlib's full two-point concavity inequality on the closed convex set, including both x endpoints."),
+            Node("convexOn_G_of_le_one", "Convexity through the Shannon order",
+                AllReal("alpha", Imp(Rel(D(0), FormulaRelationOperator.LessThan, N("alpha")),
+                    Imp(Rel(N("alpha"), FormulaRelationOperator.LessThanOrEqual, D(1)), AllReal("y",
+                        Imp(Rel(N("y"), FormulaRelationOperator.MemberOf, EntropyInterval()),
+                            Call("ConvexOn", RealType(), EntropyInterval(),
+                                Par(Seq(N("x"), Sp, Mapsto, Sp, Call("G", N("alpha"), N("x"), N("y")))))))))),
+                DescribeRole.Theorem,
+                "For 0 < alpha < 1 the negative-parameter certificate makes F antitone in r and hence elasticity "
+                + "monotone in the bias t. At alpha = 1 the separate Shannon certificate differentiates Real.binEntropy "
+                + "and uses -psi'(t)=artanh(t). In both cases the slope ratio decreases with t, so its composition with "
+                + "the decreasing inverse bias is monotone in the entropy coordinate. Continuity and the constant/identity "
+                + "boundary cases give ConvexOn on the full closed interval."),
             Node("result", "Concavity for every real alpha at least two", ClaimBody(), DescribeRole.Theorem,
                 "For every real alpha >= 2 and y in [0,log 2], the function x maps to G(alpha,x,y) is concave on [0,log 2]. "
                 + "Symmetry of binary convolution also gives the corresponding second-coordinate statement as a mathematical consequence; "
@@ -74,9 +87,9 @@ internal sealed class HircheCachinCombiningConcavityDocument : IScribeDocumentDe
 
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role, string prose,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("hirche-combining-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("hirche-combining-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            name == "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
+            (name == "result" || name == "convexOn_G_of_le_one") ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula N(string value) => F.Id(value);
     private static Formula RealType() => Seq(Mathbb, Grp(N("R")));

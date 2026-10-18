@@ -7,6 +7,10 @@
    digest: Binary Renyi information combining is concave at every real order at least two. -/
 
 import D5.S3.Entropy.RenyiCombining.CachinElasticityMonotone
+import D5.S3.Entropy.RenyiCombining.CachinShannonBranch
+import D5.S3.Entropy.RenyiCombining.CachinNegativeBranch
+import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+import Mathlib.Analysis.SpecialFunctions.Artanh
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Convex.Deriv
@@ -24,7 +28,7 @@ open scoped Topology
 namespace D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
 
 noncomputable def h (α p : ℝ) : ℝ :=
-  Real.log (p ^ α + (1 - p) ^ α) / (1 - α)
+  if α = 1 then Real.binEntropy p else Real.log (p ^ α + (1 - p) ^ α) / (1 - α)
 
 noncomputable def hInv (α : ℝ) : ℝ → ℝ :=
   Function.invFunOn (h α) (Icc 0 (1 / 2))
@@ -39,7 +43,7 @@ def claim : Prop := ∀ α : ℝ, 2 ≤ α → ∀ y ∈ Icc 0 (Real.log 2),
 private def psi (α t : ℝ) : ℝ := h α ((1 - t) / 2)
 private def inverseBias (α x : ℝ) : ℝ := 1 - 2 * hInv α x
 private def slope (α t : ℝ) : ℝ :=
-  α * (((1 + t) / 2) ^ (α - 1) - ((1 - t) / 2) ^ (α - 1)) /
+  if α = 1 then Real.artanh t else α * (((1 + t) / 2) ^ (α - 1) - ((1 - t) / 2) ^ (α - 1)) /
     (2 * (α - 1) * (((1 + t) / 2) ^ α + ((1 - t) / 2) ^ α))
 
 private lemma powerSum_pos {α p : ℝ} (hp : p ∈ Icc 0 (1 / 2)) :
@@ -47,28 +51,34 @@ private lemma powerSum_pos {α p : ℝ} (hp : p ∈ Icc 0 (1 / 2)) :
   have hw : 0 < 1 - p := by linarith [hp.2]
   exact add_pos_of_nonneg_of_pos (Real.rpow_nonneg hp.1 _) (Real.rpow_pos_of_pos hw _)
 
-private lemma h_continuousOn {α : ℝ} (hα : 2 ≤ α) : ContinuousOn (h α) (Icc 0 (1 / 2)) := by
+private lemma h_continuousOn {α : ℝ} (hα : 0 < α) : ContinuousOn (h α) (Icc 0 (1 / 2)) := by
+  unfold h
+  by_cases ha : α = 1
+  · simpa [ha] using Real.binEntropy_continuous.continuousOn
+  simp only [if_neg ha]
   apply ContinuousOn.div_const
   apply ContinuousOn.log _ (fun p hp => (powerSum_pos hp).ne')
-  exact (continuousOn_id.rpow_const (fun _ _ => Or.inr (by linarith))).add
-    ((continuousOn_const.sub continuousOn_id).rpow_const (fun _ _ => Or.inr (by linarith)))
+  exact (continuousOn_id.rpow_const (fun _ _ => Or.inr hα.le)).add
+    ((continuousOn_const.sub continuousOn_id).rpow_const (fun _ _ => Or.inr hα.le))
 
-private lemma h_zero {α : ℝ} (hα : 2 ≤ α) : h α 0 = 0 := by
-  simp [h, Real.zero_rpow (show α ≠ 0 by linarith)]
+private lemma h_zero {α : ℝ} (hα : 0 < α) : h α 0 = 0 := by
+  by_cases ha : α = 1 <;> simp [h, ha, Real.zero_rpow hα.ne']
 
-private lemma h_half {α : ℝ} (hα : 2 ≤ α) : h α (1 / 2) = Real.log 2 := by
-  have ha : 1 - α ≠ 0 := by linarith
+private lemma h_half {α : ℝ} (hα : 0 < α) : h α (1 / 2) = Real.log 2 := by
+  by_cases hne : α = 1
+  · simpa [h, hne, one_div] using Real.binEntropy_two_inv
+  have ha : 1 - α ≠ 0 := sub_ne_zero.mpr (Ne.symm hne)
   have hp : (0 : ℝ) < 1 / 2 := by norm_num
   have he : (1 / 2 : ℝ) ^ α + (1 - 1 / 2 : ℝ) ^ α =
       (1 / 2 : ℝ) ^ (α - 1) := by
     rw [show (1 - 1 / 2 : ℝ) = 1 / 2 by ring,
       Real.rpow_sub hp _ _, Real.rpow_one]
     ring
-  rw [h, he, Real.log_rpow hp, Real.log_div (by norm_num) (by norm_num), Real.log_one]
+  rw [h, if_neg hne, he, Real.log_rpow hp, Real.log_div (by norm_num) (by norm_num), Real.log_one]
   field_simp
   <;> ring
 
-private lemma h_hasDerivAt {α p : ℝ} (hα : 2 ≤ α) (hp : p ∈ Ioo 0 (1 / 2)) :
+private lemma h_hasDerivAt {α p : ℝ} (hne : α ≠ 1) (hp : p ∈ Ioo 0 (1 / 2)) :
     HasDerivAt (h α)
       (α * (p ^ (α - 1) - (1 - p) ^ (α - 1)) /
         ((1 - α) * (p ^ α + (1 - p) ^ α))) p := by
@@ -76,36 +86,43 @@ private lemma h_hasDerivAt {α p : ℝ} (hα : 2 ≤ α) (hp : p ∈ Ioo 0 (1 / 
   have hd := (((hasDerivAt_id p).rpow_const (p := α) (Or.inl hp.1.ne')).add
     (((hasDerivAt_const p 1).sub (hasDerivAt_id p)).rpow_const
       (p := α) (Or.inl hw.ne'))).log (powerSum_pos ⟨hp.1.le, hp.2.le⟩).ne'
+  unfold h
+  simp only [if_neg hne]
   convert hd.div_const (1 - α) using 1 <;> dsimp
-  · rfl
-  · field_simp
-    <;> ring
+  field_simp
+  <;> ring
 
-private lemma h_strictMonoOn {α : ℝ} (hα : 2 ≤ α) : StrictMonoOn (h α) (Icc 0 (1 / 2)) := by
+private lemma h_strictMonoOn {α : ℝ} (hα : 0 < α) : StrictMonoOn (h α) (Icc 0 (1 / 2)) := by
+  by_cases hne : α = 1
+  · unfold h
+    simpa [hne, one_div] using Real.binEntropy_strictMonoOn
   apply strictMonoOn_of_deriv_pos (convex_Icc _ _) (h_continuousOn hα)
   intro p hp
   rw [interior_Icc] at hp
-  rw [(h_hasDerivAt hα hp).deriv]
+  rw [(h_hasDerivAt hne hp).deriv]
   have hpw : p < 1 - p := by linarith [hp.2]
-  have hr := Real.rpow_lt_rpow hp.1.le hpw (show 0 < α - 1 by linarith)
   have hs := powerSum_pos (α := α) ⟨hp.1.le, hp.2.le⟩
-  exact div_pos_of_neg_of_neg (mul_neg_of_pos_of_neg (by linarith) (sub_neg.mpr hr))
-    (mul_neg_of_neg_of_pos (by linarith) hs)
+  rcases lt_or_gt_of_ne hne with ha | ha
+  · have hr := Real.rpow_lt_rpow_of_neg hp.1 hpw (show α - 1 < 0 by linarith)
+    exact div_pos (mul_pos hα (sub_pos.mpr hr)) (mul_pos (by linarith) hs)
+  · have hr := Real.rpow_lt_rpow hp.1.le hpw (show 0 < α - 1 by linarith)
+    exact div_pos_of_neg_of_neg (mul_neg_of_pos_of_neg hα (sub_neg.mpr hr))
+      (mul_neg_of_neg_of_pos (by linarith) hs)
 
-private lemma h_image {α : ℝ} (hα : 2 ≤ α) : h α '' Icc 0 (1 / 2) = Icc 0 (Real.log 2) := by
+private lemma h_image {α : ℝ} (hα : 0 < α) : h α '' Icc 0 (1 / 2) = Icc 0 (Real.log 2) := by
   rw [(h_continuousOn hα).image_Icc_of_monotoneOn (by norm_num)
     (h_strictMonoOn hα).monotoneOn, h_zero hα, h_half hα]
 
-private lemma hInv_spec {α x : ℝ} (hα : 2 ≤ α) (hx : x ∈ Icc 0 (Real.log 2)) :
+private lemma hInv_spec {α x : ℝ} (hα : 0 < α) (hx : x ∈ Icc 0 (Real.log 2)) :
     hInv α x ∈ Icc 0 (1 / 2) ∧ h α (hInv α x) = x := by
   have him : x ∈ h α '' Icc 0 (1 / 2) := by rw [h_image hα]; exact hx
   exact ⟨Function.invFunOn_mem him, Function.invFunOn_eq him⟩
 
-private lemma hInv_h {α p : ℝ} (hα : 2 ≤ α) (hp : p ∈ Icc 0 (1 / 2)) :
+private lemma hInv_h {α p : ℝ} (hα : 0 < α) (hp : p ∈ Icc 0 (1 / 2)) :
     hInv α (h α p) = p :=
   (h_strictMonoOn hα).injOn.leftInvOn_invFunOn hp
 
-private lemma hInv_continuousOn {α : ℝ} (hα : 2 ≤ α) :
+private lemma hInv_continuousOn {α : ℝ} (hα : 0 < α) :
     ContinuousOn (hInv α) (Icc 0 (Real.log 2)) := by
   let e : Icc (0 : ℝ) (1 / 2) ≃ Icc (0 : ℝ) (Real.log 2) :=
     { toFun := fun p => ⟨h α p, by rw [← h_image hα]; exact mem_image_of_mem _ p.property⟩
@@ -117,7 +134,7 @@ private lemma hInv_continuousOn {α : ℝ} (hα : 2 ≤ α) :
   exact continuousOn_iff_continuous_domRestrict.mpr
     (continuous_subtype_val.comp he.continuous_symm_of_equiv_compact_to_t2)
 
-private lemma hInv_interior {α x : ℝ} (hα : 2 ≤ α) (hx : x ∈ Ioo 0 (Real.log 2)) :
+private lemma hInv_interior {α x : ℝ} (hα : 0 < α) (hx : x ∈ Ioo 0 (Real.log 2)) :
     hInv α x ∈ Ioo 0 (1 / 2) := by
   obtain ⟨hp, he⟩ := hInv_spec hα ⟨hx.1.le, hx.2.le⟩
   constructor
@@ -130,61 +147,73 @@ private lemma hInv_interior {α x : ℝ} (hα : 2 ≤ α) (hx : x ∈ Ioo 0 (Rea
     rw [hz, h_half hα] at he
     linarith [hx.2]
 
-private lemma psi_continuousOn {α : ℝ} (hα : 2 ≤ α) : ContinuousOn (psi α) (Icc 0 1) :=
+private lemma psi_continuousOn {α : ℝ} (hα : 0 < α) : ContinuousOn (psi α) (Icc 0 1) :=
   (h_continuousOn hα).comp ((continuousOn_const.sub continuousOn_id).div_const 2)
     (fun t ht => ⟨by linarith [ht.2], by linarith [ht.1]⟩)
 
-private lemma slope_pos {α t : ℝ} (hα : 2 ≤ α) (ht : t ∈ Ioo 0 1) : 0 < slope α t := by
+private lemma slope_pos {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) : 0 < slope α t := by
+  by_cases hne : α = 1
+  · simpa [slope, hne] using Real.artanh_pos ht
   have hw : 0 < (1 - t) / 2 := by linarith [ht.2]
   have hu : 0 < (1 + t) / 2 := by linarith [ht.1]
   have hwu : (1 - t) / 2 < (1 + t) / 2 := by linarith [ht.1]
-  have hr := Real.rpow_lt_rpow hw.le hwu (show 0 < α - 1 by linarith)
-  unfold slope
-  exact div_pos (mul_pos (by linarith) (sub_pos.mpr hr))
-    (mul_pos (mul_pos (by norm_num) (by linarith))
-      (add_pos (Real.rpow_pos_of_pos hu _) (Real.rpow_pos_of_pos hw _)))
+  have hs : 0 < ((1 + t) / 2) ^ α + ((1 - t) / 2) ^ α :=
+    add_pos (Real.rpow_pos_of_pos hu _) (Real.rpow_pos_of_pos hw _)
+  simp only [slope, if_neg hne]
+  rcases lt_or_gt_of_ne hne with ha | ha
+  · have hr := Real.rpow_lt_rpow_of_neg hw hwu (show α - 1 < 0 by linarith)
+    exact div_pos_of_neg_of_neg (mul_neg_of_pos_of_neg hα (sub_neg.mpr hr))
+      (mul_neg_of_neg_of_pos (mul_neg_of_pos_of_neg (by norm_num) (by linarith)) hs)
+  · have hr := Real.rpow_lt_rpow hw.le hwu (show 0 < α - 1 by linarith)
+    exact div_pos (mul_pos hα (sub_pos.mpr hr))
+      (mul_pos (mul_pos (by norm_num) (by linarith)) hs)
 
-private lemma psi_hasDerivAt {α t : ℝ} (hα : 2 ≤ α) (ht : t ∈ Ioo 0 1) :
+private lemma psi_hasDerivAt {α t : ℝ} (hα : 0 < α) (ht : t ∈ Ioo 0 1) :
     HasDerivAt (psi α) (-slope α t) t := by
   have hp : (1 - t) / 2 ∈ Ioo (0 : ℝ) (1 / 2) :=
     ⟨by linarith [ht.2], by linarith [ht.1]⟩
-  have hd := (h_hasDerivAt hα hp).comp t
+  by_cases hne : α = 1
+  · subst α
+    unfold psi h slope
+    simpa only [ite_true] using
+      CachinShannonBranch.binEntropy_bias_hasDerivAt ht
+  have hd := (h_hasDerivAt hne hp).comp t
     (((hasDerivAt_const t 1).sub (hasDerivAt_id t)).div_const 2)
   convert hd using 1
   · rfl
   · rw [show 1 - (1 - t) / 2 = (1 + t) / 2 by ring]
-    unfold slope
+    simp only [slope, if_neg hne]
     have hs : 0 < ((1 + t) / 2) ^ α + ((1 - t) / 2) ^ α :=
       add_pos (Real.rpow_pos_of_pos (by linarith [ht.1]) _)
         (Real.rpow_pos_of_pos (by linarith [ht.2]) _)
     rw [add_comm (((1 - t) / 2) ^ α) (((1 + t) / 2) ^ α)]
-    field_simp [(show α - 1 ≠ 0 by linarith), (show 1 - α ≠ 0 by linarith), hs.ne']
+    field_simp [sub_ne_zero.mpr hne, sub_ne_zero.mpr (Ne.symm hne), hs.ne']
     <;> ring
 
-private lemma psi_strictAntiOn {α : ℝ} (hα : 2 ≤ α) : StrictAntiOn (psi α) (Icc 0 1) := by
+private lemma psi_strictAntiOn {α : ℝ} (hα : 0 < α) : StrictAntiOn (psi α) (Icc 0 1) := by
   apply strictAntiOn_of_deriv_neg (convex_Icc _ _) (psi_continuousOn hα)
   intro t ht
   rw [interior_Icc] at ht
   rw [(psi_hasDerivAt hα ht).deriv]
   exact neg_neg_of_pos (slope_pos hα ht)
 
-private lemma inverseBias_spec {α x : ℝ} (hα : 2 ≤ α) (hx : x ∈ Icc 0 (Real.log 2)) :
+private lemma inverseBias_spec {α x : ℝ} (hα : 0 < α) (hx : x ∈ Icc 0 (Real.log 2)) :
     inverseBias α x ∈ Icc 0 1 ∧ psi α (inverseBias α x) = x := by
   obtain ⟨hp, he⟩ := hInv_spec hα hx
   constructor
   · constructor <;> dsimp [inverseBias] <;> linarith [hp.1, hp.2]
   · simpa [psi, inverseBias, show (1 - (1 - 2 * hInv α x)) / 2 = hInv α x by ring] using he
 
-private lemma inverseBias_interior {α x : ℝ} (hα : 2 ≤ α) (hx : x ∈ Ioo 0 (Real.log 2)) :
+private lemma inverseBias_interior {α x : ℝ} (hα : 0 < α) (hx : x ∈ Ioo 0 (Real.log 2)) :
     inverseBias α x ∈ Ioo 0 1 := by
   have hp := hInv_interior hα hx
   constructor <;> dsimp [inverseBias] <;> linarith [hp.1, hp.2]
 
-private lemma inverseBias_continuousOn {α : ℝ} (hα : 2 ≤ α) :
+private lemma inverseBias_continuousOn {α : ℝ} (hα : 0 < α) :
     ContinuousOn (inverseBias α) (Icc 0 (Real.log 2)) :=
   continuousOn_const.sub (continuousOn_const.mul (hInv_continuousOn hα))
 
-private lemma inverseBias_hasDerivAt {α x : ℝ} (hα : 2 ≤ α) (hx : x ∈ Ioo 0 (Real.log 2)) :
+private lemma inverseBias_hasDerivAt {α x : ℝ} (hα : 0 < α) (hx : x ∈ Ioo 0 (Real.log 2)) :
     HasDerivAt (inverseBias α) (-slope α (inverseBias α x))⁻¹ x := by
   apply HasDerivAt.of_local_left_inverse
     ((inverseBias_continuousOn hα x ⟨hx.1.le, hx.2.le⟩).continuousAt
@@ -232,7 +261,7 @@ private lemma T_ratio {α t : ℝ} (ht : t ∈ Ioo 0 1) :
   field_simp
   <;> ring
 
-private lemma slope_eq {α t : ℝ} (hα : 2 ≤ α) (ht : t ∈ Ioo 0 1) :
+private lemma slope_eq {α t : ℝ} (hα : α ≠ 1) (ht : t ∈ Ioo 0 1) :
     slope α t = α / (α - 1) * CachinElasticityMonotone.T (α - 1) (ratio t) /
       (1 + t * CachinElasticityMonotone.T (α - 1) (ratio t)) := by
   have hu : 0 < (1 + t) / 2 := by linarith [ht.1]
@@ -244,12 +273,12 @@ private lemma slope_eq {α t : ℝ} (hα : 2 ≤ α) (ht : t ∈ Ioo 0 1) :
   have hwα : ((1 - t) / 2) ^ α = ((1 - t) / 2) ^ (α - 1) * ((1 - t) / 2) := by
     simpa using (Real.rpow_add_one hw.ne' (α - 1))
   rw [T_ratio ht]
-  unfold slope
+  simp only [slope, if_neg hα]
   rw [huα, hwα]
   field_simp
   <;> ring
 
-private lemma T_comp_hasDerivAt {n t : ℝ} (hn : 1 ≤ n) (ht : t ∈ Ioo 0 1) :
+private lemma T_comp_hasDerivAt {n t : ℝ} (hn : n ≠ 0) (ht : t ∈ Ioo 0 1) :
     HasDerivAt (fun s => CachinElasticityMonotone.T n (ratio s))
       (CachinElasticityMonotone.T n (ratio t) * CachinElasticityMonotone.A n (ratio t) / t) t := by
   have hr := ratio_mem ht
@@ -259,21 +288,31 @@ private lemma T_comp_hasDerivAt {n t : ℝ} (hn : 1 ≤ n) (ht : t ∈ Ioo 0 1) 
   · rw [CachinElasticityMonotone.A_eq n (ratio t) hr.1]
     unfold CachinElasticityMonotone.T
     have hp := Real.rpow_pos_of_pos hr.1 n
-    have hl := Real.rpow_lt_one hr.1.le hr.2 (show 0 < n by linarith)
+    have hl : 1 - (ratio t) ^ n ≠ 0 := by
+      rcases lt_or_gt_of_ne hn with hn | hn
+      · have hlt := Real.rpow_lt_rpow_of_exponent_gt hr.1 hr.2 hn
+        exact sub_ne_zero.mpr (ne_of_lt (by simpa using hlt))
+      · exact (sub_pos.mpr (Real.rpow_lt_one hr.1.le hr.2 hn)).ne'
     have hd0 : 1 + t ≠ 0 := by linarith [ht.1]
-    field_simp [hd0, ht.1.ne', (sub_pos.mpr hl).ne', (by linarith : 1 + (ratio t) ^ n ≠ 0)]
+    field_simp [hd0, ht.1.ne', hl, (by linarith : 1 + (ratio t) ^ n ≠ 0)]
     unfold ratio
     field_simp [hd0]
     <;> ring
 
-private lemma slope_hasDerivAt {α t : ℝ} (hα : 2 ≤ α) (ht : t ∈ Ioo 0 1) :
+private lemma slope_hasDerivAt {α t : ℝ} (hα : 0 < α) (hne : α ≠ 1) (ht : t ∈ Ioo 0 1) :
     HasDerivAt (slope α)
       (slope α t * CachinElasticityMonotone.F (α - 1) (ratio t) / t) t := by
-  have hn : 1 ≤ α - 1 := by linarith
+  have hn : α - 1 ≠ 0 := sub_ne_zero.mpr hne
   have hr := ratio_mem ht
-  have hT := CachinElasticityMonotone.T_pos (α - 1) (ratio t) hn hr
-  have hd0 : 1 + t * CachinElasticityMonotone.T (α - 1) (ratio t) ≠ 0 :=
-    (add_pos zero_lt_one (mul_pos ht.1 hT)).ne'
+  have hT : -1 < CachinElasticityMonotone.T (α - 1) (ratio t) := by
+    have hp := Real.rpow_pos_of_pos hr.1 (α - 1)
+    unfold CachinElasticityMonotone.T
+    apply (lt_div_iff₀ (by linarith : 0 < 1 + ratio t ^ (α - 1))).mpr
+    linarith
+  have hd0 : 1 + t * CachinElasticityMonotone.T (α - 1) (ratio t) ≠ 0 := by
+    have hp := mul_lt_mul_of_pos_left hT ht.1
+    have : 0 < 1 + t * CachinElasticityMonotone.T (α - 1) (ratio t) := by nlinarith [ht.2]
+    exact this.ne'
   have he : (1 - ratio t) / (1 + ratio t) = t := by
     apply (div_eq_iff (show 1 + ratio t ≠ 0 by linarith [hr.1])).mpr
     unfold ratio
@@ -291,9 +330,9 @@ private lemma slope_hasDerivAt {α t : ℝ} (hα : 2 ≤ α) (ht : t ∈ Ioo 0 1
     simp only [zero_add, one_mul] at hd
     apply hd.congr_of_eventuallyEq
     filter_upwards [isOpen_Ioo.mem_nhds ht] with s hs
-    exact slope_eq hα hs
+    exact slope_eq hne hs
   convert hd' using 1
-  rw [slope_eq hα ht]
+  rw [slope_eq hne ht]
   unfold CachinElasticityMonotone.F CachinElasticityMonotone.B
   rw [he]
   field_simp [hd0, ht.1.ne']
@@ -305,22 +344,27 @@ private lemma elasticity_anti {α : ℝ} (hα : 2 ≤ α) :
   exact CachinElasticityMonotone.monotoneOn_F (α - 1) (by linarith) (ratio_mem hb) (ratio_mem ha)
     (ratio_anti ha hb hab)
 
+private lemma slope_ratio_hasDerivAt {α v : ℝ} (hα : 0 < α) (hne : α ≠ 1)
+    (hv : v ∈ Ioo 0 1) : ∀ t ∈ Ioo (0 : ℝ) 1, HasDerivAt
+      (fun s => v * slope α (v * s) / slope α s)
+      (v * slope α (v * t) / (t * slope α t) *
+        (CachinElasticityMonotone.F (α - 1) (ratio (v * t)) - CachinElasticityMonotone.F (α - 1) (ratio t))) t := by
+  intro t ht
+  have hvt : v * t ∈ Ioo (0 : ℝ) 1 :=
+    ⟨mul_pos hv.1 ht.1, by nlinarith [ht.2, mul_pos (sub_pos.mpr hv.2) ht.1]⟩
+  have hf := (slope_hasDerivAt hα hne hvt).comp t ((hasDerivAt_id t).const_mul v)
+  convert (hf.const_mul v).div (slope_hasDerivAt hα hne ht) (slope_pos hα ht).ne' using 1
+  · rfl
+  · dsimp
+    field_simp [hv.1.ne', ht.1.ne', (slope_pos hα ht).ne']
+    <;> ring
+
 private lemma slope_ratio_monotone {α v : ℝ} (hα : 2 ≤ α) (hv : v ∈ Ioo 0 1) :
     MonotoneOn (fun t => v * slope α (v * t) / slope α t) (Ioo 0 1) := by
   have hvt : ∀ t ∈ Ioo (0 : ℝ) 1, v * t ∈ Ioo (0 : ℝ) 1 := by
     intro t ht
     exact ⟨mul_pos hv.1 ht.1, by nlinarith [ht.2, mul_pos (sub_pos.mpr hv.2) ht.1]⟩
-  have hd : ∀ t ∈ Ioo (0 : ℝ) 1, HasDerivAt
-      (fun s => v * slope α (v * s) / slope α s)
-      (v * slope α (v * t) / (t * slope α t) *
-        (CachinElasticityMonotone.F (α - 1) (ratio (v * t)) - CachinElasticityMonotone.F (α - 1) (ratio t))) t := by
-    intro t ht
-    have hf := (slope_hasDerivAt hα (hvt t ht)).comp t ((hasDerivAt_id t).const_mul v)
-    convert (hf.const_mul v).div (slope_hasDerivAt hα ht) (slope_pos hα ht).ne' using 1
-    · rfl
-    · dsimp
-      field_simp [hv.1.ne', ht.1.ne', (slope_pos hα ht).ne']
-      <;> ring
+  have hd := slope_ratio_hasDerivAt (by linarith : 0 < α) (by linarith) hv
   apply monotoneOn_of_deriv_nonneg (convex_Ioo _ _)
     (fun t ht => (hd t ht).continuousAt.continuousWithinAt)
     (fun t ht => (hd t (interior_subset ht)).differentiableAt.differentiableWithinAt)
@@ -328,10 +372,31 @@ private lemma slope_ratio_monotone {α v : ℝ} (hα : 2 ≤ α) (hv : v ∈ Ioo
   have ht' := interior_subset ht
   rw [(hd t ht').deriv]
   apply mul_nonneg
-  · exact div_nonneg (mul_pos hv.1 (slope_pos hα (hvt t ht'))).le
-      (mul_pos ht'.1 (slope_pos hα ht')).le
+  · exact div_nonneg (mul_pos hv.1 (slope_pos (by linarith : 0 < α) (hvt t ht'))).le
+      (mul_pos ht'.1 (slope_pos (by linarith : 0 < α) ht')).le
   · exact sub_nonneg.mpr (elasticity_anti hα (hvt t ht') ht'
       (by nlinarith [hv.2, ht'.1] : v * t ≤ t))
+
+private lemma slope_ratio_antitone {α v : ℝ} (hα : 0 < α) (hne : α ≠ 1)
+    (hF : AntitoneOn (CachinElasticityMonotone.F (α - 1)) (Ioo 0 1))
+    (hv : v ∈ Ioo 0 1) :
+    AntitoneOn (fun t => v * slope α (v * t) / slope α t) (Ioo 0 1) := by
+  have hvt : ∀ t ∈ Ioo (0 : ℝ) 1, v * t ∈ Ioo (0 : ℝ) 1 := by
+    intro t ht
+    exact ⟨mul_pos hv.1 ht.1, by nlinarith [ht.2, mul_pos (sub_pos.mpr hv.2) ht.1]⟩
+  have hd := slope_ratio_hasDerivAt hα hne hv
+  apply antitoneOn_of_deriv_nonpos (convex_Ioo _ _)
+    (fun t ht => (hd t ht).continuousAt.continuousWithinAt)
+    (fun t ht => (hd t (interior_subset ht)).differentiableAt.differentiableWithinAt)
+  intro t ht
+  have ht' := interior_subset ht
+  rw [(hd t ht').deriv]
+  apply mul_nonpos_of_nonneg_of_nonpos
+  · exact div_nonneg (mul_pos hv.1 (slope_pos hα (hvt t ht'))).le
+      (mul_pos ht'.1 (slope_pos hα ht')).le
+  · apply sub_nonpos.mpr
+    exact hF (ratio_mem ht') (ratio_mem (hvt t ht'))
+      (ratio_anti (hvt t ht') ht' (by nlinarith [hv.2, ht'.1]))
 
 private lemma bias_combining (α x y : ℝ) :
     G α x y = psi α (inverseBias α y * inverseBias α x) := by
@@ -339,7 +404,7 @@ private lemma bias_combining (α x y : ℝ) :
   congr 1
   ring
 
-private lemma transported_continuousOn {α v : ℝ} (hα : 2 ≤ α) (hv : v ∈ Icc 0 1) :
+private lemma transported_continuousOn {α v : ℝ} (hα : 0 < α) (hv : v ∈ Icc 0 1) :
     ContinuousOn (fun x => psi α (v * inverseBias α x)) (Icc 0 (Real.log 2)) := by
   apply (psi_continuousOn hα).comp (continuousOn_const.mul (inverseBias_continuousOn hα))
   intro x hx
@@ -348,7 +413,7 @@ private lemma transported_continuousOn {α v : ℝ} (hα : 2 ≤ α) (hv : v ∈
     change v * inverseBias α x ≤ 1
     nlinarith [ht.2, mul_nonneg (sub_nonneg.mpr hv.2) ht.1]⟩
 
-private lemma transported_hasDerivAt {α v x : ℝ} (hα : 2 ≤ α) (hv : v ∈ Ioo 0 1)
+private lemma transported_hasDerivAt {α v x : ℝ} (hα : 0 < α) (hv : v ∈ Ioo 0 1)
     (hx : x ∈ Ioo 0 (Real.log 2)) :
     HasDerivAt (fun z => psi α (v * inverseBias α z))
       (v * slope α (v * inverseBias α x) / slope α (inverseBias α x)) x := by
@@ -360,7 +425,7 @@ private lemma transported_hasDerivAt {α v x : ℝ} (hα : 2 ≤ α) (hv : v ∈
   · simp only [inv_neg, div_eq_mul_inv]
     ring
 
-private lemma inverseBias_anti {α : ℝ} (hα : 2 ≤ α) :
+private lemma inverseBias_anti {α : ℝ} (hα : 0 < α) :
     AntitoneOn (inverseBias α) (Icc 0 (Real.log 2)) := by
   intro x hx y hy hxy
   have ht := inverseBias_spec hα hx
@@ -379,23 +444,61 @@ private lemma transported_concaveOn {α v : ℝ} (hα : 2 ≤ α) (hv : v ∈ Ic
   · subst v
     apply (concaveOn_id (convex_Icc (0 : ℝ) (Real.log 2))).congr
     intro x hx
+    simpa using (inverseBias_spec (by linarith : 0 < α) hx).2.symm
+  have hv' : v ∈ Ioo (0 : ℝ) 1 :=
+    ⟨lt_of_le_of_ne hv.1 (Ne.symm hv0), lt_of_le_of_ne hv.2 hv1⟩
+  apply AntitoneOn.concaveOn_of_deriv (convex_Icc _ _) (transported_continuousOn (by linarith : 0 < α) hv)
+  · intro x hx
+    rw [interior_Icc] at hx
+    exact (transported_hasDerivAt (by linarith : 0 < α) hv' hx).differentiableAt.differentiableWithinAt
+  · intro x hx y hy hxy
+    rw [interior_Icc] at hx hy
+    rw [(transported_hasDerivAt (by linarith : 0 < α) hv' hx).deriv, (transported_hasDerivAt (by linarith : 0 < α) hv' hy).deriv]
+    exact slope_ratio_monotone hα hv' (inverseBias_interior (by linarith : 0 < α) hy)
+      (inverseBias_interior (by linarith : 0 < α) hx) (inverseBias_anti (by linarith : 0 < α) ⟨hx.1.le, hx.2.le⟩
+        ⟨hy.1.le, hy.2.le⟩ hxy)
+
+private lemma transported_convexOn {α v : ℝ} (hα : 0 < α) (hv : v ∈ Icc 0 1)
+    (hR : ∀ v ∈ Ioo (0 : ℝ) 1,
+      AntitoneOn (fun t => v * slope α (v * t) / slope α t) (Ioo 0 1)) :
+    ConvexOn ℝ (Icc 0 (Real.log 2)) (fun x => psi α (v * inverseBias α x)) := by
+  by_cases hv0 : v = 0
+  · subst v
+    simpa using convexOn_const (psi α 0) (convex_Icc (0 : ℝ) (Real.log 2))
+  by_cases hv1 : v = 1
+  · subst v
+    apply (convexOn_id (convex_Icc (0 : ℝ) (Real.log 2))).congr
+    intro x hx
     simpa using (inverseBias_spec hα hx).2.symm
   have hv' : v ∈ Ioo (0 : ℝ) 1 :=
     ⟨lt_of_le_of_ne hv.1 (Ne.symm hv0), lt_of_le_of_ne hv.2 hv1⟩
-  apply AntitoneOn.concaveOn_of_deriv (convex_Icc _ _) (transported_continuousOn hα hv)
+  apply MonotoneOn.convexOn_of_deriv (convex_Icc _ _) (transported_continuousOn hα hv)
   · intro x hx
     rw [interior_Icc] at hx
     exact (transported_hasDerivAt hα hv' hx).differentiableAt.differentiableWithinAt
   · intro x hx y hy hxy
     rw [interior_Icc] at hx hy
     rw [(transported_hasDerivAt hα hv' hx).deriv, (transported_hasDerivAt hα hv' hy).deriv]
-    exact slope_ratio_monotone hα hv' (inverseBias_interior hα hy)
-      (inverseBias_interior hα hx) (inverseBias_anti hα ⟨hx.1.le, hx.2.le⟩
-        ⟨hy.1.le, hy.2.le⟩ hxy)
+    exact hR v hv' (inverseBias_interior hα hy) (inverseBias_interior hα hx)
+      (inverseBias_anti hα ⟨hx.1.le, hx.2.le⟩ ⟨hy.1.le, hy.2.le⟩ hxy)
+
+lemma convexOn_G_of_le_one {α : ℝ} (hα : 0 < α) (ha : α ≤ 1)
+    {y : ℝ} (hy : y ∈ Icc 0 (Real.log 2)) :
+    ConvexOn ℝ (Icc 0 (Real.log 2)) (fun x => G α x y) := by
+  have hR : ∀ v ∈ Ioo (0 : ℝ) 1,
+      AntitoneOn (fun t => v * slope α (v * t) / slope α t) (Ioo 0 1) := by
+    intro v hv
+    by_cases he : α = 1
+    · simpa only [slope, if_pos he] using
+        (CachinShannonBranch.slope_ratio_strictAntiOn hv).antitoneOn
+    · exact slope_ratio_antitone hα he
+        (CachinNegativeBranch.antitoneOn_F_neg (α - 1) (by linarith) (by exact sub_neg.mpr (lt_of_le_of_ne ha he))) hv
+  simpa only [bias_combining] using
+    transported_convexOn hα (inverseBias_spec hα hy).1 hR
 
 theorem result : claim := by
   intro α hα y hy
   simpa only [bias_combining] using
-    transported_concaveOn hα (inverseBias_spec hα hy).1
+    transported_concaveOn hα (inverseBias_spec (by linarith : 0 < α) hy).1
 
 end D5.S3.Entropy.RenyiCombining.HircheCachinCombiningConcavity
