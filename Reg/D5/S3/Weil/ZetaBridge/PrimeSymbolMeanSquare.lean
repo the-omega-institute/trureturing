@@ -38,9 +38,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℕ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -65,9 +74,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℕ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[1],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "arg", "body", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[1],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "arg", "body", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -92,9 +110,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℕ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -119,9 +146,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -146,9 +182,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℕ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -173,9 +218,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℕ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -200,9 +254,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -227,9 +290,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -254,9 +326,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℝ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -281,9 +362,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℝ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "fn", "arg", "arg", "body", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg", "body", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -308,9 +398,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℝ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "body", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg", "body", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -335,9 +434,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -362,9 +470,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -389,9 +506,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -416,9 +542,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℕ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -443,9 +578,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -470,9 +614,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -497,9 +650,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℂ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -524,9 +686,18 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (ℝ)
-  sourceSelection := some { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[0, 3],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare,
+    definition := none,
+    coordinates := #[0, 3],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false
+    }]
+  }
   continuation := .unknown
   familyRecord := none
   options := #[] }

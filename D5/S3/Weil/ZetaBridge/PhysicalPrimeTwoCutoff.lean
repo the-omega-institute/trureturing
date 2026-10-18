@@ -124,7 +124,7 @@ theorem matrixEntry_offdiagonal (a : ℝ) (ha : 0 < a)
     rw [frequency_mul_radius a ha n, Real.sin_nat_mul_pi]
   have hv : Real.sin (omega a m * a) = 0 := by
     rw [frequency_mul_radius a ha m, Real.sin_nat_mul_pi]
-  rw [matrixEntry_eq_matrix a ha, matrix, if_pos hs,
+  rw [matrixEntry_eq_matrix a ha, PhysicalCompressedCosineMatrix.matrix, if_pos hs,
     overlap_quotient a |s| (omega a n) (omega a m) hd hp hu hv,
     frequency_mul_radius a ha n, frequency_mul_radius a ha m,
     Real.cos_nat_mul_pi, Real.cos_nat_mul_pi]
@@ -173,6 +173,7 @@ private lemma matrixEntry_dimensionless (a : ℝ) (ha : 0 < a)
   have hnr : (n : ℝ) < (m : ℝ) := by exact_mod_cast hnm
   have hn0 : 0 ≤ (n : ℝ) := Nat.cast_nonneg n
   have hden : (m : ℝ) ^ 2 - (n : ℝ) ^ 2 ≠ 0 := ne_of_gt (by nlinarith)
+  have hden' : (n : ℝ) ^ 2 - (m : ℝ) ^ 2 ≠ 0 := ne_of_lt (by nlinarith)
   have hf (k : ℕ) : omega a k = Real.pi / a * (k : ℝ) := by
     unfold omega
     field_simp [ha.ne']
@@ -186,7 +187,7 @@ private lemma matrixEntry_dimensionless (a : ℝ) (ha : 0 < a)
     exact ne_of_lt (by nlinarith)
   simp_rw [hf] at hfreq
   rw [hf, hf, pow_succ]
-  field_simp [ha.ne', Real.pi_ne_zero, hden, hfreq]
+  field_simp [ha.ne', Real.pi_ne_zero, hden, hden', hfreq]
   <;> ring
 
 /-- Uniform sharp-constant offdiagonal bound for the actual physical pairing.
@@ -211,8 +212,8 @@ theorem matrixEntry_uniform_bound (a : ℝ) (ha : 0 < a)
       _ ≤ (1 / Real.pi) * (1 / ((m : ℝ) - (n : ℝ))) := by
         exact mul_le_mul_of_nonneg_right
           (div_le_div_of_nonneg_right hA1 Real.pi_pos.le) (by positivity)
-      _ = _ := by ring
-  · rw [matrixEntry_eq_matrix a ha, matrix, if_neg hs, abs_zero]
+      _ = _ := one_div_mul_one_div _ _
+  · rw [matrixEntry_eq_matrix a ha, PhysicalCompressedCosineMatrix.matrix, if_neg hs, abs_zero]
     positivity
 
 /-! Coefficients are actual integrals before they are rewritten as matrix rows. -/
@@ -283,7 +284,8 @@ theorem shiftCoefficient_sq (a : ℝ) (ha : 0 < a)
         (one_div_le_one_div_of_le (by positivity)
           (mul_le_mul_of_nonneg_left (by linarith :
             (m : ℝ) - (N : ℝ) ≤ (m : ℝ) - (n : ℝ)) Real.pi_pos.le)))
-  convert h using 1 <;> ring
+  convert h using 1 <;>
+    simp only [div_eq_mul_inv, mul_inv_rev, ← inv_pow, mul_pow] <;> ring
 
 private lemma complete_tail (N M : ℕ) (hNM : N < M)
     (c : ℕ → ℂ) (C : ℝ) (hC : 0 ≤ C)
@@ -305,7 +307,7 @@ private lemma complete_tail (N M : ℕ) (hNM : N < M)
     _ ≤ ∑' j : ℕ, C * ((d + (j : ℝ) + 1)⁻¹) ^ 2 := hs.tsum_le_tsum hpoint hmajor
     _ = C * ∑' j : ℕ, ((d + (j : ℝ) + 1)⁻¹) ^ 2 := by rw [tsum_mul_left]
     _ ≤ C * d⁻¹ := mul_le_mul_of_nonneg_left hb hC
-    _ = _ := by rw [div_eq_mul_inv]; rfl
+    _ = _ := by rw [div_eq_mul_inv]
 
 /-- Complete infinite tail of actual compression pairings, including summability.
 This is coefficient-space truth only until the concrete L2 bridge is checked. -/
@@ -319,7 +321,8 @@ theorem shift_complete_tail (a : ℝ) (ha : 0 < a)
     (headMass N v * ((N : ℝ) + 1) / Real.pi ^ 2) (by positivity)
     (fun m hm => shiftCoefficient_sq a ha N v s m hm)
   refine ⟨hs, ?_⟩
-  convert hb using 1 <;> ring
+  convert hb using 1 <;>
+    simp only [div_eq_mul_inv, mul_inv_rev, ← inv_pow, mul_pow] <;> ring
 
 /-! Prime cutoff is arithmetic and distinct from both mode cutoffs N and M. -/
 def primeMass (a : ℝ) : ℝ := ∑ r ∈ Finset.Icc 1 (primeCutoff a), primeWeight r
@@ -348,7 +351,7 @@ private lemma symmetricPrimeEntry_bound (a : ℝ) (ha : 0 < a)
       intro r _
       rw [abs_mul, abs_of_nonneg (prime_weight_nonnegative r)]
       apply mul_le_mul_of_nonneg_left _ (prime_weight_nonnegative r)
-      have h := (abs_add _ _).trans (add_le_add
+      have h := (abs_add_le _ _).trans (add_le_add
         (matrixEntry_uniform_bound a ha n m hnm (Real.log (r : ℝ)))
         (matrixEntry_uniform_bound a ha n m hnm (-Real.log (r : ℝ))))
       convert h using 1 <;> ring
@@ -385,12 +388,16 @@ theorem primeCoefficient_eq_shifts (a : ℝ) (N : ℕ) (v : ℕ → ℂ) (m : �
     apply Finset.sum_congr rfl
     intro r _
     ring
-  rw [primeCoefficient, he, integral_finsetSum _ (fun r _ =>
+  rw [primeCoefficient, he]
+  rw [integral_finsetSum (f := fun r x => (primeWeight r : ℂ) *
+    ((mode a m x : ℂ) * compression a (Real.log (r : ℝ))
+        (profile a (Finset.range (N + 1)) v) x +
+     (mode a m x : ℂ) * compression a (-Real.log (r : ℝ))
+        (profile a (Finset.range (N + 1)) v) x)) _ (fun r _ =>
     ((hi r (Real.log (r : ℝ))).add (hi r (-Real.log (r : ℝ)))).const_mul _)]
   apply Finset.sum_congr rfl
   intro r _
-  rw [integral_const_mul, integral_add (hi r _) (hi r _)]
-  rfl
+  rw [integral_const_mul, integral_add (hi r _) (hi r _)] <;> rfl
 
 /-- Exact row expansion of the physical prime coefficient. Multiplying by
 conj(v_m) and summing retains all mixed complex terms of the source form. -/
@@ -427,7 +434,8 @@ private lemma primeCoefficient_sq (a : ℝ) (ha : 0 < a)
         (div_le_div_of_nonneg_left (by positivity) (by positivity)
           (mul_le_mul_of_nonneg_left (by linarith :
             (m : ℝ) - (N : ℝ) ≤ (m : ℝ) - (n : ℝ)) Real.pi_pos.le)))
-  convert h using 1 <;> ring
+  convert h using 1 <;>
+    simp only [div_eq_mul_inv, mul_inv_rev, ← inv_pow, mul_pow] <;> ring
 
 /-- The complete infinite coefficient allowance for the actual symmetric
 prime-power action, with the exact arithmetic cutoff and both shifts. -/
@@ -442,6 +450,7 @@ theorem prime_complete_tail (a : ℝ) (ha : 0 < a)
     (4 * primeMass a ^ 2 * headMass N v * ((N : ℝ) + 1) / Real.pi ^ 2)
     (by positivity) (fun m hm => primeCoefficient_sq a ha N v m hm)
   refine ⟨hs, ?_⟩
-  convert hb using 1 <;> ring
+  convert hb using 1 <;>
+    simp only [div_eq_mul_inv, mul_inv_rev, ← inv_pow, mul_pow] <;> ring
 
 end PhysicalPrimeTwoCutoff

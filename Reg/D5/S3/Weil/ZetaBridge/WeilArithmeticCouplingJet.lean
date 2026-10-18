@@ -9,6 +9,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import LeanInformationAuditInterface.Contract.Analysis.Source
 import D5.S3.Weil.ZetaBridge.WeilArithmeticCouplingJet
 import Reg.Support.DependentFamily
+import Mathlib.Analysis.Real.Pi.Bounds
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -93,6 +94,7 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_envelope))
   bridge := source_reconstruction
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
+    classical
     constructor
     · intro i
       let bad : Realization signature := realize signature
@@ -101,7 +103,7 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_envelope))
       refine ⟨bad, ?_, rfl, ?_⟩
       · intro j hj
         funext c n
-        simp [actual, bad, realize, hj]
+        cases i <;> cases j <;> simp_all [actual, bad, realize]
       · intro hall
         have h := hall (c := 2) (n := 1) (m := 1)
           (by decide) (by decide) (by decide)
@@ -212,13 +214,15 @@ private theorem positive_mode : 0 < smoothWeight 2 1 := by
       2 * frequency 2 (1 : ℤ) * (Real.cosh (logLength 2 / 2) - 1) /
         (frequency 2 (1 : ℤ) ^ 2 + 1 / 4) :=
     div_pos (mul_pos (mul_pos (by norm_num) hw) hc) (by positivity)
-  change 0 <
+  have hweight : smoothWeight 2 1 =
     (2 * frequency 2 (1 : ℤ) * (Real.cosh (logLength 2 / 2) - 1) /
         (frequency 2 (1 : ℤ) ^ 2 + 1 / 4) +
       ∑' j : ℕ, frequency 2 (1 : ℤ) *
         (1 - Real.exp (-(2 * (j : ℝ) + 1 / 2) * logLength 2)) /
         ((2 * (j : ℝ) + 1 / 2) ^ 2 + frequency 2 (1 : ℤ) ^ 2)) /
-      (1 : ℝ) ^ 2
+      (1 : ℝ) ^ 2 := by
+    unfold smoothWeight <;> rfl
+  rw [hweight]
   norm_num only [one_pow, div_one]
   exact add_pos_of_pos_of_nonneg hp hgamma
 
@@ -389,12 +393,13 @@ def familyRegistration : Registration arena (type_of% (@smooth_weight_antitone))
   bridge := source_reconstruction
   variation := ⟨actual_law, intervention false, intervention_rejects false⟩
   sensitivity := by
+    classical
     constructor
     · intro i
       refine ⟨intervention i, ?_, rfl, intervention_rejects i⟩
       intro j hj
       funext c m
-      simp [actual, intervention, realize, hj]
+      cases i <;> cases j <;> simp_all [actual, intervention, realize]
     · intro e
       exact nomatch e
   dependence := actual_dependence
@@ -480,10 +485,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro hall
   have hbad := hall 0 (m := 1) (by decide)
   have hactual := arithmetic_symbol_smooth_split 0 (m := 1) (by decide)
-  change arithmeticBoundarySymbol 0 (1 : ℤ) =
-    -(1 : ℝ) ^ 2 * (smoothWeight 0 1 + 1) -
-      ∑ q ∈ Finset.range 0, primeWeight q * Real.sin (frequency 0 (1 : ℤ) * Real.log q)
-    at hbad
+  simp only [rejected, realize] at hbad
   norm_num only [one_pow, neg_mul, one_mul, Finset.range_zero, Finset.sum_empty,
     sub_zero] at hbad hactual
   linarith

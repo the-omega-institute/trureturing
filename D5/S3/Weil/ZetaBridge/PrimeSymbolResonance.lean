@@ -45,6 +45,7 @@ import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.Order.Archimedean.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Basic.Complex.BigOperators
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -156,7 +157,8 @@ private theorem centered_geometric {z : ℂ} (hz : ‖z‖ = 1)
     calc
       _ = |((b : ℂ) * ∑ j ∈ Finset.range K, z ^ (M + (j : ℤ))).re| := by
         rw [Finset.mul_sum]
-        exact congrArg abs (map_sum Complex.reAddGroupHom _ _).symm
+        exact congrArg abs (Complex.re_sum (Finset.range K)
+          (fun j => (b : ℂ) * z ^ (M + (j : ℤ)))).symm
       _ ≤ ‖(b : ℂ) * ∑ j ∈ Finset.range K, z ^ (M + (j : ℤ))‖ :=
         Complex.abs_re_le_norm _
       _ = |b| * ‖∑ j ∈ Finset.range K, z ^ (M + (j : ℤ))‖ := by
@@ -200,7 +202,7 @@ private theorem square_expansion (s : Finset ℕ) (a : ℕ → ℝ) (z : ℕ →
     ring
   rw [pow_two, Finset.sum_mul]
   simp_rw [Finset.mul_sum, ht]
-  simp only [map_sum Complex.reAddGroupHom]
+  simp only [Complex.re_sum]
 
 private theorem sine_energy_identity (c : ℕ) (m : ℤ) :
     2 * primeSymbol c m ^ 2 =
@@ -241,7 +243,7 @@ theorem prime_symbol_exact_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :
         intro p hp
         apply Finset.sum_congr rfl
         intro q hq
-        rw [hdres p hp q hq]
+        simp only [hdres p hp q hq]
       _ = primeSquareMass c := by
         unfold primeSquareMass
         apply Finset.sum_congr rfl
@@ -256,7 +258,7 @@ theorem prime_symbol_exact_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :
     intro p hp
     apply Finset.sum_congr rfl
     intro q hq
-    rw [hdres p hp q hq]
+    simp only [hdres p hp q hq]
   have hR : (∑ p ∈ s, ∑ q ∈ s,
       if primePhase c p * primePhase c q = 1 then primeWeight p * primeWeight q else 0)
       = resonantMass c := by
@@ -265,7 +267,7 @@ theorem prime_symbol_exact_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :
     intro p hp
     apply Finset.sum_congr rfl
     intro q hq
-    rw [hsres p hp q hq]
+    simp only [hsres p hp q hq]
   have hCs : (∑ p ∈ s, ∑ q ∈ s,
       if primePhase c p * primePhase c q = 1 then 0 else
         2 * |primeWeight p * primeWeight q| / ‖1 - primePhase c p * primePhase c q‖)
@@ -275,7 +277,7 @@ theorem prime_symbol_exact_block {c : ℕ} (hc : 2 ≤ c) (M : ℤ) (K : ℕ) :
     intro p hp
     apply Finset.sum_congr rfl
     intro q hq
-    rw [hsres p hp q hq]
+    simp only [hsres p hp q hq]
   have hX : (∑ j ∈ Finset.range K, ‖E (M + (j : ℤ))‖ ^ 2) =
       ∑ p ∈ s, ∑ q ∈ s, ∑ j ∈ Finset.range K,
         (((primeWeight p * primeWeight q : ℝ) : ℂ) *
@@ -360,11 +362,11 @@ theorem resonantMass_eq_convolution {c : ℕ} (hc : 2 ≤ c) :
     ext x
     obtain ⟨p, q⟩ := x
     simp only [s, Finset.mem_filter, Finset.mem_product, primeIndices,
-      Finset.mem_Ico, Nat.mem_divisorsAntidiagonal, hc0, and_true]
+      Finset.mem_Ico, Nat.mem_divisorsAntidiagonal]
     constructor
     · rintro ⟨⟨⟨hp, _⟩, ⟨hq, _⟩⟩, hpq⟩
-      exact ⟨hpq, hp, hq⟩
-    · rintro ⟨hpq, hp, hq⟩
+      exact ⟨⟨hpq, hc0⟩, hp, hq⟩
+    · rintro ⟨⟨hpq, _⟩, hp, hq⟩
       have hpl : p < c := by
         have hb := Nat.mul_le_mul_left p hq
         omega
@@ -526,6 +528,7 @@ theorem prime_symbol_mean_lower_bound {c : ℕ} (hc : 3 ≤ c) :
       exact ⟨Finset.mem_product.mp hs, he⟩
     have first_inj : Set.InjOn (fun x : ℕ × ℕ => x.1) E := by
       intro x hx y hy hxy
+      change x.1 = y.1 at hxy
       apply Prod.ext hxy
       have hm : x.1 * x.2 = y.1 * y.2 :=
         (edge x hx).2.trans (edge y hy).2.symm
@@ -533,6 +536,7 @@ theorem prime_symbol_mean_lower_bound {c : ℕ} (hc : 3 ≤ c) :
       exact mul_left_cancel₀ (ne_of_gt (hpos x.1 (edge x hx).1.1)) hm
     have second_inj : Set.InjOn (fun x : ℕ × ℕ => x.2) E := by
       intro x hx y hy hxy
+      change x.2 = y.2 at hxy
       apply Prod.ext _ hxy
       have hm : x.1 * x.2 = y.1 * y.2 :=
         (edge x hx).2.trans (edge y hy).2.symm

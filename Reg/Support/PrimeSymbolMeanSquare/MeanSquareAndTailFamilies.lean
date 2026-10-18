@@ -97,9 +97,16 @@ def family : Registration arena (type_of% (@prime_symbol_block)) where
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@prime_symbol_block) :=
   Analysis.Source.ofRegistration (@prime_symbol_block) family source_reconstruction selection
 
@@ -141,7 +148,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro hall
   have h := hall (fun _ => 0) (fun _ => 1) 1 0 (by norm_num)
     (fun _ => by norm_num) (fun _ => le_rfl)
-    (fun K => by simp; positivity) 1
+    (fun K => by simp) 1
   norm_num [rejected, realize] at h
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
@@ -165,9 +172,16 @@ def family : Registration arena (type_of% (@finite_abel_majorant)) where
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[1],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "arg", "body", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[1]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "arg", "body", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@finite_abel_majorant) :=
   Analysis.Source.ofRegistration (@finite_abel_majorant) family source_reconstruction selection
 
@@ -233,9 +247,16 @@ def family : Registration arena (type_of% (@prime_symbol_square_tail)) where
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[0]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "arg", "arg", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@prime_symbol_square_tail) :=
   Analysis.Source.ofRegistration (@prime_symbol_square_tail) family source_reconstruction selection
 
@@ -300,9 +321,16 @@ def family : Registration arena (type_of% (@canonical_first_jet_prime_tail)) whe
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@canonical_first_jet_prime_tail) :=
   Analysis.Source.ofRegistration (@canonical_first_jet_prime_tail) family source_reconstruction selection
 
@@ -363,9 +391,16 @@ def family : Registration arena (type_of% (@inverseSquareWeight_antitone)) where
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[0]
+  readouts := #[{
+    path := #["body", "body", "body", "fn", "arg", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@inverseSquareWeight_antitone) :=
   Analysis.Source.ofRegistration (@inverseSquareWeight_antitone) family source_reconstruction selection
 
@@ -427,9 +462,16 @@ def family : Registration arena (type_of% (@complex_prime_energy)) where
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@complex_prime_energy) :=
   Analysis.Source.ofRegistration (@complex_prime_energy) family source_reconstruction selection
 
@@ -494,9 +536,16 @@ def family : Registration arena (type_of% (@complex_prime_tail)) where
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@complex_prime_tail) :=
   Analysis.Source.ofRegistration (@complex_prime_tail) family source_reconstruction selection
 
@@ -562,9 +611,16 @@ def family : Registration arena (type_of% (@retained_arithmetic_tail)) where
   dependence := actual_dependence
 
 /-- PROPOSED raw Expr paths. Compiler acquisition has not run. -/
-def selection : Contract.SourceSelection := { owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare, definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+def selection : Contract.SourceSelection := {
+  owner := `D5.S3.Weil.ZetaBridge.PrimeSymbolMeanSquare
+  definition := none
+  coordinates := #[]
+  readouts := #[{
+    path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "fn", "arg", "fn"]
+    stateBinder := 0
+    functionOperand := true
+    stateOperand := none
+    booleanPredicate := false }] }
 def sourceModel : Analysis.Source (@retained_arithmetic_tail) :=
   Analysis.Source.ofRegistration (@retained_arithmetic_tail) family source_reconstruction selection
 
