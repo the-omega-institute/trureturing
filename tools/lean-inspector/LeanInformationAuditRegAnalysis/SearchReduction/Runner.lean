@@ -214,6 +214,17 @@ def attempt (env : Environment) (levels : List Name) (type : Expr)
     let ok ← action goal.mvarId!
     if !ok then return { strategy, outcome := .exhausted }
     let proof ← instantiateMVars goal
+    -- Tactics can add auxiliary lemmas to their private environment. Expand
+    -- those values before transporting the proof to another attempt state.
+    let proof ← Core.transform proof (pre := fun expression => do
+      if let .const name levels := expression then
+        unless env.contains name do
+          let info ← getConstInfo name
+          if info.isUnsafe then throwError "search.unsafe_generated_dependency: {name}"
+          let some value := info.value?
+            | throwError "search.generated_dependency_without_value: {name}"
+          return .visit (value.instantiateLevelParams info.levelParams levels)
+      return .continue)
     let axioms ← checkProof `_searchReduction.proof levels type proof
     return { strategy, outcome := .found, proof? := some proof, axioms }
   let start ← IO.getNumHeartbeats
