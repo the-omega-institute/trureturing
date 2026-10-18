@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.QuantumChannels;
 internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.";
-    private static readonly LibraryNoteRef Campbell = LibraryNoteRef.Create("D5/L/QuantumChannels/campbell2010optimalentangling");
-    private static readonly LibraryNoteRef Tiles = LibraryNoteRef.Create("D5/L/QuantumChannels/bennett1999unextendible");
+    private static readonly LibraryNoteRef Campbell = LibraryNoteRef.Create("D5/L/QuantumContext/campbell2010optimalentangling");
+    private static readonly LibraryNoteRef Tiles = LibraryNoteRef.Create("D5/L/QuantumContext/bennett1999unextendible");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A two-qutrit CPTP map separates assisted and separable-input log-negativity capacities.",
         H("Log-negativity capacity depends on the input resource"),

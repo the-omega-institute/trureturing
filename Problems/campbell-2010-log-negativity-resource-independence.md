@@ -16,7 +16,7 @@ E. T. Campbell, *Optimal entangling capacity of dynamical processes*, Phys. Rev.
 
 > The most obvious open question is whether log-negativity EC is resource independent for all unitaries, or indeed all CPTP maps, or whether this is a singular feature of 2-qubit gates.
 
-The all-CPTP clause is refuted. The unitary clause and the source's two-qutrit unitary conjecture remain open. The statement and source scope are fixed in [#17047](https://github.com/the-omega-institute/trureturing/issues/17047); the source quotations are in the [Campbell note](../Library/QuantumChannels/campbell2010optimalentangling.md).
+The all-CPTP clause is refuted. The unitary clause and the source's two-qutrit unitary conjecture remain open. The statement and source scope are fixed in [#17047](https://github.com/the-omega-institute/trureturing/issues/17047); the source quotations are in the [Campbell note](../Library/QuantumContext/campbell2010optimalentangling.md).
 
 ### Statement echo
 
