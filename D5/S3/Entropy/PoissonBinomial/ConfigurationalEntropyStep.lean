@@ -8,6 +8,7 @@
 
 import D5.S3.Entropy.PoissonBinomial.PoissonBinomialStructure
 import D5.S3.Entropy.PoissonBinomial.EntropyDirectionBounds
+import D5.S3.Geometry.AlphaGeometry.CubeRootSpectralMonotonicity
 
 /-! Pairwise smoothing of the configurational entropy. -/
 
@@ -351,13 +352,12 @@ theorem F_le_interiorT {M : ℕ} (x y : Fin M → ℝ) (ht : InteriorT x y) :
         F x ≤ F ((1 - t) • x + t • (x ∘ Equiv.swap a b)) := by
       have he : (1 - t) • x + t • (x ∘ Equiv.swap a b) =
           transfer x a b (t * (x a - x b)) := by
+        rw [D5.S3.Geometry.AlphaGeometry.CubeRootSpectralMonotonicity.Pair.mixPair_eq_pairLine
+          x a b hab t]
         ext l
-        by_cases hla : l = a
-        · subst l; simp [transfer, hab]; ring
-        · by_cases hlb : l = b
-          · subst l; simp [transfer, hab, hab.symm]; ring
-          · simp [transfer, Equiv.swap_apply_of_ne_of_ne hla hlb, hla, hlb]
-            ring
+        by_cases hla : l = a <;> by_cases hlb : l = b <;>
+          simp_all [D5.S3.Geometry.AlphaGeometry.CubeRootSpectralMonotonicity.Pair.pairLine,
+            transfer, Pi.single_apply, sub_eq_add_neg]
       rw [he]
       exact pair_le x hab hx ⟨mul_nonneg ht0 (sub_nonneg.mpr horder),
         by nlinarith [mul_nonneg (sub_nonneg.mpr ht1) (sub_nonneg.mpr horder)]⟩

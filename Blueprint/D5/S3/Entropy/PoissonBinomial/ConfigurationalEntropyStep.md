@@ -42,3 +42,4 @@ The entropy-direction bound for the convolution and the logarithmic divided-diff
 - Truth anchor: `D5/S3/Entropy/PoissonBinomial/ConfigurationalEntropyStep.continuous_F`
 - Dependency: [D5/S3/Entropy/PoissonBinomial/EntropyDirectionBounds](EntropyDirectionBounds.md)
 - Dependency: [D5/S3/Entropy/PoissonBinomial/PoissonBinomialStructure](PoissonBinomialStructure.md)
+- Dependency: [D5/S3/Geometry/AlphaGeometry/CubeRootSpectralMonotonicity](../../Geometry/AlphaGeometry/CubeRootSpectralMonotonicity.md)
