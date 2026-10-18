@@ -17,6 +17,7 @@ import Mathlib.Data.Int.Interval
 import Mathlib.Data.Finset.Prod
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.IntervalCases
 
 /-! Height functions of volume five reduce to five-point downsets of the ground height. -/
 
@@ -537,6 +538,122 @@ private theorem negative_triangle (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (I : Finset (�
     decide
   have hn := Finset.card_le_card hs
   omega
+
+private def EndVertex (ℓ : ℕ) (v : ℤ × ℤ) : Prop :=
+  (-4 ≤ v.1 ∧ v.1 ≤ -2 ∧ v.2 = 0) ∨
+  (v.1 = 0 ∧ 2 ≤ v.2 ∧ v.2 ≤ 4) ∨
+  ((ℓ : ℤ) + 1 ≤ v.1 ∧ v.1 ≤ (ℓ : ℤ) + 3 ∧ v.2 = 1 - (ℓ : ℤ)) ∨
+  (v.1 = (ℓ : ℤ) - 1 ∧ -(ℓ : ℤ) - 3 ≤ v.2 ∧ v.2 ≤ -(ℓ : ℤ) - 1) ∨
+  v = (-1, 1) ∨ v = ((ℓ : ℤ), -(ℓ : ℤ)) ∨
+  v = (-1, -1) ∨ v = (1, 1) ∨
+  v = ((ℓ : ℤ), 2 - (ℓ : ℤ)) ∨ v = ((ℓ : ℤ) - 2, -(ℓ : ℤ))
+
+set_option maxHeartbeats 2000000 in
+private theorem vertex_classification (ℓ : ℕ) (hℓ : 3 ≤ ℓ)
+    (I : Finset (ℤ × ℤ)) (hI : IsDownset ℓ I) (hcard : I.card = 5)
+    (v : ℤ × ℤ) (hv : v ∈ I) : ground ℓ v ≤ 1 ∨ EndVertex ℓ v := by
+  have hwidth : 1 ≤ ℓ := by omega
+  obtain ⟨hmin, i, hi, hil, hvi⟩ := ground_nearest ℓ hwidth v
+  have hbound := rectangle_bound ℓ hwidth I hI v hv i hi hil hvi
+  have hrank := rank_bound ℓ hwidth I hI v hv
+  rw [hcard] at hbound hrank
+  norm_num at hbound hrank
+  generalize hdx : v.1 - i = dx at hvi hbound
+  generalize hdy : v.2 + i = dy at hvi hbound
+  have hdx_range : -4 ≤ dx ∧ dx ≤ 4 := by
+    simp only [abs_eq_max_neg] at hvi
+    omega
+  have hdy_range : -4 ≤ dy ∧ dy ≤ 4 := by
+    simp only [abs_eq_max_neg] at hvi
+    omega
+  have hshape : dx = 0 ∨ dy = 0 ∨ (dx = 1 ∨ dx = -1) ∧ (dy = 1 ∨ dy = -1) := by
+    have ha := abs_nonneg dx
+    have hb := abs_nonneg dy
+    by_cases hxa : |dx| = 0
+    · left
+      exact abs_eq_zero.mp hxa
+    · by_cases hya : |dy| = 0
+      · right; left
+        exact abs_eq_zero.mp hya
+      · have hax : 1 ≤ |dx| := by omega
+        have hby : 1 ≤ |dy| := by omega
+        have hp := mul_nonneg (by omega : 0 ≤ |dx| - 1) (by omega : 0 ≤ |dy| - 1)
+        have hs : 2 * (|dx| + |dy|) ≤ 5 := by nlinarith
+        have heq : |dx| = 1 ∧ |dy| = 1 := by omega
+        right; right
+        simp only [abs_eq_max_neg] at heq
+        omega
+  have lmin : 0 < i → |dx| + |dy| ≤ |dx + 1| + |dy - 1| := by
+    intro hl
+    have hm := hmin (i - 1) (by omega) (by omega)
+    have hx : v.1 - (i - 1) = dx + 1 := by omega
+    have hy : v.2 + (i - 1) = dy - 1 := by omega
+    rw [hx, hy, hvi] at hm
+    exact hm
+  have rmin : i + 1 < ℓ → |dx| + |dy| ≤ |dx - 1| + |dy + 1| := by
+    intro hl
+    have hm := hmin (i + 1) (by omega) hl
+    have hx : v.1 - (i + 1) = dx - 1 := by omega
+    have hy : v.2 + (i + 1) = dy + 1 := by omega
+    rw [hx, hy, hvi] at hm
+    exact hm
+  have lrect : 0 < i → |dx + 1| + |dy - 1| = |dx| + |dy| →
+      (|dx + 1| + 1) * (|dy - 1| + 1) ≤ 5 := by
+    intro hl he
+    have hx : v.1 - (i - 1) = dx + 1 := by omega
+    have hy : v.2 + (i - 1) = dy - 1 := by omega
+    have hm := rectangle_bound ℓ hwidth I hI v hv (i - 1) (by omega) (by omega)
+      (by rw [hx, hy, he]; exact hvi)
+    rwa [hx, hy, hcard] at hm
+  have rrect : i + 1 < ℓ → |dx - 1| + |dy + 1| = |dx| + |dy| →
+      (|dx - 1| + 1) * (|dy + 1| + 1) ≤ 5 := by
+    intro hl he
+    have hx : v.1 - (i + 1) = dx - 1 := by omega
+    have hy : v.2 + (i + 1) = dy + 1 := by omega
+    have hm := rectangle_bound ℓ hwidth I hI v hv (i + 1) (by omega) hl
+      (by rw [hx, hy, he]; exact hvi)
+    rwa [hx, hy, hcard] at hm
+  have no_pos (j : ℤ) : ¬(0 ≤ j ∧ j + 2 < ℓ ∧ j + 2 ≤ v.1 ∧ -j ≤ v.2) := by
+    rintro ⟨hj, hjl, hx, hy⟩
+    exact positive_triangle ℓ hwidth I hI hcard v hv j hj hjl ⟨hx, hy⟩
+  have no_neg (j : ℤ) : ¬(0 ≤ j ∧ j + 2 < ℓ ∧ v.1 ≤ j ∧ v.2 ≤ -j - 2) := by
+    rintro ⟨hj, hjl, hx, hy⟩
+    exact negative_triangle ℓ hwidth I hI hcard v hv j hj hjl ⟨hx, hy⟩
+  have p0 : ¬(i + 2 < ℓ ∧ 2 ≤ dx ∧ 0 ≤ dy) := by
+    have hp := no_pos i
+    omega
+  have p1 : ¬(1 ≤ i ∧ i + 1 < ℓ ∧ 1 ≤ dx ∧ 1 ≤ dy) := by
+    have hp := no_pos (i - 1)
+    omega
+  have p2 : ¬(2 ≤ i ∧ 0 ≤ dx ∧ 2 ≤ dy) := by
+    have hp := no_pos (i - 2)
+    omega
+  have n0 : ¬(i + 2 < ℓ ∧ dx ≤ 0 ∧ dy ≤ -2) := by
+    have hp := no_neg i
+    omega
+  have n1 : ¬(1 ≤ i ∧ i + 1 < ℓ ∧ dx ≤ -1 ∧ dy ≤ -1) := by
+    have hp := no_neg (i - 1)
+    omega
+  have n2 : ¬(2 ≤ i ∧ dx ≤ -2 ∧ dy ≤ 0) := by
+    have hp := no_neg (i - 2)
+    omega
+  unfold EndVertex
+  simp only [Prod.ext_iff]
+  obtain ⟨dxlo, dxhi⟩ := hdx_range
+  obtain ⟨dylo, dyhi⟩ := hdy_range
+  clear hmin no_pos no_neg hwidth hrank hbound
+  rcases hshape with hzero | hzero | ⟨hxx, hyy⟩
+  · cases hzero
+    interval_cases dy <;> norm_num at lmin <;> norm_num at rmin <;>
+      norm_num at lrect <;> norm_num at rrect <;> norm_num at hvi <;>
+      norm_num at p0 p1 p2 n0 n1 n2 <;> omega
+  · cases hzero
+    interval_cases dx <;> norm_num at lmin <;> norm_num at rmin <;>
+      norm_num at lrect <;> norm_num at rrect <;> norm_num at hvi <;>
+      norm_num at p0 p1 p2 n0 n1 n2 <;> omega
+  · rcases hxx with rfl | rfl <;> rcases hyy with rfl | rfl <;>
+      norm_num at lmin <;> norm_num at rmin <;> norm_num at lrect <;>
+      norm_num at rrect <;> norm_num at hvi <;> norm_num at p0 p1 p2 n0 n1 n2 <;> omega
 
 private theorem downset_count (ℓ : ℕ) (hℓ : 3 ≤ ℓ) :
     (Nat.card {I : Finset (ℤ × ℤ) // I.card = 5 ∧ IsDownset ℓ I} : ℤ) =
