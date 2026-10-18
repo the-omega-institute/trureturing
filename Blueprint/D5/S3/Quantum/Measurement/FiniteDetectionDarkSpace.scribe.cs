@@ -13,7 +13,19 @@ internal sealed class FiniteDetectionDarkSpaceDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite-dimensional repeated-detection dark space is determined after dimension many no-click steps.",
         H("Finite Detection Dark Space"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(DescribeId.Create("finite-detection-positive-block-diagonal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Measurement/FiniteDetectionDarkSpace.positiveBlockDiagonal"),
+                H("Positive semidefinite dependent block matrices"), StatementSource.FromAuthor(Disp(
+                    BlockAll("T", BlockId("Type"), BlockInstances(BlockId("T"),
+                        BlockAll("k", new Formula.TypeArrow(BlockId("T"), BlockId("Type")),
+                            Seq(OpenBracket, BlockAll("i", BlockId("T"), BlockQ("Fintype", BlockApp(BlockId("k"), BlockId("i")))), CloseBracket, Sp,
+                                OpenBracket, BlockAll("i", BlockId("T"), BlockQ("DecidableEq", BlockApp(BlockId("k"), BlockId("i")))), CloseBracket, Sp,
+                                BlockAll("M", BlockAll("i", BlockId("T"), BlockQ("Matrix", BlockApp(BlockId("k"), BlockId("i")), BlockApp(BlockId("k"), BlockId("i")), BlockComplex)),
+                                    BlockImp(BlockAll("i", BlockId("T"), BlockQ("Matrix.PosSemidef", BlockApp(BlockId("M"), BlockId("i")))),
+                                        BlockQ("Matrix.PosSemidef", BlockQ("Matrix.blockDiagonal'", BlockId("M"))))))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A finite dependent block diagonal matrix is positive semidefinite when every diagonal block is positive semidefinite."))), DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("finite-detection-dark-space"),
             DeclarationHandle.Create(Declaration),
             H("The dark space is a finite survival-defect kernel"),
@@ -106,4 +118,28 @@ internal sealed class FiniteDetectionDarkSpaceDocument : IScribeDocumentDefiniti
 
     private static Formula Subscript(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
+    private static Formula BlockId(string name) => F.Id(name);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula BlockAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, BlockId(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula BlockComplex => Seq(Mathbb, Grp(BlockId("C")));
+    private static Formula BlockInstances(Formula type, Formula body) => Seq(
+        OpenBracket, BlockQ("Fintype", type), CloseBracket, Sp,
+        OpenBracket, BlockQ("DecidableEq", type), CloseBracket, Sp, body);
+    private static Formula BlockApp(Formula function, params Formula[] arguments) =>
+        Seq(function, Sp, Seq(arguments.SelectMany(argument =>
+            new[] { Parenthesized(argument), Sp }).ToArray()));
+    private static Formula BlockQ(string name, params Formula[] arguments)
+    {
+        Formula constant = Seq(name.Split('.').SelectMany((part, index) => new[] {
+            index == 0 ? Sp : Dot,
+            part.EndsWith("'", StringComparison.Ordinal)
+                ? Seq(Operatorname, Grp(BlockId(part[..^1])), Apos)
+                : Seq(Operatorname, Grp(BlockId(part))) }).ToArray());
+        return arguments.Length == 0 ? constant : BlockApp(constant, arguments);
+    }
+    private static Formula BlockImp(Formula hypothesis, Formula conclusion) =>
+        new Formula.Logic(Parenthesized(hypothesis), FormulaLogicOperator.Implies,
+            Parenthesized(conclusion));
+
 }
