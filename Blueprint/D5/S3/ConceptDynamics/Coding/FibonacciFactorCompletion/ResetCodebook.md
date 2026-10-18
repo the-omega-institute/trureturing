@@ -188,4 +188,4 @@ One reset floor exceeds both actual initial states and d. For the full weak equa
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetCodebook.positive_block_tiling`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetCodebook.reset_codebook_construction`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/ResetCodebook.uniform_guard_lower_memory`
-- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion](../FibonacciFactorCompletion.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FibonacciFactorCompletion](FibonacciFactorCompletion.md)
