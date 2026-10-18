@@ -9,6 +9,8 @@
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Tactic
 
 /-! # The two-site single-entry network
@@ -317,7 +319,7 @@ private theorem mass_conservation (k : Rates) (p : ℝ → Fin 5 → ℝ)
 /-- Every trajectory of the specified five-state forward system, starting at R,
 has strictly positive fiber width and association at every positive time. The
 only incomparable Boolean configurations are 10 and 01, giving strict MTP2. -/
-theorem five_state_strict_association (k : Rates) (p : ℝ → Fin 5 → ℝ)
+private theorem strict_for_every_forward_solution (k : Rates) (p : ℝ → Fin 5 → ℝ)
     (hp : ForwardSolution k p) (t : ℝ) (ht : 0 < t) :
     0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < association p t ∧
       p t 2 * p t 3 < p t 1 * p t 4 ∧
@@ -414,6 +416,91 @@ theorem five_state_strict_association (k : Rates) (p : ℝ → Fin 5 → ℝ)
   change 0 < association p t at Dpos
   rw [hdet] at Dpos
   linarith
+
+/-- The actual matrix-exponential trajectory from the inhibited state. -/
+def canonicalTrajectory (k : Rates) (t : ℝ) (i : Fin 5) : ℝ :=
+  NormedSpace.exp (t • generator k) i 0
+
+open scoped Matrix.Norms.Operator in
+private def entry (i j : Fin 5) : Matrix (Fin 5) (Fin 5) ℝ →L[ℝ] ℝ where
+  toFun M := M i j
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+  cont := (continuous_apply j).comp (continuous_apply i)
+
+private theorem canonical_forward (k : Rates) : ForwardSolution k (canonicalTrajectory k) := by
+  constructor
+  · funext i
+    simp [canonicalTrajectory, Matrix.one_apply, Pi.single_apply, eq_comm]
+  · intro t _ i
+    open scoped Matrix.Norms.Operator in
+      have hd := (entry i 0).hasFDerivAt.comp_hasDerivAt t
+        (hasDerivAt_exp_smul_const' (generator k) t)
+      convert! hd using 1 <;>
+        simp [canonicalTrajectory, entry, Matrix.mul_apply, mulVec, dotProduct, Function.comp_def]
+
+private theorem exp_entry_nonneg (B : Matrix (Fin 5) (Fin 5) ℝ)
+    (hB : ∀ i j, 0 ≤ B i j) (i j : Fin 5) : 0 ≤ NormedSpace.exp B i j := by
+  have hpow (n : ℕ) : ∀ i j, 0 ≤ (B ^ n) i j := by
+    induction n with
+    | zero => intro i j; simp [Matrix.one_apply]; split_ifs <;> norm_num
+    | succ n ih =>
+      intro i j
+      rw [pow_succ, Matrix.mul_apply]
+      exact Finset.sum_nonneg (fun k _ => mul_nonneg (ih i k) (hB k j))
+  open scoped Matrix.Norms.Operator in
+    have hs := (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℝ) B).map (entry i j)
+      (entry i j).continuous
+    change 0 ≤ (entry i j) (NormedSpace.exp B)
+    rw [← hs.tsum_eq]
+    apply tsum_nonneg
+    intro n
+    change 0 ≤ (n.factorial : ℝ)⁻¹ * (B ^ n) i j
+    exact mul_nonneg (inv_nonneg.mpr (Nat.cast_nonneg _)) (hpow n i j)
+
+private theorem canonical_nonneg (k : Rates) (t : ℝ) (ht : 0 ≤ t) (i : Fin 5) :
+    0 ≤ canonicalTrajectory k t i := by
+  let C := k.a + k.b + k.c + k.d + k.eta + k.theta
+  let B := generator k + C • (1 : Matrix (Fin 5) (Fin 5) ℝ)
+  have hB : ∀ i j, 0 ≤ B i j := by
+    intro i j
+    fin_cases i <;> fin_cases j <;>
+      simp [B, C, generator, Matrix.one_apply] <;>
+      linarith [k.a_pos, k.b_pos, k.c_pos, k.d_pos, k.eta_pos, k.theta_pos]
+  have hsplit : t • generator k = (-t * C) • (1 : Matrix (Fin 5) (Fin 5) ℝ) + t • B := by
+    dsimp [B]
+    rw [smul_add, smul_smul]
+    module
+  have hcomm : Commute ((-t * C) • (1 : Matrix (Fin 5) (Fin 5) ℝ)) (t • B) :=
+    (Commute.one_left _).smul_left _
+  have hscalar : NormedSpace.exp ((-t * C) • (1 : Matrix (Fin 5) (Fin 5) ℝ)) =
+      Real.exp (-t * C) • (1 : Matrix (Fin 5) (Fin 5) ℝ) := by
+    have he : (-t * C) • (1 : Matrix (Fin 5) (Fin 5) ℝ) =
+        diagonal (fun _ => -t * C) := by
+      ext j l
+      simp [Matrix.one_apply, Matrix.diagonal]
+    rw [he, Matrix.exp_diagonal]
+    ext j l
+    simp [Matrix.diagonal, Matrix.one_apply, ← Real.exp_eq_exp_ℝ]
+  unfold canonicalTrajectory
+  rw [hsplit, Matrix.exp_add_of_commute _ _ hcomm, hscalar, Matrix.smul_mul, one_mul]
+  exact mul_nonneg (Real.exp_pos _).le
+    (exp_entry_nonneg (t • B) (fun j l => mul_nonneg ht (hB j l)) i 0)
+
+/-- A probability-valued solution exists, and every solution of the same
+generator with the repressed initial state has the asserted strict association. -/
+theorem five_state_strict_association (k : Rates) :
+    (∃ p : ℝ → Fin 5 → ℝ, ForwardSolution k p ∧
+      ∀ t, 0 ≤ t → (∀ i, 0 ≤ p t i) ∧ ∑ i, p t i = 1) ∧
+    (∀ (p : ℝ → Fin 5 → ℝ), ForwardSolution k p → ∀ t, 0 < t →
+      0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < association p t ∧
+        p t 2 * p t 3 < p t 1 * p t 4 ∧
+        0 < k.theta * p t 0 - k.eta * p t 1) := by
+  constructor
+  · refine ⟨canonicalTrajectory k, canonical_forward k, ?_⟩
+    intro t ht
+    exact ⟨canonical_nonneg k t ht, mass_conservation k _ (canonical_forward k) t ht⟩
+  · exact strict_for_every_forward_solution k
 
 #print axioms five_state_strict_association
 

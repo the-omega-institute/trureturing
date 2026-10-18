@@ -27,12 +27,14 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
                 "D(p,t)=r(p,t) p(t,11)-X(p,t)Y(p,t). Conservation of total mass identifies this with p(t,00)p(t,11)-p(t,10)p(t,01).", DescribeRole.Definition),
             Node("fiberWidth", "Probability fiber width",
                 "w(p,t)=min{X(p,t),Y(p,t),r(p,t)-X(p,t),r(p,t)-Y(p,t)}. The three occupancy means are coordinates of one five-mode source.", DescribeRole.Definition),
+            Node("canonicalTrajectory", "The generated probability law",
+                "The trajectory p(t,i) is the (i,R) entry of exp(t Q), where Q is the independently specified generator. It starts at unit mass in R, solves the forward equations, is nonnegative for nonnegative time and has total mass one.", DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("single-entry-five-state-strict-association"),
                 DeclarationHandle.Create(Prefix + "five_state_strict_association"),
                 H("Strict association at every positive time"),
                 StatementSource.FromAuthor(TheoremFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Every forward solution starting at R has r>0, w>0 and D>0 at every positive time. Since 10 and 01 are the only incomparable configurations of the two-dimensional Boolean square, its conditional law is strictly MTP2. In addition theta p(R)-eta p(00)>0, so the active mass increases strictly. No positive-association premise is imposed. The generator is similar to minus a symmetric Gram matrix built from its five actual edges. Projection of the same trajectory onto an orthogonal eigenbasis gives a positive spectral representation of its return probability. The positive R diagonal ensures that at least one positive eigenvalue carries nonzero return weight, hence strictly positive net return at every finite time. Scalar integrating factors propagate that strict input through r, both occupied and vacant margins, the double occupancy, and finally D' = -(a+b+c+d)D + r' p(11). The theorem is conditional on the forward-equation contract; a separate construction of a probability-valued solution is not included. It does not assert the general-dimensional result or the common-tail coefficient."))), DescribeRole.Theorem))));
+                    "A probability-valued forward solution exists, and every forward solution starting at R has r>0, w>0 and D>0 at every positive time. Since 10 and 01 are the only incomparable configurations of the two-dimensional Boolean square, its conditional law is strictly MTP2. In addition theta p(R)-eta p(00)>0, so the active mass increases strictly. No positive-association premise is imposed. The generator is similar to minus a symmetric Gram matrix built from its five actual edges. Projection of the same trajectory onto an orthogonal eigenbasis gives a positive spectral representation of its return probability. The positive R diagonal ensures that at least one positive eigenvalue carries nonzero return weight, hence strictly positive net return at every finite time. Scalar integrating factors propagate that strict input through r, both occupied and vacant margins, the double occupancy, and finally D' = -(a+b+c+d)D + r' p(11). Existence uses exp(t Q); entrywise nonnegativity follows by a scalar diagonal shift to an entrywise nonnegative matrix and its exponential series, and conservation follows from the column sums. The theorem does not assert the general-dimensional result or the common-tail coefficient."))), DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string declaration, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("single-entry-five-" + declaration.ToLowerInvariant()),
@@ -56,6 +58,8 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula All(string v, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
+    private static Formula Exists(string v, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(v), domain, body);
     private static Formula R() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Pos(Formula x) => Rel(D(0), FormulaRelationOperator.LessThan, x);
     private static Formula TheoremFormula()
@@ -68,7 +72,15 @@ internal sealed class SingleEntryFiveStateDocument : IScribeDocumentDefinition
                     Pos(Sub(Mul(Call("theta", k), Call("p", t, D(0))),
                         Mul(Call("eta", k), Call("p", t, D(1)))))))));
         Formula curve = Seq(R(), Sp, To, Sp, Call("Fin", D(5)), Sp, To, Sp, R());
-        return Disp(All("k", F.Id("Rates"), All("p", curve,
-            Imp(Call("ForwardSolution", k, p), All("t", R(), Imp(Pos(t), result))))));
+        Formula nonnegative = All("t", R(), Imp(
+            Rel(D(0), FormulaRelationOperator.LessThanOrEqual, t),
+            And(All("i", Call("Fin", D(5)), Rel(D(0), FormulaRelationOperator.LessThanOrEqual,
+                Call("p", t, F.Id("i")))),
+                Rel(Seq(new Formula.Subscript(Sum, Seq(F.Id("i"), Colon, Call("Fin", D(5)))),
+                    Sp, Call("p", t, F.Id("i"))),
+                    FormulaRelationOperator.Equal, D(1)))));
+        Formula existence = Exists("p", curve, And(Call("ForwardSolution", k, p), nonnegative));
+        return Disp(All("k", F.Id("Rates"), And(existence, All("p", curve,
+            Imp(Call("ForwardSolution", k, p), All("t", R(), Imp(Pos(t), result)))))));
     }
 }
