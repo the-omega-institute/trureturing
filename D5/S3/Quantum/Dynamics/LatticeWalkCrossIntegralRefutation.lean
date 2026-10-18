@@ -6,17 +6,13 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/LatticeWalkCrossIntegralRefutation.claim; result=D5/S3/Quantum/Dynamics/LatticeWalkCrossIntegralRefutation.result; claim=D5/S3/Quantum/Dynamics/LatticeWalkCrossIntegralRefutation.claim
    digest: Early coherent amplitudes refute the odd coprime lattice-walk cross-integral bound. -/
 
-module
-
-public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.Analysis.Complex.ExponentialBounds
+import D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros
 
 /-! The cross-integral estimate of Dhamapurkar and Deng, arXiv:2309.16352, Eq. (15). -/
 
 set_option linter.style.longLine false
-
-public section
 
 noncomputable section
 
@@ -41,27 +37,21 @@ def claim : Prop :=
       ‖∫ t in (0 : ℝ)..T, walkTerm n₁ l₁ t * walkTerm n₂ l₂ t‖ ≤
         32 * n₁ * (n₂ * Real.log n₂) ^ 2 + 32 * n₂ * (n₁ * Real.log n₁) ^ 2
 
-private def phase (x : ℝ) : ℂ := Complex.exp ((x : ℂ) * I)
-
 private def angle (n j : ℕ) : ℝ := 2 * Real.pi * j / n
 
 private def mode (n j : ℕ) (t : ℝ) : ℂ :=
-  phase (t / 2 * Real.cos (angle n j)) * phase (angle n j)
+  Complex.exp (((t / 2 * Real.cos (angle n j) : ℝ) : ℂ) * I) *
+    Complex.exp (((angle n j : ℝ) : ℂ) * I)
 
 private def amp (n : ℕ) (t : ℝ) : ℂ := ∑ j ∈ range n, mode n j t
 
-private lemma phase_add (x y : ℝ) : phase (x + y) = phase x * phase y := by
-  simp only [phase.eq_1, Complex.ofReal_add, add_mul, Complex.exp_add]
-
-private lemma phase_conj (x : ℝ) : conj (phase x) = phase (-x) := by
-  simp [phase.eq_1, ← Complex.exp_conj]
-
-private lemma phase_period (x : ℝ) : phase (x + 2 * Real.pi) = phase x := by
-  rw [phase_add]
-  simp [phase.eq_1, Complex.ofReal_mul, Complex.exp_two_pi_mul_I]
+private lemma phase_period (x : ℝ) : Complex.exp (((x + 2 * Real.pi : ℝ) : ℂ) * I) =
+    Complex.exp ((x : ℂ) * I) := by
+  rw [Complex.ofReal_add, add_mul, Complex.exp_add]
+  simp [Complex.ofReal_mul, Complex.exp_two_pi_mul_I]
 
 private lemma phase_two_sum (n : ℕ) (hn : 3 ≤ n) :
-    ∑ j ∈ range n, phase (2 * angle n j) = 0 := by
+    ∑ j ∈ range n, Complex.exp (((2 * angle n j : ℝ) : ℂ) * I) = 0 := by
   have hn0 : n ≠ 0 := by omega
   have hnC : (n : ℂ) ≠ 0 := by exact_mod_cast hn0
   let z : ℂ := Complex.exp (2 * Real.pi * I * (2 : ℕ) / n)
@@ -81,7 +71,7 @@ private lemma phase_two_sum (n : ℕ) (hn : 3 ≤ n) :
   convert hs0 using 1
   apply sum_congr rfl
   intro j _
-  simp only [phase.eq_1, angle.eq_1, z, ← Complex.exp_nat_mul, Complex.ofReal_mul,
+  simp only [angle.eq_1, z, ← Complex.exp_nat_mul, Complex.ofReal_mul,
     Complex.ofReal_div, Complex.ofReal_natCast, Complex.ofReal_ofNat, Nat.cast_ofNat]
   congr 1
   ring
@@ -97,17 +87,22 @@ private lemma mode_pair (n j k : ℕ) (t : ℝ) :
   have hb : (angle n j - angle n k) / 2 = Real.pi * ((j : ℝ) - k) / n := by
     simp only [angle]; ring
   rw [ha, hb] at hc
-  simp only [mode.eq_1, phase_conj, ← phase_add]
-  rw [show t / 2 * Real.cos (angle n j) + angle n j +
-      -(t / 2 * Real.cos (angle n k) + angle n k) =
-      t / 2 * (Real.cos (angle n j) - Real.cos (angle n k)) +
-        (angle n j - angle n k) by ring, hc, phase_add]
+  have he : mode n j t * conj (mode n k t) =
+      Complex.exp ((((t / 2 * (Real.cos (angle n j) - Real.cos (angle n k)) +
+        (angle n j - angle n k) : ℝ) : ℂ) * I)) := by
+    simp only [mode.eq_1, map_mul, ← Complex.exp_conj, Complex.conj_ofReal,
+      Complex.conj_I, mul_neg]
+    simp only [← Complex.exp_add, Complex.ofReal_add,
+      Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_ofNat]
+    congr 1
+    ring
+  rw [he, hc, Complex.ofReal_add, add_mul, Complex.exp_add]
   congr 1
-  · simp only [phase.eq_1, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg,
+  · simp only [Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg,
       Complex.ofReal_ofNat]
     congr 1
     ring
-  · simp only [phase.eq_1, angle.eq_1, Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_div,
+  · simp only [angle.eq_1, Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_div,
       Complex.ofReal_natCast, Complex.ofReal_ofNat, Int.cast_one, mul_one]
     congr 1
     ring
@@ -118,12 +113,12 @@ private lemma mode_diagonal (n j : ℕ) (t : ℝ) :
   simp
 
 private lemma mode_antidiagonal (n j : ℕ) (hj : j ≤ n) (t : ℝ) :
-    mode n j t * conj (mode n (n - j) t) = phase (2 * angle n j) := by
+    mode n j t * conj (mode n (n - j) t) = Complex.exp (((2 * angle n j : ℝ) : ℂ) * I) := by
   rw [mode_pair]
   have hs : j + (n - j) = n := Nat.add_sub_of_le hj
   have hn : n = 0 ∨ n ≠ 0 := eq_or_ne n 0
   rcases hn with rfl | hn
-  · simp [phase.eq_1, angle.eq_1]
+  · simp [angle.eq_1]
   have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn
   have hsR : (j : ℝ) + (n - j : ℕ) = n := by exact_mod_cast hs
   rw [show Real.pi * ((j : ℝ) + (n - j : ℕ)) / n = Real.pi by
@@ -137,7 +132,7 @@ private lemma mode_antidiagonal (n j : ℕ) (hj : j ≤ n) (t : ℝ) :
     field_simp (disch := exact_mod_cast hn)
     ring
   rw [he]
-  change phase (2 * angle n j - 2 * Real.pi) = _
+  change Complex.exp (((2 * angle n j - 2 * Real.pi : ℝ) : ℂ) * I) = _
   have hp := phase_period (2 * angle n j - 2 * Real.pi)
   simpa only [sub_add_cancel] using hp.symm
 
@@ -157,7 +152,7 @@ private lemma walk_identity (n : ℕ) (hn : Odd n) (hn3 : 3 ≤ n) (t : ℝ) :
     simp only [sum_ite_eq, hj, ite_true, g, mode_diagonal]
   have hanti (j : ℕ) (hj : j ∈ range n) :
       (∑ k ∈ range n, if j + k = n then g j k else 0) =
-        if j = 0 then 0 else phase (2 * angle n j) := by
+        if j = 0 then 0 else Complex.exp (((2 * angle n j : ℝ) : ℂ) * I) := by
     have hjn := mem_range.mp hj
     by_cases hz : j = 0
     · subst j
@@ -169,11 +164,11 @@ private lemma walk_identity (n : ℕ) (hn : Odd n) (hn3 : 3 ≤ n) (t : ℝ) :
       simp_rw [show ∀ k, j + k = n ↔ n - j = k by omega]
       rw [sum_ite_eq, ite_eq_left hmem, ite_eq_right hz]
       exact mode_antidiagonal n j (by omega) t
-  have hs : (∑ j ∈ range n, if j = 0 then 0 else phase (2 * angle n j)) = -1 := by
-    have he : (∑ j ∈ range n, phase (2 * angle n j)) =
-        (∑ j ∈ range n, if j = 0 then 0 else phase (2 * angle n j)) + 1 := by
+  have hs : (∑ j ∈ range n, if j = 0 then 0 else Complex.exp (((2 * angle n j : ℝ) : ℂ) * I)) = -1 := by
+    have he : (∑ j ∈ range n, Complex.exp (((2 * angle n j : ℝ) : ℂ) * I)) =
+        (∑ j ∈ range n, if j = 0 then 0 else Complex.exp (((2 * angle n j : ℝ) : ℂ) * I)) + 1 := by
       rw [← sum_erase_add _ _ hzero]
-      simp only [angle.eq_1, Nat.cast_zero, mul_zero, zero_div, phase.eq_1, Complex.ofReal_zero,
+      simp only [angle.eq_1, Nat.cast_zero, mul_zero, zero_div, Complex.ofReal_zero,
         zero_mul, Complex.exp_zero]
       congr 1
       rw [← sum_erase_add _ _ hzero]
@@ -207,10 +202,26 @@ private lemma walk_identity (n : ℕ) (hn : Odd n) (hn3 : 3 ≤ n) (t : ℝ) :
 
 private lemma cos_square_sum (n : ℕ) (hn : 3 ≤ n) :
     ∑ j ∈ range n, Real.cos (angle n j) ^ 2 = n / 2 := by
-  have hs := congrArg Complex.re (phase_two_sum n hn)
-  simp only [Complex.re_sum, phase.eq_1, Complex.exp_ofReal_mul_I_re, Complex.zero_re,
-    Real.cos_two_mul, sum_sub_distrib, ← mul_sum, sum_const, card_range,
-    nsmul_eq_mul, mul_one] at hs
+  have hnR : (2 : ℝ) < n := by exact_mod_cast (show 2 < n by omega)
+  have hn0 : (0 : ℝ) < n := by linarith
+  have hsin : Real.sin (Real.pi * (2 : ℕ) / n) ≠ 0 := by
+    change Real.sin (Real.pi * 2 / n) ≠ 0
+    apply (Real.sin_pos_of_pos_of_lt_pi (by positivity) ?_).ne'
+    apply (div_lt_iff₀ hn0).2
+    nlinarith [Real.pi_pos]
+  have hs := D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros.sum_sin_sq
+    (a := n) (m := 2) (by omega) hsin
+  have htotal : (∑ j ∈ range n, Real.sin (angle n j) ^ 2) +
+      (∑ j ∈ range n, Real.cos (angle n j) ^ 2) = n := by
+    rw [← sum_add_distrib]
+    simp only [Real.sin_sq_add_cos_sq, sum_const, card_range, nsmul_eq_mul, mul_one]
+  have hs' : (∑ j ∈ range n, Real.sin (angle n j) ^ 2) = n / 2 := by
+    convert hs using 1
+    apply sum_congr rfl
+    intro j _
+    congr 2
+    unfold angle
+    ring
   linarith
 
 private lemma cross_sum_zero (n : ℕ) (hn : 3 ≤ n) (t : ℝ) :
@@ -275,7 +286,7 @@ private lemma amp_im_lower (n : ℕ) (hn : 3 ≤ n) (t : ℝ)
   have him : (amp n t).im =
       ∑ j ∈ range n, Real.sin (t / 2 * Real.cos (angle n j)) *
         Real.cos (angle n j) := by
-    simp only [amp.eq_1, Complex.im_sum, mode.eq_1, Complex.mul_im, phase.eq_1,
+    simp only [amp.eq_1, Complex.im_sum, mode.eq_1, Complex.mul_im,
       Complex.exp_ofReal_mul_I_re, Complex.exp_ofReal_mul_I_im, sum_add_distrib]
     rw [cross_sum_zero n hn t, zero_add]
   rw [him]
@@ -292,7 +303,7 @@ private lemma amp_normSq_upper (n : ℕ) (t : ℝ) :
     calc
       ‖amp n t‖ ≤ ∑ j ∈ range n, ‖mode n j t‖ := norm_sum_le _ _
       _ = n := by
-        simp only [mode.eq_1, norm_mul, phase.eq_1, Complex.norm_exp_ofReal_mul_I, mul_one,
+        simp only [mode.eq_1, norm_mul, Complex.norm_exp_ofReal_mul_I, mul_one,
           sum_const, card_range, nsmul_eq_mul]
   rw [Complex.normSq_eq_norm_sq]
   exact pow_le_pow_left₀ (norm_nonneg _) hb 2
@@ -312,7 +323,7 @@ private lemma continuous_profile (n : ℕ) : Continuous (profile n) := by
   unfold profile
   apply Continuous.sub _ continuous_const
   apply Complex.continuous_normSq.comp
-  unfold amp mode phase
+  unfold amp mode
   fun_prop
 
 private lemma profile_product_lower (n m : ℕ) (hn : 3 ≤ n) (hm : 3 ≤ m) (t : ℝ) :
