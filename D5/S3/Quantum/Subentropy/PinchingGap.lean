@@ -269,8 +269,12 @@ private theorem pinch_gap_integral (A : Matrix (X × B) (X × B) ℂ)
 
 /-- Matrix subentropy is concave on the positive trace-one cone. -/
 theorem matrix_subentropy_concave {ι : Type*} [Fintype ι] [DecidableEq ι] (i₀ : ι) :
-    ConcaveOn ℝ {A : Matrix ι ι ℂ | A.PosSemidef ∧ A.trace = 1}
-      matrixSubentropy := by
+    Convex ℝ {A : Matrix ι ι ℂ | A.PosSemidef ∧ A.trace = 1} ∧
+    ∀ ⦃A : Matrix ι ι ℂ⦄, A.PosSemidef ∧ A.trace = 1 →
+    ∀ ⦃C : Matrix ι ι ℂ⦄, C.PosSemidef ∧ C.trace = 1 →
+    ∀ ⦃c d : ℝ⦄, 0 ≤ c → 0 ≤ d → c + d = 1 →
+      c • matrixSubentropy A + d • matrixSubentropy C ≤
+        matrixSubentropy (c • A + d • C) := by
   have hdomain : Convex ℝ
       {A : Matrix ι ι ℂ | A.PosSemidef ∧ A.trace = 1} := by
     intro A hA C hC c d hc hd hcd
