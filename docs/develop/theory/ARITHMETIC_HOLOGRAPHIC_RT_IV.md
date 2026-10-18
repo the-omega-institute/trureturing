@@ -2453,3 +2453,215 @@ The calibrated cyclic attainer in Theorem 107.1 has ranks $(3,3)$, belongs to th
 The assumption that one original Gram has a transitive fibre-preserving symmetry is substantive. No averaging of a generic pair into this class, no common-stress or local-minimum property of the approximation families, and no unrestricted global-quarter conclusion follows. This completes the proof.
 
 ## 追加锚（本行以下为增补区）
+
+## 111. Spectral parity in the original monomial-symmetry obstruction
+
+### 111.1. Original channels and monomial symmetry
+
+Retain the original channels, four two-coordinate fibres, correct-output forward Grams $G,H$, fixed correlated encodings and unhalved arbitrary-reference diamond error $\delta(A,B)$ of §110.1. For a permutation $\pi$ of the eight coordinates, use $P_\pi e_j=e_{\pi(j)}$. A monomial unitary has the form
+
+$$
+Ue_j=u_j e_{\pi(j)},\qquad |u_j|=1.
+\tag{111.1}
+$$
+
+It preserves the original fibres when $\pi$ preserves their partition. A group $\mathcal U$ of such matrices is a monomial symmetry group of a Hermitian matrix $M$ when $`U^*MU=M`$ for every $U\in\mathcal U$. Its permutation image is finite even if $\mathcal U$ is infinite.
+
+**Theorem 111.1.** Suppose that one of the actual correct-output Grams $M\in\{G,H\}$ has a fibre-preserving monomial symmetry group with transitive permutation image. If any eigenvalue of $M$ has odd multiplicity, then
+
+$$
+\delta(A,B)\geq\sqrt2-1>\frac14.
+\tag{111.2}
+$$
+
+In particular, the conclusion holds if $\operatorname{rank}M$ is odd, or if $M$ has a simple eigenvalue. The other original channel is arbitrary, and either channel may leak. With leakage, $\operatorname{rank}M$ denotes the rank of the actual correct-output Gram and need not equal the channel's local Kraus rank.
+
+The constant is sharp in this class. It is attained by a calibrated rank-$(3,3)$ pair, and it is the infimum in the calibrated exact-rank classes $(7,4)$ and $(7,5)$ described in §107. Thus a pair in the stated monomial-symmetry class with error below $\sqrt2-1$ must have even multiplicity for every eigenvalue of $M$, including zero.
+
+### 111.2. Connected support and a finite central extension
+
+**Proof of Theorem 111.1.** It suffices to rule out $\delta<\sqrt2-1$. For original coordinates $j,k$ in different fibres, the matrix unit $|j\rangle\langle k|$ has trace norm one. Compressing its full output error to the correct-output entry gives
+
+$$
+\left|\frac12-G_{jk}H_{jk}\right|\leq\delta.
+\tag{111.3}
+$$
+
+The physical coefficient is the conjugate of the forward product, which leaves this modulus unchanged. All wrong-output components remain in the full channel before compression; no calibration is used. Because $\sqrt2-1<1/2$, every cross-fibre entry of $G$ and $H$ is nonzero under the supposed strict inequality. In particular the support graph of $M$, with an edge whenever $j\ne k$ and $M_{jk}\ne0$, is connected.
+
+For a diagonal unitary $Z=\operatorname{diag}(z_j)$ preserving $M$, the entrywise equation $`Z^*MZ=M`$ gives $\overline{z_j}z_k=1$ on every support edge. Connectedness therefore makes $Z$ scalar. This argument permits arbitrary complex entries and uses no positive or real gauge.
+
+Let $F$ be the transitive permutation image of $\mathcal U$, and let $P$ be a Sylow two-subgroup of $F$. For a coordinate $x$, orbit-stabilizer gives
+
+$$
+|P\cdot x|
+ =\frac{|P|}{|P\cap F_x|}
+ \geq\frac{|F|_2}{|F_x|_2}=8,
+\tag{111.4}
+$$
+
+where $|K|_2$ is the largest power of two dividing $|K|$. The orbit has at most eight elements, so $P$ is transitive. Every element still preserves the original fibres.
+
+Define $E$ to be the group of all monomial unitary symmetries of $M$ whose permutation lies in $P$ and whose determinant is one. This uses the full matrix stabilizer; scalar multiples of the originally supplied lifts are allowed. Every $\pi\in P$ has a lift, and multiplication by a unit scalar can make its determinant one. Two lifts of the same permutation differ by a diagonal symmetry, hence by a scalar. Exactly eight scalar multiples of a fixed lift have determinant one. Consequently
+
+$$
+|E|=8|P|,\qquad
+\ker(E\longrightarrow P)=\{\zeta I_8:\zeta^8=1\}.
+\tag{111.5}
+$$
+
+Thus $E$ is a finite two-group. No compatible section of the permutation map, splitting of a projective extension, or finiteness of the original group $\mathcal U$ was assumed.
+
+### 111.3. An odd eigenspace contains a common line
+
+The needed representation-theoretic step is the standard fact that an odd-dimensional complex unitary representation of a finite two-group contains an invariant line. It is a special case of the classical irreducible-degree divisibility theorem; see [Teleman, Theorem 13.6](../../../Library/notes/teleman2005representation.md). The following elementary argument supplies the exact step within this proof.
+
+Induct on group order to show that an odd-dimensional irreducible unitary representation has dimension one. The trivial group is immediate. A nontrivial finite two-group has a normal subgroup $N$ of index two. This elementary maximal-subgroup property also follows by induction through a central subgroup of order two. Restrict an odd-dimensional irreducible representation $V$ to $N$ and decompose it orthogonally into $N$-isotypic components. An element $g$ outside $N$ permutes these components. Since $g^2\in N$, its orbits have size one or two. The sum over each orbit is invariant under $N$ and $g$, hence under the whole group. Irreducibility leaves exactly one orbit. A two-element orbit would consist of equal-dimensional components and make $\dim V$ even. Thus $V$ is a single $N$-isotypic component, a sum of copies of an irreducible $N$-module $W$.
+
+Since $\dim V$ is odd, $\dim W$ is odd. Induction gives $\dim W=1$, so $N$ acts by scalars on $V$. Any eigenvector of the unitary representing $g$ then spans a line invariant under $N$ and $g$. Irreducibility forces $\dim V=1$. Finally, an arbitrary odd-dimensional unitary representation decomposes into irreducible orthogonal summands; at least one has odd dimension and is therefore a line. This proves the required step without a classification of the two-group.
+
+Let $\lambda$ be an eigenvalue of $M$ with odd multiplicity. Every element of $E$ commutes with $M$, so its $\lambda$ eigenspace is an odd-dimensional unitary representation of $E$. Choose a nonzero vector $a$ on a common invariant line. For every $U\in E$ there is a unit scalar $\chi(U)$ with
+
+$$
+Ua=\chi(U)a,\qquad
+u_j a_j=\chi(U)a_{\pi(j)},
+\quad Ue_j=u_j e_{\pi(j)}.
+\tag{111.6}
+$$
+
+Transitivity of $P$ forces all coordinate moduli to equal a single $r>0$. In particular, none is zero. Set
+
+$$
+D=\operatorname{diag}(a_j/r).
+\tag{111.7}
+$$
+
+This is one diagonal unitary, independent of the lift or permutation. Equation (111.6) yields
+
+$$
+D^*UD=\chi(U)P_\pi,\qquad
+P_\pi^*(D^*MD)P_\pi=D^*MD.
+\tag{111.8}
+$$
+
+Thus the gauged matrix has a transitive pure-permutation symmetry group preserving the original fibres. Only the subgroup with image $P$ is asserted to have this common gauge; it need not remove the phases of every element of $\mathcal U$.
+
+When the eigenvalue is simple, the same argument is shorter and works for the entire supplied group: every $U\in\mathcal U$ preserves its unique eigenline, so (111.6)–(111.8) hold directly for all of $\mathcal U$. In particular, rank seven gives a unique kernel line, and transitivity forces that kernel vector to have equal nonzero coordinate moduli. Full kernel support is then a conclusion, rather than an additional hypothesis.
+
+### 111.4. The complete physical gauge and sharpness
+
+Assume first that $M=G$. Precompose the original channels by reciprocal diagonal phases:
+
+$$
+A'=A\circ\operatorname{Ad}_D,\qquad
+B'=B\circ\operatorname{Ad}_{\overline D},\qquad
+G'=D^*GD,\qquad H'=D^T H\overline D.
+\tag{111.9}
+$$
+
+Every Stinespring column is phased, including every wrong-output component. On each logical matrix unit $|j\rangle\langle k|$, the complete local outputs acquire factors $d_j\overline{d_k}$ and $\overline{d_j}d_k$, whose product is one. Equivalently,
+
+$$
+(D\otimes\overline D)V_{\rm in}=V_{\rm in}.
+\tag{111.10}
+$$
+
+The entire encoded physical product channel, and hence its arbitrary-reference diamond error, is unchanged. If $M=H$, exchange the two phase assignments. Theorem 110.1 now applies to the gauged pair and gives (111.2), contradicting the supposed smaller error. If $\operatorname{rank}M$ is odd, the sum of the multiplicities of its nonzero eigenvalues is odd, so at least one such multiplicity is odd. This proves the rank assertion.
+
+For sharpness, the cyclic attainer of §107.4 has first-Gram Fourier weights $1/2,m/2,(1-m)/2$, where $m=1/\sqrt2$, on modes $0,1,3$. Its three positive eigenvalues are
+
+$$
+4,\qquad 2\sqrt2,\qquad 4-2\sqrt2,
+\tag{111.11}
+$$
+
+all simple, and its original error is $\sqrt2-1$. Its pure-permutation symmetry is a special case of monomial symmetry. The calibrated approximating families of §107.5 have exact first rank seven, unique full-support Fourier kernel and exact opposite ranks four or five. Their errors converge to the same constant. This establishes the claimed sharp value and rank-class infima, without asserting attainment or local minimality for those approximating families. $\square$
+
+### 111.5. An exact even-multiplicity boundary at quarter error
+
+**Proposition 111.2.** There are original calibrated channels of local Kraus ranks $(4,2)$ and exact error $1/4$ for which the second Gram has a transitive fibre-preserving monomial symmetry group. That Gram has spectrum $4$ with multiplicity two and $0$ with multiplicity six. Consequently the odd-multiplicity condition in Theorem 111.1 cannot be discarded.
+
+**Proof.** Let $X,Y,Z$ be the Pauli matrices and set
+
+$$
+\begin{aligned}
+n_0&=(1,1,1)/\sqrt3,&n_1&=(1,-1,-1)/\sqrt3,\\
+n_2&=(-1,1,-1)/\sqrt3,&n_3&=(-1,-1,1)/\sqrt3.
+\end{aligned}\tag{111.12}
+$$
+
+Choose an orthonormal qubit basis $(b_{f0},b_{f1})$ whose rank-one projectors are
+
+$$
+|b_{fi}\rangle\langle b_{fi}|
+ =\frac{I_2+(-1)^i n_f\cdot(X,Y,Z)}2.
+\tag{111.13}
+$$
+
+Use the tetrahedral marker construction of [RT II §82](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family):
+
+$$
+m_i=\sqrt{\frac78}e_0+(-1)^i\sqrt{\frac18}e_1,
+\qquad a_{fi}=\overline{b_{fi}}\otimes m_i,
+\qquad\langle m_0,m_1\rangle=\frac34.
+\tag{111.14}
+$$
+
+The assignments $|f,i\rangle\mapsto|f\rangle\otimes a_{fi}$ and $|f,i\rangle\mapsto|f\rangle\otimes b_{fi}$ are full original Stinespring isometries. The second record span has dimension two. The two marker vectors are independent, and for either fixed bit the four qubit vectors span $\mathbb C^2$. Their tensor subspaces with $m_0$ and $m_1$ are independent, so the first record span has dimension four. These are the stated local Kraus ranks.
+
+If $B_0$ is the $2\times8$ matrix of second-party records, then
+
+$$
+B_0B_0^*=\sum_{f,i}|b_{fi}\rangle\langle b_{fi}|=4I_2.
+\tag{111.15}
+$$
+
+Thus its Gram $`H=B_0^*B_0`$ has exactly the asserted repeated spectrum.
+
+To retain the original complete-norm normalization, put $R_{fg}=n_f\cdot n_g$. Its Klein-character eigenvalues are $0,4/3,4/3,4/3$. The product coefficients are
+
+$$
+K_{fi,gj}=|\langle b_{fi},b_{gj}\rangle|^2\langle m_i,m_j\rangle.
+\tag{111.16}
+$$
+
+The product-minus-target difference in the logical plus/minus bit sectors has the two real Schur kernels
+
+$$
+D_+=\frac{R-J_4}{8},\qquad
+D_-=\frac{J_4+7R}{8}-I_4,
+\tag{111.17}
+$$
+
+and zero cross-sector terms. Each kernel has eigenvalues $-1/2,1/6,1/6,1/6$. For a Hermitian Klein-circulant kernel $D$, expansion in its real characters gives a signed sum of diagonal unitary conjugations and hence the arbitrary-reference upper bound $\|\operatorname{Schur}_D\|_\diamond\leq\|D\|_1/4$. The uniform pure input attains equality. The two positive input principal blocks have traces summing to one, so the full original norm is the larger sector norm. Therefore
+
+$$
+\delta(A,B)=\max\left\{\frac{\|D_+\|_1}{4},
+                             \frac{\|D_-\|_1}{4}\right\}
+             =\frac14.
+\tag{111.18}
+$$
+
+It remains to verify the monomial symmetry, rather than infer it from the eigenvalue multiplicities. The Pauli $X,Z$ and the Hadamard $Q=(X+Z)/\sqrt2$ act on Bloch vectors respectively by
+
+$$
+(x,y,z)\mapsto(x,-y,-z),\quad
+(x,y,z)\mapsto(-x,-y,z),\quad
+(x,y,z)\mapsto(z,-y,x).
+\tag{111.19}
+$$
+
+These transformations permute the eight cube vertices $\{(-1)^i n_f\}$ and preserve their original antipodal pairs. The first two act transitively on each sign-product class, and the last exchanges the two classes. The generated permutation group is therefore transitive on all eight original coordinates.
+
+For every word $V$ in these qubit unitaries, distinctness of the eight record rays gives a permutation $\pi$ and unit scalars $\zeta_j$ such that $Vb_j=\zeta_jb_{\pi(j)}$. Define $U_Ve_j=\zeta_je_{\pi(j)}$. Then
+
+$$
+B_0U_V=VB_0,\qquad U_V^*HU_V=H.
+\tag{111.20}
+$$
+
+Composition of words gives composition of these monomial matrices, so they form the required group. Changing the individual record phases only diagonally conjugates it. Thus the same actual quarter-error product has transitive monomial symmetry and only even spectral multiplicities. By Theorem 110.1, this $H$ cannot have any diagonal gauge with transitive fibre-preserving pure-permutation symmetry. $\square$
+
+Theorem 111.1 constrains a symmetry class of actual original Grams. It does not assert such symmetry for arbitrary channels or calibrated minima, and Proposition 111.2 is not a subquarter example. The unrestricted global quarter optimum remains open.
+
+## 追加锚（本行以下为增补区）
