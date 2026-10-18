@@ -16,7 +16,7 @@ triage: anchor
 
 Chiranjib Mukhopadhyay, Sk Sazim, Arun Kumar Pati, J. Phys. A: Math. Theor.
 51, 414006 (2018), arXiv:1801.04807v3 (quant-ph). Quotations are from the
-arXiv v3 TeX source.
+arXiv v3 TeX source; `cohbound` and `entbound` label the panels (a) and (b) of Fig. 4.
 
 The qutrit Wigner function:
 
@@ -26,12 +26,12 @@ The qutrit Wigner function:
 
 The coherence lower bound (Eq. (18)):
 
-> However, for qutrit pure states, numerical simulation in Fig. 4(a) leads us to conjecture the following inequality, which gives a reverse, i.e., lower bound to the magic in terms of quantum coherence.
+> However, for qutrit pure states, numerical simulation in Fig. \ref{cohbound} leads us to conjecture the following inequality, which gives a reverse, i.e., lower bound to the magic in terms of quantum coherence.
 > Proposition - The following condition on quantum coherence, quantified via the $l_1$-norm, and 'magic', quantified by the sum negativity, holds for qutrit pure states $M_{SN}[|\psi\rangle] \geq \frac{C_{l_{1}}[|\psi\rangle]}{2}\sqrt{1- \frac{C_{l_{1}}[|\psi\rangle]}{2}}$
 
 The entanglement trade-off (Eq. (19)):
 
-> Proposition - The negativity of entanglement $E_{AB}$ and the sum negativity $SN_{A}$ satisfies the following trade off relation $16 E_{AB}^{2} + 9 M_{SN_{A}}^{2} < 4$. Although an analytical proof is lacking, the numerical result furnished in Fig. 4(b) strongly suggests that the proposition above is true and indeed, almost tight for pure $3\times2$ states.
+> Proposition - The negativity of entanglement $E_{AB}$ and the sum negativity $SN_{A}$ satisfies the following trade off relation $16 E_{AB}^{2} + 9 M_{SN_{A}}^{2} < 4$. Although an analytical proof is lacking, the numerical result furnished in Fig. \ref{entbound} strongly suggests that the proposition above is true and indeed, almost tight for pure $3\times2$ states.
 
 ## Verified locator
 
