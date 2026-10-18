@@ -4262,3 +4262,346 @@ The plane quantifier in (R.248) ranges over real $\theta$ and every complex dens
 At the midpoint $I_2/2$, both the input and the transpose reference are maximally mixed, exactly the hypothesis of the primary source's equation (5); its $1/d^2$ factor is $1/4$ here and its trace is over the code subsystem. Equation (R.259) supplies the corresponding derivation from (R.258). Away from the midpoint the extension is the TP/unital Pauli argument (R.257), not an assertion that the midpoint formula applies unchanged. The primary source's additional optimality criteria are not used: the completed transpose map is a feasible recovery. The full-input dual and reference-norm implications reuse Theorems 7.1 and 7.4, with their exact matrix and scalar checks exposed in (R.262)–(R.268). These are ordinary finite-dimensional analytic channel results, not a kernel-verification, physical-implementation or global-novelty claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 52. A spectral-cap common-direction bound for every positive beta
+
+**Definition 52.1 (actual class, constants and transported reality).** Retain Definition 1.1 and the fixed-input optimum $p_N(\rho)=p(\rho)$ of (R.31). In Sections 52–53, $N:M_3\to M_5$ is any actual original-real-Kraus CPTP encoder of actual Kraus rank exactly two and original phase-difference spectrum $(a,\beta,0,-\beta,-a)$, where
+
+$$
+0<\beta\leq\tfrac12,\qquad a=1-\beta,\qquad
+\gamma=\sqrt a,\qquad T=T_\beta=\frac{1+\gamma}{2},\qquad
+d=1-T=\frac{1-\gamma}{2},\qquad v=\sqrt T,\qquad
+\mathcal C=\operatorname{span}\{|0\rangle,|1\rangle\}.
+\tag{R.269}
+$$
+
+Every admissible third column in (R.9), equivalently the complete joint domain in Sections 31–32, remains allowed. No restriction on the original joint Gram data is imposed. Recoveries range over all complex CPTP maps $M_5\to M_3$ on the entire output; channel fidelities include input purifications, and $\delta_N$ uses the unhalved diamond norm with every finite complex reference permitted. The constants obey $\beta=4dT$, $0<d<\beta$, $\gamma\geq1/\sqrt2$, and $\gamma<v<1$.
+
+Choose a minimal real Kraus list and its actual $V:\mathbb C^3\to\mathbb C^5_B\otimes\mathbb C^2_E$. Original environment conjugation is the antiunitary $J_E$. If coordinates are changed by a unitary $W$, replace $V$ by $(I_B\otimes W^\dagger)V$ and transport $J_E$ to $W^\dagger J_EW$, along with every complementary block. In particular $\tau_- =J_E\tau_+J_E^{-1}$, where $\tau_\pm=\Gamma(\chi_\pm)$; this need not mean entrywise conjugation in the new coordinates. The original input frame is kept fixed.
+
+**Theorem 52.2 (one common missing direction, with a varying phase-plane marginal).** For every actual rank-two encoder in Definition 52.1, every environment density $\omega$, and every rectangular contraction $U:\mathbb C^5\to\mathbb C^3\otimes\mathbb C^2$, let $V_\omega\psi=\psi\otimes|\omega\rangle_{FE}$ purify the constant channel and set $A_{\omega,U}=V_\omega^\dagger(U\otimes I_E)V$. Then
+
+$$
+\min\left\{
+\min_{\substack{\psi\in\mathcal C\\\|\psi\|=1}}
+\operatorname{Re}\langle\psi|A_{\omega,U}|\psi\rangle,
+\operatorname{Re}\langle2|A_{\omega,U}|2\rangle
+\right\}\leq v.
+\tag{R.270}
+$$
+
+All phase-plane tests here are complex. The contraction is an Uhlmann variable, not a restriction on the allowed physical recoveries.
+
+**Proof.** The zero phase cross block in (R.3) gives, for every complex unit $\psi\in\mathcal C$,
+
+$$
+\tau_\psi:=\Gamma(|\psi\rangle\langle\psi|)
+=|\langle\chi_+|\psi\rangle|^2\tau_+
+ +|\langle\chi_-|\psi\rangle|^2\tau_-,\qquad
+\operatorname{Tr}\tau_\psi=1,\qquad 0\preceq\tau_\psi\preceq aI_2.
+\tag{R.271}
+$$
+
+Both phase marginals have eigenvalues $a,\beta$, so their convex combinations have the displayed spectral cap. They need not coincide, commute, or be simultaneously real diagonalizable. Equation (R.222) is recovered at $\beta=1/2$; no general-beta constancy is used.
+
+Fix the same actual $V,\omega,U$ throughout the proof. Diagonalize only the center, writing $\omega=\operatorname{diag}(s,t)$, $s\geq t\geq0$, $s+t=1$, and choose matching conjugate coordinates on $F=\mathbb C^2$, so $|\omega\rangle=\sqrt s|0_F0_E\rangle+\sqrt t|1_F1_E\rangle$. The antiunitary and actual marginals are transported as in Definition 52.1. The spectral cap (R.271) survives this change. Since the target of $U$ has dimension six and its source dimension five, choose one unit $\eta\in\ker U^\dagger$ and write, in these matching coordinates,
+
+$$
+\eta=\sum_{i=0}^1|i\rangle\otimes\overline{\ell_i}
+       +|2\rangle\otimes\bar b,\qquad
+L=[\ell_0,\ell_1],\quad G=LL^\dagger,\quad
+\operatorname{Tr}G+\|b\|^2=1.
+\tag{R.272}
+$$
+
+These bars specify the coefficient convention for this vector; they do not replace the transported original antiunitary. For $\Pi=I_6-\eta\eta^\dagger$ and $z=L\psi$, the projected target vector $(\Pi\otimes I_E)V_\omega\psi$ has environmental marginal
+
+$$
+M_\psi=\omega-\sqrt\omega\,zz^\dagger\sqrt\omega\succeq0,
+\qquad
+|\langle\psi|A_{\omega,U}|\psi\rangle|
+\leq f(\tau_\psi,M_\psi),\qquad
+|\langle2|A_{\omega,U}|2\rangle|^2\leq1-b^\dagger\omega b.
+\tag{R.273}
+$$
+
+Indeed $(\eta^\dagger\otimes I_E)V_\omega\psi=\sqrt\omega L\psi$, giving the first formula. The contracted actual vector $(U\otimes I_E)V\psi$ lies in $\operatorname{ran}\Pi\otimes E$ and its marginal $Q_\psi$ obeys $Q_\psi\preceq\tau_\psi$, since $U^\dagger U\preceq I_B$. Purification overlap is at most $f(Q_\psi,M_\psi)\leq f(\tau_\psi,M_\psi)$. The latter monotonicity follows by taking the trace of the positive square root of $\sqrt{M_\psi}Q_\psi\sqrt{M_\psi}\preceq\sqrt{M_\psi}\tau_\psi\sqrt{M_\psi}$. For $|2\rangle$, the projected target has squared norm $1-b^\dagger\omega b$, and the actual vector has norm at most one. Thus (R.273) holds for contractions and singular projected marginals, with this same $\eta$ for every input.
+
+Suppose, to the contrary, that all real overlaps in (R.270) are strictly greater than $v$. The third-input bound forces
+
+$$
+b^\dagger\omega b<d.
+\tag{R.274}
+$$
+
+For positive semidefinite, possibly singular or subnormalized $Q,M$, and every $X\succ0$, use
+
+$$
+f(Q,M)\leq\sqrt{\operatorname{Tr}(QX)\operatorname{Tr}(MX^{-1})}
+\leq\tfrac12\bigl(\operatorname{Tr}(QX)+\operatorname{Tr}(MX^{-1})\bigr).
+\tag{R.275}
+$$
+
+The polar trace formula expresses fidelity as a maximum of $|\operatorname{Tr}(\sqrt Q\sqrt M W)|$ over unitaries $W$. Insert $X^{1/2}X^{-1/2}$ between the roots and apply Hilbert–Schmidt Cauchy–Schwarz, then arithmetic–geometric mean. No inverse of $Q$ or $M$ is needed. This is the variational fidelity inequality in [Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, Section 2.1, (6), Theorem 3](https://arxiv.org/pdf/1207.5726v2), used here only as this intermediate estimate.
+
+For $0<t\leq\beta$, put
+
+$$
+X=\operatorname{diag}\!\left(\sqrt{s/a},\sqrt{t/\beta}\right),\qquad
+D=\operatorname{diag}\!\left(\sqrt{as},\sqrt{\beta t}\right),\qquad
+f_t=\sqrt{as}+\sqrt{\beta t}.
+\tag{R.276}
+$$
+
+Here $X_{11}\geq X_{22}$ because $\beta s\geq at$ is equivalent to $t\leq\beta$. By (R.271),
+
+$$
+\begin{aligned}
+\operatorname{Tr}(\tau_\psi X)
+&=X_{22}\operatorname{Tr}\tau_\psi+(X_{11}-X_{22})(\tau_\psi)_{11}
+\leq aX_{11}+\beta X_{22}=f_t,\\
+\operatorname{Tr}(M_\psi X^{-1})&=f_t-z^\dagger Dz,\qquad
+f(\tau_\psi,M_\psi)\leq f_t-\tfrac12z^\dagger Dz.
+\end{aligned}
+\tag{R.277}
+$$
+
+On $[0,\beta]$, $f_t$ increases: in the interior its derivative has the sign of $\beta(1-t)-at=\beta-t$. Also $f_d=\gamma\sqrt T+\sqrt{\beta d}=(\gamma+2d)\sqrt T=v$. Consequently $0<t\leq d$, including $t=d$ or equivalently $s=T$, already contradicts the supposed overlaps. At $t=0$, $M_\psi\preceq|0\rangle\langle0|$, so its fidelity with $\tau_\psi$ is at most $\sqrt{(\tau_\psi)_{00}}\leq\sqrt a=\gamma<v$. This treats singular centers without using $X^{-1}$.
+
+It remains in the weighted branch to consider $d<t\leq\beta$. The inequalities for every complex $\psi$ now imply
+
+$$
+L^\dagger DL\prec2(f_t-v)I_2,\qquad
+G\prec2(f_t-v)D^{-1},\qquad
+\operatorname{Tr}G<\frac{2(f_t-v)f_t}{\sqrt{a\beta st}}.
+\tag{R.278}
+$$
+
+To obtain the middle inequality, apply the equality of the largest eigenvalues of $(D^{1/2}L)^\dagger(D^{1/2}L)$ and $(D^{1/2}L)(D^{1/2}L)^\dagger$, then conjugate by $D^{-1/2}$. Strictness follows from compactness of the unit sphere. This uses no inverse of $L$.
+
+The needed scalar bound is uniform over this entire interval:
+
+$$
+\frac{2(f_t-v)f_t}{\sqrt{a\beta st}}\leq\frac{t-d}{t}.
+\tag{R.279}
+$$
+
+For an exact proof, set $x=\sqrt{Tt/(ds)}$. Its range is $1<x\leq1+1/\gamma$: the endpoint follows from $\beta=4dT$ and $s=a=\gamma^2$ at $t=\beta$. In these variables
+
+$$
+s=\frac{T}{T+dx^2},\qquad t=\frac{dx^2}{T+dx^2},\qquad
+f_t=\frac{\sqrt T[\gamma+(1-\gamma)x]}{\sqrt{T+dx^2}},\qquad
+\frac{f_t-v}{t-d}
+=\frac{(1+2\gamma)-(2\gamma-1)x}{(x+1)(f_t+v)}.
+\tag{R.280}
+$$
+
+For the last identity, subtract $v^2=T$ from $f_t^2$ and use the exact factorization
+
+$$
+[\gamma+(1-\gamma)x]^2-(T+dx^2)
+=d(x-1)[(1+2\gamma)-(2\gamma-1)x].
+\tag{R.281}
+$$
+
+All canceled factors are positive in this branch. Using $t/\sqrt{a\beta st}=x/(2\gamma T)$, (R.279) is equivalent to
+
+$$
+\frac{f_t}{f_t+v}H_\gamma(x)\leq\frac{\gamma(1+\gamma)}2,\qquad
+H_\gamma(x)=\frac{x[(1+2\gamma)-(2\gamma-1)x]}{x+1}.
+\tag{R.282}
+$$
+
+Here $H_\gamma(x)>0$ by $f_t>v$ and (R.280). The following quadratic is strictly positive:
+
+$$
+\begin{aligned}
+\bigl(\tfrac{11}{10}-H_\gamma(x)\bigr)(x+1)
+&=(2\gamma-1)x^2-(2\gamma-\tfrac1{10})x+\tfrac{11}{10},\\
+\operatorname{disc}
+&=4\gamma^2-\tfrac{46}{5}\gamma+\tfrac{441}{100}<0.
+\end{aligned}
+\tag{R.283}
+$$
+
+Indeed for $7/10\leq\gamma\leq1$ the leading coefficient is positive, the discriminant has derivative $8\gamma-46/5<0$, and its value at $7/10$ is $-7/100$. Our range $\gamma\geq1/\sqrt2>7/10$ is contained in that interval. Thus $H_\gamma(x)<11/10$. Cauchy–Schwarz gives $f_t\leq\sqrt{(a+\beta)(s+t)}=1$, and $T>17/20>81/100$ gives $v>9/10$. Therefore
+
+$$
+\frac{f_t}{f_t+v}H_\gamma(x)
+<\frac{11}{19}<\frac{119}{200}
+<\frac{\gamma(1+\gamma)}2.
+\tag{R.284}
+$$
+
+The last comparison uses $\gamma>7/10$; the middle one is the integer inequality $2200<2261$. This proves (R.279) without a finite-sample replacement.
+
+For the other branch, $\beta\leq t\leq1/2$, take $X=I_2$ in (R.275). Trace one in (R.271) gives $f(\tau_\psi,M_\psi)\leq1-z^\dagger\omega z/2$. The supposed overlaps imply, by the same singular-value argument used in (R.278),
+
+$$
+L^\dagger\omega L\prec2(1-v)I_2,\qquad
+\operatorname{Tr}G<2(1-v)\operatorname{Tr}\omega^{-1}
+=\frac{2(1-v)}{st}\leq\frac{t-d}{t}.
+\tag{R.285}
+$$
+
+To verify its last scalar comparison, $(1-t)(t-d)$ increases on $[\beta,1/2]$, because its derivative is $1+d-2t\geq d>0$. Its minimum is $a(\beta-d)$. Moreover $\beta-d=d(1+2\gamma)$ and
+
+$$
+\begin{aligned}
+2(1-v)&=\frac{2d}{1+v}\leq a\,d(1+2\gamma)=a(\beta-d),\\
+(1+v)\gamma^2(1+2\gamma)
+&\geq(1+\gamma)\gamma^2(1+2\gamma)
+\geq1+\frac{3\sqrt2}{4}>2.
+\end{aligned}
+\tag{R.286}
+$$
+
+Here $v\geq\gamma$; the product in the second line increases for positive $\gamma$, and its value at $1/\sqrt2$ is the displayed constant. Dividing the first line by $st>0$ proves (R.285).
+
+In either remaining branch, (R.272), (R.278)–(R.279), and (R.285) yield the same contradiction:
+
+$$
+\|b\|^2=1-\operatorname{Tr}G>\frac dt,\qquad
+b^\dagger\omega b\geq t\|b\|^2>d,
+\tag{R.287}
+$$
+
+contrary to (R.274). This proves (R.270). The branch union includes $t=\beta$, $t=1/2$ and $\beta=1/2$, as well as the separately treated $t=0$ and $t=d$. The only center inverses occur at $t>0$; no input, projected marginal, actual third-column matrix or recovery dual is inverted. Beta zero is excluded from the positive-beta divisions. The proof uses the third column only through this actual $V$ and its norm bound in (R.273), and hence covers its complete admissible domain. $\square$
+
+## 53. One original-real block input before every complex recovery
+
+**Theorem 53.1 (uniform general-beta actual-rank-two recovery bound).** For every actual original-real-Kraus encoder in Definition 52.1, there is one original-input-frame real density
+
+$$
+\rho=\begin{pmatrix}x&z&0\\z&y&0\\0&0&1-x-y\end{pmatrix},\qquad
+x,y\geq0,\quad x+y\leq1,\quad z\in\mathbb R,\quad z^2\leq xy,
+\qquad p_N(\rho)\leq T_\beta.
+\tag{R.288}
+$$
+
+Consequently this same input satisfies $F_e(\rho,RN)\leq T_\beta$ for every complex whole-output CPTP recovery $R:M_5\to M_3$, and
+
+$$
+g_N^2\leq T_\beta,\qquad
+\delta_N\geq1-\sqrt{1-\beta}.
+\tag{R.289}
+$$
+
+The diamond norm in this statement is unhalved and permits every finite complex reference. The witness depends on the actual encoder, including its third column; it is chosen before the recovery.
+
+**Proof.** Use the same compact convex set $\mathcal S$ of all complex $\mathcal C\oplus\mathbb C|2\rangle$ block densities as in Theorem 45.1. For a fixed actual $V$, the unrestricted fixed-input recovery/complement and rectangular Uhlmann interfaces in (R.223) give
+
+$$
+h(\rho,\omega):=F_\rho(\Gamma,\mathcal C_\omega)
+=\max_{\|U\|\leq1}\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U}),
+\qquad \sqrt{p_N(\rho)}=\max_{\omega\in\mathsf D(E)}h(\rho,\omega).
+\tag{R.290}
+$$
+
+For fixed $\omega$, the first maximum makes $h$ continuous and convex in $\rho$. For fixed $\rho$, it is continuous and concave in $\omega$, being root fidelity between the fixed purified complementary output and the reference marginal tensored with $\omega$. Both $\mathcal S$ and $\mathsf D(E)$ are nonempty compact convex sets, including their singular boundaries. Thus the first convex-concave minimax exchange applies. At fixed $\omega$, the payoff is real bilinear in the Hermitian density $\rho$ and the complex contraction $U$ viewed as a real variable; both domains are nonempty compact convex sets, giving the second exchange. Precisely,
+
+$$
+\begin{aligned}
+\min_{\rho\in\mathcal S}\sqrt{p_N(\rho)}
+&=\min_{\rho\in\mathcal S}\max_\omega h(\rho,\omega)
+=\max_\omega\min_{\rho\in\mathcal S}h(\rho,\omega)\\
+&=\max_\omega\max_{\|U\|\leq1}
+\min_{\rho\in\mathcal S}\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})
+\leq v.
+\end{aligned}
+\tag{R.291}
+$$
+
+For the last inequality, a linear functional on $\mathcal S$ attains its minimum either on a pure complex phase-plane density or on $|2\rangle\langle2|$; its minimum is exactly the left side of (R.270). The minimax hypotheses are the ones already used in (R.233) and Definition 10.1. Continuity and compactness attain a single $\rho\in\mathcal S$ with $p_N(\rho)\leq T$. No independently chosen optimal centers or inputs are combined.
+
+For an original-real Kraus list, the squared trace expression (R.30) implies $p_N(\bar\rho)=p_N(\rho)$: conjugation bijects the full complex CPTP recovery set. Each recovery's expression is convex in $\rho$, as a sum of squared moduli of linear trace functionals; maximizing preserves convexity. Hence
+
+$$
+\rho_{\mathbb R}=\frac{\rho+\bar\rho}{2}\in\mathcal S,\qquad
+p_N(\rho_{\mathbb R})\leq\tfrac12[p_N(\rho)+p_N(\bar\rho)]
+=p_N(\rho)\leq T.
+\tag{R.292}
+$$
+
+This is averaging in the original real input frame, giving exactly (R.288). In phase coordinates it is instead the transported averaging (R.33). Diagonalizing the environment center did not change this input frame.
+
+Theorem 7.1 then supplies an attained dual $Y\succeq0$ for this input, with $Y\otimes I_3\succeq D_\rho D_\rho^\dagger$ and $\operatorname{Tr}Y=p_N(\rho)\leq T$, even for singular $\rho$ or $Y$. Fix one purification $|\Psi_\rho\rangle$ with reference dimension at most three. For every allowed recovery, the binary measurement onto this same pure identity target gives
+
+$$
+\begin{aligned}
+\|RN-\mathrm{id}_3\|_\diamond
+&\geq\|(RN\otimes\mathrm{id})(|\Psi_\rho\rangle\langle\Psi_\rho|)
+             -|\Psi_\rho\rangle\langle\Psi_\rho|\|_1\\
+&\geq2\bigl(1-F_e(\rho,RN)\bigr)
+\geq2(1-T)=1-\sqrt a.
+\end{aligned}
+\tag{R.293}
+$$
+
+Take the infimum over the entire complex CPTP recovery set. This reference witness lower-bounds the supremum permitting all finite complex references; Schmidt compression of the witness does not restrict that domain. Also every recovery's worst-input squared fidelity is at most its value at this one input, proving $g_N^2\leq T$. These are the existing norm implications of Theorem 7.4, now with uniform threshold-input existence on the full positive-beta actual-rank-two class. They assert neither a formula for the witness at every encoder nor equality of the restricted and unrestricted input optima. $\square$
+
+## 54. Low-rank comparison centers at arbitrary actual encoder rank
+
+**Corollary 54.1 (each rank-at-most-two center is insufficient for a fidelity-threshold violation).** Let $N:M_3\to M_5$ be any actual original-real-Kraus CPTP encoder of the original phase-difference spectrum $(a,\beta,0,-\beta,-a)$, $0<\beta\leq1/2$, now with arbitrary actual encoder Kraus rank $r\leq9$. Retain its actual $V:\mathbb C^3\to\mathbb C^5_B\otimes E$ and complement $\Gamma$. For each individual environment density $\omega$ of rank at most two,
+
+$$
+\min_{\rho\in\mathcal S}F_\rho(\Gamma,\mathcal C_\omega)\leq\sqrt{T_\beta},
+\qquad
+F(\Gamma,\mathcal C_\omega)\leq\sqrt{T_\beta}.
+\tag{R.294}
+$$
+
+These are root channel fidelities on complex input purifications, with all finite complex references permitted. Under the unrestricted recovery/complement interface, a violation $g_N^2>T_\beta$ could therefore only be witnessed by a center of rank at least three. This statement imposes no rank restriction on the actual encoder or on its allowed complex whole-output CPTP recoveries.
+
+**Proof.** In the actual environment of dimension $r$, (R.3) still gives the convex-combination formula in (R.271), now with $0\preceq\tau_\psi\preceq aI_E$ and trace one. The phase marginals have eigenvalues $a,\beta$ on their supports and zero elsewhere. Coordinate changes retain the original transported antiunitary as in Definition 52.1.
+
+For a rank-two $\omega$, put $P=\operatorname{supp}\omega$ and purify it using $F=\mathbb C^2$, with $P$ coordinates diagonalizing the center as $\operatorname{diag}(s,t)$. Keep the actual $V$ into $B\otimes E$, rather than replacing it by a two-dimensional-environment encoder. The Uhlmann contraction is still $U:\mathbb C^5\to\mathbb C^3\otimes F$; thus one common $\eta\in\ker U^\dagger$ gives exactly (R.272). The projected target marginal $M_\psi$ is supported on $P$, with the same two-by-two expression (R.273). For the actual contracted marginal the argument there still gives
+
+$$
+|\langle\psi|A_{\omega,U}|\psi\rangle|
+\leq f(\tau_\psi,M_\psi)
+=f(Q_\psi,M_\psi),\qquad
+Q_\psi=P\tau_\psi P\big|_P,\quad
+0\preceq Q_\psi\preceq aI_2,\quad \operatorname{Tr}Q_\psi\leq1.
+\tag{R.295}
+$$
+
+The fidelity equality follows from $\sqrt{M_\psi}\tau_\psi\sqrt{M_\psi}=\sqrt{M_\psi}Q_\psi\sqrt{M_\psi}$ on $P$; no commutation of $P$ with $\tau_\psi$ is assumed. Its trace may be strictly below one, so normalization must not be silently imposed.
+
+For $0<t\leq\beta$ the $X$ in (R.276) still satisfies $X_{11}\geq X_{22}>0$, and
+
+$$
+\operatorname{Tr}(Q_\psi X)
+=X_{22}\operatorname{Tr}Q_\psi+(X_{11}-X_{22})(Q_\psi)_{11}
+\leq X_{22}+a(X_{11}-X_{22})
+=aX_{11}+\beta X_{22}=f_t.
+\tag{R.296}
+$$
+
+Thus (R.277)–(R.284) apply unchanged to the compressed marginal. For $t\geq\beta$, $X=I_2$ uses $\operatorname{Tr}Q_\psi\leq1$ and yields the same bound $1-z^\dagger\omega z/2$ as (R.285). The third-input norm bound and the normalization $\operatorname{Tr}G+\|b\|^2=1$ are unchanged. Consequently the identical scalar comparisons and contradiction (R.287) establish (R.270) at this fixed center and every contraction, without imposing encoder rank two.
+
+For a rank-one center $\omega=|e\rangle\langle e|$, any pure $\psi\in\mathcal C$ already has
+
+$$
+F_\psi(\Gamma,\mathcal C_\omega)^2
+=\langle e|\tau_\psi|e\rangle\leq a<T.
+\tag{R.297}
+$$
+
+This is also the $t=0$ case if $F$ is padded to dimension two. At each fixed rank-two center, the compact bilinear minimax exchange between $\mathcal S$ and the contraction ball, as justified in (R.291), gives $\min_{\rho\in\mathcal S}h(\rho,\omega)\leq v$. Rank one satisfies that conclusion directly by (R.297). Minimizing over all input densities can only decrease it, proving (R.294). Unrestricted duality $g_N=\max_\omega F(\Gamma,\mathcal C_\omega)$ then proves the stated necessary rank condition for a fidelity-threshold violation. $\square$
+
+**Definition 54.2 (order of the center and input quantifiers).** Corollary 54.1 asserts that for each individual rank-at-most-two center there exists a complex block input, possibly depending on that center. The subset $\{\omega\in\mathsf D(E):\operatorname{rank}\omega\leq2\}$ is nonconvex when $r\geq3$: for instance the average of two diagonal rank-two densities with different supports can have rank three. Therefore the first minimax exchange in (R.291) cannot be applied over that subset. No one common higher-rank-encoder input, original-real averaging at a fixed arbitrary center, or rank-two optimizer for the full center problem is inferred. The physical recovery optimization remains over all complex CPTP maps on the entire output.
+
+## 55. Sharpness, reused interfaces and the remaining arbitrary-rank target
+
+**Definition 55.1 (dependence and sharpness).** The added model-specific inference is the spectral-cap estimate (R.277), the exact scalar comparison (R.279)–(R.286), and its compressed-center extension (R.295)–(R.296). They extend the half-beta actual-rank-two result of Sections 44–45 to every $0<\beta\leq1/2$. The common-object normalization and target projection are (R.224)–(R.225); the half-beta overlap estimate (R.226) is replaced by (R.273)–(R.277), using the spectral cap (R.271) in place of constant marginal (R.222). At $\beta=1/2$, Theorems 44.2 and 45.1 remain special cases. The phase-leakage and $C=0$ exclusions of Theorem 4.3 and residual exclusions of Section 3 remain available at arbitrary actual rank; no rank reduction follows from their union with Theorem 53.1.
+
+The threshold is attained by the already specified actual family (P.11): for every positive beta its actual Kraus rank is exactly two, since its two nonzero Kraus matrices are independent. Theorem 8.1 supplies $g_{N_\beta}^2=T_\beta$, and (P.14)–(P.15) give a whole-output complex CPTP recovery with unhalved full-reference error $1-\sqrt a$. The matching recovery-independent lower bound is already in the proof of (P.12). Thus the constants in (R.289) are sharp within the actual-rank-two class. These existing sharpness certificates are used without another construction or an assertion about arbitrary-rank optimizers. Beta zero requires none of the divisions above: its original target is $\delta_N\geq0$ and its isometric attainer is already Theorem 8.2 and the endpoint of (P.11).
+
+The recovery/complement and fixed-input identities are the literature-attested interfaces in (R.223): Bény–Oreshkov [arXiv:0907.5391v4, Theorem 1, (3), with its fixed-state variant](https://arxiv.org/pdf/0907.5391v4), and [arXiv:1103.0649v3, (54)–(56), Corollary 5, (64)–(66), (132)–(133)](https://arxiv.org/pdf/1103.0649v3). Here the target identity has scalar-trace complement, all spaces are finite complex spaces, and rectangular contractions permit unequal purification dimensions and singular inputs or centers. The CPTP completion is essential; the Kraus-bounded trace-nonincreasing Theorem 3 alone does not provide the unrestricted equality. Minimax uses the compact convex domains and convexity/concavity verified in (R.291), with the standard theorem attributed in Definition 10.1; the attained recovery dual and the norm conversion are Theorems 7.1 and 7.4. Equation (R.275) includes its own support-independent derivation of the cited variational inequality. The new class estimate is a repo-derived finite-dimensional analytic composition of these interfaces, without a kernel-certification, physical-realization or global-novelty claim.
+
+**Definition 55.2 (unchanged all-class question and the missing weighted bridge).** The original target (R.243) still asks for $\delta_N\geq1-\sqrt{1-\beta}$ for every actual original-real-Kraus $M_3\to M_5$ encoder of the specified phase spectrum, at arbitrary actual rank up to nine, with all complex whole-output CPTP recoveries and the unhalved diamond norm over every finite complex reference. That target remains unproved outside its established subclasses. Corollary 54.1 excludes low-rank comparison centers from a violation of the fidelity-threshold condition; it is not a rank-two optimizer theorem.
+
+For centers of rank at least three, the total weight outside a leading eigenvector cannot be substituted for the smallest eigenvalue in $b^\dagger\omega b$. The closure (R.287) needs the same two weights with $s+t=1$ and $b^\dagger\omega b\geq t(1-\operatorname{Tr}G)$. Higher-dimensional kernels supply more missing directions but do not alone supply the necessary joint weighted estimate on their third-input components. A sufficient remaining bridge is $\lambda_{\min}\operatorname{Herm}A_{\omega,U}\leq\sqrt{T_\beta}$ for every remaining actual encoder, rank-at-least-three center and contraction in its correctly dimensioned Uhlmann interface. Such a uniform estimate would imply the desired norm lower bound by the pure-target estimate (R.293). No such uniform estimate, actual improving encoder/recovery pair, or strict full-reference unhalved diamond upper certificate below $1-\sqrt{1-\beta}$ is supplied here.
+
+## 追加锚（本行以下为增补区）
