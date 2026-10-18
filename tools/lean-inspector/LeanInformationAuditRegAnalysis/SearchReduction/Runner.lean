@@ -127,6 +127,17 @@ private partial def statementHead : Expr → List Name
   | .mdata _ body => statementHead body
   | e => [expressionHead e]
 
+/-- Only compiler matcher names may differ in this full-statement fallback.
+The marker is a retrieval key, never a term submitted to the kernel. -/
+private def matcherShape (type : Expr) : Expr :=
+  type.replace fun expression =>
+    match expression with
+    | .const (.str _ part) levels =>
+      if part.startsWith "match_" then
+        some (.const `_searchReduction.matcherShape levels)
+      else none
+    | _ => none
+
 /-- A cheap syntactic prefilter avoids normalizing arbitrary mathematical
 predicates merely to discover that they contain no logical pair. -/
 private partial def pairHead (env : Environment) (expression : Expr)
@@ -198,14 +209,18 @@ partial def structural (goal : MVarId) (extra : Array Name) :
   let reducedHead := statementHead type
   let heads := if originalHead == reducedHead then #[originalHead]
     else #[originalHead, reducedHead]
-  for key in heads do
-    for name in (← get).statementHeads[key]?.getD #[] do
-      let before ← (saveState : MetaM Meta.SavedState)
-      let value ← mkConstWithFreshMVarLevels name
-      if ← isDefEq (← inferType value) original then
-        goal.assign value
-        return #[]
-      (before.restore : MetaM Unit)
+  let shape := matcherShape original
+  if shape != original then
+    for key in heads do
+      for name in (← get).statementHeads[key]?.getD #[] do
+        let info ← getConstInfo name
+        unless matcherShape info.type == shape do continue
+        let before ← (saveState : MetaM Meta.SavedState)
+        let value ← mkConstWithFreshMVarLevels name
+        if ← isDefEq (← inferType value) original then
+          goal.assign value
+          return #[]
+        (before.restore : MetaM Unit)
   if type.isForall then
     let (_, next) ← goal.intro1
     return ← structural next extra
