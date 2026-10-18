@@ -13,14 +13,28 @@ import time
 
 PREFIX = "RUNNER_DIAGNOSTICS "
 SIGNALS = "HUP,INT,TERM,QUIT,ABRT,KILL,USR1,USR2"
+OUTPUT_LOCK = threading.Lock()
 
 
 def emit(kind, **fields):
     try:
-        print(PREFIX + json.dumps(dict(kind=kind, time_ns=time.time_ns(), **fields),
-                                  sort_keys=True), flush=True)
+        payload = (PREFIX + json.dumps(dict(kind=kind, time_ns=time.time_ns(), **fields),
+                                      sort_keys=True) + "\n").encode()
+        with OUTPUT_LOCK:
+            fd = sys.stdout.fileno()
+            # Keep ordinary pipe records atomic relative to business output.
+            if len(payload) > os.fpathconf(fd, "PC_PIPE_BUF"):
+                payload = (PREFIX + '{"kind":"unavailable","reason":"console-record-too-large"}\n').encode()
+            while payload:
+                try:
+                    written = os.write(fd, payload)
+                except InterruptedError:
+                    continue
+                if written <= 0:
+                    break
+                payload = payload[written:]
     except (OSError, ValueError):
-        pass  # A failed console observer must not affect the business command.
+        pass  # No buffered stdout can change the business exit during shutdown.
 
 
 def identity(pid):

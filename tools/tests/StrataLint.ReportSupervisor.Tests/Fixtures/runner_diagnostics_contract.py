@@ -131,9 +131,9 @@ class RunnerDiagnosticsTests(unittest.TestCase):
     def test_observer_failure_preserves_exit_and_redacts_error(self):
         module = load()
         with mock.patch.object(module.Observer, "start", side_effect=RuntimeError("PRIVATE_ENV")), \
-                mock.patch("builtins.print") as output:
+                mock.patch.object(module.os, "write", side_effect=lambda fd, data: len(data)) as output:
             self.assertEqual(7, module.observed([sys.executable, "-c", "raise SystemExit(7)"]))
-        lines = "\n".join(call.args[0] for call in output.call_args_list)
+        lines = "\n".join(call.args[1].decode() for call in output.call_args_list)
         self.assertNotIn("PRIVATE_ENV", lines)
         self.assertIn('"reason": "observer-start"', lines)
         self.assertIn('"sampler_alive": false', lines)
@@ -151,9 +151,9 @@ class RunnerDiagnosticsTests(unittest.TestCase):
                     mock.patch.object(module.shutil, "which", side_effect=lambda name:
                                       str(fake) if installed and name == "strace" else None), \
                     mock.patch.dict(os.environ, PATH=str(self.directory)), \
-                    mock.patch("builtins.print") as output:
+                    mock.patch.object(module.os, "write", side_effect=lambda fd, data: len(data)) as output:
                 self.assertEqual(7, module.observed([sys.executable, "-c", "raise SystemExit(7)"]))
-            lines = "\n".join(call.args[0] for call in output.call_args_list)
+            lines = "\n".join(call.args[1].decode() for call in output.call_args_list)
             self.assertNotIn("PRIVATE_ENV", lines)
             self.assertIn('"sampler_alive": false', lines)
             if installed:
@@ -201,6 +201,33 @@ class RunnerDiagnosticsTests(unittest.TestCase):
                 expected["runner_diagnostics"] = "true"
             self.assertEqual(expected, inputs)
 
+    def test_console_failure_and_partial_writes_preserve_exit(self):
+        program = ("import importlib.util,sys; "
+                   "s=importlib.util.spec_from_file_location('d',sys.argv[1]); "
+                   "m=importlib.util.module_from_spec(s); s.loader.exec_module(m); "
+                   "m.Observer.start=lambda self: None; "
+                   "raise SystemExit(m.observed([sys.executable,'-c','raise SystemExit(7)']))")
+        child = subprocess.Popen([sys.executable, "-B", "-c", program, str(WRAPPER)],
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        child.stdout.close()
+        error = child.stderr.read()
+        self.assertEqual(7, child.wait(timeout=5), error)
+        self.assertEqual("", error)
+        child.stderr.close()
+        module, writes, calls = load(), [], []
+        def partial(_fd, data):
+            calls.append(True)
+            if len(calls) == 1:
+                raise InterruptedError()
+            count = min(3, len(data))
+            writes.append(data[:count])
+            return count
+        with mock.patch.object(module.os, "write", side_effect=partial):
+            module.emit("signal", si_pid=123)
+        text = b"".join(writes).decode()
+        self.assertEqual(123, records(text)[0]["si_pid"])
+        self.assertTrue(text.endswith("\n"))
+
     def test_partial_tracer_start_failure_still_reaps_real_process(self):
         module = load()
         fake = self.directory / "strace"
@@ -239,9 +266,9 @@ class RunnerDiagnosticsTests(unittest.TestCase):
         module = load()
         with mock.patch.object(module.Observer, "start"), \
                 mock.patch.object(module.Observer, "close", side_effect=PermissionError("PRIVATE_ENV")), \
-                mock.patch("builtins.print") as output:
+                mock.patch.object(module.os, "write", side_effect=lambda fd, data: len(data)) as output:
             self.assertEqual(7, module.observed([sys.executable, "-c", "raise SystemExit(7)"]))
-        lines = "\n".join(call.args[0] for call in output.call_args_list)
+        lines = "\n".join(call.args[1].decode() for call in output.call_args_list)
         self.assertNotIn("PRIVATE_ENV", lines)
         self.assertIn('"reason": "observer-close"', lines)
 

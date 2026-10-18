@@ -15,6 +15,7 @@ public sealed class RunnerDiagnosticsTests
     [InlineData("test_cleanup_failure_is_redacted_and_keeps_business_exit")]
     [InlineData("test_stale_process_or_group_identity_cannot_receive_cleanup")]
     [InlineData("test_partial_tracer_start_failure_still_reaps_real_process")]
+    [InlineData("test_console_failure_and_partial_writes_preserve_exit")]
     [InlineData("test_linux_signal_sender_and_term_join_entire_business_tree")]
     [InlineData("test_linux_sudo_observer_detaches_without_signalling_worker")]
     public void OptInObservationPreservesBusinessAndReapsObservers(string test)
