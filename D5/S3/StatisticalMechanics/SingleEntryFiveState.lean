@@ -74,12 +74,16 @@ private theorem positive_forcing (f g : ℝ → ℝ) (c : ℝ)
   rw [hf0, mul_zero] at h
   exact (mul_pos_iff_of_pos_left (Real.exp_pos _)).mp h
 
-private theorem symmetric_return_derivative {V : Type*} [Fintype V] [DecidableEq V]
+private theorem symmetric_return_data {V : Type*} [Fintype V] [DecidableEq V]
     (A : Matrix V V ℝ) (hA : A.PosSemidef) (o : V) (ho : 0 < A o o)
     (y : ℝ → V → ℝ) (y0 : y 0 = Pi.single o 1)
     (hy : ∀ t, 0 ≤ t → ∀ i,
       HasDerivAt (fun u => y u i) (-(A *ᵥ y t) i) t) :
-    ∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0 := by
+    ∃ lam c : V → ℝ,
+      (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
+      (∃ j, 0 < lam j * c j) ∧
+      (∀ t, 0 ≤ t → y t o = ∑ j, c j * Real.exp (-lam j * t)) ∧
+      ∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0 := by
   let U : Matrix V V ℝ := hA.1.eigenvectorUnitary
   let lam := hA.1.eigenvalues
   let c := fun t j => ∑ i, U i j * y t i
@@ -146,28 +150,32 @@ private theorem symmetric_return_derivative {V : Type*} [Fintype V] [DecidableEq
   have hex : ∃ j, 0 < lam j * U o j ^ 2 := by
     have hs : 0 < ∑ j, lam j * U o j ^ 2 := by rwa [← hdiag]
     simpa using (Finset.sum_pos_iff_of_nonneg (fun j _ => hnonneg j)).mp hs
-  intro t ht
-  have hder : HasDerivAt (fun u => ∑ j, U o j ^ 2 * Real.exp (-lam j * u))
-      (∑ j, -(lam j * U o j ^ 2 * Real.exp (-lam j * t))) t := by
-    apply HasDerivAt.fun_sum
-    intro j _
-    convert (((hasDerivAt_id t).const_mul (-lam j)).exp.const_mul (U o j ^ 2)) using 1
-    all_goals (first | rfl | (dsimp; ring))
-  have hpos : 0 < ∑ j, lam j * U o j ^ 2 * Real.exp (-lam j * t) := by
-    apply (Finset.sum_pos_iff_of_nonneg
-      (fun j _ => mul_nonneg (hnonneg j) (Real.exp_pos _).le)).mpr
-    obtain ⟨j, hj⟩ := hex
-    exact ⟨j, Finset.mem_univ _, mul_pos hj (Real.exp_pos _)⟩
-  by_cases hzero : t = 0
-  · subst t
-    rw [(hy 0 le_rfl o).deriv, y0]
-    simpa using neg_neg_of_pos ho
-  · have htpos : 0 < t := lt_of_le_of_ne ht (Ne.symm hzero)
-    have heq : (fun u => y u o) =ᶠ[nhds t]
-        (fun u => ∑ j, U o j ^ 2 * Real.exp (-lam j * u)) :=
-      Filter.eventually_of_mem (Ioi_mem_nhds htpos) (fun u hu => hreturn u hu.le)
-    rw [heq.deriv_eq, hder.deriv, Finset.sum_neg_distrib]
-    exact neg_neg_of_pos hpos
+  have hdecr : ∀ t, 0 ≤ t → deriv (fun u => y u o) t < 0 := by
+    intro t ht
+    have hder : HasDerivAt (fun u => ∑ j, U o j ^ 2 * Real.exp (-lam j * u))
+        (∑ j, -(lam j * U o j ^ 2 * Real.exp (-lam j * t))) t := by
+      apply HasDerivAt.fun_sum
+      intro j _
+      convert (((hasDerivAt_id t).const_mul (-lam j)).exp.const_mul (U o j ^ 2)) using 1
+      all_goals (first | rfl | (dsimp; ring))
+    have hpos : 0 < ∑ j, lam j * U o j ^ 2 * Real.exp (-lam j * t) := by
+      apply (Finset.sum_pos_iff_of_nonneg
+        (fun j _ => mul_nonneg (hnonneg j) (Real.exp_pos _).le)).mpr
+      obtain ⟨j, hj⟩ := hex
+      exact ⟨j, Finset.mem_univ _, mul_pos hj (Real.exp_pos _)⟩
+    by_cases hzero : t = 0
+    · subst t
+      rw [(hy 0 le_rfl o).deriv, y0]
+      simpa using neg_neg_of_pos ho
+    · have htpos : 0 < t := lt_of_le_of_ne ht (Ne.symm hzero)
+      have heq : (fun u => y u o) =ᶠ[nhds t]
+          (fun u => ∑ j, U o j ^ 2 * Real.exp (-lam j * u)) :=
+        Filter.eventually_of_mem (Ioi_mem_nhds htpos) (fun u hu => hreturn u hu.le)
+      rw [heq.deriv_eq, hder.deriv, Finset.sum_neg_distrib]
+      exact neg_neg_of_pos hpos
+  refine ⟨lam, (fun j => U o j ^ 2),
+    (fun j => ⟨hA.eigenvalues_nonneg j, sq_nonneg _⟩), ?_, hex, hreturn, hdecr⟩
+  simpa [y0] using (hreturn 0 le_rfl).symm
 
 /-- Six independent positive transition rates. The letters `a,b` refer to site 1
 and `c,d` to site 2; `eta,theta` refer to 00 to R and R to 00. -/
@@ -255,9 +263,13 @@ private theorem similarity (k : Rates) (i j : Fin 5) :
       Real.sq_sqrt k.c_pos.le, Real.sq_sqrt k.d_pos.le,
       Real.sq_sqrt k.eta_pos.le, Real.sq_sqrt k.theta_pos.le] <;> ring
 
-private theorem net_input_pos (k : Rates) (p : ℝ → Fin 5 → ℝ)
-    (hp : ForwardSolution k p) (t : ℝ) (ht : 0 ≤ t) :
-    0 < k.theta * p t 0 - k.eta * p t 1 := by
+private theorem return_spectral_data (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) :
+    ∃ lam c : Fin 5 → ℝ,
+      (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
+      (∃ j, 0 < lam j * c j) ∧
+      (∀ t, 0 ≤ t → p t 0 = ∑ j, c j * Real.exp (-lam j * t)) ∧
+      ∀ t, 0 ≤ t → 0 < k.theta * p t 0 - k.eta * p t 1 := by
   let y := fun u i => scale k 0 / scale k i * p u i
   have hscale (i : Fin 5) : scale k i ≠ 0 := ne_of_gt (scale_pos k i)
   have hA : (gram k).PosSemidef := by
@@ -282,13 +294,27 @@ private theorem net_input_pos (k : Rates) (p : ℝ → Fin 5 → ℝ)
     field_simp [hscale]
     nlinarith [congrArg (fun z : ℝ => z * p u j) hs]
   have hdiag : 0 < gram k 0 0 := by simpa [gram_entries] using k.theta_pos
-  have hneg := symmetric_return_derivative (gram k) hA 0 hdiag y hy0 hy t ht
+  obtain ⟨lam, c, hn, hsum, hmode, hrep, hdecr⟩ :=
+    symmetric_return_data (gram k) hA 0 hdiag y hy0 hy
   have hreturn : (fun u => y u 0) = (fun u => p u 0) := by
     funext u
     simp [y, hscale]
-  rw [hreturn, (hp.2 t ht 0).deriv] at hneg
-  simp [generator, mulVec, dotProduct, Fin.sum_univ_five] at hneg
-  linarith
+  refine ⟨lam, c, hn, hsum, hmode, ?_, ?_⟩
+  · intro t ht
+    change (fun u => p u 0) t = _
+    rw [← hreturn]
+    exact hrep t ht
+  · intro t ht
+    have hneg := hdecr t ht
+    rw [hreturn, (hp.2 t ht 0).deriv] at hneg
+    simp [generator, mulVec, dotProduct, Fin.sum_univ_five] at hneg
+    linarith
+
+private theorem net_input_pos (k : Rates) (p : ℝ → Fin 5 → ℝ)
+    (hp : ForwardSolution k p) (t : ℝ) (ht : 0 ≤ t) :
+    0 < k.theta * p t 0 - k.eta * p t 1 := by
+  obtain ⟨_, _, _, _, _, _, hi⟩ := return_spectral_data k p hp
+  exact hi t ht
 
 /-- Total mass outside R. -/
 def activeMass (p : ℝ → Fin 5 → ℝ) (t : ℝ) : ℝ := 1 - p t 0
@@ -698,6 +724,10 @@ theorem five_state_strict_association (k : Rates) :
       0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < association p t ∧
         p t 2 * p t 3 < p t 1 * p t 4 ∧
         0 < k.theta * p t 0 - k.eta * p t 1 ∧
+        (∃ lam c : Fin 5 → ℝ,
+          (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
+          (∃ j, 0 < lam j * c j) ∧
+          ∀ u, 0 ≤ u → p u 0 = ∑ j, c j * Real.exp (-lam j * u)) ∧
         ∀ f : Fin 5 → ℝ,
           taskError p f t = taskContrast f * association p t / activeMass p t ∧
           (taskContrast f ≠ 0 → 0 < taskContrast f * taskError p f t)) := by
@@ -722,7 +752,8 @@ theorem five_state_strict_association (k : Rates) :
     · exact equilibrium_properties k
   · intro p hp t ht
     obtain ⟨hr, hw, hD, hdet, hf⟩ := strict_for_every_forward_solution k p hp t ht
-    refine ⟨hr, hw, hD, hdet, hf, ?_⟩
+    obtain ⟨lam, c, hn, hsum, hmode, hrep, _⟩ := return_spectral_data k p hp
+    refine ⟨hr, hw, hD, hdet, hf, ⟨lam, c, hn, hsum, hmode, hrep⟩, ?_⟩
     intro f
     have he := task_error_identity k p hp t ht f
     refine ⟨he, ?_⟩

@@ -54,6 +54,10 @@ abbrev arena : Arena where
       0 < activeMass p t ∧ 0 < fiberWidth p t ∧ 0 < R.readout () ⟨k, p⟩ t ∧
         p t 2 * p t 3 < p t 1 * p t 4 ∧
         0 < k.theta * p t 0 - k.eta * p t 1 ∧
+        (∃ lam c : Fin 5 → ℝ,
+          (∀ j, 0 ≤ lam j ∧ 0 ≤ c j) ∧ (∑ j, c j) = 1 ∧
+          (∃ j, 0 < lam j * c j) ∧
+          ∀ u, 0 ≤ u → p u 0 = ∑ j, c j * Real.exp (-lam j * u)) ∧
         ∀ f : Fin 5 → ℝ,
           taskError p f t = taskContrast f * association p t / activeMass p t ∧
           (taskContrast f ≠ 0 → 0 < taskContrast f * taskError p f t))
