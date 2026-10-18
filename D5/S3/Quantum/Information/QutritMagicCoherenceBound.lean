@@ -10,7 +10,12 @@ import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Information.CorrelatedCoherenceMonogamyRefutation
 
 /-! The pure-qutrit magic–coherence inequality of Mukhopadhyay–Sazim–Pati,
-arXiv:1801.04807v3, Eq. (18), for the Wigner convention of Eq. (12). -/
+arXiv:1801.04807v3, Eq. (18), for the Wigner convention of Eq. (12).
+
+The negative mass of each column is controlled by its first two moments. For
+amplitude norms `a, b, c`, the defects `a² - bc`, `b² - ac`, `c² - ab` obey
+a second moment identity. Their total negative mass then satisfies a quadratic
+bound, and a nonnegative square gives the required coefficient. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -46,6 +51,7 @@ def claim : Prop := ∀ x : Fin 3 → ℂ, ∑ i, Complex.normSq (x i) = 1 →
 private noncomputable def negMass (a b c : ℝ) : ℝ :=
   max (-a) 0 + max (-b) 0 + max (-c) 0
 
+/-- The second moment is at most the sum of the squared positive and negative masses. -/
 private theorem parts_bound (a b c : ℝ) :
     a ^ 2 + b ^ 2 + c ^ 2 ≤ (a + b + c + negMass a b c) ^ 2 +
       (negMass a b c) ^ 2 := by
@@ -73,6 +79,7 @@ private theorem parts_bound (a b c : ℝ) :
   rw [negMass.eq_1] at *
   linarith [(parts a).2, (parts b).2, (parts c).2]
 
+/-- First and second column moments force negative mass when the off-diagonal radius exceeds `A`. -/
 private theorem column_bound (A R α a b c : ℝ) (hA : 0 ≤ A) (hR : 0 ≤ R)
     (hα : 0 ≤ α) (hαsq : α ^ 2 = 3) (hsum : a + b + c = 3 * A)
     (hsq : a ^ 2 + b ^ 2 + c ^ 2 = 3 * A ^ 2 + 6 * R ^ 2) :
@@ -94,6 +101,7 @@ private theorem column_bound (A R α a b c : ℝ) (hA : 0 ≤ A) (hR : 0 ≤ R)
   · rw [max_eq_left (sub_nonneg.mpr h)]
     linarith
 
+/-- Normalized nonnegative amplitudes give `D² + vD ≥ sv` for the three defects. -/
 private theorem amplitude_bound (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
     (hc : 0 ≤ c) (hnorm : a ^ 2 + b ^ 2 + c ^ 2 = 1) :
     let s := a * b + a * c + b * c
@@ -117,6 +125,7 @@ private theorem amplitude_bound (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
   rw [hid, hnorm, hsum] at hparts
   nlinarith only [hparts]
 
+/-- A square bounds the comparison root of the defect quadratic. -/
 private theorem constant_bound (s v D α u : ℝ) (hs : 0 ≤ s) (hv : 0 ≤ v)
     (hD : 0 ≤ D) (hsv : s + v = 1) (hquad : s * v ≤ D ^ 2 + v * D)
     (hα : 0 ≤ α) (hαsq : α ^ 2 = 3) (hu : 0 ≤ u) (husq : u ^ 2 = v) :
@@ -149,6 +158,7 @@ private theorem phase_column_bound (A R ell μ α : ℝ) (hA : 0 ≤ A) (hR : 0 
     _ = 3 * A ^ 2 + 6 * ell ^ 2 + 2 * α ^ 2 * μ ^ 2 := by ring
     _ = 3 * A ^ 2 + 6 * R ^ 2 := by rw [hαsq]; nlinarith only [hphase]
 
+/-- Pure-state entries identify half-coherence and bound negativity by amplitude defects. -/
 private theorem pure_state_reduction (x : Fin 3 → ℂ)
     (hr : ‖x 0‖ ^ 2 + ‖x 1‖ ^ 2 + ‖x 2‖ ^ 2 = 1) :
     let s := ‖x 0‖ * ‖x 1‖ + ‖x 0‖ * ‖x 2‖ + ‖x 1‖ * ‖x 2‖
