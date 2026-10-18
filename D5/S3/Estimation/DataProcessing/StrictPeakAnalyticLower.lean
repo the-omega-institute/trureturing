@@ -36,7 +36,7 @@ private theorem quartic_integral (a b A B C : ℝ) :
   norm_num
   ring
 
-private theorem cap_integral : (∫ u in (0 : ℝ)..1, cap u) = 1/3 := by
+theorem cap_integral : (∫ u in (0 : ℝ)..1, cap u) = 1/3 := by
   have he : cap = (fun u : ℝ => (1/2 : ℝ)+(-1/2)*u^2+0*u^4) := by
     funext u; unfold cap; ring
   rw [he, quartic_integral]
