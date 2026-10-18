@@ -148,7 +148,6 @@ def windowShiftEvidence : Registration windowShiftArena
     intro h
     have hfirst := congrFun h (0 : Fin 1)
     norm_num [realize, memoryWindow] at hfirst
-    cases hfirst
 }
 
 def window_shift_registration :

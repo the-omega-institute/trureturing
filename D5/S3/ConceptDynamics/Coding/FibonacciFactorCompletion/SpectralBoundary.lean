@@ -530,7 +530,7 @@ theorem original_closed_root_boundary (side : MemorySide) (d : ℝ)
       simp [complexAdjacency,weightedAdjacency,univ,one_step_no_c side d high,
         uedge,letterWeight,Algebra.algebraMap_eq_smul_one]
     unfold weightedRadius
-    rw [scalar,spectralRadius,spectrum.scalar_eq]
+    rw [scalar,spectralRadius_eq_of_unital,spectrum.scalar_eq]
     simp only [Set.mem_singleton_iff,iSup_iSup_eq_left]
     rw [ENNReal.coe_nnreal_eq,coe_nnnorm,Complex.norm_real,Real.norm_eq_abs,
       abs_of_nonneg (pow_nonneg hz 6)]
