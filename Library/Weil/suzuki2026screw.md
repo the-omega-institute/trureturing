@@ -1064,3 +1064,193 @@ coupling to compact or omitted positions. The all-size result (W22)
 retains its spacing restriction. Full physical positivity, the signed
 Robin upper and RH remain unproved. No Jacobi-orbit or finite-curvature
 identity alone is claimed to settle these outstanding estimates.
+
+## The first actual core requires a joint correction estimate
+
+The positive limiting $\operatorname{sech}$ kernel in (W25) does not
+supply an order-uniform perturbation argument by itself. Its first
+correction can be identified from the same complete physical source.
+Classical Pick interpolation then excludes a finite relative lower bound
+for that correction considered separately. This is a paper application of
+existing interpolation theory, without a priority or Lean-verification
+claim; it gives no negative minor of the actual theta kernel.
+
+Fix a bounded nonempty open interval $I$ with
+$\overline I\subset(0,\infty)$. For $u,v\in\overline I$ put
+$a=A+u$, $b=A+v$, $x=(a+b)/2$, $d=(a-b)/2$ and $E=e^{-2x}$.
+Define the positively congruent actual kernel and its two core terms by
+
+$$
+\begin{aligned}
+\mathcal P_A(u,v)&=
+ \frac{8\pi e^{a+b}L_0(a,b)}{\Phi(a)\Phi(b)},\\
+S(u,v)&=\operatorname{sech}(u-v),\\
+C(u,v)&=\frac{u+v}{2}\operatorname{sech}(u-v)
+ -\frac{u-v}{2\sinh(u-v)}.
+\end{aligned}
+$$
+
+The last quotient has its continuous diagonal value, so
+$C(u,u)=u-1/2$. The source-specific expansion is
+
+$$
+\boxed{\mathcal P_A=A S+C+R_A,\qquad
+ \|R_A\|_{C^2(\overline I^2)}\longrightarrow0
+ \quad(A\to\infty).}
+\tag{W27}
+$$
+
+The norm controls derivatives in the offsets $u,v$ of total order at
+most two. To prove the stronger remainder needed here, reuse the exact
+$Q,B,F,\mathscr H$ and the whole-half-line majorants from (W24).
+They give $\mathcal P_A=8\pi(xQ-B)$ exactly. Set
+$F_0=-4\pi t\cosh(2d)$. The exact expansion of $F$ in (W24),
+Taylor's integral remainder for $e^{2Et}$ and (W23) imply, for fixed
+$D>0$ and $m+n\le2$,
+
+$$
+\left|\partial_x^m\partial_d^n(F-F_0)\right|
+\le C_D E t(1+t)^q e^{cEt}\qquad(|d|\le D)
+$$
+
+with fixed finite $q,c$, for all sufficiently large $x$.
+For the logarithmic remainder in (W23), express its shift by $Et$ as
+an integral of its first derivative; its first two mixed derivatives
+are covered by the same bounds. Both $F$ and $F_0$ are at most
+$-c_Dt$, where $c_D=2e^{-2D}$. The identity
+
+$$
+e^F-e^{F_0}=(F-F_0)\int_0^1e^{(1-s)F_0+sF}\,ds
+$$
+
+and its first two mixed derivatives are consequently bounded by
+$C_D E(1+t)^{q'}e^{c'Et-c_Dt}$ for fixed finite $q',c'$.
+Taking $c'E\le c_D/2$ gives an integrable bound proportional to $E$.
+The factor $Et/x$ and its derivatives contribute $O_D(E)$ as well.
+Thus, with $q_\infty$ as in (W24),
+
+$$
+\max_{m+n\le2}\sup_{|d|\le D}
+\left|\partial_x^m\partial_d^n(Q-q_\infty(d))\right|
+=O_D(E).
+$$
+
+In particular $x(Q-q_\infty)$ and these mixed derivatives tend to zero.
+For the reflected term let $h(z)=\cosh(2\sqrt z)$, analytic at zero.
+On bounded $t,d$ sets, its exact exponent is
+
+$$
+\mathscr H(x,d^2+Et)-\mathscr H(x,d^2)
+=-2\pi\frac{h(d^2+Et)-h(d^2)}E
+ +\text{the logarithmic remainder difference}.
+$$
+
+The quotient extends smoothly to $E=0$. It converges with two $d$
+derivatives to $t h'(d^2)=t\sinh(2d)/d$; derivatives involving $x$
+tend to zero, using $\partial_x=-2E\partial_E$ on this quotient.
+The differentiated remainder differences tend to zero by (W23).
+At $d=0$, $\sinh(2d)/d$ has value $2$.
+The already established global reflected majorant
+$C_D(1+t)^6e^{4\sqrt t-t/2}$ permits mixed dominated differentiation,
+including the entire exterior where $x-\sqrt{d^2+Et}<0$. It gives
+
+$$
+B(x,d)\longrightarrow\frac{d}{8\pi\sinh(2d)}
+$$
+
+with two $d$ derivatives and vanishing derivatives involving $x$.
+The value at $d=0$ is $1/(16\pi)$. Therefore
+$8\pi(xQ-B)=x\operatorname{sech}(2d)-d/\sinh(2d)+o_{C^2}(1)$;
+the linear change to $u,v$ proves (W27).
+
+For the obstruction, reuse classical Pick interpolation as cited above
+in McCarthy, Theorem 1, printed p.36. The related anti-Löwner theory is
+[Audenaert, *A Characterisation of Anti-Löwner Functions*,
+Theorem 2.1](https://doi.org/10.1090/S0002-9939-2011-10935-3),
+[arXiv:1008.2943v2](https://arxiv.org/abs/1008.2943v2).
+Its finite-order transfer requires order $2N$ for an order-$N$
+conclusion; its whole-positive-axis integral representation is not a
+representation on an arbitrary subinterval. Neither extension is assumed
+here. The needed consequence follows directly from Pick interpolation.
+
+On any nonempty open $J\subset(1,\infty)$, the kernel
+
+$$
+K_{\log}(z,w)=\frac{\log z+\log w}{z+w}
+$$
+
+cannot be positive semidefinite on all finite subsets. Indeed the
+Cayley data $\lambda(z)=(z-1)/(z+1)$ and
+$\tau(z)=(\log z-1)/(\log z+1)$ lie in $(-1,1)$. Their disk Pick
+matrix is congruent to $K_{\log}$ by the positive diagonal factors
+$(z+1)/(\log z+1)$. If all finite matrices were positive semidefinite,
+choose distinct $z_n\in J$ accumulating at an interior point of $J$.
+Pick's theorem supplies analytic disk-valued interpolants of each first
+$N$ data. A normal-family subsequence converges locally uniformly to a
+Schur function with every datum. Its first retained value lies strictly
+inside the disk, so the maximum principle excludes a boundary constant.
+Undoing both Cayley maps gives a holomorphic positive-real function
+$F$ on $\operatorname{Re}z>0$ with $F(z_n)=\log z_n$.
+The identity theorem forces $F=\operatorname{Log}$ on that half-plane,
+contradicting $\operatorname{Log}(1/2)<0$. Thus some finite real sample
+has a negative quadratic direction. This uses a classical theorem;
+it is not a new general positivity criterion.
+
+Write the unshifted first core as
+
+$$
+G(a,b)=\frac{a+b}{2}\operatorname{sech}(a-b)
+ -\frac{a-b}{2\sinh(a-b)}.
+$$
+
+For $z_i=e^{2a_i}$ and $D=\operatorname{diag}(\sqrt{z_i})$,
+exact algebra gives
+
+$$
+\boxed{[G(a_i,a_j)]=\frac12D[K_{\log}(z_i,z_j)
+ -L_{\log}(z_i,z_j)]D,\qquad
+L_{\log}(z,w)=\int_0^\infty\frac{dt}{(z+t)(w+t)}.}
+\tag{W28}
+$$
+
+Here $L_{\log}=(\log z-\log w)/(z-w)$, including its continuous
+diagonal, is positive semidefinite by this classical integral formula.
+Subtracting it preserves a negative direction of $K_{\log}$, and
+positive diagonal congruence transports that direction. Consequently
+**every** nonempty open interval of positions $a>1$ contains a finite
+sample on which $G$ is indefinite: it has a negative direction, whereas
+$G(a,a)=a-1/2>0$. The statement is existential in the finite sample;
+it does not assert that every finite sample is indefinite.
+
+Finally $G(A+u,A+v)=A S(u,v)+C(u,v)$ exactly. On distinct nodes $S$
+is strictly positive definite, since
+
+$$
+S(u,v)=\frac{2e^{u+v}}{e^{2u}+e^{2v}}
+$$
+
+is a positive diagonal congruence of the Cauchy kernel. Its integral
+representation is a Gram matrix of linearly independent exponentials.
+For every $M>0$ choose $A>\max(M,1)$. A negative direction for the
+core on $A+I$ then gives
+
+$$
+\boxed{\text{for every }M>0\text{ there exist distinct }u_1,\ldots,u_N\in I
+\text{ and }c\in\mathbb R^N\setminus\{0\}\text{ such that }
+ c^{\mathsf T}C c<-M c^{\mathsf T}S c.}
+\tag{W29}
+$$
+
+Thus no finite $b_I$ provides $C\succeq-b_I S$ uniformly over all
+finite samples and their densities. This excludes estimating that
+first correction separately in this reference form. It does **not**
+exclude a source-specific joint lower bound for $C+R_A$.
+If the actual $\mathcal P_A$ were positive semidefinite, the remainder
+would have to satisfy
+$c^{\mathsf T}R_Ac\ge-c^{\mathsf T}(A S+C)c$ on every negative core
+direction. Convergence in $C^2$ in (W27) gives no order-uniform bound in
+the $S$ form and does not exclude such cancellations.
+The remaining target is the joint actual form, with the complete
+reflected contribution and all finite coefficient vectors retained.
+Neither an actual negative theta minor, full physical positivity, the
+signed Robin upper nor RH is established by this core obstruction.
